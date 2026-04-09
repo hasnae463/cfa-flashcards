@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>CFA Level III Flashcards</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #0D1117;
+  --surface:  #161B22;
+  --surface2: #1C2330;
+  --border:   #2A3441;
+  --text:     #E6EDF3;
+  --muted:    #7D8590;
+  --gold:     #D4A017;
+  --gold-dim: #8A6810;
+  --red:      #C0392B;
+  --green:    #2EA043;
+  --blue:     #388BFD;
+  --orange:   #D4680A;
+  --purple:   #A855F7;
+  --card-w: min(480px, 92vw);
+  --card-h: min(300px, 56vw);
+  --serif: 'Playfair Display', Georgia, serif;
+  --mono:  'IBM Plex Mono', monospace;
+  --sans:  'IBM Plex Sans', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+/* ── HEADER ── */
+header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--surface); position: sticky; top: 0; z-index: 200; }
+.logo-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; }
+.logo-title  { font-family: var(--serif); font-size: 18px; color: var(--text); font-weight: 400; line-height: 1.1; }
+.header-right { display: flex; gap: 10px; align-items: center; }
+.hstat { text-align: center; }
+.hstat-n { font-family: var(--mono); font-size: 15px; font-weight: 500; line-height: 1; }
+.hstat-l { font-family: var(--mono); font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+.hstat.know   .hstat-n { color: var(--green); }
+.hstat.review .hstat-n { color: var(--orange); }
+.hstat.total  .hstat-n { color: var(--gold); }
+
+/* ── NAV TABS ── */
+.main-tabs { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 16px; }
+.main-tab { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; padding: 11px 16px; cursor: pointer; transition: color .15s; white-space: nowrap; }
+.main-tab:hover { color: var(--text); }
+.main-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* ── SCREENS ── */
+.screen { display: none; flex-direction: column; flex: 1; min-height: 0; }
+.screen.active { display: flex; }
+
+/* ════════════════════════════════════════
+   STUDY SCREEN
+════════════════════════════════════════ */
+.filter-row { display: flex; gap: 8px; padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; flex-wrap: nowrap; }
+.filter-row::-webkit-scrollbar { display: none; }
+
+.pill { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.08em; border: 1px solid var(--border); background: var(--surface); color: var(--muted); padding: 5px 11px; border-radius: 20px; cursor: pointer; white-space: nowrap; transition: all .15s; flex-shrink: 0; }
+.pill.active-gold   { border-color: var(--gold);   color: var(--gold);   background: rgba(212,160,23,.1); }
+.pill.active-blue   { border-color: var(--blue);   color: var(--blue);   background: rgba(56,139,253,.1); }
+.pill.active-green  { border-color: var(--green);  color: var(--green);  background: rgba(46,160,67,.1); }
+.pill.active-orange { border-color: var(--orange); color: var(--orange); background: rgba(212,104,10,.1); }
+.pill.active-purple { border-color: var(--purple); color: var(--purple); background: rgba(168,85,247,.1); }
+
+.stage { flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px 16px 16px; gap:16px; }
+.card-counter { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.1em; }
+.card-counter span { color:var(--text); }
+
+/* flip card */
+.flip-scene { width:var(--card-w); height:var(--card-h); perspective:1000px; cursor:pointer; user-select:none; }
+.flip-card  { width:100%; height:100%; position:relative; transform-style:preserve-3d; transition:transform .5s cubic-bezier(.4,0,.2,1); }
+.flip-card.flipped { transform:rotateY(180deg); }
+.card-face { position:absolute; width:100%; height:100%; backface-visibility:hidden; border-radius:8px; display:flex; flex-direction:column; overflow:hidden; border:1px solid var(--border); }
+.card-front { background:var(--surface); }
+.card-back  { transform:rotateY(180deg); background:var(--surface2); }
+
+.card-strip { height:4px; flex-shrink:0; }
+.s-formula  { background:var(--blue); }
+.s-framework{ background:var(--green); }
+.s-command  { background:var(--orange); }
+.s-thin-full{ background:var(--purple); }
+
+.card-head { display:flex; justify-content:space-between; align-items:center; padding:9px 14px 5px; flex-shrink:0; }
+.c-badge { font-family:var(--mono); font-size:8px; letter-spacing:.12em; text-transform:uppercase; padding:3px 8px; border-radius:12px; border:1px solid; }
+.b-formula   { color:var(--blue);   border-color:var(--blue);   background:rgba(56,139,253,.08); }
+.b-framework { color:var(--green);  border-color:var(--green);  background:rgba(46,160,67,.08); }
+.b-command   { color:var(--orange); border-color:var(--orange); background:rgba(212,104,10,.08); }
+.b-thin-full { color:var(--purple); border-color:var(--purple); background:rgba(168,85,247,.08); }
+
+.c-subtopic { font-family:var(--mono); font-size:8px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); max-width:55%; text-align:right; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.card-body  { flex:1; padding:6px 16px 12px; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
+.card-q { font-family:var(--serif); font-size:clamp(13px,3vw,17px); line-height:1.45; color:var(--text); }
+.card-hint { margin-top:8px; font-family:var(--mono); font-size:9px; color:var(--muted); }
+.card-a { font-size:clamp(11px,2.5vw,13px); line-height:1.65; color:#C9D1D9; overflow:auto; max-height:100%; }
+.card-a .hl  { color:var(--gold); font-weight:500; }
+.card-a .hl-green  { color:#3DD68C; font-weight:500; }
+.card-a .hl-red    { color:#FF7B72; font-weight:500; }
+.card-a .hl-orange { color:#F0A04B; font-weight:500; }
+.card-a .fl  { font-family:var(--mono); font-size:clamp(9.5px,2vw,11.5px); color:#79C0FF; background:rgba(56,139,253,.08); padding:5px 9px; border-radius:3px; margin:5px 0; line-height:1.7; display:block; white-space:pre-wrap; }
+.card-a .bad { color:#FF7B72; text-decoration:line-through; font-style:italic; }
+.card-a .good{ color:#7EE787; }
+.card-a .rl  { border-left:2px solid var(--gold-dim); padding-left:9px; margin:3px 0; font-size:clamp(10px,2.2vw,12px); line-height:1.6; }
+
+.card-footer { padding:6px 14px 8px; font-family:var(--mono); font-size:9px; color:var(--muted); flex-shrink:0; border-top:1px solid var(--border); }
+.tap-hint { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.1em; animation:pulse 2.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:.35} 50%{opacity:.85} }
+
+.actions { display:flex; gap:8px; justify-content:center; }
+.act-btn { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; border:1px solid var(--border); background:var(--surface); color:var(--muted); padding:9px 18px; border-radius:4px; cursor:pointer; transition:all .15s; min-width:95px; }
+.act-btn.know   { border-color:var(--green);  color:var(--green);  background:rgba(46,160,67,.08); }
+.act-btn.review { border-color:var(--orange); color:var(--orange); background:rgba(212,104,10,.08); }
+
+.nav-row { display:flex; gap:10px; align-items:center; }
+.nav-btn { font-family:var(--mono); background:var(--surface); border:1px solid var(--border); color:var(--muted); width:36px; height:36px; border-radius:4px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s; font-size:14px; }
+.nav-btn:hover { border-color:var(--gold); color:var(--gold); }
+.progress-dots { display:flex; gap:4px; flex-wrap:wrap; justify-content:center; max-width:200px; }
+.dot { width:6px; height:6px; border-radius:50%; background:var(--border); transition:background .2s; }
+.dot.cur    { background:var(--gold); }
+.dot.know   { background:var(--green); }
+.dot.review { background:var(--orange); }
+
+.empty-state { text-align:center; padding:50px 20px; color:var(--muted); }
+.empty-state .ei { font-size:30px; margin-bottom:10px; }
+.empty-state .em { font-family:var(--serif); font-size:18px; margin-bottom:6px; color:var(--text); }
+.empty-state .es { font-family:var(--mono); font-size:11px; }
+
+/* ════════════════════════════════════════
+   MANAGE SCREEN
+════════════════════════════════════════ */
+.manage-layout { display:flex; flex:1; overflow:hidden; min-height:0; }
+
+/* sidebar */
+.sidebar { width:220px; flex-shrink:0; border-right:1px solid var(--border); background:var(--surface); display:flex; flex-direction:column; overflow:hidden; }
+.sidebar-head { padding:12px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+.sidebar-title { font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); }
+.tree { flex:1; overflow-y:auto; padding:8px 0; }
+.tree-topic { padding:0; }
+.tree-topic-btn { width:100%; text-align:left; background:none; border:none; padding:8px 14px; font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:space-between; transition:background .12s; }
+.tree-topic-btn:hover { background:var(--surface2); }
+.tree-topic-btn.selected { color:var(--gold); background:rgba(212,160,23,.08); }
+.tree-topic-btn .count { font-size:9px; color:var(--muted); }
+.tree-topic-btn .arrow { font-size:9px; color:var(--muted); transition:transform .15s; }
+.tree-topic-btn.open .arrow { transform:rotate(90deg); }
+.subtopics { display:none; padding-left:0; }
+.subtopics.open { display:block; }
+.subtopic-btn { width:100%; text-align:left; background:none; border:none; padding:6px 14px 6px 24px; font-family:var(--mono); font-size:9.5px; color:var(--muted); cursor:pointer; display:flex; align-items:center; justify-content:space-between; transition:background .12s; }
+.subtopic-btn:hover { background:var(--surface2); color:var(--text); }
+.subtopic-btn.selected { color:var(--gold); background:rgba(212,160,23,.06); }
+.subtopic-btn .count { font-size:9px; }
+
+/* card list */
+.card-list-panel { flex:1; overflow:hidden; display:flex; flex-direction:column; min-height:0; }
+.clp-head { padding:12px 18px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:10px; flex-shrink:0; background:var(--surface); }
+.btn-add { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; background:var(--gold); color:var(--bg); border:none; padding:7px 14px; border-radius:3px; cursor:pointer; transition:opacity .15s; flex-shrink:0; }
+.btn-add:hover { opacity:.85; }
+.card-list { flex:1; overflow-y:auto; padding:12px 16px; display:flex; flex-direction:column; gap:8px; }
+.card-list-item { background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:12px 14px; display:flex; align-items:flex-start; gap:10px; }
+.cli-left { flex:1; overflow:hidden; }
+.cli-meta { display:flex; gap:8px; align-items:center; margin-bottom:5px; flex-wrap:wrap; }
+.cli-q { font-size:12.5px; line-height:1.45; color:var(--text); overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+.cli-sub { font-family:var(--mono); font-size:8.5px; color:var(--muted); }
+.cli-actions { display:flex; gap:6px; flex-shrink:0; }
+.cli-btn { font-family:var(--mono); font-size:9px; background:none; border:1px solid var(--border); color:var(--muted); padding:4px 9px; border-radius:3px; cursor:pointer; transition:all .12s; }
+.cli-btn:hover { border-color:var(--text); color:var(--text); }
+.cli-btn.del:hover { border-color:var(--red); color:var(--red); }
+
+/* ── MODAL ── */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:300; display:none; align-items:center; justify-content:center; padding:16px; }
+.modal-overlay.open { display:flex; }
+.modal { background:var(--surface); border:1px solid var(--border); border-radius:8px; width:min(600px,100%); max-height:90vh; overflow-y:auto; display:flex; flex-direction:column; }
+.modal-head { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
+.modal-title { font-family:var(--serif); font-size:18px; font-weight:400; }
+.modal-close { background:none; border:none; color:var(--muted); font-size:18px; cursor:pointer; padding:2px 6px; border-radius:3px; }
+.modal-close:hover { color:var(--text); background:var(--surface2); }
+.modal-body { padding:20px; display:flex; flex-direction:column; gap:16px; flex:1; }
+.modal-foot { padding:14px 20px; border-top:1px solid var(--border); display:flex; justify-content:flex-end; gap:10px; flex-shrink:0; }
+
+/* form fields */
+.field { display:flex; flex-direction:column; gap:5px; }
+.field label { font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.field input, .field select, .field textarea {
+  background:var(--surface2); border:1px solid var(--border); color:var(--text);
+  font-family:var(--sans); font-size:13px; padding:9px 12px; border-radius:4px; outline:none;
+  transition:border-color .15s;
+}
+.field input:focus, .field select:focus, .field textarea:focus { border-color:var(--gold); }
+.field textarea { resize:vertical; min-height:90px; line-height:1.6; }
+.field select option { background:var(--surface2); }
+.field-hint { font-family:var(--mono); font-size:9px; color:var(--muted); line-height:1.5; }
+
+/* answer formatting helpers */
+.fmt-bar { display:flex; gap:6px; flex-wrap:wrap; }
+.fmt-btn { font-family:var(--mono); font-size:9px; background:var(--surface2); border:1px solid var(--border); color:var(--muted); padding:4px 10px; border-radius:3px; cursor:pointer; transition:all .12s; }
+.fmt-btn:hover { border-color:var(--gold); color:var(--gold); }
+
+.btn-cancel { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; background:none; border:1px solid var(--border); color:var(--muted); padding:8px 16px; border-radius:3px; cursor:pointer; }
+.btn-save   { font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; background:var(--gold); color:var(--bg); border:none; padding:8px 18px; border-radius:3px; cursor:pointer; }
+.btn-cancel:hover { border-color:var(--text); color:var(--text); }
+.btn-save:hover { opacity:.85; }
+
+/* topic/subtopic add form */
+.new-topic-row { display:flex; gap:8px; padding:10px 14px; border-top:1px solid var(--border); }
+.new-topic-row input { flex:1; background:var(--surface2); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:10px; padding:6px 10px; border-radius:3px; outline:none; }
+.new-topic-row input:focus { border-color:var(--gold); }
+.new-topic-row button { font-family:var(--mono); font-size:10px; background:var(--gold); color:var(--bg); border:none; padding:6px 12px; border-radius:3px; cursor:pointer; }
+
+/* preview */
+.preview-box { background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:12px 14px; font-size:12.5px; line-height:1.65; color:#C9D1D9; min-height:60px; }
+
+/* mobile sidebar toggle */
+@media (max-width:640px) {
+  .manage-layout { flex-direction:column; }
+  .sidebar { width:100%; max-height:220px; border-right:none; border-bottom:1px solid var(--border); }
+  .tree { max-height:150px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo-label">CFA Level III</div>
+    <div class="logo-title">Flashcards</div>
+  </div>
+  <div class="header-right">
+    <div class="hstat know"><div class="hstat-n" id="sKnow">0</div><div class="hstat-l">Know</div></div>
+    <div class="hstat review"><div class="hstat-n" id="sReview">0</div><div class="hstat-l">Review</div></div>
+    <div class="hstat total"><div class="hstat-n" id="sTotal">0</div><div class="hstat-l">Cards</div></div>
+    <div id="syncStatus" style="font-family:var(--mono);font-size:9px;color:#D4A017;transition:opacity .5s;opacity:1;white-space:nowrap;min-width:70px;text-align:right">loading…</div>
+  </div>
+</header>
+
+<div class="main-tabs">
+  <button class="main-tab active" onclick="switchScreen('study',this)">Study</button>
+  <button class="main-tab" onclick="switchScreen('manage',this)">Manage Cards</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     STUDY SCREEN
+══════════════════════════════════════ -->
+<div class="screen active" id="screen-study">
+  <div class="filter-row" id="topicFilter"></div>
+  <div class="filter-row" id="subtopicFilter" style="padding-top:6px;padding-bottom:6px;"></div>
+  <div class="filter-row" id="typeFilter"></div>
+  <div class="stage" id="stage"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MANAGE SCREEN
+══════════════════════════════════════ -->
+<div class="screen" id="screen-manage">
+  <div class="manage-layout">
+
+    <!-- sidebar tree -->
+    <div class="sidebar">
+      <div class="sidebar-head">
+        <span class="sidebar-title">Topics</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--muted)" id="totalManage">0 cards</span>
+      </div>
+      <div class="tree" id="tree"></div>
+      <div class="new-topic-row">
+        <input id="newTopicInput" placeholder="New topic name…" onkeydown="if(event.key==='Enter')addTopic()">
+        <button onclick="addTopic()">+ Add</button>
+      </div>
+    </div>
+
+    <!-- card list -->
+    <div class="card-list-panel">
+      <div class="clp-head">
+        <span class="clp-title" id="clpTitle">All Cards</span>
+        <button class="btn-add" onclick="openModal()">+ New Card</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;">
+        <div class="card-list" id="cardList"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — Add / Edit Card
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title" id="modalTitle">New Card</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="field-row">
+        <div class="field">
+          <label>Topic</label>
+          <select id="fTopic" onchange="populateSubtopicSelect()"></select>
+        </div>
+        <div class="field">
+          <label>Subtopic</label>
+          <div style="display:flex;gap:6px">
+            <select id="fSubtopic" style="flex:1"></select>
+            <button class="fmt-btn" onclick="promptNewSubtopic()" title="Add subtopic">+ Sub</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Card Type</label>
+        <select id="fType">
+          <option value="formula">📐 Formula</option>
+          <option value="framework">🔑 Framework</option>
+          <option value="command">✍️ Command Word</option>
+          <option value="thin-full">⚡ Thin vs Full</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Question (front of card)</label>
+        <textarea id="fQ" placeholder="What does the card ask?" rows="3"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Answer (back of card)</label>
+        <div class="fmt-bar" style="margin-bottom:6px">
+          <button class="fmt-btn" onclick="ins('[hl]','[/hl]')" title="Gold highlight" style="color:#D4A017;border-color:#D4A017">Gold</button>
+          <button class="fmt-btn" onclick="ins('[grn]','[/grn]')" title="Green text" style="color:#3DD68C;border-color:#3DD68C">Green</button>
+          <button class="fmt-btn" onclick="ins('[red]','[/red]')" title="Red text" style="color:#FF7B72;border-color:#FF7B72">Red</button>
+          <button class="fmt-btn" onclick="ins('[orn]','[/orn]')" title="Orange text" style="color:#F0A04B;border-color:#F0A04B">Orange</button>
+          <button class="fmt-btn" onclick="ins('[fl]','[/fl]')" title="Formula block">Formula</button>
+          <button class="fmt-btn" onclick="ins('[rl]','[/rl]')" title="Rule bullet">Rule</button>
+          <button class="fmt-btn" onclick="ins('[bad]','[/bad]')" title="Strikethrough red">Thin ✗</button>
+          <button class="fmt-btn" onclick="ins('[good]','[/good]')" title="Green text">Full ✓</button>
+        </div>
+        <textarea id="fA" placeholder="Answer text. Use formatting tags above for styled output." rows="6" oninput="updatePreview()"></textarea>
+        <div class="field-hint">Tags: [hl]gold text[/hl] · [fl]formula block[/fl] · [rl]rule line[/rl] · [bad]crossed out[/bad] · [good]green[/good]</div>
+      </div>
+
+      <div class="field">
+        <label>Answer Preview</label>
+        <div class="preview-box" id="preview"></div>
+      </div>
+
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" onclick="saveCard()">Save Card</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+// DATA MODEL
+// ══════════════════════════════════════════════════
+// Card: { id, topic, subtopic, type, q, a }
+// Deck: { topics: [{name, subtopics:[string]}], cards: [Card] }
+
+const DEFAULT_DECK = {
+  topics: [
+    { name:"IPS",                subtopics:["Individual","Institutional"] },
+    { name:"Asset Allocation",   subtopics:["SAA / TAA","LDI","Goals-Based","Risk Budgeting"] },
+    { name:"Derivatives",        subtopics:["Options Strategies","Futures Hedge","Swaps","Risk Measures"] },
+    { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
+    { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
+    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Index-Based Strategies","Active Equity","Fixed Income"] },
+    { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
+    { name:"Command Words",      subtopics:["Templates","Thin vs Full"] },
+  ],
+  cards: [
+    // IPS
+    {id:"c1",topic:"IPS",subtopic:"Individual",type:"framework",
+     q:"RRTTLLU — what does each letter stand for?",
+     a:"[rl][hl]R[/hl]eturn objective[/rl][rl][hl]R[/hl]isk objective (tolerance + capacity)[/rl][rl][hl]T[/hl]ime horizon[/rl][rl][hl]T[/hl]ax considerations[/rl][rl][hl]L[/hl]iquidity needs[/rl][rl][hl]L[/hl]egal & regulatory[/rl][rl][hl]U[/hl]nique circumstances[/rl]\n\nFor the AM: always address Return + Risk first — most heavily tested."},
+    {id:"c2",topic:"IPS",subtopic:"Individual",type:"framework",
+     q:"Risk tolerance: ability vs willingness — which wins when they conflict?",
+     a:"[hl]The lower of the two[/hl] is the binding constraint.\n\n[rl]Ability HIGH + Willingness LOW → use LOW[/rl][rl]Willingness HIGH + Ability LOW → use LOW[/rl]\n\nAM tip: behavioural evidence (actual actions e.g. moving to cash) overrides stated tolerance. Always cite the specific vignette action."},
+    {id:"c3",topic:"IPS",subtopic:"Individual",type:"formula",
+     q:"Required pre-tax nominal return — build the formula from scratch",
+     a:"[fl]Step 1: After-tax real need ÷ (1 − tax rate) = pre-tax real need\nStep 2: Pre-tax real need × (1 + inflation) = pre-tax nominal need\nStep 3: Pre-tax nominal need ÷ portfolio value = required return %[/fl]\n[hl]Common trap:[/hl] Forgetting the inflation gross-up in Step 2 loses a point."},
+    {id:"c4",topic:"IPS",subtopic:"Individual",type:"command",
+     q:"Command word: JUSTIFY a risk classification. 3-layer structure?",
+     a:"[rl][hl]L1 — Answer:[/hl] State the classification directly (above/below/average)[/rl][rl][hl]L2 — Mechanism:[/hl] Behavioural evidence overrides stated tolerance[/rl][rl][hl]L3 — Vignette:[/hl] Cite the specific action/number from the case[/rl]\n\n[bad]'She is risk averse because she doesn't like losses.'[/bad]\n[good]'Below average. Moving 45% to cash after a 15% drawdown is behavioural evidence that overrides stated discomfort.'[/good]"},
+    {id:"c5",topic:"IPS",subtopic:"Individual",type:"thin-full",
+     q:"Thin vs Full: Liquidity constraint — client has €80k education expense in 2 years",
+     a:"[bad]Thin: 'Liquidity need is €80,000 for education.'[/bad]\n\n[good]Full: 'The IPS should specify a reserve of €80,000 required within 2 years — a known, non-deferrable outflow that must be ring-fenced in low-risk liquid instruments to prevent a forced sale of growth assets at an inopportune time.'[/good]\n\n[hl]What thin misses:[/hl] ring-fencing rationale, timing, consequence of not separating."},
+
+    // Asset Allocation
+    {id:"c6",topic:"Asset Allocation",subtopic:"LDI",type:"formula",
+     q:"Duration gap — formula and what it signals for a pension fund",
+     a:"[fl]Duration gap = Duration(Liabilities) − Duration(Assets)[/fl]\nA [hl]positive gap[/hl] means liabilities are more rate-sensitive than assets.\n\n[fl]If rates fall 100bps:\nΔL ≈ Duration(L) × 1% × PV(L)\nΔA ≈ Duration(A) × 1% × MV(A)[/fl]\nGap > 0 → liabilities rise more than assets → [hl]funding ratio worsens[/hl]."},
+    {id:"c7",topic:"Asset Allocation",subtopic:"LDI",type:"framework",
+     q:"LDI — three conditions for cash flow matching immunisation",
+     a:"[rl]1. [hl]Duration match:[/hl] Asset duration = Liability duration[/rl][rl]2. [hl]PV match:[/hl] PV(assets) ≥ PV(liabilities)[/rl][rl]3. [hl]Convexity:[/hl] Asset convexity ≥ Liability convexity (non-parallel shifts)[/rl]\n\nAM tip: duration match alone is insufficient — always add the convexity condition when asked to 'fully immunise'."},
+    {id:"c8",topic:"Asset Allocation",subtopic:"LDI",type:"framework",
+     q:"4 factors that argue FOR de-risking a pension fund (LDI over equity)",
+     a:"[rl]1. [hl]Large duration gap[/hl] → rate risk amplifies funding deficit[/rl][rl]2. [hl]Weak/stressed sponsor[/hl] → cannot backstop drawdowns with contributions[/rl][rl]3. [hl]Closed/mature plan[/hl] → shorter horizon, nearer cash flows[/rl][rl]4. [hl]Low funding ratio[/hl] → already underfunded; equity drawdown deepens deficit[/rl]"},
+
+    // Derivatives
+    {id:"c9",topic:"Derivatives",subtopic:"Futures Hedge",type:"formula",
+     q:"Equity futures hedge — number of contracts formula",
+     a:"[fl]N = (β_target − β_portfolio) / β_futures × (V_portfolio / V_futures)[/fl]\n[hl]Signs:[/hl]\n[rl]N < 0 → SELL (reducing beta)[/rl][rl]N > 0 → BUY (increasing beta)[/rl]\n\nAlways state direction explicitly — the number alone loses a point."},
+    {id:"c10",topic:"Derivatives",subtopic:"Options Strategies",type:"framework",
+     q:"3 options strategies — when to use each",
+     a:"[rl][hl]Protective put:[/hl] Bullish + fear drawdown. Floor on loss, unlimited upside. Costs premium.[/rl][rl][hl]Covered call:[/hl] Neutral/mildly bullish. Generate income. Caps upside. No downside protection.[/rl][rl][hl]Collar:[/hl] Limit cost of protection. Short call offsets put cost. Caps both downside AND upside.[/rl]\n\nAM rule: 'downside protection AND retains upside' → always Protective Put, never Collar."},
+    {id:"c11",topic:"Derivatives",subtopic:"Risk Measures",type:"framework",
+     q:"VaR — 3 limitations to know for the AM",
+     a:"[rl]1. [hl]Tail severity:[/hl] VaR says nothing about loss magnitude BEYOND the threshold (use CVaR)[/rl][rl]2. [hl]Normality assumption:[/hl] equity returns are fat-tailed; VaR understates crisis tail risk[/rl][rl]3. [hl]Historical bias:[/hl] historical VaR assumes past correlations hold in stress periods[/rl]\n\nAlways name CVaR as the alternative when critiquing VaR."},
+
+    // Portfolio Construction
+    {id:"c12",topic:"Portfolio Construction",subtopic:"Active Mgmt",type:"framework",
+     q:"Closet indexer — two diagnostic metrics and thresholds",
+     a:"[rl][hl]Active share:[/hl] < 60% → likely closet indexer[/rl][rl][hl]Tracking error:[/hl] < 4% → likely closet indexer[/rl]\n\nBoth low → confirmed closet indexer.\nActive share HIGH + TE LOW → concentrated factor bet.\nTE HIGH + active share LOW → many small deviations."},
+    {id:"c13",topic:"Portfolio Construction",subtopic:"Rebalancing",type:"framework",
+     q:"Corridor (threshold) rebalancing — when does it override the calendar?",
+     a:"A corridor breach [hl]always triggers immediate rebalancing[/hl], regardless of the calendar schedule.\n\n[rl]1. Confirm breach: actual weight > target + band[/rl][rl]2. Rule: corridor trigger overrides calendar[/rl][rl]3. Cost trade-off: transaction cost vs excess risk of drift[/rl]"},
+
+    // Performance
+    {id:"c14",topic:"Performance",subtopic:"BHB Attribution",type:"formula",
+     q:"Brinson-Hood-Beebower — the three effects and formulas",
+     a:"[fl]Allocation  = (w_p − w_b) × (R_b,sector − R_b,total)\nSelection   = w_b × (R_p,sector − R_b,sector)\nInteraction = (w_p − w_b) × (R_p,sector − R_b,sector)[/fl]\n[hl]Key traps:[/hl]\n[rl]Allocation uses BENCHMARK sector return, not portfolio return[/rl][rl]Selection uses BENCHMARK weight, not portfolio weight[/rl]"},
+    {id:"c15",topic:"Performance",subtopic:"Risk-Adjusted Measures",type:"framework",
+     q:"Risk-adjusted return measures — when to use which",
+     a:"[rl][hl]Sharpe:[/hl] Standalone portfolio. Risk = total σ.[/rl][rl][hl]Treynor:[/hl] One of many portfolios. Risk = beta. Rewards systematic risk only.[/rl][rl][hl]Information Ratio:[/hl] Active manager vs benchmark. Risk = tracking error.[/rl][rl][hl]M²:[/hl] Converts Sharpe to % return space. Compares at same risk level.[/rl]"},
+
+    // PM Pathway
+    {id:"c16",topic:"PM Pathway",subtopic:"Liab-Driven Strategies",type:"framework",
+     q:"Liability-driven investing (LDI) — hedging portfolio vs return-seeking portfolio",
+     a:"[rl][hl]Hedging portfolio:[/hl] Assets whose returns are highly correlated with liabilities (long-duration bonds). Purpose: minimise surplus volatility.[/rl][rl][hl]Return-seeking portfolio:[/hl] Growth assets (equity, alternatives). Purpose: improve funding ratio over time.[/rl]\n\n[hl]Split decision:[/hl] Determined by funding ratio. Low ratio → more hedging. High ratio → more return-seeking."},
+    {id:"c17",topic:"PM Pathway",subtopic:"Liab-Driven Strategies",type:"formula",
+     q:"Surplus = Assets − PV(Liabilities). What is the immunisation objective?",
+     a:"[fl]Surplus = MV(Assets) − PV(Liabilities)\nFunding Ratio = MV(Assets) / PV(Liabilities)[/fl]\n[hl]Immunisation goal:[/hl] Minimise variance of surplus (not variance of assets alone).\n\n[rl]Full immunisation: Duration(A) = Duration(L) AND Convexity(A) ≥ Convexity(L)[/rl][rl]Partial hedge: hedging portfolio covers a fraction of liability duration[/rl]"},
+    {id:"c18",topic:"PM Pathway",subtopic:"Index-Based Strategies",type:"framework",
+     q:"Index-based investing — 3 equity indexing approaches and key trade-off",
+     a:"[rl][hl]Full replication:[/hl] Hold all index constituents. Zero tracking error. High cost for large indices.[/rl][rl][hl]Stratified sampling:[/hl] Hold representative sample by sector/factor. Low cost, small TE.[/rl][rl][hl]Optimisation:[/hl] Factor-based sampling to minimise TE subject to cost. Most flexible.[/rl]\n\n[hl]Core trade-off:[/hl] Lower tracking error ↔ higher transaction/rebalancing cost."},
+    {id:"c19",topic:"PM Pathway",subtopic:"Index-Based Strategies",type:"framework",
+     q:"Sources of index tracking error — 5 main causes",
+     a:"[rl]1. [hl]Fees and expenses:[/hl] Management fee reduces return vs gross index[/rl][rl]2. [hl]Sampling:[/hl] Not holding all securities creates residual risk[/rl][rl]3. [hl]Cash drag:[/hl] Dividends held as cash before reinvestment[/rl][rl]4. [hl]Rebalancing timing:[/hl] Index rebalances at theoretical prices; fund trades at market[/rl][rl]5. [hl]Index changes:[/hl] Adds/deletions cause forced trades at unfavourable prices[/rl]"},
+
+    // Butterfly — Liab-Driven Strategies
+    {id:"c23",topic:"PM Pathway",subtopic:"Liab-Driven Strategies",type:"framework",
+     q:"Positive vs Negative butterfly — what is the shape change in each case?",
+     a:"[hl]Butterfly shift = change in curvature of the yield curve.[/hl]\n\n[rl][hl]Positive butterfly:[/hl] Intermediate (belly) yields rise MORE than short and long yields → curve becomes MORE humped → belly cheapens relative to wings.[/rl][rl][hl]Negative butterfly:[/hl] Intermediate (belly) yields fall MORE than short and long yields → curve becomes LESS humped (flattens in the middle) → belly richens relative to wings.[/rl]\n\n[hl]Memory anchor:[/hl] Positive = belly UP = hump increases. Negative = belly DOWN = hump decreases."},
+
+    {id:"c24",topic:"PM Pathway",subtopic:"Liab-Driven Strategies",type:"formula",
+     q:"Butterfly spread — formula and how to read the sign",
+     a:"[fl]Butterfly spread = 2 × Yield(belly) − Yield(short wing) − Yield(long wing)[/fl]\n[hl]Positive butterfly (spread increases):[/hl] belly yields rise → spread widens → positive value.\n[hl]Negative butterfly (spread decreases):[/hl] belly yields fall → spread narrows → negative value.\n\n[rl]Example: 2yr = 3.0%, 5yr = 4.2%, 10yr = 3.8%[/rl][rl]Spread = 2(4.2) − 3.0 − 3.8 = 8.4 − 6.8 = +1.6% → belly is rich, positive butterfly[/rl]\n\n[hl]AM trap:[/hl] The sign tells you the direction — always interpret it, don't just calculate."},
+
+    {id:"c25",topic:"PM Pathway",subtopic:"Liab-Driven Strategies",type:"command",
+     q:"Command: EXPLAIN how a portfolio manager would position for a positive butterfly. 3-layer structure.",
+     a:"[rl][hl]L1 — Position:[/hl] Underweight the belly (intermediate maturities), overweight the wings (short and long maturities) — a barbell position.[/rl][rl][hl]L2 — Mechanism:[/hl] In a positive butterfly, belly yields rise more than wings, so belly bond prices fall more. Underweighting the belly avoids the largest price decline. Wing bonds lose less (short end) or gain from flight-to-quality (long end) — the barbell outperforms the bullet.[/rl][rl][hl]L3 — Vignette link:[/hl] Cite the spread widening or belly cheapening expected in the scenario. Confirm the barbell has equal duration to a benchmark bullet — the trade is a pure curvature bet, not a duration bet.[/rl]\n\n[hl]Key exam rule:[/hl] Always confirm duration-neutrality when comparing barbell vs bullet in the AM."},
+
+    {id:"c26",topic:"PM Pathway",subtopic:"Liab-Driven Strategies",type:"thin-full",
+     q:"Thin vs Full: Justify positioning a barbell over a bullet given an expected positive butterfly",
+     a:"[bad]Thin: 'A barbell is better because the belly will underperform in a positive butterfly.'[/bad]\n\n[good]Full: 'A barbell (overweight wings, underweight belly) outperforms a duration-equivalent bullet when a positive butterfly occurs. Belly yields rise more than wing yields, causing the largest price decline in intermediate maturities. The barbell avoids this loss: the short wing has low duration sensitivity, and the long wing benefits from any flight-to-quality. Both positions share the same portfolio duration, so the outperformance is purely attributable to the curvature bet, not a directional rate view.'[/good]\n\n[hl]What thin misses:[/hl] duration-neutrality confirmation, mechanism for each wing separately, explicit link between yield rise and price decline in the belly."},
+
+    // Ethics
+    {id:"c20",topic:"Ethics / GIPS",subtopic:"GIPS Composites",type:"framework",
+     q:"GIPS composite construction — the key rule",
+     a:"[hl]All actual, fee-paying, discretionary portfolios[/hl] with similar mandates must be included.\n\n[rl]Cannot cherry-pick: inclusion based on mandate, not performance[/rl][rl]Must include all accounts from the date they meet the composite definition[/rl][rl]Terminated portfolios included for periods they were managed[/rl]\n\nAM trigger: 'selected best-performing accounts' → always a GIPS violation."},
+
+    // Command Words
+    {id:"c21",topic:"Command Words",subtopic:"Templates",type:"command",
+     q:"Difference between EXPLAIN, JUSTIFY, and DISCUSS in the AM",
+     a:"[rl][hl]EXPLAIN:[/hl] Causal chain — X causes Y because Z. Direction of effect required.[/rl][rl][hl]JUSTIFY:[/hl] Reasons supporting a conclusion. Lead with conclusion, then reasons.[/rl][rl][hl]DISCUSS:[/hl] Name it + mechanism + quantify/vignette link. More depth than identify.[/rl]\n\nAll three require vignette linkage in Layer 3 to earn full marks."},
+    {id:"c22",topic:"Command Words",subtopic:"Thin vs Full",type:"thin-full",
+     q:"The single most common AM mistake — what is it?",
+     a:"[hl]Stopping at Layer 1.[/hl]\n\nWriting the correct conclusion without the financial mechanism (Layer 2) or vignette link (Layer 3).\n\nAfter every sentence, ask:\n[rl]'Why is that true financially?' → write Layer 2[/rl][rl]'Where does that come from in the vignette?' → write Layer 3[/rl][rl]'What is the consequence if not done?' → write the impact[/rl]"},
+  ]
+};
+
+// ══════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════
+let deck   = JSON.parse(JSON.stringify(DEFAULT_DECK));
+let marks  = {};
+let editId = null;
+
+// study filters
+let fTopic    = 'All';
+let fSubtopic = 'All';
+let fType     = 'all';
+let filtered  = [];
+let idx       = 0;
+let flipped   = false;
+
+// manage tree
+let mTopic    = 'All';
+let mSubtopic = 'All';
+
+// ══════════════════════════════════════════════════
+// SUPABASE CONFIG
+// ══════════════════════════════════════════════════
+const SUPABASE_URL = 'https://sebfgbmkuovwdcskzmey.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_0YcUUQsnKvGYSWS2STKLCw_ZthWvOo4';
+
+async function sbGet(table) {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.main&select=data`, {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+  });
+  const rows = await r.json();
+  return rows && rows[0] ? rows[0].data : null;
+}
+
+async function sbSet(table, data) {
+  await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates'
+    },
+    body: JSON.stringify({ id: 'main', data, updated_at: new Date().toISOString() })
+  });
+}
+
+// ── sync status indicator ─────────────────────────
+let syncTimer = null;
+function showSync(msg, color) {
+  const el = document.getElementById('syncStatus');
+  if (el) { el.textContent = msg; el.style.color = color; el.style.opacity = '1'; }
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(() => { if (el) el.style.opacity = '0'; }, 2000);
+}
+
+// ══════════════════════════════════════════════════
+// PERSISTENCE
+// ══════════════════════════════════════════════════
+async function loadDeck() {
+  try {
+    showSync('loading…', '#D4A017');
+    const saved = await sbGet('cfa_deck');
+    if (saved) {
+      const savedIds = new Set(saved.cards.map(c => c.id));
+      DEFAULT_DECK.cards.forEach(c => { if (!savedIds.has(c.id)) saved.cards.push(c); });
+      DEFAULT_DECK.topics.forEach(dt => {
+        const st = saved.topics.find(t => t.name === dt.name);
+        if (!st) { saved.topics.push(JSON.parse(JSON.stringify(dt))); }
+        else { dt.subtopics.forEach(sub => { if (!st.subtopics.includes(sub)) st.subtopics.push(sub); }); }
+      });
+      showSync('✓ synced', '#2EA043');
+      return saved;
+    }
+  } catch(e) { showSync('offline', '#C0392B'); }
+  return JSON.parse(JSON.stringify(DEFAULT_DECK));
+}
+
+async function saveDeck() {
+  showSync('saving…', '#D4A017');
+  try {
+    // also keep localStorage as fallback
+    localStorage.setItem('cfa_deck', JSON.stringify(deck));
+    await sbSet('cfa_deck', deck);
+    showSync('✓ saved', '#2EA043');
+  } catch(e) { showSync('⚠ offline — saved locally', '#D4680A'); }
+}
+
+async function loadMarks() {
+  try {
+    const saved = await sbGet('cfa_marks');
+    if (saved) return saved;
+  } catch(e) {}
+  try { const s = localStorage.getItem('cfa_marks'); if(s) return JSON.parse(s); } catch(e) {}
+  return {};
+}
+
+async function saveMarks() {
+  try {
+    localStorage.setItem('cfa_marks', JSON.stringify(marks));
+    await sbSet('cfa_marks', marks);
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════════════════
+// SCREEN SWITCH
+// ══════════════════════════════════════════════════
+function switchScreen(name, btn) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.main-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='study')  { buildStudyFilters(); renderStudy(); }
+  if(name==='manage') { buildTree(); renderCardList(); }
+}
+
+// ══════════════════════════════════════════════════
+// FORMATTING
+// ══════════════════════════════════════════════════
+function formatAnswer(raw) {
+  if(!raw) return '';
+  return raw
+    .replace(/\[hl\]([\s\S]*?)\[\/hl\]/g,   "<span class='hl'>$1</span>")
+    .replace(/\[grn\]([\s\S]*?)\[\/grn\]/g,  "<span class='hl-green'>$1</span>")
+    .replace(/\[red\]([\s\S]*?)\[\/red\]/g,  "<span class='hl-red'>$1</span>")
+    .replace(/\[orn\]([\s\S]*?)\[\/orn\]/g,  "<span class='hl-orange'>$1</span>")
+    .replace(/\[fl\]([\s\S]*?)\[\/fl\]/g,    "<span class='fl'>$1</span>")
+    .replace(/\[rl\]([\s\S]*?)\[\/rl\]/g,    "<span class='rl'>$1</span>")
+    .replace(/\[bad\]([\s\S]*?)\[\/bad\]/g,  "<span class='bad'>$1</span>")
+    .replace(/\[good\]([\s\S]*?)\[\/good\]/g,"<span class='good'>$1</span>")
+    .replace(/\n/g,'<br>');
+}
+
+function stripType(t) { return {formula:'s-formula',framework:'s-framework',command:'s-command','thin-full':'s-thin-full'}[t]||'s-formula'; }
+function badgeClass(t){ return {formula:'b-formula',framework:'b-framework',command:'b-command','thin-full':'b-thin-full'}[t]||'b-formula'; }
+function badgeLabel(t){ return {formula:'📐 Formula',framework:'🔑 Framework',command:'✍️ Command','thin-full':'⚡ Thin vs Full'}[t]||t; }
+
+// ══════════════════════════════════════════════════
+// STUDY — FILTERS
+// ══════════════════════════════════════════════════
+function buildStudyFilters() {
+  // topics
+  const topics = ['All', ...deck.topics.map(t=>t.name)];
+  const tf = document.getElementById('topicFilter');
+  tf.innerHTML = '';
+  topics.forEach(t => {
+    const b=document.createElement('button');
+    b.className='pill'+(t===fTopic?' active-gold':'');
+    b.textContent = t==='All'?'All Topics':t;
+    b.onclick=()=>{ fTopic=t; fSubtopic='All'; buildStudyFilters(); applyFilters(); };
+    tf.appendChild(b);
+  });
+
+  // subtopics
+  const sf = document.getElementById('subtopicFilter');
+  sf.innerHTML='';
+  const topicObj = deck.topics.find(t=>t.name===fTopic);
+  if(topicObj && topicObj.subtopics.length) {
+    const subs = ['All', ...topicObj.subtopics];
+    subs.forEach(s=>{
+      const b=document.createElement('button');
+      b.className='pill'+(s===fSubtopic?' active-gold':'');
+      b.textContent=s==='All'?'All Subtopics':s;
+      b.style.fontSize='9px';
+      b.onclick=()=>{ fSubtopic=s; buildStudyFilters(); applyFilters(); };
+      sf.appendChild(b);
+    });
+  }
+
+  // types
+  const types=[['all','All Types',''],['formula','📐 Formula','active-blue'],
+               ['framework','🔑 Framework','active-green'],['command','✍️ Command','active-orange'],
+               ['thin-full','⚡ Thin vs Full','active-purple']];
+  const tyf=document.getElementById('typeFilter');
+  tyf.innerHTML='';
+  types.forEach(([v,l,ac])=>{
+    const b=document.createElement('button');
+    b.className='pill'+(v===fType?' '+(ac||'active-gold'):'');
+    b.setAttribute('data-type',v);
+    b.textContent=l;
+    b.onclick=()=>{ fType=v; buildStudyFilters(); applyFilters(); };
+    tyf.appendChild(b);
+  });
+}
+
+function applyFilters() {
+  filtered = deck.cards.filter(c=>{
+    const ok1 = fTopic==='All' || c.topic===fTopic;
+    const ok2 = fSubtopic==='All' || c.subtopic===fSubtopic;
+    const ok3 = fType==='all' || c.type===fType;
+    return ok1&&ok2&&ok3;
+  });
+  idx=0; flipped=false;
+  renderStudy();
+}
+
+// ══════════════════════════════════════════════════
+// STUDY — RENDER
+// ══════════════════════════════════════════════════
+function renderStudy() {
+  updateStats();
+  const stage=document.getElementById('stage');
+  if(!filtered.length){
+    stage.innerHTML=`<div class='empty-state'><div class='ei'>🃏</div><div class='em'>No cards match this filter</div><div class='es'>Try a different topic or type</div></div>`;
+    return;
+  }
+  const card=filtered[idx];
+  const mark=marks[card.id];
+  const dots=filtered.map((c,i)=>{
+    const m=marks[c.id];
+    const cls=i===idx?'dot cur':m==='know'?'dot know':m==='review'?'dot review':'dot';
+    return `<div class='${cls}'></div>`;
+  }).join('');
+
+  stage.innerHTML=`
+    <div class='card-counter'>Card <span>${idx+1}</span> / <span>${filtered.length}</span></div>
+    <div class='flip-scene' onclick='toggleFlip()'>
+      <div class='flip-card${flipped?" flipped":""}' id='fc'>
+        <div class='card-face card-front'>
+          <div class='card-strip ${stripType(card.type)}'></div>
+          <div class='card-head'>
+            <span class='c-badge ${badgeClass(card.type)}'>${badgeLabel(card.type)}</span>
+            <span class='c-subtopic'>${card.topic} · ${card.subtopic||''}</span>
+          </div>
+          <div class='card-body'>
+            <div class='card-q'>${card.q}</div>
+            <div class='card-hint'>tap to reveal</div>
+          </div>
+          ${mark?`<div class='card-footer'>${mark==='know'?'✓ Know':'↩ Review'}</div>`:''}
+        </div>
+        <div class='card-face card-back'>
+          <div class='card-strip ${stripType(card.type)}'></div>
+          <div class='card-head'>
+            <span class='c-badge ${badgeClass(card.type)}'>${badgeLabel(card.type)}</span>
+            <span class='c-subtopic'>${card.topic} · ${card.subtopic||''}</span>
+          </div>
+          <div class='card-body'>
+            <div class='card-a'>${formatAnswer(card.a)}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='tap-hint' id='th'>${flipped?'— mark below —':'— tap to flip —'}</div>
+    <div class='actions'>
+      <button class='act-btn know'   onclick='markCard("know")'>✓ Know it</button>
+      <button class='act-btn'        onclick='nextCard()'>→ Skip</button>
+      <button class='act-btn review' onclick='markCard("review")'>↩ Review</button>
+    </div>
+    <div class='nav-row'>
+      <button class='nav-btn' onclick='prevCard()'>←</button>
+      <div class='progress-dots'>${dots}</div>
+      <button class='nav-btn' onclick='nextCard()'>→</button>
+    </div>`;
+}
+
+function toggleFlip(){
+  flipped=!flipped;
+  const fc=document.getElementById('fc');
+  if(fc) fc.classList.toggle('flipped',flipped);
+  const th=document.getElementById('th');
+  if(th) th.textContent=flipped?'— mark below —':'— tap to flip —';
+}
+function nextCard(){ if(!filtered.length)return; idx=(idx+1)%filtered.length; flipped=false; renderStudy(); }
+function prevCard(){ if(!filtered.length)return; idx=(idx-1+filtered.length)%filtered.length; flipped=false; renderStudy(); }
+function markCard(m){ if(!filtered.length)return; marks[filtered[idx].id]=m; saveMarks(); setTimeout(nextCard,200); }
+
+function updateStats(){
+  let know=0,review=0;
+  Object.values(marks).forEach(m=>{if(m==='know')know++;else review++;});
+  document.getElementById('sKnow').textContent=know;
+  document.getElementById('sReview').textContent=review;
+  document.getElementById('sTotal').textContent=deck.cards.length;
+}
+
+// ══════════════════════════════════════════════════
+// MANAGE — TREE
+// ══════════════════════════════════════════════════
+function buildTree(){
+  document.getElementById('totalManage').textContent=deck.cards.length+' cards';
+  const tree=document.getElementById('tree');
+  tree.innerHTML='';
+
+  // All node
+  const allBtn=document.createElement('button');
+  allBtn.className='tree-topic-btn'+(mTopic==='All'?' selected':'');
+  allBtn.innerHTML=`<span>All Cards</span><span class='count'>${deck.cards.length}</span>`;
+  allBtn.onclick=()=>{ mTopic='All'; mSubtopic='All'; buildTree(); renderCardList(); };
+  tree.appendChild(allBtn);
+
+  deck.topics.forEach(t=>{
+    const topicCount=deck.cards.filter(c=>c.topic===t.name).length;
+    const isOpen = mTopic===t.name;
+
+    const wrap=document.createElement('div');
+    wrap.className='tree-topic';
+
+    const btn=document.createElement('button');
+    btn.className='tree-topic-btn'+(isOpen?' open':'')+(mTopic===t.name&&mSubtopic==='All'?' selected':'');
+    btn.innerHTML=`<span>${t.name}</span><span style='display:flex;gap:8px;align-items:center'><span class='count'>${topicCount}</span><span class='arrow'>▶</span></span>`;
+    btn.onclick=()=>{
+      mTopic=t.name; mSubtopic='All';
+      if(btn.classList.contains('open')){ btn.classList.remove('open'); subs.classList.remove('open'); }
+      else { document.querySelectorAll('.tree-topic-btn.open').forEach(b=>{b.classList.remove('open'); b.nextElementSibling&&b.nextElementSibling.classList.remove('open');}); btn.classList.add('open'); subs.classList.add('open'); }
+      buildTree(); renderCardList();
+    };
+    wrap.appendChild(btn);
+
+    const subs=document.createElement('div');
+    subs.className='subtopics'+(isOpen?' open':'');
+    t.subtopics.forEach(s=>{
+      const sc=deck.cards.filter(c=>c.topic===t.name&&c.subtopic===s).length;
+      const sb=document.createElement('button');
+      sb.className='subtopic-btn'+(mTopic===t.name&&mSubtopic===s?' selected':'');
+      sb.innerHTML=`<span>${s}</span><span class='count'>${sc}</span>`;
+      sb.onclick=(e)=>{ e.stopPropagation(); mTopic=t.name; mSubtopic=s; buildTree(); renderCardList(); };
+      subs.appendChild(sb);
+    });
+
+    // add subtopic inline
+    const addSubRow=document.createElement('div');
+    addSubRow.style.cssText='display:flex;gap:6px;padding:5px 14px 5px 20px;';
+    addSubRow.innerHTML=`<input id='si_${t.name}' placeholder='New subtopic…' style='flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:9px;padding:4px 8px;border-radius:3px;outline:none;' onkeydown='if(event.key==="Enter")addSubtopic("${t.name}")'><button onclick='addSubtopic("${t.name}")' style='font-family:var(--mono);font-size:9px;background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:4px 8px;border-radius:3px;cursor:pointer;'>+</button>`;
+    subs.appendChild(addSubRow);
+
+    wrap.appendChild(subs);
+    tree.appendChild(wrap);
+  });
+}
+
+function addTopic(){
+  const inp=document.getElementById('newTopicInput');
+  const name=inp.value.trim();
+  if(!name) return;
+  if(deck.topics.find(t=>t.name===name)) return;
+  deck.topics.push({name,subtopics:[]});
+  saveDeck(); inp.value='';
+  mTopic=name; mSubtopic='All';
+  buildTree(); renderCardList();
+}
+
+function addSubtopic(topicName){
+  const inp=document.getElementById('si_'+topicName);
+  if(!inp) return;
+  const name=inp.value.trim();
+  if(!name) return;
+  const t=deck.topics.find(t=>t.name===topicName);
+  if(!t || t.subtopics.includes(name)) return;
+  t.subtopics.push(name);
+  saveDeck(); inp.value='';
+  mSubtopic=name;
+  buildTree(); renderCardList();
+}
+
+// ══════════════════════════════════════════════════
+// MANAGE — CARD LIST
+// ══════════════════════════════════════════════════
+function renderCardList(){
+  const cards = deck.cards.filter(c=>{
+    const ok1 = mTopic==='All' || c.topic===mTopic;
+    const ok2 = mSubtopic==='All' || c.subtopic===mSubtopic;
+    return ok1&&ok2;
+  });
+  const label = mTopic==='All' ? 'All Cards' : mSubtopic==='All' ? mTopic : `${mTopic} → ${mSubtopic}`;
+  document.getElementById('clpTitle').textContent=`${label} (${cards.length})`;
+
+  const list=document.getElementById('cardList');
+  if(!cards.length){
+    list.innerHTML=`<div style='text-align:center;padding:40px 20px;color:var(--muted);font-family:var(--mono);font-size:11px;'>No cards here yet.<br>Click <span style='color:var(--gold)'>+ New Card</span> to add one.</div>`;
+    return;
+  }
+  list.innerHTML=cards.map(c=>`
+    <div class='card-list-item'>
+      <div class='cli-left'>
+        <div class='cli-meta'>
+          <span class='c-badge ${badgeClass(c.type)}' style='font-size:8px'>${badgeLabel(c.type)}</span>
+          <span class='cli-sub'>${c.topic} · ${c.subtopic||'—'}</span>
+        </div>
+        <div class='cli-q'>${c.q}</div>
+      </div>
+      <div class='cli-actions'>
+        <button class='cli-btn' onclick='editCard("${c.id}")'>Edit</button>
+        <button class='cli-btn del' onclick='deleteCard("${c.id}")'>Del</button>
+      </div>
+    </div>`).join('');
+}
+
+function deleteCard(id){
+  if(!confirm('Delete this card?')) return;
+  deck.cards=deck.cards.filter(c=>c.id!==id);
+  delete marks[id];
+  saveDeck(); saveMarks();
+  renderCardList(); buildTree(); updateStats();
+}
+
+// ══════════════════════════════════════════════════
+// MODAL
+// ══════════════════════════════════════════════════
+function populateTopicSelect(){
+  const sel=document.getElementById('fTopic');
+  sel.innerHTML=deck.topics.map(t=>`<option value="${t.name}">${t.name}</option>`).join('');
+  populateSubtopicSelect();
+}
+function populateSubtopicSelect(){
+  const topic=document.getElementById('fTopic').value;
+  const t=deck.topics.find(t=>t.name===topic);
+  const sel=document.getElementById('fSubtopic');
+  sel.innerHTML=(t?t.subtopics:[]).map(s=>`<option value="${s}">${s}</option>`).join('');
+}
+function promptNewSubtopic(){
+  const topic=document.getElementById('fTopic').value;
+  const name=prompt('New subtopic name for "'+topic+'":');
+  if(!name||!name.trim()) return;
+  const t=deck.topics.find(t=>t.name===topic);
+  if(t&&!t.subtopics.includes(name.trim())){ t.subtopics.push(name.trim()); saveDeck(); }
+  populateSubtopicSelect();
+  document.getElementById('fSubtopic').value=name.trim();
+}
+
+function openModal(id){
+  editId=id||null;
+  document.getElementById('modalTitle').textContent=id?'Edit Card':'New Card';
+  populateTopicSelect();
+  if(id){
+    const c=deck.cards.find(c=>c.id===id);
+    document.getElementById('fTopic').value=c.topic;
+    populateSubtopicSelect();
+    document.getElementById('fSubtopic').value=c.subtopic||'';
+    document.getElementById('fType').value=c.type;
+    document.getElementById('fQ').value=c.q;
+    document.getElementById('fA').value=c.a;
+  } else {
+    if(mTopic!=='All') document.getElementById('fTopic').value=mTopic;
+    populateSubtopicSelect();
+    if(mSubtopic!=='All') document.getElementById('fSubtopic').value=mSubtopic;
+    document.getElementById('fType').value='framework';
+    document.getElementById('fQ').value='';
+    document.getElementById('fA').value='';
+  }
+  updatePreview();
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function editCard(id){ openModal(id); }
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); editId=null; }
+
+function saveCard(){
+  const topic=document.getElementById('fTopic').value;
+  const subtopic=document.getElementById('fSubtopic').value;
+  const type=document.getElementById('fType').value;
+  const q=document.getElementById('fQ').value.trim();
+  const a=document.getElementById('fA').value.trim();
+  if(!topic||!q||!a){ alert('Topic, question and answer are required.'); return; }
+
+  if(editId){
+    const c=deck.cards.find(c=>c.id===editId);
+    if(c){ c.topic=topic; c.subtopic=subtopic; c.type=type; c.q=q; c.a=a; }
+  } else {
+    deck.cards.push({id:'c'+Date.now(),topic,subtopic,type,q,a});
+  }
+  saveDeck(); closeModal();
+  buildTree(); renderCardList(); updateStats();
+  // refresh study filters
+  buildStudyFilters(); applyFilters();
+}
+
+function updatePreview(){
+  const raw=document.getElementById('fA').value;
+  document.getElementById('preview').innerHTML=formatAnswer(raw)||'<span style="color:var(--muted);font-family:var(--mono);font-size:11px">Preview will appear here…</span>';
+}
+
+function ins(open,close){
+  const ta=document.getElementById('fA');
+  const s=ta.selectionStart, e=ta.selectionEnd;
+  const sel=ta.value.substring(s,e);
+  ta.value=ta.value.substring(0,s)+open+sel+close+ta.value.substring(e);
+  ta.selectionStart=s+open.length;
+  ta.selectionEnd=s+open.length+sel.length;
+  ta.focus(); updatePreview();
+}
+
+// ══════════════════════════════════════════════════
+// KEYBOARD + SWIPE
+// ══════════════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('modalOverlay').classList.contains('open')) return;
+  if(e.key==='ArrowRight'||e.key==='l') nextCard();
+  else if(e.key==='ArrowLeft'||e.key==='h') prevCard();
+  else if(e.key===' '){ e.preventDefault(); toggleFlip(); }
+  else if(e.key==='1') markCard('know');
+  else if(e.key==='2') markCard('review');
+});
+let tx=0;
+document.addEventListener('touchstart',e=>{ tx=e.touches[0].clientX; },{passive:true});
+document.addEventListener('touchend',e=>{
+  if(document.getElementById('modalOverlay').classList.contains('open')) return;
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>50){ dx<0?nextCard():prevCard(); }
+},{passive:true});
+
+// ══════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════
+async function init() {
+  deck  = await loadDeck();
+  marks = await loadMarks();
+  buildStudyFilters();
+  applyFilters();
+}
+init();
+</script>
+</body>
+</html>
