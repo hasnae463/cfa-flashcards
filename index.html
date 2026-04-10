@@ -237,11 +237,63 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
 <div class="main-tabs">
   <button class="main-tab active" onclick="switchScreen('study',this)">Study</button>
   <button class="main-tab" onclick="switchScreen('manage',this)">Manage Cards</button>
+  <button class="main-tab" onclick="switchScreen('notes',this)">📝 Notes</button>
 </div>
 
 <!-- ══════════════════════════════════════
-     STUDY SCREEN
+     NOTES SCREEN
 ══════════════════════════════════════ -->
+<div class="screen" id="screen-notes">
+  <div class="manage-layout">
+
+    <!-- notes sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-head">
+        <span class="sidebar-title">Notes</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--muted)" id="noteCount">0 notes</span>
+      </div>
+      <div class="tree" id="notesTree"></div>
+    </div>
+
+    <!-- notes editor -->
+    <div class="card-list-panel">
+      <div class="clp-head">
+        <span class="clp-title" id="notesTitle">Select a subtopic</span>
+        <button class="btn-add" onclick="saveCurrentNote()" id="noteSaveBtn" style="display:none">💾 Save</button>
+      </div>
+      <div style="flex:1;overflow-y:auto;display:flex;flex-direction:column;min-height:0;">
+
+        <!-- format toolbar -->
+        <div id="noteToolbar" style="display:none;padding:8px 16px;border-bottom:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap;background:var(--bg);flex-shrink:0;">
+          <button class="fmt-btn" onclick="noteIns('[hl]','[/hl]')" style="color:#D4A017;border-color:#D4A017">Gold</button>
+          <button class="fmt-btn" onclick="noteIns('[grn]','[/grn]')" style="color:#3DD68C;border-color:#3DD68C">Green</button>
+          <button class="fmt-btn" onclick="noteIns('[red]','[/red]')" style="color:#FF7B72;border-color:#FF7B72">Red</button>
+          <button class="fmt-btn" onclick="noteIns('[orn]','[/orn]')" style="color:#F0A04B;border-color:#F0A04B">Orange</button>
+          <button class="fmt-btn" onclick="noteIns('[fl]','[/fl]')">Formula</button>
+          <button class="fmt-btn" onclick="noteIns('[rl]','[/rl]')">Rule</button>
+          <button class="fmt-btn" onclick="toggleNotePreview()" id="previewToggle">👁 Preview</button>
+        </div>
+
+        <!-- editor -->
+        <div id="noteEditorWrap" style="display:none;flex:1;min-height:0;display:flex;flex-direction:column;">
+          <textarea id="noteEditor"
+            placeholder="Tes notes pour ce subtopic… Utilise les boutons de formatage ci-dessus."
+            oninput="onNoteInput()"
+            style="flex:1;min-height:0;background:var(--surface2);border:none;color:var(--text);font-family:var(--sans);font-size:13.5px;line-height:1.75;padding:20px;resize:none;outline:none;border-bottom:1px solid var(--border);"></textarea>
+          <div id="notePreview" style="display:none;flex:1;min-height:0;overflow-y:auto;padding:20px;font-size:13.5px;line-height:1.75;color:#C9D1D9;background:var(--surface2);"></div>
+        </div>
+
+        <!-- empty state -->
+        <div id="notesEmpty" style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted);">
+          <div style="font-size:28px">📝</div>
+          <div style="font-family:var(--serif);font-size:17px;color:var(--text)">Sélectionne un subtopic</div>
+          <div style="font-family:var(--mono);font-size:11px;">Tes notes sont sauvegardées automatiquement</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
 <div class="screen active" id="screen-study">
   <div class="filter-row" id="topicFilter"></div>
   <div class="filter-row" id="subtopicFilter" style="padding-top:6px;padding-bottom:6px;"></div>
@@ -584,6 +636,7 @@ function switchScreen(name, btn) {
   btn.classList.add('active');
   if(name==='study')  { buildStudyFilters(); renderStudy(); }
   if(name==='manage') { buildTree(); renderCardList(); }
+  if(name==='notes')  { buildNotesTree(); }
 }
 
 // ══════════════════════════════════════════════════
@@ -969,11 +1022,150 @@ document.addEventListener('touchend',e=>{
 },{passive:true});
 
 // ══════════════════════════════════════════════════
+// NOTES
+// ══════════════════════════════════════════════════
+let notes = {}; // key: "topic||subtopic" → text
+let currentNoteKey = null;
+let notesDirty = false;
+let notesSaveTimer = null;
+let notePreviewOn = false;
+
+async function loadNotes() {
+  try {
+    const saved = await sbGet('cfa_notes');
+    if (saved) return saved;
+  } catch(e) {}
+  try { const s = localStorage.getItem('cfa_notes'); if(s) return JSON.parse(s); } catch(e) {}
+  return {};
+}
+
+async function saveNotes() {
+  try {
+    localStorage.setItem('cfa_notes', JSON.stringify(notes));
+    await sbSet('cfa_notes', notes);
+    showSync('✓ note saved', '#2EA043');
+  } catch(e) { showSync('⚠ offline', '#D4680A'); }
+}
+
+function buildNotesTree() {
+  const tree = document.getElementById('notesTree');
+  if (!tree) return;
+  tree.innerHTML = '';
+  let total = Object.keys(notes).filter(k => notes[k] && notes[k].trim()).length;
+  document.getElementById('noteCount').textContent = total + ' note' + (total !== 1 ? 's' : '');
+
+  deck.topics.forEach(t => {
+    if (!t.subtopics.length) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'tree-topic';
+
+    const btn = document.createElement('button');
+    const isOpen = t.subtopics.some(s => currentNoteKey === `${t.name}||${s}`);
+    btn.className = 'tree-topic-btn' + (isOpen ? ' open' : '');
+    const subCount = t.subtopics.filter(s => notes[`${t.name}||${s}`]?.trim()).length;
+    btn.innerHTML = `<span>${t.name}</span><span style="display:flex;gap:8px;align-items:center"><span class="count">${subCount}/${t.subtopics.length}</span><span class="arrow">▶</span></span>`;
+
+    const subs = document.createElement('div');
+    subs.className = 'subtopics' + (isOpen ? ' open' : '');
+
+    btn.onclick = () => {
+      const wasOpen = btn.classList.contains('open');
+      document.querySelectorAll('.tree-topic-btn.open').forEach(b => { b.classList.remove('open'); b.nextElementSibling?.classList.remove('open'); });
+      if (!wasOpen) { btn.classList.add('open'); subs.classList.add('open'); }
+    };
+
+    t.subtopics.forEach(s => {
+      const key = `${t.name}||${s}`;
+      const hasNote = notes[key] && notes[key].trim();
+      const sb = document.createElement('button');
+      sb.className = 'subtopic-btn' + (currentNoteKey === key ? ' selected' : '');
+      sb.innerHTML = `<span>${s}</span><span style="color:${hasNote?'#2EA043':'#2A3441'};font-size:11px">${hasNote ? '●' : '○'}</span>`;
+      sb.onclick = (e) => { e.stopPropagation(); openNote(key, t.name, s); buildNotesTree(); };
+      subs.appendChild(sb);
+    });
+
+    wrap.appendChild(btn);
+    wrap.appendChild(subs);
+    tree.appendChild(wrap);
+  });
+}
+
+function openNote(key, topic, subtopic) {
+  // save previous if dirty
+  if (notesDirty && currentNoteKey) { saveCurrentNote(); }
+
+  currentNoteKey = key;
+  notesDirty = false;
+
+  document.getElementById('notesTitle').textContent = `${topic} → ${subtopic}`;
+  document.getElementById('noteSaveBtn').style.display = 'inline-block';
+  document.getElementById('noteToolbar').style.display = 'flex';
+  document.getElementById('noteEditorWrap').style.display = 'flex';
+  document.getElementById('notesEmpty').style.display = 'none';
+
+  const ta = document.getElementById('noteEditor');
+  ta.value = notes[key] || '';
+
+  // reset preview
+  notePreviewOn = false;
+  document.getElementById('notePreview').style.display = 'none';
+  ta.style.display = 'block';
+  document.getElementById('previewToggle').textContent = '👁 Preview';
+}
+
+function onNoteInput() {
+  notesDirty = true;
+  document.getElementById('noteSaveBtn').style.color = '#D4A017';
+  // autosave after 2s of inactivity
+  clearTimeout(notesSaveTimer);
+  notesSaveTimer = setTimeout(() => saveCurrentNote(), 2000);
+}
+
+function saveCurrentNote() {
+  if (!currentNoteKey) return;
+  const val = document.getElementById('noteEditor').value;
+  notes[currentNoteKey] = val;
+  notesDirty = false;
+  document.getElementById('noteSaveBtn').style.color = '';
+  saveNotes();
+  buildNotesTree();
+}
+
+function toggleNotePreview() {
+  notePreviewOn = !notePreviewOn;
+  const ta = document.getElementById('noteEditor');
+  const preview = document.getElementById('notePreview');
+  if (notePreviewOn) {
+    preview.innerHTML = formatAnswer(ta.value) || '<span style="color:var(--muted)">Nothing to preview yet…</span>';
+    preview.style.display = 'block';
+    ta.style.display = 'none';
+    document.getElementById('previewToggle').textContent = '✏️ Edit';
+  } else {
+    preview.style.display = 'none';
+    ta.style.display = 'block';
+    document.getElementById('previewToggle').textContent = '👁 Preview';
+  }
+}
+
+function noteIns(open, close) {
+  const ta = document.getElementById('noteEditor');
+  if (!ta) return;
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  const sel = ta.value.substring(s, e);
+  ta.value = ta.value.substring(0, s) + open + sel + close + ta.value.substring(e);
+  ta.selectionStart = s + open.length;
+  ta.selectionEnd = s + open.length + sel.length;
+  ta.focus();
+  onNoteInput();
+}
+
+// ══════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════
 async function init() {
   deck  = await loadDeck();
   marks = await loadMarks();
+  notes = await loadNotes();
   buildStudyFilters();
   applyFilters();
 }
