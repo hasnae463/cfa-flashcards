@@ -1006,6 +1006,8 @@ function ins(open,close){
 // KEYBOARD + SWIPE
 // ══════════════════════════════════════════════════
 document.addEventListener('keydown',e=>{
+  const tag = document.activeElement?.tagName;
+  if(tag==='TEXTAREA'||tag==='INPUT') return;
   if(document.getElementById('modalOverlay').classList.contains('open')) return;
   if(e.key==='ArrowRight'||e.key==='l') nextCard();
   else if(e.key==='ArrowLeft'||e.key==='h') prevCard();
