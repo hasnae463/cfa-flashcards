@@ -266,7 +266,10 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
     <div class="card-list-panel">
       <div class="clp-head">
         <span class="clp-title" id="notesTitle">Sélectionne un subtopic</span>
-        <span id="noteSyncStatus" style="font-family:var(--mono);font-size:9px;color:var(--muted);transition:opacity .5s"></span>
+        <span style="display:flex;gap:8px;align-items:center">
+          <button id="widgetToggleBtn" onclick="toggleLdiWidget()" style="display:none;font-family:var(--mono);font-size:9px;letter-spacing:.08em;background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:3px;cursor:pointer">📊 Widget</button>
+          <span id="noteSyncStatus" style="font-family:var(--mono);font-size:9px;color:var(--muted);transition:opacity .5s"></span>
+        </span>
       </div>
 
       <!-- WYSIWYG toolbar -->
@@ -1465,9 +1468,34 @@ function buildNotesTree() {
   });
 }
 
+let ldiWidgetVisible = false;
+
+function toggleLdiWidget() {
+  ldiWidgetVisible = !ldiWidgetVisible;
+  const widget = document.getElementById('ldiWidget');
+  const ed = document.getElementById('noteEditor');
+  const toolbar = document.getElementById('noteToolbar');
+  const btn = document.getElementById('widgetToggleBtn');
+  if (ldiWidgetVisible) {
+    widget.style.display = 'block';
+    ed.style.display = 'none';
+    toolbar.style.display = 'none';
+    btn.style.color = 'var(--gold)';
+    btn.style.borderColor = 'var(--gold)';
+  } else {
+    widget.style.display = 'none';
+    ed.style.display = 'block';
+    toolbar.style.display = 'flex';
+    btn.style.color = '';
+    btn.style.borderColor = '';
+    ed.focus();
+  }
+}
+
 function openNote(key, topic, subtopic) {
   if (currentNoteKey) flushNote(currentNoteKey);
   currentNoteKey = key;
+  ldiWidgetVisible = false;
   document.getElementById('notesTitle').textContent = `${topic} → ${subtopic}`;
   document.getElementById('notesEmpty').style.display = 'none';
 
@@ -1475,18 +1503,18 @@ function openNote(key, topic, subtopic) {
   const widget = document.getElementById('ldiWidget');
   const ed = document.getElementById('noteEditor');
   const toolbar = document.getElementById('noteToolbar');
+  const btn = document.getElementById('widgetToggleBtn');
 
-  if (isLDI) {
-    widget.style.display = 'block';
-    ed.style.display = 'none';
-    toolbar.style.display = 'none';
-  } else {
-    widget.style.display = 'none';
-    ed.style.display = 'block';
-    toolbar.style.display = 'flex';
-    ed.innerHTML = notes[key] || '<p><br></p>';
-    ed.focus();
-  }
+  // Always show editor — widget available via toggle button for LDI
+  widget.style.display = 'none';
+  ed.style.display = 'block';
+  toolbar.style.display = 'flex';
+  btn.style.display = isLDI ? 'inline-block' : 'none';
+  btn.style.color = '';
+  btn.style.borderColor = '';
+
+  ed.innerHTML = notes[key] || '<p><br></p>';
+  ed.focus();
   buildNotesTree();
 }
 
