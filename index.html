@@ -307,6 +307,347 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
           onkeydown="onNoteKey(event)">
         </div>
 
+        <!-- ── LDI Interactive Study Widget ── -->
+        <div id="ldiWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            .lw-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+            .lw-tab{background:none;border:1px solid var(--border);border-radius:4px;padding:5px 12px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+            .lw-tab.active{background:rgba(212,160,23,.1);border-color:var(--gold);color:var(--gold);font-weight:500}
+            .lw-panel{display:none}.lw-panel.active{display:block}
+            .lw-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:13px 16px;margin-bottom:10px}
+            .lw-title{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text);margin-bottom:7px;letter-spacing:.04em}
+            .lw-body{font-size:12.5px;line-height:1.75;color:#C9D1D9}
+            .lw-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:3px;font-weight:500;font-family:var(--mono);white-space:nowrap}
+            .lw-pass{background:rgba(46,160,67,.15);color:#3DD68C;border:1px solid rgba(46,160,67,.3)}
+            .lw-fail{background:rgba(192,57,43,.15);color:#FF7B72;border:1px solid rgba(192,57,43,.3)}
+            .lw-warn{background:rgba(212,104,10,.15);color:#F0A04B;border:1px solid rgba(212,104,10,.3)}
+            .lw-blue{background:rgba(56,139,253,.12);color:#79C0FF;border:1px solid rgba(56,139,253,.3)}
+            .lw-hl{color:#D4A017;font-weight:500}
+            .lw-green{color:#3DD68C;font-weight:500}
+            .lw-red{color:#FF7B72;font-weight:500}
+            .lw-orange{color:#F0A04B;font-weight:500}
+            .lw-rule{border-left:2px solid #8A6810;padding-left:9px;margin:5px 0;font-size:12px;line-height:1.65;display:block}
+            .lw-fl{font-family:var(--mono);font-size:11px;color:#79C0FF;background:rgba(56,139,253,.08);padding:6px 10px;border-radius:3px;margin:7px 0;line-height:1.75;display:block;white-space:pre-wrap}
+            .lw-trap{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.25);border-radius:4px;padding:9px 13px;margin:8px 0;font-size:12px;color:#FF7B72;line-height:1.65}
+            .lw-tip{background:rgba(46,160,67,.1);border:1px solid rgba(46,160,67,.25);border-radius:4px;padding:9px 13px;margin:8px 0;font-size:12px;color:#3DD68C;line-height:1.65}
+            .lw-info{background:rgba(56,139,253,.08);border:1px solid rgba(56,139,253,.2);border-radius:4px;padding:9px 13px;margin:8px 0;font-size:12px;color:#79C0FF;line-height:1.65}
+            .lw-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+            .lw-metrics{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+            .lw-metric{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:6px 10px;font-size:11px}
+            .lw-metric-l{color:var(--muted);margin-bottom:2px;font-size:10px;font-family:var(--mono)}
+            .lw-metric-v{font-weight:500;color:#E6EDF3;font-family:var(--mono)}
+            .lw-metric-v.good{color:#3DD68C}.lw-metric-v.bad{color:#FF7B72}
+            .lw-sblock{border-left:3px solid var(--border);padding-left:13px;margin-bottom:13px}
+            .lw-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:8px}
+            .lw-table th{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:7px 8px;border-bottom:1px solid var(--border);text-align:left}
+            .lw-table td{padding:7px 8px;border-bottom:1px solid var(--border);color:#C9D1D9;vertical-align:top;font-size:12px}
+            .lw-table tr:last-child td{border-bottom:none}
+            .lw-section{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+            .lw-svg-wrap{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:10px;overflow-x:auto}
+          </style>
+
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#D4A017;margin-bottom:12px">LDI · Interactive Study Map</div>
+
+          <div class="lw-tabs">
+            <button class="lw-tab active" onclick="lwTab('strategies',this)">3 Strategies</button>
+            <button class="lw-tab" onclick="lwTab('benchmark',this)">Benchmark Rules</button>
+            <button class="lw-tab" onclick="lwTab('immuntypes',this)">Immunization Types</button>
+            <button class="lw-tab" onclick="lwTab('twist',this)">Twist &amp; Convexity</button>
+            <button class="lw-tab" onclick="lwTab('selection',this)">Portfolio Selection</button>
+            <button class="lw-tab" onclick="lwTab('scenarios',this)">Scenario Analysis</button>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 1 · 3 STRATEGIES
+          ══════════════════════════════ -->
+          <div id="lw-strategies" class="lw-panel active">
+            <div class="lw-card">
+              <div class="lw-row"><div class="lw-title">Duration matching (immunization)</div><span class="lw-badge lw-pass">Most cost-efficient</span></div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">Mechanism:</span> Match asset BPV to liability BPV. Uses corporate bonds + derivatives overlay. When rates rise, capital losses are offset by reinvestment gains — the two effects cancel.</span>
+                <span class="lw-rule"><span class="lw-hl">Why cheapest:</span> Corporate credit spread means less capital needed up front to fund the same liability. Lower funding cost than Treasuries.</span>
+                <span class="lw-rule"><span class="lw-hl">Liability:</span> Stays on balance sheet. No defeasance.</span>
+              </div>
+              <div class="lw-metrics">
+                <div class="lw-metric"><div class="lw-metric-l">Rebalancing</div><div class="lw-metric-v">Continuous</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Parallel shift</div><div class="lw-metric-v good">Hedged ✓</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Twist risk</div><div class="lw-metric-v bad">Exposed ✗</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Cost rank</div><div class="lw-metric-v good">1st (cheapest)</div></div>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-row"><div class="lw-title">Cash flow matching</div><span class="lw-badge lw-warn">Moderate cost</span></div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">Mechanism:</span> Buy bonds whose coupons and principal arrive exactly when liability payments are due. No rate assumption — the match is structural.</span>
+                <span class="lw-rule"><span class="lw-hl">Asset choice:</span> Treasuries chosen for timing, not yield. Cash flow schedule drives selection.</span>
+                <span class="lw-rule"><span class="lw-hl">Liability:</span> Qualifies for <span class="lw-hl">accounting defeasance</span> if Treasuries used — removed from balance sheet.</span>
+              </div>
+              <div class="lw-metrics">
+                <div class="lw-metric"><div class="lw-metric-l">Rebalancing</div><div class="lw-metric-v good">None needed</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Twist risk</div><div class="lw-metric-v good">Immune ✓</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Defeasance</div><div class="lw-metric-v good">Yes (Treasuries)</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Cost rank</div><div class="lw-metric-v">2nd</div></div>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-row"><div class="lw-title">Tender offer</div><span class="lw-badge lw-fail">Most expensive</span></div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">Mechanism:</span> Repurchase own debt in the open market. Eliminates liability immediately — no portfolio construction.</span>
+                <span class="lw-rule"><span class="lw-hl">Cost trap:</span> Repurchasing at a <em>tighter</em> spread than actual rating = paying above market price.<br>
+                  BBB issuer at A-rated spread → A spread &lt; BBB spread → A price &gt; BBB price → <span class="lw-red">premium paid, most expensive route</span>.</span>
+              </div>
+              <div class="lw-metrics">
+                <div class="lw-metric"><div class="lw-metric-l">Execution risk</div><div class="lw-metric-v bad">High</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Liability removed</div><div class="lw-metric-v good">Immediately</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Cost rank</div><div class="lw-metric-v bad">3rd (highest)</div></div>
+              </div>
+            </div>
+
+            <div class="lw-trap">Exam trap: "accounting defeasance" ≠ "cost efficient." Cash flow matching (Treasuries) qualifies for defeasance but costs more capital. When the question asks for cost efficiency → always duration matching with corporates.</div>
+
+            <table class="lw-table">
+              <thead><tr><th>Feature</th><th>Duration matching</th><th>Cash flow matching</th><th>Tender offer</th></tr></thead>
+              <tbody>
+                <tr><td>Mechanism</td><td>Price sensitivity match</td><td>Payment timing match</td><td>Debt extinguishment</td></tr>
+                <tr><td>Asset type</td><td>Corporates + derivatives</td><td>Treasuries (precise maturity)</td><td>N/A — market transaction</td></tr>
+                <tr><td>Twist immune?</td><td><span class="lw-badge lw-fail">No</span></td><td><span class="lw-badge lw-pass">Yes</span></td><td>N/A</td></tr>
+                <tr><td>Defeasance?</td><td><span class="lw-badge lw-fail">No</span></td><td><span class="lw-badge lw-pass">Yes (if Treasuries)</span></td><td><span class="lw-badge lw-fail">No</span></td></tr>
+                <tr><td>Cost rank</td><td><span class="lw-badge lw-pass">1st (cheapest)</span></td><td><span class="lw-badge lw-warn">2nd</span></td><td><span class="lw-badge lw-fail">3rd (most expensive)</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 2 · BENCHMARK RULES
+          ══════════════════════════════ -->
+          <div id="lw-benchmark" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-title">Seven properties of a valid benchmark</div>
+              <table class="lw-table">
+                <thead><tr><th>Property</th><th>What it means</th><th>Classic violation</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="lw-hl">Specified in advance</span></td><td>Rules known before period starts</td><td>Benchmark changed mid-period</td></tr>
+                  <tr><td><span class="lw-hl">Appropriate</span></td><td>Consistent with manager's style</td><td>Equity benchmark for bond manager</td></tr>
+                  <tr><td><span class="lw-hl">Measurable</span></td><td>Valued at same frequency as portfolio</td><td><span class="lw-red">Weekly valuation ✗</span></td></tr>
+                  <tr><td><span class="lw-hl">Unambiguous</span></td><td>Clearly identified securities + weights</td><td>Vague inclusion rules</td></tr>
+                  <tr><td><span class="lw-hl">Reflective of opinions</span></td><td>Manager has views on constituents</td><td>Securities manager knows nothing about</td></tr>
+                  <tr><td><span class="lw-hl">Accountable</span></td><td>Manager accepts responsibility</td><td>Benchmark imposed without agreement</td></tr>
+                  <tr><td><span class="lw-hl">Investable</span></td><td>Can be replicated passively</td><td>Illiquid or untradeable securities</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="lw-trap">Weekly valuation violates <strong>measurability</strong>. Fixed income portfolios must be valued daily. Weekly = cannot track performance on any given day, cannot rebalance against stale prices.</div>
+            <div class="lw-tip">Characteristic 1 (investment-grade + $250M minimum) → valid: unambiguous, investable rules.<br>Characteristic 3 (historical prices available) → valid: supports accountability and auditability.</div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 3 · IMMUNIZATION TYPES
+          ══════════════════════════════ -->
+          <div id="lw-immuntypes" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-row"><div class="lw-title">1. Classical single-period immunization</div><span class="lw-badge lw-blue">Single liability</span></div>
+              <div class="lw-body">Match asset duration to a single liability at a fixed future date. Continuous rebalancing required. Assumes parallel shifts only.</div>
+              <div class="lw-fl">Conditions:
+  Asset PV ≥ Liability PV
+  Asset duration = Liability duration
+  Asset convexity ≥ Liability convexity</div>
+            </div>
+            <div class="lw-card">
+              <div class="lw-row"><div class="lw-title">2. Multiple liability immunization (Fong &amp; Vasicek)</div><span class="lw-badge lw-blue">Multiple liabilities</span></div>
+              <div class="lw-body">Same three conditions PLUS the asset duration distribution must <span class="lw-hl">bracket</span> the liability duration distribution — some assets shorter AND some longer than the liability range. Matching portfolio duration alone is insufficient.</div>
+            </div>
+            <div class="lw-card">
+              <div class="lw-row"><div class="lw-title">3. Cash flow matching</div><span class="lw-badge lw-pass">Twist-immune</span></div>
+              <div class="lw-body">Directly pair asset cash flows to each liability date. No rate assumption. No rebalancing. Immune to all shifts — parallel and non-parallel. Eligible for defeasance if Treasuries used.</div>
+            </div>
+            <div class="lw-card">
+              <div class="lw-row"><div class="lw-title">4. Contingent immunization</div><span class="lw-badge lw-warn">Active + safety net</span></div>
+              <div class="lw-body">Pursue active management while portfolio value exceeds the trigger. Switch to full immunization immediately when value hits the trigger.</div>
+              <div class="lw-fl">Trigger  = PV(liability) at current rates
+Cushion = Portfolio value − Trigger
+Active management stops when Cushion = 0</div>
+              <div class="lw-trap">Risk: a sudden large rate move can erode the cushion faster than the manager can react, forcing immunization at an unfavorable level.</div>
+            </div>
+            <table class="lw-table">
+              <thead><tr><th>Strategy</th><th>Liabilities</th><th>Twist-immune?</th><th>Active return?</th><th>Rebalancing?</th></tr></thead>
+              <tbody>
+                <tr><td>Classical</td><td>Single</td><td><span class="lw-badge lw-fail">No</span></td><td><span class="lw-badge lw-fail">No</span></td><td>Yes</td></tr>
+                <tr><td>Multiple liability</td><td>Multiple</td><td><span class="lw-badge lw-warn">Partial</span></td><td><span class="lw-badge lw-fail">No</span></td><td>Yes</td></tr>
+                <tr><td>Cash flow matching</td><td>Single or multiple</td><td><span class="lw-badge lw-pass">Yes</span></td><td><span class="lw-badge lw-fail">No</span></td><td>None</td></tr>
+                <tr><td>Contingent</td><td>Single or multiple</td><td><span class="lw-badge lw-fail">No</span></td><td><span class="lw-badge lw-pass">Yes</span></td><td>Until trigger</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 4 · TWIST & CONVEXITY
+          ══════════════════════════════ -->
+          <div id="lw-twist" class="lw-panel">
+            <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Why twists break duration matching — and the one thing that reduces the damage.</p>
+            <div class="lw-svg-wrap">
+              <svg width="100%" viewBox="0 0 660 290" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <marker id="lwar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                </defs>
+                <!-- LEFT: Parallel shift -->
+                <text x="100" y="22" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="14" font-weight="600">Parallel shift</text>
+                <!-- base curve -->
+                <path d="M20 185 Q100 138 188 112" fill="none" stroke="#7D8590" stroke-width="2"/>
+                <!-- up shift -->
+                <path d="M20 157 Q100 110 188 84" fill="none" stroke="#388BFD" stroke-width="1.5" stroke-dasharray="6 3"/>
+                <!-- down shift -->
+                <path d="M20 210 Q100 163 188 138" fill="none" stroke="#D4A017" stroke-width="1.5" stroke-dasharray="6 3"/>
+                <text x="194" y="88" fill="#388BFD" font-family="monospace" font-size="11">+rates</text>
+                <text x="194" y="143" fill="#D4A017" font-family="monospace" font-size="11">−rates</text>
+                <text x="100" y="240" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="11">All maturities shift equally</text>
+                <rect x="30" y="252" width="140" height="20" rx="4" fill="rgba(46,160,67,0.15)" stroke="rgba(46,160,67,0.4)" stroke-width="0.5"/>
+                <text x="100" y="266" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="10">Duration match holds ✓</text>
+                <!-- divider -->
+                <line x1="230" y1="10" x2="230" y2="285" stroke="#2A3441" stroke-width="1"/>
+                <!-- RIGHT: Twist -->
+                <text x="445" y="22" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="14" font-weight="600">Yield curve twist</text>
+                <!-- base curve -->
+                <path d="M248 185 Q380 152 638 130" fill="none" stroke="#7D8590" stroke-width="2"/>
+                <!-- twist line: short up, long down -->
+                <path d="M248 158 Q380 154 638 153" fill="none" stroke="#C0392B" stroke-width="1.5" stroke-dasharray="6 3"/>
+                <!-- arrows -->
+                <line x1="266" y1="187" x2="266" y2="161" stroke="#C0392B" stroke-width="1.5" marker-end="url(#lwar)"/>
+                <line x1="620" y1="133" x2="620" y2="151" stroke="#C0392B" stroke-width="1.5" marker-end="url(#lwar)"/>
+                <text x="248" y="218" fill="#7D8590" font-family="monospace" font-size="11">Short ↑</text>
+                <text x="600" y="218" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="11">Long ↓</text>
+                <text x="445" y="240" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="11">Short and long maturities diverge</text>
+                <rect x="288" y="252" width="315" height="20" rx="4" fill="rgba(192,57,43,0.15)" stroke="rgba(192,57,43,0.4)" stroke-width="0.5"/>
+                <text x="445" y="266" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="10">Duration match breaks — value gap opens ✗</text>
+              </svg>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">The root cause</div>
+              <div class="lw-body">Duration assumes <span class="lw-hl">one uniform rate change</span> across all maturities. Under a twist, short-end and long-end rates move differently. Asset cash flows (spread across maturities) and liability cash flows (concentrated at one date) experience different effective rate changes — creating a funding gap even with a perfect duration match.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Bullet vs barbell — why it matters for twist risk</div>
+              <table class="lw-table">
+                <thead><tr><th></th><th>Bullet portfolio</th><th>Barbell portfolio</th></tr></thead>
+                <tbody>
+                  <tr><td>Cash flow distribution</td><td>Concentrated near liability date</td><td>Spread at short and long ends</td></tr>
+                  <tr><td>Convexity</td><td>Lower (closer to liability)</td><td>Higher (more dispersed)</td></tr>
+                  <tr><td>Twist exposure</td><td><span class="lw-badge lw-pass">Lower — all CFs experience similar rate change</span></td><td><span class="lw-badge lw-fail">Higher — short/long CFs diverge under twist</span></td></tr>
+                  <tr><td>Parallel shift protection</td><td colspan="2" style="text-align:center;color:var(--muted)">Same — both duration-matched</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-tip">Exam rule: to reduce non-parallel shift risk → <strong>minimize convexity</strong> (bullet structure). NOT maximize cash flow yield. NOT minimize duration gap.</div>
+            <div class="lw-info">Statement 1 (measurement errors on known liability) → <strong>Correct</strong>: duration/convexity parameter errors still apply even when the liability amount and date are certain.<br><br>Statement 2 (cash flow matching mitigates non-parallel shift risk) → <strong>Correct</strong>: structural match = immune to all yield curve shapes.</div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 5 · PORTFOLIO SELECTION
+          ══════════════════════════════ -->
+          <div id="lw-selection" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-title">Step 1 — Screen on convexity (hard rule, no exceptions)</div>
+              <div class="lw-body">Any portfolio with convexity below the liability convexity is immediately eliminated. Non-negotiable — no BPV proximity can save it.</div>
+              <div class="lw-fl">Asset convexity &lt; Liability convexity → ELIMINATED</div>
+            </div>
+            <div class="lw-card">
+              <div class="lw-title">Step 2 — Smallest BPV gap among survivors</div>
+              <div class="lw-body">Smallest gap = fewest futures contracts needed = least basis risk and transaction cost.</div>
+              <div class="lw-fl">Nf = (BPV_liability − BPV_portfolio) / BPV_futures
+BPV_futures = BPV_CTD / conversion factor
+Negative Nf = short futures   ·   BPV gap = |portfolio BPV − liability BPV|</div>
+            </div>
+            <div class="lw-card">
+              <div class="lw-title">Step 3 — Don't maximize convexity</div>
+              <div class="lw-body">Excess convexity = more dispersed cash flows = more twist exposure. Prefer convexity <span class="lw-hl">just above</span> the liability level, not maximized.</div>
+            </div>
+
+            <div class="lw-section">Worked example A — Chaopraya (money duration)</div>
+            <table class="lw-table">
+              <thead><tr><th></th><th>Money duration</th><th>Convexity</th><th>vs. Liability (135.14)</th><th>BPV gap</th><th>Result</th></tr></thead>
+              <tbody>
+                <tr><td style="color:var(--muted)">Liability</td><td>2,609,700</td><td>135.14</td><td>—</td><td>—</td><td>—</td></tr>
+                <tr><td>Portfolio 1</td><td>2,609,981</td><td>147.64</td><td>+12.50</td><td>281</td><td><span class="lw-badge lw-warn">Larger gap</span></td></tr>
+                <tr><td>Portfolio 2</td><td>2,609,442</td><td>139.85</td><td>+4.71</td><td>258</td><td><span class="lw-badge lw-pass">Best ✓</span></td></tr>
+                <tr><td>Portfolio 3</td><td>2,609,707</td><td>132.87</td><td>−2.27</td><td>—</td><td><span class="lw-badge lw-fail">Eliminated ✗</span></td></tr>
+              </tbody>
+            </table>
+
+            <div class="lw-section">Worked example B — Endicott (BPV)</div>
+            <table class="lw-table">
+              <thead><tr><th></th><th>BPV</th><th>Gap from 173,355</th><th>Convexity vs 39.50</th><th>Result</th></tr></thead>
+              <tbody>
+                <tr><td>Portfolio A</td><td>188,100</td><td>14,745</td><td>39.65 ✓</td><td><span class="lw-badge lw-warn">Larger gap</span></td></tr>
+                <tr><td>Portfolio B</td><td>182,655</td><td>9,300</td><td>37.95 ✗ below</td><td><span class="lw-badge lw-fail">Eliminated ✗</span></td></tr>
+                <tr><td>Portfolio C</td><td>182,160</td><td>8,805</td><td>40.25 ✓</td><td><span class="lw-badge lw-pass">Best ✓</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 6 · SCENARIO ANALYSIS
+          ══════════════════════════════ -->
+          <div id="lw-scenarios" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-title">The two diagnostic signals</div>
+              <table class="lw-table">
+                <thead><tr><th>Yield gap</th><th>MV difference</th><th>Conclusion</th></tr></thead>
+                <tbody>
+                  <tr><td>≈ 0%</td><td>Small (±tens of dollars)</td><td><span class="lw-badge lw-pass">Well immunized for this scenario</span></td></tr>
+                  <tr><td>≠ 0%</td><td>Large (±thousands)</td><td><span class="lw-badge lw-fail">Duration gap opened — not immunized</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-sblock" style="border-color:#388BFD">
+              <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:#388BFD;margin-bottom:6px">Parallel shifts — immunization works</div>
+              <div class="lw-body" style="margin-bottom:6px">Yield gap = 0.000% and MV difference tiny (±$4–18). Assets and liabilities move in lockstep. Duration matching succeeds exactly as designed.</div>
+              <div class="lw-metrics">
+                <div class="lw-metric"><div class="lw-metric-l">MV diff (up shift)</div><div class="lw-metric-v good">+$18</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">MV diff (down shift)</div><div class="lw-metric-v good">+$4</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Yield gap</div><div class="lw-metric-v good">0.000%</div></div>
+              </div>
+            </div>
+
+            <div class="lw-sblock" style="border-color:#C0392B">
+              <div style="font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.07em;color:#FF7B72;margin-bottom:6px">Yield curve twists — immunization breaks</div>
+              <div class="lw-body" style="margin-bottom:6px">MV differences blow out to ±$2,300+. Yield gap opens to ±0.088%. Different maturities move differently → structural mismatch between assets and liabilities.</div>
+              <div class="lw-metrics">
+                <div class="lw-metric"><div class="lw-metric-l">MV diff (steepening)</div><div class="lw-metric-v bad">−$2,259</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">MV diff (flattening)</div><div class="lw-metric-v bad">+$2,309</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Yield gap</div><div class="lw-metric-v bad">±0.088%</div></div>
+              </div>
+            </div>
+
+            <div class="lw-trap">Critical insight: twist MV differences (~$2,300) dwarf parallel-shift differences (~$4–18). Twist risk is far larger in practice — yet duration matching only addresses parallel shifts.</div>
+
+            <div class="lw-card">
+              <div class="lw-title">AM constructed response structure</div>
+              <div class="lw-body">
+                <span class="lw-rule">1. State overall verdict: effective for parallel shifts, fails for twists</span>
+                <span class="lw-rule">2. Cite the specific numbers from the table — yield gap AND MV difference for each scenario type</span>
+                <span class="lw-rule">3. Explain the mechanism: parallel → both sides respond equally; twist → assets and liabilities sit at different maturities and experience different rate changes</span>
+                <span class="lw-rule">4. Conclude: residual structural exposure to non-parallel shifts that duration matching cannot eliminate</span>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            function lwTab(id, btn) {
+              document.querySelectorAll('#ldiWidget .lw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#ldiWidget .lw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('lw-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+          </script>
+        </div>
+
         <!-- empty state -->
         <div id="notesEmpty" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted);">
           <div style="font-size:28px">📝</div>
@@ -1054,10 +1395,15 @@ let notes = {};           // key: "topic||subtopic" → HTML string
 let currentNoteKey = null;
 let notesSaveTimer = null;
 
+const DEFAULT_NOTES = {
+  "PM Pathway||Liab-Driven Strategies": "<h3>Three debt retirement strategies</h3>\n<p><span style=\"color:#D4A017;font-weight:500\">Duration matching (immunization)</span> \u2014 Match asset BPV to liability BPV. Use corporate bonds + derivatives overlay. Relies on rate offset: capital losses are offset by reinvestment gains (and vice versa). <span style=\"color:#3DD68C\">Cheapest</span> \u2014 corporate credit spread means less capital needed upfront. Liability stays on balance sheet. Requires continuous rebalancing.</p>\n<p><span style=\"color:#D4A017;font-weight:500\">Cash flow matching</span> \u2014 Buy bonds whose coupons and principal arrive exactly when liability payments are due. Uses Treasuries. No rebalancing needed. Immune to all yield curve shifts (parallel and non-parallel). Qualifies for <span style=\"color:#D4A017\">accounting defeasance</span> \u2014 liability removed from balance sheet. More expensive because Treasury yields are lower.</p>\n<p><span style=\"color:#D4A017;font-weight:500\">Tender offer</span> \u2014 Repurchase own debt in the open market. Eliminates liability immediately. <span style=\"color:#FF7B72\">Most expensive</span> if repurchasing at a tighter spread than actual rating. Logic: tighter spread = lower yield = higher price \u2192 you overpay. Example: BBB issuer repurchasing at A-rated spread \u2192 A spread &lt; BBB spread \u2192 A price &gt; BBB price \u2192 premium paid.</p>\n<ul>\n<li><b>Cost rank:</b> Duration matching &lt; Cash flow matching &lt; Tender offer (when spread is tight)</li>\n<li><span style=\"color:#FF7B72\">Exam trap:</span> Accounting defeasance \u2260 cost efficiency. Cash flow matching qualifies for defeasance but costs more capital. Cost efficiency question \u2192 always duration matching.</li>\n</ul>\n\n<h3>Benchmark validity \u2014 seven properties</h3>\n<p>A valid benchmark must be: <span style=\"color:#D4A017\">Specified in advance \u00b7 Appropriate \u00b7 Measurable \u00b7 Unambiguous \u00b7 Reflective of opinions \u00b7 Accountable \u00b7 Investable</span></p>\n<p><span style=\"color:#FF7B72\">Classic violation \u2014 weekly valuation:</span> A benchmark must be valued at the same frequency as the portfolio (daily for fixed income). Weekly valuation means you cannot track performance on any given day and cannot rebalance against stale prices. Violates <span style=\"color:#D4A017\">measurability</span>.</p>\n<ul>\n<li>Restricting to investment-grade + $250M minimum \u2192 <span style=\"color:#3DD68C\">valid</span> (unambiguous, investable)</li>\n<li>Historical prices and turnover available \u2192 <span style=\"color:#3DD68C\">valid</span> (supports accountability)</li>\n<li>Weekly valuation \u2192 <span style=\"color:#FF7B72\">violation</span> (measurability)</li>\n</ul>\n\n<h3>Four immunization strategies</h3>\n<p><span style=\"color:#D4A017;font-weight:500\">1. Classical single-period immunization</span> \u2014 Single liability at a fixed future date. Conditions: Asset PV \u2265 Liability PV \u00b7 Asset duration = Liability duration \u00b7 Asset convexity \u2265 Liability convexity. Requires continuous rebalancing. Assumes parallel shifts only.</p>\n<p><span style=\"color:#D4A017;font-weight:500\">2. Multiple liability immunization (Fong &amp; Vasicek)</span> \u2014 Stream of liabilities at different dates. Same three conditions PLUS: asset duration distribution must <span style=\"color:#D4A017\">bracket</span> liability duration distribution \u2014 some assets shorter, some longer than the liability range. Matching portfolio duration alone is insufficient.</p>\n<p><span style=\"color:#D4A017;font-weight:500\">3. Cash flow matching</span> \u2014 Directly pair asset cash flows to each liability date. No rate assumption needed. Immune to all shifts. No rebalancing. Eligible for defeasance.</p>\n<p><span style=\"color:#D4A017;font-weight:500\">4. Contingent immunization</span> \u2014 Pursue active management while portfolio value exceeds the trigger point. If value falls to trigger (= PV of liability at current rates), switch immediately to full immunization. Cushion = Portfolio value \u2212 Trigger. Risk: sudden rate move erodes cushion before manager can react.</p>\n\n<h3>The twist problem \u2014 why duration matching fails under non-parallel shifts</h3>\n<p>Duration assumes <span style=\"color:#D4A017\">one uniform rate change</span> across all maturities. Under a twist, short-end and long-end rates move differently. Asset cash flows (spread across maturities) and liability cash flows (concentrated at one date) experience different effective rate changes \u2014 creating a funding gap even with a perfect duration match.</p>\n<ul>\n<li><span style=\"color:#D4A017\">Bullet portfolio</span> \u2014 cash flows concentrated near the liability date. All cash flows experience roughly the same rate change regardless of curve shape. <span style=\"color:#3DD68C\">Lower twist exposure.</span></li>\n<li><span style=\"color:#D4A017\">Barbell portfolio</span> \u2014 cash flows spread at short and long ends. Short and long cash flows diverge under a twist. <span style=\"color:#FF7B72\">Higher twist exposure</span> even with duration matched.</li>\n<li><span style=\"color:#FF7B72\">Exam rule:</span> To reduce non-parallel shift risk \u2192 minimize convexity (bullet structure). NOT maximize cash flow yield. NOT minimize duration gap.</li>\n</ul>\n\n<h3>Portfolio selection \u2014 exact elimination sequence</h3>\n<p><span style=\"color:#D4A017;font-weight:500\">Step 1 \u2014 Screen on convexity (hard rule, no exceptions)</span><br>Any portfolio with convexity below liability convexity is immediately eliminated. Non-negotiable.</p>\n<p><span style=\"color:#D4A017;font-weight:500\">Step 2 \u2014 BPV gap among survivors</span><br>Choose the portfolio with BPV (money duration) closest to the liability BPV. Smallest gap = fewest futures contracts needed = least basis risk.</p>\n<p><span style=\"color:#D4A017;font-weight:500\">Step 3 \u2014 Tiebreaker: don't maximize convexity</span><br>Excess convexity = more dispersed cash flows = more twist exposure. Prefer convexity just above the liability, not maximized.</p>\n<p><span style=\"color:#F0A04B\">Futures formula:</span></p>\n<span style=\"display:inline-block;font-family:monospace;font-size:12px;color:#79C0FF;background:rgba(56,139,253,.1);padding:3px 8px;border-radius:3px;margin:2px 0\">Nf = (BPV_liability \u2212 BPV_portfolio) / BPV_futures</span><br>\n<span style=\"display:inline-block;font-family:monospace;font-size:12px;color:#79C0FF;background:rgba(56,139,253,.1);padding:3px 8px;border-radius:3px;margin:2px 0\">BPV_futures = BPV_CTD / conversion factor</span>\n<p>Negative Nf = short futures. The BPV gap is simple subtraction: portfolio BPV \u2212 liability BPV. Larger gap = more contracts needed.</p>\n<p><span style=\"color:#F0A04B\">Worked example (Chaopraya):</span> Liability convexity 135.14. Portfolio 3 convexity 132.87 \u2192 eliminated. Portfolio 1 gap 281, Portfolio 2 gap 258 \u2192 Portfolio 2 wins (smallest gap, convexity just above liability).</p>\n\n<h3>Scenario analysis \u2014 reading the table</h3>\n<p>Two diagnostic signals per scenario: the <span style=\"color:#D4A017\">yield gap</span> and the <span style=\"color:#D4A017\">MV difference</span>.</p>\n<ul>\n<li>Yield gap \u2248 0% + small MV difference \u2192 <span style=\"color:#3DD68C\">well immunized for this scenario</span></li>\n<li>Yield gap \u2260 0% + large MV difference \u2192 <span style=\"color:#FF7B72\">duration gap opened \u2014 not immunized</span></li>\n</ul>\n<p><span style=\"color:#3DD68C\">Parallel shifts:</span> Yield gap = 0.000%, MV difference \u00b1$4\u201318. Duration matching succeeds \u2014 assets and liabilities move in lockstep.</p>\n<p><span style=\"color:#FF7B72\">Yield curve twists:</span> Yield gap \u00b10.088%, MV difference \u00b1$2,300+. Duration gap opens because short and long rates move differently and assets vs liabilities sit at different maturity points.</p>\n<p><span style=\"color:#FF7B72\">Critical insight:</span> Twist MV differences (~$2,300) dwarf parallel-shift differences (~$4\u201318). Twist risk is far larger in practice \u2014 yet duration matching only addresses parallel shifts.</p>\n<p><span style=\"color:#F0A04B\">AM constructed response structure:</span></p>\n<ol>\n<li>State overall effectiveness (works for parallel, fails for twists)</li>\n<li>For each scenario: cite the specific yield gap AND MV difference numbers</li>\n<li>Explain the mechanism: parallel \u2192 both sides respond equally; twist \u2192 assets and liabilities at different maturities experience different rate changes</li>\n<li>Conclude: residual structural exposure to non-parallel shifts that duration matching cannot eliminate</li>\n</ol>\n"
+};
+
 async function loadNotes() {
-  try { const s = await sbGet('cfa_notes'); if (s) return s; } catch(e) {}
-  try { const s = localStorage.getItem('cfa_notes'); if(s) return JSON.parse(s); } catch(e) {}
-  return {};
+  let base = JSON.parse(JSON.stringify(DEFAULT_NOTES));
+  try { const s = await sbGet('cfa_notes'); if (s) { Object.assign(base, s); return base; } } catch(e) {}
+  try { const s = localStorage.getItem('cfa_notes'); if(s) { Object.assign(base, JSON.parse(s)); return base; } } catch(e) {}
+  return base;
 }
 
 async function saveNotes() {
@@ -1120,18 +1466,27 @@ function buildNotesTree() {
 }
 
 function openNote(key, topic, subtopic) {
-  // autosave current before switching
   if (currentNoteKey) flushNote(currentNoteKey);
-
   currentNoteKey = key;
   document.getElementById('notesTitle').textContent = `${topic} → ${subtopic}`;
-  document.getElementById('noteToolbar').style.display = 'flex';
-  const ed = document.getElementById('noteEditor');
-  ed.style.display = 'block';
   document.getElementById('notesEmpty').style.display = 'none';
 
-  ed.innerHTML = notes[key] || '<p><br></p>';
-  ed.focus();
+  const isLDI = (key === 'PM Pathway||Liab-Driven Strategies');
+  const widget = document.getElementById('ldiWidget');
+  const ed = document.getElementById('noteEditor');
+  const toolbar = document.getElementById('noteToolbar');
+
+  if (isLDI) {
+    widget.style.display = 'block';
+    ed.style.display = 'none';
+    toolbar.style.display = 'none';
+  } else {
+    widget.style.display = 'none';
+    ed.style.display = 'block';
+    toolbar.style.display = 'flex';
+    ed.innerHTML = notes[key] || '<p><br></p>';
+    ed.focus();
+  }
   buildNotesTree();
 }
 
