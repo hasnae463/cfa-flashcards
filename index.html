@@ -267,7 +267,7 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
       <div class="clp-head">
         <span class="clp-title" id="notesTitle">Sélectionne un subtopic</span>
         <span style="display:flex;gap:8px;align-items:center">
-          <button id="widgetToggleBtn" onclick="toggleLdiWidget()" style="display:none;font-family:var(--mono);font-size:9px;letter-spacing:.08em;background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:3px;cursor:pointer">📊 Widget</button>
+          <button id="widgetToggleBtn" style="display:none;font-family:var(--mono);font-size:9px;letter-spacing:.08em;background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:3px;cursor:pointer">📊 Widget</button>
           <span id="noteSyncStatus" style="font-family:var(--mono);font-size:9px;color:var(--muted);transition:opacity .5s"></span>
         </span>
       </div>
@@ -651,6 +651,834 @@ Negative Nf = short futures   ·   BPV gap = |portfolio BPV − liability BPV|</
           </script>
         </div>
 
+        <!-- ── Yield Curve Strategies Interactive Widget ── -->
+        <div id="ycsWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#D4A017;margin-bottom:12px">Yield Curve Strategies · Interactive Study Map</div>
+
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px" id="ycTabBar">
+            <button class="lw-tab active" onclick="ycTab('swaps',this)">Swaps &amp; Carry</button>
+            <button class="lw-tab" onclick="ycTab('steepening',this)">Bull/Bear Steepening</button>
+            <button class="lw-tab" onclick="ycTab('2s10s',this)">2s10s Drivers</button>
+            <button class="lw-tab" onclick="ycTab('krd',this)">Key Rate Duration</button>
+            <button class="lw-tab" onclick="ycTab('swaptions',this)">Swaptions</button>
+            <button class="lw-tab" onclick="ycTab('totalreturn',this)">Total Return Formula</button>
+            <button class="lw-tab" onclick="ycTab('misc',this)">Other Concepts</button>
+          </div>
+
+          <!-- ══ TAB 1: SWAPS & CARRY ══ -->
+          <div id="ycs-swaps" class="lw-panel active">
+            <div class="lw-card">
+              <div class="lw-row"><div class="lw-title">Receive-fixed swap — two return components</div><span class="lw-badge lw-blue">Duration extension tool</span></div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">What it does:</span> Synthetically increases portfolio duration. You receive the fixed rate and pay MRR (floating). No bond purchase needed — pure rate exposure.</span>
+                <span class="lw-rule"><span class="lw-hl">Component 1 — Carry:</span> Fixed rate − MRR = daily accrual. Accrues daily, settled periodically (quarterly/semi-annually). Can be positive or negative.</span>
+                <span class="lw-rule"><span class="lw-hl">Component 2 — Mark-to-market:</span> As rates move, the swap's present value changes. Not a cash flow — only realized if you exit. Rates fall → swap gains value. Rates rise → swap loses value.</span>
+              </div>
+              <div class="lw-metrics">
+                <div class="lw-metric"><div class="lw-metric-l">Carry settlement</div><div class="lw-metric-v">Periodic (quarterly)</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">MTM settlement</div><div class="lw-metric-v">On exit only</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Duration effect</div><div class="lw-metric-v good">Increases ✓</div></div>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Carry: can be positive OR negative</div>
+              <table class="lw-table">
+                <thead><tr><th>Condition</th><th>Carry</th><th>When it happens</th></tr></thead>
+                <tbody>
+                  <tr><td>Fixed rate &gt; MRR</td><td><span class="lw-badge lw-pass">Positive ✓</span></td><td>Normal upward-sloping curve — you earn the spread daily</td></tr>
+                  <tr><td>MRR &gt; Fixed rate</td><td><span class="lw-badge lw-fail">Negative ✗</span></td><td>Inverted curve or aggressive hike cycle — you pay out the difference</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-trap">Worst case for receive-fixed: rates rise sharply → carry turns negative AND MTM loses value simultaneously. You lose on both legs.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Pay-fixed swap — the mirror image</div>
+              <div class="lw-body">
+                <span class="lw-rule">You pay the fixed rate and receive MRR. Synthetically <span class="lw-hl">reduces or negatives</span> portfolio duration.</span>
+                <span class="lw-rule">Profits when rates <span class="lw-hl">rise</span> (MTM gain) and when MRR &gt; fixed rate (positive carry in inverted curve).</span>
+                <span class="lw-rule">A bearish manager uses pay-fixed swaps (or shorts futures) to push total portfolio duration negative.</span>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Negative portfolio duration — how to achieve it</div>
+              <div class="lw-body">Bonds always have positive duration — you cannot get negative duration from physical bonds alone. You need derivatives sized large enough to <span class="lw-hl">more than offset</span> the positive duration of the bond holdings.</div>
+              <div class="lw-fl">Tools: pay-fixed swaps · short bond futures · buy bond puts
+Size the notional so: |Derivative duration| > Portfolio bond duration
+Net duration = Bond duration − Derivative duration offset → negative</div>
+              <div class="lw-info">If duration = −2: rates rise 100bps → portfolio <span class="lw-green">gains</span> ~2%. Behaves like a short bond position.</div>
+            </div>
+          </div>
+
+          <!-- ══ TAB 2: BULL/BEAR STEEPENING ══ -->
+          <div id="ycs-steepening" class="lw-panel">
+            <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Identification is on the government curve. Implementation uses swaps and futures.</p>
+
+            <div class="lw-svg-wrap">
+              <svg width="100%" viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <marker id="ycar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                </defs>
+                <!-- LEFT: Bull Steepening -->
+                <text x="110" y="20" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Bull Steepening</text>
+                <text x="110" y="36" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="10">Short end falls · Long end stable</text>
+                <!-- base curve -->
+                <path d="M20 200 Q110 160 200 140" fill="none" stroke="#7D8590" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <!-- new curve: short end down, long end same -->
+                <path d="M20 220 Q110 175 200 140" fill="none" stroke="#3DD68C" stroke-width="2"/>
+                <!-- arrow at short end -->
+                <line x1="38" y1="198" x2="38" y2="218" stroke="#3DD68C" stroke-width="1.5" marker-end="url(#ycar)"/>
+                <text x="20" y="250" fill="#7D8590" font-family="monospace" font-size="10">Short ↓</text>
+                <text x="180" y="250" fill="#7D8590" font-family="monospace" font-size="10">Long ~</text>
+                <text x="110" y="270" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10">Driven by: CB cuts / recession fears</text>
+                <rect x="30" y="280" width="160" height="16" rx="3" fill="rgba(46,160,67,0.15)" stroke="rgba(46,160,67,0.4)" stroke-width="0.5"/>
+                <text x="110" y="292" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="9">Buy short end · Neutral/short long end</text>
+
+                <!-- divider -->
+                <line x1="230" y1="10" x2="230" y2="298" stroke="#2A3441" stroke-width="1"/>
+
+                <!-- RIGHT: Bear Steepening -->
+                <text x="445" y="20" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Bear Steepening</text>
+                <text x="445" y="36" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="10">Long end rises · Short end stable</text>
+                <!-- base curve -->
+                <path d="M248 200 Q380 165 628 148" fill="none" stroke="#7D8590" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <!-- new curve: long end up, short end same -->
+                <path d="M248 200 Q380 160 628 128" fill="none" stroke="#FF7B72" stroke-width="2"/>
+                <!-- arrow at long end -->
+                <line x1="610" y1="148" x2="610" y2="130" stroke="#FF7B72" stroke-width="1.5" marker-end="url(#ycar)"/>
+                <text x="248" y="250" fill="#7D8590" font-family="monospace" font-size="10">Short ~</text>
+                <text x="590" y="250" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="10">Long ↑</text>
+                <text x="445" y="270" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10">Driven by: inflation LT · fiscal risk · supply</text>
+                <rect x="320" y="280" width="250" height="16" rx="3" fill="rgba(192,57,43,0.15)" stroke="rgba(192,57,43,0.4)" stroke-width="0.5"/>
+                <text x="445" y="292" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="9">Short long end · Neutral/long short end</text>
+              </svg>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">How to identify: watch 2s10s spread on the government curve</div>
+              <div class="lw-body">
+                <span class="lw-rule">2s10s = 10-year yield − 2-year yield. Spread widening = steepening. Spread narrowing = flattening.</span>
+                <span class="lw-rule"><span class="lw-hl">Identify bull vs bear:</span> decompose what each end actually did. If 2yr fell 30bps and 10yr unchanged → bull steepening. If 10yr rose 30bps and 2yr unchanged → bear steepening.</span>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Implementation tools — steepening trade</div>
+              <table class="lw-table">
+                <thead><tr><th>View</th><th>Short end position</th><th>Long end position</th><th>Net duration</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="lw-badge lw-pass">Bull steepening</span></td><td>Receive-fixed 2yr swap OR long 2yr futures</td><td>Pay-fixed 10yr OR short 10yr futures</td><td>Roughly neutral</td></tr>
+                  <tr><td><span class="lw-badge lw-fail">Bear steepening</span></td><td>Neutral or long short end</td><td>Pay-fixed 10yr OR short 10yr futures OR buy 30yr payer swaption</td><td>Roughly neutral</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Key rate duration positioning for bear steepening (Boyd example)</div>
+              <div class="lw-body">Bear steepening = long rates rise → you want <span class="lw-hl">low KRD at the long end</span> relative to the index. Portfolio B had 10yr KRD of 2.85 vs index 7.25 — significantly underweight the long end. Correct position. Portfolio C was overweight the long end (KRD 8.35 vs 7.25) — would underperform badly.</div>
+            </div>
+
+            <div class="lw-tip">Duration-neutral discipline: a steepening trade is a view on curve <em>shape</em>, not overall rate level. Keep total duration close to benchmark. Only the distribution across maturities changes.</div>
+
+            <div class="lw-card">
+              <div class="lw-title">Options-based steepening trade</div>
+              <table class="lw-table">
+                <thead><tr><th>Trade</th><th>Long end</th><th>Short end</th><th>View</th></tr></thead>
+                <tbody>
+                  <tr><td>Steepening</td><td>Buy <span class="lw-hl">payer swaption</span> (right to pay fixed at 30yr)</td><td>Buy <span class="lw-hl">bond call</span> (right to buy 2yr bond)</td><td>Long rates ↑ · Short rates ↓</td></tr>
+                  <tr><td>Flattening</td><td>Buy <span class="lw-hl">receiver swaption</span> (right to receive fixed at 30yr)</td><td>Buy <span class="lw-hl">bond put</span> (right to sell 2yr bond)</td><td>Long rates ↓ · Short rates ↑</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-trap">Exam trap: receiver swaption profits when rates FALL (you lock in receiving a high fixed rate). Payer swaption profits when rates RISE. Never mix these up.</div>
+            </div>
+          </div>
+
+          <!-- ══ TAB 3: 2s10s DRIVERS ══ -->
+          <div id="ycs-2s10s" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-title">2s10s is a concept, not one instrument — always specify the curve</div>
+              <table class="lw-table">
+                <thead><tr><th>Version</th><th>What it is</th><th>Used for</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="lw-hl">Government bond curve</span></td><td>10yr Treasury − 2yr Treasury (US) · 10yr Bund − 2yr Bund (EU)</td><td>Identification of steepening/flattening · pure policy signal · default meaning of "2s10s"</td></tr>
+                  <tr><td><span class="lw-hl">Swap curve</span></td><td>10yr swap rate − 2yr swap rate</td><td>Implementation · what managers actually trade · includes small credit component</td></tr>
+                  <tr><td><span class="lw-hl">Swap spread</span></td><td>Swap rate − govt bond yield at same maturity</td><td>Completely different signal — banking system credit and liquidity conditions</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">What drives the 2-year yield</div>
+              <div class="lw-body">Almost entirely <span class="lw-hl">monetary policy expectations</span> over the next 24 months.
+                <span class="lw-rule">Central bank hikes / hawkish signals → 2yr rises immediately</span>
+                <span class="lw-rule">Central bank cuts / dovish pivot → 2yr falls immediately</span>
+                <span class="lw-rule">Hot CPI or strong payrolls → more hikes priced in → 2yr rises</span>
+                <span class="lw-rule">The 2yr barely cares about 2030 — it's anchored to what the CB does right now</span>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">What drives the 10-year yield — two components</div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">1. Expected future short rates:</span> what do investors think policy rates will average over 10 years? Connects to monetary policy at a much longer horizon.</span>
+                <span class="lw-rule"><span class="lw-hl">2. Term premium:</span> extra compensation for locking up money for 10 years. Captures inflation uncertainty, fiscal risk, government bond supply, global demand for safe assets.</span>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Spread = gap between now and the future</div>
+              <table class="lw-table">
+                <thead><tr><th>Spread signal</th><th>What it means</th><th>Steepening type likely</th></tr></thead>
+                <tbody>
+                  <tr><td>CB hiking aggressively</td><td>2yr rises fast → spread narrows/inverts</td><td>Flattening / inversion</td></tr>
+                  <tr><td>CB cuts or signals cuts</td><td>2yr falls → spread widens</td><td><span class="lw-badge lw-pass">Bull steepening</span></td></tr>
+                  <tr><td>LT inflation expectations rise</td><td>10yr rises via term premium</td><td><span class="lw-badge lw-fail">Bear steepening</span></td></tr>
+                  <tr><td>Heavy LT government bond supply</td><td>10yr rises → spread widens</td><td><span class="lw-badge lw-fail">Bear steepening</span></td></tr>
+                  <tr><td>Strong foreign CB demand for UST</td><td>Term premium suppressed → 10yr low</td><td>Flattening</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-info">Identification workflow: (1) observe 2s10s widening on govt curve → steepening confirmed. (2) Check which end moved → identifies bull vs bear. (3) Check macro drivers (CB language, inflation breakevens, term premium, fiscal) → anticipates which type is coming next.</div>
+          </div>
+
+          <!-- ══ TAB 4: KEY RATE DURATION ══ -->
+          <div id="ycs-krd" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-title">What key rate duration (KRD) actually measures</div>
+              <div class="lw-body">Sensitivity of portfolio value to a rate change at <span class="lw-hl">one specific maturity point</span> on the yield curve, holding all other maturities constant. Unlike overall duration which assumes parallel shifts.</div>
+              <div class="lw-fl">KRD at 10yr = +6 means:
+10yr rate falls 1% → portfolio gains ~6%
+10yr rate rises 1% → portfolio loses ~6%
+(other maturities unchanged)</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Positive vs negative KRD — what each means</div>
+              <table class="lw-table">
+                <thead><tr><th>KRD at maturity X</th><th>Manager's view</th><th>Position</th><th>Example instrument</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="lw-badge lw-pass">High positive</span></td><td>Rate at X will fall</td><td>Overweight that maturity</td><td>Buy bonds at X tenor · receive-fixed swap at X</td></tr>
+                  <tr><td><span class="lw-badge lw-fail">High negative</span></td><td>Rate at X will rise</td><td>Underweight / short that maturity</td><td>Short futures at X · pay-fixed swap at X</td></tr>
+                  <tr><td>Neutral (= index)</td><td>No view on that maturity</td><td>Match index weight</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">The surgical power of KRD — expressing curve shape views</div>
+              <div class="lw-body">A manager can simultaneously hold:
+                <span class="lw-rule">Positive KRD at 2yr → expects short rates to fall</span>
+                <span class="lw-rule">Negative KRD at 10yr → expects long rates to rise</span>
+                <span class="lw-rule">= Bear steepening bet, total duration roughly neutral</span>
+              </div>
+              <div class="lw-tip">You cannot see this nuance by looking at total portfolio duration alone. Two portfolios with identical total duration can have completely different curve exposures.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Boyd example — bear steepening KRD mapping</div>
+              <table class="lw-table">
+                <thead><tr><th></th><th>2yr KRD</th><th>5yr KRD</th><th>10yr KRD</th><th>Bear steepening fit</th></tr></thead>
+                <tbody>
+                  <tr><td>Index</td><td>2.50</td><td>3.60</td><td>7.25</td><td>—</td></tr>
+                  <tr><td>Portfolio A</td><td>2.50</td><td>3.60</td><td>7.25</td><td><span class="lw-badge lw-warn">Mirrors index — no view</span></td></tr>
+                  <tr><td>Portfolio B</td><td>4.00</td><td>6.50</td><td>2.85</td><td><span class="lw-badge lw-pass">Best ✓ — underweight long end</span></td></tr>
+                  <tr><td>Portfolio C</td><td>1.00</td><td>4.00</td><td>8.35</td><td><span class="lw-badge lw-fail">Worst ✗ — overweight long end</span></td></tr>
+                </tbody>
+              </table>
+              <div class="lw-body" style="margin-top:8px">Portfolio B wins because 10yr KRD (2.85) is far below the index (7.25) — it loses much less when long rates rise. Portfolio C would be destroyed — it has more long-end sensitivity than the index.</div>
+            </div>
+          </div>
+
+          <!-- ══ TAB 5: SWAPTIONS ══ -->
+          <div id="ycs-swaptions" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-title">Swaption fundamentals — what you own</div>
+              <div class="lw-body">A swaption gives you the <span class="lw-hl">right but not obligation</span> to enter into a swap at a pre-agreed fixed rate on a future date.</div>
+              <table class="lw-table" style="margin-top:10px">
+                <thead><tr><th>Type</th><th>Right to…</th><th>Exercise when…</th><th>Rate view</th><th>Duration effect</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="lw-hl">Receiver swaption</span></td><td>Receive fixed, pay floating</td><td>Rates fall (fixed rate you receive &gt; market)</td><td><span class="lw-badge lw-pass">Bullish (rates fall)</span></td><td>Long duration when exercised</td></tr>
+                  <tr><td><span class="lw-hl">Payer swaption</span></td><td>Pay fixed, receive floating</td><td>Rates rise (fixed rate you pay &lt; market)</td><td><span class="lw-badge lw-fail">Bearish (rates rise)</span></td><td>Short duration when exercised</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Long vs short swaption positions</div>
+              <table class="lw-table">
+                <thead><tr><th>Position</th><th>You…</th><th>Max loss</th><th>Max gain</th></tr></thead>
+                <tbody>
+                  <tr><td>Long receiver swaption</td><td>Pay premium upfront</td><td>Premium paid</td><td>Unlimited (if rates fall far)</td></tr>
+                  <tr><td>Short receiver swaption</td><td>Collect premium</td><td>Unlimited</td><td>Premium collected</td></tr>
+                  <tr><td>Long payer swaption</td><td>Pay premium upfront</td><td>Premium paid</td><td>Unlimited (if rates rise far)</td></tr>
+                  <tr><td>Short payer swaption</td><td>Collect premium</td><td>Unlimited</td><td>Premium collected</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Cook example — downward parallel shift 50bps</div>
+              <div class="lw-body">Cook expects rates to fall. She wants to benefit.
+                <span class="lw-rule"><span class="lw-hl">Long receiver swaption</span> = right to receive fixed. If rates fall, she exercises and receives an above-market fixed rate. The swaption gains value as rates fall. <span class="lw-green">Correct position ✓</span></span>
+                <span class="lw-rule"><span class="lw-red">Short receiver swaption</span> = she sold the right to someone else. If rates fall, the counterparty exercises against her — she loses. Wrong direction.</span>
+              </div>
+            </div>
+
+            <div class="lw-trap">The most common exam trap: confusing which swaption benefits from which rate direction. Anchor it to the underlying swap logic — receiver swaption = you want to receive fixed = you want rates to fall so your fixed rate looks attractive. Payer swaption = you want to pay fixed = you want rates to rise so paying the lower locked-in fixed rate is valuable.</div>
+
+            <div class="lw-card">
+              <div class="lw-title">Steepening trade with swaptions — summary</div>
+              <div class="lw-body">
+                <span class="lw-rule">Steepening = long rates rise, short rates fall</span>
+                <span class="lw-rule"><span class="lw-hl">Long payer swaption at 30yr</span> → right to pay fixed at 30yr → profits when 30yr rates rise ✓</span>
+                <span class="lw-rule"><span class="lw-hl">Long call on 2yr bond</span> → right to buy 2yr bond → profits when 2yr bond price rises = 2yr rates fall ✓</span>
+                <span class="lw-rule">Combined = pure steepening bet with limited downside (premium paid)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══ TAB 6: TOTAL RETURN FORMULA ══ -->
+          <div id="ycs-totalreturn" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-title">The full expected return formula</div>
+              <div class="lw-fl">E(R) = Rolldown return
+       + (−Duration × Δyield)
+       + (0.5 × Convexity × Δyield²)
+       + ΔFX (if unhedged foreign bond)</div>
+              <div class="lw-trap">Never drop the convexity term — even if the yield move seems small. The exam tests whether you include it. With 50bps move it's tiny (0.02%) but it's the difference between answer choices.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Component 1 — Rolldown return</div>
+              <div class="lw-body">The price appreciation from a bond "rolling down" an upward-sloping stable yield curve as time passes. A 2-year bond becomes a 1-year bond after one year — and since 1-year yields are lower, its price rises.</div>
+              <div class="lw-fl">Rolldown = (Expected price in 1yr − Price today) / Price today
+Example: (98.75 − 97.00) / 97.00 = 1.804%</div>
+              <div class="lw-info">The expected price in 1yr assumes an <em>unchanged</em> yield curve — it is the price the bond would have if it simply aged one year with no rate moves. It is given in the exhibit, not calculated from scratch.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Component 2 — Duration + Convexity price effect</div>
+              <div class="lw-fl">Price effect = (−Duration × Δyield) + (0.5 × Convexity × Δyield²)
+
+Example (bullet, −50bps shift):
+= (−4.50 × −0.0050) + (0.5 × 17.0 × 0.0050²)
+= +2.250% + 0.021%
+= 2.271%</div>
+              <div class="lw-body">Use the <span class="lw-hl">expected duration and convexity in 1 year</span> (from exhibit), not today's values. Δyield is negative for rate falls. Always convert bps to decimals: 50bps = 0.0050.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Component 3 — Currency effect</div>
+              <div class="lw-body">
+                <span class="lw-rule">If the foreign currency <span class="lw-hl">appreciates</span> vs your home currency → add positive FX return</span>
+                <span class="lw-rule">If the foreign currency <span class="lw-hl">depreciates</span> vs your home currency → subtract FX loss</span>
+                <span class="lw-rule">Cook example: USD depreciates against EUR by 0.75% → USD-denominated returns lose 0.75% when converted to EUR → <span class="lw-red">−0.75%</span></span>
+              </div>
+              <div class="lw-trap">Watch the direction carefully. "USD depreciates against EUR" = your USD bonds are worth less in EUR terms = negative FX contribution. Don't flip the sign.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Cook worked example — full calculation</div>
+              <table class="lw-table">
+                <thead><tr><th>Component</th><th>Bullet</th><th>Barbell</th></tr></thead>
+                <tbody>
+                  <tr><td>Rolldown</td><td>(98.75−97.00)/97.00 = <span class="lw-green">1.804%</span></td><td>(99.75−97.75)/97.75 = <span class="lw-green">2.046%</span></td></tr>
+                  <tr><td>Duration effect (−D × −0.005)</td><td>−4.50 × −0.005 = <span class="lw-green">+2.250%</span></td><td>−4.45 × −0.005 = <span class="lw-green">+2.225%</span></td></tr>
+                  <tr><td>Convexity effect (0.5×Cx×0.005²)</td><td>0.5×17.0×0.000025 = <span class="lw-green">+0.021%</span></td><td>0.5×40.0×0.000025 = <span class="lw-green">+0.050%</span></td></tr>
+                  <tr><td>FX (USD depreciates vs EUR)</td><td><span class="lw-red">−0.750%</span></td><td><span class="lw-red">−0.750%</span></td></tr>
+                  <tr style="border-top:1px solid var(--border)"><td><strong>Total</strong></td><td><strong>3.325% ≈ 3.32%</strong></td><td><strong>3.571% ≈ 3.58%</strong></td></tr>
+                </tbody>
+              </table>
+              <div class="lw-body" style="margin-top:8px">Barbell wins because of <span class="lw-hl">higher convexity (40 vs 17)</span> and <span class="lw-hl">higher rolldown (2.046% vs 1.804%)</span>. In a falling rate environment, convexity advantage is amplified.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Rolldown strategy — why it works</div>
+              <div class="lw-body">Buy further out on an upward-sloping curve. As time passes the bond rolls toward a lower-yield, higher-price point. You earn rolldown return on top of yield — as long as the curve stays stable and upward-sloping. This is why the 2-year zero-coupon (bought at 96.1169, expected to be worth 99.0090 in a year) earns more than the 1-year zero-coupon in the Thai bond example.</div>
+            </div>
+          </div>
+
+          <!-- ══ TAB 7: OTHER CONCEPTS ══ -->
+          <div id="ycs-misc" class="lw-panel">
+
+            <div class="lw-card">
+              <div class="lw-title">BPV / DV01 — same thing, different names</div>
+              <div class="lw-body">Dollar change in portfolio value for a 1bp (0.01%) move in rates.</div>
+              <div class="lw-fl">BPV = Modified duration × Market value × 0.0001
+Example: Duration 5 · MV $10M → BPV = 5 × $10M × 0.0001 = $5,000 per bp</div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">Why it matters:</span> Duration is a percentage — you can't subtract durations across portfolios of different sizes. BPV puts everything in the same unit (dollars per bp) so arithmetic works.</span>
+                <span class="lw-rule"><span class="lw-hl">Hedging:</span> Nf = (BPV_target − BPV_portfolio) / BPV_futures</span>
+                <span class="lw-rule"><span class="lw-hl">Immunization:</span> match asset BPV to liability BPV so a 1bp move hits both equally</span>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Negative convexity — callable bonds</div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">At high yields:</span> call is out of the money, callable bond behaves like option-free bond — normal positive convexity.</span>
+                <span class="lw-rule"><span class="lw-hl">At low yields:</span> call is deep in the money. Issuer's right to call becomes very valuable. Market knows bond may be called → price stops rising at normal pace → price-yield curve bends the wrong way → <span class="lw-red">negative convexity</span>.</span>
+                <span class="lw-rule"><span class="lw-hl">The asymmetry:</span> less upside when rates fall (call caps price) but full downside when rates rise (call not exercised). You keep all the risk, lose some of the reward.</span>
+              </div>
+              <div class="lw-trap">Why callable bonds must offer a higher yield: compensation for this asymmetric payoff. You are short the call option → you must be paid for it.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Forward rate bias</div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">What theory says (UIP):</span> high-yield currency should depreciate by exactly the yield differential — no free lunch.</span>
+                <span class="lw-rule"><span class="lw-hl">What actually happens:</span> high-yield currencies depreciate by less than predicted, or not at all. The yield advantage is not fully offset.</span>
+                <span class="lw-rule"><span class="lw-hl">Implication:</span> go unhedged into high-yielding currencies to earn excess returns. Amplify by borrowing in low-yield currencies (carry trade).</span>
+              </div>
+              <div class="lw-info">Carry trade = borrow in low-yield currency (JPY at 0.5%) · invest in high-yield currency (BRL at 10%) · pocket the spread. Works because forward rate bias means the low-yield currency doesn't appreciate enough to wipe out the carry.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Stable yield curve — what generates excess return</div>
+              <div class="lw-body">When rates don't move, you cannot earn excess return from predicting rate direction. The only way to beat the benchmark is to earn <span class="lw-hl">more carry</span>.</div>
+              <table class="lw-table">
+                <thead><tr><th>Strategy</th><th>Works under stable curve?</th><th>Why</th></tr></thead>
+                <tbody>
+                  <tr><td>Increase duration above benchmark</td><td><span class="lw-badge lw-pass">Yes</span></td><td>Longer bonds earn more yield + rolldown without rate rise penalty</td></tr>
+                  <tr><td>Add leverage</td><td><span class="lw-badge lw-pass">Yes</span></td><td>Borrow at short rates, invest in longer bonds, pocket the spread</td></tr>
+                  <tr><td>Reduce duration below benchmark</td><td><span class="lw-badge lw-fail">No — least likely</span></td><td>Shorter bonds earn less yield, no rate protection needed, guaranteed underperformance vs benchmark</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-trap">Reducing duration only makes sense if you expect rates to RISE — then shorter portfolio loses less than benchmark. Under a stable curve it just sacrifices yield for nothing.</div>
+            </div>
+
+          </div>
+
+          <script>
+            function ycTab(id, btn) {
+              document.querySelectorAll('#ycsWidget .lw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#ycTabBar .lw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('ycs-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+          </script>
+        </div>
+
+        <!-- ── Yield Curve Strategies Interactive Widget ── -->
+        <div id="ycsWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#D4A017;margin-bottom:12px">Yield Curve Strategies · Interactive Study Map</div>
+
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px" id="ycTabBar">
+            <button class="lw-tab active" onclick="ycTab('swaps',this)">Swaps &amp; Carry</button>
+            <button class="lw-tab" onclick="ycTab('steepening',this)">Bull/Bear Steepening</button>
+            <button class="lw-tab" onclick="ycTab('2s10s',this)">2s10s Drivers</button>
+            <button class="lw-tab" onclick="ycTab('krd',this)">Key Rate Duration</button>
+            <button class="lw-tab" onclick="ycTab('swaptions',this)">Swaptions</button>
+            <button class="lw-tab" onclick="ycTab('totalreturn',this)">Total Return Formula</button>
+            <button class="lw-tab" onclick="ycTab('misc',this)">Other Concepts</button>
+          </div>
+
+          <!-- ══ TAB 1: SWAPS & CARRY ══ -->
+          <div id="ycs-swaps" class="lw-panel active">
+            <div class="lw-card">
+              <div class="lw-row"><div class="lw-title">Receive-fixed swap — two return components</div><span class="lw-badge lw-blue">Duration extension tool</span></div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">What it does:</span> Synthetically increases portfolio duration. You receive the fixed rate and pay MRR (floating). No bond purchase needed — pure rate exposure.</span>
+                <span class="lw-rule"><span class="lw-hl">Component 1 — Carry:</span> Fixed rate − MRR = daily accrual. Accrues daily, settled periodically (quarterly/semi-annually). Can be positive or negative.</span>
+                <span class="lw-rule"><span class="lw-hl">Component 2 — Mark-to-market:</span> As rates move, the swap's present value changes. Not a cash flow — only realized if you exit. Rates fall → swap gains value. Rates rise → swap loses value.</span>
+              </div>
+              <div class="lw-metrics">
+                <div class="lw-metric"><div class="lw-metric-l">Carry settlement</div><div class="lw-metric-v">Periodic (quarterly)</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">MTM settlement</div><div class="lw-metric-v">On exit only</div></div>
+                <div class="lw-metric"><div class="lw-metric-l">Duration effect</div><div class="lw-metric-v good">Increases ✓</div></div>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Carry: can be positive OR negative</div>
+              <table class="lw-table">
+                <thead><tr><th>Condition</th><th>Carry</th><th>When it happens</th></tr></thead>
+                <tbody>
+                  <tr><td>Fixed rate &gt; MRR</td><td><span class="lw-badge lw-pass">Positive ✓</span></td><td>Normal upward-sloping curve — you earn the spread daily</td></tr>
+                  <tr><td>MRR &gt; Fixed rate</td><td><span class="lw-badge lw-fail">Negative ✗</span></td><td>Inverted curve or aggressive hike cycle — you pay out the difference</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-trap">Worst case for receive-fixed: rates rise sharply → carry turns negative AND MTM loses value simultaneously. You lose on both legs.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Pay-fixed swap — the mirror image</div>
+              <div class="lw-body">
+                <span class="lw-rule">You pay the fixed rate and receive MRR. Synthetically <span class="lw-hl">reduces or negatives</span> portfolio duration.</span>
+                <span class="lw-rule">Profits when rates <span class="lw-hl">rise</span> (MTM gain) and when MRR &gt; fixed rate (positive carry in inverted curve).</span>
+                <span class="lw-rule">A bearish manager uses pay-fixed swaps (or shorts futures) to push total portfolio duration negative.</span>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Negative portfolio duration — how to achieve it</div>
+              <div class="lw-body">Bonds always have positive duration — you cannot get negative duration from physical bonds alone. You need derivatives sized large enough to <span class="lw-hl">more than offset</span> the positive duration of the bond holdings.</div>
+              <div class="lw-fl">Tools: pay-fixed swaps · short bond futures · buy bond puts
+Size the notional so: |Derivative duration| > Portfolio bond duration
+Net duration = Bond duration − Derivative duration offset → negative</div>
+              <div class="lw-info">If duration = −2: rates rise 100bps → portfolio <span class="lw-green">gains</span> ~2%. Behaves like a short bond position.</div>
+            </div>
+          </div>
+
+          <!-- ══ TAB 2: BULL/BEAR STEEPENING ══ -->
+          <div id="ycs-steepening" class="lw-panel">
+            <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Identification is on the government curve. Implementation uses swaps and futures.</p>
+
+            <div class="lw-svg-wrap">
+              <svg width="100%" viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <marker id="ycar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </marker>
+                </defs>
+                <!-- LEFT: Bull Steepening -->
+                <text x="110" y="20" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Bull Steepening</text>
+                <text x="110" y="36" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="10">Short end falls · Long end stable</text>
+                <!-- base curve -->
+                <path d="M20 200 Q110 160 200 140" fill="none" stroke="#7D8590" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <!-- new curve: short end down, long end same -->
+                <path d="M20 220 Q110 175 200 140" fill="none" stroke="#3DD68C" stroke-width="2"/>
+                <!-- arrow at short end -->
+                <line x1="38" y1="198" x2="38" y2="218" stroke="#3DD68C" stroke-width="1.5" marker-end="url(#ycar)"/>
+                <text x="20" y="250" fill="#7D8590" font-family="monospace" font-size="10">Short ↓</text>
+                <text x="180" y="250" fill="#7D8590" font-family="monospace" font-size="10">Long ~</text>
+                <text x="110" y="270" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10">Driven by: CB cuts / recession fears</text>
+                <rect x="30" y="280" width="160" height="16" rx="3" fill="rgba(46,160,67,0.15)" stroke="rgba(46,160,67,0.4)" stroke-width="0.5"/>
+                <text x="110" y="292" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="9">Buy short end · Neutral/short long end</text>
+
+                <!-- divider -->
+                <line x1="230" y1="10" x2="230" y2="298" stroke="#2A3441" stroke-width="1"/>
+
+                <!-- RIGHT: Bear Steepening -->
+                <text x="445" y="20" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Bear Steepening</text>
+                <text x="445" y="36" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="10">Long end rises · Short end stable</text>
+                <!-- base curve -->
+                <path d="M248 200 Q380 165 628 148" fill="none" stroke="#7D8590" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <!-- new curve: long end up, short end same -->
+                <path d="M248 200 Q380 160 628 128" fill="none" stroke="#FF7B72" stroke-width="2"/>
+                <!-- arrow at long end -->
+                <line x1="610" y1="148" x2="610" y2="130" stroke="#FF7B72" stroke-width="1.5" marker-end="url(#ycar)"/>
+                <text x="248" y="250" fill="#7D8590" font-family="monospace" font-size="10">Short ~</text>
+                <text x="590" y="250" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="10">Long ↑</text>
+                <text x="445" y="270" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10">Driven by: inflation LT · fiscal risk · supply</text>
+                <rect x="320" y="280" width="250" height="16" rx="3" fill="rgba(192,57,43,0.15)" stroke="rgba(192,57,43,0.4)" stroke-width="0.5"/>
+                <text x="445" y="292" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="9">Short long end · Neutral/long short end</text>
+              </svg>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">How to identify: watch 2s10s spread on the government curve</div>
+              <div class="lw-body">
+                <span class="lw-rule">2s10s = 10-year yield − 2-year yield. Spread widening = steepening. Spread narrowing = flattening.</span>
+                <span class="lw-rule"><span class="lw-hl">Identify bull vs bear:</span> decompose what each end actually did. If 2yr fell 30bps and 10yr unchanged → bull steepening. If 10yr rose 30bps and 2yr unchanged → bear steepening.</span>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Implementation tools — steepening trade</div>
+              <table class="lw-table">
+                <thead><tr><th>View</th><th>Short end position</th><th>Long end position</th><th>Net duration</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="lw-badge lw-pass">Bull steepening</span></td><td>Receive-fixed 2yr swap OR long 2yr futures</td><td>Pay-fixed 10yr OR short 10yr futures</td><td>Roughly neutral</td></tr>
+                  <tr><td><span class="lw-badge lw-fail">Bear steepening</span></td><td>Neutral or long short end</td><td>Pay-fixed 10yr OR short 10yr futures OR buy 30yr payer swaption</td><td>Roughly neutral</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Key rate duration positioning for bear steepening (Boyd example)</div>
+              <div class="lw-body">Bear steepening = long rates rise → you want <span class="lw-hl">low KRD at the long end</span> relative to the index. Portfolio B had 10yr KRD of 2.85 vs index 7.25 — significantly underweight the long end. Correct position. Portfolio C was overweight the long end (KRD 8.35 vs 7.25) — would underperform badly.</div>
+            </div>
+
+            <div class="lw-tip">Duration-neutral discipline: a steepening trade is a view on curve <em>shape</em>, not overall rate level. Keep total duration close to benchmark. Only the distribution across maturities changes.</div>
+
+            <div class="lw-card">
+              <div class="lw-title">Options-based steepening trade</div>
+              <table class="lw-table">
+                <thead><tr><th>Trade</th><th>Long end</th><th>Short end</th><th>View</th></tr></thead>
+                <tbody>
+                  <tr><td>Steepening</td><td>Buy <span class="lw-hl">payer swaption</span> (right to pay fixed at 30yr)</td><td>Buy <span class="lw-hl">bond call</span> (right to buy 2yr bond)</td><td>Long rates ↑ · Short rates ↓</td></tr>
+                  <tr><td>Flattening</td><td>Buy <span class="lw-hl">receiver swaption</span> (right to receive fixed at 30yr)</td><td>Buy <span class="lw-hl">bond put</span> (right to sell 2yr bond)</td><td>Long rates ↓ · Short rates ↑</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-trap">Exam trap: receiver swaption profits when rates FALL (you lock in receiving a high fixed rate). Payer swaption profits when rates RISE. Never mix these up.</div>
+            </div>
+          </div>
+
+          <!-- ══ TAB 3: 2s10s DRIVERS ══ -->
+          <div id="ycs-2s10s" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-title">2s10s is a concept, not one instrument — always specify the curve</div>
+              <table class="lw-table">
+                <thead><tr><th>Version</th><th>What it is</th><th>Used for</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="lw-hl">Government bond curve</span></td><td>10yr Treasury − 2yr Treasury (US) · 10yr Bund − 2yr Bund (EU)</td><td>Identification of steepening/flattening · pure policy signal · default meaning of "2s10s"</td></tr>
+                  <tr><td><span class="lw-hl">Swap curve</span></td><td>10yr swap rate − 2yr swap rate</td><td>Implementation · what managers actually trade · includes small credit component</td></tr>
+                  <tr><td><span class="lw-hl">Swap spread</span></td><td>Swap rate − govt bond yield at same maturity</td><td>Completely different signal — banking system credit and liquidity conditions</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">What drives the 2-year yield</div>
+              <div class="lw-body">Almost entirely <span class="lw-hl">monetary policy expectations</span> over the next 24 months.
+                <span class="lw-rule">Central bank hikes / hawkish signals → 2yr rises immediately</span>
+                <span class="lw-rule">Central bank cuts / dovish pivot → 2yr falls immediately</span>
+                <span class="lw-rule">Hot CPI or strong payrolls → more hikes priced in → 2yr rises</span>
+                <span class="lw-rule">The 2yr barely cares about 2030 — it's anchored to what the CB does right now</span>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">What drives the 10-year yield — two components</div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">1. Expected future short rates:</span> what do investors think policy rates will average over 10 years? Connects to monetary policy at a much longer horizon.</span>
+                <span class="lw-rule"><span class="lw-hl">2. Term premium:</span> extra compensation for locking up money for 10 years. Captures inflation uncertainty, fiscal risk, government bond supply, global demand for safe assets.</span>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Spread = gap between now and the future</div>
+              <table class="lw-table">
+                <thead><tr><th>Spread signal</th><th>What it means</th><th>Steepening type likely</th></tr></thead>
+                <tbody>
+                  <tr><td>CB hiking aggressively</td><td>2yr rises fast → spread narrows/inverts</td><td>Flattening / inversion</td></tr>
+                  <tr><td>CB cuts or signals cuts</td><td>2yr falls → spread widens</td><td><span class="lw-badge lw-pass">Bull steepening</span></td></tr>
+                  <tr><td>LT inflation expectations rise</td><td>10yr rises via term premium</td><td><span class="lw-badge lw-fail">Bear steepening</span></td></tr>
+                  <tr><td>Heavy LT government bond supply</td><td>10yr rises → spread widens</td><td><span class="lw-badge lw-fail">Bear steepening</span></td></tr>
+                  <tr><td>Strong foreign CB demand for UST</td><td>Term premium suppressed → 10yr low</td><td>Flattening</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-info">Identification workflow: (1) observe 2s10s widening on govt curve → steepening confirmed. (2) Check which end moved → identifies bull vs bear. (3) Check macro drivers (CB language, inflation breakevens, term premium, fiscal) → anticipates which type is coming next.</div>
+          </div>
+
+          <!-- ══ TAB 4: KEY RATE DURATION ══ -->
+          <div id="ycs-krd" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-title">What key rate duration (KRD) actually measures</div>
+              <div class="lw-body">Sensitivity of portfolio value to a rate change at <span class="lw-hl">one specific maturity point</span> on the yield curve, holding all other maturities constant. Unlike overall duration which assumes parallel shifts.</div>
+              <div class="lw-fl">KRD at 10yr = +6 means:
+10yr rate falls 1% → portfolio gains ~6%
+10yr rate rises 1% → portfolio loses ~6%
+(other maturities unchanged)</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Positive vs negative KRD — what each means</div>
+              <table class="lw-table">
+                <thead><tr><th>KRD at maturity X</th><th>Manager's view</th><th>Position</th><th>Example instrument</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="lw-badge lw-pass">High positive</span></td><td>Rate at X will fall</td><td>Overweight that maturity</td><td>Buy bonds at X tenor · receive-fixed swap at X</td></tr>
+                  <tr><td><span class="lw-badge lw-fail">High negative</span></td><td>Rate at X will rise</td><td>Underweight / short that maturity</td><td>Short futures at X · pay-fixed swap at X</td></tr>
+                  <tr><td>Neutral (= index)</td><td>No view on that maturity</td><td>Match index weight</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">The surgical power of KRD — expressing curve shape views</div>
+              <div class="lw-body">A manager can simultaneously hold:
+                <span class="lw-rule">Positive KRD at 2yr → expects short rates to fall</span>
+                <span class="lw-rule">Negative KRD at 10yr → expects long rates to rise</span>
+                <span class="lw-rule">= Bear steepening bet, total duration roughly neutral</span>
+              </div>
+              <div class="lw-tip">You cannot see this nuance by looking at total portfolio duration alone. Two portfolios with identical total duration can have completely different curve exposures.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Boyd example — bear steepening KRD mapping</div>
+              <table class="lw-table">
+                <thead><tr><th></th><th>2yr KRD</th><th>5yr KRD</th><th>10yr KRD</th><th>Bear steepening fit</th></tr></thead>
+                <tbody>
+                  <tr><td>Index</td><td>2.50</td><td>3.60</td><td>7.25</td><td>—</td></tr>
+                  <tr><td>Portfolio A</td><td>2.50</td><td>3.60</td><td>7.25</td><td><span class="lw-badge lw-warn">Mirrors index — no view</span></td></tr>
+                  <tr><td>Portfolio B</td><td>4.00</td><td>6.50</td><td>2.85</td><td><span class="lw-badge lw-pass">Best ✓ — underweight long end</span></td></tr>
+                  <tr><td>Portfolio C</td><td>1.00</td><td>4.00</td><td>8.35</td><td><span class="lw-badge lw-fail">Worst ✗ — overweight long end</span></td></tr>
+                </tbody>
+              </table>
+              <div class="lw-body" style="margin-top:8px">Portfolio B wins because 10yr KRD (2.85) is far below the index (7.25) — it loses much less when long rates rise. Portfolio C would be destroyed — it has more long-end sensitivity than the index.</div>
+            </div>
+          </div>
+
+          <!-- ══ TAB 5: SWAPTIONS ══ -->
+          <div id="ycs-swaptions" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-title">Swaption fundamentals — what you own</div>
+              <div class="lw-body">A swaption gives you the <span class="lw-hl">right but not obligation</span> to enter into a swap at a pre-agreed fixed rate on a future date.</div>
+              <table class="lw-table" style="margin-top:10px">
+                <thead><tr><th>Type</th><th>Right to…</th><th>Exercise when…</th><th>Rate view</th><th>Duration effect</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="lw-hl">Receiver swaption</span></td><td>Receive fixed, pay floating</td><td>Rates fall (fixed rate you receive &gt; market)</td><td><span class="lw-badge lw-pass">Bullish (rates fall)</span></td><td>Long duration when exercised</td></tr>
+                  <tr><td><span class="lw-hl">Payer swaption</span></td><td>Pay fixed, receive floating</td><td>Rates rise (fixed rate you pay &lt; market)</td><td><span class="lw-badge lw-fail">Bearish (rates rise)</span></td><td>Short duration when exercised</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Long vs short swaption positions</div>
+              <table class="lw-table">
+                <thead><tr><th>Position</th><th>You…</th><th>Max loss</th><th>Max gain</th></tr></thead>
+                <tbody>
+                  <tr><td>Long receiver swaption</td><td>Pay premium upfront</td><td>Premium paid</td><td>Unlimited (if rates fall far)</td></tr>
+                  <tr><td>Short receiver swaption</td><td>Collect premium</td><td>Unlimited</td><td>Premium collected</td></tr>
+                  <tr><td>Long payer swaption</td><td>Pay premium upfront</td><td>Premium paid</td><td>Unlimited (if rates rise far)</td></tr>
+                  <tr><td>Short payer swaption</td><td>Collect premium</td><td>Unlimited</td><td>Premium collected</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Cook example — downward parallel shift 50bps</div>
+              <div class="lw-body">Cook expects rates to fall. She wants to benefit.
+                <span class="lw-rule"><span class="lw-hl">Long receiver swaption</span> = right to receive fixed. If rates fall, she exercises and receives an above-market fixed rate. The swaption gains value as rates fall. <span class="lw-green">Correct position ✓</span></span>
+                <span class="lw-rule"><span class="lw-red">Short receiver swaption</span> = she sold the right to someone else. If rates fall, the counterparty exercises against her — she loses. Wrong direction.</span>
+              </div>
+            </div>
+
+            <div class="lw-trap">The most common exam trap: confusing which swaption benefits from which rate direction. Anchor it to the underlying swap logic — receiver swaption = you want to receive fixed = you want rates to fall so your fixed rate looks attractive. Payer swaption = you want to pay fixed = you want rates to rise so paying the lower locked-in fixed rate is valuable.</div>
+
+            <div class="lw-card">
+              <div class="lw-title">Steepening trade with swaptions — summary</div>
+              <div class="lw-body">
+                <span class="lw-rule">Steepening = long rates rise, short rates fall</span>
+                <span class="lw-rule"><span class="lw-hl">Long payer swaption at 30yr</span> → right to pay fixed at 30yr → profits when 30yr rates rise ✓</span>
+                <span class="lw-rule"><span class="lw-hl">Long call on 2yr bond</span> → right to buy 2yr bond → profits when 2yr bond price rises = 2yr rates fall ✓</span>
+                <span class="lw-rule">Combined = pure steepening bet with limited downside (premium paid)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══ TAB 6: TOTAL RETURN FORMULA ══ -->
+          <div id="ycs-totalreturn" class="lw-panel">
+            <div class="lw-card">
+              <div class="lw-title">The full expected return formula</div>
+              <div class="lw-fl">E(R) = Rolldown return
+       + (−Duration × Δyield)
+       + (0.5 × Convexity × Δyield²)
+       + ΔFX (if unhedged foreign bond)</div>
+              <div class="lw-trap">Never drop the convexity term — even if the yield move seems small. The exam tests whether you include it. With 50bps move it's tiny (0.02%) but it's the difference between answer choices.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Component 1 — Rolldown return</div>
+              <div class="lw-body">The price appreciation from a bond "rolling down" an upward-sloping stable yield curve as time passes. A 2-year bond becomes a 1-year bond after one year — and since 1-year yields are lower, its price rises.</div>
+              <div class="lw-fl">Rolldown = (Expected price in 1yr − Price today) / Price today
+Example: (98.75 − 97.00) / 97.00 = 1.804%</div>
+              <div class="lw-info">The expected price in 1yr assumes an <em>unchanged</em> yield curve — it is the price the bond would have if it simply aged one year with no rate moves. It is given in the exhibit, not calculated from scratch.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Component 2 — Duration + Convexity price effect</div>
+              <div class="lw-fl">Price effect = (−Duration × Δyield) + (0.5 × Convexity × Δyield²)
+
+Example (bullet, −50bps shift):
+= (−4.50 × −0.0050) + (0.5 × 17.0 × 0.0050²)
+= +2.250% + 0.021%
+= 2.271%</div>
+              <div class="lw-body">Use the <span class="lw-hl">expected duration and convexity in 1 year</span> (from exhibit), not today's values. Δyield is negative for rate falls. Always convert bps to decimals: 50bps = 0.0050.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Component 3 — Currency effect</div>
+              <div class="lw-body">
+                <span class="lw-rule">If the foreign currency <span class="lw-hl">appreciates</span> vs your home currency → add positive FX return</span>
+                <span class="lw-rule">If the foreign currency <span class="lw-hl">depreciates</span> vs your home currency → subtract FX loss</span>
+                <span class="lw-rule">Cook example: USD depreciates against EUR by 0.75% → USD-denominated returns lose 0.75% when converted to EUR → <span class="lw-red">−0.75%</span></span>
+              </div>
+              <div class="lw-trap">Watch the direction carefully. "USD depreciates against EUR" = your USD bonds are worth less in EUR terms = negative FX contribution. Don't flip the sign.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Cook worked example — full calculation</div>
+              <table class="lw-table">
+                <thead><tr><th>Component</th><th>Bullet</th><th>Barbell</th></tr></thead>
+                <tbody>
+                  <tr><td>Rolldown</td><td>(98.75−97.00)/97.00 = <span class="lw-green">1.804%</span></td><td>(99.75−97.75)/97.75 = <span class="lw-green">2.046%</span></td></tr>
+                  <tr><td>Duration effect (−D × −0.005)</td><td>−4.50 × −0.005 = <span class="lw-green">+2.250%</span></td><td>−4.45 × −0.005 = <span class="lw-green">+2.225%</span></td></tr>
+                  <tr><td>Convexity effect (0.5×Cx×0.005²)</td><td>0.5×17.0×0.000025 = <span class="lw-green">+0.021%</span></td><td>0.5×40.0×0.000025 = <span class="lw-green">+0.050%</span></td></tr>
+                  <tr><td>FX (USD depreciates vs EUR)</td><td><span class="lw-red">−0.750%</span></td><td><span class="lw-red">−0.750%</span></td></tr>
+                  <tr style="border-top:1px solid var(--border)"><td><strong>Total</strong></td><td><strong>3.325% ≈ 3.32%</strong></td><td><strong>3.571% ≈ 3.58%</strong></td></tr>
+                </tbody>
+              </table>
+              <div class="lw-body" style="margin-top:8px">Barbell wins because of <span class="lw-hl">higher convexity (40 vs 17)</span> and <span class="lw-hl">higher rolldown (2.046% vs 1.804%)</span>. In a falling rate environment, convexity advantage is amplified.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Rolldown strategy — why it works</div>
+              <div class="lw-body">Buy further out on an upward-sloping curve. As time passes the bond rolls toward a lower-yield, higher-price point. You earn rolldown return on top of yield — as long as the curve stays stable and upward-sloping. This is why the 2-year zero-coupon (bought at 96.1169, expected to be worth 99.0090 in a year) earns more than the 1-year zero-coupon in the Thai bond example.</div>
+            </div>
+          </div>
+
+          <!-- ══ TAB 7: OTHER CONCEPTS ══ -->
+          <div id="ycs-misc" class="lw-panel">
+
+            <div class="lw-card">
+              <div class="lw-title">BPV / DV01 — same thing, different names</div>
+              <div class="lw-body">Dollar change in portfolio value for a 1bp (0.01%) move in rates.</div>
+              <div class="lw-fl">BPV = Modified duration × Market value × 0.0001
+Example: Duration 5 · MV $10M → BPV = 5 × $10M × 0.0001 = $5,000 per bp</div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">Why it matters:</span> Duration is a percentage — you can't subtract durations across portfolios of different sizes. BPV puts everything in the same unit (dollars per bp) so arithmetic works.</span>
+                <span class="lw-rule"><span class="lw-hl">Hedging:</span> Nf = (BPV_target − BPV_portfolio) / BPV_futures</span>
+                <span class="lw-rule"><span class="lw-hl">Immunization:</span> match asset BPV to liability BPV so a 1bp move hits both equally</span>
+              </div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Negative convexity — callable bonds</div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">At high yields:</span> call is out of the money, callable bond behaves like option-free bond — normal positive convexity.</span>
+                <span class="lw-rule"><span class="lw-hl">At low yields:</span> call is deep in the money. Issuer's right to call becomes very valuable. Market knows bond may be called → price stops rising at normal pace → price-yield curve bends the wrong way → <span class="lw-red">negative convexity</span>.</span>
+                <span class="lw-rule"><span class="lw-hl">The asymmetry:</span> less upside when rates fall (call caps price) but full downside when rates rise (call not exercised). You keep all the risk, lose some of the reward.</span>
+              </div>
+              <div class="lw-trap">Why callable bonds must offer a higher yield: compensation for this asymmetric payoff. You are short the call option → you must be paid for it.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Forward rate bias</div>
+              <div class="lw-body">
+                <span class="lw-rule"><span class="lw-hl">What theory says (UIP):</span> high-yield currency should depreciate by exactly the yield differential — no free lunch.</span>
+                <span class="lw-rule"><span class="lw-hl">What actually happens:</span> high-yield currencies depreciate by less than predicted, or not at all. The yield advantage is not fully offset.</span>
+                <span class="lw-rule"><span class="lw-hl">Implication:</span> go unhedged into high-yielding currencies to earn excess returns. Amplify by borrowing in low-yield currencies (carry trade).</span>
+              </div>
+              <div class="lw-info">Carry trade = borrow in low-yield currency (JPY at 0.5%) · invest in high-yield currency (BRL at 10%) · pocket the spread. Works because forward rate bias means the low-yield currency doesn't appreciate enough to wipe out the carry.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Stable yield curve — what generates excess return</div>
+              <div class="lw-body">When rates don't move, you cannot earn excess return from predicting rate direction. The only way to beat the benchmark is to earn <span class="lw-hl">more carry</span>.</div>
+              <table class="lw-table">
+                <thead><tr><th>Strategy</th><th>Works under stable curve?</th><th>Why</th></tr></thead>
+                <tbody>
+                  <tr><td>Increase duration above benchmark</td><td><span class="lw-badge lw-pass">Yes</span></td><td>Longer bonds earn more yield + rolldown without rate rise penalty</td></tr>
+                  <tr><td>Add leverage</td><td><span class="lw-badge lw-pass">Yes</span></td><td>Borrow at short rates, invest in longer bonds, pocket the spread</td></tr>
+                  <tr><td>Reduce duration below benchmark</td><td><span class="lw-badge lw-fail">No — least likely</span></td><td>Shorter bonds earn less yield, no rate protection needed, guaranteed underperformance vs benchmark</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-trap">Reducing duration only makes sense if you expect rates to RISE — then shorter portfolio loses less than benchmark. Under a stable curve it just sacrifices yield for nothing.</div>
+            </div>
+
+          </div>
+
+          <script>
+            function ycTab(id, btn) {
+              document.querySelectorAll('#ycsWidget .lw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#ycTabBar .lw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('ycs-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+          </script>
+        </div>
+
         <!-- empty state -->
         <div id="notesEmpty" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted);">
           <div style="font-size:28px">📝</div>
@@ -784,7 +1612,7 @@ const DEFAULT_DECK = {
     { name:"Derivatives",        subtopics:["Options Strategies","Futures Hedge","Swaps","Risk Measures"] },
     { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
-    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Index-Based Strategies","Active Equity","Fixed Income"] },
+    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Index-Based Strategies","Active Equity","Fixed Income"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
     { name:"Command Words",      subtopics:["Templates","Thin vs Full"] },
   ],
@@ -1468,50 +2296,62 @@ function buildNotesTree() {
   });
 }
 
-let ldiWidgetVisible = false;
+let currentWidgetId = null;
 
-function toggleLdiWidget() {
-  ldiWidgetVisible = !ldiWidgetVisible;
-  const widget = document.getElementById('ldiWidget');
-  const ed = document.getElementById('noteEditor');
-  const toolbar = document.getElementById('noteToolbar');
-  const btn = document.getElementById('widgetToggleBtn');
-  if (ldiWidgetVisible) {
-    widget.style.display = 'block';
-    ed.style.display = 'none';
-    toolbar.style.display = 'none';
-    btn.style.color = 'var(--gold)';
-    btn.style.borderColor = 'var(--gold)';
-  } else {
+function toggleWidget(widgetId) {
+  if (!widgetId) return;
+  var widget = document.getElementById(widgetId);
+  var ed = document.getElementById('noteEditor');
+  var toolbar = document.getElementById('noteToolbar');
+  var btn = document.getElementById('widgetToggleBtn');
+  if (widget.style.display !== 'none') {
     widget.style.display = 'none';
     ed.style.display = 'block';
     toolbar.style.display = 'flex';
     btn.style.color = '';
     btn.style.borderColor = '';
+    currentWidgetId = null;
     ed.focus();
+  } else {
+    ['ldiWidget','ycsWidget'].forEach(function(id) {
+      var el = document.getElementById(id); if (el) el.style.display = 'none';
+    });
+    widget.style.display = 'block';
+    ed.style.display = 'none';
+    toolbar.style.display = 'none';
+    btn.style.color = 'var(--gold)';
+    btn.style.borderColor = 'var(--gold)';
+    currentWidgetId = widgetId;
   }
 }
 
 function openNote(key, topic, subtopic) {
   if (currentNoteKey) flushNote(currentNoteKey);
   currentNoteKey = key;
-  ldiWidgetVisible = false;
+  currentWidgetId = null;
   document.getElementById('notesTitle').textContent = `${topic} → ${subtopic}`;
   document.getElementById('notesEmpty').style.display = 'none';
 
-  const isLDI = (key === 'PM Pathway||Liab-Driven Strategies');
-  const widget = document.getElementById('ldiWidget');
-  const ed = document.getElementById('noteEditor');
-  const toolbar = document.getElementById('noteToolbar');
-  const btn = document.getElementById('widgetToggleBtn');
+  var WIDGET_MAP = {
+    'PM Pathway||Liab-Driven Strategies': 'ldiWidget',
+    'PM Pathway||Yield Curve Strategies': 'ycsWidget'
+  };
+  var widgetId = WIDGET_MAP[key];
 
-  // Always show editor — widget available via toggle button for LDI
-  widget.style.display = 'none';
+  ['ldiWidget','ycsWidget'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.style.display = 'none';
+  });
+
+  var ed = document.getElementById('noteEditor');
+  var toolbar = document.getElementById('noteToolbar');
+  var btn = document.getElementById('widgetToggleBtn');
+
   ed.style.display = 'block';
   toolbar.style.display = 'flex';
-  btn.style.display = isLDI ? 'inline-block' : 'none';
   btn.style.color = '';
   btn.style.borderColor = '';
+  btn.style.display = widgetId ? 'inline-block' : 'none';
+  if (widgetId) { btn.onclick = function() { toggleWidget(widgetId); }; }
 
   ed.innerHTML = notes[key] || '<p><br></p>';
   ed.focus();
