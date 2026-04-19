@@ -1065,416 +1065,1512 @@ Example: Duration 5 · MV $10M → BPV = 5 × $10M × 0.0001 = $5,000 per bp</di
           </script>
         </div>
 
-        <!-- ── Yield Curve Strategies Interactive Widget ── -->
-        <div id="ycsWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+        <!-- ── Credit Strategies Interactive Study Widget ── -->
+        <div id="creditWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            /* Credit widget — harmonized with LDI widget visual language, prefix cw- to avoid collisions */
+            .cw-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+            .cw-tab{background:none;border:1px solid var(--border);border-radius:4px;padding:5px 12px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+            .cw-tab.active{background:rgba(212,160,23,.1);border-color:var(--gold);color:var(--gold);font-weight:500}
+            .cw-panel{display:none}.cw-panel.active{display:block}
+            .cw-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:13px 16px;margin-bottom:10px}
+            .cw-title{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text);margin-bottom:7px;letter-spacing:.04em}
+            .cw-body{font-size:12.5px;line-height:1.75;color:#C9D1D9}
+            .cw-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:3px;font-weight:500;font-family:var(--mono);white-space:nowrap}
+            .cw-pass{background:rgba(46,160,67,.15);color:#3DD68C;border:1px solid rgba(46,160,67,.3)}
+            .cw-fail{background:rgba(192,57,43,.15);color:#FF7B72;border:1px solid rgba(192,57,43,.3)}
+            .cw-warn{background:rgba(212,104,10,.15);color:#F0A04B;border:1px solid rgba(212,104,10,.3)}
+            .cw-blue{background:rgba(56,139,253,.12);color:#79C0FF;border:1px solid rgba(56,139,253,.3)}
+            .cw-hl{color:#D4A017;font-weight:500}
+            .cw-green{color:#3DD68C;font-weight:500}
+            .cw-red{color:#FF7B72;font-weight:500}
+            .cw-orange{color:#F0A04B;font-weight:500}
+            .cw-rule{border-left:2px solid #8A6810;padding-left:9px;margin:5px 0;font-size:12px;line-height:1.65;display:block}
+            .cw-fl{font-family:var(--mono);font-size:11px;color:#79C0FF;background:rgba(56,139,253,.08);padding:6px 10px;border-radius:3px;margin:7px 0;line-height:1.75;display:block;white-space:pre-wrap}
+            .cw-trap{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.25);border-radius:4px;padding:9px 13px;margin:8px 0;font-size:12px;color:#FF7B72;line-height:1.65}
+            .cw-tip{background:rgba(46,160,67,.1);border:1px solid rgba(46,160,67,.25);border-radius:4px;padding:9px 13px;margin:8px 0;font-size:12px;color:#3DD68C;line-height:1.65}
+            .cw-info{background:rgba(56,139,253,.08);border:1px solid rgba(56,139,253,.2);border-radius:4px;padding:9px 13px;margin:8px 0;font-size:12px;color:#79C0FF;line-height:1.65}
+            .cw-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+            .cw-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:8px}
+            .cw-table th{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:7px 8px;border-bottom:1px solid var(--border);text-align:left}
+            .cw-table td{padding:7px 8px;border-bottom:1px solid var(--border);color:#C9D1D9;vertical-align:top;font-size:12px}
+            .cw-table tr:last-child td{border-bottom:none}
+            .cw-section{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+            .cw-svg-wrap{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:10px;overflow-x:auto}
 
-          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#D4A017;margin-bottom:12px">Yield Curve Strategies · Interactive Study Map</div>
+            /* cycle cards */
+            .cw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
+            .cw-scard{border-radius:6px;border:1px solid var(--border);padding:12px 11px;cursor:pointer;transition:all .2s;background:var(--surface)}
+            .cw-scard:hover{background:var(--surface2)}
+            .cw-sname{font-family:var(--mono);font-size:11px;font-weight:500;margin-bottom:8px;letter-spacing:.04em}
+            .cw-ssub{font-size:10px;color:var(--muted);margin-bottom:3px;font-family:var(--mono);letter-spacing:.05em}
+            .cw-bg{background:rgba(46,160,67,.15);color:#3DD68C;border:1px solid rgba(46,160,67,.3)}
+            .cw-br{background:rgba(192,57,43,.15);color:#FF7B72;border:1px solid rgba(192,57,43,.3)}
+            .cw-bw{background:rgba(212,104,10,.15);color:#F0A04B;border:1px solid rgba(212,104,10,.3)}
+            .cw-bn{background:rgba(56,139,253,.1);color:#79C0FF;border:1px solid rgba(56,139,253,.25)}
+            .cw-detail{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:13px 16px;display:none;margin-top:10px}
+            .cw-dtitle{font-family:var(--mono);font-size:12px;font-weight:500;margin-bottom:10px;letter-spacing:.04em}
+            .cw-drow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px}
+            .cw-drow:last-child{border-bottom:none}
+            .cw-dlabel{color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.04em}
+            .cw-cwrap{background:var(--surface2);border-radius:4px;padding:10px;margin-top:10px}
+            .cw-ctitle{font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em}
+            .cw-crow{display:flex;align-items:center;gap:10px;margin-bottom:6px;font-size:11px}
+            .cw-clabel{color:var(--muted);min-width:24px;font-weight:500;font-family:var(--mono);font-size:10px}
+            .cw-memo{background:rgba(212,104,10,.08);border:1px solid rgba(212,104,10,.2);border-radius:4px;padding:9px 12px;margin-top:10px;font-size:12px;color:#F0A04B;line-height:1.65}
 
-          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px" id="ycTabBar">
-            <button class="lw-tab active" onclick="ycTab('swaps',this)">Swaps &amp; Carry</button>
-            <button class="lw-tab" onclick="ycTab('steepening',this)">Bull/Bear Steepening</button>
-            <button class="lw-tab" onclick="ycTab('2s10s',this)">2s10s Drivers</button>
-            <button class="lw-tab" onclick="ycTab('krd',this)">Key Rate Duration</button>
-            <button class="lw-tab" onclick="ycTab('swaptions',this)">Swaptions</button>
-            <button class="lw-tab" onclick="ycTab('totalreturn',this)">Total Return Formula</button>
-            <button class="lw-tab" onclick="ycTab('misc',this)">Other Concepts</button>
+            /* sliders / calculators */
+            .cw-sl-row{display:flex;align-items:center;gap:12px;margin:8px 0}
+            .cw-sl-lbl{font-family:var(--mono);font-size:10px;color:var(--muted);min-width:100px;letter-spacing:.04em}
+            .cw-sl-val{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--text);min-width:52px;text-align:right}
+            #creditWidget input[type=range]{accent-color:var(--gold);flex:1}
+            #creditWidget select{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:11px;padding:5px 8px;border-radius:4px;outline:none;flex:1}
+            .cw-sim{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:12px;margin-top:10px}
+            .cw-sim-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px}
+            .cw-sim-row:last-child{border-bottom:none}
+            .cw-sim-lbl{color:var(--muted);font-family:var(--mono);font-size:10px}
+            .cw-sim-val{font-family:var(--mono);font-weight:500;color:var(--text)}
+            .cw-zbar{height:12px;border-radius:6px;background:var(--surface2);overflow:visible;margin:10px 0 4px;border:1px solid var(--border);position:relative}
+            .cw-zfill{height:100%;border-radius:6px;transition:width .4s,background .4s}
+            .cw-zmark{position:absolute;top:-3px;height:18px;width:1.5px;background:var(--muted)}
+            .cw-frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 6px}
+            .cw-frac-n{border-bottom:1.5px solid var(--text);padding:0 4px 3px;font-size:12px}
+            .cw-frac-d{padding:3px 4px 0;font-size:12px}
+            .cw-par-bar{height:10px;background:var(--surface2);border-radius:5px;margin:10px 0 4px;position:relative;border:1px solid var(--border)}
+            .cw-par-mark{position:absolute;top:-4px;left:50%;width:2px;height:18px;background:var(--muted)}
+            .cw-par-fill{height:100%;border-radius:5px;transition:width .4s,background .4s}
+
+            /* strategies grid + badges */
+            .cw-strat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:8px 0}
+            .cw-strat-card{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:11px 13px}
+            .cw-strat-title{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+            .cw-strat-row{font-size:11.5px;color:#C9D1D9;padding:5px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+            .cw-strat-row:last-child{border-bottom:none}
+            .cw-buy-b{background:rgba(192,57,43,.15);color:#FF7B72;border:1px solid rgba(192,57,43,.3);padding:1px 7px;border-radius:3px;font-size:9px;font-family:var(--mono);font-weight:500;white-space:nowrap}
+            .cw-sell-b{background:rgba(46,160,67,.15);color:#3DD68C;border:1px solid rgba(46,160,67,.3);padding:1px 7px;border-radius:3px;font-size:9px;font-family:var(--mono);font-weight:500;white-space:nowrap}
+            .cw-stage-pill{display:inline-block;font-size:10px;padding:3px 10px;border-radius:12px;font-weight:500;margin-bottom:8px;font-family:var(--mono)}
+
+            /* curve trade SVG styles (used inside CDS Curve tab) */
+            .cw-leg{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;color:#C9D1D9}
+            .cw-leg:last-child{border-bottom:none}
+            .cw-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:10.5px;color:var(--muted);margin-bottom:10px;font-family:var(--mono)}
+            .cw-li{display:flex;align-items:center;gap:5px}
+
+            /* errors navigation */
+            .cw-err-nav{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+            .cw-err-pill{background:none;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:4px;cursor:pointer;font-family:var(--mono);font-size:10px;transition:all .15s}
+            .cw-err-pill.active{background:rgba(212,160,23,.1);border-color:var(--gold);color:var(--gold);font-weight:500}
+            .cw-err-item{display:none}
+            .cw-err-item.active{display:block}
+            .cw-etitle{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--text);margin-bottom:7px;display:flex;align-items:center;gap:8px;letter-spacing:.03em}
+            .cw-enum{background:rgba(192,57,43,.15);color:#FF7B72;border:1px solid rgba(192,57,43,.3);border-radius:3px;padding:2px 8px;font-family:var(--mono);font-size:10px;font-weight:500}
+            .cw-ebody{font-size:12px;line-height:1.7;color:#C9D1D9}
+            .cw-right{color:#3DD68C;font-weight:500}
+            .cw-wrong{color:#FF7B72;font-weight:500}
+
+            /* quiz buttons */
+            .cw-qbtn{background:rgba(212,160,23,.1);border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:9px 16px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;width:100%;margin-top:8px;transition:all .15s}
+            .cw-qbtn:hover{background:rgba(212,160,23,.18)}
+            .cw-nbtn{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:9px 16px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;flex:1;margin-top:8px;transition:all .15s}
+            .cw-nbtn:hover{border-color:var(--gold);color:var(--gold)}
+            .cw-reveal{background:var(--surface2);border-radius:4px;padding:11px 13px;margin:8px 0;font-size:12px;line-height:1.65}
+
+            /* exam questions */
+            .cw-cqt{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+            .cw-cqb{background:none;border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.05em;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+            .cw-cqb.active{background:rgba(212,160,23,.1);border-color:var(--gold);color:var(--gold);font-weight:500}
+            .cw-cqp{display:none}.cw-cqp.active{display:block}
+            .cw-cqcard{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin-bottom:10px}
+            .cw-cqnum{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+            .cw-cqq{font-size:12px;line-height:1.65;color:#C9D1D9;margin-bottom:10px}
+            .cw-cqopts{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+            .cw-cqopt{font-size:11.5px;padding:6px 10px;border-radius:4px;border:1px solid var(--border);color:#8B949E;line-height:1.5}
+            .cw-cqopt.correct{background:rgba(46,160,67,.1);border-color:rgba(46,160,67,.4);color:#3DD68C}
+            .cw-cqwhy{font-size:12px;line-height:1.65;color:#8B949E;border-left:2px solid #8A6810;padding-left:10px}
+            .cw-cqtrap{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.25);border-radius:4px;padding:8px 12px;font-size:11px;color:#FF7B72;line-height:1.6;margin-top:8px}
+            .cw-cqfl{font-family:var(--mono);font-size:10.5px;color:#79C0FF;background:rgba(56,139,253,.08);padding:6px 10px;border-radius:3px;margin:6px 0;line-height:1.75;display:block;white-space:pre-wrap}
+            .cw-bwrong{display:inline-block;font-size:8.5px;padding:2px 7px;border-radius:3px;font-weight:500;font-family:var(--mono);background:rgba(192,57,43,.15);color:#FF7B72;border:1px solid rgba(192,57,43,.3)}
+          </style>
+
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#D4A017;margin-bottom:12px">Credit Strategies · Interactive Study Map</div>
+
+          <div class="cw-tabs">
+            <button class="cw-tab active" onclick="cwTab('cycle',this)">Credit Cycle</button>
+            <button class="cw-tab" onclick="cwTab('rm',this)">Risk Models</button>
+            <button class="cw-tab" onclick="cwTab('cp',this)">CDS Pricing</button>
+            <button class="cw-tab" onclick="cwTab('dy',this)">Dynamic Strats</button>
+            <button class="cw-tab" onclick="cwTab('cds',this)">CDS Curve</button>
+            <button class="cw-tab" onclick="cwTab('frn',this)">FRN Duration</button>
+            <button class="cw-tab" onclick="cwTab('ee',this)">Exam Errors</button>
+            <button class="cw-tab" onclick="cwTab('eq',this)">All Questions</button>
           </div>
 
-          <!-- ══ TAB 1: SWAPS & CARRY ══ -->
-          <div id="ycs-swaps" class="lw-panel active">
-            <div class="lw-card">
-              <div class="lw-row"><div class="lw-title">Receive-fixed swap — two return components</div><span class="lw-badge lw-blue">Duration extension tool</span></div>
-              <div class="lw-body">
-                <span class="lw-rule"><span class="lw-hl">What it does:</span> Synthetically increases portfolio duration. You receive the fixed rate and pay MRR (floating). No bond purchase needed — pure rate exposure.</span>
-                <span class="lw-rule"><span class="lw-hl">Component 1 — Carry:</span> Fixed rate − MRR = daily accrual. Accrues daily, settled periodically (quarterly/semi-annually). Can be positive or negative.</span>
-                <span class="lw-rule"><span class="lw-hl">Component 2 — Mark-to-market:</span> As rates move, the swap's present value changes. Not a cash flow — only realized if you exit. Rates fall → swap gains value. Rates rise → swap loses value.</span>
+          <!-- ══════════════════════════════
+               TAB 1 · CREDIT CYCLE
+          ══════════════════════════════ -->
+          <div id="cw-cycle" class="cw-panel active">
+            <p style="font-size:11.5px;color:var(--muted);margin-bottom:10px">Click any stage for details — defaults, spread direction, curve shape.</p>
+            <div class="cw-grid">
+              <div class="cw-scard" id="cw-c-early" onclick="cwSel('early')">
+                <div class="cw-sname" style="color:#3DD68C">Early expansion</div>
+                <div class="cw-ssub">Defaults</div><span class="cw-badge cw-bg">Peak → Falling</span>
+                <div class="cw-ssub" style="margin-top:5px">Spread level</div><span class="cw-badge cw-bn">Stable</span>
               </div>
-              <div class="lw-metrics">
-                <div class="lw-metric"><div class="lw-metric-l">Carry settlement</div><div class="lw-metric-v">Periodic (quarterly)</div></div>
-                <div class="lw-metric"><div class="lw-metric-l">MTM settlement</div><div class="lw-metric-v">On exit only</div></div>
-                <div class="lw-metric"><div class="lw-metric-l">Duration effect</div><div class="lw-metric-v good">Increases ✓</div></div>
+              <div class="cw-scard" id="cw-c-late" onclick="cwSel('late')">
+                <div class="cw-sname" style="color:#F0A04B">Late expansion</div>
+                <div class="cw-ssub">Defaults</div><span class="cw-badge cw-bw">Falling</span>
+                <div class="cw-ssub" style="margin-top:5px">Spread level</div><span class="cw-badge cw-bw">Falling</span>
               </div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Carry: can be positive OR negative</div>
-              <table class="lw-table">
-                <thead><tr><th>Condition</th><th>Carry</th><th>When it happens</th></tr></thead>
-                <tbody>
-                  <tr><td>Fixed rate &gt; MRR</td><td><span class="lw-badge lw-pass">Positive ✓</span></td><td>Normal upward-sloping curve — you earn the spread daily</td></tr>
-                  <tr><td>MRR &gt; Fixed rate</td><td><span class="lw-badge lw-fail">Negative ✗</span></td><td>Inverted curve or aggressive hike cycle — you pay out the difference</td></tr>
-                </tbody>
-              </table>
-              <div class="lw-trap">Worst case for receive-fixed: rates rise sharply → carry turns negative AND MTM loses value simultaneously. You lose on both legs.</div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Pay-fixed swap — the mirror image</div>
-              <div class="lw-body">
-                <span class="lw-rule">You pay the fixed rate and receive MRR. Synthetically <span class="lw-hl">reduces or negatives</span> portfolio duration.</span>
-                <span class="lw-rule">Profits when rates <span class="lw-hl">rise</span> (MTM gain) and when MRR &gt; fixed rate (positive carry in inverted curve).</span>
-                <span class="lw-rule">A bearish manager uses pay-fixed swaps (or shorts futures) to push total portfolio duration negative.</span>
+              <div class="cw-scard" id="cw-c-peak" onclick="cwSel('peak')">
+                <div class="cw-sname" style="color:#FF7B72">Peak</div>
+                <div class="cw-ssub">Defaults</div><span class="cw-badge cw-bn">Stable</span>
+                <div class="cw-ssub" style="margin-top:5px">Spread level</div><span class="cw-badge cw-br">Rising</span>
+              </div>
+              <div class="cw-scard" id="cw-c-contraction" onclick="cwSel('contraction')">
+                <div class="cw-sname" style="color:#C0392B">Contraction</div>
+                <div class="cw-ssub">Defaults</div><span class="cw-badge cw-br">Rising</span>
+                <div class="cw-ssub" style="margin-top:5px">Spread level</div><span class="cw-badge cw-br">Rising sharply</span>
               </div>
             </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Negative portfolio duration — how to achieve it</div>
-              <div class="lw-body">Bonds always have positive duration — you cannot get negative duration from physical bonds alone. You need derivatives sized large enough to <span class="lw-hl">more than offset</span> the positive duration of the bond holdings.</div>
-              <div class="lw-fl">Tools: pay-fixed swaps · short bond futures · buy bond puts
-Size the notional so: |Derivative duration| > Portfolio bond duration
-Net duration = Bond duration − Derivative duration offset → negative</div>
-              <div class="lw-info">If duration = −2: rates rise 100bps → portfolio <span class="lw-green">gains</span> ~2%. Behaves like a short bond position.</div>
-            </div>
+            <div class="cw-detail" id="cw-cycle-detail"></div>
           </div>
 
-          <!-- ══ TAB 2: BULL/BEAR STEEPENING ══ -->
-          <div id="ycs-steepening" class="lw-panel">
-            <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Identification is on the government curve. Implementation uses swaps and futures.</p>
-
-            <div class="lw-svg-wrap">
-              <svg width="100%" viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <marker id="ycar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </marker>
-                </defs>
-                <!-- LEFT: Bull Steepening -->
-                <text x="110" y="20" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Bull Steepening</text>
-                <text x="110" y="36" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="10">Short end falls · Long end stable</text>
-                <!-- base curve -->
-                <path d="M20 200 Q110 160 200 140" fill="none" stroke="#7D8590" stroke-width="1.5" stroke-dasharray="4 3"/>
-                <!-- new curve: short end down, long end same -->
-                <path d="M20 220 Q110 175 200 140" fill="none" stroke="#3DD68C" stroke-width="2"/>
-                <!-- arrow at short end -->
-                <line x1="38" y1="198" x2="38" y2="218" stroke="#3DD68C" stroke-width="1.5" marker-end="url(#ycar)"/>
-                <text x="20" y="250" fill="#7D8590" font-family="monospace" font-size="10">Short ↓</text>
-                <text x="180" y="250" fill="#7D8590" font-family="monospace" font-size="10">Long ~</text>
-                <text x="110" y="270" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10">Driven by: CB cuts / recession fears</text>
-                <rect x="30" y="280" width="160" height="16" rx="3" fill="rgba(46,160,67,0.15)" stroke="rgba(46,160,67,0.4)" stroke-width="0.5"/>
-                <text x="110" y="292" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="9">Buy short end · Neutral/short long end</text>
-
-                <!-- divider -->
-                <line x1="230" y1="10" x2="230" y2="298" stroke="#2A3441" stroke-width="1"/>
-
-                <!-- RIGHT: Bear Steepening -->
-                <text x="445" y="20" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Bear Steepening</text>
-                <text x="445" y="36" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="10">Long end rises · Short end stable</text>
-                <!-- base curve -->
-                <path d="M248 200 Q380 165 628 148" fill="none" stroke="#7D8590" stroke-width="1.5" stroke-dasharray="4 3"/>
-                <!-- new curve: long end up, short end same -->
-                <path d="M248 200 Q380 160 628 128" fill="none" stroke="#FF7B72" stroke-width="2"/>
-                <!-- arrow at long end -->
-                <line x1="610" y1="148" x2="610" y2="130" stroke="#FF7B72" stroke-width="1.5" marker-end="url(#ycar)"/>
-                <text x="248" y="250" fill="#7D8590" font-family="monospace" font-size="10">Short ~</text>
-                <text x="590" y="250" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="10">Long ↑</text>
-                <text x="445" y="270" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10">Driven by: inflation LT · fiscal risk · supply</text>
-                <rect x="320" y="280" width="250" height="16" rx="3" fill="rgba(192,57,43,0.15)" stroke="rgba(192,57,43,0.4)" stroke-width="0.5"/>
-                <text x="445" y="292" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="9">Short long end · Neutral/long short end</text>
-              </svg>
+          <!-- ══════════════════════════════
+               TAB 2 · RISK MODELS
+          ══════════════════════════════ -->
+          <div id="cw-rm" class="cw-panel">
+            <div class="cw-tabs" style="margin-bottom:12px">
+              <button class="cw-tab active" onclick="cwRmGo('overview',this)">Overview</button>
+              <button class="cw-tab" onclick="cwRmGo('structural',this)">Structural</button>
+              <button class="cw-tab" onclick="cwRmGo('reduced',this)">Reduced form</button>
+              <button class="cw-tab" onclick="cwRmGo('zscore',this)">Altman z-score</button>
             </div>
 
-            <div class="lw-card">
-              <div class="lw-title">How to identify: watch 2s10s spread on the government curve</div>
-              <div class="lw-body">
-                <span class="lw-rule">2s10s = 10-year yield − 2-year yield. Spread widening = steepening. Spread narrowing = flattening.</span>
-                <span class="lw-rule"><span class="lw-hl">Identify bull vs bear:</span> decompose what each end actually did. If 2yr fell 30bps and 10yr unchanged → bull steepening. If 10yr rose 30bps and 2yr unchanged → bear steepening.</span>
+            <div id="cw-rm-overview" class="cw-panel active">
+              <div class="cw-card">
+                <div class="cw-title">Two approaches to credit risk modelling</div>
+                <div class="cw-body">Both estimate probability of default (POD) and derive fair credit spreads — from different angles.</div>
+              </div>
+              <table class="cw-table">
+                <thead><tr><th></th><th>Structural</th><th>Reduced form</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="cw-hl">Core idea</span></td><td>Asset value falls below default threshold</td><td>Macro + financials → default intensity</td></tr>
+                  <tr><td><span class="cw-hl">Also called</span></td><td>Distance to default models</td><td>Intensity models</td></tr>
+                  <tr><td><span class="cw-hl">Data source</span></td><td>Equity market data (price, vol, mkt cap)</td><td>Financial ratios, macro variables</td></tr>
+                  <tr><td><span class="cw-hl">Output</span></td><td>Daily POD + implied fair spread</td><td>Default intensity → fair spread</td></tr>
+                  <tr><td><span class="cw-hl">Examples</span></td><td>Moody's EDF, Bloomberg DRSK</td><td>Altman z-score</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div id="cw-rm-structural" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">Core intuition</div>
+                <div class="cw-body">A firm defaults when asset value falls below liabilities. Structural models track the asset value process and estimate the probability it crosses below the default threshold.</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Why "distance to default"?</div>
+                <div class="cw-body">The model measures how far asset value is from the default threshold, in units of asset volatility.</div>
+                <div class="cw-fl">Distance to default = (Asset value − Default threshold) / Asset volatility
+
+Higher distance → lower POD → tighter credit spread
+Lower distance  → higher POD → wider credit spread</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Inputs — inferred from equity markets</div>
+                <div class="cw-body">Asset value and volatility are unobservable. Equity = call option on firm assets → infer from equity data.</div>
+                <span class="cw-rule">Market capitalization → proxy for asset value</span>
+                <span class="cw-rule">Equity price volatility → proxy for asset volatility</span>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Examples</div>
+                <span class="cw-rule"><span class="cw-hl">Moody's EDF</span> — Expected Default Frequency, daily POD estimates</span>
+                <span class="cw-rule"><span class="cw-hl">Bloomberg DRSK</span> — daily POD + implied fair credit spreads</span>
               </div>
             </div>
 
-            <div class="lw-card">
-              <div class="lw-title">Implementation tools — steepening trade</div>
-              <table class="lw-table">
-                <thead><tr><th>View</th><th>Short end position</th><th>Long end position</th><th>Net duration</th></tr></thead>
-                <tbody>
-                  <tr><td><span class="lw-badge lw-pass">Bull steepening</span></td><td>Receive-fixed 2yr swap OR long 2yr futures</td><td>Pay-fixed 10yr OR short 10yr futures</td><td>Roughly neutral</td></tr>
-                  <tr><td><span class="lw-badge lw-fail">Bear steepening</span></td><td>Neutral or long short end</td><td>Pay-fixed 10yr OR short 10yr futures OR buy 30yr payer swaption</td><td>Roughly neutral</td></tr>
-                </tbody>
-              </table>
+            <div id="cw-rm-reduced" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">Core intuition</div>
+                <div class="cw-body">Rather than modelling asset value, reduced form models look at statistical relationships between macro conditions, issuer financials, and observed defaults. Default is a surprise event whose intensity varies with observable inputs.</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">What they estimate</div>
+                <div class="cw-body">A <span class="cw-hl">default intensity</span> — probability of default per unit time — as a function of observable variables.</div>
+                <div class="cw-fl">Fair credit spread ≈ Default intensity × LGD</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Inputs used</div>
+                <span class="cw-rule">Macroeconomic conditions (GDP growth, credit conditions)</span>
+                <span class="cw-rule">Issuer financial ratios (leverage, coverage, profitability)</span>
+                <span class="cw-rule">Industry and sector characteristics</span>
+              </div>
+              <div class="cw-info">Key difference: reduced form models don't need equity market data — works for private firms, sovereigns, any issuer without listed equity.</div>
             </div>
 
-            <div class="lw-card">
-              <div class="lw-title">Key rate duration positioning for bear steepening (Boyd example)</div>
-              <div class="lw-body">Bear steepening = long rates rise → you want <span class="lw-hl">low KRD at the long end</span> relative to the index. Portfolio B had 10yr KRD of 2.85 vs index 7.25 — significantly underweight the long end. Correct position. Portfolio C was overweight the long end (KRD 8.35 vs 7.25) — would underperform badly.</div>
-            </div>
+            <div id="cw-rm-zscore" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">Altman z-score formula</div>
+                <div class="cw-fl">z = (1.2×A) + (1.4×B) + (3.3×C) + (0.6×D) + (0.999×E)
 
-            <div class="lw-tip">Duration-neutral discipline: a steepening trade is a view on curve <em>shape</em>, not overall rate level. Keep total duration close to benchmark. Only the distribution across maturities changes.</div>
-
-            <div class="lw-card">
-              <div class="lw-title">Options-based steepening trade</div>
-              <table class="lw-table">
-                <thead><tr><th>Trade</th><th>Long end</th><th>Short end</th><th>View</th></tr></thead>
-                <tbody>
-                  <tr><td>Steepening</td><td>Buy <span class="lw-hl">payer swaption</span> (right to pay fixed at 30yr)</td><td>Buy <span class="lw-hl">bond call</span> (right to buy 2yr bond)</td><td>Long rates ↑ · Short rates ↓</td></tr>
-                  <tr><td>Flattening</td><td>Buy <span class="lw-hl">receiver swaption</span> (right to receive fixed at 30yr)</td><td>Buy <span class="lw-hl">bond put</span> (right to sell 2yr bond)</td><td>Long rates ↓ · Short rates ↑</td></tr>
-                </tbody>
-              </table>
-              <div class="lw-trap">Exam trap: receiver swaption profits when rates FALL (you lock in receiving a high fixed rate). Payer swaption profits when rates RISE. Never mix these up.</div>
+A = Working capital / Total assets
+B = Retained earnings / Total assets
+C = EBIT / Total assets
+D = Market value of equity / Total liabilities
+E = Sales / Total assets</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Interactive z-score calculator</div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">A (WC/TA)</span><input type="range" min="-0.5" max="0.8" step="0.05" value="0.2" id="cwZA" oninput="cwZCalc()"><span class="cw-sl-val" id="cwZAo">0.20</span></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">B (RE/TA)</span><input type="range" min="-0.3" max="0.8" step="0.05" value="0.2" id="cwZB" oninput="cwZCalc()"><span class="cw-sl-val" id="cwZBo">0.20</span></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">C (EBIT/TA)</span><input type="range" min="-0.2" max="0.4" step="0.02" value="0.1" id="cwZC" oninput="cwZCalc()"><span class="cw-sl-val" id="cwZCo">0.10</span></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">D (MVE/TL)</span><input type="range" min="0.1" max="3" step="0.1" value="1.0" id="cwZD" oninput="cwZCalc()"><span class="cw-sl-val" id="cwZDo">1.00</span></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">E (Sales/TA)</span><input type="range" min="0.2" max="2.5" step="0.1" value="1.0" id="cwZE" oninput="cwZCalc()"><span class="cw-sl-val" id="cwZEo">1.00</span></div>
+                <div id="cwZResult" style="margin-top:10px"></div>
+              </div>
+              <div class="cw-tip">Exam note: the formula is always given in the question. Focus on plugging in the inputs correctly and interpreting the z-score against the three bands.</div>
             </div>
           </div>
-
-          <!-- ══ TAB 3: 2s10s DRIVERS ══ -->
-          <div id="ycs-2s10s" class="lw-panel">
-            <div class="lw-card">
-              <div class="lw-title">2s10s is a concept, not one instrument — always specify the curve</div>
-              <table class="lw-table">
-                <thead><tr><th>Version</th><th>What it is</th><th>Used for</th></tr></thead>
-                <tbody>
-                  <tr><td><span class="lw-hl">Government bond curve</span></td><td>10yr Treasury − 2yr Treasury (US) · 10yr Bund − 2yr Bund (EU)</td><td>Identification of steepening/flattening · pure policy signal · default meaning of "2s10s"</td></tr>
-                  <tr><td><span class="lw-hl">Swap curve</span></td><td>10yr swap rate − 2yr swap rate</td><td>Implementation · what managers actually trade · includes small credit component</td></tr>
-                  <tr><td><span class="lw-hl">Swap spread</span></td><td>Swap rate − govt bond yield at same maturity</td><td>Completely different signal — banking system credit and liquidity conditions</td></tr>
-                </tbody>
-              </table>
+          <!-- ══════════════════════════════
+               TAB 3 · CDS PRICING & MECHANICS
+          ══════════════════════════════ -->
+          <div id="cw-cp" class="cw-panel">
+            <div class="cw-tabs" style="margin-bottom:12px">
+              <button class="cw-tab active" onclick="cwCpGo('mech',this)">CDS mechanics</button>
+              <button class="cw-tab" onclick="cwCpGo('upfront',this)">Up-front premium</button>
+              <button class="cw-tab" onclick="cwCpGo('price',this)">CDS price</button>
             </div>
 
-            <div class="lw-card">
-              <div class="lw-title">What drives the 2-year yield</div>
-              <div class="lw-body">Almost entirely <span class="lw-hl">monetary policy expectations</span> over the next 24 months.
-                <span class="lw-rule">Central bank hikes / hawkish signals → 2yr rises immediately</span>
-                <span class="lw-rule">Central bank cuts / dovish pivot → 2yr falls immediately</span>
-                <span class="lw-rule">Hot CPI or strong payrolls → more hikes priced in → 2yr rises</span>
-                <span class="lw-rule">The 2yr barely cares about 2030 — it's anchored to what the CB does right now</span>
+            <div id="cw-cp-mech" class="cw-panel active">
+              <div class="cw-card">
+                <div class="cw-title">Standardized fixed coupon</div>
+                <div class="cw-body">CDS contracts pay a standardized fixed coupon — makes settlement operationally straightforward. This is NOT the fair spread.</div>
+                <div class="cw-fl">IG issuers → fixed coupon = 1% (100bps) per year
+HY issuers → fixed coupon = 5% (500bps) per year</div>
+                <div class="cw-trap">The fixed coupon ≠ fair CDS spread. The difference is settled via an up-front payment at initiation.</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Who pays whom at initiation?</div>
+                <span class="cw-rule"><span class="cw-hl">Fair spread &gt; fixed coupon</span> → buyer pays up-front to seller (buyer pays below-market coupon, compensates upfront)</span>
+                <span class="cw-rule"><span class="cw-hl">Fair spread &lt; fixed coupon</span> → seller pays up-front to buyer (seller receives above-market coupon, compensates upfront)</span>
+                <span class="cw-rule"><span class="cw-hl">Fair spread = fixed coupon</span> → no up-front payment</span>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Inverse price / spread relationship</div>
+                <span class="cw-rule">Spreads rise → protection more expensive → old contract (low fixed coupon) worth less → CDS price falls</span>
+                <span class="cw-rule">Spreads fall → old contract worth more → CDS price rises</span>
+                <div class="cw-tip">Same logic as bonds: price and yield move in opposite directions.</div>
               </div>
             </div>
 
-            <div class="lw-card">
-              <div class="lw-title">What drives the 10-year yield — two components</div>
-              <div class="lw-body">
-                <span class="lw-rule"><span class="lw-hl">1. Expected future short rates:</span> what do investors think policy rates will average over 10 years? Connects to monetary policy at a much longer horizon.</span>
-                <span class="lw-rule"><span class="lw-hl">2. Term premium:</span> extra compensation for locking up money for 10 years. Captures inflation uncertainty, fiscal risk, government bond supply, global demand for safe assets.</span>
+            <div id="cw-cp-upfront" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">Up-front premium formula</div>
+                <div class="cw-fl">CDS spread > fixed coupon:
+  Up-front = (CDS spread − fixed coupon) × EffSpreadDur
+  → paid by protection BUYER to seller
+
+CDS spread < fixed coupon:
+  Up-front = (fixed coupon − CDS spread) × EffSpreadDur
+  → paid by protection SELLER to buyer</div>
+                <div class="cw-tip">Intuition: up-front payment = PV of the difference between what you pay (fixed coupon) and what is fair (CDS spread), scaled by duration.</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Interactive calculator</div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">CDS spread (fair)</span><input type="range" min="50" max="600" step="10" value="150" id="cwCdsS" oninput="cwCpCalc()"><span class="cw-sl-val" id="cwCdsSo">150 bps</span></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">Fixed coupon</span><select id="cwFixC" onchange="cwCpCalc()"><option value="100">IG — 100bps (1%)</option><option value="500">HY — 500bps (5%)</option></select></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">EffSpreadDur</span><input type="range" min="1" max="10" step="0.5" value="4" id="cwDur1" oninput="cwCpCalc()"><span class="cw-sl-val" id="cwDur1o">4.0</span></div>
+                <div class="cw-sim" id="cwCalcBox"></div>
               </div>
             </div>
 
-            <div class="lw-card">
-              <div class="lw-title">Spread = gap between now and the future</div>
-              <table class="lw-table">
-                <thead><tr><th>Spread signal</th><th>What it means</th><th>Steepening type likely</th></tr></thead>
-                <tbody>
-                  <tr><td>CB hiking aggressively</td><td>2yr rises fast → spread narrows/inverts</td><td>Flattening / inversion</td></tr>
-                  <tr><td>CB cuts or signals cuts</td><td>2yr falls → spread widens</td><td><span class="lw-badge lw-pass">Bull steepening</span></td></tr>
-                  <tr><td>LT inflation expectations rise</td><td>10yr rises via term premium</td><td><span class="lw-badge lw-fail">Bear steepening</span></td></tr>
-                  <tr><td>Heavy LT government bond supply</td><td>10yr rises → spread widens</td><td><span class="lw-badge lw-fail">Bear steepening</span></td></tr>
-                  <tr><td>Strong foreign CB demand for UST</td><td>Term premium suppressed → 10yr low</td><td>Flattening</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="lw-info">Identification workflow: (1) observe 2s10s widening on govt curve → steepening confirmed. (2) Check which end moved → identifies bull vs bear. (3) Check macro drivers (CB language, inflation breakevens, term premium, fiscal) → anticipates which type is coming next.</div>
-          </div>
-
-          <!-- ══ TAB 4: KEY RATE DURATION ══ -->
-          <div id="ycs-krd" class="lw-panel">
-            <div class="lw-card">
-              <div class="lw-title">What key rate duration (KRD) actually measures</div>
-              <div class="lw-body">Sensitivity of portfolio value to a rate change at <span class="lw-hl">one specific maturity point</span> on the yield curve, holding all other maturities constant. Unlike overall duration which assumes parallel shifts.</div>
-              <div class="lw-fl">KRD at 10yr = +6 means:
-10yr rate falls 1% → portfolio gains ~6%
-10yr rate rises 1% → portfolio loses ~6%
-(other maturities unchanged)</div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Positive vs negative KRD — what each means</div>
-              <table class="lw-table">
-                <thead><tr><th>KRD at maturity X</th><th>Manager's view</th><th>Position</th><th>Example instrument</th></tr></thead>
-                <tbody>
-                  <tr><td><span class="lw-badge lw-pass">High positive</span></td><td>Rate at X will fall</td><td>Overweight that maturity</td><td>Buy bonds at X tenor · receive-fixed swap at X</td></tr>
-                  <tr><td><span class="lw-badge lw-fail">High negative</span></td><td>Rate at X will rise</td><td>Underweight / short that maturity</td><td>Short futures at X · pay-fixed swap at X</td></tr>
-                  <tr><td>Neutral (= index)</td><td>No view on that maturity</td><td>Match index weight</td><td>—</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">The surgical power of KRD — expressing curve shape views</div>
-              <div class="lw-body">A manager can simultaneously hold:
-                <span class="lw-rule">Positive KRD at 2yr → expects short rates to fall</span>
-                <span class="lw-rule">Negative KRD at 10yr → expects long rates to rise</span>
-                <span class="lw-rule">= Bear steepening bet, total duration roughly neutral</span>
+            <div id="cw-cp-price" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">CDS price formula</div>
+                <div class="cw-fl">CDS price ≈ 1 + [(fixed coupon − CDS spread) × EffSpreadDur]</div>
+                <div class="cw-body" style="margin-top:8px">Expressed as % of notional. Same inverse spread/price relationship as bonds.</div>
+                <span class="cw-rule">Spread rises → (coupon − spread) more negative → price falls below 1</span>
+                <span class="cw-rule">Spread falls → (coupon − spread) more positive → price rises above 1</span>
               </div>
-              <div class="lw-tip">You cannot see this nuance by looking at total portfolio duration alone. Two portfolios with identical total duration can have completely different curve exposures.</div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Boyd example — bear steepening KRD mapping</div>
-              <table class="lw-table">
-                <thead><tr><th></th><th>2yr KRD</th><th>5yr KRD</th><th>10yr KRD</th><th>Bear steepening fit</th></tr></thead>
-                <tbody>
-                  <tr><td>Index</td><td>2.50</td><td>3.60</td><td>7.25</td><td>—</td></tr>
-                  <tr><td>Portfolio A</td><td>2.50</td><td>3.60</td><td>7.25</td><td><span class="lw-badge lw-warn">Mirrors index — no view</span></td></tr>
-                  <tr><td>Portfolio B</td><td>4.00</td><td>6.50</td><td>2.85</td><td><span class="lw-badge lw-pass">Best ✓ — underweight long end</span></td></tr>
-                  <tr><td>Portfolio C</td><td>1.00</td><td>4.00</td><td>8.35</td><td><span class="lw-badge lw-fail">Worst ✗ — overweight long end</span></td></tr>
-                </tbody>
-              </table>
-              <div class="lw-body" style="margin-top:8px">Portfolio B wins because 10yr KRD (2.85) is far below the index (7.25) — it loses much less when long rates rise. Portfolio C would be destroyed — it has more long-end sensitivity than the index.</div>
-            </div>
-          </div>
-
-          <!-- ══ TAB 5: SWAPTIONS ══ -->
-          <div id="ycs-swaptions" class="lw-panel">
-            <div class="lw-card">
-              <div class="lw-title">Swaption fundamentals — what you own</div>
-              <div class="lw-body">A swaption gives you the <span class="lw-hl">right but not obligation</span> to enter into a swap at a pre-agreed fixed rate on a future date.</div>
-              <table class="lw-table" style="margin-top:10px">
-                <thead><tr><th>Type</th><th>Right to…</th><th>Exercise when…</th><th>Rate view</th><th>Duration effect</th></tr></thead>
-                <tbody>
-                  <tr><td><span class="lw-hl">Receiver swaption</span></td><td>Receive fixed, pay floating</td><td>Rates fall (fixed rate you receive &gt; market)</td><td><span class="lw-badge lw-pass">Bullish (rates fall)</span></td><td>Long duration when exercised</td></tr>
-                  <tr><td><span class="lw-hl">Payer swaption</span></td><td>Pay fixed, receive floating</td><td>Rates rise (fixed rate you pay &lt; market)</td><td><span class="lw-badge lw-fail">Bearish (rates rise)</span></td><td>Short duration when exercised</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Long vs short swaption positions</div>
-              <table class="lw-table">
-                <thead><tr><th>Position</th><th>You…</th><th>Max loss</th><th>Max gain</th></tr></thead>
-                <tbody>
-                  <tr><td>Long receiver swaption</td><td>Pay premium upfront</td><td>Premium paid</td><td>Unlimited (if rates fall far)</td></tr>
-                  <tr><td>Short receiver swaption</td><td>Collect premium</td><td>Unlimited</td><td>Premium collected</td></tr>
-                  <tr><td>Long payer swaption</td><td>Pay premium upfront</td><td>Premium paid</td><td>Unlimited (if rates rise far)</td></tr>
-                  <tr><td>Short payer swaption</td><td>Collect premium</td><td>Unlimited</td><td>Premium collected</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Cook example — downward parallel shift 50bps</div>
-              <div class="lw-body">Cook expects rates to fall. She wants to benefit.
-                <span class="lw-rule"><span class="lw-hl">Long receiver swaption</span> = right to receive fixed. If rates fall, she exercises and receives an above-market fixed rate. The swaption gains value as rates fall. <span class="lw-green">Correct position ✓</span></span>
-                <span class="lw-rule"><span class="lw-red">Short receiver swaption</span> = she sold the right to someone else. If rates fall, the counterparty exercises against her — she loses. Wrong direction.</span>
+              <div class="cw-card">
+                <div class="cw-title">Interactive: CDS price vs spread</div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">CDS spread</span><input type="range" min="10" max="600" step="10" value="150" id="cwPSpread" oninput="cwCpPrCalc()"><span class="cw-sl-val" id="cwPSpreado">150 bps</span></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">Fixed coupon</span><select id="cwPCoupon" onchange="cwCpPrCalc()"><option value="100">IG — 100bps</option><option value="500">HY — 500bps</option></select></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">EffSpreadDur</span><input type="range" min="1" max="10" step="0.5" value="4" id="cwDur2" oninput="cwCpPrCalc()"><span class="cw-sl-val" id="cwDur2o">4.0</span></div>
+                <div class="cw-sim" id="cwPriceBox"></div>
               </div>
-            </div>
-
-            <div class="lw-trap">The most common exam trap: confusing which swaption benefits from which rate direction. Anchor it to the underlying swap logic — receiver swaption = you want to receive fixed = you want rates to fall so your fixed rate looks attractive. Payer swaption = you want to pay fixed = you want rates to rise so paying the lower locked-in fixed rate is valuable.</div>
-
-            <div class="lw-card">
-              <div class="lw-title">Steepening trade with swaptions — summary</div>
-              <div class="lw-body">
-                <span class="lw-rule">Steepening = long rates rise, short rates fall</span>
-                <span class="lw-rule"><span class="lw-hl">Long payer swaption at 30yr</span> → right to pay fixed at 30yr → profits when 30yr rates rise ✓</span>
-                <span class="lw-rule"><span class="lw-hl">Long call on 2yr bond</span> → right to buy 2yr bond → profits when 2yr bond price rises = 2yr rates fall ✓</span>
-                <span class="lw-rule">Combined = pure steepening bet with limited downside (premium paid)</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- ══ TAB 6: TOTAL RETURN FORMULA ══ -->
-          <div id="ycs-totalreturn" class="lw-panel">
-            <div class="lw-card">
-              <div class="lw-title">The full expected return formula</div>
-              <div class="lw-fl">E(R) = Rolldown return
-       + (−Duration × Δyield)
-       + (0.5 × Convexity × Δyield²)
-       + ΔFX (if unhedged foreign bond)</div>
-              <div class="lw-trap">Never drop the convexity term — even if the yield move seems small. The exam tests whether you include it. With 50bps move it's tiny (0.02%) but it's the difference between answer choices.</div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Component 1 — Rolldown return</div>
-              <div class="lw-body">The price appreciation from a bond "rolling down" an upward-sloping stable yield curve as time passes. A 2-year bond becomes a 1-year bond after one year — and since 1-year yields are lower, its price rises.</div>
-              <div class="lw-fl">Rolldown = (Expected price in 1yr − Price today) / Price today
-Example: (98.75 − 97.00) / 97.00 = 1.804%</div>
-              <div class="lw-info">The expected price in 1yr assumes an <em>unchanged</em> yield curve — it is the price the bond would have if it simply aged one year with no rate moves. It is given in the exhibit, not calculated from scratch.</div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Component 2 — Duration + Convexity price effect</div>
-              <div class="lw-fl">Price effect = (−Duration × Δyield) + (0.5 × Convexity × Δyield²)
-
-Example (bullet, −50bps shift):
-= (−4.50 × −0.0050) + (0.5 × 17.0 × 0.0050²)
-= +2.250% + 0.021%
-= 2.271%</div>
-              <div class="lw-body">Use the <span class="lw-hl">expected duration and convexity in 1 year</span> (from exhibit), not today's values. Δyield is negative for rate falls. Always convert bps to decimals: 50bps = 0.0050.</div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Component 3 — Currency effect</div>
-              <div class="lw-body">
-                <span class="lw-rule">If the foreign currency <span class="lw-hl">appreciates</span> vs your home currency → add positive FX return</span>
-                <span class="lw-rule">If the foreign currency <span class="lw-hl">depreciates</span> vs your home currency → subtract FX loss</span>
-                <span class="lw-rule">Cook example: USD depreciates against EUR by 0.75% → USD-denominated returns lose 0.75% when converted to EUR → <span class="lw-red">−0.75%</span></span>
-              </div>
-              <div class="lw-trap">Watch the direction carefully. "USD depreciates against EUR" = your USD bonds are worth less in EUR terms = negative FX contribution. Don't flip the sign.</div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Cook worked example — full calculation</div>
-              <table class="lw-table">
-                <thead><tr><th>Component</th><th>Bullet</th><th>Barbell</th></tr></thead>
-                <tbody>
-                  <tr><td>Rolldown</td><td>(98.75−97.00)/97.00 = <span class="lw-green">1.804%</span></td><td>(99.75−97.75)/97.75 = <span class="lw-green">2.046%</span></td></tr>
-                  <tr><td>Duration effect (−D × −0.005)</td><td>−4.50 × −0.005 = <span class="lw-green">+2.250%</span></td><td>−4.45 × −0.005 = <span class="lw-green">+2.225%</span></td></tr>
-                  <tr><td>Convexity effect (0.5×Cx×0.005²)</td><td>0.5×17.0×0.000025 = <span class="lw-green">+0.021%</span></td><td>0.5×40.0×0.000025 = <span class="lw-green">+0.050%</span></td></tr>
-                  <tr><td>FX (USD depreciates vs EUR)</td><td><span class="lw-red">−0.750%</span></td><td><span class="lw-red">−0.750%</span></td></tr>
-                  <tr style="border-top:1px solid var(--border)"><td><strong>Total</strong></td><td><strong>3.325% ≈ 3.32%</strong></td><td><strong>3.571% ≈ 3.58%</strong></td></tr>
-                </tbody>
-              </table>
-              <div class="lw-body" style="margin-top:8px">Barbell wins because of <span class="lw-hl">higher convexity (40 vs 17)</span> and <span class="lw-hl">higher rolldown (2.046% vs 1.804%)</span>. In a falling rate environment, convexity advantage is amplified.</div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Rolldown strategy — why it works</div>
-              <div class="lw-body">Buy further out on an upward-sloping curve. As time passes the bond rolls toward a lower-yield, higher-price point. You earn rolldown return on top of yield — as long as the curve stays stable and upward-sloping. This is why the 2-year zero-coupon (bought at 96.1169, expected to be worth 99.0090 in a year) earns more than the 1-year zero-coupon in the Thai bond example.</div>
             </div>
           </div>
 
-          <!-- ══ TAB 7: OTHER CONCEPTS ══ -->
-          <div id="ycs-misc" class="lw-panel">
-
-            <div class="lw-card">
-              <div class="lw-title">BPV / DV01 — same thing, different names</div>
-              <div class="lw-body">Dollar change in portfolio value for a 1bp (0.01%) move in rates.</div>
-              <div class="lw-fl">BPV = Modified duration × Market value × 0.0001
-Example: Duration 5 · MV $10M → BPV = 5 × $10M × 0.0001 = $5,000 per bp</div>
-              <div class="lw-body">
-                <span class="lw-rule"><span class="lw-hl">Why it matters:</span> Duration is a percentage — you can't subtract durations across portfolios of different sizes. BPV puts everything in the same unit (dollars per bp) so arithmetic works.</span>
-                <span class="lw-rule"><span class="lw-hl">Hedging:</span> Nf = (BPV_target − BPV_portfolio) / BPV_futures</span>
-                <span class="lw-rule"><span class="lw-hl">Immunization:</span> match asset BPV to liability BPV so a 1bp move hits both equally</span>
-              </div>
+          <!-- ══════════════════════════════
+               TAB 4 · DYNAMIC CREDIT SPREAD CURVE STRATEGIES
+          ══════════════════════════════ -->
+          <div id="cw-dy" class="cw-panel">
+            <div class="cw-tabs" style="margin-bottom:12px">
+              <button class="cw-tab active" onclick="cwDyGo('overview',this)">Overview</button>
+              <button class="cw-tab" onclick="cwDyGo('recovery',this)">Recovery</button>
+              <button class="cw-tab" onclick="cwDyGo('slowdown',this)">Slowdown</button>
+              <button class="cw-tab" onclick="cwDyGo('logic',this)">The logic</button>
             </div>
 
-            <div class="lw-card">
-              <div class="lw-title">Negative convexity — callable bonds</div>
-              <div class="lw-body">
-                <span class="lw-rule"><span class="lw-hl">At high yields:</span> call is out of the money, callable bond behaves like option-free bond — normal positive convexity.</span>
-                <span class="lw-rule"><span class="lw-hl">At low yields:</span> call is deep in the money. Issuer's right to call becomes very valuable. Market knows bond may be called → price stops rising at normal pace → price-yield curve bends the wrong way → <span class="lw-red">negative convexity</span>.</span>
-                <span class="lw-rule"><span class="lw-hl">The asymmetry:</span> less upside when rates fall (call caps price) but full downside when rates rise (call not exercised). You keep all the risk, lose some of the reward.</span>
+            <div id="cw-dy-overview" class="cw-panel active">
+              <div class="cw-card">
+                <div class="cw-title">Credit cycle drives strategy</div>
+                <div class="cw-body">The shape of the credit spread curve changes predictably across the economic cycle. An active manager exploits these changes using both cash bonds and CDS.</div>
               </div>
-              <div class="lw-trap">Why callable bonds must offer a higher yield: compensation for this asymmetric payoff. You are short the call option → you must be paid for it.</div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Forward rate bias</div>
-              <div class="lw-body">
-                <span class="lw-rule"><span class="lw-hl">What theory says (UIP):</span> high-yield currency should depreciate by exactly the yield differential — no free lunch.</span>
-                <span class="lw-rule"><span class="lw-hl">What actually happens:</span> high-yield currencies depreciate by less than predicted, or not at all. The yield advantage is not fully offset.</span>
-                <span class="lw-rule"><span class="lw-hl">Implication:</span> go unhedged into high-yielding currencies to earn excess returns. Amplify by borrowing in low-yield currencies (carry trade).</span>
-              </div>
-              <div class="lw-info">Carry trade = borrow in low-yield currency (JPY at 0.5%) · invest in high-yield currency (BRL at 10%) · pocket the spread. Works because forward rate bias means the low-yield currency doesn't appreciate enough to wipe out the carry.</div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Stable yield curve — what generates excess return</div>
-              <div class="lw-body">When rates don't move, you cannot earn excess return from predicting rate direction. The only way to beat the benchmark is to earn <span class="lw-hl">more carry</span>.</div>
-              <table class="lw-table">
-                <thead><tr><th>Strategy</th><th>Works under stable curve?</th><th>Why</th></tr></thead>
+              <table class="cw-table">
+                <thead><tr><th>Economic stage</th><th>HY curve shape</th><th>HY spreads vs IG</th></tr></thead>
                 <tbody>
-                  <tr><td>Increase duration above benchmark</td><td><span class="lw-badge lw-pass">Yes</span></td><td>Longer bonds earn more yield + rolldown without rate rise penalty</td></tr>
-                  <tr><td>Add leverage</td><td><span class="lw-badge lw-pass">Yes</span></td><td>Borrow at short rates, invest in longer bonds, pocket the spread</td></tr>
-                  <tr><td>Reduce duration below benchmark</td><td><span class="lw-badge lw-fail">No — least likely</span></td><td>Shorter bonds earn less yield, no rate protection needed, guaranteed underperformance vs benchmark</td></tr>
+                  <tr><td><span class="cw-green">Recovery</span></td><td>Steepens</td><td>HY narrows more than IG</td></tr>
+                  <tr><td><span class="cw-red">Slowdown</span></td><td>Flattens / inverts</td><td>HY widens more than IG</td></tr>
                 </tbody>
               </table>
-              <div class="lw-trap">Reducing duration only makes sense if you expect rates to RISE — then shorter portfolio loses less than benchmark. Under a stable curve it just sacrifices yield for nothing.</div>
             </div>
 
+            <div id="cw-dy-recovery" class="cw-panel">
+              <div class="cw-card">
+                <span class="cw-stage-pill" style="background:rgba(46,160,67,.15);color:#3DD68C;border:1px solid rgba(46,160,67,.3)">Economic recovery</span>
+                <div class="cw-body" style="margin-bottom:10px">HY spreads narrow more than IG spreads. HY credit curve steepens.</div>
+                <div class="cw-strat-grid">
+                  <div class="cw-strat-card">
+                    <div class="cw-strat-title" style="color:#79C0FF">Cash strategy</div>
+                    <div class="cw-strat-row"><span class="cw-buy-b">Buy</span>Short-term HY bonds</div>
+                    <div class="cw-strat-row"><span class="cw-buy-b">Buy</span>Long-term HY bonds</div>
+                    <div class="cw-strat-row"><span class="cw-sell-b">Sell</span>IG bonds</div>
+                  </div>
+                  <div class="cw-strat-card">
+                    <div class="cw-strat-title" style="color:#F0A04B">CDS strategy</div>
+                    <div class="cw-strat-row"><span class="cw-sell-b">Sell</span>HY protection</div>
+                    <div class="cw-strat-row"><span class="cw-buy-b">Buy</span>IG protection</div>
+                  </div>
+                </div>
+              </div>
+              <div class="cw-tip">HY spreads compress faster in recovery — you want to be long HY (cash) or short HY protection (CDS). Hedge via IG: sell IG bonds or buy IG protection.</div>
+            </div>
+
+            <div id="cw-dy-slowdown" class="cw-panel">
+              <div class="cw-card">
+                <span class="cw-stage-pill" style="background:rgba(192,57,43,.15);color:#FF7B72;border:1px solid rgba(192,57,43,.3)">Economic slowdown</span>
+                <div class="cw-body" style="margin-bottom:10px">HY spreads widen more than IG spreads. HY credit curve flattens/inverts.</div>
+                <div class="cw-strat-grid">
+                  <div class="cw-strat-card">
+                    <div class="cw-strat-title" style="color:#79C0FF">Cash strategy</div>
+                    <div class="cw-strat-row"><span class="cw-buy-b">Buy</span>IG bonds</div>
+                    <div class="cw-strat-row"><span class="cw-buy-b">Buy</span>Long-term HY bonds</div>
+                    <div class="cw-strat-row"><span class="cw-sell-b">Sell</span>Short-term HY bonds</div>
+                  </div>
+                  <div class="cw-strat-card">
+                    <div class="cw-strat-title" style="color:#F0A04B">CDS strategy</div>
+                    <div class="cw-strat-row"><span class="cw-sell-b">Sell</span>IG protection</div>
+                    <div class="cw-strat-row"><span class="cw-buy-b">Buy</span>Long-term HY protection</div>
+                    <div class="cw-strat-row"><span class="cw-buy-b">Buy</span>Short-term HY protection</div>
+                  </div>
+                </div>
+              </div>
+              <div class="cw-trap">HY spreads blow out fastest in a slowdown — especially short-term HY (inverted curve). Buy HY protection (CDS) or sell HY bonds. Shift to IG or buy IG bonds.</div>
+            </div>
+
+            <div id="cw-dy-logic" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">Why the HY curve inverts in a slowdown</div>
+                <div class="cw-body">Near-term default risk spikes faster than long-term risk. Short-dated HY spreads must compensate investors for immediate default risk — they blow out more than long-dated spreads. The short end rises sharply relative to the long end → curve inverts.</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Cash vs CDS — same view, different instrument</div>
+                <span class="cw-rule"><span class="cw-hl">Bullish credit (recovery)</span> → Cash: buy bonds / CDS: sell protection</span>
+                <span class="cw-rule"><span class="cw-hl">Bearish credit (slowdown)</span> → Cash: sell bonds / CDS: buy protection</span>
+                <div class="cw-tip">CDS allows more surgical positioning: you can be bearish on short-term HY and bullish on long-term HY simultaneously — a pure curve trade that is harder to implement efficiently in cash bonds.</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">IG vs HY — the relative value dimension</div>
+                <span class="cw-rule">Recovery: HY benefits more than IG → overweight HY, underweight IG</span>
+                <span class="cw-rule">Slowdown: HY suffers more than IG → underweight HY, overweight IG</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 5 · CDS CURVE TRADES
+          ══════════════════════════════ -->
+          <div id="cw-cds" class="cw-panel">
+            <div class="cw-tabs" style="margin-bottom:12px">
+              <button class="cw-tab active" onclick="cwCtTab('steep',this)">Steepening trade</button>
+              <button class="cw-tab" onclick="cwCtTab('flat',this)">Flattening trade</button>
+              <button class="cw-tab" onclick="cwCtTab('logic',this)">Core logic</button>
+            </div>
+
+            <div id="cw-ct-steep" class="cw-panel active">
+              <div class="cw-card">
+                <div class="cw-title">Steepening — long end rises more than short end</div>
+                <div class="cw-body">View: fiscal stress, inflation risk, or heavy long-end supply pushes long-term spreads higher. Short end stays anchored. The gap between 10yr and 1yr <span class="cw-hl">widens</span>.</div>
+                <div class="cw-legend" style="margin-top:10px">
+                  <div class="cw-li"><svg width="24" height="3"><line x1="0" y1="1.5" x2="24" y2="1.5" stroke="#7D8590" stroke-width="2"/></svg>Current</div>
+                  <div class="cw-li"><svg width="24" height="3"><line x1="0" y1="1.5" x2="24" y2="1.5" stroke="#378ADD" stroke-width="2" stroke-dasharray="4 2"/></svg>Expected</div>
+                  <div class="cw-li"><svg width="10" height="10"><circle cx="5" cy="5" r="5" fill="#E24B4A"/></svg>Buy protection</div>
+                  <div class="cw-li"><svg width="10" height="10"><circle cx="5" cy="5" r="5" fill="#1D9E75"/></svg>Sell protection</div>
+                </div>
+                <div class="cw-svg-wrap">
+                  <svg width="100%" viewBox="0 0 580 230" xmlns="http://www.w3.org/2000/svg">
+                    <defs><marker id="cwas" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+                    <line x1="50" y1="15" x2="50" y2="185" stroke="#2A3441" stroke-width="0.5"/>
+                    <line x1="50" y1="185" x2="550" y2="185" stroke="#2A3441" stroke-width="0.5"/>
+                    <line x1="50" y1="45" x2="550" y2="45" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                    <line x1="50" y1="85" x2="550" y2="85" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                    <line x1="50" y1="125" x2="550" y2="125" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                    <line x1="50" y1="165" x2="550" y2="165" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                    <text x="44" y="48" text-anchor="end" font-size="10" fill="#7D8590">250</text>
+                    <text x="44" y="88" text-anchor="end" font-size="10" fill="#7D8590">200</text>
+                    <text x="44" y="128" text-anchor="end" font-size="10" fill="#7D8590">150</text>
+                    <text x="44" y="168" text-anchor="end" font-size="10" fill="#7D8590">100</text>
+                    <text x="100" y="200" text-anchor="middle" font-size="10" fill="#7D8590">1yr</text>
+                    <text x="230" y="200" text-anchor="middle" font-size="10" fill="#7D8590">3yr</text>
+                    <text x="360" y="200" text-anchor="middle" font-size="10" fill="#7D8590">5yr</text>
+                    <text x="500" y="200" text-anchor="middle" font-size="10" fill="#7D8590">10yr</text>
+                    <text x="14" y="100" text-anchor="middle" font-size="9" fill="#7D8590" transform="rotate(-90 14 100)">CDS spread (bps)</text>
+                    <path d="M100 169 L230 145 L360 129 L500 105" fill="none" stroke="#7D8590" stroke-width="2"/>
+                    <path d="M100 169 L230 141 L360 125 L500 77" fill="none" stroke="#378ADD" stroke-width="2" stroke-dasharray="6 3"/>
+                    <line x1="500" y1="103" x2="500" y2="81" stroke="#E24B4A" stroke-width="1.5" marker-end="url(#cwas)"/>
+                    <circle cx="100" cy="169" r="8" fill="#1D9E75"/>
+                    <text x="100" y="169" text-anchor="middle" dominant-baseline="central" font-size="9" fill="white" font-weight="500">S</text>
+                    <text x="100" y="183" text-anchor="middle" font-size="10" fill="#1D9E75">stable</text>
+                    <circle cx="230" cy="141" r="4" fill="#2A3441"/>
+                    <circle cx="360" cy="125" r="4" fill="#2A3441"/>
+                    <circle cx="500" cy="77" r="8" fill="#E24B4A"/>
+                    <text x="500" y="77" text-anchor="middle" dominant-baseline="central" font-size="9" fill="white" font-weight="500">B</text>
+                    <text x="500" y="63" text-anchor="middle" font-size="10" fill="#E24B4A">+40bps</text>
+                  </svg>
+                </div>
+                <div class="cw-leg"><span class="cw-buy-b">Buy</span><span>protection at <strong>1yr</strong> — short-end spreads stable → collect premium</span></div>
+                <div class="cw-leg"><span class="cw-sell-b">Sell</span><span>protection at <strong>10yr</strong> — long-end spreads rise → position gains in value</span></div>
+              </div>
+              <div class="cw-tip">Both legs profit as the curve steepens. The trade is a pure shape bet — not a directional view on whether spreads go up or down overall.</div>
+            </div>
+
+            <div id="cw-ct-flat" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">Flattening — short end rises, long end falls</div>
+                <div class="cw-body">View: near-term credit stress pushes short-end spreads higher while the long end falls (recovery priced in further out). The gap between 10yr and 1yr <span class="cw-hl">narrows</span>.</div>
+                <div class="cw-svg-wrap">
+                  <svg width="100%" viewBox="0 0 580 230" xmlns="http://www.w3.org/2000/svg">
+                    <defs><marker id="cwaf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+                    <line x1="50" y1="15" x2="50" y2="185" stroke="#2A3441" stroke-width="0.5"/>
+                    <line x1="50" y1="185" x2="550" y2="185" stroke="#2A3441" stroke-width="0.5"/>
+                    <line x1="50" y1="45" x2="550" y2="45" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                    <line x1="50" y1="85" x2="550" y2="85" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                    <line x1="50" y1="125" x2="550" y2="125" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                    <line x1="50" y1="165" x2="550" y2="165" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                    <text x="44" y="48" text-anchor="end" font-size="10" fill="#7D8590">250</text>
+                    <text x="44" y="88" text-anchor="end" font-size="10" fill="#7D8590">200</text>
+                    <text x="44" y="128" text-anchor="end" font-size="10" fill="#7D8590">150</text>
+                    <text x="44" y="168" text-anchor="end" font-size="10" fill="#7D8590">100</text>
+                    <text x="100" y="200" text-anchor="middle" font-size="10" fill="#7D8590">1yr</text>
+                    <text x="230" y="200" text-anchor="middle" font-size="10" fill="#7D8590">3yr</text>
+                    <text x="360" y="200" text-anchor="middle" font-size="10" fill="#7D8590">5yr</text>
+                    <text x="500" y="200" text-anchor="middle" font-size="10" fill="#7D8590">10yr</text>
+                    <text x="14" y="100" text-anchor="middle" font-size="9" fill="#7D8590" transform="rotate(-90 14 100)">CDS spread (bps)</text>
+                    <path d="M100 169 L230 145 L360 129 L500 105" fill="none" stroke="#7D8590" stroke-width="2"/>
+                    <path d="M100 137 L230 137 L360 133 L500 137" fill="none" stroke="#378ADD" stroke-width="2" stroke-dasharray="6 3"/>
+                    <line x1="100" y1="167" x2="100" y2="141" stroke="#E24B4A" stroke-width="1.5" marker-end="url(#cwaf)"/>
+                    <line x1="500" y1="107" x2="500" y2="141" stroke="#1D9E75" stroke-width="1.5" marker-end="url(#cwaf)"/>
+                    <circle cx="100" cy="137" r="8" fill="#E24B4A"/>
+                    <text x="100" y="137" text-anchor="middle" dominant-baseline="central" font-size="9" fill="white" font-weight="500">B</text>
+                    <text x="100" y="123" text-anchor="middle" font-size="10" fill="#E24B4A">+40bps</text>
+                    <circle cx="230" cy="137" r="4" fill="#2A3441"/>
+                    <circle cx="360" cy="133" r="4" fill="#2A3441"/>
+                    <circle cx="500" cy="137" r="8" fill="#1D9E75"/>
+                    <text x="500" y="137" text-anchor="middle" dominant-baseline="central" font-size="9" fill="white" font-weight="500">S</text>
+                    <text x="500" y="153" text-anchor="middle" font-size="10" fill="#1D9E75">−40bps</text>
+                    <text x="300" y="122" text-anchor="middle" font-size="10" fill="#378ADD">nearly flat</text>
+                  </svg>
+                </div>
+                <div class="cw-leg"><span class="cw-buy-b">Buy</span><span>protection at <strong>1yr</strong> — short-end spreads rise → position gains in value</span></div>
+                <div class="cw-leg"><span class="cw-sell-b">Sell</span><span>protection at <strong>10yr</strong> — long-end spreads fall → position gains in value</span></div>
+              </div>
+              <div class="cw-tip">Both legs profit as the curve flattens. The two ends converge — the gap narrows.</div>
+            </div>
+
+            <div id="cw-ct-logic" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">Buy protection = bearish on credit at that maturity</div>
+                <div class="cw-body">You pay a fixed premium. If spreads widen, your contract is below market — your CDS gains in mark-to-market value.</div>
+                <span class="cw-rule">Spread rises 100 → 150bps: your contract (paying only 100bps) is worth more than a new contract → MTM gain</span>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Sell protection = bullish on credit at that maturity</div>
+                <div class="cw-body">You receive a fixed premium. If spreads narrow, your contract (receiving above-market premium) gains in value.</div>
+                <span class="cw-rule">Spread falls 100 → 50bps: your contract (receiving 100bps) is worth more than a new contract → MTM gain</span>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Duration weighting — isolating curve shape</div>
+                <div class="cw-body">Long-dated CDS has more spread duration than short-dated. An equal-notional trade is not curve-neutral — it has directional exposure.</div>
+                <div class="cw-fl">Ratio = EffSpreadDur(long) / EffSpreadDur(short)
+e.g. 8.9 / 4.9 = 1.82×
+→ for every $1 of 10yr notional, use $1.82 of 5yr notional</div>
+                <div class="cw-tip">Without duration weighting, the trade accidentally becomes a bet on overall spread level instead of pure curve shape.</div>
+              </div>
+            </div>
+          </div>
+          <!-- ══════════════════════════════
+               TAB 6 · FRN RATE & SPREAD DURATION
+          ══════════════════════════════ -->
+          <div id="cw-frn" class="cw-panel">
+            <div class="cw-tabs" style="margin-bottom:12px">
+              <button class="cw-tab active" onclick="cwFwT('how',this)">How FRNs work</button>
+              <button class="cw-tab" onclick="cwFwT('rate',this)">Rate duration</button>
+              <button class="cw-tab" onclick="cwFwT('spread',this)">Spread duration</button>
+              <button class="cw-tab" onclick="cwFwT('dm',this)">DM vs QM</button>
+              <button class="cw-tab" onclick="cwFwT('formulas',this)">Formulas</button>
+            </div>
+
+            <div id="cw-fw-how" class="cw-panel active">
+              <div class="cw-card">
+                <div class="cw-title">What an FRN pays</div>
+                <div class="cw-body">An FRN pays a coupon that resets every period to the current benchmark rate (MRR) plus a fixed <span class="cw-hl">quoted margin (QM)</span>. The QM is set at issuance and never changes.</div>
+                <div class="cw-fl">Coupon = MRR + QM
+Example: MRR 3.00% + QM 0.50% → coupon = 3.50% this period
+Next reset: MRR becomes whatever the market rate is → new coupon</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Two separate risks</div>
+                <div class="cw-body">Because the coupon resets automatically, the FRN has <span class="cw-green">very low rate risk</span>. But it still carries <span class="cw-red">credit / spread risk</span> — if the issuer deteriorates, the market demands a higher spread than QM, and the price falls.</div>
+                <table class="cw-table" style="margin-top:10px">
+                  <thead><tr><th>Risk type</th><th>Driver</th><th>FRN exposure</th></tr></thead>
+                  <tbody>
+                    <tr><td>Rate risk</td><td>MRR benchmark moves</td><td><span class="cw-badge cw-pass">Near zero — coupon resets</span></td></tr>
+                    <tr><td>Spread / credit risk</td><td>Issuer credit quality (DM)</td><td><span class="cw-badge cw-fail">Meaningful — DM can widen</span></td></tr>
+                  </tbody>
+                </table>
+                <div class="cw-tip">An FRN doesn't eliminate risk — it swaps rate risk for credit risk.</div>
+              </div>
+            </div>
+
+            <div id="cw-fw-rate" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">Why rate duration is near zero</div>
+                <div class="cw-body">When MRR rises 100bps, the next coupon also rises 100bps — you are automatically compensated. The bond's price barely needs to move.</div>
+                <span class="cw-rule"><span class="cw-red">Fixed-rate bond:</span> coupon is fixed → price must fall when rates rise to make yield competitive</span>
+                <span class="cw-rule"><span class="cw-green">FRN:</span> coupon rises with rates → price stays near par → rate duration ≈ 0</span>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Not exactly zero — time to next reset</div>
+                <div class="cw-body">Rate duration ≈ <span class="cw-hl">time until the next coupon reset</span>. Quarterly reset → rate duration ≈ 0.25 years. Right after a reset it is at its minimum; right before the next reset it is slightly higher.</div>
+                <div class="cw-info">This is why EffRateDur is still calculated — to measure this small but non-zero residual rate sensitivity.</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">FRN vs fixed-rate bond</div>
+                <table class="cw-table">
+                  <thead><tr><th></th><th>Fixed-rate bond</th><th>FRN</th></tr></thead>
+                  <tbody>
+                    <tr><td>Coupon</td><td>Fixed forever</td><td>Resets to MRR + QM</td></tr>
+                    <tr><td>Rate duration</td><td>High (full maturity)</td><td>Near zero (time to reset)</td></tr>
+                    <tr><td>Spread duration</td><td>High</td><td>High (full maturity)</td></tr>
+                    <tr><td>Price when rates rise</td><td>Falls significantly</td><td>Barely changes</td></tr>
+                    <tr><td>Price when DM widens</td><td>Falls</td><td>Falls</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="cw-fw-spread" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">Spread duration — the real risk of an FRN</div>
+                <div class="cw-body">Even though MRR resets automatically, the <span class="cw-hl">discount margin (DM)</span> — the spread investors actually require — can change any time credit conditions change.</div>
+                <span class="cw-rule">Credit deteriorates → DM widens → bond price falls</span>
+                <span class="cw-rule">Credit improves → DM narrows → bond price rises</span>
+                <span class="cw-rule">MRR stays constant throughout → pure spread risk, no rate risk</span>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Spread duration magnitude</div>
+                <div class="cw-body">Spread duration ≈ <span class="cw-hl">full maturity of the FRN</span>. The coupon reset protects against rate moves but provides zero protection against credit spread moves.</div>
+                <div class="cw-trap">Common mistake: assuming FRNs have low duration full stop. They have low <em>rate</em> duration but normal <em>spread</em> duration. In 2008, FRN prices fell sharply — not because rates moved, but because credit spreads exploded.</div>
+              </div>
+            </div>
+
+            <div id="cw-fw-dm" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">DM is yield, QM is coupon</div>
+                <div class="cw-body">Exactly like a fixed-rate bond: yield &gt; coupon → discount; yield &lt; coupon → premium.</div>
+                <div class="cw-fl">DM = QM  →  par   (coupon matches what market demands)
+DM > QM  →  below par  (market demands more than bond pays)
+DM < QM  →  above par  (bond pays more than market demands)</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Interactive: move DM vs QM</div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">QM (bond pays)</span><input type="range" min="10" max="200" step="5" value="50" id="cwFwQm" oninput="cwFwSim()"><span class="cw-sl-val" id="cwFwQmo">50 bps</span></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">DM (mkt requires)</span><input type="range" min="10" max="200" step="5" value="50" id="cwFwDm" oninput="cwFwSim()"><span class="cw-sl-val" id="cwFwDmo">50 bps</span></div>
+                <div class="cw-sim" id="cwFwSimBox"></div>
+              </div>
+            </div>
+
+            <div id="cw-fw-formulas" class="cw-panel">
+              <div class="cw-card" style="background:rgba(56,139,253,.06);border-color:rgba(56,139,253,.25)">
+                <div style="font-family:var(--mono);font-size:10px;color:#79C0FF;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;font-weight:500">EffRateDur — sensitivity to MRR moves</div>
+                <div style="font-size:14px;font-weight:500;color:var(--text);text-align:center;line-height:2.4">
+                  EffRateDur<sub>FRN</sub> = <span class="cw-frac"><span class="cw-frac-n">PV<sub>−</sub> − PV<sub>+</sub></span><span class="cw-frac-d">2 × ΔMRR × PV<sub>0</sub></span></span>
+                </div>
+                <div style="font-size:11px;color:var(--muted);line-height:1.8;margin-top:4px">PV<sub>0</sub> = current price · PV<sub>−</sub> = price when MRR shifted down · PV<sub>+</sub> = price when MRR shifted up · ΔMRR = shock size</div>
+              </div>
+              <div class="cw-card" style="background:rgba(212,104,10,.06);border-color:rgba(212,104,10,.25)">
+                <div style="font-family:var(--mono);font-size:10px;color:#F0A04B;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;font-weight:500">EffSpreadDur — sensitivity to DM (spread) moves</div>
+                <div style="font-size:14px;font-weight:500;color:var(--text);text-align:center;line-height:2.4">
+                  EffSpreadDur<sub>FRN</sub> = <span class="cw-frac"><span class="cw-frac-n">PV<sub>−</sub> − PV<sub>+</sub></span><span class="cw-frac-d">2 × ΔDM × PV<sub>0</sub></span></span>
+                </div>
+                <div style="font-size:11px;color:var(--muted);line-height:1.8;margin-top:4px">Same structure — PV<sub>−</sub> = price when DM shifted down · PV<sub>+</sub> = price when DM shifted up · ΔDM = shock size</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Why the two formulas are identical in structure</div>
+                <div class="cw-body">Both are the general effective duration formula. The only difference is what you shock in the denominator:</div>
+                <span class="cw-rule">Shock MRR → measures price sensitivity to benchmark rate moves → EffRateDur</span>
+                <span class="cw-rule">Shock DM → measures price sensitivity to credit spread moves → EffSpreadDur</span>
+                <div class="cw-tip">The numerator (PV− − PV+) is always the same. The denominator answers: sensitive to what?</div>
+              </div>
+              <div class="cw-card">
+                <div class="cw-title">Calculator</div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">PV₀ (current)</span><input type="range" min="90" max="110" step="0.5" value="100" id="cwPv0" oninput="cwFwCalc()"><span class="cw-sl-val" id="cwPv0o">100.00</span></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">PV− (down)</span><input type="range" min="90" max="115" step="0.1" value="101" id="cwPvm" oninput="cwFwCalc()"><span class="cw-sl-val" id="cwPvmo">101.00</span></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">PV+ (up)</span><input type="range" min="85" max="110" step="0.1" value="99" id="cwPvp" oninput="cwFwCalc()"><span class="cw-sl-val" id="cwPvpo">99.00</span></div>
+                <div class="cw-sl-row"><span class="cw-sl-lbl">Shock (bps)</span><input type="range" min="10" max="100" step="5" value="25" id="cwShock" oninput="cwFwCalc()"><span class="cw-sl-val" id="cwShocko">25 bps</span></div>
+                <div class="cw-sim" id="cwFwCalcBox"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 7 · EXAM ERROR LOG
+          ══════════════════════════════ -->
+          <div id="cw-ee" class="cw-panel">
+            <div class="cw-tabs" style="margin-bottom:12px">
+              <button class="cw-tab active" onclick="cwEeTab('errors',this)">Error review</button>
+              <button class="cw-tab" onclick="cwEeTab('quiz',this)">Quiz me</button>
+            </div>
+
+            <div id="cw-ee-errors" class="cw-panel active">
+              <div class="cw-err-nav" id="cwErrNav">
+                <button class="cw-err-pill active" onclick="cwEeGoErr(0,this)">1</button>
+                <button class="cw-err-pill" onclick="cwEeGoErr(1,this)">2</button>
+                <button class="cw-err-pill" onclick="cwEeGoErr(2,this)">3</button>
+                <button class="cw-err-pill" onclick="cwEeGoErr(3,this)">4</button>
+                <button class="cw-err-pill" onclick="cwEeGoErr(4,this)">5</button>
+                <button class="cw-err-pill" onclick="cwEeGoErr(5,this)">6</button>
+                <button class="cw-err-pill" onclick="cwEeGoErr(6,this)">7</button>
+                <button class="cw-err-pill" onclick="cwEeGoErr(7,this)">8</button>
+              </div>
+
+              <div class="cw-err-item active" id="cwErr0">
+                <div class="cw-card">
+                  <div class="cw-etitle"><span class="cw-enum">1</span>CDS MTM — protection buyer direction</div>
+                  <div class="cw-ebody">Manager buys CDS protection at 1.75% spread. Spread immediately falls to 1.60%.</div>
+                  <div class="cw-trap">Wrong reasoning: calculated +€131,250 gain but forgot direction. A spread fall is BAD for the protection buyer.</div>
+                  <div class="cw-tip">Correct: the protection buyer profits when spreads WIDEN (credit deteriorates). When spreads NARROW the buyer loses — the contract locked in at 1.75% is now above market. → Loss of €131,250.</div>
+                  <div class="cw-fl">MTM = −EffSpreadDur × ΔSpread × Notional
+= −8.75 × (1.60% − 1.75%) × €10,000,000
+= −8.75 × (−0.0015) × €10,000,000
+= +€131,250 in absolute terms → but LOSS for buyer
+
+Direction rule:
+Buy protection → profit when spreads WIDEN
+Sell protection → profit when spreads NARROW</div>
+                </div>
+              </div>
+
+              <div class="cw-err-item" id="cwErr1">
+                <div class="cw-card">
+                  <div class="cw-etitle"><span class="cw-enum">2</span>Stone's three suggestions for Palma</div>
+                  <div class="cw-ebody">Which suggestion is most likely correct when buying foreign bonds?</div>
+                  <div class="cw-trap">Wrong: said Statement 3 (credit cycles must coincide) was correct.</div>
+                  <div class="cw-tip">Correct: Statement 1 (spread advantage vs hedge cost) is correct. The other two have inverted logic.</div>
+                  <span class="cw-rule"><span class="cw-right">✓ Spread advantage:</span> hedging cost can negate the yield pickup — covered interest parity means hedge cost ≈ rate differential. Always evaluate net of hedge cost.</span>
+                  <span class="cw-rule"><span class="cw-wrong">✗ Pegged currencies:</span> Stone said avoid local currency in pegged countries — WRONG. A peg REDUCES currency risk → pegged currencies are MORE attractive, not less.</span>
+                  <span class="cw-rule"><span class="cw-wrong">✗ Credit cycles coincide:</span> Stone said ensure cycles coincide — WRONG. Coinciding cycles = no diversification benefit. You WANT different cycle stages.</span>
+                </div>
+              </div>
+
+              <div class="cw-err-item" id="cwErr2">
+                <div class="cw-card">
+                  <div class="cw-etitle"><span class="cw-enum">3</span>Larent's CDO statements — which is correct?</div>
+                  <div class="cw-ebody">Three statements: relative value, diversification, senior vs mezzanine with increasing correlations.</div>
+                  <div class="cw-trap">Wrong: confused the direction of senior vs mezzanine when correlations increase.</div>
+                  <div class="cw-tip">Correct: relative value statement is correct. The other two are wrong.</div>
+                  <span class="cw-rule"><span class="cw-right">✓ Relative value:</span> AA CDO priced at BB default rate expectation = spread overcompensates for actual risk → genuine relative value.</span>
+                  <span class="cw-rule"><span class="cw-wrong">✗ Diversification:</span> CDO + its own underlying bonds = same exposure. No diversification — just concentration.</span>
+                  <span class="cw-rule"><span class="cw-wrong">✗ Senior vs mezzanine:</span> Larent said senior gains more as correlations increase — WRONG. Higher correlation → bimodal distribution → senior loses relative value, mezzanine gains.</span>
+                </div>
+              </div>
+
+              <div class="cw-err-item" id="cwErr3">
+                <div class="cw-card">
+                  <div class="cw-etitle"><span class="cw-enum">4</span>Nucor/Smith — which liquidity statement is least likely correct?</div>
+                  <div class="cw-ebody">Three statements about market liquidity. Which is least likely correct?</div>
+                  <div class="cw-trap">Wrong: said Statement 2 (embedded options → lower liquidity) was incorrect. Statement 3 is actually the wrong one.</div>
+                  <div class="cw-tip">Correct: Statement 3 is least likely correct. Liquidity is HIGHEST immediately after issuance — new issues attract maximum activity.</div>
+                  <span class="cw-rule"><span class="cw-right">✓ Statement 1:</span> Gov bonds and higher-quality corporates more liquid in stress → correct, flight to quality.</span>
+                  <span class="cw-rule"><span class="cw-right">✓ Statement 2:</span> Bonds with embedded options trade with lower liquidity → correct. Option complexity widens bid-ask.</span>
+                  <span class="cw-rule"><span class="cw-wrong">✗ Statement 3:</span> "Liquidity reduced when new supply issued" → WRONG. Liquidity is highest immediately after issuance.</span>
+                </div>
+              </div>
+
+              <div class="cw-err-item" id="cwErr4">
+                <div class="cw-card">
+                  <div class="cw-etitle"><span class="cw-enum">5</span>Benchmark spread vs G-spread</div>
+                  <div class="cw-ebody">Dealers quote a spread to Treasuries whose maturity does not match the bond's maturity. Which spread measure is this?</div>
+                  <div class="cw-trap">Wrong: said G-spread. The G-spread actually corrects for maturity mismatch through interpolation.</div>
+                  <div class="cw-tip">Correct: Benchmark spread. Dealers quote against the nearest on-the-run Treasury regardless of maturity match.</div>
+                  <div class="cw-fl">Benchmark spread: spread over nearest on-the-run Treasury
+→ maturity DOES NOT match (what dealers quote on Bloomberg)
+
+G-spread: spread over INTERPOLATED government yield
+→ maturity-matched by construction (requires calculation)
+
+I-spread: spread over swap rate of matching maturity
+
+Key phrase: "maturity does not match" = benchmark spread
+Key phrase: "interpolated" = G-spread</div>
+                </div>
+              </div>
+
+              <div class="cw-err-item" id="cwErr5">
+                <div class="cw-card">
+                  <div class="cw-etitle"><span class="cw-enum">6</span>BBB bond excess return — yield decline vs spread</div>
+                  <div class="cw-ebody">50bp decline in yield over one year. BBB bond: OAS 2.75%, EffSpreadDur 6, POD 0.75%, LGD 40%.</div>
+                  <div class="cw-trap">Wrong: reinterpreted "yield decline" as a benchmark rate move (not a spread move) and got 2.45% instead of 5.45%.</div>
+                  <div class="cw-tip">Correct: use the decline directly as ΔSpread = −0.50% in the excess return formula. Answer = 5.45%.</div>
+                  <div class="cw-fl">Excess return = Spread₀ − (EffSpreadDur × ΔSpread) − (POD × LGD)
+= 2.75% − (6 × −0.50%) − (0.75% × 40%)
+= 2.75% + 3.00% − 0.30%
+= 5.45%
+
+Rule: when the formula gives a clean answer matching an option,
+trust the first calculation. Don't reinterpret the question.</div>
+                </div>
+              </div>
+
+              <div class="cw-err-item" id="cwErr6">
+                <div class="cw-card">
+                  <div class="cw-etitle"><span class="cw-enum">7</span>CDO tranches — increasing default correlations</div>
+                  <div class="cw-ebody">Choate: long subordinated (Class B), short senior (Class A). What does this signal about expected default correlations?</div>
+                  <div class="cw-trap">Wrong: initially said decreasing correlations benefit subordinated relative to senior.</div>
+                  <div class="cw-tip">Correct: INCREASING correlations → mezzanine/subordinated gains relative to senior. Long sub / short senior = bet on increasing correlations.</div>
+                  <span class="cw-rule">Low correlation: defaults predictable and moderate → reliably hit lower tranches → senior very safe → senior is valuable</span>
+                  <span class="cw-rule">High correlation: loss distribution bimodal (near-zero OR catastrophic) → catastrophic tail now threatens senior too → senior loses relative value → mezzanine gains</span>
+                  <div class="cw-fl">Long sub + short senior → profits when sub outperforms senior
+Sub outperforms senior when correlations INCREASE
+→ Choate expects INCREASING default correlations
+
+Memory anchor: high correlation = bimodal = senior no longer safely remote</div>
+                </div>
+              </div>
+
+              <div class="cw-err-item" id="cwErr7">
+                <div class="cw-card">
+                  <div class="cw-etitle"><span class="cw-enum">8</span>Goodwin Q29 — alternative to individual bonds</div>
+                  <div class="cw-ebody">Goodwin wants credit exposure while limiting liquidity risk in a rapidly changing market. What should XBK traders suggest?</div>
+                  <div class="cw-trap">Wrong: answered "Bond 2" — misread the question. Asked for an ALTERNATIVE to individual bonds.</div>
+                  <div class="cw-tip">Correct: CDS or bond ETFs. Both provide credit exposure with better liquidity than individual bonds.</div>
+                  <span class="cw-rule"><span class="cw-right">CDS:</span> highly liquid even in volatile markets, surgical credit exposure, easy to unwind</span>
+                  <span class="cw-rule"><span class="cw-right">Bond ETFs:</span> trade on exchange with continuous pricing, instant diversified exposure</span>
+                  <div class="cw-trap">Read the question carefully. "Gain credit exposure while limiting liquidity risk" asks for a liquid instrument TYPE, not which of the three bonds is best.</div>
+                </div>
+              </div>
+
+              <div style="display:flex;justify-content:space-between;margin-top:12px;align-items:center">
+                <button onclick="cwEePrevErr()" class="cw-nbtn" style="max-width:100px;margin-top:0">← Prev</button>
+                <span id="cwErrCounter" style="font-family:var(--mono);font-size:11px;color:var(--muted)">1 / 8</span>
+                <button onclick="cwEeNextErr()" class="cw-nbtn" style="max-width:100px;margin-top:0">Next →</button>
+              </div>
+            </div>
+
+            <div id="cw-ee-quiz" class="cw-panel">
+              <div class="cw-card" id="cwQuizBox"></div>
+            </div>
+          </div>
+          <!-- ══════════════════════════════
+               TAB 8 · ALL EXAM QUESTIONS
+          ══════════════════════════════ -->
+          <div id="cw-eq" class="cw-panel">
+            <div class="cw-cqt" id="cwCqtBar">
+              <button class="cw-cqb active" onclick="cwCqTab('q1',this)">Q1</button>
+              <button class="cw-cqb" onclick="cwCqTab('q2',this)">Q2</button>
+              <button class="cw-cqb" onclick="cwCqTab('q3',this)">Q3</button>
+              <button class="cw-cqb" onclick="cwCqTab('q4',this)">Q4</button>
+              <button class="cw-cqb" onclick="cwCqTab('q5',this)">Q5</button>
+              <button class="cw-cqb" onclick="cwCqTab('q6',this)">Q6</button>
+              <button class="cw-cqb" onclick="cwCqTab('q7',this)">Q7</button>
+              <button class="cw-cqb" onclick="cwCqTab('q8',this)">Q8</button>
+              <button class="cw-cqb" onclick="cwCqTab('q9',this)">Q9</button>
+              <button class="cw-cqb" onclick="cwCqTab('q10',this)">Q10</button>
+              <button class="cw-cqb" onclick="cwCqTab('q11',this)">Q11</button>
+              <button class="cw-cqb" onclick="cwCqTab('q12',this)">Q12</button>
+              <button class="cw-cqb" onclick="cwCqTab('q13',this)">Q13</button>
+              <button class="cw-cqb" onclick="cwCqTab('q14',this)">Q14</button>
+              <button class="cw-cqb" onclick="cwCqTab('q15',this)">Q15</button>
+              <button class="cw-cqb" onclick="cwCqTab('q16',this)">Q16</button>
+              <button class="cw-cqb" onclick="cwCqTab('q17',this)">Q17</button>
+              <button class="cw-cqb" onclick="cwCqTab('q18',this)">Q18</button>
+              <button class="cw-cqb" onclick="cwCqTab('q19',this)">Q19</button>
+              <button class="cw-cqb" onclick="cwCqTab('q20',this)">Q20</button>
+              <button class="cw-cqb" onclick="cwCqTab('q21',this)">Q21</button>
+            </div>
+
+            <div id="cw-cq-q1" class="cw-cqp active">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q1 · Stone/Palma <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Stone outlines three suggestions for Palma investing outside EU markets:<br>
+                  1. Evaluate whether spread advantage is negated by cost of currency hedge.<br>
+                  2. Avoid local currency investments in countries where exchange rate is pegged.<br>
+                  3. Ensure timing of credit cycles across markets coincides.<br><br>
+                  Which suggestion is <strong>most likely correct</strong>?</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">B — Spread advantage is most likely correct</div>
+                  <div class="cw-cqopt">A — Credit cycles coinciding = no diversification benefit</div>
+                  <div class="cw-cqopt">C — Pegged currency = less risk, not more; logic is inverted</div>
+                </div>
+                <div class="cw-cqwhy">Spread advantage: correct — you must net FX hedge cost against spread pickup. If hedge cost ≥ spread, no real advantage.<br><br>
+                  Pegged currency: wrong direction — a peg <span class="cw-green">reduces</span> FX risk, making local currency <span class="cw-green">more</span> attractive.<br><br>
+                  Credit cycles coinciding: wrong logic — if cycles coincide, there is <span class="cw-red">no diversification</span>.</div>
+                <div class="cw-cqtrap">Trap: peg = stable FX = lower risk = MORE attractive for unhedged investment.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q2" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q2 · CDS Mark-to-Market <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Manager buys CDS protection at 1.75% spread (EffSpreadDur = 8.75, notional €10M). Spread immediately falls to 1.60%. MTM?</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">A — Loss of €131,250</div>
+                </div>
+                <div class="cw-cqwhy">
+                  <span class="cw-cqfl">MTM = EffSpreadDur × ΔSpread × Notional
+= 8.75 × (1.60% − 1.75%) × €10,000,000
+= 8.75 × (−0.0015) × €10,000,000
+= −€131,250 → LOSS</span>
+                  Buying protection is bearish on credit — you profit when spreads <span class="cw-red">widen</span>. Spreads fell here (credit improved), so the protection buyer <span class="cw-red">loses</span>.
+                </div>
+                <div class="cw-cqtrap">Trap: Spread fell → protection buyer loses. Spread fell → protection seller gains.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q3" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q3 · Unhedged excess return <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Equal-weighted portfolio: USD IG (OAS 1.25%, EL 0.40%), USD HY (3.00%, EL 2.25%), EUR IG (1.15%, EL 0.50%), EUR HY (3.25%, EL 2.50%). EUR depreciates 2% vs USD.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">A — −0.257%</div>
+                </div>
+                <div class="cw-cqwhy">
+                  <span class="cw-cqfl">Excess return per asset = OAS − Expected Loss (± FX for non-base currency)
+
+USD IG: 1.25% − 0.40%           = +0.85%
+USD HY: 3.00% − 2.25%           = +0.75%
+EUR IG: 1.15% − 0.50% − 2.00%  = −1.35%
+EUR HY: 3.25% − 2.50% − 2.00%  = −1.25%
+
+Average = (0.85 + 0.75 − 1.35 − 1.25) / 4 ≈ −0.25%</span>
+                  FX drag only applies to EUR allocations.
+                </div>
+                <div class="cw-cqtrap">Trap: Subtract 2% EUR depreciation only from EUR-denominated positions.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q4" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q4 · Goodwin — alternative to individual bonds <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Goodwin wants to gain credit exposure while <strong>limiting liquidity risk</strong>. Best alternative?</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">C — CDS contracts or bond ETFs</div>
+                  <div class="cw-cqopt">A/B — Individual bonds have worse liquidity, not better</div>
+                </div>
+                <div class="cw-cqwhy">The question asks for an <span class="cw-hl">alternative to individual bonds</span> — not which individual bond to buy. CDS contracts trade in a highly liquid OTC market. Bond ETFs trade on exchange with continuous pricing.</div>
+                <div class="cw-cqtrap">Trap: Misreading the question. Asks what to use INSTEAD of individual bonds.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q5" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q5 · Larent — structured instruments <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Three statements: (A) AA-rated CDOs offer relative value because yield spread reflects BB default expectations, (B) CDOs provide diversification beyond underlying bonds, (C) increasing default correlations increase value of senior tranches. Which is correct?</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">A — Relative value</div>
+                  <div class="cw-cqopt">B — Wrong: CDO exposure = same underlying bonds, no diversification</div>
+                  <div class="cw-cqopt">C — Wrong: increasing correlations hurt senior, benefit mezzanine</div>
+                </div>
+                <div class="cw-cqwhy">
+                  B incorrect: CDO + underlying bonds = concentrated, not diversified exposure.<br>
+                  C incorrect: rising correlations → bimodal loss distribution → catastrophic tail threatens senior. Mezzanine/subordinated gains relative to senior.
+                </div>
+                <div class="cw-cqtrap">Higher correlation → bimodal distribution → senior LOSES relative value.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q6" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q6 · Smith liquidity statements <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Which is least likely correct?<br>
+                  1: Gov bonds and high-quality corporates more liquid than lower-rated in high volatility.<br>
+                  2: Bonds with embedded options trade with lower liquidity than conventional bonds.<br>
+                  3: Liquidity is reduced when significant new supply of bonds is issued.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">C — Statement 3 is least likely correct</div>
+                </div>
+                <div class="cw-cqwhy">Statement 3 is <span class="cw-red">backwards</span>. Liquidity is actually <span class="cw-green">highest immediately after issuance</span>. New bonds attract most market participants, price discovery freshest.</div>
+                <div class="cw-cqtrap">Trap: Statement 3 sounds intuitive. But the exam tests the seasoning effect: new issues = peak liquidity.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q7" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q7 · Choate COF structured instruments <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">COF portfolio: overweight MBS, long CDO subordinated Class B, short CDO senior Class A. What is Choate expecting?</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">B — Lower rate volatility + increasing default correlations</div>
+                </div>
+                <div class="cw-cqwhy">
+                  <strong>MBS overweight</strong> → MBS has negative convexity from prepayment optionality. Lower rate vol = prepayment option worth less = MBS prices rise. Bet on <span class="cw-green">lower rate volatility</span>.<br><br>
+                  <strong>Long sub / short senior</strong> → profits from increasing correlations as mezzanine outperforms senior.
+                </div>
+                <div class="cw-cqtrap">Long sub / short senior = bet on INCREASING correlations.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q8" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q8 · Island spread / Stone data / West report <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq"><strong>Part 1:</strong> Dealers quote a spread over a Treasury whose maturity does not match the bond's maturity. Which spread measure?<br>
+                  <strong>Part 2:</strong> Assuming no change in credit spreads, which analyst data item is most useful?<br>
+                  <strong>Part 3:</strong> Is West's two-section top-down report correctly structured?</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">Part 1: C — Benchmark spread (maturity mismatch is the key clue)</div>
+                  <div class="cw-cqopt correct">Part 2: C — Expected probability of default (forward-looking)</div>
+                  <div class="cw-cqopt correct">Part 3: B — Incorrect on macro factors (KRD is risk measure, not macro)</div>
+                </div>
+                <div class="cw-cqwhy">
+                  Benchmark spread = nearest on-the-run Treasury → maturity mismatch. G-spread = interpolated yield → matches maturity.<br><br>
+                  West's report: KRD belongs in risk measures section, not macro section.
+                </div>
+                <div class="cw-cqtrap">G-spread corrects maturity mismatch via interpolation. Benchmark spread doesn't.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q9" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q9 · Goodwin — best bond + alternatives <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Spreads expected to tighten 30%. Which bond has the highest expected excess spread?
+                  <table class="cw-table" style="margin-top:8px">
+                    <thead><tr><th>Bond</th><th>Rating</th><th>OAS</th><th>ESD</th><th>EL</th></tr></thead>
+                    <tbody>
+                      <tr><td>Bond 1</td><td>A2</td><td>0.80%</td><td>4.5</td><td>0.10%</td></tr>
+                      <tr><td>Bond 2</td><td>Baa2</td><td>1.50%</td><td>5.5</td><td>0.30%</td></tr>
+                      <tr><td>Bond 3</td><td>Ba2</td><td>3.00%</td><td>6.0</td><td>1.80%</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">Bond 2 has the highest expected excess spread</div>
+                  <div class="cw-cqopt correct">Liquidity alternative: CDS or bond ETFs</div>
+                </div>
+                <div class="cw-cqwhy">Bond 2 has the best risk-adjusted combination of spread, duration, and expected loss given a 30% tightening scenario.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q10" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q10 · Credit spread measures — Z-DM vs DM <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Which is most accurate?<br>
+                  A. DM is yield spread over MRR established upon issuance.<br>
+                  B. Z-DM above DM if MRR expected constant.<br>
+                  C. Yield spread = G-spread if government yield curve is flat.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">C — Yield spread = G-spread when government yield curve is flat</div>
+                  <div class="cw-cqopt">A — Wrong: describes QM, not DM (DM recalculated each period)</div>
+                  <div class="cw-cqopt">B — Wrong: if MRR constant, Z-DM = DM (no difference)</div>
+                </div>
+                <div class="cw-cqwhy">G-spread uses interpolated government yield at bond's maturity. When curve is flat, interpolation gives same rate as nearest Treasury → both spreads converge.</div>
+                <div class="cw-cqtrap">DM vs QM: DM floats each period; QM fixed at issuance.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q11" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q11 · BB bond — instantaneous excess return <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">BB bond: credit spread 3.50%, EffSpreadDur 5. Spread widens 50bps instantaneously (holding period = zero).</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">B — −2.50%</div>
+                </div>
+                <div class="cw-cqwhy">
+                  <span class="cw-cqfl">Instantaneous excess return = −EffSpreadDur × ΔSpread
+= −5 × 0.50% = −2.50%</span>
+                  Zero holding period → no carry, no expected loss. Only price impact counts. Widening → price falls.
+                </div>
+                <div class="cw-cqtrap">Spread widening = loss for bond holder.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q12" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q12 · BBB bond — 1-year excess return <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">BBB bond: spread 2.75%, EffSpreadDur 6, POD 0.75%, LGD 40%. Spread declines 50bps over one-year holding period.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">C — 5.45%</div>
+                </div>
+                <div class="cw-cqwhy">
+                  <span class="cw-cqfl">Excess return = Spread₀ − (EffSpreadDur × ΔSpread) − (POD × LGD)
+= 2.75% − (6 × −0.50%) − (0.75% × 40%)
+= 2.75% + 3.00% − 0.30%
+= 5.45%</span>
+                </div>
+                <div class="cw-cqtrap">"50bp decline in yield" = spread tightens 50bps → ΔSpread = −0.50% → positive price contribution.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q13" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q13 · Statistical credit models <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Which is most accurate?<br>
+                  A. Structural models solve POD using financial ratios and macro variables.<br>
+                  B. Reduced-form models use market-based variables to estimate asset value and volatility.<br>
+                  C. Structural models define default as asset value below liabilities.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">C — Structural: default = asset value falls below liabilities</div>
+                </div>
+                <div class="cw-cqwhy">
+                  <table class="cw-table">
+                    <thead><tr><th>Model</th><th>Inputs</th><th>Trigger</th></tr></thead>
+                    <tbody>
+                      <tr><td><span class="cw-hl">Structural</span></td><td>Asset value, volatility (from equity)</td><td>Asset value &lt; Liabilities</td></tr>
+                      <tr><td><span class="cw-hl">Reduced-form</span></td><td>Financial ratios, macro</td><td>Statistical default intensity</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="cw-cqtrap">A and B have the descriptions swapped.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q14" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q14 · Illiquid bond — best strategy <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Which strategy best addresses liquidity risk of a less frequently traded bond?<br>
+                  A. Enter receive-fixed/pay-floating asset swap.<br>
+                  B. Sell single-name CDS protection on the issuer.<br>
+                  C. Allocate the illiquid bond to the buy-and-hold portion.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">C — Allocate to buy-and-hold portion</div>
+                </div>
+                <div class="cw-cqwhy">Buy-and-hold has no requirement to liquidate at short notice — removes the liquidity mismatch entirely. A and B still require exiting the underlying bond; B actually adds net credit risk.</div>
+                <div class="cw-cqtrap">A and B seem sophisticated but don't remove the need to eventually exit the illiquid position.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q15" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q15 · Portfolio tail risk methods <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Which describes methods for assessing portfolio tail risk?<br>
+                  A. Parametric uses normal distribution and is well suited for option-based portfolios.<br>
+                  B. Historical simulation is NOT suited for options.<br>
+                  C. Monte Carlo is well suited for option-based portfolios.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">C — Monte Carlo is well suited for option-based portfolios</div>
+                </div>
+                <div class="cw-cqwhy">
+                  <table class="cw-table">
+                    <thead><tr><th>Method</th><th>Options?</th><th>Why</th></tr></thead>
+                    <tbody>
+                      <tr><td>Parametric</td><td><span class="cw-red">No</span></td><td>Assumes normality; options have non-linear payoffs</td></tr>
+                      <tr><td>Historical sim</td><td><span class="cw-green">Partial</span></td><td>Captures non-normality; limited by sample</td></tr>
+                      <tr><td>Monte Carlo</td><td><span class="cw-green">Best</span></td><td>Handles path-dependency and non-linearity</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q16" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q16 · VaR calculation <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Bond: $75M face, price 104.0175, ModDur 9.887. Daily yield vol = 1.50bps. 99% confidence (z = 2.33), 1-month (21 trading days).</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">A — $1,234,105</div>
+                </div>
+                <div class="cw-cqwhy">
+                  <span class="cw-cqfl">Step 1: MV = $75M × (104.0175/100) = $78,013,125
+
+Step 2: VaR = MV × ModDur × Daily yield vol × z × √days
+        = $78,013,125 × 9.887 × 0.00015 × 2.33 × √21
+        = $78,013,125 × 9.887 × 0.00015 × 2.33 × 4.583
+        ≈ $1,234,105</span>
+                </div>
+                <div class="cw-cqtrap">Daily yield vol = 1.50bps = 0.00015. Scale monthly using √21. Compute MV first.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q17" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q17 · CDS pricing at inception <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Best describes CDS pricing at inception:<br>
+                  A. Credit spread below coupon → CDS at premium; buyer pays below-market coupon.<br>
+                  B. Credit spread above coupon → CDS at discount; seller receives below-market premium.<br>
+                  C. CDS initially priced at par with fixed coupon; price changes over time.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">C — Initiated at par via up-front payment; price drifts as spreads move</div>
+                </div>
+                <div class="cw-cqwhy">
+                  <table class="cw-table">
+                    <thead><tr><th>Situation</th><th>Up-front direction</th></tr></thead>
+                    <tbody>
+                      <tr><td>CDS spread &gt; coupon</td><td>Buyer pays up-front to seller</td></tr>
+                      <tr><td>CDS spread &lt; coupon</td><td>Seller pays up-front to buyer</td></tr>
+                    </tbody>
+                  </table>
+                  Standard coupons: 1% IG, 5% HY. Up-front ensures every CDS starts at par.
+                </div>
+                <div class="cw-cqtrap">A and B have up-front directions inverted. Side paying above-market receives up-front.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q18" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q18 · HY credit spread curve shape <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Most accurate about HY credit spread curve shape?<br>
+                  A. HY curves invert during the peak phase.<br>
+                  B. Distressed bonds trade on price, not spread — spread curve becomes misleading.<br>
+                  C. HY curves invert because DTS is best measure of HY price changes.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">B — Distressed bonds trade on price not spread</div>
+                </div>
+                <div class="cw-cqwhy">As default probability rises, bond price is driven by expected recovery value. Spread becomes near-meaningless.<br><br>
+                  A is wrong on timing: inversion happens during <span class="cw-hl">contraction</span>, not peak.</div>
+                <div class="cw-cqtrap">"Peak" vs "contraction" — inversion during contraction when short-term default risk spikes.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q19" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q19 · Credit curve roll-down strategy <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Best describes credit curve roll-down?<br>
+                  A. Returns = incremental coupon from longer maturity + price appreciation from time.<br>
+                  B. Synthetic roll-down = purchasing CDS protection at longer maturity.<br>
+                  C. Positive return if credit spread curve is upward sloping.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">C — Positive return requires upward-sloping spread curve</div>
+                </div>
+                <div class="cw-cqwhy">As time passes, a 5yr bond becomes a 4yr bond. If curve is upward-sloping, 4yr spread &lt; 5yr → bond price rises.<br>
+                  B wrong: synthetic roll-down = SELLING protection (long credit), not buying.</div>
+                <div class="cw-cqtrap">Buying protection = short credit. Roll-down requires LONG credit.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q20" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q20 · IG steepening trade <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">CDX IG 5yr: 85bps, ESD 4.9. CDX IG 10yr: 135bps, ESD 8.9. Expected steepening.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">C — Buy 10yr protection + sell 5yr protection, duration-weighted 1.82×</div>
+                </div>
+                <div class="cw-cqwhy">
+                  <span class="cw-cqfl">Steepening = long-end rises more than short-end
+
+Long end rises → BUY protection at 10yr
+Short end stable → SELL protection at 5yr
+
+Duration weighting:
+Ratio = ESD 10yr / ESD 5yr = 8.9 / 4.9 = 1.82×</span>
+                  Without duration weighting → unintended level exposure.
+                </div>
+                <div class="cw-cqtrap">Direction AND ratio must both be correct.</div>
+              </div>
+            </div>
+
+            <div id="cw-cq-q21" class="cw-cqp">
+              <div class="cw-cqcard">
+                <div class="cw-cqnum">Q21 · Economic contraction positioning <span class="cw-bwrong">✗ got wrong</span></div>
+                <div class="cw-cqq">Expected economic contraction. Which CDS strategy?<br>
+                  A. Buy 5yr CDX HY protection + sell 5yr CDX IG protection, equal notional.<br>
+                  B. Buy 10yr CDX IG + sell 5yr CDX IG, 1.82× notional.<br>
+                  C. Buy 10yr CDX HY + sell 5yr CDX HY, 1.85× notional.</div>
+                <div class="cw-cqopts">
+                  <div class="cw-cqopt correct">A — Buy HY protection + sell IG protection, same maturity</div>
+                </div>
+                <div class="cw-cqwhy">During contraction, HY widens <span class="cw-red">much more</span> than IG — quality divergence is the key signal.<br><br>
+                  Same maturity isolates HY vs IG quality spread, not curve shape.<br><br>
+                  C wrong: HY curve tends to <span class="cw-red">flatten or invert</span> in contraction.</div>
+                <div class="cw-cqtrap">Contraction = quality trade (HY vs IG), not curve trade.</div>
+              </div>
+            </div>
           </div>
 
           <script>
-            function ycTab(id, btn) {
-              document.querySelectorAll('#ycsWidget .lw-panel').forEach(function(p){p.classList.remove('active')});
-              document.querySelectorAll('#ycTabBar .lw-tab').forEach(function(b){b.classList.remove('active')});
-              document.getElementById('ycs-'+id).classList.add('active');
+            // ═══════════════════════════════════════════════
+            // Credit Widget JS — all functions prefixed cw*
+            // ═══════════════════════════════════════════════
+
+            function cwTab(id, btn){
+              document.querySelectorAll('#creditWidget > .cw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#creditWidget > .cw-tabs > .cw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cw-'+id).classList.add('active');
               btn.classList.add('active');
+            }
+
+            // ── Credit Cycle tab ──
+            var cwCycleData = {
+              early:{name:'Early expansion (recovery)',color:'#3DD68C',
+                defaults:{t:'Peak → Falling',b:'cw-bg'},spread:{t:'Stable',b:'cw-bn'},
+                ig:{t:'Stable',s:'flat'},hy:{t:'Inverted',s:'inv'},
+                memo:'Defaults still elevated from recession but peaking. IG spreads stabilize. HY curve inverted — short-term HY risk still high from lingering recession stress.'},
+              late:{name:'Late expansion',color:'#F0A04B',
+                defaults:{t:'Falling',b:'cw-bw'},spread:{t:'Falling',b:'cw-bw'},
+                ig:{t:'Upward sloping',s:'up'},hy:{t:'Upward sloping',s:'up'},
+                memo:'Strong growth: defaults falling, spreads compressing. Both IG and HY curves upward sloping — near-term credit risk is low, normal term structure.'},
+              peak:{name:'Peak',color:'#FF7B72',
+                defaults:{t:'Stable',b:'cw-bn'},spread:{t:'Rising',b:'cw-br'},
+                ig:{t:'Upward sloping',s:'up'},hy:{t:'Upward sloping',s:'up'},
+                memo:'Growth slowing. Spreads widen before defaults move — market prices in deterioration ahead of actual defaults. Both curves still upward sloping.'},
+              contraction:{name:'Contraction (recession)',color:'#C0392B',
+                defaults:{t:'Rising',b:'cw-br'},spread:{t:'Rising sharply',b:'cw-br'},
+                ig:{t:'Flat',s:'flat'},hy:{t:'Inverted',s:'inv'},
+                memo:'Recession: defaults and spreads both rising. IG curve flattens. HY curve inverts — short-term HY spreads blow out as near-term default risk spikes.'}
+            };
+            function cwCurve(shape, color){
+              var paths={flat:'M8 20 L112 20',up:'M8 32 Q60 16 112 6',inv:'M8 6 Q60 22 112 34'};
+              return '<svg width="120" height="40" viewBox="0 0 120 40"><path d="'+paths[shape]+'" fill="none" stroke="'+color+'" stroke-width="2.5" stroke-linecap="round"/><text x="8" y="40" font-size="9" fill="#7D8590" font-family="monospace">S</text><text x="104" y="40" font-size="9" fill="#7D8590" font-family="monospace">L</text></svg>';
+            }
+            function cwSel(id){
+              Object.keys(cwCycleData).forEach(function(k){
+                var c=document.getElementById('cw-c-'+k);
+                if(c){c.style.borderColor='#2A3441';c.style.borderWidth='1px';}
+              });
+              var card=document.getElementById('cw-c-'+id);
+              if(card){card.style.borderColor=cwCycleData[id].color;card.style.borderWidth='2px';}
+              var s=cwCycleData[id];
+              var h='<div class="cw-dtitle" style="color:'+s.color+'">'+s.name+'</div>'+
+                '<div class="cw-drow"><span class="cw-dlabel">Corporate defaults</span><span class="cw-badge '+s.defaults.b+'">'+s.defaults.t+'</span></div>'+
+                '<div class="cw-drow"><span class="cw-dlabel">Credit spread level</span><span class="cw-badge '+s.spread.b+'">'+s.spread.t+'</span></div>'+
+                '<div class="cw-cwrap"><div class="cw-ctitle">Spread curve shape</div>'+
+                '<div class="cw-crow"><span class="cw-clabel">IG</span>'+cwCurve(s.ig.s,'#388BFD')+'<span style="color:#C9D1D9;font-size:11.5px">'+s.ig.t+'</span></div>'+
+                '<div class="cw-crow"><span class="cw-clabel">HY</span>'+cwCurve(s.hy.s,'#FF7B72')+'<span style="color:#C9D1D9;font-size:11.5px">'+s.hy.t+'</span></div>'+
+                '</div><div class="cw-memo">'+s.memo+'</div>';
+              var d=document.getElementById('cw-cycle-detail');
+              d.innerHTML=h; d.style.display='block';
+            }
+
+            // ── Risk Models sub-tabs ──
+            function cwRmGo(id, btn){
+              document.querySelectorAll('#cw-rm > .cw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cw-rm > .cw-tabs > .cw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cw-rm-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function cwZCalc(){
+              var A=+document.getElementById('cwZA').value,B=+document.getElementById('cwZB').value;
+              var C=+document.getElementById('cwZC').value,D=+document.getElementById('cwZD').value;
+              var E=+document.getElementById('cwZE').value;
+              document.getElementById('cwZAo').textContent=A.toFixed(2);
+              document.getElementById('cwZBo').textContent=B.toFixed(2);
+              document.getElementById('cwZCo').textContent=C.toFixed(2);
+              document.getElementById('cwZDo').textContent=D.toFixed(2);
+              document.getElementById('cwZEo').textContent=E.toFixed(2);
+              var z=1.2*A+1.4*B+3.3*C+0.6*D+0.999*E;
+              var band,col,badgeCls;
+              if(z>3.0){band='Low chance of default';col='#3DD68C';badgeCls='cw-bg';}
+              else if(z>=1.8){band='Some risk of default';col='#F0A04B';badgeCls='cw-bw';}
+              else{band='Likely to default';col='#FF7B72';badgeCls='cw-br';}
+              var barPct=Math.min(95,Math.max(5,(z/5)*95)).toFixed(0);
+              document.getElementById('cwZResult').innerHTML=
+                '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">'+
+                '<span style="font-family:var(--mono);font-size:24px;font-weight:500;color:'+col+'">'+z.toFixed(2)+'</span>'+
+                '<span class="cw-badge '+badgeCls+'">'+band+'</span></div>'+
+                '<div class="cw-zbar"><div class="cw-zfill" style="width:'+barPct+'%;background:'+col+'"></div>'+
+                '<div class="cw-zmark" style="left:36%"></div><div class="cw-zmark" style="left:60%"></div></div>'+
+                '<div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:#7D8590;margin-top:3px">'+
+                '<span>Likely default</span><span>1.8</span><span>Some risk</span><span>3.0</span><span>Low risk</span></div>';
+            }
+
+            // ── CDS Pricing sub-tabs ──
+            function cwCpGo(id, btn){
+              document.querySelectorAll('#cw-cp > .cw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cw-cp > .cw-tabs > .cw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cw-cp-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function cwCpCalc(){
+              var s=+document.getElementById('cwCdsS').value;
+              var c=+document.getElementById('cwFixC').value;
+              var d=+document.getElementById('cwDur1').value;
+              document.getElementById('cwCdsSo').textContent=s+' bps';
+              document.getElementById('cwDur1o').textContent=d.toFixed(1);
+              var diff=s-c, up=Math.abs(diff/10000)*d*100;
+              var payer=s>c?'Buyer → Seller':s<c?'Seller → Buyer':'No payment';
+              var col=s>c?'#FF7B72':s<c?'#3DD68C':'#7D8590';
+              document.getElementById('cwCalcBox').innerHTML=
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">CDS spread</span><span class="cw-sim-val">'+s+' bps</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Fixed coupon</span><span class="cw-sim-val">'+c+' bps</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Spread − coupon</span><span class="cw-sim-val" style="color:'+col+'">'+(diff>0?'+':'')+diff+' bps</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Up-front (% notional)</span><span class="cw-sim-val" style="color:'+col+'">'+(s===c?'0.00':up.toFixed(2))+'%</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Direction</span><span class="cw-badge cw-blue">'+payer+'</span></div>';
+            }
+            function cwCpPrCalc(){
+              var s=+document.getElementById('cwPSpread').value;
+              var c=+document.getElementById('cwPCoupon').value;
+              var d=+document.getElementById('cwDur2').value;
+              document.getElementById('cwPSpreado').textContent=s+' bps';
+              document.getElementById('cwDur2o').textContent=d.toFixed(1);
+              var price=1+((c-s)/10000)*d;
+              var col=price>1?'#3DD68C':price<1?'#FF7B72':'#7D8590';
+              var status=price>1?'Above par — spread < coupon':price<1?'Below par — spread > coupon':'At par';
+              document.getElementById('cwPriceBox').innerHTML=
+                '<div style="text-align:center;padding:10px 0"><span style="font-family:var(--mono);font-size:26px;font-weight:500;color:'+col+'">'+(price*100).toFixed(2)+'</span><span style="font-size:12px;color:#7D8590;font-family:var(--mono)"> (% notional)</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Status</span><span style="font-size:11.5px;color:'+col+'">'+status+'</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Coupon − spread</span><span class="cw-sim-val">'+(c-s>0?'+':'')+(c-s)+' bps</span></div>';
+            }
+
+            // ── Dynamic Strats sub-tabs ──
+            function cwDyGo(id, btn){
+              document.querySelectorAll('#cw-dy > .cw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cw-dy > .cw-tabs > .cw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cw-dy-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+
+            // ── CDS Curve sub-tabs ──
+            function cwCtTab(id, btn){
+              document.querySelectorAll('#cw-cds > .cw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cw-cds > .cw-tabs > .cw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cw-ct-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+
+            // ── FRN sub-tabs ──
+            function cwFwT(id, btn){
+              document.querySelectorAll('#cw-frn > .cw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cw-frn > .cw-tabs > .cw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cw-fw-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function cwFwSim(){
+              var qm=parseInt(document.getElementById('cwFwQm').value);
+              var dm=parseInt(document.getElementById('cwFwDm').value);
+              document.getElementById('cwFwQmo').textContent=qm+' bps';
+              document.getElementById('cwFwDmo').textContent=dm+' bps';
+              var diff=qm-dm;
+              var pct=Math.min(Math.max(50+diff*0.15,5),95).toFixed(0);
+              var barBg,badge,explain;
+              if(Math.abs(diff)<5){
+                barBg='#2EA043';badge='<span class="cw-badge cw-pass">At par</span>';
+                explain='DM = QM — coupon exactly matches required return. Bond prices at 100.';
+              } else if(diff>0){
+                barBg='#388BFD';badge='<span class="cw-badge cw-blue">Above par (premium)</span>';
+                explain='QM > DM — bond pays MORE spread than required. Investors bid up the price above par.';
+              } else {
+                barBg='#C0392B';badge='<span class="cw-badge cw-fail">Below par (discount)</span>';
+                explain='DM > QM — market demands MORE than bond pays. Price falls below par to compensate.';
+              }
+              document.getElementById('cwFwSimBox').innerHTML=
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">QM (bond pays)</span><span class="cw-sim-val">'+qm+' bps</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">DM (mkt requires)</span><span class="cw-sim-val">'+dm+' bps</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Gap (QM − DM)</span><span class="cw-sim-val" style="color:'+(diff>=0?'#3DD68C':'#FF7B72')+'">'+(diff>0?'+':'')+diff+' bps</span></div>'+
+                '<div class="cw-par-bar"><div class="cw-par-mark"></div><div class="cw-par-fill" style="width:'+pct+'%;background:'+barBg+'"></div></div>'+
+                '<div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:#7D8590;margin-bottom:8px"><span>Discount</span><span>Par</span><span>Premium</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Pricing</span>'+badge+'</div>'+
+                '<div style="font-size:11.5px;color:#C9D1D9;margin-top:10px;line-height:1.6">'+explain+'</div>';
+            }
+            function cwFwCalc(){
+              var pv0=parseFloat(document.getElementById('cwPv0').value);
+              var pvm=parseFloat(document.getElementById('cwPvm').value);
+              var pvp=parseFloat(document.getElementById('cwPvp').value);
+              var shock=parseInt(document.getElementById('cwShock').value);
+              document.getElementById('cwPv0o').textContent=pv0.toFixed(2);
+              document.getElementById('cwPvmo').textContent=pvm.toFixed(2);
+              document.getElementById('cwPvpo').textContent=pvp.toFixed(2);
+              document.getElementById('cwShocko').textContent=shock+' bps';
+              var shockDec=shock/10000;
+              var dur=((pvm-pvp)/(2*shockDec*pv0)).toFixed(2);
+              document.getElementById('cwFwCalcBox').innerHTML=
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">PV− − PV+</span><span class="cw-sim-val">'+(pvm-pvp).toFixed(3)+'</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">2 × shock × PV₀</span><span class="cw-sim-val">'+(2*shockDec*pv0).toFixed(5)+'</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Duration result</span><span class="cw-sim-val" style="color:#79C0FF">'+dur+'</span></div>'+
+                '<div style="font-size:11.5px;color:#C9D1D9;margin-top:8px;line-height:1.6">Same calculation for both EffRateDur and EffSpreadDur — only the shock type differs (MRR vs DM).</div>';
+            }
+
+            // ── Exam Errors tab ──
+            var cwEeCurErr=0, cwEeRevealed=false, cwEeQord=[], cwEeQi=0;
+            var CW_EE_ERRORS=[
+              {q:"You buy CDS protection at 1.75% spread. The spread immediately falls to 1.60%. Is your MTM a gain or loss?",
+               a:"LOSS of €131,250. Spreads narrowed — bad for protection buyer. Buyer profits when spreads WIDEN. MTM = −8.75 × (−0.0015) × €10M = −€131,250.",
+               trap:"Don't confuse the magnitude with the direction. The math gives a positive number but the sign depends on your position."},
+              {q:"Stone's three suggestions for Palma: (1) evaluate spread net of hedge cost, (2) avoid local currency in pegged countries, (3) ensure credit cycles coincide. Which is most likely CORRECT?",
+               a:"Suggestion 1 — spread advantage net of hedge cost. Hedge cost can negate yield pickup via covered interest parity. Suggestions 2 and 3 both have inverted logic.",
+               trap:"Pegged = LESS currency risk = MORE attractive. Different credit cycles = MORE diversification value, not less."},
+              {q:"Larent's three CDO statements: (A) relative value exists in AA CDOs priced at BB default rates, (B) hold CDO + underlying bonds for diversification, (C) senior gains more than mezzanine as correlations increase. Which is CORRECT?",
+               a:"Statement A — relative value. B wrong (same exposure, no diversification). C wrong (increasing correlations benefit mezzanine, not senior).",
+               trap:"CDO diversification trap: a CDO repackages the same bonds you already hold. No new diversification."},
+              {q:"Smith's Statement 3: liquidity is reduced when significant new supply of bonds is issued. Is this correct?",
+               a:"INCORRECT — least likely correct. Liquidity is HIGHEST immediately after issuance when trading activity peaks.",
+               trap:"New supply ≠ reduced liquidity. New issues attract maximum market participation."},
+              {q:"Dealers quote a spread to Treasuries whose maturity does NOT match the bond's maturity. Which spread measure is this?",
+               a:"Benchmark spread — spread over nearest on-the-run Treasury, which rarely matches the corporate bond's maturity.",
+               trap:"G-spread CORRECTS for maturity mismatch through interpolation. Benchmark spread does NOT correct it — that's the whole point."},
+              {q:"BBB bond: OAS 2.75%, EffSpreadDur 6, POD 0.75%, LGD 40%. 50bp decline in yield over one year. Expected excess return?",
+               a:"5.45% = 2.75% − (6 × −0.50%) − (0.75% × 40%) = 2.75% + 3.00% − 0.30% = 5.45%",
+               trap:"The 50bp yield decline IS the ΔSpread input. Don't reinterpret as a benchmark rate move."},
+              {q:"Choate is long subordinated CDO tranche (Class B) and short senior (Class A). Is he expecting increasing or decreasing default correlations?",
+               a:"INCREASING correlations. Long sub / short senior profits when sub outperforms senior, which happens when correlations rise — bimodal distribution means catastrophic tail threatens senior while mezzanine benefits.",
+               trap:"High correlation = bimodal loss distribution = senior is no longer safely remote from catastrophic losses."},
+              {q:"Goodwin wants credit exposure while LIMITING LIQUIDITY RISK. What alternative to individual bonds?",
+               a:"CDS or bond ETFs. Both provide credit exposure with significantly better liquidity than individual corporate bonds.",
+               trap:"Read carefully — asks for instrument TYPE (liquid alternative), not which bond is best."}
+            ];
+            function cwEeTab(id, btn){
+              document.querySelectorAll('#cw-ee > .cw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cw-ee > .cw-tabs > .cw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cw-ee-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id==='quiz') cwEeStartQuiz();
+            }
+            function cwEeGoErr(n, btn){
+              document.querySelectorAll('.cw-err-item').forEach(function(e){e.classList.remove('active')});
+              document.querySelectorAll('.cw-err-pill').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cwErr'+n).classList.add('active');
+              btn.classList.add('active');
+              cwEeCurErr=n;
+              document.getElementById('cwErrCounter').textContent=(n+1)+' / 8';
+            }
+            function cwEeNextErr(){var n=(cwEeCurErr+1)%8;cwEeGoErr(n,document.querySelectorAll('.cw-err-pill')[n]);}
+            function cwEePrevErr(){var n=(cwEeCurErr+7)%8;cwEeGoErr(n,document.querySelectorAll('.cw-err-pill')[n]);}
+            function cwEeStartQuiz(){cwEeQord=[0,1,2,3,4,5,6,7].sort(function(){return Math.random()-.5});cwEeQi=0;cwEeRevealed=false;cwEeRenderQ();}
+            function cwEeRenderQ(){
+              if(cwEeQi>=cwEeQord.length){
+                document.getElementById('cwQuizBox').innerHTML=
+                  '<div style="text-align:center;padding:20px">'+
+                  '<div style="font-family:var(--serif);font-size:18px;color:#3DD68C;margin-bottom:8px">All 8 done</div>'+
+                  '<div style="font-family:var(--mono);font-size:11px;color:#7D8590;margin-bottom:14px">Every error reviewed</div>'+
+                  '<button class="cw-qbtn" onclick="cwEeStartQuiz()">Restart</button></div>';
+                return;
+              }
+              var e=CW_EE_ERRORS[cwEeQord[cwEeQi]];
+              var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'+
+                '<span style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:#FF7B72;text-transform:uppercase">Error #'+(cwEeQord[cwEeQi]+1)+'</span>'+
+                '<span style="font-family:var(--mono);font-size:10px;color:#7D8590">'+(cwEeQi+1)+' / 8</span></div>'+
+                '<div style="font-size:12.5px;line-height:1.7;color:#E6EDF3;margin-bottom:10px">'+e.q+'</div>';
+              if(!cwEeRevealed){
+                h+='<button class="cw-qbtn" onclick="cwEeRevQ()">Show correct answer</button>';
+              } else {
+                h+='<div class="cw-reveal" style="color:#3DD68C"><span style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:#3DD68C;display:block;margin-bottom:4px">CORRECT ANSWER</span>'+e.a+'</div>'+
+                  '<div class="cw-reveal" style="color:#FF7B72"><span style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:#FF7B72;display:block;margin-bottom:4px">THE TRAP</span>'+e.trap+'</div>'+
+                  '<div style="display:flex;gap:8px"><button class="cw-nbtn" onclick="cwEeNxtQ()">Next →</button></div>';
+              }
+              document.getElementById('cwQuizBox').innerHTML=h;
+            }
+            function cwEeRevQ(){cwEeRevealed=true;cwEeRenderQ();}
+            function cwEeNxtQ(){cwEeQi++;cwEeRevealed=false;cwEeRenderQ();}
+
+            // ── All Questions tab ──
+            function cwCqTab(id, btn){
+              document.querySelectorAll('#cw-eq > .cw-cqp').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cwCqtBar .cw-cqb').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cw-cq-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+
+            // Initialize calculators on widget first paint
+            function cwInit(){
+              try{ cwZCalc(); cwCpCalc(); cwCpPrCalc(); cwFwSim(); cwFwCalc(); }catch(e){}
             }
           </script>
         </div>
@@ -1612,7 +2708,7 @@ const DEFAULT_DECK = {
     { name:"Derivatives",        subtopics:["Options Strategies","Futures Hedge","Swaps","Risk Measures"] },
     { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
-    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Index-Based Strategies","Active Equity","Fixed Income"] },
+    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity","Fixed Income"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
     { name:"Command Words",      subtopics:["Templates","Thin vs Full"] },
   ],
@@ -2313,7 +3409,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
     ed.focus();
   } else {
-    ['ldiWidget','ycsWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -2322,6 +3418,7 @@ function toggleWidget(widgetId) {
     btn.style.color = 'var(--gold)';
     btn.style.borderColor = 'var(--gold)';
     currentWidgetId = widgetId;
+    if (widgetId === 'creditWidget' && typeof cwInit === 'function') setTimeout(cwInit, 50);
   }
 }
 
@@ -2334,11 +3431,12 @@ function openNote(key, topic, subtopic) {
 
   var WIDGET_MAP = {
     'PM Pathway||Liab-Driven Strategies': 'ldiWidget',
-    'PM Pathway||Yield Curve Strategies': 'ycsWidget'
+    'PM Pathway||Yield Curve Strategies': 'ycsWidget',
+    'PM Pathway||Credit Strategies': 'creditWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
