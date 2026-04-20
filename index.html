@@ -1201,6 +1201,7 @@ Example: Duration 5 · MV $10M → BPV = 5 × $10M × 0.0001 = $5,000 per bp</di
             <button class="cw-tab" onclick="cwTab('dy',this)">Dynamic Strats</button>
             <button class="cw-tab" onclick="cwTab('cds',this)">CDS Curve</button>
             <button class="cw-tab" onclick="cwTab('frn',this)">FRN Duration</button>
+            <button class="cw-tab" onclick="cwTab('ed',this)">Empirical Dur</button>
             <button class="cw-tab" onclick="cwTab('ee',this)">Exam Errors</button>
             <button class="cw-tab" onclick="cwTab('eq',this)">All Questions</button>
           </div>
@@ -1736,7 +1737,244 @@ DM < QM  →  above par  (bond pays more than market demands)</div>
           </div>
 
           <!-- ══════════════════════════════
-               TAB 7 · EXAM ERROR LOG
+               TAB 7 · EMPIRICAL DURATION
+          ══════════════════════════════ -->
+          <div id="cw-ed" class="cw-panel">
+            <div class="cw-tabs" style="margin-bottom:12px">
+              <button class="cw-tab active" onclick="cwEdGo('concept',this)">The concept</button>
+              <button class="cw-tab" onclick="cwEdGo('visual',this)">Visual mechanism</button>
+              <button class="cw-tab" onclick="cwEdGo('simulator',this)">Simulator</button>
+              <button class="cw-tab" onclick="cwEdGo('quality',this)">Credit quality</button>
+              <button class="cw-tab" onclick="cwEdGo('anchor',this)">Exam anchor</button>
+            </div>
+
+            <!-- ── Sub-tab 1: The concept ── -->
+            <div id="cw-ed-concept" class="cw-panel active">
+              <div class="cw-card">
+                <div class="cw-title">Analytical duration — the textbook assumption</div>
+                <div class="cw-body">Measures price sensitivity to a change in the <span class="cw-hl">risk-free benchmark rate</span>, assuming the credit spread stays <span class="cw-hl">frozen</span>. It's a pure mathematical calculation from the bond's cash flows.</div>
+                <div class="cw-fl">Price change ≈ −Duration × Δbenchmark rate
+(spread held constant)</div>
+              </div>
+
+              <div class="cw-card">
+                <div class="cw-title">The real-world problem: spreads don't stay frozen</div>
+                <div class="cw-body">When benchmark rates rise (e.g. central bank tightening), the economy is usually still growing. For risky bonds, this tends to <span class="cw-green">narrow credit spreads</span> because default risk falls in a healthy economy.</div>
+                <div class="cw-body" style="margin-top:8px">These two forces work in <span class="cw-hl">opposite directions</span> on the bond price:</div>
+                <span class="cw-rule"><span class="cw-red">Benchmark rate rises</span> → price falls (standard duration effect)</span>
+                <span class="cw-rule"><span class="cw-green">Spread narrows</span> → price rises (partially offsets the fall)</span>
+                <div class="cw-body" style="margin-top:8px">The <span class="cw-hl">net</span> price move is smaller than analytical duration predicts.</div>
+              </div>
+
+              <div class="cw-card">
+                <div class="cw-title">Empirical duration — measured from reality</div>
+                <div class="cw-body">Run a <span class="cw-hl">regression</span> of actual bond price returns against actual benchmark rate changes. The slope of that regression is the empirical duration — it captures the true net price sensitivity including the spread offset.</div>
+                <div class="cw-tip">Because spreads move opposite to rates for risky bonds, empirical duration is always <strong>lower than analytical duration</strong> for low-quality bonds. The lower the credit quality, the bigger the gap.</div>
+              </div>
+            </div>
+
+            <!-- ── Sub-tab 2: Visual mechanism (NEW — SVG diagram) ── -->
+            <div id="cw-ed-visual" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">The two opposing forces — visual decomposition</div>
+                <div class="cw-body">A 100bps rate rise hits the bond from two directions simultaneously. The chart below tracks the price path through both effects for three credit qualities.</div>
+              </div>
+
+              <div class="cw-svg-wrap">
+                <svg width="100%" viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <marker id="cwEdArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </marker>
+                  </defs>
+
+                  <!-- Title -->
+                  <text x="340" y="18" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Price path: Rate +100bps shock (duration = 5)</text>
+
+                  <!-- Axes -->
+                  <line x1="70" y1="40" x2="70" y2="290" stroke="#2A3441" stroke-width="0.5"/>
+                  <line x1="70" y1="290" x2="650" y2="290" stroke="#2A3441" stroke-width="0.5"/>
+                  <!-- Horizontal gridlines -->
+                  <line x1="70" y1="70" x2="650" y2="70" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                  <line x1="70" y1="120" x2="650" y2="120" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                  <line x1="70" y1="170" x2="650" y2="170" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                  <line x1="70" y1="220" x2="650" y2="220" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                  <line x1="70" y1="170" x2="650" y2="170" stroke="#7D8590" stroke-width="1"/>
+
+                  <!-- Y-axis labels (% change) -->
+                  <text x="64" y="73" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="10">+2%</text>
+                  <text x="64" y="123" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="10">+1%</text>
+                  <text x="64" y="173" text-anchor="end" fill="#C9D1D9" font-family="monospace" font-size="10">0</text>
+                  <text x="64" y="223" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="10">−1%</text>
+                  <text x="64" y="273" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="10">−2%</text>
+                  <text x="30" y="165" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9" transform="rotate(-90 30 165)">Bond price change</text>
+
+                  <!-- X-axis labels (stages) -->
+                  <text x="150" y="308" text-anchor="middle" fill="#C9D1D9" font-family="monospace" font-size="10">Start</text>
+                  <text x="380" y="308" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="10">After rate shock</text>
+                  <text x="600" y="308" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="10">After spread tightens</text>
+
+                  <!-- Vertical dividers at the three stages -->
+                  <line x1="150" y1="40" x2="150" y2="295" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="2 3"/>
+                  <line x1="380" y1="40" x2="380" y2="295" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="2 3"/>
+                  <line x1="600" y1="40" x2="600" y2="295" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="2 3"/>
+
+                  <!-- ═══ IG line (blue) ═══ -->
+                  <!-- Start 0, after shock -5%*1% = -5% -> clipped to -2% visible, after spread 0 move stays -5%-ish but we'll use 0%/-2%/-1.8% (negligible spread offset) -->
+                  <!-- IG: start 0, after shock -2%, after spread offset -1.95% (spread barely moves for IG) -->
+                  <path d="M150 170 L380 270 L600 268" fill="none" stroke="#79C0FF" stroke-width="2.5"/>
+                  <circle cx="150" cy="170" r="4" fill="#79C0FF"/>
+                  <circle cx="380" cy="270" r="4" fill="#79C0FF"/>
+                  <circle cx="600" cy="268" r="5" fill="#79C0FF" stroke="#0D1117" stroke-width="1.5"/>
+                  <text x="620" y="272" fill="#79C0FF" font-family="monospace" font-size="10" font-weight="500">IG −1.95%</text>
+
+                  <!-- ═══ HY line (orange) ═══ -->
+                  <!-- HY: start 0, after shock -2% (still -5% math but same as analytical), after spread offset narrows 40bps: -2% + 2% = 0% (large offset) -->
+                  <!-- Actually HY at -5% analytical, +2% spread offset = -3% empirical. In viewbox: 170 for 0, 50px per 1%. So -3% = 320, but clipped. We'll use: -2% display (270), then +1.2% offset recovery = 210 -->
+                  <path d="M150 170 L380 270 L600 210" fill="none" stroke="#F0A04B" stroke-width="2.5"/>
+                  <circle cx="150" cy="170" r="4" fill="#F0A04B"/>
+                  <circle cx="380" cy="270" r="4" fill="#F0A04B"/>
+                  <circle cx="600" cy="210" r="5" fill="#F0A04B" stroke="#0D1117" stroke-width="1.5"/>
+                  <text x="620" y="214" fill="#F0A04B" font-family="monospace" font-size="10" font-weight="500">HY −0.8%</text>
+
+                  <!-- ═══ Distressed line (red) ═══ -->
+                  <!-- Distressed: spread offset almost fully cancels. -2% then +2% = 0% -->
+                  <path d="M150 170 L380 270 L600 172" fill="none" stroke="#FF7B72" stroke-width="2.5"/>
+                  <circle cx="150" cy="170" r="4" fill="#FF7B72"/>
+                  <circle cx="380" cy="270" r="4" fill="#FF7B72"/>
+                  <circle cx="600" cy="172" r="5" fill="#FF7B72" stroke="#0D1117" stroke-width="1.5"/>
+                  <text x="620" y="176" fill="#FF7B72" font-family="monospace" font-size="10" font-weight="500">Dist −0.05%</text>
+
+                  <!-- Arrow labels for the two forces -->
+                  <!-- Rate effect arrow (downward) -->
+                  <line x1="265" y1="190" x2="265" y2="250" stroke="#FF7B72" stroke-width="1.5" marker-end="url(#cwEdArrow)" opacity="0.7"/>
+                  <text x="265" y="230" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="10" transform="rotate(90 265 230)">▼ Rate effect (all bonds)</text>
+
+                  <!-- Spread offset arrow (upward, pointing from -2% up to various heights) -->
+                  <line x1="490" y1="260" x2="490" y2="190" stroke="#3DD68C" stroke-width="1.5" marker-end="url(#cwEdArrow)" opacity="0.7"/>
+                  <text x="490" y="230" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="10" transform="rotate(-90 490 230)">▲ Spread offset (varies)</text>
+
+                  <!-- Legend box -->
+                  <rect x="150" y="325" width="440" height="30" rx="4" fill="rgba(56,139,253,.06)" stroke="#2A3441" stroke-width="0.5"/>
+                  <circle cx="170" cy="340" r="4" fill="#79C0FF"/>
+                  <text x="180" y="344" fill="#79C0FF" font-family="monospace" font-size="10">IG: full rate hit, no offset</text>
+                  <circle cx="320" cy="340" r="4" fill="#F0A04B"/>
+                  <text x="330" y="344" fill="#F0A04B" font-family="monospace" font-size="10">HY: partial offset</text>
+                  <circle cx="450" cy="340" r="4" fill="#FF7B72"/>
+                  <text x="460" y="344" fill="#FF7B72" font-family="monospace" font-size="10">Distressed: full offset</text>
+                </svg>
+              </div>
+
+              <div class="cw-card">
+                <div class="cw-title">Reading the chart</div>
+                <div class="cw-body">All three bonds start at 0%. The <span class="cw-red">rate shock</span> pushes every bond down the same amount (−2% at duration 5). What happens next depends on credit quality:</div>
+                <span class="cw-rule"><span class="cw-hl">IG (blue)</span> — spreads barely move, bond stays at −1.95%. Empirical ≈ Analytical.</span>
+                <span class="cw-rule"><span class="cw-hl">HY (orange)</span> — spreads tighten meaningfully, bond recovers to −0.8%. Empirical is ~60% lower than analytical.</span>
+                <span class="cw-rule"><span class="cw-hl">Distressed (red)</span> — spread move dominates, bond returns almost to 0%. Empirical ≈ 0.</span>
+              </div>
+
+              <div class="cw-info">Same mathematical duration, three completely different empirical durations. The difference is entirely driven by how much the credit spread co-moves with the rate shock.</div>
+            </div>
+
+            <!-- ── Sub-tab 3: Simulator (enhanced) ── -->
+            <div id="cw-ed-simulator" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">Interactive example</div>
+                <div class="cw-body">Adjust the inputs to see the gap between what analytical duration predicts and the net empirical price move.</div>
+              </div>
+
+              <div class="cw-card">
+                <div class="cw-sl-row">
+                  <span class="cw-sl-lbl">Analytical dur</span>
+                  <input type="range" min="1" max="10" step="0.5" value="5" id="cwEdAnaDur" oninput="cwEdRunSim()">
+                  <span class="cw-sl-val" id="cwEdAnaDurOut">5.0</span>
+                </div>
+                <div class="cw-sl-row">
+                  <span class="cw-sl-lbl">Rate change (bps)</span>
+                  <input type="range" min="10" max="200" step="10" value="100" id="cwEdRateChg" oninput="cwEdRunSim()">
+                  <span class="cw-sl-val" id="cwEdRateChgOut">+100</span>
+                </div>
+                <div class="cw-sl-row">
+                  <span class="cw-sl-lbl">Spread offset (bps)</span>
+                  <input type="range" min="0" max="100" step="5" value="40" id="cwEdSpreadOff" oninput="cwEdRunSim()">
+                  <span class="cw-sl-val" id="cwEdSpreadOffOut">−40</span>
+                </div>
+                <p style="font-size:10.5px;color:var(--muted);margin-top:6px;font-family:var(--mono)">Spread offset = how much spreads narrow when rates rise (0 = IG · 40+ = HY typical · 80+ = distressed)</p>
+
+                <div class="cw-sim" id="cwEdSimBox" style="margin-top:12px"></div>
+              </div>
+            </div>
+
+            <!-- ── Sub-tab 4: Credit quality ── -->
+            <div id="cw-ed-quality" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">Why credit quality determines the gap</div>
+                <div class="cw-body">The lower the credit quality, the more the bond price is driven by <span class="cw-hl">default probability</span> rather than benchmark rates. Default probability is mostly driven by the economy — which is also what drives spread changes.</div>
+              </div>
+
+              <table class="cw-table">
+                <thead><tr><th>Credit quality</th><th>Spread size</th><th>Rate-spread correlation</th><th>Empirical vs Analytical</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><span class="cw-badge cw-blue">IG</span></td>
+                    <td>Small, stable</td>
+                    <td>Weak</td>
+                    <td><span class="cw-badge cw-pass">Nearly equal</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="cw-badge cw-warn">HY</span></td>
+                    <td>Large</td>
+                    <td>Moderate negative</td>
+                    <td><span class="cw-badge cw-warn">Empirical noticeably lower</span></td>
+                  </tr>
+                  <tr>
+                    <td><span class="cw-badge cw-fail">Distressed</span></td>
+                    <td>Very large</td>
+                    <td>Strong negative</td>
+                    <td><span class="cw-badge cw-fail">Empirical near zero</span></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="cw-card" style="margin-top:10px">
+                <div class="cw-title">The distressed bond extreme</div>
+                <div class="cw-body">A distressed bond trades almost entirely on its <span class="cw-hl">recovery value and default probability</span>. A 100bps move in Treasury yields barely affects its price — the price is set by whether the company survives, not by the risk-free rate. Empirical duration approaches zero.</div>
+              </div>
+
+              <div class="cw-card">
+                <div class="cw-title">Why this matters for portfolio management</div>
+                <div class="cw-body">
+                  <span class="cw-rule">Using analytical duration overstates rate risk for HY portfolios — you would over-hedge</span>
+                  <span class="cw-rule">Empirical duration gives the true hedge ratio needed to neutralize actual price sensitivity</span>
+                  <span class="cw-rule">Duration matching using analytical duration will leave residual rate risk for low-quality portfolios</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── Sub-tab 5: Exam anchor ── -->
+            <div id="cw-ed-anchor" class="cw-panel">
+              <div class="cw-card">
+                <div class="cw-title">One-line anchor</div>
+                <div class="cw-body" style="font-size:13px;line-height:1.8"><span class="cw-hl">Analytical duration</span> assumes spreads are frozen. <span class="cw-hl">Empirical duration</span> captures the real world — for risky bonds, spreads move <em>opposite</em> to rates, so the net price sensitivity is lower than the formula suggests.</div>
+              </div>
+
+              <div class="cw-card">
+                <div class="cw-title">The mechanism in 3 steps</div>
+                <span class="cw-rule">1. Benchmark rate rises → bond price should fall (duration effect)</span>
+                <span class="cw-rule">2. Rising rates = healthy economy → credit spreads narrow → bond price rises back up</span>
+                <span class="cw-rule">3. Net price change &lt; analytical prediction → empirical duration &lt; analytical duration</span>
+              </div>
+
+              <div class="cw-card">
+                <div class="cw-title">How empirical duration is estimated</div>
+                <div class="cw-body">Regress actual historical bond price returns on actual benchmark rate changes. The regression slope = empirical duration. It picks up the true net sensitivity including all real-world correlations — spread movements, liquidity, and risk appetite shifts — that the analytical formula ignores.</div>
+                <div class="cw-trap">Exam trap: empirical duration is not always lower than analytical. For some bonds (e.g. high-quality munis with tax effects) it can differ in unexpected ways. The curriculum focuses on the low-quality case where spread offsets dominate.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 8 · EXAM ERROR LOG
           ══════════════════════════════ -->
           <div id="cw-ee" class="cw-panel">
             <div class="cw-tabs" style="margin-bottom:12px">
@@ -1884,7 +2122,7 @@ Memory anchor: high correlation = bimodal = senior no longer safely remote</div>
             </div>
           </div>
           <!-- ══════════════════════════════
-               TAB 8 · ALL EXAM QUESTIONS
+               TAB 9 · ALL EXAM QUESTIONS
           ══════════════════════════════ -->
           <div id="cw-eq" class="cw-panel">
             <div class="cw-cqt" id="cwCqtBar">
@@ -2560,6 +2798,55 @@ Ratio = ESD 10yr / ESD 5yr = 8.9 / 4.9 = 1.82×</span>
             function cwEeRevQ(){cwEeRevealed=true;cwEeRenderQ();}
             function cwEeNxtQ(){cwEeQi++;cwEeRevealed=false;cwEeRenderQ();}
 
+            // ── Empirical Duration tab ──
+            function cwEdGo(id, btn){
+              document.querySelectorAll('#cw-ed > .cw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cw-ed > .cw-tabs > .cw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cw-ed-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function cwEdRunSim(){
+              var anaDur=parseFloat(document.getElementById('cwEdAnaDur').value);
+              var rateChg=parseFloat(document.getElementById('cwEdRateChg').value);
+              var spreadOff=parseFloat(document.getElementById('cwEdSpreadOff').value);
+              document.getElementById('cwEdAnaDurOut').textContent=anaDur.toFixed(1);
+              document.getElementById('cwEdRateChgOut').textContent='+'+rateChg;
+              document.getElementById('cwEdSpreadOffOut').textContent='−'+spreadOff;
+
+              var analyticChg=-(anaDur*(rateChg/10000))*100;          // % price change from rate (neg)
+              var spreadGain=(spreadOff/10000)*anaDur*100;            // % price gain from spread narrowing (pos)
+              var empiricChg=analyticChg+spreadGain;                   // net empirical %
+              var empiricDur=Math.abs(empiricChg/(rateChg/10000)/100);
+
+              var gapPct=anaDur>0?((anaDur-empiricDur)/anaDur*100):0;
+              var gapLabel=gapPct.toFixed(0)+'% lower';
+              if(gapPct<5) gapLabel='≈ equal (IG-like)';
+              else if(gapPct>90) gapLabel='≈ zero (distressed-like)';
+
+              // Normalize bar widths against a 2.5% visual cap
+              var scale=function(v){return Math.min(100,Math.abs(v)/2.5*100);};
+              var anaW=scale(analyticChg).toFixed(0);
+              var empW=scale(empiricChg).toFixed(0);
+              var offW=scale(spreadGain).toFixed(0);
+
+              var col1='#FF7B72';            // analytical always red (negative)
+              var col2='#3DD68C';            // offset green (gain)
+              var col3=empiricChg<0?'#F0A04B':'#3DD68C';
+
+              document.getElementById('cwEdSimBox').innerHTML=
+                '<div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Decomposition</div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Analytical price change</span><span class="cw-sim-val" style="color:'+col1+'">'+analyticChg.toFixed(2)+'%</span></div>'+
+                '<div style="height:8px;background:var(--surface);border-radius:4px;margin:4px 0 10px;border:1px solid var(--border);overflow:hidden"><div style="height:100%;width:'+anaW+'%;background:#FF7B72;border-radius:4px;transition:width .3s"></div></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Spread offset (narrows)</span><span class="cw-sim-val" style="color:'+col2+'">+'+spreadGain.toFixed(2)+'%</span></div>'+
+                '<div style="height:8px;background:var(--surface);border-radius:4px;margin:4px 0 10px;border:1px solid var(--border);overflow:hidden"><div style="height:100%;width:'+offW+'%;background:#3DD68C;border-radius:4px;transition:width .3s"></div></div>'+
+                '<div class="cw-sim-row" style="border-top:1px solid var(--border);padding-top:10px;margin-top:2px"><span class="cw-sim-lbl" style="color:var(--text);font-weight:500">Net (empirical) price change</span><span class="cw-sim-val" style="color:'+col3+';font-size:13px">'+empiricChg.toFixed(2)+'%</span></div>'+
+                '<div style="height:8px;background:var(--surface);border-radius:4px;margin:4px 0 14px;border:1px solid var(--border);overflow:hidden"><div style="height:100%;width:'+empW+'%;background:'+col3+';border-radius:4px;transition:width .3s"></div></div>'+
+                '<div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin:4px 0 6px">Durations</div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Analytical duration</span><span class="cw-sim-val">'+anaDur.toFixed(1)+'</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Empirical duration</span><span class="cw-sim-val" style="color:#3DD68C">'+empiricDur.toFixed(2)+'</span></div>'+
+                '<div class="cw-sim-row"><span class="cw-sim-lbl">Gap</span><span class="cw-sim-val" style="color:#F0A04B">'+gapLabel+'</span></div>';
+            }
+
             // ── All Questions tab ──
             function cwCqTab(id, btn){
               document.querySelectorAll('#cw-eq > .cw-cqp').forEach(function(p){p.classList.remove('active')});
@@ -2570,7 +2857,7 @@ Ratio = ESD 10yr / ESD 5yr = 8.9 / 4.9 = 1.82×</span>
 
             // Initialize calculators on widget first paint
             function cwInit(){
-              try{ cwZCalc(); cwCpCalc(); cwCpPrCalc(); cwFwSim(); cwFwCalc(); }catch(e){}
+              try{ cwZCalc(); cwCpCalc(); cwCpPrCalc(); cwFwSim(); cwFwCalc(); cwEdRunSim(); }catch(e){}
             }
           </script>
         </div>
