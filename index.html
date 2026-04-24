@@ -2862,6 +2862,1182 @@ Ratio = ESD 10yr / ESD 5yr = 8.9 / 4.9 = 1.82×</span>
           </script>
         </div>
 
+        <!-- ── Index-Based Equity Strategies Interactive Study Widget ── -->
+        <div id="indexWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            /* Index widget — harmonized with cw-* visual language, prefix iw- */
+            .iw-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+            .iw-tab{background:none;border:1px solid var(--border);border-radius:4px;padding:5px 12px;font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+            .iw-tab.active{background:rgba(212,160,23,.1);border-color:var(--gold);color:var(--gold);font-weight:500}
+            .iw-panel{display:none}.iw-panel.active{display:block}
+            .iw-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:13px 16px;margin-bottom:10px}
+            .iw-title{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text);margin-bottom:7px;letter-spacing:.04em}
+            .iw-body{font-size:12.5px;line-height:1.75;color:#C9D1D9}
+            .iw-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:3px;font-weight:500;font-family:var(--mono);white-space:nowrap}
+            .iw-pass{background:rgba(46,160,67,.15);color:#3DD68C;border:1px solid rgba(46,160,67,.3)}
+            .iw-fail{background:rgba(192,57,43,.15);color:#FF7B72;border:1px solid rgba(192,57,43,.3)}
+            .iw-warn{background:rgba(212,104,10,.15);color:#F0A04B;border:1px solid rgba(212,104,10,.3)}
+            .iw-blue{background:rgba(56,139,253,.12);color:#79C0FF;border:1px solid rgba(56,139,253,.3)}
+            .iw-hl{color:#D4A017;font-weight:500}
+            .iw-green{color:#3DD68C;font-weight:500}
+            .iw-red{color:#FF7B72;font-weight:500}
+            .iw-orange{color:#F0A04B;font-weight:500}
+            .iw-rule{border-left:2px solid #8A6810;padding-left:9px;margin:5px 0;font-size:12px;line-height:1.65;display:block}
+            .iw-fl{font-family:var(--mono);font-size:11px;color:#79C0FF;background:rgba(56,139,253,.08);padding:6px 10px;border-radius:3px;margin:7px 0;line-height:1.75;display:block;white-space:pre-wrap}
+            .iw-trap{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.25);border-radius:4px;padding:9px 13px;margin:8px 0;font-size:12px;color:#FF7B72;line-height:1.65}
+            .iw-tip{background:rgba(46,160,67,.1);border:1px solid rgba(46,160,67,.25);border-radius:4px;padding:9px 13px;margin:8px 0;font-size:12px;color:#3DD68C;line-height:1.65}
+            .iw-info{background:rgba(56,139,253,.08);border:1px solid rgba(56,139,253,.2);border-radius:4px;padding:9px 13px;margin:8px 0;font-size:12px;color:#79C0FF;line-height:1.65}
+            .iw-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+            .iw-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:8px}
+            .iw-table th{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:7px 8px;border-bottom:1px solid var(--border);text-align:left}
+            .iw-table td{padding:7px 8px;border-bottom:1px solid var(--border);color:#C9D1D9;vertical-align:top;font-size:12px}
+            .iw-table tr:last-child td{border-bottom:none}
+            .iw-section{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px}
+            .iw-svg-wrap{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:12px;margin-bottom:10px;overflow-x:auto}
+
+            /* sliders / calculators */
+            .iw-sl-row{display:flex;align-items:center;gap:12px;margin:8px 0}
+            .iw-sl-lbl{font-family:var(--mono);font-size:10px;color:var(--muted);min-width:120px;letter-spacing:.04em}
+            .iw-sl-val{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--text);min-width:60px;text-align:right}
+            #indexWidget input[type=range]{accent-color:var(--gold);flex:1}
+            #indexWidget select{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:11px;padding:5px 8px;border-radius:4px;outline:none;flex:1}
+            .iw-sim{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:12px;margin-top:10px}
+            .iw-sim-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px}
+            .iw-sim-row:last-child{border-bottom:none}
+            .iw-sim-lbl{color:var(--muted);font-family:var(--mono);font-size:10px}
+            .iw-sim-val{font-family:var(--mono);font-weight:500;color:var(--text)}
+
+            /* factor match cards */
+            .iw-match-card{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:10px 12px;margin-bottom:8px;transition:all .2s}
+            .iw-match-card.winner{border-color:var(--gold);background:rgba(212,160,23,.08)}
+            .iw-match-card.loser{opacity:0.5}
+            .iw-match-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:11.5px}
+            .iw-match-lbl{font-family:var(--mono);font-size:10px;color:var(--muted)}
+            .iw-match-score{font-family:var(--mono);font-weight:500;font-size:11px}
+
+            /* errors navigation */
+            .iw-err-nav{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+            .iw-err-pill{background:none;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:4px;cursor:pointer;font-family:var(--mono);font-size:10px;transition:all .15s}
+            .iw-err-pill.active{background:rgba(212,160,23,.1);border-color:var(--gold);color:var(--gold);font-weight:500}
+            .iw-err-item{display:none}
+            .iw-err-item.active{display:block}
+            .iw-etitle{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--text);margin-bottom:7px;display:flex;align-items:center;gap:8px;letter-spacing:.03em}
+            .iw-enum{background:rgba(192,57,43,.15);color:#FF7B72;border:1px solid rgba(192,57,43,.3);border-radius:3px;padding:2px 8px;font-family:var(--mono);font-size:10px;font-weight:500}
+            .iw-ebody{font-size:12px;line-height:1.7;color:#C9D1D9}
+            .iw-right{color:#3DD68C;font-weight:500}
+            .iw-wrong{color:#FF7B72;font-weight:500}
+            .iw-qbtn{background:rgba(212,160,23,.1);border:1px solid var(--gold);color:var(--gold);border-radius:4px;padding:9px 16px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;width:100%;margin-top:8px;transition:all .15s}
+            .iw-qbtn:hover{background:rgba(212,160,23,.18)}
+            .iw-nbtn{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:4px;padding:9px 16px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;flex:1;margin-top:8px;transition:all .15s}
+            .iw-nbtn:hover{border-color:var(--gold);color:var(--gold)}
+            .iw-reveal{background:var(--surface2);border-radius:4px;padding:11px 13px;margin:8px 0;font-size:12px;line-height:1.65}
+
+            /* all questions tab */
+            .iw-cqt{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+            .iw-cqb{background:none;border:1px solid var(--border);border-radius:4px;padding:4px 10px;font-family:var(--mono);font-size:9px;letter-spacing:.05em;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap}
+            .iw-cqb.active{background:rgba(212,160,23,.1);border-color:var(--gold);color:var(--gold);font-weight:500}
+            .iw-cqp{display:none}.iw-cqp.active{display:block}
+            .iw-cqcard{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:14px 16px;margin-bottom:10px}
+            .iw-cqnum{font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+            .iw-cqq{font-size:12px;line-height:1.65;color:#C9D1D9;margin-bottom:10px}
+            .iw-cqopts{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+            .iw-cqopt{font-size:11.5px;padding:6px 10px;border-radius:4px;border:1px solid var(--border);color:#8B949E;line-height:1.5}
+            .iw-cqopt.correct{background:rgba(46,160,67,.1);border-color:rgba(46,160,67,.4);color:#3DD68C}
+            .iw-cqwhy{font-size:12px;line-height:1.65;color:#8B949E;border-left:2px solid #8A6810;padding-left:10px}
+            .iw-cqtrap{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.25);border-radius:4px;padding:8px 12px;font-size:11px;color:#FF7B72;line-height:1.6;margin-top:8px}
+            .iw-cqfl{font-family:var(--mono);font-size:10.5px;color:#79C0FF;background:rgba(56,139,253,.08);padding:6px 10px;border-radius:3px;margin:6px 0;line-height:1.75;display:block;white-space:pre-wrap}
+            .iw-bwrong{display:inline-block;font-size:8.5px;padding:2px 7px;border-radius:3px;font-weight:500;font-family:var(--mono);background:rgba(192,57,43,.15);color:#FF7B72;border:1px solid rgba(192,57,43,.3)}
+          </style>
+
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#D4A017;margin-bottom:12px">Index-Based Equity · Interactive Study Map</div>
+
+          <div class="iw-tabs">
+            <button class="iw-tab active" onclick="iwTab('weight',this)">Weighting Methods</button>
+            <button class="iw-tab" onclick="iwTab('factor',this)">Factor Strategies</button>
+            <button class="iw-tab" onclick="iwTab('replic',this)">Replication</button>
+            <button class="iw-tab" onclick="iwTab('attr',this)">Attribution</button>
+            <button class="iw-tab" onclick="iwTab('match',this)">Factor Matcher</button>
+            <button class="iw-tab" onclick="iwTab('invest',this)">Investability</button>
+            <button class="iw-tab" onclick="iwTab('fut',this)">Futures Calc</button>
+            <button class="iw-tab" onclick="iwTab('mfetf',this)">MF vs ETF</button>
+            <button class="iw-tab" onclick="iwTab('err',this)">Exam Errors</button>
+            <button class="iw-tab" onclick="iwTab('eq',this)">All Questions</button>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 1 · WEIGHTING METHODS
+          ══════════════════════════════ -->
+          <div id="iw-weight" class="iw-panel active">
+            <div class="iw-card">
+              <div class="iw-title">The 5 main weighting methods</div>
+              <table class="iw-table">
+                <thead><tr><th>Method</th><th>Weight driver</th><th>Example</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="iw-hl">Price-weighted</span></td><td>Share price only</td><td>DJIA · Nikkei 225</td></tr>
+                  <tr><td><span class="iw-hl">Market-cap (full)</span></td><td>Price × total shares</td><td>Old-school cap indexes</td></tr>
+                  <tr><td><span class="iw-hl">Float-adjusted cap</span></td><td>Price × floating shares</td><td>S&P 500 · MSCI · FTSE</td></tr>
+                  <tr><td><span class="iw-hl">Equal-weighted</span></td><td>1/N — same weight each</td><td>S&P 500 Equal Weight</td></tr>
+                  <tr><td><span class="iw-hl">Fundamental</span></td><td>Book value · earnings · dividends</td><td>RAFI indexes</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Price-weighted — the mental model that sticks</div>
+              <div class="iw-body">A price-weighted index is <span class="iw-hl">equivalent to a portfolio holding one share of each constituent</span>. High-priced stocks automatically get high weights — regardless of their economic size.</div>
+              <div class="iw-fl">Weight of stock i = Price_i / Σ(all prices)
+
+Replication: 1 share of A + 1 share of B + 1 share of C...
+→ no need to know shares outstanding
+→ no need to know market cap</div>
+              <div class="iw-info">Example: A ($100) + B ($50) + C ($25). Weights = 57.1% / 28.6% / 14.3%. Holding 1 of each replicates exactly.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Price-weighted traps — what the exam tests</div>
+              <span class="iw-rule"><span class="iw-red">Sensitive to stock splits:</span> a 2-for-1 split halves the price → halves the weight, with no economic change. Index providers must adjust the <span class="iw-hl">divisor</span> to preserve continuity.</span>
+              <span class="iw-rule"><span class="iw-red">No economic justification:</span> a $500 stock dominates a $50 stock, but the $50 stock might have 10× more shares and thus 10× more market cap. Price alone is arbitrary.</span>
+              <span class="iw-rule"><span class="iw-red">Only 2 major indexes matter:</span> DJIA (30 stocks), Nikkei 225 (225 stocks). Everything else is cap-weighted or float-adjusted.</span>
+              <div class="iw-trap">Answer trap: "price-weighted index is unaffected by stock splits" → FALSE. It's the most split-sensitive method. Divisor adjustments are required at every split.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Equal-weighted — the natural small-cap value tilt</div>
+              <div class="iw-body">Each stock gets weight 1/N. Relative to market-cap weighting, this <span class="iw-hl">overweights smaller names</span> and <span class="iw-hl">underweights megacaps</span>.</div>
+              <span class="iw-rule">Result: positive Size factor loading (small-cap tilt)</span>
+              <span class="iw-rule">Result: positive Value factor loading (cap-weighting biases toward growth, so equal-weight pulls in the opposite direction)</span>
+              <span class="iw-rule">Higher turnover: small stocks drift, rebalancing costs accumulate</span>
+              <div class="iw-tip">Exam anchor: if you see an index with positive Size + positive Value + higher yield than market, it's likely equal-weighted.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Fundamental weighting — the often-misstated one</div>
+              <div class="iw-body">Weights based on economic fundamentals (book value, earnings, cash flow, dividends), not price. Because price doesn't enter the weight, fundamental weighting <span class="iw-green">overweights stocks priced below intrinsic value</span> and <span class="iw-red">underweights overpriced stocks</span>.</div>
+              <div class="iw-trap">Classic exam trap: "fundamental weighting has the disadvantage of overweighting overpriced stocks and underweighting underpriced stocks." — FALSE. That's what market-cap weighting is accused of (price inflation → weight inflation). Fundamental weighting is the correction, not the problem.</div>
+              <div class="iw-tip">Anchor: Fundamental weighting = built-in value tilt. It rewards underpriced, punishes overpriced.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">HHI — how concentrated is this index?</div>
+              <div class="iw-fl">HHI = Σ(w_i²)
+Effective number of stocks = 1 / HHI</div>
+              <div class="iw-body">HHI = 0.0286 → 1/0.0286 ≈ 35 equivalent equally-weighted stocks. If the index has 150 names but HHI implies only 35 effective stocks, it's heavily concentrated in a few megacaps.</div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">HHI value</span><input type="range" min="0.005" max="0.2" step="0.005" value="0.0286" id="iwHhi" oninput="iwHhiCalc()"><span class="iw-sl-val" id="iwHhio">0.0286</span></div>
+              <div class="iw-sim" id="iwHhiBox"></div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 2 · FACTOR STRATEGIES
+          ══════════════════════════════ -->
+          <div id="iw-factor" class="iw-panel">
+            <div class="iw-card">
+              <div class="iw-title">The big anchor: factor strategies CONCENTRATE risk</div>
+              <div class="iw-body">This is the single most-tested concept in Index-Based Equity. Relative to broad-market-cap weighting, any factor-based strategy (momentum, value, size, quality, low-vol, yield) <span class="iw-hl">concentrates</span> risk exposure — it deliberately tilts toward one characteristic.</div>
+              <div class="iw-trap">Exam trap (appears 3+ times across vignettes): "factor-based strategies diversify risk exposure" → FALSE. They do the opposite. Broad-market-cap weighting is diversified; factor tilts concentrate.</div>
+            </div>
+
+            <div class="iw-svg-wrap">
+              <svg width="100%" viewBox="0 0 660 260" xmlns="http://www.w3.org/2000/svg">
+                <text x="330" y="20" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Broad-market cap vs factor tilt — exposure profile</text>
+
+                <!-- Left: broad market -->
+                <text x="150" y="48" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="11" font-weight="500">Broad market cap-weighted</text>
+                <rect x="60" y="60" width="40" height="60" fill="#79C0FF" opacity="0.7"/>
+                <rect x="105" y="70" width="40" height="50" fill="#79C0FF" opacity="0.7"/>
+                <rect x="150" y="68" width="40" height="52" fill="#79C0FF" opacity="0.7"/>
+                <rect x="195" y="75" width="40" height="45" fill="#79C0FF" opacity="0.7"/>
+                <line x1="55" y1="120" x2="245" y2="120" stroke="#7D8590" stroke-width="1"/>
+                <text x="80" y="135" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Tech</text>
+                <text x="125" y="135" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Fin</text>
+                <text x="170" y="135" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Hlth</text>
+                <text x="215" y="135" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Stap</text>
+                <rect x="30" y="160" width="240" height="22" rx="3" fill="rgba(46,160,67,0.1)" stroke="rgba(46,160,67,0.3)" stroke-width="0.5"/>
+                <text x="150" y="174" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="10">Diversified across sectors ✓</text>
+                <text x="150" y="200" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9.5">HHI ≈ 0.03 · 35 effective stocks</text>
+                <text x="150" y="214" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9.5">Low single-factor exposure</text>
+
+                <!-- Divider -->
+                <line x1="330" y1="40" x2="330" y2="240" stroke="#2A3441" stroke-width="1"/>
+
+                <!-- Right: momentum tilt -->
+                <text x="510" y="48" text-anchor="middle" fill="#F0A04B" font-family="monospace" font-size="11" font-weight="500">Momentum factor tilt</text>
+                <rect x="420" y="60" width="40" height="60" fill="#F0A04B" opacity="0.9"/>
+                <rect x="465" y="90" width="40" height="30" fill="#F0A04B" opacity="0.3"/>
+                <rect x="510" y="68" width="40" height="52" fill="#F0A04B" opacity="0.7"/>
+                <rect x="555" y="100" width="40" height="20" fill="#F0A04B" opacity="0.2"/>
+                <line x1="415" y1="120" x2="605" y2="120" stroke="#7D8590" stroke-width="1"/>
+                <text x="440" y="135" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Tech</text>
+                <text x="485" y="135" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Fin</text>
+                <text x="530" y="135" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Hlth</text>
+                <text x="575" y="135" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Stap</text>
+                <rect x="390" y="160" width="240" height="22" rx="3" fill="rgba(192,57,43,0.1)" stroke="rgba(192,57,43,0.3)" stroke-width="0.5"/>
+                <text x="510" y="174" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="10">Concentrated in trending names ✗</text>
+                <text x="510" y="200" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9.5">Loads up on whatever is running</text>
+                <text x="510" y="214" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9.5">Exposed when factor rotates</text>
+              </svg>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">The 6 classic factors — what each one bets on</div>
+              <table class="iw-table">
+                <thead><tr><th>Factor</th><th>Bets on</th><th>Overweights stocks with</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="iw-hl">Size</span></td><td>Small-cap premium</td><td>Low market cap</td></tr>
+                  <tr><td><span class="iw-hl">Value</span></td><td>Mean reversion in valuations</td><td>Low P/E, low P/B</td></tr>
+                  <tr><td><span class="iw-hl">Momentum</span></td><td>Trend continuation</td><td>Recent winners (price up)</td></tr>
+                  <tr><td><span class="iw-hl">Quality</span></td><td>Stable earners outperform</td><td>High ROE, low debt, earnings stability</td></tr>
+                  <tr><td><span class="iw-hl">Low Volatility</span></td><td>Low-vol anomaly</td><td>Low beta, low return vol</td></tr>
+                  <tr><td><span class="iw-hl">Yield</span></td><td>Dividend premium</td><td>High dividend yield</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Two most-confused factor pairs</div>
+              <span class="iw-rule"><span class="iw-red">Value ≠ Low Volatility:</span> value hunts cheap valuations (P/B, P/E) — a bet on mean reversion. Low-vol hunts stable low-beta stocks — a bet on the low-vol anomaly. Different factors with different risk profiles.</span>
+              <span class="iw-rule"><span class="iw-red">Momentum ≠ Contrarian:</span> momentum BUYS recent winners (price just went up). Contrarian/reversal buys recent losers. Opposite strategies.</span>
+              <div class="iw-trap">Common exam wrong answer: "momentum overweights stocks that recently experienced large price decreases." That describes reversal, not momentum. Momentum = buy winners.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Three properties of factor strategies vs cap weighting</div>
+              <span class="iw-rule"><span class="iw-red">✗ Diversify risk</span> — FALSE, they concentrate</span>
+              <span class="iw-rule"><span class="iw-green">✓ Transparent</span> — TRUE, factor selection/weighting/rebalancing are rule-based and disclosed</span>
+              <span class="iw-rule"><span class="iw-green">✓ Replicable by others</span> — TRUE, which creates overcrowding risk and can erode alpha</span>
+              <div class="iw-tip">Memory anchor: "transparent + replicable + concentrated" — two positives, one negative. The trap statement swaps "concentrate" for "diversify".</div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 3 · REPLICATION METHODS
+          ══════════════════════════════ -->
+          <div id="iw-replic" class="iw-panel">
+            <div class="iw-card">
+              <div class="iw-title">The 3 replication methods — full decision table</div>
+              <table class="iw-table">
+                <thead><tr><th>Method</th><th>Holdings</th><th>Sophistication</th><th>Covariances?</th><th>Typical TE</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="iw-hl">Full replication</span></td><td>≈ 100% of index</td><td>None</td><td>N/A</td><td>Lowest</td></tr>
+                  <tr><td><span class="iw-hl">Stratified sampling</span></td><td>Subset (buckets)</td><td><span class="iw-red">Low</span></td><td><span class="iw-red">No</span></td><td>Moderate</td></tr>
+                  <tr><td><span class="iw-hl">Optimization</span></td><td>Subset (factor model)</td><td><span class="iw-green">High</span></td><td><span class="iw-green">Yes</span></td><td>Low</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Full replication — the "all securities" method</div>
+              <span class="iw-rule"><span class="iw-hl">Keyword trigger:</span> "all index constituents must be available for trading"</span>
+              <span class="iw-rule">Holds every security at exact index weight → tracking error near zero in theory</span>
+              <span class="iw-rule">Best when: index is small and liquid (e.g. S&P 500), AUM is large enough to afford many trades</span>
+              <span class="iw-rule">Weakness: brokerage commissions explode when index is large (Russell 3000 → 3000 trades at every rebalance)</span>
+              <div class="iw-tip">If the question says "available for trading" or "significant commissions when index is large" → full replication.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Stratified sampling — the "simple subset" method</div>
+              <span class="iw-rule"><span class="iw-hl">Keyword trigger:</span> "technically unsophisticated" · "fewer individual securities"</span>
+              <span class="iw-rule">Divides the index into strata (sector × size × style), picks a few representative names in each cell</span>
+              <span class="iw-rule">Best when: index has many constituents, AUM is modest, simplicity is preferred</span>
+              <span class="iw-rule"><span class="iw-red">Does NOT account for covariances</span> — ignores how stocks co-move. This is the key exam differentiator.</span>
+              <div class="iw-tip">If the question says "technically straightforward" or "unsophisticated" → stratified sampling. Optimization is explicitly sophisticated.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Optimization — the "factor-model minimization" method</div>
+              <span class="iw-rule"><span class="iw-hl">Keyword trigger:</span> "accounts for covariances" · "minimize tracking error"</span>
+              <span class="iw-rule">Uses a factor model + covariance matrix to pick the subset that minimizes TE for a given number of holdings</span>
+              <span class="iw-rule">Best when: index is very large, tracking error discipline is critical, team has quant expertise</span>
+              <span class="iw-rule">Can achieve lower TE than stratified with similar (or even fewer) holdings</span>
+              <div class="iw-trap">Tell-tale sign of optimization: the manager explicitly "accounts for covariances". Stratified sampling never does this.</div>
+            </div>
+
+            <div class="iw-svg-wrap">
+              <svg width="100%" viewBox="0 0 660 230" xmlns="http://www.w3.org/2000/svg">
+                <text x="330" y="20" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Tracking error vs technical sophistication</text>
+                <!-- axes -->
+                <line x1="70" y1="180" x2="620" y2="180" stroke="#2A3441" stroke-width="0.5"/>
+                <line x1="70" y1="40" x2="70" y2="180" stroke="#2A3441" stroke-width="0.5"/>
+                <text x="345" y="210" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10">Technical sophistication →</text>
+                <text x="30" y="115" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10" transform="rotate(-90 30 115)">Tracking error →</text>
+                <!-- grid -->
+                <line x1="70" y1="70" x2="620" y2="70" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                <line x1="70" y1="125" x2="620" y2="125" stroke="#2A3441" stroke-width="0.5" stroke-dasharray="3 3"/>
+                <!-- Full replication: low soph, low TE -->
+                <circle cx="160" cy="155" r="11" fill="#79C0FF"/>
+                <text x="160" y="160" text-anchor="middle" fill="white" font-size="9" font-weight="500">FR</text>
+                <text x="160" y="135" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="9.5">Full Replication</text>
+                <text x="160" y="174" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="8">~0% TE</text>
+                <!-- Stratified: low soph, moderate TE (top left) -->
+                <circle cx="300" cy="80" r="11" fill="#F0A04B"/>
+                <text x="300" y="85" text-anchor="middle" fill="white" font-size="9" font-weight="500">SS</text>
+                <text x="300" y="60" text-anchor="middle" fill="#F0A04B" font-family="monospace" font-size="9.5">Stratified Sampling</text>
+                <text x="300" y="100" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="8">moderate TE · no covars</text>
+                <!-- Optimization: high soph, low TE (bottom right) -->
+                <circle cx="520" cy="148" r="11" fill="#3DD68C"/>
+                <text x="520" y="153" text-anchor="middle" fill="white" font-size="9" font-weight="500">OP</text>
+                <text x="520" y="128" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="9.5">Optimization</text>
+                <text x="520" y="167" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="8">low TE · covars modeled</text>
+              </svg>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Replication manager skill — counter-intuitive but critical</div>
+              <div class="iw-body">For replication managers, <span class="iw-hl">skill is measured by LOW tracking error</span>, not by positive excess return. The goal is to match the index — NOT to beat it.</div>
+              <span class="iw-rule">High excess return + high TE → NOT skill. The manager deviated from the benchmark and got lucky.</span>
+              <span class="iw-rule">Low TE → genuine skill at the replication mandate.</span>
+              <span class="iw-rule">Excess return for a replication manager should be near zero (minus fees). Anything large suggests unintended bets.</span>
+              <div class="iw-trap">For ACTIVE managers, high excess return + moderate TE = skill (measured by Information Ratio). For REPLICATION managers, the evaluation inverts: excess return is a bug, not a feature.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">TE drivers under full replication — what raises TE</div>
+              <span class="iw-rule"><span class="iw-hl">Number of constituents</span> — more names = more trades, more slippage, more rebalancing cost</span>
+              <span class="iw-rule"><span class="iw-hl">Expense ratio</span> — directly deducted from return, creates a constant gap</span>
+              <span class="iw-rule"><span class="iw-hl">Constituent liquidity</span> — small/illiquid names at the tail of the index are harder to trade</span>
+              <span class="iw-rule"><span class="iw-hl">International exposure</span> — time zones, FX, settlement delays, stale pricing add friction</span>
+              <div class="iw-tip">Classic comparison: MSCI EAFE (933 names, international, 0.33% fee) will have HIGHER TE than S&P 500 (506 names, domestic, 0.10% fee) or S&P/TSX 60 (60 names, 0.18% fee). All three factors push EAFE to highest TE.</div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 4 · ATTRIBUTION ANALYSIS
+          ══════════════════════════════ -->
+          <div id="iw-attr" class="iw-panel">
+            <div class="iw-card">
+              <div class="iw-title">Brinson attribution on factors — the decomposition</div>
+              <div class="iw-body">When a fund uses factor-based weights (growth, value, quality, momentum), the excess return vs benchmark splits into two sources — exactly like classical sector-based BHB attribution.</div>
+              <table class="iw-table">
+                <thead><tr><th>Source</th><th>Condition</th><th>Meaning</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="iw-hl">Factor weighting effect</span></td><td>Weights <span class="iw-red">different</span> · returns <span class="iw-green">same</span></td><td>Active tilt vs benchmark factor weights</td></tr>
+                  <tr><td><span class="iw-hl">Security selection effect</span></td><td>Weights <span class="iw-green">same</span> · returns <span class="iw-red">different</span></td><td>Stock picking within factor bucket</td></tr>
+                  <tr><td><span class="iw-hl">Interaction</span></td><td>Both <span class="iw-red">different</span></td><td>Cross-term (usually small)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">The calculation walkthrough</div>
+              <div class="iw-fl">For each factor:
+  Fund contribution    = Weight_fund × Return_fund
+  Bench contribution   = Weight_bench × Return_bench
+  Total effect         = Fund − Bench
+
+Then classify:
+  If weight differs but return same → factor weighting effect
+  If weight same but return differs → security selection
+  If both differ                    → interaction
+
+Sum them up → total active return
+
+% from factor weighting = (sum of factor weighting effects) / (total active return)</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Interactive Brinson factor attribution</div>
+              <div class="iw-body" style="margin-bottom:10px">Adjust factor weights and returns to see how the attribution decomposes.</div>
+
+              <div style="font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:8px 0 4px">Factor A</div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Fund weight</span><input type="range" min="0.1" max="0.5" step="0.01" value="0.22" id="iwAW1" oninput="iwAttrCalc()"><span class="iw-sl-val" id="iwAW1o">0.22</span></div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Bench weight</span><input type="range" min="0.1" max="0.5" step="0.01" value="0.25" id="iwAB1" oninput="iwAttrCalc()"><span class="iw-sl-val" id="iwAB1o">0.25</span></div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Return (%)</span><input type="range" min="0" max="15" step="0.1" value="7.9" id="iwAR1" oninput="iwAttrCalc()"><span class="iw-sl-val" id="iwAR1o">7.9%</span></div>
+
+              <div style="font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:12px 0 4px">Factor B (same weights, different returns)</div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Shared weight</span><input type="range" min="0.1" max="0.5" step="0.01" value="0.30" id="iwAW2" oninput="iwAttrCalc()"><span class="iw-sl-val" id="iwAW2o">0.30</span></div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Fund return (%)</span><input type="range" min="0" max="15" step="0.1" value="3.9" id="iwAFR2" oninput="iwAttrCalc()"><span class="iw-sl-val" id="iwAFR2o">3.9%</span></div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Bench return (%)</span><input type="range" min="0" max="15" step="0.1" value="4.5" id="iwABR2" oninput="iwAttrCalc()"><span class="iw-sl-val" id="iwABR2o">4.5%</span></div>
+
+              <div class="iw-sim" id="iwAttrBox"></div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">The three answer traps on factor attribution questions</div>
+              <span class="iw-rule"><span class="iw-red">Trap 1 — Total effect instead of split:</span> question asks "% from factor weighting" but answer gives the absolute total effect. Wrong because it doesn't split into sources.</span>
+              <span class="iw-rule"><span class="iw-red">Trap 2 — Absolute instead of percentage:</span> answer gives the dollar/% contribution of factor weighting but forgets to divide by total effect.</span>
+              <span class="iw-rule"><span class="iw-green">✓ Correct:</span> (factor weighting contribution) / (total effect) × 100 = percentage.</span>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 5 · FACTOR MATCHER
+          ══════════════════════════════ -->
+          <div id="iw-match" class="iw-panel">
+            <div class="iw-card">
+              <div class="iw-title">Reading factor exposures from a regression table</div>
+              <div class="iw-body">Exam questions give you a table of factor loadings (coefficients) for 2-3 indexes, plus a description of an investor. Match the investor to the index whose loadings align with their style.</div>
+              <table class="iw-table">
+                <thead><tr><th>Factor coefficient</th><th>Positive = tilt toward</th><th>Negative = tilt toward</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="iw-hl">Size</span></td><td>Small-cap</td><td>Large-cap</td></tr>
+                  <tr><td><span class="iw-hl">Value</span></td><td>Value (low P/B, low P/E)</td><td>Growth</td></tr>
+                  <tr><td><span class="iw-hl">Yield</span></td><td>High dividend</td><td>Low/no dividend</td></tr>
+                  <tr><td><span class="iw-hl">Momentum</span></td><td>Trend followers</td><td>Contrarian</td></tr>
+                  <tr><td><span class="iw-hl">Quality</span></td><td>Stable earners</td><td>Junk / high leverage</td></tr>
+                  <tr><td><span class="iw-hl">Market</span></td><td>High beta to broad mkt</td><td>Low beta / distinct</td></tr>
+                </tbody>
+              </table>
+              <div class="iw-trap">Critical: negative loadings reverse the interpretation. Size = −0.16 means the index tilts LARGE-cap, not small-cap. Same for Value → negative = growth.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Interactive investor matcher</div>
+              <div class="iw-body" style="margin-bottom:10px">Pick an investor profile and see which index matches best. Based on the Jones-type exam questions.</div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Investor profile</span><select id="iwInvestor" onchange="iwMatchCalc()">
+                <option value="smv">Small-cap value + dividend (Jones)</option>
+                <option value="lcg">Large-cap growth, high beta</option>
+                <option value="lowvol">Defensive: low vol, high quality</option>
+                <option value="mom">Momentum trend-follower</option>
+              </select></div>
+
+              <div id="iwMatchBox" style="margin-top:14px"></div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Equal-weighted index = natural small+value tilt</div>
+              <div class="iw-body">When you see a factor loading table with Size positive + Value positive + moderate Yield positive → likely an <span class="iw-hl">equal-weighted index</span>. By construction, equal weighting overweights smaller names (size tilt) and resists the growth bias of cap-weighting (value tilt).</div>
+              <div class="iw-tip">Price-weighted and volatility-weighted indexes tend to be large-cap-growth oriented (negative Size, negative Value loadings). The equal-weighted one stands out by loading positive on both.</div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 6 · INVESTABILITY CONCEPTS
+          ══════════════════════════════ -->
+          <div id="iw-invest" class="iw-panel">
+            <div class="iw-card">
+              <div class="iw-title">Two rules that both improve investability</div>
+              <table class="iw-table">
+                <thead><tr><th>Rule</th><th>What it does</th><th>Effect on investability</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="iw-hl">Free-float adjustment</span></td><td>Exclude locked-up shares from weights</td><td><span class="iw-badge iw-pass">Raises liquidity ✓</span></td></tr>
+                  <tr><td><span class="iw-hl">Buffering policy</span></td><td>No-action zone around thresholds</td><td><span class="iw-badge iw-pass">Reduces turnover ✓</span></td></tr>
+                </tbody>
+              </table>
+              <div class="iw-trap">Classic exam wrong answer: "free-float adjustment lowers liquidity." FALSE. It does the opposite — by restricting weights to tradeable shares only, index funds can actually replicate the index without chasing shares that aren't for sale.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Free-float adjustment — the mechanics</div>
+              <div class="iw-fl">Free-float weight_i = (Price_i × Free-float shares_i) / Σ(Price × Free-float shares)</div>
+              <div class="iw-body" style="margin-top:8px">Excluded from the free float:</div>
+              <span class="iw-rule">Founder and insider holdings</span>
+              <span class="iw-rule">Government strategic stakes</span>
+              <span class="iw-rule">Corporate cross-holdings</span>
+              <span class="iw-rule">Post-IPO lockups and restricted shares</span>
+            </div>
+
+            <div class="iw-svg-wrap">
+              <svg width="100%" viewBox="0 0 660 220" xmlns="http://www.w3.org/2000/svg">
+                <text x="330" y="20" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Full cap vs Float-adjusted — two $50B companies</text>
+
+                <!-- Family-controlled company: 40% float -->
+                <text x="160" y="50" text-anchor="middle" fill="#C9D1D9" font-family="monospace" font-size="11">Family-controlled (40% float)</text>
+                <!-- Full stack -->
+                <rect x="80" y="60" width="50" height="100" fill="#79C0FF" opacity="0.7" stroke="#2A3441" stroke-width="0.5"/>
+                <text x="105" y="115" text-anchor="middle" fill="white" font-family="monospace" font-size="10" font-weight="500">$50B</text>
+                <text x="105" y="180" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Full cap</text>
+                <!-- Float -->
+                <rect x="180" y="120" width="50" height="40" fill="#F0A04B" opacity="0.9" stroke="#2A3441" stroke-width="0.5"/>
+                <text x="205" y="145" text-anchor="middle" fill="white" font-family="monospace" font-size="10" font-weight="500">$20B</text>
+                <text x="205" y="180" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Float-adj</text>
+
+                <!-- Divider -->
+                <line x1="340" y1="40" x2="340" y2="200" stroke="#2A3441" stroke-width="1"/>
+
+                <!-- Widely-held: 95% float -->
+                <text x="510" y="50" text-anchor="middle" fill="#C9D1D9" font-family="monospace" font-size="11">Widely-held (95% float)</text>
+                <rect x="430" y="60" width="50" height="100" fill="#79C0FF" opacity="0.7" stroke="#2A3441" stroke-width="0.5"/>
+                <text x="455" y="115" text-anchor="middle" fill="white" font-family="monospace" font-size="10" font-weight="500">$50B</text>
+                <text x="455" y="180" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Full cap</text>
+                <rect x="530" y="65" width="50" height="95" fill="#3DD68C" opacity="0.9" stroke="#2A3441" stroke-width="0.5"/>
+                <text x="555" y="115" text-anchor="middle" fill="white" font-family="monospace" font-size="10" font-weight="500">$47.5B</text>
+                <text x="555" y="180" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Float-adj</text>
+
+                <text x="330" y="210" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Same full cap → very different index weights once float-adjusted</text>
+              </svg>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Buffering policy — keeping stable what should be stable</div>
+              <div class="iw-body">A security hovering near a rank threshold (e.g. #500 in an index of 500 names) shouldn't be deleted the moment it slips to #501. Buffering sets two lines: an outer trigger and an inner reset — you only act on outer breaches, and you rebalance to the inner target.</div>
+              <span class="iw-rule">Reduces transaction costs (fewer forced trades)</span>
+              <span class="iw-rule">Reduces turnover and tax drag</span>
+              <span class="iw-rule">Reduces tracking error caused by trading noise</span>
+              <span class="iw-rule">Trade-off: portfolio drifts slightly further from the pure target</span>
+              <div class="iw-tip">Buffering applies to: index inclusion/exclusion rules, style/factor classifications, rebalancing corridors. All versions of the same idea.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">The 7 properties of a valid benchmark</div>
+              <div class="iw-body">From the benchmark rules tab in LDI — but also tested here:</div>
+              <span class="iw-rule"><span class="iw-hl">Specified in advance · Appropriate · Measurable · Unambiguous · Reflective of opinions · Accountable · Investable</span></span>
+              <div class="iw-tip">"Investable" is the one that ties directly to the free-float and buffering policies — an index isn't investable if funds can't actually replicate it.</div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 7 · FUTURES CALCULATION
+          ══════════════════════════════ -->
+          <div id="iw-fut" class="iw-panel">
+            <div class="iw-card">
+              <div class="iw-title">Equity futures for passive exposure — the step-by-step</div>
+              <div class="iw-fl">Step 1: Cash to invest (bonus, new contribution, etc.)
+Step 2: Apply POLICY WEIGHT for the target asset class
+Step 3: Contract value = Futures price × multiplier
+Step 4: Number of contracts = (Cash × weight) / Contract value
+Step 5: Direction: BUY to pre-invest cash · SELL to hedge existing exposure</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">The multiplier trap — standard vs E-mini</div>
+              <table class="iw-table">
+                <thead><tr><th>Contract</th><th>Multiplier</th><th>Contract size @ 2464.29</th></tr></thead>
+                <tbody>
+                  <tr><td>S&P 500 standard</td><td>250</td><td>$616,072</td></tr>
+                  <tr><td><span class="iw-hl">S&P 500 E-mini</span></td><td><span class="iw-hl">50</span></td><td><span class="iw-hl">$123,214</span></td></tr>
+                  <tr><td>S&P 500 Micro</td><td>5</td><td>$12,321</td></tr>
+                </tbody>
+              </table>
+              <div class="iw-trap">Critical: always check which multiplier the question specifies. Using 250 instead of 50 gives 1/5 the right number of contracts — a classic wrong answer is built exactly around this mistake.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Interactive futures calculator</div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Cash amount ($)</span><input type="range" min="100000" max="10000000" step="50000" value="5750000" id="iwFCash" oninput="iwFutCalc()"><span class="iw-sl-val" id="iwFCasho">$5,750,000</span></div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Policy weight (%)</span><input type="range" min="5" max="60" step="1" value="15" id="iwFWt" oninput="iwFutCalc()"><span class="iw-sl-val" id="iwFWto">15%</span></div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Futures price</span><input type="range" min="1000" max="6000" step="10" value="2464" id="iwFPr" oninput="iwFutCalc()"><span class="iw-sl-val" id="iwFPro">2464</span></div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Contract type</span><select id="iwFMult" onchange="iwFutCalc()">
+                <option value="250">S&P 500 standard (×250)</option>
+                <option value="50" selected>S&P 500 E-mini (×50)</option>
+                <option value="5">S&P 500 Micro (×5)</option>
+              </select></div>
+              <div class="iw-sl-row"><span class="iw-sl-lbl">Direction</span><select id="iwFDir" onchange="iwFutCalc()">
+                <option value="buy">Buy (pre-invest cash / bullish)</option>
+                <option value="sell">Sell (hedge existing exposure)</option>
+              </select></div>
+              <div class="iw-sim" id="iwFutBox"></div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Why futures drift from the underlying index</div>
+              <span class="iw-rule"><span class="iw-hl">Dividends:</span> index futures don't pay dividends; underlying index does. The futures price embeds this — as the ex-div date approaches, futures drop relative to index by the dividend amount.</span>
+              <span class="iw-rule"><span class="iw-hl">Stock splits:</span> require contract adjustments; creates short-term tracking noise.</span>
+              <span class="iw-rule"><span class="iw-hl">Financing cost (cost of carry):</span> futures price = spot × (1 + r − d) × t. Rising rates widen the basis.</span>
+              <div class="iw-tip">For exam performance-attribution questions: if the portfolio used futures and returns differ from the cash index, it's usually corporate actions (dividends, splits) — not manager skill or lack thereof.</div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 8 · MUTUAL FUND vs ETF
+          ══════════════════════════════ -->
+          <div id="iw-mfetf" class="iw-panel">
+            <div class="iw-card">
+              <div class="iw-title">The 3 key differences — memorize these</div>
+              <table class="iw-table">
+                <thead><tr><th>Feature</th><th>Mutual fund</th><th>ETF</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="iw-hl">Margin purchases</span></td><td><span class="iw-red">✗ No</span></td><td><span class="iw-green">✓ Yes</span></td></tr>
+                  <tr><td><span class="iw-hl">Short selling</span></td><td><span class="iw-red">✗ No</span></td><td><span class="iw-green">✓ Yes</span></td></tr>
+                  <tr><td><span class="iw-hl">Liquidity</span></td><td>Redeemed at NAV, end-of-day only</td><td>Intraday trading, but subject to market liquidity</td></tr>
+                  <tr><td><span class="iw-hl">Pricing</span></td><td>NAV only (one price per day)</td><td>Market price, may deviate from NAV</td></tr>
+                  <tr><td><span class="iw-hl">Tax efficiency</span></td><td>Lower (cash redemptions trigger gains)</td><td>Higher (in-kind creation/redemption)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">The liquidity nuance — not what most people think</div>
+              <div class="iw-body">"ETFs are more liquid than mutual funds" is <span class="iw-red">too simplistic</span>. They offer DIFFERENT kinds of liquidity:</div>
+              <span class="iw-rule"><span class="iw-hl">Mutual funds</span> — guaranteed NAV redemption, but once per day only. Liquidity is certain in magnitude but limited in timing.</span>
+              <span class="iw-rule"><span class="iw-hl">ETFs</span> — intraday trading at market prices, but during stress can trade at significant discounts to NAV (2020 bond ETFs). Liquidity is continuous in timing but uncertain in price.</span>
+              <div class="iw-trap">Exam trap: "mutual funds and ETFs have the same degree of liquidity" → FALSE. They have different types of liquidity, not the same degree.</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Currency overlay — hedge, not leverage</div>
+              <div class="iw-body">A <span class="iw-hl">currency overlay</span> uses FX forwards/futures to hedge the currency risk of foreign securities back to the home currency. It neutralizes FX exposure — it does NOT amplify returns.</div>
+              <div class="iw-trap">Exam trap: "currency overlay used to lever returns of foreign securities" → FALSE. Overlay = hedge. To lever, you'd need leverage (margin, futures notional beyond the underlying exposure).</div>
+            </div>
+
+            <div class="iw-card">
+              <div class="iw-title">Lending portfolio securities — incremental income with hidden risks</div>
+              <div class="iw-body">ETFs and index funds can lend their securities to short-sellers for a small fee, generating extra income that partially offsets expenses. But this creates:</div>
+              <span class="iw-rule"><span class="iw-red">Counterparty risk</span> — the borrower might default</span>
+              <span class="iw-rule"><span class="iw-red">Collateral risk</span> — collateral held may lose value or be illiquid</span>
+              <div class="iw-tip">Used to reduce expense ratios but adds a non-market risk dimension.</div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 9 · EXAM ERRORS
+          ══════════════════════════════ -->
+          <div id="iw-err" class="iw-panel">
+            <div class="iw-tabs" style="margin-bottom:12px">
+              <button class="iw-tab active" onclick="iwErrTab('review',this)">Error review</button>
+              <button class="iw-tab" onclick="iwErrTab('quiz',this)">Quiz me</button>
+            </div>
+
+            <div id="iw-err-review" class="iw-panel active">
+              <div class="iw-err-nav" id="iwErrNav">
+                <button class="iw-err-pill active" onclick="iwGoErr(0,this)">1</button>
+                <button class="iw-err-pill" onclick="iwGoErr(1,this)">2</button>
+                <button class="iw-err-pill" onclick="iwGoErr(2,this)">3</button>
+                <button class="iw-err-pill" onclick="iwGoErr(3,this)">4</button>
+                <button class="iw-err-pill" onclick="iwGoErr(4,this)">5</button>
+                <button class="iw-err-pill" onclick="iwGoErr(5,this)">6</button>
+                <button class="iw-err-pill" onclick="iwGoErr(6,this)">7</button>
+                <button class="iw-err-pill" onclick="iwGoErr(7,this)">8</button>
+                <button class="iw-err-pill" onclick="iwGoErr(8,this)">9</button>
+                <button class="iw-err-pill" onclick="iwGoErr(9,this)">10</button>
+                <button class="iw-err-pill" onclick="iwGoErr(10,this)">11</button>
+              </div>
+
+              <div class="iw-err-item active" id="iwErr0">
+                <div class="iw-card">
+                  <div class="iw-etitle"><span class="iw-enum">1</span>Jones small-cap value investor</div>
+                  <div class="iw-ebody">Jones invests in small-cap + low P/B + high yield. Which of three indexes matches?</div>
+                  <div class="iw-trap">Wrong approach: picked an index with negative Size loading (Index 2 or 3). Negative Size = large-cap tilt, opposite of what Jones wants.</div>
+                  <div class="iw-tip">Correct: the index with POSITIVE Size (+0.33) + POSITIVE Value (+0.41) + POSITIVE Yield (+0.24). That's Index 1, which is equal-weighted — naturally tilts small + value.</div>
+                  <span class="iw-rule">Sign check: positive Size → small-cap · Positive Value → value · Positive Yield → high dividend. All three must align with Jones's profile.</span>
+                </div>
+              </div>
+
+              <div class="iw-err-item" id="iwErr1">
+                <div class="iw-card">
+                  <div class="iw-etitle"><span class="iw-enum">2</span>Mutual fund vs ETF comments</div>
+                  <div class="iw-ebody">Three comments: (1) both on margin · (2) ETFs can short, mutual funds cannot · (3) same liquidity.</div>
+                  <div class="iw-trap">Wrong: picked #1 (both on margin) — only ETFs can be bought on margin, not mutual funds.</div>
+                  <div class="iw-tip">Correct: #2. ETFs allow short positions; mutual funds do not.</div>
+                  <span class="iw-rule">#1 FALSE — only ETFs can be margined</span>
+                  <span class="iw-rule"><span class="iw-right">#2 TRUE</span> — ETFs can be shorted, mutual funds cannot</span>
+                  <span class="iw-rule">#3 FALSE — different types of liquidity, not the same degree</span>
+                </div>
+              </div>
+
+              <div class="iw-err-item" id="iwErr2">
+                <div class="iw-card">
+                  <div class="iw-etitle"><span class="iw-enum">3</span>Factor strategies vs market-cap</div>
+                  <div class="iw-ebody">Stapleton: "diversify risk + transparent + can be copied."</div>
+                  <div class="iw-trap">Wrong: said statement is correct or that "transparent" is wrong.</div>
+                  <div class="iw-tip">Correct: "diversify risk" is wrong. Factor strategies CONCENTRATE risk. "Transparent" and "can be copied" are both correct.</div>
+                  <span class="iw-rule">Anchor: any time you see "factor strategy + diversify" → red flag, likely wrong</span>
+                </div>
+              </div>
+
+              <div class="iw-err-item" id="iwErr3">
+                <div class="iw-card">
+                  <div class="iw-etitle"><span class="iw-enum">4</span>Brinson factor attribution %</div>
+                  <div class="iw-ebody">Growth weight diff + Quality weight diff + Momentum return diff → what % of excess return is from factor weighting?</div>
+                  <div class="iw-trap">Wrong: gave the raw factor weighting contribution (−0.04%) instead of the percentage. Or gave the total effect (−0.22%).</div>
+                  <div class="iw-tip">Correct: divide factor weighting contribution by total effect → −0.04% / −0.22% = 18.18%.</div>
+                  <div class="iw-fl">Factor weighting contributions:
+  Growth:  (0.22 − 0.25) × 7.9% = −0.24%
+  Quality: (0.29 − 0.26) × 6.7% = +0.20%
+  Sum: −0.04%
+
+Security selection contribution:
+  Momentum: 0.30 × (3.9% − 4.5%) = −0.18%
+
+Total effect: −0.04 + −0.18 = −0.22%
+% from factor weighting: −0.04 / −0.22 = 18.18%</div>
+                </div>
+              </div>
+
+              <div class="iw-err-item" id="iwErr4">
+                <div class="iw-card">
+                  <div class="iw-etitle"><span class="iw-enum">5</span>Parker's three factor claims</div>
+                  <div class="iw-ebody">Which is correct? (a) fundamental overweights overpriced · (b) value factor lowers downside · (c) single-factor concentrates risk.</div>
+                  <div class="iw-trap">Wrong: picked value factor (confused with low-vol) or fundamental (the signs are reversed).</div>
+                  <div class="iw-tip">Correct: single-factor concentrates risk. (a) wrong — fundamental overweights UNDERpriced. (b) wrong — value ≠ low-vol.</div>
+                  <span class="iw-rule">Value factor = bet on mean reversion in valuations</span>
+                  <span class="iw-rule">Low-volatility factor = bet on low-vol anomaly (downside protection)</span>
+                  <span class="iw-rule">Fundamental weighting = built-in value tilt (underweight overpriced, overweight underpriced)</span>
+                </div>
+              </div>
+
+              <div class="iw-err-item" id="iwErr5">
+                <div class="iw-card">
+                  <div class="iw-etitle"><span class="iw-enum">6</span>Identifying blended stratified + optimization</div>
+                  <div class="iw-ebody">Three replication managers. Which uses stratified sampling + optimization?</div>
+                  <div class="iw-trap">Wrong: picked Manager B (stratified only) because it has many holdings. Missed that B doesn't account for covariances.</div>
+                  <div class="iw-tip">Correct: Manager C. The giveaway is "accounts for covariances" = YES. This is the signature of optimization.</div>
+                  <span class="iw-rule">Manager A (498/500, TE 0.06%) → Full replication</span>
+                  <span class="iw-rule">Manager B (800/928, TE 1.97%, covariances NO) → Stratified alone</span>
+                  <span class="iw-rule"><span class="iw-right">Manager C (1200/3000, TE 0.34%, covariances YES) → Stratified + Optimization ✓</span></span>
+                </div>
+              </div>
+
+              <div class="iw-err-item" id="iwErr6">
+                <div class="iw-card">
+                  <div class="iw-etitle"><span class="iw-enum">7</span>Parker's comments on Manager B</div>
+                  <div class="iw-ebody">Three claims: (1) TE measures market volatility · (2) currency overlay levers returns · (3) excess return is luck.</div>
+                  <div class="iw-trap">Wrong: picked TE or currency overlay. Both contain errors.</div>
+                  <div class="iw-tip">Correct: excess return comment. A replication manager's JOB is to match the index, not beat it. Positive excess return with high TE → unintended deviation, luck more than skill.</div>
+                  <span class="iw-rule">TE measures std dev of (portfolio return − benchmark return), not market volatility</span>
+                  <span class="iw-rule">Currency overlay hedges FX, doesn't lever</span>
+                  <span class="iw-rule">For replication managers: excess return is a bug, not a feature</span>
+                </div>
+              </div>
+
+              <div class="iw-err-item" id="iwErr7">
+                <div class="iw-card">
+                  <div class="iw-etitle"><span class="iw-enum">8</span>Free-float and buffering statements</div>
+                  <div class="iw-ebody">(1) Free-float lowers liquidity. (2) Buffering makes index more investable.</div>
+                  <div class="iw-trap">Wrong: thought free-float reduces the tradeable universe so must reduce liquidity.</div>
+                  <div class="iw-tip">Correct: #2 only. Free-float RAISES liquidity by restricting weights to actually-tradeable shares. Buffering IMPROVES investability by reducing turnover.</div>
+                  <span class="iw-rule">Both policies push toward more investable, more replicable indexes</span>
+                </div>
+              </div>
+
+              <div class="iw-err-item" id="iwErr8">
+                <div class="iw-card">
+                  <div class="iw-etitle"><span class="iw-enum">9</span>Method 1 = Full replication</div>
+                  <div class="iw-ebody">"All index constituents available for trading + large commissions when index is large."</div>
+                  <div class="iw-tip">Keyword: "all constituents available". Full replication needs every single name to be tradeable. Stratified and optimization work with subsets.</div>
+                  <span class="iw-rule">"All constituents" → Full replication</span>
+                  <span class="iw-rule">"Technically unsophisticated" → Stratified sampling</span>
+                  <span class="iw-rule">"Accounts for covariances" → Optimization</span>
+                </div>
+              </div>
+
+              <div class="iw-err-item" id="iwErr9">
+                <div class="iw-card">
+                  <div class="iw-etitle"><span class="iw-enum">10</span>Highest TE among three ETFs</div>
+                  <div class="iw-ebody">XIU (60 names, 0.18%) · SPY (506, 0.10%) · EFA (933, 0.33%). Which has highest TE under full replication?</div>
+                  <div class="iw-tip">Correct: EFA. More constituents = more tracking friction. Higher fees = constant drag. Both point same direction.</div>
+                  <span class="iw-rule">TE drivers: # constituents + expense ratio + liquidity of smallest names + international/FX exposure</span>
+                  <span class="iw-rule">EFA loses on all four — it's international, has the most names, and highest fees</span>
+                </div>
+              </div>
+
+              <div class="iw-err-item" id="iwErr10">
+                <div class="iw-card">
+                  <div class="iw-etitle"><span class="iw-enum">11</span>Price-weighted index property</div>
+                  <div class="iw-ebody">What characterizes the price-weighted large-cap benchmark? (A) unaffected by splits · (B) liquidity-weighted · (C) same shares of each.</div>
+                  <div class="iw-trap">Wrong: picked "unaffected by splits". Price-weighted is HIGHLY affected by splits — that's why divisor adjustments exist.</div>
+                  <div class="iw-tip">Correct: (C) same number of shares of each component. A price-weighted index is equivalent to holding 1 share of each constituent.</div>
+                  <span class="iw-rule">Price-weighted = "1 share of each" replication</span>
+                  <span class="iw-rule">Splits DIVIDE the price → DIVIDE the weight with no economic change. Divisor adjustments compensate.</span>
+                  <span class="iw-rule">Only DJIA and Nikkei 225 are major price-weighted indexes</span>
+                </div>
+              </div>
+
+              <div style="display:flex;justify-content:space-between;margin-top:12px;align-items:center">
+                <button onclick="iwPrevErr()" class="iw-nbtn" style="max-width:100px;margin-top:0">← Prev</button>
+                <span id="iwErrCounter" style="font-family:var(--mono);font-size:11px;color:var(--muted)">1 / 11</span>
+                <button onclick="iwNextErr()" class="iw-nbtn" style="max-width:100px;margin-top:0">Next →</button>
+              </div>
+            </div>
+
+            <div id="iw-err-quiz" class="iw-panel">
+              <div class="iw-card" id="iwQuizBox"></div>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════
+               TAB 10 · ALL QUESTIONS
+          ══════════════════════════════ -->
+          <div id="iw-eq" class="iw-panel">
+            <div class="iw-cqt" id="iwCqtBar">
+              <button class="iw-cqb active" onclick="iwCqTab('q1',this)">Q1</button>
+              <button class="iw-cqb" onclick="iwCqTab('q2',this)">Q2</button>
+              <button class="iw-cqb" onclick="iwCqTab('q3',this)">Q3</button>
+              <button class="iw-cqb" onclick="iwCqTab('q4',this)">Q4</button>
+              <button class="iw-cqb" onclick="iwCqTab('q5',this)">Q5</button>
+              <button class="iw-cqb" onclick="iwCqTab('q6',this)">Q6</button>
+              <button class="iw-cqb" onclick="iwCqTab('q7',this)">Q7</button>
+              <button class="iw-cqb" onclick="iwCqTab('q8',this)">Q8</button>
+              <button class="iw-cqb" onclick="iwCqTab('q9',this)">Q9</button>
+              <button class="iw-cqb" onclick="iwCqTab('q10',this)">Q10</button>
+              <button class="iw-cqb" onclick="iwCqTab('q11',this)">Q11</button>
+            </div>
+
+            <div id="iw-cq-q1" class="iw-cqp active">
+              <div class="iw-cqcard">
+                <div class="iw-cqnum">Q1 · Jones small-cap value <span class="iw-bwrong">✗ got wrong</span></div>
+                <div class="iw-cqq">Jones invests in small-cap securities with low P/B and high dividend yields. Three indexes with factor exposures given (Size, Value, Yield, Momentum, Quality). Best match?</div>
+                <div class="iw-cqopts">
+                  <div class="iw-cqopt correct">A — Index 1 (equal-weighted): positive Size +0.33, positive Value +0.41, positive Yield +0.24</div>
+                  <div class="iw-cqopt">B/C — Index 2 & 3: negative Size and negative Value (large-cap growth tilt)</div>
+                </div>
+                <div class="iw-cqwhy">Read the signs: positive Size = small-cap tilt, positive Value = value tilt, positive Yield = dividend tilt. All three must align with the investor's style. Equal-weighted indexes naturally generate these tilts.</div>
+                <div class="iw-cqtrap">Trap: negative coefficient means OPPOSITE direction. Size −0.16 is a large-cap tilt, not a small-cap tilt.</div>
+              </div>
+            </div>
+
+            <div id="iw-cq-q2" class="iw-cqp">
+              <div class="iw-cqcard">
+                <div class="iw-cqnum">Q2 · Mutual fund vs ETF comments <span class="iw-bwrong">✗ got wrong</span></div>
+                <div class="iw-cqq">Three comments: (1) both can be purchased on margin · (2) ETFs can be shorted but mutual funds cannot · (3) same degree of liquidity. Which is most accurate?</div>
+                <div class="iw-cqopts">
+                  <div class="iw-cqopt correct">B — Comment 2: only ETFs can be shorted</div>
+                  <div class="iw-cqopt">A — Comment 1 wrong: only ETFs can be margined</div>
+                  <div class="iw-cqopt">C — Comment 3 wrong: different types of liquidity</div>
+                </div>
+                <div class="iw-cqwhy">ETFs trade like stocks: margin, short, intraday pricing. Mutual funds redeem at NAV end-of-day only. The liquidity comment is the subtlest trap — "same degree" is wrong because the NATURE of liquidity differs.</div>
+              </div>
+            </div>
+
+            <div id="iw-cq-q3" class="iw-cqp">
+              <div class="iw-cqcard">
+                <div class="iw-cqnum">Q3 · Factor strategies vs cap weighting <span class="iw-bwrong">✗ got wrong</span></div>
+                <div class="iw-cqq">Stapleton's claim: factor-based strategies (a) diversify risk, (b) are transparent, (c) can be copied by others. Is her comment correct?</div>
+                <div class="iw-cqopts">
+                  <div class="iw-cqopt correct">C — Incorrect regarding risk exposure</div>
+                </div>
+                <div class="iw-cqwhy">Factor strategies CONCENTRATE risk on the chosen factor. "Transparent" and "replicable by others" are both correct. The wrong word is "diversify".</div>
+                <div class="iw-cqtrap">This trap appears 3+ times in Index-Based Equity. If you see "factor-based + diversify" anywhere, it's almost always wrong.</div>
+              </div>
+            </div>
+
+            <div id="iw-cq-q4" class="iw-cqp">
+              <div class="iw-cqcard">
+                <div class="iw-cqnum">Q4 · Brinson factor attribution % <span class="iw-bwrong">✗ got wrong</span></div>
+                <div class="iw-cqq">River Valley fund vs benchmark. Growth weight diff, Quality weight diff, Momentum return diff. What % of excess return comes from active factor weighting?</div>
+                <div class="iw-cqopts">
+                  <div class="iw-cqopt correct">C — 18.18%</div>
+                  <div class="iw-cqopt">A/B — wrong: these give the raw contribution, not the percentage</div>
+                </div>
+                <div class="iw-cqwhy">
+                  <span class="iw-cqfl">Factor weighting effects (weight diff, return same):
+  Growth:  (0.22 − 0.25) × 7.9%  = −0.24%
+  Quality: (0.29 − 0.26) × 6.7%  = +0.20%
+  Sum: −0.04%
+
+Security selection effect (weight same, return diff):
+  Momentum: 0.30 × (3.9% − 4.5%) = −0.18%
+
+Total active return: −0.04 + −0.18 = −0.22%
+% from factor weighting: −0.04 / −0.22 = 18.18%</span>
+                </div>
+                <div class="iw-cqtrap">Two trap answers: (A) total effect itself · (B) absolute factor weighting amount. Neither is the PERCENTAGE of total. Always divide.</div>
+              </div>
+            </div>
+
+            <div id="iw-cq-q5" class="iw-cqp">
+              <div class="iw-cqcard">
+                <div class="iw-cqnum">Q5 · Parker's three factor claims <span class="iw-bwrong">✗ got wrong</span></div>
+                <div class="iw-cqq">(A) Fundamental weighting overweights overpriced · (B) value factor lowers downside · (C) single-factor concentrates risk. Which is correct?</div>
+                <div class="iw-cqopts">
+                  <div class="iw-cqopt correct">B — Single-factor concentrates risk exposure</div>
+                  <div class="iw-cqopt">A — Wrong: fundamental weighting overweights UNDERpriced (value tilt)</div>
+                  <div class="iw-cqopt">C — Wrong: value factor seeks cheap valuations, NOT downside protection (that's low-vol)</div>
+                </div>
+                <div class="iw-cqwhy">Three distinct errors to know: fundamental weighting has a value tilt (not the reverse); value factor ≠ low-vol; single-factor concentrates risk.</div>
+              </div>
+            </div>
+
+            <div id="iw-cq-q6" class="iw-cqp">
+              <div class="iw-cqcard">
+                <div class="iw-cqnum">Q6 · Stratified + optimization identification <span class="iw-bwrong">✗ got wrong</span></div>
+                <div class="iw-cqq">Three replication managers. Which blends stratified sampling with optimization?</div>
+                <div class="iw-cqopts">
+                  <div class="iw-cqopt correct">C — Manager C (1200/3000 holdings, TE 0.34%, accounts for covariances)</div>
+                  <div class="iw-cqopt">A — Manager A: full replication (498/500, TE 0.06%)</div>
+                  <div class="iw-cqopt">B — Manager B: stratified only (800/928, TE 1.97%, no covariances)</div>
+                </div>
+                <div class="iw-cqwhy">The single distinguishing feature is "accounts for covariances" = YES → optimization. Number of holdings alone is not decisive.</div>
+                <div class="iw-cqtrap">Reading the data: B has MORE holdings than C but HIGHER TE. That's the signature of stratified without optimization — it can't shrink TE by modeling correlations.</div>
+              </div>
+            </div>
+
+            <div id="iw-cq-q7" class="iw-cqp">
+              <div class="iw-cqcard">
+                <div class="iw-cqnum">Q7 · Parker's three comments on Manager B <span class="iw-bwrong">✗ got wrong</span></div>
+                <div class="iw-cqq">(A) High TE means volatile markets · (B) currency overlay levers returns · (C) excess return is luck.</div>
+                <div class="iw-cqopts">
+                  <div class="iw-cqopt correct">B — Excess return is luck, not skill</div>
+                  <div class="iw-cqopt">A — Wrong: TE measures deviation from benchmark, not market volatility</div>
+                  <div class="iw-cqopt">C — Wrong: currency overlay HEDGES, doesn't lever</div>
+                </div>
+                <div class="iw-cqwhy">For a replication manager: the mandate is to match the index, not beat it. High excess return + high TE = unintended deviation. Skill for replication managers is measured by LOW TE, not positive excess return.</div>
+              </div>
+            </div>
+
+            <div id="iw-cq-q8" class="iw-cqp">
+              <div class="iw-cqcard">
+                <div class="iw-cqnum">Q8 · Free-float and buffering <span class="iw-bwrong">✗ got wrong</span></div>
+                <div class="iw-cqq">(1) Free-float adjustment lowers liquidity. (2) Buffering policy makes index more investable. Which is correct?</div>
+                <div class="iw-cqopts">
+                  <div class="iw-cqopt correct">Statement 2 — correct (buffering improves investability)</div>
+                  <div class="iw-cqopt">Statement 1 — wrong (free-float RAISES liquidity)</div>
+                </div>
+                <div class="iw-cqwhy">Free-float restricts weights to actually-tradeable shares, so index-tracking funds can actually replicate. Buffering reduces turnover at inclusion/exclusion thresholds. Both push toward easier-to-replicate indexes.</div>
+              </div>
+            </div>
+
+            <div id="iw-cq-q9" class="iw-cqp">
+              <div class="iw-cqcard">
+                <div class="iw-cqnum">Q9 · Method 2 replication process <span class="iw-bwrong">✗ got wrong</span></div>
+                <div class="iw-cqq">"Large number of constituents, low AUM, straightforward and technically unsophisticated, fewer individual securities." Which method?</div>
+                <div class="iw-cqopts">
+                  <div class="iw-cqopt correct">C — Stratified sampling</div>
+                  <div class="iw-cqopt">A — Optimization: explicitly sophisticated (factor model, covariances)</div>
+                  <div class="iw-cqopt">B — Full replication: requires ALL constituents, not fewer</div>
+                </div>
+                <div class="iw-cqwhy">Keyword "unsophisticated" eliminates optimization. "Fewer securities" eliminates full replication. Stratified sampling is the only method that is simple AND works with a subset.</div>
+              </div>
+            </div>
+
+            <div id="iw-cq-q10" class="iw-cqp">
+              <div class="iw-cqcard">
+                <div class="iw-cqnum">Q10 · Highest tracking error among 3 ETFs <span class="iw-bwrong">✗ got wrong</span></div>
+                <div class="iw-cqq">XIU (S&P/TSX 60, 60 names, 0.18%), SPY (S&P 500, 506, 0.10%), EFA (MSCI EAFE, 933, 0.33%). Full replication.</div>
+                <div class="iw-cqopts">
+                  <div class="iw-cqopt correct">C — EFA (most constituents, highest fees, international)</div>
+                </div>
+                <div class="iw-cqwhy">TE drivers all point to EFA: largest constituent count (replication friction), highest expense ratio (constant drag), international (FX, settlements, time zones add noise).</div>
+              </div>
+            </div>
+
+            <div id="iw-cq-q11" class="iw-cqp">
+              <div class="iw-cqcard">
+                <div class="iw-cqnum">Q11 · Price-weighted index property <span class="iw-bwrong">✗ got wrong</span></div>
+                <div class="iw-cqq">The benchmark is price-weighted. Which is true? (A) unaffected by splits · (B) liquidity-weighted · (C) same number of shares in each stock.</div>
+                <div class="iw-cqopts">
+                  <div class="iw-cqopt correct">C — Holds the same number of shares in each component</div>
+                  <div class="iw-cqopt">A — Wrong: HIGHLY affected by splits (needs divisor adjustment)</div>
+                  <div class="iw-cqopt">B — Wrong: liquidity-weighted is not a real index type</div>
+                </div>
+                <div class="iw-cqwhy">A price-weighted index is equivalent to holding 1 share of each constituent. Price = weight, regardless of shares outstanding or market cap.</div>
+                <div class="iw-cqtrap">Price-weighted is the MOST split-sensitive method — any split halves the price and halves the weight without economic change, forcing a divisor adjustment. "Unaffected by splits" is the trap answer.</div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            // ═══════════════════════════════════════════════
+            // Index Widget JS — all functions prefixed iw*
+            // ═══════════════════════════════════════════════
+
+            function iwTab(id, btn){
+              document.querySelectorAll('#indexWidget > .iw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#indexWidget > .iw-tabs > .iw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('iw-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+
+            // ── HHI calculator ──
+            function iwHhiCalc(){
+              var h=parseFloat(document.getElementById('iwHhi').value);
+              document.getElementById('iwHhio').textContent=h.toFixed(4);
+              var eff=(1/h).toFixed(1);
+              var label,col;
+              if(h<0.03){label='Well diversified';col='#3DD68C';}
+              else if(h<0.1){label='Moderate concentration';col='#F0A04B';}
+              else{label='Highly concentrated';col='#FF7B72';}
+              document.getElementById('iwHhiBox').innerHTML=
+                '<div class="iw-sim-row"><span class="iw-sim-lbl">HHI</span><span class="iw-sim-val">'+h.toFixed(4)+'</span></div>'+
+                '<div class="iw-sim-row"><span class="iw-sim-lbl">Effective # of stocks</span><span class="iw-sim-val" style="color:#79C0FF">'+eff+'</span></div>'+
+                '<div class="iw-sim-row"><span class="iw-sim-lbl">Concentration level</span><span class="iw-sim-val" style="color:'+col+'">'+label+'</span></div>';
+            }
+
+            // ── Attribution calculator ──
+            function iwAttrCalc(){
+              var w1f=parseFloat(document.getElementById('iwAW1').value);
+              var w1b=parseFloat(document.getElementById('iwAB1').value);
+              var r1=parseFloat(document.getElementById('iwAR1').value);
+              var w2=parseFloat(document.getElementById('iwAW2').value);
+              var r2f=parseFloat(document.getElementById('iwAFR2').value);
+              var r2b=parseFloat(document.getElementById('iwABR2').value);
+
+              document.getElementById('iwAW1o').textContent=w1f.toFixed(2);
+              document.getElementById('iwAB1o').textContent=w1b.toFixed(2);
+              document.getElementById('iwAR1o').textContent=r1.toFixed(1)+'%';
+              document.getElementById('iwAW2o').textContent=w2.toFixed(2);
+              document.getElementById('iwAFR2o').textContent=r2f.toFixed(1)+'%';
+              document.getElementById('iwABR2o').textContent=r2b.toFixed(1)+'%';
+
+              var fact1=(w1f-w1b)*r1;                  // factor weighting effect (weights differ, returns same)
+              var sel2=w2*(r2f-r2b);                   // security selection effect
+              var total=fact1+sel2;
+              var pctFact=total!==0?(fact1/total*100):0;
+              var pctSel=total!==0?(sel2/total*100):0;
+
+              var col1=fact1>=0?'#3DD68C':'#FF7B72';
+              var col2=sel2>=0?'#3DD68C':'#FF7B72';
+              var col3=total>=0?'#3DD68C':'#FF7B72';
+
+              document.getElementById('iwAttrBox').innerHTML=
+                '<div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Decomposition</div>'+
+                '<div class="iw-sim-row"><span class="iw-sim-lbl">Factor weighting effect</span><span class="iw-sim-val" style="color:'+col1+'">'+(fact1>=0?'+':'')+fact1.toFixed(3)+'%</span></div>'+
+                '<div class="iw-sim-row"><span class="iw-sim-lbl">Security selection effect</span><span class="iw-sim-val" style="color:'+col2+'">'+(sel2>=0?'+':'')+sel2.toFixed(3)+'%</span></div>'+
+                '<div class="iw-sim-row" style="border-top:1px solid var(--border);padding-top:8px;margin-top:2px"><span class="iw-sim-lbl" style="color:var(--text);font-weight:500">Total active return</span><span class="iw-sim-val" style="color:'+col3+';font-size:13px">'+(total>=0?'+':'')+total.toFixed(3)+'%</span></div>'+
+                '<div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin:12px 0 6px">Percentage split</div>'+
+                '<div class="iw-sim-row"><span class="iw-sim-lbl">% from factor weighting</span><span class="iw-sim-val" style="color:#D4A017">'+pctFact.toFixed(2)+'%</span></div>'+
+                '<div class="iw-sim-row"><span class="iw-sim-lbl">% from security selection</span><span class="iw-sim-val" style="color:#D4A017">'+pctSel.toFixed(2)+'%</span></div>';
+            }
+
+            // ── Factor matcher ──
+            var iwIndexes=[
+              {id:'I1',name:'Equal-weighted',method:'Equal',loadings:{Market:0.45,Size:0.33,Value:0.41,Yield:0.24,Momentum:0.01,Quality:0.32}},
+              {id:'I2',name:'Price-weighted',method:'Price',loadings:{Market:0.90,Size:-0.16,Value:-0.06,Yield:0.08,Momentum:0.54,Quality:0.29}},
+              {id:'I3',name:'Volatility-weighted',method:'Vol',loadings:{Market:0.88,Size:-0.38,Value:-0.23,Yield:0.33,Momentum:-0.01,Quality:0.46}}
+            ];
+            var iwProfiles={
+              smv:{name:'Small-cap value + dividend (Jones)',wants:{Size:'+',Value:'+',Yield:'+'}},
+              lcg:{name:'Large-cap growth, high beta',wants:{Size:'-',Value:'-',Market:'+'}},
+              lowvol:{name:'Defensive: low vol, high quality',wants:{Quality:'+',Yield:'+',Market:'-'}},
+              mom:{name:'Momentum trend-follower',wants:{Momentum:'+',Market:'+'}}
+            };
+            function iwMatchCalc(){
+              var key=document.getElementById('iwInvestor').value;
+              var prof=iwProfiles[key];
+              var scored=iwIndexes.map(function(ix){
+                var score=0, details=[];
+                Object.keys(prof.wants).forEach(function(f){
+                  var want=prof.wants[f];
+                  var val=ix.loadings[f];
+                  var match;
+                  if(want==='+' && val>0.1){match='✓'; score+=Math.min(val,1);}
+                  else if(want==='-' && val<-0.05){match='✓'; score+=Math.min(-val,1);}
+                  else{match='✗'; score-=0.3;}
+                  details.push({f:f,val:val,want:want,match:match});
+                });
+                return {ix:ix, score:score, details:details};
+              });
+              scored.sort(function(a,b){return b.score-a.score;});
+              var h='<div style="font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:8px">Match scores for: '+prof.name+'</div>';
+              scored.forEach(function(s,i){
+                var cls=i===0?'iw-match-card winner':(i===scored.length-1?'iw-match-card loser':'iw-match-card');
+                var badge=i===0?' <span class="iw-badge iw-pass">Best match ✓</span>':(i===scored.length-1?' <span class="iw-badge iw-fail">Worst match</span>':'');
+                h+='<div class="'+cls+'">';
+                h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font-family:var(--mono);font-size:11px;font-weight:500;color:var(--text)">'+s.ix.name+' ('+s.ix.method+')</span>'+badge+'</div>';
+                s.details.forEach(function(d){
+                  var icon=d.match==='✓'?'<span style="color:#3DD68C">✓</span>':'<span style="color:#FF7B72">✗</span>';
+                  var valStr=(d.val>=0?'+':'')+d.val.toFixed(2);
+                  h+='<div class="iw-match-row"><span class="iw-match-lbl">'+d.f+' (want '+d.want+')</span><span class="iw-match-score">'+valStr+' '+icon+'</span></div>';
+                });
+                h+='</div>';
+              });
+              document.getElementById('iwMatchBox').innerHTML=h;
+            }
+
+            // ── Futures calculator ──
+            function iwFutCalc(){
+              var cash=parseFloat(document.getElementById('iwFCash').value);
+              var wt=parseFloat(document.getElementById('iwFWt').value);
+              var pr=parseFloat(document.getElementById('iwFPr').value);
+              var mult=parseFloat(document.getElementById('iwFMult').value);
+              var dir=document.getElementById('iwFDir').value;
+
+              document.getElementById('iwFCasho').textContent='$'+cash.toLocaleString();
+              document.getElementById('iwFWto').textContent=wt.toFixed(0)+'%';
+              document.getElementById('iwFPro').textContent=pr.toFixed(0);
+
+              var notional=cash*(wt/100);
+              var contractVal=pr*mult;
+              var nContracts=notional/contractVal;
+              var nRounded=Math.round(nContracts);
+
+              var dirLabel=dir==='buy'?'BUY':'SELL';
+              var dirCol=dir==='buy'?'#3DD68C':'#FF7B72';
+
+              document.getElementById('iwFutBox').innerHTML=
+                '<div class="iw-sim-row"><span class="iw-sim-lbl">Step 1: Cash to invest</span><span class="iw-sim-val">$'+cash.toLocaleString()+'</span></div>'+
+                '<div class="iw-sim-row"><span class="iw-sim-lbl">Step 2: × policy weight</span><span class="iw-sim-val">$'+Math.round(notional).toLocaleString()+'</span></div>'+
+                '<div class="iw-sim-row"><span class="iw-sim-lbl">Step 3: contract value</span><span class="iw-sim-val">'+pr.toFixed(0)+' × '+mult+' = $'+Math.round(contractVal).toLocaleString()+'</span></div>'+
+                '<div class="iw-sim-row" style="border-top:1px solid var(--border);padding-top:10px;margin-top:2px"><span class="iw-sim-lbl" style="color:var(--text);font-weight:500">Action</span><span class="iw-sim-val" style="color:'+dirCol+';font-size:14px">'+dirLabel+' '+nRounded+' contracts</span></div>'+
+                '<div class="iw-sim-row"><span class="iw-sim-lbl">Exact value</span><span class="iw-sim-val">'+nContracts.toFixed(3)+'</span></div>';
+            }
+
+            // ── Exam Errors tab ──
+            var iwCurErr=0, iwRevealed=false, iwQord=[], iwQi=0;
+            var IW_ERRORS=[
+              {q:"Jones wants small-cap value + dividend. Three indexes with factor loadings. Which has positive Size + positive Value + positive Yield simultaneously?",
+               a:"Index 1 (equal-weighted). Size +0.33 · Value +0.41 · Yield +0.24. All three positive matches. Index 2 & 3 have negative Size and Value → large-cap growth tilt.",
+               trap:"Negative factor coefficient = OPPOSITE direction. Size −0.16 means large-cap, not small-cap."},
+              {q:"Comparing mutual funds and ETFs, which statement is correct? (1) Both margin-eligible · (2) ETFs shortable but mutual funds not · (3) same degree of liquidity.",
+               a:"Comment 2 is correct — ETFs can be shorted, mutual funds cannot. Comment 1 wrong (only ETFs on margin). Comment 3 wrong (different types of liquidity).",
+               trap:"ETFs trade like stocks (margin/short/intraday). Mutual funds redeem at end-of-day NAV only."},
+              {q:"Factor-based strategies vs market-cap weighting: Stapleton says they diversify risk, are transparent, and can be copied. Is this correct?",
+               a:"No — incorrect regarding risk exposure. Factor strategies CONCENTRATE risk (they deliberately tilt toward one characteristic). Transparent and replicable are both correct.",
+               trap:"'Factor-based + diversify' is almost always a wrong answer. Factor strategies concentrate by construction."},
+              {q:"Brinson factor attribution: fund-vs-bench weight differences on Growth and Quality, return difference on Momentum. Total effect −0.22%. What % from factor weighting?",
+               a:"18.18%. Factor weighting sum = −0.04%. Security selection = −0.18%. Factor weighting / total = −0.04 / −0.22 = 18.18%.",
+               trap:"Don't confuse the raw dollar/% contribution with the PERCENTAGE of total. Always divide by total effect."},
+              {q:"Which is correct? (a) Fundamental weighting overweights overpriced stocks · (b) value factor lowers downside risk · (c) single-factor concentrates risk exposure.",
+               a:"(c) only. Fundamental weighting overweights UNDERpriced stocks (value tilt, not the reverse). Value factor ≠ low-volatility — it hunts cheap valuations, not downside protection.",
+               trap:"Value factor and low-volatility factor are frequently confused. Value = mean reversion in valuations. Low-vol = low-beta stocks for downside protection."},
+              {q:"Three replication managers: Full rep vs stratified alone vs stratified+optimization. What distinguishes stratified+optimization?",
+               a:"Accounts for covariances = YES. Optimization uses a factor model to minimize TE for a given holding count. Stratified alone never models covariances.",
+               trap:"Number of holdings alone is misleading. Manager with MORE holdings but HIGHER TE is stratified without optimization."},
+              {q:"Manager B is a replication manager with the highest excess return among three. Is this a sign of skill?",
+               a:"No — likely luck. For a replication manager, the job is to match the index. Positive excess return with high TE means unintended deviation. Skill for replication = LOW TE.",
+               trap:"Active managers: excess return + IR = skill. Replication managers: low TE = skill. Opposite evaluation frameworks."},
+              {q:"Free-float adjustment lowers liquidity of a cap-weighted index. True or false?",
+               a:"FALSE — it RAISES liquidity. By restricting weights to actually-tradeable shares (excluding insider/government/locked-up holdings), index funds can replicate without chasing shares that aren't for sale.",
+               trap:"Intuition might say 'fewer shares = less liquid'. But for index construction, what matters is tradeable shares, not total outstanding. Free-float makes the index easier to replicate."},
+              {q:"Method description: 'all index constituents available for trading, significant commissions when index is large.' What replication method?",
+               a:"Full replication. Keyword: 'all constituents available'. Full rep holds every security at exact index weight → needs all to be tradeable.",
+               trap:"Stratified and optimization work with subsets, so don't need all constituents tradeable."},
+              {q:"XIU (60 names, 0.18% fee) vs SPY (506, 0.10%) vs EFA (933, 0.33%). Which has highest TE under full replication?",
+               a:"EFA. More constituents = more replication friction. Highest fees = constant drag. International = FX/time zone/settlement friction. All three factors point to EFA.",
+               trap:"Don't focus on fees alone. Constituent count and liquidity dominate for large international indexes."},
+              {q:"A price-weighted index holds: (a) same dollar amount of each · (b) same market cap of each · (c) same number of shares of each.",
+               a:"(c) Same number of shares. A price-weighted index is equivalent to holding 1 share of each constituent. Weight = price / sum of prices.",
+               trap:"Price-weighted is HIGHLY affected by stock splits (divisor adjustment required). Never answer 'unaffected by splits' for price-weighted."}
+            ];
+            function iwErrTab(id, btn){
+              document.querySelectorAll('#iw-err > .iw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#iw-err > .iw-tabs > .iw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('iw-err-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id==='quiz') iwStartQuiz();
+            }
+            function iwGoErr(n, btn){
+              document.querySelectorAll('.iw-err-item').forEach(function(e){e.classList.remove('active')});
+              document.querySelectorAll('.iw-err-pill').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('iwErr'+n).classList.add('active');
+              btn.classList.add('active');
+              iwCurErr=n;
+              document.getElementById('iwErrCounter').textContent=(n+1)+' / 11';
+            }
+            function iwNextErr(){var n=(iwCurErr+1)%11;iwGoErr(n,document.querySelectorAll('#iwErrNav .iw-err-pill')[n]);}
+            function iwPrevErr(){var n=(iwCurErr+10)%11;iwGoErr(n,document.querySelectorAll('#iwErrNav .iw-err-pill')[n]);}
+            function iwStartQuiz(){iwQord=[0,1,2,3,4,5,6,7,8,9,10].sort(function(){return Math.random()-.5});iwQi=0;iwRevealed=false;iwRenderQ();}
+            function iwRenderQ(){
+              if(iwQi>=iwQord.length){
+                document.getElementById('iwQuizBox').innerHTML=
+                  '<div style="text-align:center;padding:20px">'+
+                  '<div style="font-family:var(--serif);font-size:18px;color:#3DD68C;margin-bottom:8px">All 11 done</div>'+
+                  '<div style="font-family:var(--mono);font-size:11px;color:#7D8590;margin-bottom:14px">Every error reviewed</div>'+
+                  '<button class="iw-qbtn" onclick="iwStartQuiz()">Restart</button></div>';
+                return;
+              }
+              var e=IW_ERRORS[iwQord[iwQi]];
+              var h='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'+
+                '<span style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:#FF7B72;text-transform:uppercase">Error #'+(iwQord[iwQi]+1)+'</span>'+
+                '<span style="font-family:var(--mono);font-size:10px;color:#7D8590">'+(iwQi+1)+' / 11</span></div>'+
+                '<div style="font-size:12.5px;line-height:1.7;color:#E6EDF3;margin-bottom:10px">'+e.q+'</div>';
+              if(!iwRevealed){
+                h+='<button class="iw-qbtn" onclick="iwRevQ()">Show correct answer</button>';
+              } else {
+                h+='<div class="iw-reveal" style="color:#3DD68C"><span style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:#3DD68C;display:block;margin-bottom:4px">CORRECT ANSWER</span>'+e.a+'</div>'+
+                  '<div class="iw-reveal" style="color:#FF7B72"><span style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;color:#FF7B72;display:block;margin-bottom:4px">THE TRAP</span>'+e.trap+'</div>'+
+                  '<div style="display:flex;gap:8px"><button class="iw-nbtn" onclick="iwNxtQ()">Next →</button></div>';
+              }
+              document.getElementById('iwQuizBox').innerHTML=h;
+            }
+            function iwRevQ(){iwRevealed=true;iwRenderQ();}
+            function iwNxtQ(){iwQi++;iwRevealed=false;iwRenderQ();}
+
+            // ── All Questions tab ──
+            function iwCqTab(id, btn){
+              document.querySelectorAll('#iw-eq > .iw-cqp').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#iwCqtBar .iw-cqb').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('iw-cq-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+
+            // Initialize calculators on first paint
+            function iwInit(){
+              try{ iwHhiCalc(); iwAttrCalc(); iwMatchCalc(); iwFutCalc(); }catch(e){}
+            }
+          </script>
+        </div>
+
+
         <!-- empty state -->
         <div id="notesEmpty" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted);">
           <div style="font-size:28px">📝</div>
@@ -3696,7 +4872,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
     ed.focus();
   } else {
-    ['ldiWidget','ycsWidget','creditWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -3706,6 +4882,7 @@ function toggleWidget(widgetId) {
     btn.style.borderColor = 'var(--gold)';
     currentWidgetId = widgetId;
     if (widgetId === 'creditWidget' && typeof cwInit === 'function') setTimeout(cwInit, 50);
+    if (widgetId === 'indexWidget' && typeof iwInit === 'function') setTimeout(iwInit, 50);
   }
 }
 
@@ -3719,11 +4896,12 @@ function openNote(key, topic, subtopic) {
   var WIDGET_MAP = {
     'PM Pathway||Liab-Driven Strategies': 'ldiWidget',
     'PM Pathway||Yield Curve Strategies': 'ycsWidget',
-    'PM Pathway||Credit Strategies': 'creditWidget'
+    'PM Pathway||Credit Strategies': 'creditWidget',
+    'PM Pathway||Index-Based Strategies': 'indexWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
