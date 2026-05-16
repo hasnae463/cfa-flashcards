@@ -4037,6 +4037,936 @@ Total active return: −0.04 + −0.18 = −0.22%
           </script>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════════════════
+             ACTIVE EQUITY INVESTING: STRATEGIES WIDGET (aw-* prefix)
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div id="awWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            .aw-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+            .aw-tab { font-family:var(--mono); font-size:10px; letter-spacing:.06em; background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 11px; border-radius:3px; cursor:pointer; transition:all .12s; }
+            .aw-tab:hover { color:var(--text); border-color:var(--text); }
+            .aw-tab.active { color:#0D1117; background:#D4A017; border-color:#D4A017; font-weight:500; }
+            .aw-panel { display:none; }
+            .aw-panel.active { display:block; }
+            .aw-card { background:var(--surface); border:1px solid var(--border); border-radius:5px; padding:13px 16px; margin-bottom:11px; }
+            .aw-title { font-family:Georgia,serif; font-size:14px; color:#D4A017; font-weight:600; margin-bottom:8px; line-height:1.4; }
+            .aw-body { font-size:12.5px; line-height:1.7; color:#C9D1D9; }
+            .aw-rule { display:block; border-left:2px solid #8A6810; padding:3px 0 3px 10px; margin:5px 0; font-size:12px; line-height:1.65; color:#C9D1D9; }
+            .aw-fl { font-family:monospace; font-size:11px; background:rgba(56,139,253,.08); border-left:2px solid #388BFD; padding:8px 11px; border-radius:3px; color:#79C0FF; line-height:1.7; margin:7px 0; white-space:pre-wrap; display:block; }
+            .aw-trap { background:rgba(192,57,43,.08); border-left:2px solid #C0392B; padding:8px 11px; border-radius:3px; color:#FF7B72; font-size:11.5px; line-height:1.65; margin:7px 0; }
+            .aw-tip { background:rgba(46,160,67,.08); border-left:2px solid #2EA043; padding:8px 11px; border-radius:3px; color:#7EE787; font-size:11.5px; line-height:1.65; margin:7px 0; }
+            .aw-info { background:rgba(56,139,253,.08); border-left:2px solid #388BFD; padding:8px 11px; border-radius:3px; color:#79C0FF; font-size:11.5px; line-height:1.65; margin:7px 0; }
+            .aw-hl { color:#D4A017; font-weight:500; }
+            .aw-green { color:#3DD68C; font-weight:500; }
+            .aw-red { color:#FF7B72; font-weight:500; }
+            .aw-orange { color:#F0A04B; font-weight:500; }
+            .aw-table { width:100%; border-collapse:collapse; margin:7px 0; font-size:11.5px; }
+            .aw-table th { background:var(--surface2); color:#D4A017; font-family:monospace; font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:7px 9px; text-align:left; border:1px solid var(--border); }
+            .aw-table td { padding:7px 9px; border:1px solid var(--border); color:#C9D1D9; line-height:1.6; }
+            .aw-badge { display:inline-block; font-family:monospace; font-size:9px; letter-spacing:.05em; padding:2px 7px; border-radius:10px; border:1px solid; text-transform:uppercase; }
+            .aw-pass { color:#3DD68C; border-color:#3DD68C; background:rgba(46,160,67,.08); }
+            .aw-fail { color:#FF7B72; border-color:#C0392B; background:rgba(192,57,43,.08); }
+            .aw-warn { color:#F0A04B; border-color:#D4680A; background:rgba(212,104,10,.08); }
+            .aw-blue { color:#79C0FF; border-color:#388BFD; background:rgba(56,139,253,.08); }
+            .aw-svg-wrap { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:10px; margin:8px 0; }
+            .aw-sim { background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:10px 12px; margin-top:8px; }
+            .aw-sim-row { display:flex; justify-content:space-between; align-items:baseline; padding:4px 0; font-size:11.5px; }
+            .aw-sim-lbl { color:#7D8590; font-family:monospace; font-size:10.5px; }
+            .aw-sim-val { color:#C9D1D9; font-family:monospace; font-size:11.5px; }
+            .aw-sl-row { display:flex; align-items:center; gap:10px; padding:4px 0; font-size:11px; }
+            .aw-sl-lbl { color:#7D8590; font-family:monospace; font-size:10px; min-width:120px; }
+            .aw-sl-row input[type=range] { flex:1; }
+            .aw-sl-row select { flex:1; background:var(--surface2); border:1px solid var(--border); color:#C9D1D9; padding:4px 8px; border-radius:3px; font-family:monospace; font-size:11px; }
+            .aw-sl-val { color:#D4A017; font-family:monospace; font-size:11px; min-width:60px; text-align:right; }
+            .aw-err-nav { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:10px; }
+            .aw-err-pill { font-family:monospace; font-size:10px; background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:5px 9px; border-radius:13px; cursor:pointer; min-width:28px; transition:all .12s; }
+            .aw-err-pill:hover { color:#D4A017; border-color:#D4A017; }
+            .aw-err-pill.active { background:#D4A017; color:#0D1117; border-color:#D4A017; font-weight:500; }
+            .aw-err-item { display:none; }
+            .aw-err-item.active { display:block; }
+            .aw-etitle { font-family:Georgia,serif; font-size:14px; color:#D4A017; font-weight:600; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+            .aw-enum { display:inline-block; background:#C0392B; color:white; font-family:monospace; font-size:10px; font-weight:600; padding:3px 8px; border-radius:11px; }
+            .aw-ebody { font-size:12.5px; line-height:1.65; color:#C9D1D9; margin-bottom:8px; }
+            .aw-right { color:#3DD68C; font-weight:500; }
+            .aw-nbtn { font-family:monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:7px 14px; border-radius:3px; cursor:pointer; }
+            .aw-nbtn:hover { color:#D4A017; border-color:#D4A017; }
+            .aw-qbtn { font-family:monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; background:#D4A017; color:#0D1117; border:none; padding:8px 14px; border-radius:3px; cursor:pointer; font-weight:500; }
+            .aw-qbtn:hover { opacity:.85; }
+            .aw-reveal { background:var(--surface2); border:1px solid var(--border); border-radius:4px; padding:10px 13px; margin-top:10px; font-size:12px; line-height:1.65; }
+            .aw-cqt { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:10px; }
+            .aw-cqb { font-family:monospace; font-size:10px; background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:5px 10px; border-radius:3px; cursor:pointer; }
+            .aw-cqb:hover { color:#D4A017; border-color:#D4A017; }
+            .aw-cqb.active { color:#0D1117; background:#D4A017; border-color:#D4A017; font-weight:500; }
+            .aw-cqp { display:none; }
+            .aw-cqp.active { display:block; }
+            .aw-cqcard { background:var(--surface); border:1px solid var(--border); border-radius:5px; padding:13px 16px; }
+            .aw-cqnum { font-family:Georgia,serif; font-size:13px; color:#D4A017; font-weight:600; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
+            .aw-bwrong { font-family:monospace; font-size:9.5px; color:#FF7B72; border:1px solid #C0392B; background:rgba(192,57,43,.08); padding:2px 7px; border-radius:10px; }
+            .aw-cqq { font-size:12.5px; line-height:1.65; color:#C9D1D9; margin-bottom:9px; }
+            .aw-cqopts { display:flex; flex-direction:column; gap:5px; margin-bottom:9px; }
+            .aw-cqopt { font-size:11.5px; line-height:1.55; padding:6px 9px; border-radius:3px; background:var(--surface2); border:1px solid var(--border); color:#C9D1D9; }
+            .aw-cqopt.correct { border-color:#2EA043; background:rgba(46,160,67,.06); color:#7EE787; }
+            .aw-cqwhy { font-size:11.5px; line-height:1.65; color:#C9D1D9; padding:8px 11px; background:rgba(56,139,253,.06); border-left:2px solid #388BFD; border-radius:3px; margin-top:5px; }
+            .aw-cqtrap { font-size:11.5px; line-height:1.65; color:#FF7B72; padding:8px 11px; background:rgba(192,57,43,.06); border-left:2px solid #C0392B; border-radius:3px; margin-top:7px; }
+            .aw-cqfl { font-family:monospace; font-size:11px; background:rgba(56,139,253,.08); padding:7px 10px; border-radius:3px; color:#79C0FF; line-height:1.7; white-space:pre-wrap; display:block; margin-top:6px; }
+          </style>
+
+          <div class="aw-tabs">
+            <button class="aw-tab active" onclick="awTab('fq',this)">Fund vs Quant</button>
+            <button class="aw-tab" onclick="awTab('tb',this)">Top-down vs Bottom-up</button>
+            <button class="aw-tab" onclick="awTab('sc',this)">Style Classification</button>
+            <button class="aw-tab" onclick="awTab('vs',this)">Value & Factors</button>
+            <button class="aw-tab" onclick="awTab('ed',this)">Event-driven & Pairs</button>
+            <button class="aw-tab" onclick="awTab('er',this)">Errors & Qs</button>
+          </div>
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 1 · FUNDAMENTAL vs QUANTITATIVE
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="aw-fq" class="aw-panel active">
+            <div class="aw-card">
+              <div class="aw-title">The two big families of active management</div>
+              <div class="aw-body">Every active equity approach falls into one of two camps. The dichotomy is about <span class="aw-hl">how decisions are made</span> — not what assets are bought.</div>
+              <table class="aw-table">
+                <thead><tr><th>Dimension</th><th>Fundamental</th><th>Quantitative</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="aw-hl">Process</span></td><td>Discretionary (human judgement)</td><td>Systematic / non-discretionary</td></tr>
+                  <tr><td><span class="aw-hl">Focus</span></td><td>Deep dive on a few companies</td><td>Factors applied across large groups</td></tr>
+                  <tr><td><span class="aw-hl">Forecast</span></td><td>Company-specific (earnings, mgmt, moat)</td><td>Factor-level (returns to factors)</td></tr>
+                  <tr><td><span class="aw-hl">Information</span></td><td>Qualitative + quantitative</td><td>Quantitative only</td></tr>
+                  <tr><td><span class="aw-hl">Decisions</span></td><td>Conviction-based, concentrated</td><td>Rule-based, diversified</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">The 3 characteristics of quantitative investing</div>
+              <span class="aw-rule"><span class="aw-green">✓</span> Identifies factors driving security returns across <span class="aw-hl">large groups</span> of securities (not deep dives on each)</span>
+              <span class="aw-rule"><span class="aw-green">✓</span> Is <span class="aw-hl">systematic / non-discretionary</span> — same rules applied uniformly, no override</span>
+              <span class="aw-rule"><span class="aw-red">✗</span> Does NOT focus on forecasting prospects of underlying companies — that's <span class="aw-hl">fundamental</span></span>
+              <div class="aw-trap">Exam trap (Drum): "characteristic of quantitative active investing = forecast underlying company prospects" → FALSE. That's the defining feature of fundamental, not quantitative. Quants look at factors across many stocks; they don't try to know each company deeply.</div>
+            </div>
+
+            <div class="aw-svg-wrap">
+              <svg width="100%" viewBox="0 0 660 240" xmlns="http://www.w3.org/2000/svg">
+                <text x="330" y="20" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Information depth × securities count</text>
+                <!-- axes -->
+                <line x1="70" y1="200" x2="620" y2="200" stroke="#2A3441" stroke-width="0.5"/>
+                <line x1="70" y1="50" x2="70" y2="200" stroke="#2A3441" stroke-width="0.5"/>
+                <text x="345" y="225" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10">Number of securities analyzed →</text>
+                <text x="30" y="125" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10" transform="rotate(-90 30 125)">Depth per security →</text>
+                <!-- Fundamental: high depth, few securities (top left) -->
+                <circle cx="170" cy="80" r="40" fill="#79C0FF" opacity="0.25"/>
+                <circle cx="170" cy="80" r="11" fill="#79C0FF"/>
+                <text x="170" y="85" text-anchor="middle" fill="white" font-size="9" font-weight="500">F</text>
+                <text x="170" y="58" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="10">Fundamental</text>
+                <text x="170" y="130" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">~20-50 names · deep dive</text>
+                <text x="170" y="145" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Concentrated portfolios</text>
+                <!-- Quantitative: low depth, many securities (bottom right) -->
+                <circle cx="510" cy="170" r="40" fill="#3DD68C" opacity="0.25"/>
+                <circle cx="510" cy="170" r="11" fill="#3DD68C"/>
+                <text x="510" y="175" text-anchor="middle" fill="white" font-size="9" font-weight="500">Q</text>
+                <text x="510" y="148" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="10">Quantitative</text>
+                <text x="510" y="220" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">100s-1000s names · factor signals</text>
+                <!-- divider arrow -->
+                <line x1="240" y1="100" x2="450" y2="155" stroke="#7D8590" stroke-width="0.5" stroke-dasharray="3 3"/>
+                <text x="345" y="135" text-anchor="middle" fill="#D4A017" font-family="monospace" font-size="9">trade-off: depth ↔ breadth</text>
+              </svg>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">When you see these phrases on the exam</div>
+              <span class="aw-rule"><span class="aw-blue">→ Fundamental</span>: "deep understanding of companies" · "management quality" · "competitive moat" · "discretionary" · "high conviction" · "concentrated"</span>
+              <span class="aw-rule"><span class="aw-green">→ Quantitative</span>: "factor model" · "systematic" · "across a universe of stocks" · "rule-based" · "non-discretionary" · "factor exposures"</span>
+              <div class="aw-tip">Memory anchor: if the description says "company-by-company" → fundamental. If it says "factor-by-factor across many stocks" → quantitative.</div>
+            </div>
+          </div>
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 2 · TOP-DOWN vs BOTTOM-UP
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="aw-tb" class="aw-panel">
+            <div class="aw-card">
+              <div class="aw-title">The other dichotomy: where does the decision start?</div>
+              <div class="aw-body">Top-down vs bottom-up is about the <span class="aw-hl">direction of analysis</span> — macro-first or stock-first. It's orthogonal to fundamental/quantitative (both styles can be top-down or bottom-up).</div>
+              <table class="aw-table">
+                <thead><tr><th>Direction</th><th>Top-down</th><th>Bottom-up</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="aw-hl">Starts with</span></td><td>Macro / economic cycle / sectors</td><td>Individual securities</td></tr>
+                  <tr><td><span class="aw-hl">Then narrows to</span></td><td>Country / sector / style buckets</td><td>(aggregates up to sectors)</td></tr>
+                  <tr><td><span class="aw-hl">Finally</span></td><td>Stocks within preferred buckets</td><td>Portfolio is sum of single bets</td></tr>
+                  <tr><td><span class="aw-hl">Typical signal</span></td><td>GDP, rates, yield curve, sector rotation</td><td>Earnings, valuation, balance sheet</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">The Drum exam trap: classify each fund</div>
+              <div class="aw-body" style="margin-bottom:8px">Three funds described. Which uses ONLY bottom-up?</div>
+              <table class="aw-table">
+                <thead><tr><th>Fund</th><th>Process described</th><th>Classification</th></tr></thead>
+                <tbody>
+                  <tr><td>Fund A</td><td>Macro analysis to identify sectors → security selection within them</td><td><span class="aw-badge aw-warn">Combination (top-down dominant)</span></td></tr>
+                  <tr><td>Fund B</td><td>News-source software to screen earnings surprises across 500 stocks; picks individual names</td><td><span class="aw-badge aw-pass">Bottom-up ONLY ✓</span></td></tr>
+                  <tr><td>Fund C</td><td>Sector forecasts + bottom-up stock selection inside each sector</td><td><span class="aw-badge aw-warn">Combination</span></td></tr>
+                </tbody>
+              </table>
+              <div class="aw-trap">Trap: even though Fund B uses sophisticated quantitative software, that doesn't make it top-down. The software is screening individual stocks based on stock-level signals (earnings surprises). The starting unit of analysis is the security, not the sector or macro environment → bottom-up.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Style rotation = top-down, even if you land in deep value</div>
+              <div class="aw-body">When a manager rotates style based on where we are in the economic cycle (e.g. "we're in late expansion → tilt toward defensives → tilt toward quality") that's <span class="aw-hl">top-down</span>, period. The trigger is macro, not the stock.</div>
+              <span class="aw-rule"><span class="aw-green">Analyst 1 ✓</span>: "Style rotation based on economic cycle = top-down" — CORRECT</span>
+              <span class="aw-rule"><span class="aw-red">Analyst 2 ✗</span>: "Style rotation = always growth at reasonable price (GARP)" — WRONG. GARP is one specific style; rotation is a process across styles.</span>
+              <span class="aw-rule"><span class="aw-red">Analyst 3 ✗</span>: "GARP is top-down" — WRONG. GARP is <span class="aw-hl">bottom-up</span> — you compute P/E and PEG security by security.</span>
+              <div class="aw-tip">The starting unit of analysis is the test. Macro context applied first → top-down. Stock characteristics applied first → bottom-up.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Quick decision tree</div>
+              <span class="aw-rule"><span class="aw-hl">Q1:</span> Does the manager start by analyzing macro/sectors/cycles?</span>
+              <span class="aw-rule">→ Yes → <span class="aw-green">top-down</span> (regardless of what they end up buying)</span>
+              <span class="aw-rule">→ No, starts with individual stocks → <span class="aw-blue">bottom-up</span></span>
+              <span class="aw-rule"><span class="aw-hl">Q2:</span> Does the description mix both?</span>
+              <span class="aw-rule">→ Yes → <span class="aw-orange">combination</span> (note which dominates the entry point)</span>
+            </div>
+          </div>
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 3 · STYLE CLASSIFICATION
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="aw-sc" class="aw-panel">
+            <div class="aw-card">
+              <div class="aw-title">3 ways to classify a fund's style</div>
+              <table class="aw-table">
+                <thead><tr><th>Method</th><th>Uses</th><th>Best when</th><th>Accuracy</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="aw-hl">Holdings-based</span></td><td>The actual portfolio (every position)</td><td>Full disclosure available</td><td><span class="aw-badge aw-pass">Highest</span></td></tr>
+                  <tr><td><span class="aw-hl">Returns-based</span></td><td>Regress fund returns on style indices</td><td>Only return series available</td><td><span class="aw-badge aw-warn">Moderate</span></td></tr>
+                  <tr><td><span class="aw-hl">Self-identification</span></td><td>Prospectus / fund manager statement</td><td>Hedge funds, derivatives, long-short</td><td><span class="aw-badge aw-blue">Required fallback</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Why holdings-based beats returns-based</div>
+              <span class="aw-rule"><span class="aw-green">✓ Holdings-based</span> looks directly at every stock in the portfolio and its characteristics (P/E, P/B, market cap). It captures the <span class="aw-hl">actual current</span> style, including recent changes.</span>
+              <span class="aw-rule"><span class="aw-orange">~ Returns-based</span> infers style from past return correlations to style indices. It's a <span class="aw-hl">lagged inference</span> — recent rotations don't show up until enough months have passed.</span>
+              <div class="aw-trap">Lunnar exam trap: "Returns-based and holdings-based are equally accurate" → FALSE. Holdings-based is MORE accurate because it uses the actual portfolio. Returns-based is a statistical inference from history.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">The hedge fund problem: why self-ID is required</div>
+              <div class="aw-body">Consider "Lunnar Hedge-X": long-short positions across asset classes plus derivatives overlay.</div>
+              <span class="aw-rule"><span class="aw-red">✗ Holdings-based fails</span>: long positions don't represent net exposure when there are large shorts</span>
+              <span class="aw-rule"><span class="aw-red">✗ Returns-based fails</span>: derivatives mean returns don't map cleanly to standard style indices</span>
+              <span class="aw-rule"><span class="aw-green">✓ Self-identification</span>: rely on the manager's prospectus / disclosed strategy</span>
+              <div class="aw-info">Self-ID is not a fallback you choose because it's easier — it's the only method that works when holdings AND returns are both ambiguous. Hedge funds, market-neutral funds, and 130/30 strategies all fall here.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Identifying the most index-like fund (Lunnar Q)</div>
+              <div class="aw-body">When given multiple funds vs benchmark style exposures, the most index-like is the one whose holdings vary the LEAST from index style characteristics.</div>
+              <table class="aw-table">
+                <thead><tr><th>Fund</th><th>P/E vs index</th><th>P/B vs index</th><th>Mkt cap vs index</th><th>Style variance</th></tr></thead>
+                <tbody>
+                  <tr><td>Lunnar A</td><td>+18%</td><td>+22%</td><td>−14%</td><td>~18% (large)</td></tr>
+                  <tr><td><span class="aw-hl">Lunnar B</span></td><td>+2%</td><td>+1%</td><td>−2%</td><td><span class="aw-green">~2% ✓ closest</span></td></tr>
+                  <tr><td>Lunnar C</td><td>−9%</td><td>−12%</td><td>+8%</td><td>~10%</td></tr>
+                </tbody>
+              </table>
+              <div class="aw-tip">Read the deviations: Lunnar B's portfolio characteristics deviate by ~2% from the index across all three style dimensions → essentially mimicking the index → "closest to index style".</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Morningstar vs Lipper — two style scoring methods</div>
+              <table class="aw-table">
+                <thead><tr><th>Aspect</th><th>Morningstar</th><th>Lipper</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="aw-hl">Inputs</span></td><td>Value score + growth score (0-100 each)</td><td>Z-scores on 6 characteristics</td></tr>
+                  <tr><td><span class="aw-hl">Method</span></td><td><span class="aw-hl">Subtracts</span>: growth score − value score</td><td><span class="aw-hl">Sums</span> Z-scores</td></tr>
+                  <tr><td><span class="aw-hl">Large positive</span></td><td>Pure growth</td><td>Pure growth</td></tr>
+                  <tr><td><span class="aw-hl">Large negative</span></td><td>Pure value</td><td>Pure value</td></tr>
+                  <tr><td><span class="aw-hl">Near zero</span></td><td>Core (low signal)</td><td>Core / blended</td></tr>
+                  <tr><td><span class="aw-hl">Both high</span></td><td><span class="aw-orange">BLEND</span> (high value + high growth)</td><td>(Doesn't appear — averaged away)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Asgard fund — the Morningstar vs Lipper divergence</div>
+              <div class="aw-body">A fund has Morningstar value score 75 AND growth score 70 (both high). Same fund: Lipper sums 6 Z-scores and gets a net <span class="aw-red">−1.8</span> (clearly value-leaning).</div>
+              <div class="aw-fl">Morningstar classification:
+  Value 75, Growth 70 → both high
+  Difference: 70 − 75 = −5 (near zero)
+  But both scores >50 → BLEND (balanced exposure to value AND growth)
+
+Lipper classification:
+  Σ Z-scores = −1.8 → value</div>
+              <div class="aw-trap">The trap: thinking "near-zero difference = core". With Morningstar, when both component scores are HIGH simultaneously, the classification is BLEND (mix of value and growth stocks), not core. Core = both scores moderate/low. Blend = both scores high.</div>
+              <div class="aw-tip">Lipper can disagree with Morningstar precisely because they use different methodologies. Both can be "correct" given their definitions — the exam expects you to know both definitions.</div>
+            </div>
+          </div>
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 4 · VALUE STRATEGIES & FACTORS
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="aw-vs" class="aw-panel">
+            <div class="aw-card">
+              <div class="aw-title">Three flavors of value investing</div>
+              <table class="aw-table">
+                <thead><tr><th>Strategy</th><th>Signal</th><th>Reference</th><th>Risk profile</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="aw-hl">Relative value</span></td><td>P/E low vs <span class="aw-hl">sector</span></td><td>Compared to peers / sector mean</td><td>Moderate</td></tr>
+                  <tr><td><span class="aw-hl">Deep value</span></td><td>P/E low absolute <span class="aw-hl">AND</span> low vs sector</td><td>Both criteria</td><td>High (could be value trap)</td></tr>
+                  <tr><td><span class="aw-hl">GARP</span></td><td>PEG ratio = P/E ÷ growth rate</td><td>PEG ≤ 1 ideal</td><td>Moderate-low (growth cushion)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Yarsley exam Q: classify the three companies</div>
+              <table class="aw-table">
+                <thead><tr><th>Company</th><th>P/E</th><th>Sector P/E</th><th>Classification</th></tr></thead>
+                <tbody>
+                  <tr><td>Company 1</td><td>40</td><td>35</td><td><span class="aw-badge aw-warn">Growth (higher than sector)</span></td></tr>
+                  <tr><td><span class="aw-hl">Company 2</span></td><td>14</td><td>35</td><td><span class="aw-badge aw-blue">Relative value</span> ← lower than sector but absolute P/E not extreme</td></tr>
+                  <tr><td><span class="aw-hl">Company 3</span></td><td>3</td><td>15</td><td><span class="aw-badge aw-pass">Deep value</span> ← extremely low absolute AND below sector</td></tr>
+                </tbody>
+              </table>
+              <div class="aw-trap">Common error: calling Company 2 deep value because P/E 14 is "much lower than 35". Wrong — P/E 14 is not extreme in absolute terms. Deep value requires BOTH: extreme absolute AND extreme relative.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">GARP: interactive P/E & PEG calculator</div>
+              <div class="aw-body" style="margin-bottom:10px">PEG = P/E ÷ expected earnings growth rate (in %). Adjust the inputs to see how GARP screens different stocks.</div>
+              <div class="aw-sl-row"><span class="aw-sl-lbl">Price per share ($)</span><input type="range" min="10" max="500" step="1" value="80" id="awPrice" oninput="awPegCalc()"><span class="aw-sl-val" id="awPriceO">$80</span></div>
+              <div class="aw-sl-row"><span class="aw-sl-lbl">EPS ($)</span><input type="range" min="0.5" max="20" step="0.1" value="4" id="awEps" oninput="awPegCalc()"><span class="aw-sl-val" id="awEpsO">$4.00</span></div>
+              <div class="aw-sl-row"><span class="aw-sl-lbl">Expected growth (%)</span><input type="range" min="2" max="40" step="0.5" value="18" id="awGr" oninput="awPegCalc()"><span class="aw-sl-val" id="awGrO">18%</span></div>
+              <div class="aw-sim" id="awPegBox"></div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Factor consistency check (Tokra trap)</div>
+              <div class="aw-body">A manager declares "value tilt" but the portfolio's P/B is HIGHER than the benchmark. Inconsistent — that's a red flag the manager's described style doesn't match the actual exposures.</div>
+              <table class="aw-table">
+                <thead><tr><th>Declared style</th><th>Expected portfolio char</th><th>Tokra's portfolio</th><th>Consistent?</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="aw-hl">Value</span></td><td>Lower P/B than benchmark</td><td><span class="aw-red">Higher P/B</span></td><td><span class="aw-badge aw-fail">✗ NO — inconsistent</span></td></tr>
+                  <tr><td><span class="aw-hl">Low size</span></td><td>Smaller mkt cap than benchmark</td><td>Smaller mkt cap ✓</td><td><span class="aw-badge aw-pass">✓ consistent</span></td></tr>
+                </tbody>
+              </table>
+              <div class="aw-trap">Tokra exam trap: when asked which factor is inconsistent with the declared style, look at portfolio characteristics vs the style label. Higher P/B than benchmark contradicts a "value" claim — that's the red flag. Also: <span class="aw-hl">"price momentum"</span> is NOT a growth metric (growth = earnings/revenue growth). Momentum is purely price-based.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Price momentum — its hidden tail risk</div>
+              <div class="aw-body">Price momentum strategies (buy recent winners) earn small steady positive returns most of the time, but suffer <span class="aw-hl">extreme negative tail events</span> when the market reverses sharply (e.g. March 2009, March 2020).</div>
+              <span class="aw-rule"><span class="aw-red">Risk profile</span>: long left tail (large losses, low frequency)</span>
+              <span class="aw-rule">NOT a "value trap" (that's value-specific) · NOT a "growth trap" (that's growth-specific)</span>
+              <span class="aw-rule">Distinct from market beta risk — momentum can blow up even when overall market is fine</span>
+              <div class="aw-tip">Memory anchor: momentum = "skating on thin ice that holds 99% of the time" — when it cracks, the loss is large. Same factor concentrates the risk.</div>
+            </div>
+          </div>
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 5 · EVENT-DRIVEN & PAIRS TRADING
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="aw-ed" class="aw-panel">
+            <div class="aw-card">
+              <div class="aw-title">Event-driven strategies — what they trade and when</div>
+              <div class="aw-body">Event-driven strategies bet on price moves around corporate events. The horizon depends entirely on which event.</div>
+              <table class="aw-table">
+                <thead><tr><th>Event type</th><th>Typical horizon</th><th>What you bet on</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="aw-hl">Merger arbitrage</span></td><td><span class="aw-green">Short (weeks-months)</span></td><td>Spread between deal price and current price closes</td></tr>
+                  <tr><td><span class="aw-hl">Acquisitions in consolidating industries</span></td><td><span class="aw-green">Short-to-medium</span></td><td>Predict next target before announcement</td></tr>
+                  <tr><td><span class="aw-hl">Distressed / control positions</span></td><td><span class="aw-red">LONG-TERM (1-3+ years)</span></td><td>Restructuring or operational turnaround</td></tr>
+                  <tr><td><span class="aw-hl">Reorganizations</span></td><td><span class="aw-red">LONG-TERM</span></td><td>Post-bankruptcy emergence, debt-for-equity, multi-year</td></tr>
+                  <tr><td><span class="aw-hl">Activist campaigns</span></td><td><span class="aw-orange">Medium-to-long</span></td><td>Governance / strategic changes play out over quarters</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Fund B horizon trap</div>
+              <div class="aw-body">Question: "Fund B has a short-term horizon. Which event-driven strategies are appropriate?"</div>
+              <span class="aw-rule"><span class="aw-green">✓ Acquisitions in consolidating industries</span> — predicting the next target → short-to-medium horizon → <span class="aw-hl">APPROPRIATE</span></span>
+              <span class="aw-rule"><span class="aw-red">✗ Distressed / control positions</span> — restructuring takes years → <span class="aw-hl">INAPPROPRIATE for short horizon</span></span>
+              <span class="aw-rule"><span class="aw-red">✗ Reorganizations</span> — multi-year post-bankruptcy → <span class="aw-hl">INAPPROPRIATE for short horizon</span></span>
+              <div class="aw-trap">Common error: thinking all event-driven strategies are short-term because they're "tactical". Wrong — distressed and reorganizations are explicitly long-horizon strategies, often locked up for years. Match the horizon to the event TYPE.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Pairs trading: the core idea</div>
+              <div class="aw-body">A pairs trade goes <span class="aw-hl">long one stock and short another</span> in the same sector/industry when their price ratio deviates from its long-term average. The bet is on mean reversion.</div>
+              <div class="aw-fl">Setup:
+  Spread_t = Price_A / Price_B   (or log ratio)
+  μ = long-term average spread
+  σ = std dev of spread
+
+If spread_t > μ + 2σ → A is rich, B is cheap → SHORT A, LONG B
+If spread_t < μ − 2σ → A is cheap, B is rich → LONG A, SHORT B
+Exit: when spread reverts to ~μ</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Kopernicus exam Q: which 3 criteria must hold for a valid pair?</div>
+              <span class="aw-rule"><span class="aw-green">✓ #1 — Current spread significantly different from long-term average</span> (otherwise there's no opportunity)</span>
+              <span class="aw-rule"><span class="aw-green">✓ #2 — Spread is mean-reverting</span> (statistical evidence: ADF/cointegration test)</span>
+              <span class="aw-rule"><span class="aw-green">✓ #3 — High correlation between the two stocks</span> (or they're co-moving fundamentally)</span>
+              <div class="aw-info">All three conditions must hold. If any one fails, the pair is not tradeable.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Kopernicus pair evaluation table</div>
+              <table class="aw-table">
+                <thead><tr><th>Pair</th><th>Spread vs avg</th><th>Mean-reverting?</th><th>High correlation?</th><th>Valid?</th></tr></thead>
+                <tbody>
+                  <tr><td>Pair 1-2</td><td><span class="aw-red">Similar to avg</span></td><td>Yes</td><td>Yes</td><td><span class="aw-badge aw-fail">✗ No (no opportunity)</span></td></tr>
+                  <tr><td><span class="aw-hl">Pair 3-4</span></td><td><span class="aw-green">Significantly different ✓</span></td><td><span class="aw-green">Yes ✓</span></td><td><span class="aw-green">Yes ✓</span></td><td><span class="aw-badge aw-pass">✓ Valid pair</span></td></tr>
+                  <tr><td>Pair 5-6</td><td><span class="aw-red">Similar to avg</span></td><td><span class="aw-red">No</span></td><td><span class="aw-red">No</span></td><td><span class="aw-badge aw-fail">✗ No (fails all three)</span></td></tr>
+                </tbody>
+              </table>
+              <div class="aw-tip">The exam often gives you 3 pairs and asks which is tradeable. Test each criterion individually — only the pair passing all 3 is valid.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Primary risk management tool for pairs trading</div>
+              <div class="aw-body">The main risk in pairs trading is <span class="aw-hl">structural divergence</span> — when the spread keeps widening instead of mean-reverting (one stock fundamentally disconnects from the other, e.g. M&A news, accounting fraud).</div>
+              <table class="aw-table">
+                <thead><tr><th>Risk tool</th><th>Use?</th><th>Why</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="aw-hl">Stop-loss orders</span></td><td><span class="aw-badge aw-pass">✓ PRIMARY</span></td><td>Caps loss if spread keeps widening (structural divergence)</td></tr>
+                  <tr><td>Asset identification</td><td><span class="aw-badge aw-fail">✗</span></td><td>That's pre-trade selection, not active risk management</td></tr>
+                  <tr><td>Limit order book monitoring</td><td><span class="aw-badge aw-fail">✗</span></td><td>HFT-only technique, not pairs trading</td></tr>
+                </tbody>
+              </table>
+              <div class="aw-trap">Exam trap: "identification of the right assets" or "monitoring limit order book" — both are wrong answers. The PRIMARY risk tool is stop-loss orders, because they protect against the only risk you can't fully diversify away: structural divergence.</div>
+            </div>
+
+            <div class="aw-svg-wrap">
+              <svg width="100%" viewBox="0 0 660 240" xmlns="http://www.w3.org/2000/svg">
+                <text x="330" y="20" text-anchor="middle" fill="#E6EDF3" font-family="Georgia,serif" font-size="13" font-weight="600">Pairs trading spread — entry, exit, stop-loss</text>
+                <!-- axes -->
+                <line x1="60" y1="180" x2="620" y2="180" stroke="#2A3441" stroke-width="0.5"/>
+                <line x1="60" y1="40" x2="60" y2="180" stroke="#2A3441" stroke-width="0.5"/>
+                <text x="340" y="225" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10">Time →</text>
+                <text x="35" y="115" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10" transform="rotate(-90 35 115)">Spread</text>
+                <!-- mean line -->
+                <line x1="60" y1="110" x2="620" y2="110" stroke="#7D8590" stroke-width="0.5" stroke-dasharray="3 3"/>
+                <text x="630" y="113" fill="#7D8590" font-family="monospace" font-size="9">μ</text>
+                <!-- entry threshold -->
+                <line x1="60" y1="70" x2="620" y2="70" stroke="#F0A04B" stroke-width="0.5" stroke-dasharray="2 2"/>
+                <text x="630" y="73" fill="#F0A04B" font-family="monospace" font-size="9">+2σ</text>
+                <line x1="60" y1="150" x2="620" y2="150" stroke="#F0A04B" stroke-width="0.5" stroke-dasharray="2 2"/>
+                <text x="630" y="153" fill="#F0A04B" font-family="monospace" font-size="9">−2σ</text>
+                <!-- stop-loss line -->
+                <line x1="60" y1="50" x2="620" y2="50" stroke="#C0392B" stroke-width="0.7" stroke-dasharray="4 2"/>
+                <text x="630" y="53" fill="#FF7B72" font-family="monospace" font-size="9">stop</text>
+                <!-- spread path that mean reverts -->
+                <path d="M 80,110 Q 130,95 160,75 Q 195,68 220,72 Q 245,80 270,100 Q 295,120 320,135 Q 345,148 370,140 Q 400,128 430,115 L 460,112" stroke="#3DD68C" stroke-width="2" fill="none"/>
+                <!-- entry marker -->
+                <circle cx="195" cy="68" r="4" fill="#3DD68C"/>
+                <text x="195" y="50" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="9.5">SHORT A</text>
+                <text x="195" y="62" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="9.5">LONG B</text>
+                <!-- exit marker -->
+                <circle cx="460" cy="112" r="4" fill="#D4A017"/>
+                <text x="460" y="105" text-anchor="middle" fill="#D4A017" font-family="monospace" font-size="9.5">EXIT</text>
+                <!-- divergence path that breaks (failed pair) -->
+                <path d="M 480,112 Q 500,98 520,80 Q 540,62 565,50 L 590,42" stroke="#FF7B72" stroke-width="2" fill="none" stroke-dasharray="3 3"/>
+                <text x="555" y="33" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="9">structural divergence</text>
+                <text x="555" y="200" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="9">→ stop-loss kicks in</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 6 · ERRORS & ALL QUESTIONS
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="aw-er" class="aw-panel">
+            <div class="aw-tabs" style="margin-bottom:12px">
+              <button class="aw-tab active" onclick="awErTab('review',this)">Error review</button>
+              <button class="aw-tab" onclick="awErTab('quiz',this)">Quiz me</button>
+              <button class="aw-tab" onclick="awErTab('full',this)">All Qs</button>
+            </div>
+
+            <!-- ── Error review pane ── -->
+            <div id="aw-er-review" class="aw-panel active">
+              <div class="aw-err-nav" id="awErrNav">
+                <button class="aw-err-pill active" onclick="awGoErr(0,this)">1</button>
+                <button class="aw-err-pill" onclick="awGoErr(1,this)">2</button>
+                <button class="aw-err-pill" onclick="awGoErr(2,this)">3</button>
+                <button class="aw-err-pill" onclick="awGoErr(3,this)">4</button>
+                <button class="aw-err-pill" onclick="awGoErr(4,this)">5</button>
+                <button class="aw-err-pill" onclick="awGoErr(5,this)">6</button>
+                <button class="aw-err-pill" onclick="awGoErr(6,this)">7</button>
+                <button class="aw-err-pill" onclick="awGoErr(7,this)">8</button>
+                <button class="aw-err-pill" onclick="awGoErr(8,this)">9</button>
+                <button class="aw-err-pill" onclick="awGoErr(9,this)">10</button>
+                <button class="aw-err-pill" onclick="awGoErr(10,this)">11</button>
+                <button class="aw-err-pill" onclick="awGoErr(11,this)">12</button>
+              </div>
+
+              <div class="aw-err-item active" id="awErr0">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">1</span>Kopernicus — pairs trading risk management</div>
+                  <div class="aw-ebody">What is the PRIMARY risk management tool used in pairs trading?</div>
+                  <div class="aw-trap">Wrong picks: "identification of the right assets" (that's pre-trade) · "monitoring limit order book" (HFT-only)</div>
+                  <div class="aw-tip">Correct: <span class="aw-right">stop-loss orders</span>. They cap losses if the spread keeps widening (structural divergence), which is the one risk pairs trading can't diversify away.</div>
+                  <span class="aw-rule">Anchor: "structural divergence" → stop-loss is the only practical defense</span>
+                </div>
+              </div>
+
+              <div class="aw-err-item" id="awErr1">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">2</span>Yarsley — Relative value vs Deep value classification</div>
+                  <div class="aw-ebody">Company 2: P/E 14, sector P/E 35. Company 3: P/E 3, sector P/E 15. Which is relative value, which is deep value?</div>
+                  <div class="aw-trap">Wrong: calling both "deep value" because P/E is below sector in both cases.</div>
+                  <div class="aw-tip">Correct: <span class="aw-right">Company 2 = relative value</span> (P/E 14 below sector 35 but not extreme absolute). <span class="aw-right">Company 3 = deep value</span> (P/E 3 is extreme in absolute terms AND below sector 15).</div>
+                  <span class="aw-rule">Deep value requires BOTH: extreme absolute P/E + below sector P/E. Relative value only needs the relative criterion.</span>
+                </div>
+              </div>
+
+              <div class="aw-err-item" id="awErr2">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">3</span>Fund B horizon — event-driven appropriateness</div>
+                  <div class="aw-ebody">Fund B has short-term horizon. Which event-driven strategies are appropriate?</div>
+                  <div class="aw-trap">Wrong: marked distressed/reorganizations as appropriate (they're long-term, not short).</div>
+                  <div class="aw-tip">Correct: <span class="aw-right">acquisitions in consolidating industries YES</span> (short-medium horizon). <span class="aw-right">Distressed/control NO</span>, <span class="aw-right">reorganizations NO</span> (both require multi-year holds).</div>
+                  <span class="aw-rule">Horizon mismatch is the trap. Match the event TYPE to fund's holding period.</span>
+                </div>
+              </div>
+
+              <div class="aw-err-item" id="awErr3">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">4</span>Lunnar — Holdings-based vs Returns-based + most index-like</div>
+                  <div class="aw-ebody">Two parts: (a) is holdings-based or returns-based more accurate? (b) Which Lunnar fund is closest to the index style?</div>
+                  <div class="aw-trap">Wrong (a): said both equally accurate. Wrong (b): picked Lunnar A (highest variance, not lowest).</div>
+                  <div class="aw-tip">Correct (a): <span class="aw-right">holdings-based MORE accurate</span> (uses actual portfolio). Correct (b): <span class="aw-right">Lunnar B</span> = closest to index (~2% variance across P/E, P/B, mkt cap).</div>
+                  <span class="aw-rule">Lower variance from index style characteristics = more index-like fund</span>
+                </div>
+              </div>
+
+              <div class="aw-err-item" id="awErr4">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">5</span>Three analysts on style rotation (Drum)</div>
+                  <div class="aw-ebody">Analyst 1: "style rotation based on economic cycle = top-down". Analyst 2: "style rotation = GARP". Analyst 3: "GARP is top-down".</div>
+                  <div class="aw-trap">Wrong: picked Analyst 2 or 3 thinking GARP is top-down because it involves growth.</div>
+                  <div class="aw-tip">Correct: only <span class="aw-right">Analyst 1</span>. Style rotation triggered by macro/cycle = top-down. GARP is bottom-up (P/E + growth computed stock by stock).</div>
+                  <span class="aw-rule">Starting unit of analysis is the test: macro first → top-down. Stock first → bottom-up.</span>
+                </div>
+              </div>
+
+              <div class="aw-err-item" id="awErr5">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">6</span>Hedge fund non-standard classification (Lunnar Hedge-X)</div>
+                  <div class="aw-ebody">Long-short + derivatives. Which style classification method must be used?</div>
+                  <div class="aw-trap">Wrong: said holdings-based or returns-based.</div>
+                  <div class="aw-tip">Correct: <span class="aw-right">self-identification</span> via the prospectus. Holdings-based fails because longs don't represent net exposure. Returns-based fails because derivatives distort the regression.</div>
+                  <span class="aw-rule">Anchor: hedge funds + long-short + derivatives → self-ID is the ONLY method that works</span>
+                </div>
+              </div>
+
+              <div class="aw-err-item" id="awErr6">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">7</span>Price momentum risk profile</div>
+                  <div class="aw-ebody">Which describes price momentum's risk: value trap, growth trap, or extreme tail risk?</div>
+                  <div class="aw-trap">Wrong: picked "value trap" or "growth trap" — both are factor-specific to those styles.</div>
+                  <div class="aw-tip">Correct: <span class="aw-right">extreme tail risk</span>. Momentum earns small steady gains most of the time but suffers large losses in sharp reversals (Mar 2009, Mar 2020).</div>
+                  <span class="aw-rule">Memory: "skating on thin ice that holds 99% of the time" — when it cracks, the loss is large</span>
+                </div>
+              </div>
+
+              <div class="aw-err-item" id="awErr7">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">8</span>Tokra — which factor is inconsistent with declared style?</div>
+                  <div class="aw-ebody">Manager declares "value tilt". Portfolio shows P/B HIGHER than benchmark + price momentum signals. Which is inconsistent?</div>
+                  <div class="aw-trap">Wrong: picked "price momentum" thinking it's a growth metric.</div>
+                  <div class="aw-tip">Correct: <span class="aw-right">higher P/B than benchmark</span> contradicts the declared value tilt. Price momentum is NOT a growth metric (growth = earnings/revenue growth; momentum is purely price-based).</div>
+                  <span class="aw-rule">Factor consistency: portfolio characteristics must align with declared style</span>
+                  <span class="aw-rule">Price momentum ≠ growth factor — they are distinct</span>
+                </div>
+              </div>
+
+              <div class="aw-err-item" id="awErr8">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">9</span>Asgard — Morningstar vs Lipper divergence</div>
+                  <div class="aw-ebody">Asgard: Morningstar value 75, growth 70 (both high). Lipper sum of 6 Z-scores = −1.8. Classifications?</div>
+                  <div class="aw-trap">Wrong: said Morningstar = core because difference (70 − 75 = −5) is near zero.</div>
+                  <div class="aw-tip">Correct: <span class="aw-right">Morningstar = BLEND</span> (both value and growth scores high → balanced exposure to value AND growth stocks). <span class="aw-right">Lipper = value</span> (Σ Z-scores significantly negative).</div>
+                  <span class="aw-rule">Morningstar blend ≠ core. Blend = both scores high. Core = both scores moderate/low.</span>
+                  <span class="aw-rule">Lipper sums; Morningstar subtracts. Different methods → can disagree.</span>
+                </div>
+              </div>
+
+              <div class="aw-err-item" id="awErr9">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">10</span>Quantitative investing characteristics</div>
+                  <div class="aw-ebody">Three claims: (a) factors across large groups · (b) systematic/non-discretionary · (c) forecast underlying company prospects. Which is NOT a quant characteristic?</div>
+                  <div class="aw-trap">Wrong: picked (a) or (b) — both ARE quant characteristics.</div>
+                  <div class="aw-tip">Correct: <span class="aw-right">(c) is NOT quantitative</span> — that's the defining feature of FUNDAMENTAL. Quants don't dive deep on each company.</div>
+                  <span class="aw-rule">Quant signature: factors + systematic + breadth (not depth)</span>
+                </div>
+              </div>
+
+              <div class="aw-err-item" id="awErr10">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">11</span>Pairs trade selection — which pair is valid?</div>
+                  <div class="aw-ebody">3 pairs evaluated on (1) spread vs avg, (2) mean reversion, (3) correlation. Which is tradeable?</div>
+                  <div class="aw-trap">Wrong: picked Pair 1-2 (similar to avg → no opportunity) or Pair 5-6 (fails all three criteria).</div>
+                  <div class="aw-tip">Correct: <span class="aw-right">Pair 3-4</span> — passes all three: spread significantly different from avg + mean reverting + high correlation.</div>
+                  <span class="aw-rule">All 3 criteria must hold. If any fails, pair is not tradeable.</span>
+                </div>
+              </div>
+
+              <div class="aw-err-item" id="awErr11">
+                <div class="aw-card">
+                  <div class="aw-etitle"><span class="aw-enum">12</span>New factor introduction — which classification methods affected?</div>
+                  <div class="aw-ebody">A manager starts using a new factor. Which style classification approaches are affected?</div>
+                  <div class="aw-trap">Wrong: said only returns-based affected (the regression coefficients change), or only holdings-based.</div>
+                  <div class="aw-tip">Correct: <span class="aw-right">BOTH</span> are affected. Holdings-based detects the new portfolio characteristics; returns-based sees new return correlations to style indices. New style exposure shows up in both.</div>
+                  <span class="aw-rule">Style change = new exposure in BOTH the holdings AND the returns</span>
+                </div>
+              </div>
+
+              <div style="display:flex;justify-content:space-between;margin-top:12px;align-items:center">
+                <button onclick="awPrevErr()" class="aw-nbtn" style="max-width:100px;margin-top:0">← Prev</button>
+                <span id="awErrCounter" style="font-family:monospace;font-size:11px;color:#7D8590">1 / 12</span>
+                <button onclick="awNextErr()" class="aw-nbtn" style="max-width:100px;margin-top:0">Next →</button>
+              </div>
+            </div>
+
+            <!-- ── Quiz pane ── -->
+            <div id="aw-er-quiz" class="aw-panel">
+              <div class="aw-card" id="awQuizBox"></div>
+            </div>
+
+            <!-- ── Full Qs pane ── -->
+            <div id="aw-er-full" class="aw-panel">
+              <div class="aw-cqt" id="awCqtBar">
+                <button class="aw-cqb active" onclick="awCqTab('q1',this)">Q1</button>
+                <button class="aw-cqb" onclick="awCqTab('q2',this)">Q2</button>
+                <button class="aw-cqb" onclick="awCqTab('q3',this)">Q3</button>
+                <button class="aw-cqb" onclick="awCqTab('q4',this)">Q4</button>
+                <button class="aw-cqb" onclick="awCqTab('q5',this)">Q5</button>
+                <button class="aw-cqb" onclick="awCqTab('q6',this)">Q6</button>
+                <button class="aw-cqb" onclick="awCqTab('q7',this)">Q7</button>
+                <button class="aw-cqb" onclick="awCqTab('q8',this)">Q8</button>
+                <button class="aw-cqb" onclick="awCqTab('q9',this)">Q9</button>
+                <button class="aw-cqb" onclick="awCqTab('q10',this)">Q10</button>
+                <button class="aw-cqb" onclick="awCqTab('q11',this)">Q11</button>
+                <button class="aw-cqb" onclick="awCqTab('q12',this)">Q12</button>
+              </div>
+
+              <div id="aw-cq-q1" class="aw-cqp active">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q1 · Kopernicus pairs trading risk <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">What is the primary risk management tool used in pairs trading by Kopernicus?</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">B — Stop-loss orders</div>
+                    <div class="aw-cqopt">A — Identification of the right assets (pre-trade, not risk mgmt)</div>
+                    <div class="aw-cqopt">C — Monitoring the limit order book (HFT technique, not pairs)</div>
+                  </div>
+                  <div class="aw-cqwhy">The main residual risk in pairs trading is structural divergence — the spread keeps widening rather than mean-reverting. Stop-loss orders cap that loss. Asset selection happens before the trade; limit-order-book monitoring is for HFT, not for pairs that hold positions for days/weeks.</div>
+                </div>
+              </div>
+
+              <div id="aw-cq-q2" class="aw-cqp">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q2 · Yarsley value strategy classification <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">Yarsley analyzes three companies. Company 2 has P/E 14 vs sector 35. Company 3 has P/E 3 vs sector 15. Classifications?</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">Company 2 = Relative value · Company 3 = Deep value</div>
+                    <div class="aw-cqopt">Both deep value (wrong — Company 2's absolute P/E isn't extreme)</div>
+                  </div>
+                  <div class="aw-cqwhy">Deep value requires BOTH conditions: extreme low absolute P/E AND below-sector P/E. Company 3 (P/E 3) is extreme in absolute terms. Company 2 (P/E 14) is below sector but P/E 14 isn't extreme by itself — that's relative value, not deep value.</div>
+                  <div class="aw-cqtrap">Don't classify "deep value" just because P/E is way below sector. Test BOTH the absolute AND relative criteria.</div>
+                </div>
+              </div>
+
+              <div id="aw-cq-q3" class="aw-cqp">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q3 · Fund B event-driven horizon <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">Fund B has a short-term horizon. Which event-driven strategies are appropriate?</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">Acquisitions in consolidating industries — APPROPRIATE</div>
+                    <div class="aw-cqopt">Distressed / control positions — NOT appropriate (long-term)</div>
+                    <div class="aw-cqopt">Reorganizations — NOT appropriate (multi-year)</div>
+                  </div>
+                  <div class="aw-cqwhy">Acquisitions in consolidating industries play out over weeks-to-months — fits a short horizon. Distressed and reorganizations require multi-year holds for the restructuring to complete and the equity value to be realized.</div>
+                  <div class="aw-cqtrap">Don't lump all event-driven strategies together. Match the HOLDING PERIOD to the event TYPE.</div>
+                </div>
+              </div>
+
+              <div id="aw-cq-q4" class="aw-cqp">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q4 · Lunnar holdings vs returns + index-like fund <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">(a) Is holdings-based or returns-based more accurate? (b) Which Lunnar fund (A/B/C) is closest to the index style?</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">(a) Holdings-based MORE accurate · (b) Lunnar B (smallest variance ~2%)</div>
+                  </div>
+                  <div class="aw-cqwhy">Holdings-based reads the actual current portfolio characteristics. Returns-based infers style from past return correlations — a statistical lag. For "closest to index", the fund whose P/E, P/B, mkt cap all deviate by only ~2% from the index is the most index-like.</div>
+                </div>
+              </div>
+
+              <div id="aw-cq-q5" class="aw-cqp">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q5 · Three analysts on style rotation <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">Which analyst is correct? A1: style rotation by cycle = top-down · A2: style rotation = GARP · A3: GARP is top-down</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">Analyst 1 only</div>
+                    <div class="aw-cqopt">A2 wrong — rotation is a PROCESS, not a single style like GARP</div>
+                    <div class="aw-cqopt">A3 wrong — GARP is bottom-up (P/E + growth computed per stock)</div>
+                  </div>
+                  <div class="aw-cqwhy">Style rotation triggered by economic cycle = top-down because the starting analysis is macro. Even if it lands in deep value, the macro entry makes it top-down. GARP computes ratios at the stock level, which is bottom-up by definition.</div>
+                </div>
+              </div>
+
+              <div id="aw-cq-q6" class="aw-cqp">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q6 · Lunnar Hedge-X classification method <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">Lunnar Hedge-X is long-short + derivatives. Which classification method must be used?</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">Self-identification via prospectus</div>
+                    <div class="aw-cqopt">Holdings-based fails (longs ≠ net exposure when there are shorts)</div>
+                    <div class="aw-cqopt">Returns-based fails (derivatives distort regression to style indices)</div>
+                  </div>
+                  <div class="aw-cqwhy">For hedge funds, market-neutral, and 130/30 strategies, neither holdings nor returns can cleanly classify the style. The manager's prospectus is the only authoritative source for the strategy.</div>
+                </div>
+              </div>
+
+              <div id="aw-cq-q7" class="aw-cqp">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q7 · Price momentum risk profile <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">Which risk profile describes price momentum strategies?</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">Extreme tail risk</div>
+                    <div class="aw-cqopt">Value trap (no — that's value-specific)</div>
+                    <div class="aw-cqopt">Growth trap (no — that's growth-specific)</div>
+                  </div>
+                  <div class="aw-cqwhy">Momentum earns small steady positive returns most of the time, then suffers extreme losses when the market reverses sharply (Mar 2009, Mar 2020). The risk distribution has a long left tail — the opposite of "safe" returns.</div>
+                </div>
+              </div>
+
+              <div id="aw-cq-q8" class="aw-cqp">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q8 · Tokra factor consistency <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">Tokra declares value tilt. Portfolio: higher P/B than benchmark + uses price momentum signals. Which is inconsistent with the declared style?</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">Higher P/B than benchmark — contradicts value tilt</div>
+                    <div class="aw-cqopt">Price momentum is NOT a growth metric (growth = earnings/revenue growth)</div>
+                  </div>
+                  <div class="aw-cqwhy">A value tilt should produce LOWER P/B than benchmark. Higher P/B is the red flag. Price momentum is a separate factor entirely — it's purely price-based and isn't a "growth metric".</div>
+                  <div class="aw-cqtrap">Don't confuse price momentum with growth. Growth = earnings/revenue growth metrics. Momentum = past price performance.</div>
+                </div>
+              </div>
+
+              <div id="aw-cq-q9" class="aw-cqp">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q9 · Asgard Morningstar vs Lipper <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">Asgard: Morningstar value 75, growth 70 (both high). Lipper sum of 6 Z-scores = −1.8. What does each method classify Asgard as?</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">Morningstar = BLEND (both scores high) · Lipper = VALUE (sum negative)</div>
+                    <div class="aw-cqopt">Wrong: Morningstar = core (only true if both scores moderate/low)</div>
+                  </div>
+                  <div class="aw-cqwhy">Morningstar blend means the fund has substantial exposure to BOTH value AND growth stocks (both scores high). Core means neither score is high. Lipper sums Z-scores across 6 characteristics — a clearly negative sum points to value, despite Morningstar showing blend exposure.</div>
+                  <div class="aw-cqtrap">The two methods can disagree because they use fundamentally different math. Morningstar subtracts; Lipper sums.</div>
+                </div>
+              </div>
+
+              <div id="aw-cq-q10" class="aw-cqp">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q10 · Quantitative investing characteristics <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">Which is NOT a characteristic of quantitative active investing?</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">Forecasting underlying company prospects — that's FUNDAMENTAL, not quant</div>
+                    <div class="aw-cqopt">Identifying factors across large groups (IS a quant characteristic)</div>
+                    <div class="aw-cqopt">Systematic / non-discretionary (IS a quant characteristic)</div>
+                  </div>
+                  <div class="aw-cqwhy">Quantitative investing applies factor rules across many securities. Fundamental investors dive deep on individual companies. The "forecast underlying company prospects" phrasing is the textbook signature of fundamental investing.</div>
+                </div>
+              </div>
+
+              <div id="aw-cq-q11" class="aw-cqp">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q11 · Pairs trade selection — which pair is valid? <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">Three pairs evaluated. Pair 1-2 spread similar to avg. Pair 3-4 significantly different + mean reverting + high correlation. Pair 5-6 fails all 3.</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">Pair 3-4 — passes all 3 criteria</div>
+                    <div class="aw-cqopt">Pair 1-2 — no opportunity (spread already at avg)</div>
+                    <div class="aw-cqopt">Pair 5-6 — fails all 3 criteria</div>
+                  </div>
+                  <div class="aw-cqwhy">Pairs trading requires ALL three: significantly different from long-term avg (the opportunity), mean-reverting (the trade thesis), and high correlation (the hedge). Any one missing → not tradeable.</div>
+                </div>
+              </div>
+
+              <div id="aw-cq-q12" class="aw-cqp">
+                <div class="aw-cqcard">
+                  <div class="aw-cqnum">Q12 · New factor changes classification — which method? <span class="aw-bwrong">✗ got wrong</span></div>
+                  <div class="aw-cqq">A manager introduces a new factor to their strategy. Which style classification methods will detect the change?</div>
+                  <div class="aw-cqopts">
+                    <div class="aw-cqopt correct">BOTH holdings-based AND returns-based</div>
+                    <div class="aw-cqopt">Wrong: only returns-based (the new factor shows up in BOTH)</div>
+                  </div>
+                  <div class="aw-cqwhy">A new factor changes which stocks are held (detected by holdings-based) AND changes the return pattern's correlation to style indices (detected by returns-based). Self-ID would also be affected if the prospectus is updated.</div>
+                  <div class="aw-cqtrap">Don't think of holdings-based and returns-based as orthogonal. They capture different views of the same underlying portfolio — a style change affects both.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            // ═════════════════════════════════════════════════════════════════
+            // Active Equity Strategies Widget JS — all functions prefixed aw*
+            // ═════════════════════════════════════════════════════════════════
+
+            function awTab(id, btn){
+              document.querySelectorAll('#awWidget > .aw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#awWidget > .aw-tabs > .aw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('aw-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+
+            // ── PEG calculator (Tab 4) ──
+            function awPegCalc(){
+              var price = parseFloat(document.getElementById('awPrice').value);
+              var eps   = parseFloat(document.getElementById('awEps').value);
+              var gr    = parseFloat(document.getElementById('awGr').value);
+
+              document.getElementById('awPriceO').textContent = '$' + price.toFixed(0);
+              document.getElementById('awEpsO').textContent   = '$' + eps.toFixed(2);
+              document.getElementById('awGrO').textContent    = gr.toFixed(1) + '%';
+
+              var pe  = price / eps;
+              var peg = pe / gr;
+
+              var peClass, peLabel;
+              if(pe < 12)      { peClass='#3DD68C'; peLabel='Cheap (low P/E)'; }
+              else if(pe < 25) { peClass='#79C0FF'; peLabel='Moderate'; }
+              else             { peClass='#F0A04B'; peLabel='Expensive (high P/E)'; }
+
+              var pegClass, pegLabel;
+              if(peg < 1)      { pegClass='#3DD68C'; pegLabel='Attractive GARP candidate ✓'; }
+              else if(peg < 1.5){ pegClass='#79C0FF'; pegLabel='Fair (PEG near 1)'; }
+              else if(peg < 2) { pegClass='#F0A04B'; pegLabel='Marginally expensive'; }
+              else             { pegClass='#FF7B72'; pegLabel='Overvalued for growth'; }
+
+              document.getElementById('awPegBox').innerHTML =
+                '<div class="aw-sim-row"><span class="aw-sim-lbl">P/E ratio</span><span class="aw-sim-val" style="color:'+peClass+'">'+pe.toFixed(2)+' · '+peLabel+'</span></div>'+
+                '<div class="aw-sim-row"><span class="aw-sim-lbl">PEG (P/E ÷ growth%)</span><span class="aw-sim-val" style="color:'+pegClass+';font-size:13px">'+peg.toFixed(2)+'</span></div>'+
+                '<div class="aw-sim-row"><span class="aw-sim-lbl">GARP assessment</span><span class="aw-sim-val" style="color:'+pegClass+'">'+pegLabel+'</span></div>'+
+                '<div class="aw-sim-row" style="border-top:1px solid var(--border);padding-top:8px;margin-top:2px"><span class="aw-sim-lbl">Rule of thumb</span><span class="aw-sim-val" style="color:#7D8590;font-size:10.5px">PEG ≤ 1 = ideal · 1-1.5 = fair · &gt; 1.5 = expensive</span></div>';
+            }
+
+            // ── Error review (Tab 6) ──
+            var awCurErr = 0, awRevealed = false, awQord = [], awQi = 0;
+
+            var AW_ERRORS = [
+              {q:"What is the PRIMARY risk management tool used in pairs trading?",
+               a:"Stop-loss orders. They cap losses if the spread keeps widening rather than mean-reverting (structural divergence), which is the residual risk pairs trading cannot diversify away.",
+               trap:"Wrong picks: 'asset identification' (that's pre-trade selection) or 'limit order book monitoring' (HFT-only technique)."},
+              {q:"Company 2 has P/E 14 vs sector P/E 35. Company 3 has P/E 3 vs sector P/E 15. Which is deep value, which is relative value?",
+               a:"Company 2 = relative value (below sector but absolute P/E 14 isn't extreme). Company 3 = deep value (P/E 3 is extreme in absolute terms AND below sector 15).",
+               trap:"Don't classify both as deep value just because both are below sector. Deep value needs BOTH conditions: extreme absolute P/E + below-sector P/E."},
+              {q:"Fund B has a short-term horizon. Which event-driven strategies are appropriate?",
+               a:"Acquisitions in consolidating industries (short-medium horizon) = appropriate. Distressed/control positions and reorganizations require multi-year holds — NOT appropriate for short horizon.",
+               trap:"Don't lump all event-driven as 'short-term tactical'. Match the EVENT TYPE to the holding period."},
+              {q:"Which is more accurate for style classification: holdings-based or returns-based?",
+               a:"Holdings-based MORE accurate. It looks directly at the actual portfolio. Returns-based is a statistical inference from past return correlations — lags actual style changes.",
+               trap:"They are NOT equally accurate. Holdings-based wins when both are available."},
+              {q:"Style rotation triggered by economic cycle — is this top-down or bottom-up? And is GARP top-down?",
+               a:"Style rotation by cycle = TOP-DOWN (starting unit of analysis is macro). GARP = BOTTOM-UP (P/E and growth computed per stock).",
+               trap:"Don't equate 'rotation' with GARP. Rotation is a process across styles; GARP is one specific style applied stock by stock."},
+              {q:"A hedge fund uses long-short positions and derivatives overlay. Which style classification method applies?",
+               a:"Self-identification via the prospectus. Holdings-based fails because longs don't represent net exposure. Returns-based fails because derivatives distort regression to standard style indices.",
+               trap:"Don't pick holdings or returns-based for hedge funds with derivatives. They both fail by construction."},
+              {q:"How would you describe the risk profile of price momentum strategies?",
+               a:"Extreme tail risk. Momentum earns small steady gains most of the time but suffers large losses in sharp market reversals (Mar 2009, Mar 2020). Long left tail in the return distribution.",
+               trap:"'Value trap' is value-specific. 'Growth trap' is growth-specific. Momentum has its own distinct risk profile: extreme tail."},
+              {q:"A manager declares 'value tilt' but the portfolio's P/B is HIGHER than the benchmark. What does this indicate? Is price momentum a growth metric?",
+               a:"Higher P/B than benchmark contradicts the declared value tilt — the actual style doesn't match the label. Price momentum is NOT a growth metric (growth = earnings/revenue growth; momentum is purely price-based).",
+               trap:"Don't categorize price momentum as a growth factor. They are distinct factors."},
+              {q:"Asgard: Morningstar value 75, growth 70 (both high). Lipper sum of 6 Z-scores = −1.8. Classifications?",
+               a:"Morningstar = BLEND (both scores high → balanced exposure to value AND growth stocks). Lipper = VALUE (sum significantly negative).",
+               trap:"Morningstar blend ≠ core. Blend = both scores HIGH simultaneously. Core = both scores moderate or low."},
+              {q:"Which is NOT a characteristic of quantitative active investing? (a) factors across large groups (b) systematic/non-discretionary (c) forecast underlying company prospects",
+               a:"(c) Forecasting underlying company prospects — that's the defining feature of FUNDAMENTAL, not quantitative. Quants apply factor rules across many stocks; they don't dive deep on each one.",
+               trap:"All three options describe active investing, but only (c) is fundamental-specific. The trap is treating them as interchangeable."},
+              {q:"Three pairs evaluated. Pair 1-2: similar to avg. Pair 3-4: different from avg + mean reverting + high correlation. Pair 5-6: fails all 3. Which is tradeable?",
+               a:"Pair 3-4 only. Pairs trading needs ALL THREE: significantly different from long-term avg + mean reverting + high correlation. Any one missing → not tradeable.",
+               trap:"Don't pick Pair 1-2 (no opportunity since spread is already at average) or Pair 5-6 (fails everything)."},
+              {q:"A manager introduces a new factor to their strategy. Which style classification methods will detect the change?",
+               a:"BOTH holdings-based AND returns-based. The new factor changes which stocks are held (visible in holdings) AND changes correlation patterns to style indices (visible in returns).",
+               trap:"Don't think holdings and returns-based are orthogonal. They capture different views of the same portfolio — a style shift affects both."}
+            ];
+
+            function awErTab(id, btn){
+              document.querySelectorAll('#aw-er > .aw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#aw-er > .aw-tabs > .aw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('aw-er-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id==='quiz') awStartQuiz();
+            }
+
+            function awGoErr(n, btn){
+              document.querySelectorAll('.aw-err-item').forEach(function(e){e.classList.remove('active')});
+              document.querySelectorAll('#awErrNav .aw-err-pill').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('awErr'+n).classList.add('active');
+              btn.classList.add('active');
+              awCurErr = n;
+              document.getElementById('awErrCounter').textContent = (n+1)+' / 12';
+            }
+            function awNextErr(){ var n=(awCurErr+1)%12; awGoErr(n, document.querySelectorAll('#awErrNav .aw-err-pill')[n]); }
+            function awPrevErr(){ var n=(awCurErr+11)%12; awGoErr(n, document.querySelectorAll('#awErrNav .aw-err-pill')[n]); }
+
+            function awStartQuiz(){
+              awQord=[0,1,2,3,4,5,6,7,8,9,10,11].sort(function(){return Math.random()-.5});
+              awQi=0; awRevealed=false; awRenderQ();
+            }
+            function awRenderQ(){
+              if(awQi >= awQord.length){
+                document.getElementById('awQuizBox').innerHTML =
+                  '<div style="text-align:center;padding:20px">'+
+                  '<div style="font-family:Georgia,serif;font-size:18px;color:#3DD68C;margin-bottom:8px">All 12 done</div>'+
+                  '<div style="font-family:monospace;font-size:11px;color:#7D8590;margin-bottom:14px">Every error reviewed</div>'+
+                  '<button class="aw-qbtn" onclick="awStartQuiz()">Restart</button></div>';
+                return;
+              }
+              var e = AW_ERRORS[awQord[awQi]];
+              var h = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'+
+                '<span style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#FF7B72;text-transform:uppercase">Error #'+(awQord[awQi]+1)+'</span>'+
+                '<span style="font-family:monospace;font-size:10px;color:#7D8590">'+(awQi+1)+' / 12</span></div>'+
+                '<div style="font-size:12.5px;line-height:1.7;color:#E6EDF3;margin-bottom:10px">'+e.q+'</div>';
+              if(!awRevealed){
+                h += '<button class="aw-qbtn" onclick="awRevQ()">Show correct answer</button>';
+              } else {
+                h += '<div class="aw-reveal" style="color:#3DD68C"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;color:#3DD68C;display:block;margin-bottom:4px">CORRECT ANSWER</span>'+e.a+'</div>'+
+                  '<div class="aw-reveal" style="color:#FF7B72"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;color:#FF7B72;display:block;margin-bottom:4px">THE TRAP</span>'+e.trap+'</div>'+
+                  '<div style="display:flex;gap:8px"><button class="aw-nbtn" onclick="awNxtQ()">Next →</button></div>';
+              }
+              document.getElementById('awQuizBox').innerHTML = h;
+            }
+            function awRevQ(){ awRevealed=true; awRenderQ(); }
+            function awNxtQ(){ awQi++; awRevealed=false; awRenderQ(); }
+
+            // ── All Questions tab ──
+            function awCqTab(id, btn){
+              document.querySelectorAll('#aw-er-full > .aw-cqp').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#awCqtBar .aw-cqb').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('aw-cq-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+
+            // Initialize calculators on first paint
+            function awInit(){
+              try{ awPegCalc(); }catch(e){}
+            }
+          </script>
+        </div>
+
+
 
         <!-- empty state -->
         <div id="notesEmpty" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted);">
@@ -4171,7 +5101,7 @@ const DEFAULT_DECK = {
     { name:"Derivatives",        subtopics:["Options Strategies","Futures Hedge","Swaps","Risk Measures"] },
     { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
-    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity","Fixed Income"] },
+    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity","Active Equity Investing: Strategies","Fixed Income"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
     { name:"Command Words",      subtopics:["Templates","Thin vs Full"] },
   ],
@@ -4872,7 +5802,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
     ed.focus();
   } else {
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -4883,6 +5813,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = widgetId;
     if (widgetId === 'creditWidget' && typeof cwInit === 'function') setTimeout(cwInit, 50);
     if (widgetId === 'indexWidget' && typeof iwInit === 'function') setTimeout(iwInit, 50);
+    if (widgetId === 'awWidget' && typeof awInit === 'function') setTimeout(awInit, 50);
   }
 }
 
@@ -4897,11 +5828,12 @@ function openNote(key, topic, subtopic) {
     'PM Pathway||Liab-Driven Strategies': 'ldiWidget',
     'PM Pathway||Yield Curve Strategies': 'ycsWidget',
     'PM Pathway||Credit Strategies': 'creditWidget',
-    'PM Pathway||Index-Based Strategies': 'indexWidget'
+    'PM Pathway||Index-Based Strategies': 'indexWidget',
+    'PM Pathway||Active Equity Investing: Strategies': 'awWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
