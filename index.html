@@ -5071,6 +5071,7 @@ Exit: when spread reverts to ~μ</div>
           <div class="pcw-tabs">
             <button class="pcw-tab active" onclick="pcwTab('construct',this)">Approaches to Construction</button>
             <button class="pcw-tab" onclick="pcwTab('approaches',this)">Portfolio Mgmt Approaches</button>
+            <button class="pcw-tab" onclick="pcwTab('riskbudget',this)">Allocating Risk Budget</button>
           </div>
 
           <div id="pcw-construct" class="pcw-panel active">
@@ -5382,6 +5383,112 @@ Both: Active Share = 5%. But Active Risk very different.</div>
             </div>
 
           </div><!-- /pcw-approaches panel -->
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 3 · ALLOCATING THE RISK BUDGET (Figure P3.5 — Factor Diversified vs Sector Rotator)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="pcw-riskbudget" class="pcw-panel">
+
+            <div class="pcw-card">
+              <div class="pcw-title">The core idea — match risk sources to your investment approach</div>
+              <div class="pcw-body">An active manager should <span class="pcw-hl">efficiently allocate their risk budget</span> to sources that accurately represent their investment approach. The risk you take on should come from the bets you intend to make — not from accidental exposures.</div>
+              <span class="pcw-rule"><span class="pcw-hl">Factor Diversified</span> manager: balanced exposure to <b>rewarded factors</b> (size, value, momentum, quality, low-vol) → risk should come from FACTOR exposures across many securities</span>
+              <span class="pcw-rule"><span class="pcw-hl">Sector Rotator</span> manager: concentrated <b>sector and cash bets</b> → risk should come from SECTOR positioning and the cash allocation</span>
+              <div class="pcw-info">If a Factor Diversified manager has too much sector-specific risk, they have an "alignment problem" — their actual risk doesn't match their advertised strategy. Same for a Sector Rotator with hidden factor bets. The exam often tests this alignment.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Figure P3.5 — Comparative sources of risk &amp; drivers of return</div>
+              <table class="pcw-table">
+                <thead><tr><th>Characteristic</th><th>Factor Diversified</th><th>Sector Rotator</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="pcw-hl">Number of securities</span></td><td><span class="pcw-green">High (in the hundreds)</span></td><td><span class="pcw-red">Low (in the tens)</span></td></tr>
+                  <tr><td><span class="pcw-hl">Position concentration</span></td><td><span class="pcw-green">Low</span></td><td><span class="pcw-red">High</span></td></tr>
+                  <tr><td><span class="pcw-hl">Cash positions</span></td><td><span class="pcw-green">Very low</span></td><td><span class="pcw-orange">High when allocated to cash</span></td></tr>
+                  <tr><td><span class="pcw-hl">Market beta</span></td><td><span class="pcw-green">Close to one (diversified)</span></td><td><span class="pcw-orange">Higher/lower than one — depends on risk targets</span></td></tr>
+                  <tr><td><span class="pcw-hl">Absolute risk</span></td><td><span class="pcw-green">Lower</span></td><td><span class="pcw-orange">Higher, though tempered by large cash allocation</span></td></tr>
+                  <tr><td><span class="pcw-hl">Active risk</span></td><td><span class="pcw-green">Lower</span></td><td><span class="pcw-red">Higher — large idiosyncratic risks from concentrated positions &amp; sector bets</span></td></tr>
+                  <tr><td><span class="pcw-hl">Active Share</span></td><td><span class="pcw-green">Lower</span></td><td><span class="pcw-red">Higher — consistent with higher security concentration</span></td></tr>
+                  <tr><td><span class="pcw-hl">Average sector deviation</span></td><td><span class="pcw-green">Lower</span></td><td><span class="pcw-red">Higher — consistent with willingness to take sector bets</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Sources of risk — where does the active risk come from?</div>
+              <table class="pcw-table">
+                <thead><tr><th>Source</th><th>Factor Diversified</th><th>Sector Rotator</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="pcw-hl">Market</span></td><td><span class="pcw-orange">Higher</span></td><td><span class="pcw-green">Lower — consistent with higher security concentration</span></td></tr>
+                  <tr><td><span class="pcw-hl">Sectors</span></td><td><span class="pcw-green">Lower</span></td><td><span class="pcw-red">Higher — consistent with sector bets</span></td></tr>
+                  <tr><td><span class="pcw-hl">Styles (factors)</span></td><td><span class="pcw-red">Higher* — by design</span></td><td><span class="pcw-orange">Lower — concentrated positions, not style bets</span></td></tr>
+                  <tr><td><span class="pcw-hl">Unexplained (idiosyncratic)</span></td><td><span class="pcw-green">Lower — diversified across many names</span></td><td><span class="pcw-red">Higher — from sector rotation &amp; concentrated positions</span></td></tr>
+                </tbody>
+              </table>
+              <div class="pcw-info">*Note: in the textbook table, "Source of risk: styles" is listed as <b>Lower</b> for Factor Diversified — this is because each individual style exposure is moderate (balanced across many factors). The factor RISK comes through clearly, but no single style dominates as a risk source.</div>
+              <div class="pcw-tip">Memory hook: think "where does the volatility live?" For Factor Diversified, it lives in MARKET beta (close to 1, broad exposure). For Sector Rotator, it lives in SECTOR bets and IDIOSYNCRATIC risk from concentrated names.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Why this matters — the alignment principle</div>
+              <span class="pcw-rule"><span class="pcw-green">✓ Risk budget allocated correctly</span>: the sources of risk match the stated strategy</span>
+              <span class="pcw-rule"><span class="pcw-red">✗ Misallocation</span>: e.g., a "factor diversified" fund whose risk comes mostly from sectors or single positions → the manager is making bets they didn't advertise → potential style drift</span>
+              <div class="pcw-fl">Diagnostic check (factor diversified fund):
+  - Most active risk should come from factor exposures
+  - Sector and idiosyncratic contributions should be LOW
+  - Number of securities should be HIGH (hundreds)
+  - Position concentration should be LOW
+  → If any of these are off, the manager has a misalignment.
+
+Diagnostic check (sector rotator):
+  - Most active risk from sector bets &amp; concentrated positions
+  - Style/factor contributions should be LOW
+  - Number of securities LOW (tens)
+  - Cash positions can be HIGH (tactical)
+  → If factor risk dominates, the manager is closet factor-betting.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">The 2 archetypes side by side — visual summary</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+                <div class="pcw-quad" style="border-top:3px solid #3DD68C">
+                  <div class="pcw-quad-h">Factor Diversified</div>
+                  <div class="pcw-quad-sub">Broad · diversified · factor-driven</div>
+                  <ul>
+                    <li>Hundreds of securities</li>
+                    <li>Low position concentration</li>
+                    <li>Market beta ≈ 1</li>
+                    <li>Active Share LOW, Active Risk LOW</li>
+                    <li>Risk source: <b>market &amp; factors</b></li>
+                    <li>Cash: very low</li>
+                  </ul>
+                </div>
+                <div class="pcw-quad" style="border-top:3px solid #F0A04B">
+                  <div class="pcw-quad-h">Sector Rotator</div>
+                  <div class="pcw-quad-sub">Concentrated · tactical · sector-driven</div>
+                  <ul>
+                    <li>Tens of securities</li>
+                    <li>High position concentration</li>
+                    <li>Beta &gt;1 or &lt;1 (depends on tilt)</li>
+                    <li>Active Share HIGH, Active Risk HIGH</li>
+                    <li>Risk source: <b>sectors &amp; idiosyncratic</b></li>
+                    <li>Cash: high when tactical (defensive)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Exam-ready cheat sheet</div>
+              <span class="pcw-rule"><span class="pcw-hl">"Hundreds of securities, low concentration, beta ≈ 1"</span> → Factor Diversified profile</span>
+              <span class="pcw-rule"><span class="pcw-hl">"Tens of securities, high concentration, high cash, sector bets"</span> → Sector Rotator profile</span>
+              <span class="pcw-rule"><span class="pcw-hl">Active risk source dominated by SECTORS</span> → Sector Rotator (or misaligned Factor Diversified)</span>
+              <span class="pcw-rule"><span class="pcw-hl">Active risk source dominated by MARKET</span> → Factor Diversified (broad exposure)</span>
+              <span class="pcw-rule"><span class="pcw-hl">Active risk source dominated by IDIOSYNCRATIC/UNEXPLAINED</span> → Sector Rotator (concentrated positions)</span>
+              <div class="pcw-trap">Common trap: confusing "high active risk" with "high factor exposure". A Sector Rotator can have very high active risk WITHOUT taking factor bets — the risk comes from idiosyncratic concentration, not from style tilts.</div>
+            </div>
+
+          </div><!-- /pcw-riskbudget panel -->
 
           <script>
             function pcwTab(id, btn){
