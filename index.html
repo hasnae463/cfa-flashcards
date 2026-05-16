@@ -5066,6 +5066,24 @@ Exit: when spread reverts to ~μ</div>
             .pcw-spec-lbl { font-family:Georgia,serif; font-size:12.5px; color:#E6EDF3; font-weight:500; flex-shrink:0; min-width:170px; }
             .pcw-spec-val { font-family:monospace; font-size:10.5px; color:#C9D1D9; line-height:1.5; }
             .pcw-spec-badge { display:inline-block; font-family:monospace; font-size:9px; padding:2px 7px; border-radius:10px; border:1px solid; margin-left:4px; }
+            /* Scale walkthrough animation */
+            .pcw-step { background:var(--surface); border:1px solid var(--border); border-left:3px solid #2A3441; border-radius:5px; padding:13px 16px; margin-bottom:10px; opacity:0.35; transition:all .5s ease; transform:translateY(6px); }
+            .pcw-step.revealed { opacity:1; transform:translateY(0); border-left-color:#D4A017; }
+            .pcw-step.done { border-left-color:#3DD68C; }
+            .pcw-step-num { display:inline-block; background:#2A3441; color:#7D8590; font-family:monospace; font-size:10px; font-weight:600; padding:3px 9px; border-radius:11px; margin-right:8px; transition:all .3s; }
+            .pcw-step.revealed .pcw-step-num { background:#D4A017; color:#0D1117; }
+            .pcw-step.done .pcw-step-num { background:#3DD68C; color:#0D1117; }
+            .pcw-step-title { font-family:Georgia,serif; font-size:13.5px; color:#E6EDF3; font-weight:600; display:inline-block; vertical-align:middle; }
+            .pcw-step-body { font-size:12px; line-height:1.7; color:#C9D1D9; margin-top:9px; padding-left:6px; }
+            .pcw-step-calc { font-family:monospace; font-size:11.5px; background:rgba(56,139,253,.08); border-left:2px solid #388BFD; padding:8px 11px; border-radius:3px; color:#79C0FF; line-height:1.8; margin-top:7px; white-space:pre-wrap; display:block; }
+            .pcw-step-result { font-family:monospace; font-size:12px; color:#D4A017; padding:6px 10px; background:rgba(212,160,23,.08); border:1px dashed #D4A017; border-radius:3px; margin-top:7px; display:inline-block; }
+            .pcw-anim-controls { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
+            .pcw-btn { font-family:monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:7px 14px; border-radius:3px; cursor:pointer; transition:all .12s; }
+            .pcw-btn:hover { color:#D4A017; border-color:#D4A017; }
+            .pcw-btn-primary { background:#D4A017; color:#0D1117; border-color:#D4A017; font-weight:500; }
+            .pcw-btn-primary:hover { opacity:.85; color:#0D1117; }
+            .pcw-progress { font-family:monospace; font-size:11px; color:#7D8590; }
+            .pcw-flow-svg { margin:10px 0; }
           </style>
 
           <div class="pcw-tabs">
@@ -5073,6 +5091,7 @@ Exit: when spread reverts to ~μ</div>
             <button class="pcw-tab" onclick="pcwTab('approaches',this)">Portfolio Mgmt Approaches</button>
             <button class="pcw-tab" onclick="pcwTab('riskbudget',this)">Allocating Risk Budget</button>
             <button class="pcw-tab" onclick="pcwTab('wellpf',this)">Well-Constructed PF</button>
+            <button class="pcw-tab" onclick="pcwTab('scale',this)">Scale &amp; AUM Limits</button>
           </div>
 
           <div id="pcw-construct" class="pcw-panel active">
@@ -5676,12 +5695,274 @@ Net exposure   = |Long| − |Short|   (as % of capital)</div>
 
           </div><!-- /pcw-wellpf panel -->
 
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 5 · SCALE & AUM LIMITS — interactive walkthrough
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="pcw-scale" class="pcw-panel">
+
+            <div class="pcw-card">
+              <div class="pcw-title">The scale problem — why size impairs strategy</div>
+              <div class="pcw-body">As a fund's AUM grows, the manager must own more dollars of each name. But each security has limits:</div>
+              <span class="pcw-rule"><span class="pcw-hl">Index weight floor</span>: strategy may forbid investing in tiny index names (below e.g. 0.02%)</span>
+              <span class="pcw-rule"><span class="pcw-hl">Position weight cap</span>: maximum portfolio weight a single security can have (e.g. 10× index weight or +100bps)</span>
+              <span class="pcw-rule"><span class="pcw-hl">Liquidity cap</span>: can't own more than X% of a security's average daily volume (ADV) without crippling market impact</span>
+              <div class="pcw-info">When the fund grows large enough that the <b>dollar position dictated by the weight cap exceeds the dollar amount allowed by the liquidity cap</b>, the strategy is impaired — you can't fill the position without moving the price.</div>
+              <div class="pcw-tip">Small-cap focused funds hit this wall earlier than large-cap funds (smaller ADV, smaller market cap). Solutions: limit AUM, diversify further, lower turnover, or change trading style.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Worked example — Issues of Scale (textbook)</div>
+              <div class="pcw-body">A diversified multifactor fund: $200M AUM, 350 positions. Benchmark = large-to-mid-cap index, 1,000 constituents, total market cap ≈ $20 trillion. Smaller index securities trade ~1.5% of shares daily.</div>
+              <table class="pcw-table">
+                <thead><tr><th>#</th><th>Constraint</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>No investment in any security with index weight &lt; <span class="pcw-hl">0.02%</span></td></tr>
+                  <tr><td>2</td><td>Max fund position = lesser of (<span class="pcw-hl">10 × index weight</span>) or (<span class="pcw-hl">index weight + 100 bps</span>)</td></tr>
+                  <tr><td>3</td><td>Absolute position size cannot exceed <span class="pcw-hl">5% of ADV</span> (trailing 12 months)</td></tr>
+                </tbody>
+              </table>
+              <div class="pcw-body" style="margin-top:9px"><b>Question:</b> at what AUM is the strategy impaired by illiquidity?</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Step-by-step walkthrough — click "Next step" to animate</div>
+              <div class="pcw-anim-controls">
+                <button class="pcw-btn pcw-btn-primary" onclick="pcwScaleNext()">Next step →</button>
+                <button class="pcw-btn" onclick="pcwScaleReset()">Reset</button>
+                <button class="pcw-btn" onclick="pcwScaleAll()">Reveal all</button>
+                <span class="pcw-progress" id="pcwScaleProg">Step 0 / 5</span>
+              </div>
+
+              <div class="pcw-step" id="pcwScaleStep1">
+                <span class="pcw-step-num">1</span><span class="pcw-step-title">What's the SMALLEST market cap I'm allowed to invest in?</span>
+                <div class="pcw-step-body">
+                  Constraint 1 says: no security with index weight &lt; 0.02%. The smallest allowed has weight exactly 0.02% of the index.
+                  <div class="pcw-step-calc">Smallest mkt cap = 0.02% × total index mkt cap
+                = 0.0002 × $20 trillion
+                = <b style="color:#D4A017">$4 billion</b></div>
+                  <div class="pcw-step-result">→ Smallest allowed market cap = $4 billion</div>
+                </div>
+              </div>
+
+              <div class="pcw-step" id="pcwScaleStep2">
+                <span class="pcw-step-num">2</span><span class="pcw-step-title">What's the ADV of that smallest name?</span>
+                <div class="pcw-step-body">
+                  The smaller securities trade 1.5% of shares outstanding daily. For a $4bn cap stock:
+                  <div class="pcw-step-calc">ADV = 1.5% × $4 billion
+    = 0.015 × $4,000,000,000
+    = <b style="color:#D4A017">$60 million</b></div>
+                  <div class="pcw-step-result">→ Daily trading volume ≈ $60 million</div>
+                </div>
+              </div>
+
+              <div class="pcw-step" id="pcwScaleStep3">
+                <span class="pcw-step-num">3</span><span class="pcw-step-title">What's the MAX dollar position I can hold (liquidity limit)?</span>
+                <div class="pcw-step-body">
+                  Constraint 3 caps the position at 5% of ADV — beyond this, market impact becomes punishing.
+                  <div class="pcw-step-calc">Max position $ = 5% × ADV
+              = 0.05 × $60 million
+              = <b style="color:#D4A017">$3 million</b></div>
+                  <div class="pcw-step-result">→ Max dollar position in the smallest cap holding = $3M</div>
+                </div>
+              </div>
+
+              <div class="pcw-step" id="pcwScaleStep4">
+                <span class="pcw-step-num">4</span><span class="pcw-step-title">What does the STRATEGY tell me to hold (weight cap)?</span>
+                <div class="pcw-step-body">
+                  Constraint 2: max position weight = lesser of (10 × index weight) or (index weight + 100 bps). For the smallest stock at 0.02% index weight:
+                  <div class="pcw-step-calc">Option A: 10 × 0.02% = 0.2%
+Option B: 0.02% + 1.00% = 1.02%
+Lesser of the two = <b style="color:#D4A017">0.2%</b></div>
+                  <div class="pcw-step-result">→ Strategy wants up to 0.2% of fund in the smallest holding</div>
+                </div>
+              </div>
+
+              <div class="pcw-step" id="pcwScaleStep5">
+                <span class="pcw-step-num">5</span><span class="pcw-step-title">At what AUM does the strategy break?</span>
+                <div class="pcw-step-body">
+                  Set the two binding constraints equal: the dollar position the strategy wants (0.2% × AUM) cannot exceed the $3M liquidity cap.
+                  <div class="pcw-step-calc">0.2% × AUM ≤ $3,000,000
+0.002 × AUM ≤ $3,000,000
+        AUM ≤ $3,000,000 / 0.002
+        AUM ≤ <b style="color:#3DD68C">$1.5 billion</b></div>
+                  <div class="pcw-step-result" style="border-color:#3DD68C;color:#3DD68C;background:rgba(46,160,67,.08)">→ Strategy is impaired when AUM exceeds $1.5 billion</div>
+                  <div class="pcw-tip" style="margin-top:10px">Above $1.5bn, the manager is constrained by small-cap illiquidity and CAN'T hold the maximum 0.2% weight allowed by the strategy. They'll have to underweight small caps relative to the model — style drift.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- visual summary flow -->
+            <div class="pcw-card">
+              <div class="pcw-title">Visual logic chain</div>
+              <div class="pcw-svg-wrap">
+                <svg width="100%" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Step boxes -->
+                  <g font-family="monospace" font-size="10.5">
+                    <!-- Step 1 -->
+                    <rect x="20" y="40" width="140" height="58" rx="5" fill="#161B22" stroke="#D4A017" stroke-width="1.2"/>
+                    <text x="90" y="58" text-anchor="middle" fill="#D4A017" font-size="9.5">CONSTRAINT 1</text>
+                    <text x="90" y="74" text-anchor="middle" fill="#C9D1D9">Min index wt 0.02%</text>
+                    <text x="90" y="89" text-anchor="middle" fill="#3DD68C" font-size="11">→ $4bn mkt cap</text>
+
+                    <!-- arrow -->
+                    <line x1="160" y1="69" x2="195" y2="69" stroke="#7D8590" stroke-width="1" marker-end="url(#arr)"/>
+
+                    <!-- Step 2 -->
+                    <rect x="200" y="40" width="140" height="58" rx="5" fill="#161B22" stroke="#D4A017" stroke-width="1.2"/>
+                    <text x="270" y="58" text-anchor="middle" fill="#D4A017" font-size="9.5">ADV @ 1.5%</text>
+                    <text x="270" y="74" text-anchor="middle" fill="#C9D1D9">of $4bn</text>
+                    <text x="270" y="89" text-anchor="middle" fill="#3DD68C" font-size="11">→ $60M daily</text>
+
+                    <line x1="340" y1="69" x2="375" y2="69" stroke="#7D8590" stroke-width="1" marker-end="url(#arr)"/>
+
+                    <!-- Step 3 -->
+                    <rect x="380" y="40" width="140" height="58" rx="5" fill="#161B22" stroke="#D4A017" stroke-width="1.2"/>
+                    <text x="450" y="58" text-anchor="middle" fill="#D4A017" font-size="9.5">CONSTRAINT 3</text>
+                    <text x="450" y="74" text-anchor="middle" fill="#C9D1D9">5% × ADV</text>
+                    <text x="450" y="89" text-anchor="middle" fill="#3DD68C" font-size="11">→ $3M max $ pos</text>
+
+                    <!-- Step 4 (parallel) -->
+                    <rect x="20" y="170" width="320" height="58" rx="5" fill="#161B22" stroke="#79C0FF" stroke-width="1.2"/>
+                    <text x="180" y="188" text-anchor="middle" fill="#79C0FF" font-size="9.5">CONSTRAINT 2 · weight cap</text>
+                    <text x="180" y="204" text-anchor="middle" fill="#C9D1D9">lesser of (10 × 0.02%) or (0.02% + 100bps)</text>
+                    <text x="180" y="219" text-anchor="middle" fill="#3DD68C" font-size="11">→ max weight = 0.2%</text>
+
+                    <!-- arrows converge to final -->
+                    <line x1="450" y1="98" x2="450" y2="125" stroke="#7D8590" stroke-width="1"/>
+                    <line x1="180" y1="170" x2="180" y2="155" stroke="#7D8590" stroke-width="1"/>
+                    <line x1="180" y1="155" x2="450" y2="155" stroke="#7D8590" stroke-width="1"/>
+                    <line x1="450" y1="155" x2="450" y2="130" stroke="#7D8590" stroke-width="1"/>
+
+                    <!-- Final equation box -->
+                    <rect x="360" y="170" width="320" height="100" rx="6" fill="#0D1117" stroke="#3DD68C" stroke-width="1.8"/>
+                    <text x="520" y="195" text-anchor="middle" fill="#3DD68C" font-size="10.5" font-weight="600">SOLVE FOR MAX AUM</text>
+                    <text x="520" y="218" text-anchor="middle" fill="#C9D1D9" font-size="11">0.2% × AUM ≤ $3 million</text>
+                    <text x="520" y="235" text-anchor="middle" fill="#C9D1D9" font-size="11">AUM ≤ $3M / 0.002</text>
+                    <text x="520" y="258" text-anchor="middle" fill="#3DD68C" font-size="14" font-weight="700">AUM ≤ $1.5 billion</text>
+                  </g>
+                  <defs>
+                    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <polygon points="0,0 6,3 0,6" fill="#7D8590"/>
+                    </marker>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+
+            <!-- INTERACTIVE CALCULATOR -->
+            <div class="pcw-card">
+              <div class="pcw-title">Interactive — change the parameters</div>
+              <div class="pcw-body" style="margin-bottom:10px">Adjust any input below. The maximum AUM updates live.</div>
+
+              <div class="pcw-sl-row"><span class="pcw-sl-lbl">Total index mkt cap ($T)</span><input type="range" min="1" max="100" step="1" value="20" id="pcwScIdx" oninput="pcwScaleCalc()"><span class="pcw-sl-val" id="pcwScIdxO">$20T</span></div>
+              <div class="pcw-sl-row"><span class="pcw-sl-lbl">Min index weight (%)</span><input type="range" min="0.005" max="0.5" step="0.005" value="0.02" id="pcwScMin" oninput="pcwScaleCalc()"><span class="pcw-sl-val" id="pcwScMinO">0.02%</span></div>
+              <div class="pcw-sl-row"><span class="pcw-sl-lbl">Daily volume (% of shares)</span><input type="range" min="0.1" max="10" step="0.1" value="1.5" id="pcwScAdv" oninput="pcwScaleCalc()"><span class="pcw-sl-val" id="pcwScAdvO">1.5%</span></div>
+              <div class="pcw-sl-row"><span class="pcw-sl-lbl">Max position vs ADV (%)</span><input type="range" min="1" max="20" step="0.5" value="5" id="pcwScAdvCap" oninput="pcwScaleCalc()"><span class="pcw-sl-val" id="pcwScAdvCapO">5%</span></div>
+              <div class="pcw-sl-row"><span class="pcw-sl-lbl">Weight cap multiplier (× idx)</span><input type="range" min="2" max="30" step="1" value="10" id="pcwScMult" oninput="pcwScaleCalc()"><span class="pcw-sl-val" id="pcwScMultO">10×</span></div>
+              <div class="pcw-sl-row"><span class="pcw-sl-lbl">Weight cap bps add-on</span><input type="range" min="10" max="500" step="10" value="100" id="pcwScBps" oninput="pcwScaleCalc()"><span class="pcw-sl-val" id="pcwScBpsO">100 bps</span></div>
+
+              <div class="pcw-sim" id="pcwScaleBox"></div>
+
+              <div class="pcw-tip" style="margin-top:12px">Try lowering total mkt cap to $5T (e.g. an emerging market index) — the AUM ceiling drops dramatically. Or raise the daily volume to 5% (more liquid market) and watch capacity expand.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Exam-ready memory anchors</div>
+              <span class="pcw-rule"><span class="pcw-hl">The chain:</span> min index weight × total mkt cap = smallest stock's mkt cap → × daily volume % = ADV → × position-vs-ADV cap = max $ position</span>
+              <span class="pcw-rule"><span class="pcw-hl">Then:</span> max $ position ÷ max portfolio weight = AUM ceiling</span>
+              <span class="pcw-rule"><span class="pcw-hl">Why this matters:</span> if a fund's AUM exceeds this ceiling, it physically can't hold its smallest names at the weight the strategy specifies → style drift forced by liquidity</span>
+              <span class="pcw-rule"><span class="pcw-hl">Small-cap funds</span> hit the ceiling EARLIER than large-cap funds because ADVs are smaller and prices move more on the same trade size</span>
+              <span class="pcw-rule"><span class="pcw-hl">Solutions for funds approaching capacity:</span> limit AUM (close fund to new investors) · diversify into more names · lower turnover · adapt trading strategy (slower execution, dark pools)</span>
+              <div class="pcw-trap">Exam trap: "higher market impact cost is associated with lower AUM" → FALSE. Higher AUM = need to trade more $ at once = more market impact. Also: large-cap securities have LOWER impact cost (more liquid). Higher portfolio TURNOVER = more trades = more impact cost.</div>
+            </div>
+
+          </div><!-- /pcw-scale panel -->
+
           <script>
             function pcwTab(id, btn){
               document.querySelectorAll('#pcwWidget > .pcw-panel').forEach(function(p){p.classList.remove('active')});
               document.querySelectorAll('#pcwWidget > .pcw-tabs > .pcw-tab').forEach(function(b){b.classList.remove('active')});
               document.getElementById('pcw-'+id).classList.add('active');
               btn.classList.add('active');
+              if(id === 'scale'){ setTimeout(pcwScaleCalc, 50); }
+            }
+
+            // ── Scale walkthrough animation ──
+            var pcwScCur = 0;
+            function pcwScaleNext(){
+              if(pcwScCur >= 5){ return; }
+              pcwScCur++;
+              for(var i=1;i<=5;i++){
+                var el = document.getElementById('pcwScaleStep'+i);
+                if(!el) continue;
+                el.classList.remove('revealed','done');
+                if(i < pcwScCur) el.classList.add('revealed','done');
+                else if(i === pcwScCur) el.classList.add('revealed');
+              }
+              document.getElementById('pcwScaleProg').textContent = 'Step '+pcwScCur+' / 5';
+              var current = document.getElementById('pcwScaleStep'+pcwScCur);
+              if(current) current.scrollIntoView({behavior:'smooth', block:'center'});
+            }
+            function pcwScaleReset(){
+              pcwScCur = 0;
+              for(var i=1;i<=5;i++){
+                var el = document.getElementById('pcwScaleStep'+i);
+                if(el) el.classList.remove('revealed','done');
+              }
+              document.getElementById('pcwScaleProg').textContent = 'Step 0 / 5';
+            }
+            function pcwScaleAll(){
+              pcwScCur = 5;
+              for(var i=1;i<=5;i++){
+                var el = document.getElementById('pcwScaleStep'+i);
+                if(el){ el.classList.add('revealed'); if(i<5) el.classList.add('done'); }
+              }
+              document.getElementById('pcwScaleProg').textContent = 'Step 5 / 5 ✓';
+            }
+
+            // ── Scale interactive calculator ──
+            function pcwScaleCalc(){
+              var idxT = parseFloat(document.getElementById('pcwScIdx').value);    // total mkt cap in $T
+              var minW = parseFloat(document.getElementById('pcwScMin').value);    // min idx weight in %
+              var advPct = parseFloat(document.getElementById('pcwScAdv').value); // daily vol in %
+              var advCap = parseFloat(document.getElementById('pcwScAdvCap').value); // max pos vs ADV in %
+              var mult = parseFloat(document.getElementById('pcwScMult').value);  // weight cap multiplier
+              var bps  = parseFloat(document.getElementById('pcwScBps').value);   // weight cap bps add-on
+
+              // labels
+              document.getElementById('pcwScIdxO').textContent = '$' + idxT + 'T';
+              document.getElementById('pcwScMinO').textContent = minW.toFixed(3) + '%';
+              document.getElementById('pcwScAdvO').textContent = advPct.toFixed(1) + '%';
+              document.getElementById('pcwScAdvCapO').textContent = advCap + '%';
+              document.getElementById('pcwScMultO').textContent = mult + '×';
+              document.getElementById('pcwScBpsO').textContent = bps + ' bps';
+
+              // calculations (all in $)
+              var totalIdx_$ = idxT * 1e12;
+              var smallestCap_$ = (minW/100) * totalIdx_$;
+              var adv_$ = (advPct/100) * smallestCap_$;
+              var maxPos_$ = (advCap/100) * adv_$;
+              var capA = mult * minW;        // 10 × index weight
+              var capB = minW + bps/100;     // index weight + 100bps (bps/100 = %)
+              var maxWeight = Math.min(capA, capB);  // in %
+              var maxAUM_$ = maxPos_$ / (maxWeight/100);
+
+              function fmt$(x){
+                if(x >= 1e12) return '$' + (x/1e12).toFixed(2) + 'T';
+                if(x >= 1e9)  return '$' + (x/1e9).toFixed(2) + 'B';
+                if(x >= 1e6)  return '$' + (x/1e6).toFixed(2) + 'M';
+                if(x >= 1e3)  return '$' + (x/1e3).toFixed(2) + 'k';
+                return '$' + x.toFixed(2);
+              }
+
+              document.getElementById('pcwScaleBox').innerHTML =
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">Smallest allowed mkt cap</span><span class="pcw-sim-val">'+(minW.toFixed(3))+'% × '+fmt$(totalIdx_$)+' = <b style="color:#79C0FF">'+fmt$(smallestCap_$)+'</b></span></div>'+
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">ADV of smallest stock</span><span class="pcw-sim-val">'+advPct.toFixed(1)+'% × '+fmt$(smallestCap_$)+' = <b style="color:#79C0FF">'+fmt$(adv_$)+'</b></span></div>'+
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">Max $ position (liquidity)</span><span class="pcw-sim-val">'+advCap+'% × '+fmt$(adv_$)+' = <b style="color:#79C0FF">'+fmt$(maxPos_$)+'</b></span></div>'+
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">Weight cap option A</span><span class="pcw-sim-val">'+mult+' × '+minW.toFixed(3)+'% = '+capA.toFixed(3)+'%</span></div>'+
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">Weight cap option B</span><span class="pcw-sim-val">'+minW.toFixed(3)+'% + '+bps+'bps = '+capB.toFixed(3)+'%</span></div>'+
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">Max portfolio weight</span><span class="pcw-sim-val">lesser of A, B = <b style="color:#79C0FF">'+maxWeight.toFixed(3)+'%</b></span></div>'+
+                '<div class="pcw-sim-row" style="border-top:1px solid var(--border);padding-top:9px;margin-top:6px"><span class="pcw-sim-lbl" style="color:#D4A017">MAX AUM (impairment)</span><span class="pcw-sim-val" style="color:#3DD68C;font-size:14px;font-weight:600">'+fmt$(maxPos_$)+' ÷ '+maxWeight.toFixed(3)+'% = '+fmt$(maxAUM_$)+'</span></div>';
             }
           </script>
         </div>
