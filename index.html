@@ -5056,7 +5056,24 @@ Exit: when spread reverts to ~μ</div>
             .pcw-quad ul { list-style:none; padding:0; margin:0; }
             .pcw-quad li { font-size:11.5px; line-height:1.55; color:#C9D1D9; padding:3px 0 3px 14px; position:relative; }
             .pcw-quad li:before { content:"›"; color:#D4A017; position:absolute; left:0; font-weight:600; }
+            .pcw-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+            .pcw-tab { font-family:monospace; font-size:10px; letter-spacing:.06em; background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 11px; border-radius:3px; cursor:pointer; transition:all .12s; }
+            .pcw-tab:hover { color:#E6EDF3; border-color:#E6EDF3; }
+            .pcw-tab.active { color:#0D1117; background:#D4A017; border-color:#D4A017; font-weight:500; }
+            .pcw-panel { display:none; }
+            .pcw-panel.active { display:block; }
+            .pcw-spec-row { display:flex; align-items:center; gap:10px; padding:6px 9px; margin:4px 0; border-left:3px solid; border-radius:3px; background:var(--surface2); }
+            .pcw-spec-lbl { font-family:Georgia,serif; font-size:12.5px; color:#E6EDF3; font-weight:500; flex-shrink:0; min-width:170px; }
+            .pcw-spec-val { font-family:monospace; font-size:10.5px; color:#C9D1D9; line-height:1.5; }
+            .pcw-spec-badge { display:inline-block; font-family:monospace; font-size:9px; padding:2px 7px; border-radius:10px; border:1px solid; margin-left:4px; }
           </style>
+
+          <div class="pcw-tabs">
+            <button class="pcw-tab active" onclick="pcwTab('construct',this)">Approaches to Construction</button>
+            <button class="pcw-tab" onclick="pcwTab('approaches',this)">Portfolio Mgmt Approaches</button>
+          </div>
+
+          <div id="pcw-construct" class="pcw-panel active">
 
           <div class="pcw-card">
             <div class="pcw-title">Approaches to portfolio construction — the big picture</div>
@@ -5230,6 +5247,150 @@ Information ratio = (Rp − Rb) / σ(Rp − Rb)  ← relative framework
             </table>
             <div class="pcw-info">"Less formal portfolio construction" is the recurring phrase in the discretionary cells. It means heuristic methods (or informal optimization) rather than the formal mathematical optimization characteristic of systematic strategies.</div>
           </div>
+
+          </div><!-- /pcw-construct panel -->
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 2 · PORTFOLIO MANAGEMENT APPROACHES (Active Share × Active Risk spectrum)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="pcw-approaches" class="pcw-panel">
+
+            <div class="pcw-card">
+              <div class="pcw-title">Active Share vs Active Risk — what each measures</div>
+              <table class="pcw-table">
+                <thead><tr><th>Measure</th><th>What it captures</th><th>Affected by correlation?</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="pcw-hl">Active Share</span></td><td>Difference in <b>weights</b> vs benchmark (pure mechanics)</td><td><span class="pcw-red">NO — weights only</span></td></tr>
+                  <tr><td><span class="pcw-hl">Active Risk</span> (tracking error)</td><td><b>Volatility</b> of (Rp − Rb)</td><td><span class="pcw-green">YES — weights + correlations + vols</span></td></tr>
+                </tbody>
+              </table>
+              <div class="pcw-fl">Active Share = ½ × Σ |w(port,i) − w(bench,i)|
+Active Risk = σ(Rp − Rb) = standard deviation of active return</div>
+              <div class="pcw-info">Same Active Share, different Active Risk: two managers can have identical Active Share (say 5%) but very different Active Risk depending on whether their active bets are on highly correlated stocks (low Active Risk) or uncorrelated stocks (high Active Risk).</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">The 6 manager styles — ordered by increasing Active Share + Active Risk</div>
+              <div class="pcw-body">As you move from pure indexing to concentrated stock picking, BOTH Active Share AND Active Risk increase. Active risk increases as <span class="pcw-hl">factor risk</span> and <span class="pcw-hl">idiosyncratic risk</span> levels increase.</div>
+
+              <div class="pcw-spec-row" style="border-left-color:#7D8590">
+                <span class="pcw-spec-lbl">Pure indexing</span>
+                <span class="pcw-spec-val">No active positions — portfolio equals benchmark<br><span class="pcw-spec-badge" style="color:#7D8590;border-color:#7D8590">Active Share = 0</span><span class="pcw-spec-badge" style="color:#7D8590;border-color:#7D8590">Active Risk = 0</span></span>
+              </div>
+
+              <div class="pcw-spec-row" style="border-left-color:#79C0FF">
+                <span class="pcw-spec-lbl">Factor neutral</span>
+                <span class="pcw-spec-val">No active factor bets · idiosyncratic risk low if diversified<br><span class="pcw-spec-badge" style="color:#79C0FF;border-color:#388BFD">Low Active Risk</span><span class="pcw-spec-badge" style="color:#79C0FF;border-color:#388BFD">Low Active Share (if diversified)</span></span>
+              </div>
+
+              <div class="pcw-spec-row" style="border-left-color:#3DD68C">
+                <span class="pcw-spec-lbl">Factor diversified</span>
+                <span class="pcw-spec-val">Balanced exposure to risk factors · minimized idiosyncratic risk through high # of securities<br><span class="pcw-spec-badge" style="color:#3DD68C;border-color:#2EA043">Reasonably low Active Risk</span><span class="pcw-spec-badge" style="color:#3DD68C;border-color:#2EA043">High Active Share (many non-benchmark names)</span></span>
+              </div>
+
+              <div class="pcw-spec-row" style="border-left-color:#F0A04B">
+                <span class="pcw-spec-lbl">Concentrated factor bets</span>
+                <span class="pcw-spec-val">Targeted factor bets · idiosyncratic risk likely HIGH<br><span class="pcw-spec-badge" style="color:#F0A04B;border-color:#D4680A">High Active Risk</span><span class="pcw-spec-badge" style="color:#F0A04B;border-color:#D4680A">High Active Share</span></span>
+              </div>
+
+              <div class="pcw-spec-row" style="border-left-color:#C0392B">
+                <span class="pcw-spec-lbl">Concentrated stock picker</span>
+                <span class="pcw-spec-val">Targeted individual stock bets<br><span class="pcw-spec-badge" style="color:#FF7B72;border-color:#C0392B">Highest Active Risk</span><span class="pcw-spec-badge" style="color:#FF7B72;border-color:#C0392B">Highest Active Share</span></span>
+              </div>
+
+              <div class="pcw-tip">Key insight: <b>Factor diversified</b> is the exception — it has HIGH Active Share (lots of off-benchmark names) but only REASONABLY LOW Active Risk because the many securities diversify away idiosyncratic risk, leaving only the balanced factor exposures.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Figure P3.3 — the visual map</div>
+              <div class="pcw-svg-wrap">
+                <svg width="100%" viewBox="0 0 660 380" xmlns="http://www.w3.org/2000/svg">
+                  <!-- axes -->
+                  <line x1="80" y1="340" x2="620" y2="340" stroke="#7D8590" stroke-width="1"/>
+                  <line x1="80" y1="40" x2="80" y2="340" stroke="#7D8590" stroke-width="1"/>
+                  <!-- labels -->
+                  <text x="350" y="370" text-anchor="middle" fill="#C9D1D9" font-family="monospace" font-size="11">Active Risk →</text>
+                  <text x="60" y="32" text-anchor="middle" fill="#C9D1D9" font-family="monospace" font-size="11">↑</text>
+                  <text x="35" y="190" text-anchor="middle" fill="#C9D1D9" font-family="monospace" font-size="11" transform="rotate(-90 35 190)">Active Share</text>
+                  <text x="80" y="358" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10">Low</text>
+                  <text x="620" y="358" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="10">High</text>
+                  <text x="60" y="345" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="10">Low</text>
+                  <text x="60" y="50" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="10">High</text>
+
+                  <!-- Pure Indexing: low-low -->
+                  <circle cx="115" cy="320" r="7" fill="#7D8590"/>
+                  <text x="135" y="324" fill="#7D8590" font-family="monospace" font-size="10.5">Pure Indexing</text>
+
+                  <!-- Closet Indexing: low-ish AS, low AR -->
+                  <circle cx="150" cy="275" r="7" fill="#79C0FF"/>
+                  <text x="170" y="279" fill="#79C0FF" font-family="monospace" font-size="10.5">Closet Indexing*</text>
+
+                  <!-- Factor-Neutral and Diversified Stock Picks: moderate AS, low-mod AR -->
+                  <circle cx="200" cy="200" r="8" fill="#3DD68C"/>
+                  <text x="220" y="195" fill="#3DD68C" font-family="monospace" font-size="10.5">Factor-Neutral &amp;</text>
+                  <text x="220" y="208" fill="#3DD68C" font-family="monospace" font-size="10.5">Diversified Stock Picks</text>
+
+                  <!-- Diversified Factor Bets: mod AS, mod AR -->
+                  <circle cx="320" cy="155" r="8" fill="#3DD68C"/>
+                  <text x="340" y="159" fill="#3DD68C" font-family="monospace" font-size="10.5">Diversified Factor Bets</text>
+
+                  <!-- Concentrated Factor Bets: high AS, high AR -->
+                  <circle cx="450" cy="110" r="8" fill="#F0A04B"/>
+                  <text x="470" y="114" fill="#F0A04B" font-family="monospace" font-size="10.5">Concentrated Factor Bets</text>
+
+                  <!-- Concentrated Stock Picks: highest AS, highest AR -->
+                  <circle cx="565" cy="65" r="9" fill="#FF7B72"/>
+                  <text x="555" y="55" text-anchor="end" fill="#FF7B72" font-family="monospace" font-size="10.5">Concentrated Stock Picks</text>
+
+                  <!-- diagonal trend line -->
+                  <line x1="115" y1="320" x2="565" y2="65" stroke="#D4A017" stroke-width="0.7" stroke-dasharray="3 3" opacity="0.5"/>
+                </svg>
+              </div>
+              <div class="pcw-info" style="font-size:10.5px">* A <b>closet indexer</b> is a fund that advertises itself as actively managed but is substantially similar to an index fund in its exposures. Low Active Share + low Active Risk = closet indexing.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">The critical exam point: Active Share ≠ Active Risk</div>
+              <span class="pcw-rule"><span class="pcw-hl">Active Share</span> looks ONLY at the weights. It ignores how stocks co-move.</span>
+              <span class="pcw-rule"><span class="pcw-hl">Active Risk</span> depends on weights AND on the correlations + volatilities of the active positions.</span>
+              <div class="pcw-fl">Same Active Share, different Active Risk:
+  Manager A: long +5% Apple, short −5% Microsoft (corr ≈ 0.9)
+    → active positions move together → LOW Active Risk
+  Manager B: long +5% Apple, short −5% utility stock (corr ≈ 0)
+    → active positions independent → HIGH Active Risk
+
+Both: Active Share = 5%. But Active Risk very different.</div>
+              <div class="pcw-trap">Common exam trap: "Manager A and Manager B have the same Active Share, therefore the same Active Risk." → FALSE. The cross-correlation between active positions determines how much Active Risk you get from a given Active Share.</div>
+              <div class="pcw-tip">Memory anchor: Active Share = arithmetic on weights. Active Risk = statistics on returns (correlations matter).</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Drivers of Active Risk</div>
+              <span class="pcw-rule"><span class="pcw-hl">Factor risk</span> — exposure to systematic factors that differ from the benchmark (e.g. value tilt, small-cap tilt)</span>
+              <span class="pcw-rule"><span class="pcw-hl">Idiosyncratic risk</span> — stock-specific risk from concentrated single-name bets</span>
+              <span class="pcw-rule">Active risk INCREASES as factor risk and idiosyncratic risk levels INCREASE</span>
+              <span class="pcw-rule">Active risk DECREASES when the # of securities increases (idiosyncratic risk gets diversified away)</span>
+              <table class="pcw-table" style="margin-top:8px">
+                <thead><tr><th>Style</th><th>Factor risk</th><th>Idiosyncratic risk</th><th>Active Risk result</th></tr></thead>
+                <tbody>
+                  <tr><td>Factor neutral</td><td><span class="pcw-green">Low</span></td><td><span class="pcw-green">Low (diversified)</span></td><td><span class="pcw-green">Low</span></td></tr>
+                  <tr><td>Factor diversified</td><td><span class="pcw-orange">Balanced/moderate</span></td><td><span class="pcw-green">Low (high N)</span></td><td><span class="pcw-orange">Reasonably low</span></td></tr>
+                  <tr><td>Concentrated factor bets</td><td><span class="pcw-red">High (targeted)</span></td><td><span class="pcw-red">High</span></td><td><span class="pcw-red">High</span></td></tr>
+                  <tr><td>Concentrated stock picker</td><td>varies</td><td><span class="pcw-red">Highest</span></td><td><span class="pcw-red">Highest</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div><!-- /pcw-approaches panel -->
+
+          <script>
+            function pcwTab(id, btn){
+              document.querySelectorAll('#pcwWidget > .pcw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#pcwWidget > .pcw-tabs > .pcw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('pcw-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+          </script>
         </div>
 
 
