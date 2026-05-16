@@ -5072,6 +5072,7 @@ Exit: when spread reverts to ~μ</div>
             <button class="pcw-tab active" onclick="pcwTab('construct',this)">Approaches to Construction</button>
             <button class="pcw-tab" onclick="pcwTab('approaches',this)">Portfolio Mgmt Approaches</button>
             <button class="pcw-tab" onclick="pcwTab('riskbudget',this)">Allocating Risk Budget</button>
+            <button class="pcw-tab" onclick="pcwTab('wellpf',this)">Well-Constructed PF</button>
           </div>
 
           <div id="pcw-construct" class="pcw-panel active">
@@ -5489,6 +5490,191 @@ Diagnostic check (sector rotator):
             </div>
 
           </div><!-- /pcw-riskbudget panel -->
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 4 · THE WELL-CONSTRUCTED PORTFOLIO
+                       (LOS P3.g + LOS P3.h: Long-Only, Long Extension, Long-Short, Market-Neutral)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="pcw-wellpf" class="pcw-panel">
+
+            <div class="pcw-card">
+              <div class="pcw-title">What makes a portfolio "well-constructed"</div>
+              <div class="pcw-body">A well-constructed portfolio delivers the characteristics promised to investors in a <span class="pcw-hl">cost-efficient</span> and <span class="pcw-hl">risk-efficient</span> way. Four requirements:</div>
+              <span class="pcw-rule"><span class="pcw-green">✓</span> A clear investment philosophy and a consistent investment process</span>
+              <span class="pcw-rule"><span class="pcw-green">✓</span> Risk and structural characteristics as promised to investors (no style drift)</span>
+              <span class="pcw-rule"><span class="pcw-green">✓</span> Achieving desired risk exposures in the most efficient manner</span>
+              <span class="pcw-rule"><span class="pcw-green">✓</span> Reasonably low operating costs, given the strategy</span>
+              <div class="pcw-info">"Risk-efficient" means you get the targeted exposures with as little extra (unintended) risk as possible. "Cost-efficient" means low fees AND low operating expenses for the type of strategy.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Comparing portfolios with the SAME desired characteristics</div>
+              <div class="pcw-body">When two portfolios target the same exposures, three tie-breaker rules tell you which one is better-constructed:</div>
+
+              <table class="pcw-table">
+                <thead><tr><th>Scenario</th><th>Which portfolio wins?</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><span class="pcw-hl">Same desired exposures, but achieved with FEWER positions</span></td>
+                    <td><span class="pcw-green">The one with fewer positions</span> — more focus on risk management. Doesn't guarantee higher excess return, but indicates higher risk efficiency.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="pcw-hl">Similar risk factor exposures + similar costs</span></td>
+                    <td><span class="pcw-green">Lower absolute volatility &amp; lower active risk wins</span> — same exposure, less noise.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="pcw-hl">Similar active risk + absolute risk + costs + alpha skill</span></td>
+                    <td><span class="pcw-green">HIGHEST Active Share wins</span> — leverages the manager's alpha skill more; higher expected return.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="pcw-tip">Memory anchor for the 3 tie-breakers: <b>fewer positions</b> → <b>lower risk</b> → <b>higher Active Share</b>. Each applies when EVERYTHING ELSE is equal.</div>
+              <div class="pcw-trap">Exam trap: the highest Active Share isn't always preferable. It's only preferable when the manager has REAL alpha skill AND when other risks/costs are similar. Without alpha skill, higher Active Share just means more uncompensated risk.</div>
+            </div>
+
+            <!-- ──────────────────────────────────────────────────────────
+                 PART 2 · LONG-ONLY vs LONG-SHORT
+                 ────────────────────────────────────────────────────────── -->
+            <div class="pcw-sectionhdr">Part 2 · Long-Only, Long Extension, Long-Short, Market-Neutral</div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">The four construction styles — at a glance</div>
+              <table class="pcw-table">
+                <thead><tr><th>Style</th><th>Long</th><th>Short</th><th>Net exposure</th><th>Typical</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="pcw-hl">Long-only</span></td><td>100%</td><td>0%</td><td>100%</td><td>Traditional mutual funds, most active managers</td></tr>
+                  <tr><td><span class="pcw-hl">Long extension</span></td><td>130%</td><td>30%</td><td><span class="pcw-green">100%</span></td><td>130/30 funds — constrained long-short</td></tr>
+                  <tr><td><span class="pcw-hl">Long-short</span></td><td>varies</td><td>varies</td><td>varies</td><td>General — any portfolio that can short</td></tr>
+                  <tr><td><span class="pcw-hl">Market-neutral</span></td><td>varies</td><td>≈ longs</td><td><span class="pcw-green">≈ 0%</span> (net beta ≈ 0)</td><td>Stat arb, pairs trading, equity market neutral</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Gross vs Net exposure — the two key metrics</div>
+              <div class="pcw-fl">Gross exposure = |Long| + |Short|   (as % of capital)
+Net exposure   = |Long| − |Short|   (as % of capital)</div>
+              <div class="pcw-body">Worked example (textbook): fund raises $100M. Invests $80M long, shorts $30M.</div>
+              <span class="pcw-rule">Long position: $80M = <span class="pcw-hl">80%</span> of capital</span>
+              <span class="pcw-rule">Short position: $30M = <span class="pcw-hl">30%</span> of capital</span>
+              <span class="pcw-rule"><span class="pcw-green">Gross exposure</span> = 80% + 30% = <span class="pcw-hl">110%</span></span>
+              <span class="pcw-rule"><span class="pcw-green">Net exposure</span> = 80% − 30% = <span class="pcw-hl">50%</span></span>
+              <span class="pcw-rule">Cash balance = $20M uninvested + $30M short sale proceeds = <span class="pcw-hl">$50M</span></span>
+              <div class="pcw-info">The short sale proceeds sit as cash (collateral with the lender). The "uninvested" portion is what wasn't put into longs. Both contribute to the cash balance.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">The 130/30 long extension — the classic example</div>
+              <div class="pcw-body">A long extension portfolio is a long-short fund <span class="pcw-hl">constrained to 100% net exposure</span>. The most common version: 130% long + 30% short = 130/30 fund.</div>
+              <span class="pcw-rule"><span class="pcw-green">→ Net exposure: 100%</span> (130 − 30) — same market beta as a long-only fund</span>
+              <span class="pcw-rule"><span class="pcw-orange">→ Gross exposure: 160%</span> (130 + 30) — higher than long-only's 100%</span>
+              <span class="pcw-rule">→ Manager has <span class="pcw-hl">no discretion over net exposure</span> (it's fixed at 100%)</span>
+              <span class="pcw-rule">→ But can use 30% shorting to express negative views &amp; finance the 130% long</span>
+              <div class="pcw-tip">Who picks 130/30? Investors who want <b>full market exposure (100% beta)</b> AND want the manager to be able to short. They get the upside of shorting without giving up the market risk premium.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Market-neutral portfolios — net beta ≈ 0</div>
+              <div class="pcw-body">Market-neutral funds aim to remove market exposure by balancing long and short positions. Two ways to think about this:</div>
+              <span class="pcw-rule"><span class="pcw-hl">Net beta zero</span>: weighted average of long and short betas cancels out</span>
+              <span class="pcw-rule"><span class="pcw-hl">Equal beta-weighted longs &amp; shorts</span>: not just $-equal, but β-equal</span>
+
+              <div class="pcw-fl">Textbook example:
+  Long $200M of assets with β = 0.9   → β-weighted long = $180M
+  Short $150M of assets with β = 1.2  → β-weighted short = $180M
+  → Net market beta = 0 ✓
+  → Gross exposure = $350M (much larger than longs alone)
+  → If positions had EQUAL betas (size/value/etc.), net exposure = 0</div>
+              <div class="pcw-tip">Market-neutral isn't $100M long + $100M short. It's β-weighted long = β-weighted short. The example shows you can be net-beta-zero with UNEQUAL dollar amounts when betas differ.</div>
+              <div class="pcw-info">In practice it's hard to maintain a zero beta over time because correlations between exposures change continually. Market-neutral funds rebalance frequently.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Market-neutral construction methods — pairs trading &amp; stat arb</div>
+              <span class="pcw-rule"><span class="pcw-hl">Pairs trading</span>: buy and short securities of <b>similar companies</b> to exploit perceived mispricings (the relative bet hedges market exposure)</span>
+              <span class="pcw-rule"><span class="pcw-hl">Statistical arbitrage (stat arb)</span>: quantitative pairs trading — same idea but driven by quantitative signals across many pairs</span>
+              <div class="pcw-info">Market-neutral funds are often used for <b>diversification</b> (low correlation with other strategies), not for high returns. They should have lower volatility than long-only strategies.</div>
+            </div>
+
+            <!-- ──────────────────────────────────────────────────────────
+                 PART 3 · BENEFITS & DRAWBACKS OF LONG-SHORT
+                 ────────────────────────────────────────────────────────── -->
+            <div class="pcw-sectionhdr">Part 3 · Benefits &amp; drawbacks of long-short</div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Benefits of long-short strategies</div>
+              <table class="pcw-table">
+                <thead><tr><th>Benefit</th><th>Why it matters</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="pcw-hl">Express negative views</span></td><td>Long-only manager: max underweight = security's benchmark weight. Long-short: <b>no cap</b> on negative bets → higher transfer coefficient (TC) → higher IR (fundamental law)</td></tr>
+                  <tr><td><span class="pcw-hl">Leverage long ideas</span></td><td>Short proceeds finance additional long positions → gear into high-conviction longs</td></tr>
+                  <tr><td><span class="pcw-hl">Remove market risk</span></td><td>Market-neutral construction → diversifying investment against other strategies (low correlation)</td></tr>
+                  <tr><td><span class="pcw-hl">Better control of factor exposures</span></td><td>Most rewarded factors (size, value, momentum) are <b>long-short by construction</b>. Shorting allows cleaner factor exposures.</td></tr>
+                </tbody>
+              </table>
+              <div class="pcw-info">The transfer coefficient point is key for the fundamental law of active management: IR ≈ IC × √breadth × TC. Removing the long-only constraint raises TC.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Drawbacks of long-short strategies</div>
+              <table class="pcw-table">
+                <thead><tr><th>Drawback</th><th>What it means</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="pcw-hl">Unlimited losses on shorts</span></td><td>Stock prices have NO upper bound → potential losses are unlimited; also reduces long-term exposure to market risk premium</td></tr>
+                  <tr><td><span class="pcw-hl">Leverage magnifies losses</span></td><td>Some long-short strategies require significant leverage → both gains AND losses are amplified</td></tr>
+                  <tr><td><span class="pcw-hl">Borrowing costs</span></td><td>Cost of borrowing securities can be high — especially for hard-to-borrow names</td></tr>
+                  <tr><td><span class="pcw-hl">Collateral &amp; forced liquidation</span></td><td>Losses on shorts → lender demands more collateral → may force liquidation at unfavorable prices. <b>Short squeeze</b> risk: heavily-shorted stocks rise sharply, forcing covers that push prices even higher. Lenders can also <b>recall shares</b> at inopportune times.</td></tr>
+                  <tr><td><span class="pcw-hl">Regulations</span></td><td>Some countries ban short selling in periods of financial instability</td></tr>
+                  <tr><td><span class="pcw-hl">Transactional complexity</span></td><td>Source borrow + post collateral + manage recalls + prime broker counterparty risk (if PB goes bankrupt, collateral may be lost)</td></tr>
+                  <tr><td><span class="pcw-hl">Higher costs</span></td><td>Management fees + operational expenses higher than long-only</td></tr>
+                  <tr><td><span class="pcw-hl">Personal ideology</span></td><td>Some investors morally object to profiting from another company's failure</td></tr>
+                </tbody>
+              </table>
+              <div class="pcw-trap">Exam trap: forgetting that short squeezes and share recalls are SEPARATE risks. Squeeze = price action forces you out. Recall = lender pulls the shares back. Both can disrupt the strategy at the worst moment.</div>
+            </div>
+
+            <!-- ──────────────────────────────────────────────────────────
+                 PART 4 · LONG-ONLY MERITS
+                 ────────────────────────────────────────────────────────── -->
+            <div class="pcw-sectionhdr">Part 4 · The merits of long-only investing</div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Why some investors stay long-only</div>
+              <table class="pcw-table">
+                <thead><tr><th>Factor</th><th>Long-only advantage</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="pcw-hl">Long-term risk premiums</span></td><td>Market risk premium is earned by NET LONG investors. Long-term holders should be net long; short sellers suffer negative expected returns over long horizons. Long-only naturally captures the equity risk premium.</td></tr>
+                  <tr><td><span class="pcw-hl">Capacity &amp; scalability</span></td><td>Long-only capacity = liquidity of underlying securities. Short strategies' capacity is limited by <b>availability to borrow</b> — typically much smaller than long-only capacity, especially for large-cap funds.</td></tr>
+                  <tr><td><span class="pcw-hl">Limited legal liability</span></td><td>Max loss for long investor = price paid (stock falls to zero, you lose 100%). For short seller: <b>unlimited loss</b> since prices have no ceiling. "Naked" short selling (no hedge) is riskier than long-only by definition.</td></tr>
+                  <tr><td><span class="pcw-hl">Regulation &amp; restrictions</span></td><td>Many institutional mandates and retail products don't permit shorting at all</td></tr>
+                  <tr><td><span class="pcw-hl">Lower costs &amp; complexity</span></td><td>No borrowing fees, no collateral, no prime broker counterparty risk</td></tr>
+                </tbody>
+              </table>
+              <div class="pcw-tip">Short horizon investors worried about negative returns may PREFER strategies with short exposure (market-neutral, long-short). Long horizon investors should generally lean toward long-only or constrained long-short (130/30) to retain equity risk premium exposure.</div>
+            </div>
+
+            <!-- ──────────────────────────────────────────────────────────
+                 PART 5 · INVESTOR DECISION SUMMARY
+                 ────────────────────────────────────────────────────────── -->
+            <div class="pcw-sectionhdr">Part 5 · Which approach for which investor?</div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Decision matrix — matching strategy to investor profile</div>
+              <table class="pcw-table">
+                <thead><tr><th>Investor characteristic</th><th>Best suited to...</th></tr></thead>
+                <tbody>
+                  <tr><td>Long-term horizon, wants market risk premium</td><td><span class="pcw-green">Long-only</span> (or 130/30 if wants shorting flexibility with full market exposure)</td></tr>
+                  <tr><td>Wants 100% net market exposure + manager flexibility</td><td><span class="pcw-green">Long extension (130/30)</span></td></tr>
+                  <tr><td>Wants alpha without market risk; diversifier</td><td><span class="pcw-green">Market-neutral</span></td></tr>
+                  <tr><td>Short horizon, downside-sensitive</td><td><span class="pcw-green">Market-neutral or long-short</span></td></tr>
+                  <tr><td>Moral / ideological objection to shorting</td><td><span class="pcw-green">Long-only</span></td></tr>
+                  <tr><td>Strong manager alpha skill + similar risks across options</td><td><span class="pcw-green">Higher Active Share variant</span> (long-short usually allows higher AS than long-only)</td></tr>
+                </tbody>
+              </table>
+              <div class="pcw-info">When selecting equity managers for a multi-asset fund: combine managers so the overall equity allocation is well-constructed. A risk factor exposure that's desired but missing in one manager can be added via a different manager that specializes in that factor.</div>
+            </div>
+
+          </div><!-- /pcw-wellpf panel -->
 
           <script>
             function pcwTab(id, btn){
