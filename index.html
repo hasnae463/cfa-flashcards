@@ -4266,17 +4266,45 @@ Total active return: −0.04 + −0.18 = −0.22%
             </div>
 
             <div class="aw-card">
-              <div class="aw-title">Identifying the most index-like fund (Lunnar Q)</div>
-              <div class="aw-body">When given multiple funds vs benchmark style exposures, the most index-like is the one whose holdings vary the LEAST from index style characteristics.</div>
+              <div class="aw-title">Identifying the most index-like fund — the 2-step method</div>
+              <div class="aw-body">"Style most consistent with its index" = smallest gap between the fund's actual style and the index style. The trick is knowing WHICH column to use.</div>
+              <span class="aw-rule"><span class="aw-hl">Step 1:</span> If both holdings-based AND returns-based columns are given → USE holdings-based (it's the actual portfolio, more accurate)</span>
+              <span class="aw-rule"><span class="aw-hl">Step 2:</span> Compute |Holdings_value − Index_value| for each fund</span>
+              <span class="aw-rule"><span class="aw-hl">Step 3:</span> Smallest absolute gap = most index-like fund</span>
+              <div class="aw-info">Note: the value and growth percentages sum to 100%, so comparing just the Value side is enough — the gap on Growth is identical.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Worked example — the Lunnar exam vignette</div>
               <table class="aw-table">
-                <thead><tr><th>Fund</th><th>P/E vs index</th><th>P/B vs index</th><th>Mkt cap vs index</th><th>Style variance</th></tr></thead>
+                <thead><tr><th>Fund</th><th>Holdings V/G</th><th>Returns V/G</th><th>Index V/G</th><th>|Holdings_V − Index_V|</th></tr></thead>
                 <tbody>
-                  <tr><td>Lunnar A</td><td>+18%</td><td>+22%</td><td>−14%</td><td>~18% (large)</td></tr>
-                  <tr><td><span class="aw-hl">Lunnar B</span></td><td>+2%</td><td>+1%</td><td>−2%</td><td><span class="aw-green">~2% ✓ closest</span></td></tr>
-                  <tr><td>Lunnar C</td><td>−9%</td><td>−12%</td><td>+8%</td><td>~10%</td></tr>
+                  <tr><td>Lunnar A</td><td>68/32</td><td><span style="color:#7D8590">68/32</span></td><td>75/25</td><td>|68 − 75| = <span class="aw-red">7%</span></td></tr>
+                  <tr><td><span class="aw-hl">Lunnar B</span></td><td>67/33</td><td><span style="color:#7D8590">68/32</span></td><td>65/35</td><td>|67 − 65| = <span class="aw-green">2% ✓ smallest</span></td></tr>
+                  <tr><td>Lunnar C</td><td>39/61</td><td><span style="color:#7D8590">34/66</span></td><td>35/65</td><td>|39 − 35| = <span class="aw-orange">4%</span></td></tr>
                 </tbody>
               </table>
-              <div class="aw-tip">Read the deviations: Lunnar B's portfolio characteristics deviate by ~2% from the index across all three style dimensions → essentially mimicking the index → "closest to index style".</div>
+              <div class="aw-tip">Lunnar B wins with the smallest gap. Note: returns-based column is shown for context, but you IGNORE it when computing the answer. Holdings-based is the gold standard.</div>
+              <div class="aw-trap">Common traps in this question: (1) comparing the fund's Holdings vs its own Returns columns (those measure the same fund — they're not the comparison). (2) Using returns-based when holdings is also available. (3) Picking Lunnar A because 68% Value "looks like" 75% Value (direction same, but the GAP is what matters).</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Interactive: enter any 3 funds and find the most index-like</div>
+              <div class="aw-body" style="margin-bottom:10px">Adjust the Value% of each fund and the index. The calculator finds the smallest holdings-vs-index gap.</div>
+
+              <div style="font-family:monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 4px">Index style</div>
+              <div class="aw-sl-row"><span class="aw-sl-lbl">Index Value %</span><input type="range" min="0" max="100" step="1" value="65" id="awIxV" oninput="awStyleCalc()"><span class="aw-sl-val" id="awIxVo">65%</span></div>
+
+              <div style="font-family:monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 4px">Fund A (holdings-based)</div>
+              <div class="aw-sl-row"><span class="aw-sl-lbl">Fund A Value %</span><input type="range" min="0" max="100" step="1" value="68" id="awFAV" oninput="awStyleCalc()"><span class="aw-sl-val" id="awFAVo">68%</span></div>
+
+              <div style="font-family:monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 4px">Fund B (holdings-based)</div>
+              <div class="aw-sl-row"><span class="aw-sl-lbl">Fund B Value %</span><input type="range" min="0" max="100" step="1" value="67" id="awFBV" oninput="awStyleCalc()"><span class="aw-sl-val" id="awFBVo">67%</span></div>
+
+              <div style="font-family:monospace;font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 4px">Fund C (holdings-based)</div>
+              <div class="aw-sl-row"><span class="aw-sl-lbl">Fund C Value %</span><input type="range" min="0" max="100" step="1" value="39" id="awFCV" oninput="awStyleCalc()"><span class="aw-sl-val" id="awFCVo">39%</span></div>
+
+              <div class="aw-sim" id="awStyleBox"></div>
             </div>
 
             <div class="aw-card">
@@ -4959,9 +4987,43 @@ Exit: when spread reverts to ~μ</div>
               btn.classList.add('active');
             }
 
+            // ── Style consistency calculator (Tab 3) ──
+            function awStyleCalc(){
+              var ix = parseFloat(document.getElementById('awIxV').value);
+              var a  = parseFloat(document.getElementById('awFAV').value);
+              var b  = parseFloat(document.getElementById('awFBV').value);
+              var c  = parseFloat(document.getElementById('awFCV').value);
+
+              document.getElementById('awIxVo').textContent = ix + '%';
+              document.getElementById('awFAVo').textContent = a + '%';
+              document.getElementById('awFBVo').textContent = b + '%';
+              document.getElementById('awFCVo').textContent = c + '%';
+
+              var gA = Math.abs(a - ix);
+              var gB = Math.abs(b - ix);
+              var gC = Math.abs(c - ix);
+              var minG = Math.min(gA, gB, gC);
+
+              function row(label, holdings, idx, gap){
+                var win = (gap === minG);
+                var col = win ? '#3DD68C' : (gap === Math.max(gA,gB,gC) ? '#FF7B72' : '#F0A04B');
+                var badge = win ? ' <span class="aw-badge aw-pass">closest ✓</span>' : '';
+                return '<div class="aw-sim-row"><span class="aw-sim-lbl">'+label+' '+holdings+'V/'+(100-holdings)+'G vs index '+idx+'V/'+(100-idx)+'G</span>'+
+                       '<span class="aw-sim-val" style="color:'+col+'">|'+holdings+' − '+idx+'| = '+gap+'%'+badge+'</span></div>';
+              }
+
+              document.getElementById('awStyleBox').innerHTML =
+                '<div style="font-family:monospace;font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Holdings vs Index gap (Value side)</div>'+
+                row('Fund A', a, ix, gA)+
+                row('Fund B', b, ix, gB)+
+                row('Fund C', c, ix, gC)+
+                '<div style="font-family:monospace;font-size:10px;color:#D4A017;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">Most index-like: '+
+                (gA===minG?'Fund A':gB===minG?'Fund B':'Fund C')+' (gap = '+minG+'%)</div>';
+            }
+
             // Initialize calculators on first paint
             function awInit(){
-              try{ awPegCalc(); }catch(e){}
+              try{ awPegCalc(); awStyleCalc(); }catch(e){}
             }
           </script>
         </div>
