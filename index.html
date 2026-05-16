@@ -5028,6 +5028,210 @@ Exit: when spread reverts to ~μ</div>
           </script>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════════════════
+             ACTIVE EQUITY INVESTING: PORTFOLIO CONSTRUCTION WIDGET (pcw-* prefix)
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div id="pcwWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            .pcw-card { background:var(--surface); border:1px solid var(--border); border-radius:5px; padding:13px 16px; margin-bottom:11px; }
+            .pcw-title { font-family:Georgia,serif; font-size:14px; color:#D4A017; font-weight:600; margin-bottom:8px; line-height:1.4; }
+            .pcw-body { font-size:12.5px; line-height:1.7; color:#C9D1D9; }
+            .pcw-rule { display:block; border-left:2px solid #8A6810; padding:3px 0 3px 10px; margin:5px 0; font-size:12px; line-height:1.65; color:#C9D1D9; }
+            .pcw-fl { font-family:monospace; font-size:11px; background:rgba(56,139,253,.08); border-left:2px solid #388BFD; padding:8px 11px; border-radius:3px; color:#79C0FF; line-height:1.7; margin:7px 0; white-space:pre-wrap; display:block; }
+            .pcw-trap { background:rgba(192,57,43,.08); border-left:2px solid #C0392B; padding:8px 11px; border-radius:3px; color:#FF7B72; font-size:11.5px; line-height:1.65; margin:7px 0; }
+            .pcw-tip { background:rgba(46,160,67,.08); border-left:2px solid #2EA043; padding:8px 11px; border-radius:3px; color:#7EE787; font-size:11.5px; line-height:1.65; margin:7px 0; }
+            .pcw-info { background:rgba(56,139,253,.08); border-left:2px solid #388BFD; padding:8px 11px; border-radius:3px; color:#79C0FF; font-size:11.5px; line-height:1.65; margin:7px 0; }
+            .pcw-hl { color:#D4A017; font-weight:500; }
+            .pcw-green { color:#3DD68C; font-weight:500; }
+            .pcw-red { color:#FF7B72; font-weight:500; }
+            .pcw-orange { color:#F0A04B; font-weight:500; }
+            .pcw-table { width:100%; border-collapse:collapse; margin:7px 0; font-size:11.5px; }
+            .pcw-table th { background:var(--surface2); color:#D4A017; font-family:monospace; font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:7px 9px; text-align:left; border:1px solid var(--border); }
+            .pcw-table td { padding:7px 9px; border:1px solid var(--border); color:#C9D1D9; line-height:1.6; vertical-align:top; }
+            .pcw-svg-wrap { background:var(--surface); border:1px solid var(--border); border-radius:4px; padding:10px; margin:8px 0; }
+            .pcw-sectionhdr { font-family:monospace; font-size:10px; letter-spacing:.12em; color:#D4A017; text-transform:uppercase; margin:18px 0 8px; padding-bottom:5px; border-bottom:1px solid var(--border); }
+            .pcw-quad { background:var(--surface); border:1px solid var(--border); border-radius:5px; padding:12px 14px; }
+            .pcw-quad-h { font-family:Georgia,serif; font-size:13px; color:#D4A017; font-weight:600; margin-bottom:6px; }
+            .pcw-quad-sub { font-family:monospace; font-size:9.5px; color:#7D8590; letter-spacing:.06em; text-transform:uppercase; margin-bottom:8px; }
+            .pcw-quad ul { list-style:none; padding:0; margin:0; }
+            .pcw-quad li { font-size:11.5px; line-height:1.55; color:#C9D1D9; padding:3px 0 3px 14px; position:relative; }
+            .pcw-quad li:before { content:"›"; color:#D4A017; position:absolute; left:0; font-weight:600; }
+          </style>
+
+          <div class="pcw-card">
+            <div class="pcw-title">Approaches to portfolio construction — the big picture</div>
+            <div class="pcw-body">Active equity managers can be classified along TWO dichotomies that combine into a 2×2 matrix:</div>
+            <span class="pcw-rule"><span class="pcw-hl">Systematic vs Discretionary</span> — is the process rule-based or judgement-based?</span>
+            <span class="pcw-rule"><span class="pcw-hl">Top-down vs Bottom-up</span> — does analysis start from macro/factors or from individual securities?</span>
+            <div class="pcw-info">Both dichotomies are orthogonal: a manager can be systematic top-down (e.g. macro factor timing model), systematic bottom-up (e.g. quant stock screen), discretionary top-down (e.g. sector rotation by judgement), or discretionary bottom-up (e.g. classic stock picker).</div>
+          </div>
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               PART 1 · The 2×2 Matrix (Figure P3.1)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div class="pcw-sectionhdr">Part 1 · The 2×2 matrix (Figure P3.1)</div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:11px">
+            <div class="pcw-quad" style="border-top:3px solid #79C0FF">
+              <div class="pcw-quad-h">Systematic · Top-Down</div>
+              <div class="pcw-quad-sub">Rules + macro entry</div>
+              <ul>
+                <li>Emphasizes <b>macro rewarded factors</b></li>
+                <li><b>Factor timing</b> possible but <b>rare</b></li>
+                <li>Diversified across broad universe</li>
+                <li>Formal portfolio optimization used</li>
+                <li>Few managers in this category</li>
+              </ul>
+            </div>
+
+            <div class="pcw-quad" style="border-top:3px solid #79C0FF">
+              <div class="pcw-quad-h">Discretionary · Top-Down</div>
+              <div class="pcw-quad-sub">Judgement + macro entry</div>
+              <ul>
+                <li>Emphasizes <b>macro rewarded factors</b></li>
+                <li><b>Most likely</b> to use factor timing</li>
+                <li>Diversified or concentrated on <b>smaller subset</b> of securities</li>
+                <li>Less formal portfolio construction</li>
+              </ul>
+            </div>
+
+            <div class="pcw-quad" style="border-top:3px solid #3DD68C">
+              <div class="pcw-quad-h">Systematic · Bottom-Up</div>
+              <div class="pcw-quad-sub">Rules + stock entry</div>
+              <ul>
+                <li>Emphasizes <b>security-specific factors</b></li>
+                <li><b>No factor timing</b></li>
+                <li>Diversified across broad universe</li>
+                <li>Formal portfolio optimization used</li>
+              </ul>
+            </div>
+
+            <div class="pcw-quad" style="border-top:3px solid #3DD68C">
+              <div class="pcw-quad-h">Discretionary · Bottom-Up</div>
+              <div class="pcw-quad-sub">Judgement + stock entry</div>
+              <ul>
+                <li>Emphasizes <b>security-specific characteristics or factors</b></li>
+                <li><b>Potential factor timing</b></li>
+                <li>Diversified or concentrated on <b>smaller subset</b> of securities</li>
+                <li>Less formal portfolio construction</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="pcw-card">
+            <div class="pcw-title">Pattern recognition across the matrix</div>
+            <table class="pcw-table">
+              <thead><tr><th>Feature</th><th>Systematic</th><th>Discretionary</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pcw-hl">Portfolio construction</span></td><td><span class="pcw-green">Formal optimization</span></td><td><span class="pcw-orange">Less formal</span></td></tr>
+                <tr><td><span class="pcw-hl">Universe breadth</span></td><td><span class="pcw-green">Broad, diversified</span></td><td><span class="pcw-orange">Broad OR concentrated subset</span></td></tr>
+                <tr><td><span class="pcw-hl">Factor timing</span></td><td><span class="pcw-red">Rare (top-down) or never (bottom-up)</span></td><td><span class="pcw-green">More common</span></td></tr>
+              </tbody>
+            </table>
+            <table class="pcw-table" style="margin-top:9px">
+              <thead><tr><th>Feature</th><th>Top-Down</th><th>Bottom-Up</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pcw-hl">Factor focus</span></td><td><span class="pcw-hl">Macro rewarded factors</span></td><td><span class="pcw-hl">Security-specific factors / characteristics</span></td></tr>
+                <tr><td><span class="pcw-hl">Starting unit</span></td><td>Macro / sectors / countries</td><td>Individual stocks</td></tr>
+              </tbody>
+            </table>
+            <div class="pcw-tip">Memory anchor: <span class="pcw-hl">Systematic = formal optimization + broad universe</span>. <span class="pcw-hl">Discretionary = less formal + possible concentration</span>. <span class="pcw-hl">Top-down = macro factors</span>. <span class="pcw-hl">Bottom-up = security-specific factors</span>.</div>
+          </div>
+
+          <div class="pcw-card">
+            <div class="pcw-title">Factor timing — who does it?</div>
+            <span class="pcw-rule"><span class="pcw-green">Discretionary top-down → MOST LIKELY</span> to time factors (judgement + macro orientation = natural fit)</span>
+            <span class="pcw-rule"><span class="pcw-orange">Systematic top-down → POSSIBLE but RARE</span> (rules can encode factor timing signals, but most quant strategies don't)</span>
+            <span class="pcw-rule"><span class="pcw-orange">Discretionary bottom-up → POTENTIAL</span> factor timing (the manager may form macro views even if stocks are the entry)</span>
+            <span class="pcw-rule"><span class="pcw-red">Systematic bottom-up → NO factor timing</span> (rule-based stock screening doesn't time factors by definition)</span>
+            <div class="pcw-trap">Exam trap: "systematic bottom-up managers time factors" → FALSE. Systematic + bottom-up = the cell where factor timing is explicitly absent.</div>
+          </div>
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               PART 2 · Objectives & Constraints (Figure P3.2)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div class="pcw-sectionhdr">Part 2 · Objective functions & constraints (Figure P3.2)</div>
+
+          <div class="pcw-card">
+            <div class="pcw-title">Absolute vs Relative framework</div>
+            <div class="pcw-body">Portfolio construction is an optimization problem with a GOAL (objective function) and a set of CONSTRAINTS. The framework choice (absolute or relative) flips both.</div>
+            <table class="pcw-table">
+              <thead><tr><th></th><th>Absolute Framework</th><th>Relative Framework</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pcw-hl">Objective Function</span></td><td>Maximize <span class="pcw-hl">Sharpe ratio</span></td><td>Maximize <span class="pcw-hl">Information ratio</span></td></tr>
+                <tr><td colspan="3" style="background:var(--surface2);color:#D4A017;font-family:monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase">Constraints</td></tr>
+                <tr><td><span class="pcw-hl">Sector / security weights</span></td><td>Maximum size in portfolio</td><td>Maximum deviation from benchmark</td></tr>
+                <tr><td><span class="pcw-hl">Risk</span></td><td>Maximum portfolio volatility specified as multiple (e.g. 0.9) of benchmark volatility</td><td>Maximum <span class="pcw-hl">tracking error</span> (active risk)</td></tr>
+                <tr><td><span class="pcw-hl">Market capitalization</span></td><td>Maximum / minimum set by mandate</td><td>Maximum / minimum set by mandate</td></tr>
+              </tbody>
+            </table>
+            <div class="pcw-info">Same mandate, two different lenses: the absolute framework cares about the portfolio's own characteristics (its Sharpe, its volatility). The relative framework cares about deviation from benchmark (its IR, its tracking error).</div>
+          </div>
+
+          <div class="pcw-card">
+            <div class="pcw-title">Sharpe vs Information Ratio — the two objective functions</div>
+            <div class="pcw-fl">Sharpe ratio  = (Rp − Rf) / σp           ← absolute framework
+Information ratio = (Rp − Rb) / σ(Rp − Rb)  ← relative framework
+                            = active return / tracking error</div>
+            <span class="pcw-rule"><span class="pcw-hl">Sharpe</span> measures excess return per unit of TOTAL risk → use when no benchmark or absolute mandate</span>
+            <span class="pcw-rule"><span class="pcw-hl">IR</span> measures active return per unit of ACTIVE risk → use when benchmarked</span>
+            <div class="pcw-tip">When the question says "benchmark" or "tracking error", the framework is RELATIVE → IR is the right objective. When the question says "absolute return mandate" or "no benchmark", the framework is ABSOLUTE → Sharpe.</div>
+          </div>
+
+          <div class="pcw-card">
+            <div class="pcw-title">Other approaches to optimization</div>
+            <span class="pcw-rule"><span class="pcw-hl">Risk-based objectives</span> (instead of return-based):</span>
+            <span class="pcw-rule">→ Minimize portfolio volatility</span>
+            <span class="pcw-rule">→ Minimize downside risk (VaR, CVaR, semi-variance)</span>
+            <span class="pcw-rule">→ Minimize maximum drawdown</span>
+            <span class="pcw-rule"><span class="pcw-hl">Factor exposure objectives</span>:</span>
+            <span class="pcw-rule">→ Maximize exposure to <b>rewarded factors</b> (size, value, momentum, quality, low-vol)</span>
+            <span class="pcw-rule"><span class="pcw-hl">Custom characteristic objectives</span>:</span>
+            <span class="pcw-rule">→ Maximize exposure to a custom metric (e.g. deep value: significant undervaluation)</span>
+            <div class="pcw-info">These risk-based and factor-based objectives can sit inside either framework (absolute or relative) — they're additional or alternative goals beyond pure Sharpe/IR maximization.</div>
+          </div>
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               PART 3 · Heuristic vs Optimization
+               ═════════════════════════════════════════════════════════════════ -->
+          <div class="pcw-sectionhdr">Part 3 · Heuristic vs Optimization</div>
+
+          <div class="pcw-card">
+            <div class="pcw-title">The two construction methods</div>
+            <table class="pcw-table">
+              <thead><tr><th>Aspect</th><th>Heuristic</th><th>Optimization</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pcw-hl">Method</span></td><td>Less scientific — rank securities by characteristic</td><td>Formal mathematical maximization</td></tr>
+                <tr><td><span class="pcw-hl">Basis</span></td><td>Ranking on a desired metric (e.g. low P/B, high momentum)</td><td>Maximize objective function subject to constraints</td></tr>
+                <tr><td><span class="pcw-hl">Weighting</span></td><td>Often equal-weighted top N or rank-weighted</td><td>Computed to maximize Sharpe / IR / factor exposure</td></tr>
+                <tr><td><span class="pcw-hl">Constraints</span></td><td>Informal (rule of thumb caps)</td><td>Formal (sector limits, TE, vol bands)</td></tr>
+                <tr><td><span class="pcw-hl">Common in</span></td><td>Discretionary + simpler quant strategies</td><td>Systematic strategies, especially top-down</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pcw-card">
+            <div class="pcw-title">Exam phrasing signals</div>
+            <span class="pcw-rule"><span class="pcw-green">→ Heuristic signals</span>: "rank by", "less scientific", "based on weighting", "low P/B selection", "simple sort", "characteristic-based filter"</span>
+            <span class="pcw-rule"><span class="pcw-green">→ Optimization signals</span>: "maximize Sharpe / IR", "formal mathematical", "subject to constraints", "covariance matrix", "tracking error minimization"</span>
+            <div class="pcw-tip">Memory anchor: heuristic = "rank and pick". Optimization = "maximize subject to constraints". The presence of constraints in the description is a strong signal toward optimization.</div>
+          </div>
+
+          <div class="pcw-card">
+            <div class="pcw-title">Where each fits in the 2×2 matrix</div>
+            <table class="pcw-table">
+              <thead><tr><th>Cell</th><th>Typical method</th></tr></thead>
+              <tbody>
+                <tr><td>Systematic · Top-Down</td><td><span class="pcw-green">Formal optimization</span></td></tr>
+                <tr><td>Systematic · Bottom-Up</td><td><span class="pcw-green">Formal optimization</span></td></tr>
+                <tr><td>Discretionary · Top-Down</td><td><span class="pcw-orange">Heuristic or less formal optimization</span></td></tr>
+                <tr><td>Discretionary · Bottom-Up</td><td><span class="pcw-orange">Heuristic (less formal portfolio construction)</span></td></tr>
+              </tbody>
+            </table>
+            <div class="pcw-info">"Less formal portfolio construction" is the recurring phrase in the discretionary cells. It means heuristic methods (or informal optimization) rather than the formal mathematical optimization characteristic of systematic strategies.</div>
+          </div>
+        </div>
+
 
 
         <!-- empty state -->
@@ -5163,7 +5367,7 @@ const DEFAULT_DECK = {
     { name:"Derivatives",        subtopics:["Options Strategies","Futures Hedge","Swaps","Risk Measures"] },
     { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
-    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity","Active Equity Investing: Strategies","Fixed Income"] },
+    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Fixed Income"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
     { name:"Command Words",      subtopics:["Templates","Thin vs Full"] },
   ],
@@ -5864,7 +6068,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
     ed.focus();
   } else {
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -5891,11 +6095,12 @@ function openNote(key, topic, subtopic) {
     'PM Pathway||Yield Curve Strategies': 'ycsWidget',
     'PM Pathway||Credit Strategies': 'creditWidget',
     'PM Pathway||Index-Based Strategies': 'indexWidget',
-    'PM Pathway||Active Equity Investing: Strategies': 'awWidget'
+    'PM Pathway||Active Equity Investing: Strategies': 'awWidget',
+    'PM Pathway||Active Equity Investing: Portfolio Construction': 'pcwWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
