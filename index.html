@@ -5092,6 +5092,7 @@ Exit: when spread reverts to ~μ</div>
             <button class="pcw-tab" onclick="pcwTab('riskbudget',this)">Allocating Risk Budget</button>
             <button class="pcw-tab" onclick="pcwTab('wellpf',this)">Well-Constructed PF</button>
             <button class="pcw-tab" onclick="pcwTab('scale',this)">Scale &amp; AUM Limits</button>
+            <button class="pcw-tab" onclick="pcwTab('errors',this)">Errors &amp; Mastery</button>
           </div>
 
           <div id="pcw-construct" class="pcw-panel active">
@@ -5878,6 +5879,245 @@ Lesser of the two = <b style="color:#D4A017">0.2%</b></div>
 
           </div><!-- /pcw-scale panel -->
 
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 6 · ERRORS & MASTERY — 11 wrong questions reorganized by error pattern
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="pcw-errors" class="pcw-panel">
+
+            <!-- Sub-tab nav: patterns / quiz / all qs / calculator -->
+            <div class="pcw-tabs" style="margin-bottom:14px">
+              <button class="pcw-tab active" onclick="pcwErrSub('patterns',this)">4 Error Patterns</button>
+              <button class="pcw-tab" onclick="pcwErrSub('drill',this)">Drill by Pattern</button>
+              <button class="pcw-tab" onclick="pcwErrSub('quiz',this)">Quiz Me</button>
+              <button class="pcw-tab" onclick="pcwErrSub('allqs',this)">All 11 Qs</button>
+              <button class="pcw-tab" onclick="pcwErrSub('varcalc',this)">Variance Calc</button>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 1 · 4 Error Patterns overview
+                 ──────────────────────────────────────────────────── -->
+            <div id="pcw-err-patterns" class="pcw-panel active">
+              <div class="pcw-card">
+                <div class="pcw-title">Your errors are not 11 isolated mistakes — they're 4 patterns</div>
+                <div class="pcw-body">I analyzed your 11 wrong answers. They cluster into 4 recurring error types. Fix the patterns, fix the questions.</div>
+              </div>
+
+              <div class="pcw-card" style="border-left:3px solid #FF7B72">
+                <div class="pcw-title">Pattern 1 · Confusing similar-sounding concepts</div>
+                <div class="pcw-body">You mix up concepts that look alike but mean different things.</div>
+                <table class="pcw-table">
+                  <thead><tr><th>Confusion</th><th>Affected Qs</th></tr></thead>
+                  <tbody>
+                    <tr><td><span class="pcw-hl">Alpha</span> vs <span class="pcw-hl">Active Return</span></td><td>Q19 (Fraser, you said −0.17%, correct = −0.20%)</td></tr>
+                    <tr><td><span class="pcw-hl">Active Risk</span> vs <span class="pcw-hl">Active Share</span> vs <span class="pcw-hl">Total Volatility</span></td><td>Q14 (Fund A/B), Ash/Blue/March</td></tr>
+                    <tr><td>What reduces <span class="pcw-hl">volatility</span> vs what reduces <span class="pcw-hl">active risk</span></td><td>Ash/Blue/March — low covariance reduces volatility but you need HIGH covariance to reduce active risk</td></tr>
+                    <tr><td><span class="pcw-hl">Top-down</span> vs <span class="pcw-hl">Bottom-up</span> when description has BOTH</td><td>Q Soar (occasional macro doesn't make it top-down)</td></tr>
+                  </tbody>
+                </table>
+                <div class="pcw-trap">Diagnostic: when you see two words that "feel close" in a question, STOP and write the formula or definition for each before answering.</div>
+              </div>
+
+              <div class="pcw-card" style="border-left:3px solid #F0A04B">
+                <div class="pcw-title">Pattern 2 · Variance/Covariance contribution formula</div>
+                <div class="pcw-body">You missed the multi-factor variance decomposition 3 times — same formula, different vignettes.</div>
+                <table class="pcw-table">
+                  <thead><tr><th>Question</th><th>What was asked</th><th>Correct answer</th></tr></thead>
+                  <tbody>
+                    <tr><td>Q20 Herrick</td><td>Country A's contribution to portfolio variance</td><td>47.5%</td></tr>
+                    <tr><td>Q25 LSME</td><td>Market factor's contribution to variance</td><td>9%</td></tr>
+                    <tr><td>Q30 Fund 1</td><td>Market factor's contribution to total risk</td><td>87%</td></tr>
+                  </tbody>
+                </table>
+                <div class="pcw-fl">The formula every time:
+  Contribution of factor k = w_k × Σ_j (w_j × Cov(k, j))
+                          (sum across ALL other factors, including itself)
+
+Then: Proportion = Contribution / Total portfolio variance
+                                (= σ²_portfolio)</div>
+                <div class="pcw-tip">Memory anchor: it's a <b>row of the covariance matrix</b> × the weight vector, then × the weight of factor k again. Never just w_k × Cov(k,k) — that's the trap that gives wrong answers.</div>
+              </div>
+
+              <div class="pcw-card" style="border-left:3px solid #79C0FF">
+                <div class="pcw-title">Pattern 3 · Classifying a strategy from a description</div>
+                <div class="pcw-body">You misclassify fund descriptions when the wording is ambiguous.</div>
+                <table class="pcw-table">
+                  <thead><tr><th>Fund</th><th>Your answer (wrong)</th><th>Correct</th><th>The key signal</th></tr></thead>
+                  <tbody>
+                    <tr><td>Soar</td><td>Top-down systematic</td><td><span class="pcw-green">Bottom-up systematic</span></td><td>"Security-specific factors" = bottom-up. Low idiosyncratic + low concentration = systematic.</td></tr>
+                    <tr><td>Fraser</td><td>Balanced factor exposure</td><td><span class="pcw-green">Firm-specific (pricing power)</span></td><td>"Discretionary" → firm-specific. Balanced factor = systematic.</td></tr>
+                    <tr><td>AE vs CC</td><td>Momentum tilt</td><td><span class="pcw-green">AE = concentrated stock-picking, CC = concentrated factor-betting</span></td><td>CC has R²=0.98 (factors dominate). AE has R²=0.72 + 42 names (idiosyncratic dominates).</td></tr>
+                  </tbody>
+                </table>
+                <div class="pcw-tip">Decision tree: (1) Does it use security-specific or macro factors? → bottom-up vs top-down. (2) Rule-based or judgement? → systematic vs discretionary. (3) Concentrated or diversified? → tells you stock-picker vs factor-better.</div>
+              </div>
+
+              <div class="pcw-card" style="border-left:3px solid #3DD68C">
+                <div class="pcw-title">Pattern 4 · Scale & liquidity arithmetic</div>
+                <div class="pcw-body">You got the chained calculations right (40 days for Reed) but you missed the strategic ANALYSIS in the Voyager question.</div>
+                <span class="pcw-rule">For Voyager: 2 concerns were (1) cash size vs total market cap of holdings ($1.1bn vs $800M), (2) daily volume vs shares outstanding (&lt;0.1% means high impact for any large trade)</span>
+                <span class="pcw-rule">You said "cash has low correlation with benchmark" — that's not a recognized issue. Cash is uninvested capital; the issue is whether you can DEPLOY it without market impact.</span>
+                <div class="pcw-tip">Memory anchor: when you see new contributions vs current holdings, ALWAYS compare to (a) total market cap of current positions and (b) average daily volume of those positions. These are the two capacity constraints.</div>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 2 · Drill by Pattern
+                 ──────────────────────────────────────────────────── -->
+            <div id="pcw-err-drill" class="pcw-panel">
+              <div class="pcw-card">
+                <div class="pcw-title">Pattern 1 deep-drill · The concept confusions</div>
+
+                <div style="font-family:monospace;font-size:9.5px;color:#7D8590;text-transform:uppercase;letter-spacing:.08em;margin:10px 0 5px">a. Alpha vs Active Return</div>
+                <table class="pcw-table">
+                  <thead><tr><th></th><th>Definition</th><th>Formula</th></tr></thead>
+                  <tbody>
+                    <tr><td><span class="pcw-hl">Active Return</span></td><td>Portfolio return minus benchmark return</td><td>R_A = R_p − R_b</td></tr>
+                    <tr><td><span class="pcw-hl">Alpha</span></td><td>Return NOT explained by rewarded factors</td><td>α = R_p − Σ(β_k × F_k)</td></tr>
+                  </tbody>
+                </table>
+                <div class="pcw-info"><b>Q19 Fraser walkthrough</b>: R_p = 0.55%, R_b = 0.72%. Factor return = (0.91×0.61) + (0.15×0.17) + (0.60×0.18) + (0.08×0.72) = 0.75%. So <b>active return = 0.55 − 0.72 = −0.17%</b> BUT <b>alpha = 0.55 − 0.75 = −0.20%</b>. Different concepts, different math.</div>
+
+                <div style="font-family:monospace;font-size:9.5px;color:#7D8590;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 5px">b. Active Risk vs Active Share vs Volatility</div>
+                <table class="pcw-table">
+                  <thead><tr><th></th><th>What it measures</th><th>Reduces if...</th></tr></thead>
+                  <tbody>
+                    <tr><td><span class="pcw-hl">Active Share</span></td><td>Weight difference vs benchmark</td><td>Portfolio weights closer to benchmark</td></tr>
+                    <tr><td><span class="pcw-hl">Active Risk</span> (tracking error)</td><td>Volatility of (R_p − R_b)</td><td>Higher COVARIANCE with benchmark</td></tr>
+                    <tr><td><span class="pcw-hl">Total Volatility</span></td><td>σ(R_p) — standalone portfolio risk</td><td>Lower correlation between holdings</td></tr>
+                  </tbody>
+                </table>
+                <div class="pcw-info"><b>Ash/Blue/March walkthrough</b>: To minimize ACTIVE risk of total Amity fund after substitution → pick fund with HIGH covariance with Amity (Ash). Low covariance (Blue, March) reduces total volatility but NOT active risk.</div>
+
+                <div style="font-family:monospace;font-size:9.5px;color:#7D8590;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 5px">c. Sector bets affect which?</div>
+                <div class="pcw-fl">Sector bets → Active Risk (yes) → Active Share (yes, only if weights differ)
+But: same Active Share + very different Active Risk = different sector/idiosyncratic profile
+Fund A active risk 3× Fund B with same Active Share → A makes sector bets, NOT B</div>
+              </div>
+
+              <div class="pcw-card">
+                <div class="pcw-title">Pattern 2 deep-drill · The variance contribution formula</div>
+                <div class="pcw-body">This formula appears in 3 different forms but it's always the same logic. Learn it once.</div>
+
+                <div class="pcw-fl">FORMULA:
+  Contribution of factor k to portfolio variance =
+      w_k × [w_k × Var(k) + Σ_{j≠k} w_j × Cov(k,j)]
+    = w_k × [Σ_j w_j × Cov(k,j)]   ← combines into one clean form
+
+  Where the bracket [...] is the covariance of factor k with the WHOLE portfolio:
+      Cov(k, portfolio) = Σ_j w_j × Cov(k,j)
+
+  So:
+      Contribution_k = w_k × Cov(k, portfolio)
+      Proportion_k = Contribution_k / Var(portfolio)</div>
+
+                <div class="pcw-info"><b>Q20 Herrick worked example</b>: For Country A with weight 30%, the covariance with portfolio (given) = 0.0276. Contribution = 0.30 × 0.0276 = 0.00828. Portfolio variance = 0.132² = 0.01742. Proportion = 0.00828 / 0.01742 = <b>47.5%</b>.</div>
+
+                <div class="pcw-info"><b>Q30 Fund 1 worked example</b>: Market factor β = 1.080. Sum all 4 covariance terms (×βs):
+                  <div style="margin:5px 0 0 0;font-family:monospace;font-size:11px">
+                    1.080×0.00109×1.080 = 0.001271<br>
+                    1.080×0.00053×0.098 = 0.000056<br>
+                    1.080×0.00022×(−0.401) = −0.000095<br>
+                    1.080×(−0.00025)×0.034 = −0.0000092<br>
+                    Sum (Contribution) = 0.001223
+                  </div>
+                  Total variance = 0.0374² = 0.001399. Proportion = 0.001223 / 0.001399 = <b>87%</b>.
+                </div>
+
+                <div class="pcw-trap">Common errors: (a) using just w_k² × Var(k) without the cross-terms → wrong. (b) Forgetting to multiply by w_k at the end → gives the bracket value alone. (c) Forgetting to square σ → gives wrong denominator.</div>
+              </div>
+
+              <div class="pcw-card">
+                <div class="pcw-title">Pattern 3 deep-drill · Fund classification decision tree</div>
+                <table class="pcw-table">
+                  <thead><tr><th>Signal in description</th><th>Points to</th></tr></thead>
+                  <tbody>
+                    <tr><td>"Security-specific factors / individual securities first"</td><td><span class="pcw-green">Bottom-up</span></td></tr>
+                    <tr><td>"Macro / sectors / countries first"</td><td><span class="pcw-blue">Top-down</span></td></tr>
+                    <tr><td>"Occasionally considers macro" + bottom-up primary</td><td>Still <span class="pcw-green">bottom-up</span></td></tr>
+                    <tr><td>"Discretionary / judgement / firm-specific (e.g., pricing power)"</td><td>Discretionary</td></tr>
+                    <tr><td>"Systematic / rule-based / broad universe / formal optimization"</td><td>Systematic</td></tr>
+                    <tr><td>"Low idiosyncratic risk + low concentration"</td><td>Systematic (high N, diversified)</td></tr>
+                    <tr><td>"Concentrated + high Active Share + low R²"</td><td>Concentrated stock-picking</td></tr>
+                    <tr><td>"Concentrated + high R² (factors dominate)"</td><td>Concentrated factor-betting</td></tr>
+                  </tbody>
+                </table>
+                <div class="pcw-info"><b>AE vs CC walkthrough</b>: AE has R²=0.72 (factors explain only 72% of variance, idiosyncratic dominates) + 42 names + Active Share 0.92 → <b>concentrated stock-picking</b>. CC has R²=0.98 (factors explain 98%) + 124 names + Active Share 0.71 → <b>concentrated factor-betting</b>. The R² is the deciding signal.</div>
+              </div>
+
+              <div class="pcw-card">
+                <div class="pcw-title">Pattern 4 deep-drill · Capacity & cash deployment</div>
+                <div class="pcw-body">Two questions you have to ask when new contributions arrive:</div>
+                <span class="pcw-rule"><span class="pcw-hl">Q1:</span> Is the new cash large relative to the total market cap of current holdings?</span>
+                <span class="pcw-rule">→ If yes, the strategy might not be able to deploy the cash within its current universe</span>
+                <span class="pcw-rule"><span class="pcw-hl">Q2:</span> Is the daily trading volume large enough to absorb the deployment?</span>
+                <span class="pcw-rule">→ If daily volume is &lt;0.1% of shares outstanding, even modest position sizes will move the price</span>
+                <div class="pcw-fl"><b>Voyager numbers</b>:
+  Current portfolio holdings total mkt cap = 500 + 200 + 100 = $800M
+  New cash contribution = $1,100M (= $1.1bn)
+  → New cash > total mkt cap of existing holdings ✗ capacity issue
+  → ADV of A,B,C all &lt; 0.1% of shares outstanding ✗ impact issue</div>
+                <div class="pcw-tip">When asked "discuss concerns about new contributions", the 2 answers should always be: (1) size relative to holdings' market cap (can you deploy?) and (2) liquidity relative to ADV (can you trade without impact?). Don't reach for "correlation" or "active variance" — those aren't the structural issues.</div>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 3 · Quiz Me
+                 ──────────────────────────────────────────────────── -->
+            <div id="pcw-err-quiz" class="pcw-panel">
+              <div class="pcw-card" id="pcwErrQuizBox"></div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 4 · All 11 Qs
+                 ──────────────────────────────────────────────────── -->
+            <div id="pcw-err-allqs" class="pcw-panel">
+              <div class="pcw-cqt">
+                <button class="aw-cqb active" onclick="pcwErrAllQ(0,this)">Q1</button>
+                <button class="aw-cqb" onclick="pcwErrAllQ(1,this)">Q2</button>
+                <button class="aw-cqb" onclick="pcwErrAllQ(2,this)">Q3</button>
+                <button class="aw-cqb" onclick="pcwErrAllQ(3,this)">Q4</button>
+                <button class="aw-cqb" onclick="pcwErrAllQ(4,this)">Q5</button>
+                <button class="aw-cqb" onclick="pcwErrAllQ(5,this)">Q6</button>
+                <button class="aw-cqb" onclick="pcwErrAllQ(6,this)">Q7</button>
+                <button class="aw-cqb" onclick="pcwErrAllQ(7,this)">Q8</button>
+                <button class="aw-cqb" onclick="pcwErrAllQ(8,this)">Q9</button>
+                <button class="aw-cqb" onclick="pcwErrAllQ(9,this)">Q10</button>
+                <button class="aw-cqb" onclick="pcwErrAllQ(10,this)">Q11</button>
+                <button class="aw-cqb" onclick="pcwErrAllQ(11,this)">Q12</button>
+              </div>
+              <div id="pcwErrAllBox" class="pcw-card"></div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 5 · Variance Contribution Calculator
+                 ──────────────────────────────────────────────────── -->
+            <div id="pcw-err-varcalc" class="pcw-panel">
+              <div class="pcw-card">
+                <div class="pcw-title">Variance contribution calculator — Pattern 2 drill</div>
+                <div class="pcw-body">Enter the 4 factor betas + the 4 covariance terms (row of factor k vs each other factor) + total portfolio σ. The calculator does the chain.</div>
+
+                <div style="font-family:monospace;font-size:9.5px;color:#7D8590;text-transform:uppercase;letter-spacing:.08em;margin:10px 0 5px">Factor weights / betas</div>
+                <div class="pcw-sl-row"><span class="pcw-sl-lbl">β_k (factor of interest)</span><input type="range" min="-2" max="2" step="0.01" value="1.08" id="pcwVcBk" oninput="pcwVarCalc()"><span class="pcw-sl-val" id="pcwVcBkO">1.08</span></div>
+                <div class="pcw-sl-row"><span class="pcw-sl-lbl">β_2 (e.g. Size)</span><input type="range" min="-2" max="2" step="0.01" value="0.098" id="pcwVcB2" oninput="pcwVarCalc()"><span class="pcw-sl-val" id="pcwVcB2O">0.098</span></div>
+                <div class="pcw-sl-row"><span class="pcw-sl-lbl">β_3 (e.g. Value)</span><input type="range" min="-2" max="2" step="0.01" value="-0.401" id="pcwVcB3" oninput="pcwVarCalc()"><span class="pcw-sl-val" id="pcwVcB3O">−0.401</span></div>
+                <div class="pcw-sl-row"><span class="pcw-sl-lbl">β_4 (e.g. Momentum)</span><input type="range" min="-2" max="2" step="0.01" value="0.034" id="pcwVcB4" oninput="pcwVarCalc()"><span class="pcw-sl-val" id="pcwVcB4O">0.034</span></div>
+
+                <div style="font-family:monospace;font-size:9.5px;color:#7D8590;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 5px">Covariance row of factor k</div>
+                <div class="pcw-sl-row"><span class="pcw-sl-lbl">Var(k)</span><input type="range" min="0" max="0.01" step="0.00001" value="0.00109" id="pcwVcC1" oninput="pcwVarCalc()"><span class="pcw-sl-val" id="pcwVcC1O">0.00109</span></div>
+                <div class="pcw-sl-row"><span class="pcw-sl-lbl">Cov(k, 2)</span><input type="range" min="-0.005" max="0.005" step="0.00001" value="0.00053" id="pcwVcC2" oninput="pcwVarCalc()"><span class="pcw-sl-val" id="pcwVcC2O">0.00053</span></div>
+                <div class="pcw-sl-row"><span class="pcw-sl-lbl">Cov(k, 3)</span><input type="range" min="-0.005" max="0.005" step="0.00001" value="0.00022" id="pcwVcC3" oninput="pcwVarCalc()"><span class="pcw-sl-val" id="pcwVcC3O">0.00022</span></div>
+                <div class="pcw-sl-row"><span class="pcw-sl-lbl">Cov(k, 4)</span><input type="range" min="-0.005" max="0.005" step="0.00001" value="-0.00025" id="pcwVcC4" oninput="pcwVarCalc()"><span class="pcw-sl-val" id="pcwVcC4O">−0.00025</span></div>
+
+                <div style="font-family:monospace;font-size:9.5px;color:#7D8590;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 5px">Portfolio σ (monthly std dev)</div>
+                <div class="pcw-sl-row"><span class="pcw-sl-lbl">σ_portfolio (%)</span><input type="range" min="0.5" max="20" step="0.01" value="3.74" id="pcwVcSig" oninput="pcwVarCalc()"><span class="pcw-sl-val" id="pcwVcSigO">3.74%</span></div>
+
+                <div class="pcw-sim" id="pcwVarCalcBox"></div>
+                <div class="pcw-tip" style="margin-top:10px">Preset is Q30 Fund 1 (answer 87%). Try Q20 Herrick numbers: β_A=0.30, β_B=0.50, β_C=0.20, Var(A)=0.0625, Cov(A,B)=0.015, Cov(A,C)=0.00675, σ=13.2% → should give 47.5%.</div>
+              </div>
+            </div>
+
+          </div><!-- /pcw-errors panel -->
+
           <script>
             function pcwTab(id, btn){
               document.querySelectorAll('#pcwWidget > .pcw-panel').forEach(function(p){p.classList.remove('active')});
@@ -5963,6 +6203,211 @@ Lesser of the two = <b style="color:#D4A017">0.2%</b></div>
                 '<div class="pcw-sim-row"><span class="pcw-sim-lbl">Weight cap option B</span><span class="pcw-sim-val">'+minW.toFixed(3)+'% + '+bps+'bps = '+capB.toFixed(3)+'%</span></div>'+
                 '<div class="pcw-sim-row"><span class="pcw-sim-lbl">Max portfolio weight</span><span class="pcw-sim-val">lesser of A, B = <b style="color:#79C0FF">'+maxWeight.toFixed(3)+'%</b></span></div>'+
                 '<div class="pcw-sim-row" style="border-top:1px solid var(--border);padding-top:9px;margin-top:6px"><span class="pcw-sim-lbl" style="color:#D4A017">MAX AUM (impairment)</span><span class="pcw-sim-val" style="color:#3DD68C;font-size:14px;font-weight:600">'+fmt$(maxPos_$)+' ÷ '+maxWeight.toFixed(3)+'% = '+fmt$(maxAUM_$)+'</span></div>';
+            }
+
+            // ═════════════════════════════════════════════════════════════════
+            // ERRORS & MASTERY TAB
+            // ═════════════════════════════════════════════════════════════════
+
+            function pcwErrSub(id, btn){
+              document.querySelectorAll('#pcw-errors > .pcw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#pcw-errors > .pcw-tabs > .pcw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('pcw-err-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'quiz') pcwErrQuizStart();
+              if(id === 'allqs') pcwErrAllQ(0, document.querySelector('#pcw-err-allqs .aw-cqb'));
+              if(id === 'varcalc') setTimeout(pcwVarCalc, 50);
+            }
+
+            // 11 questions with full structure
+            var PCW_ERRORS = [
+              {
+                num:1, title:"Voyager — concerns about new contributions",
+                pattern:"Pattern 4 · Scale & liquidity",
+                q:"Voyager has $100M AUM in 3 stocks (total mkt cap $800M, all stocks &lt;0.1% daily volume). New cash contributions = $1.1bn. Discuss 2 concerns.",
+                wrong:"You said: low correlation with benchmark + cash contributing to 100% active variance",
+                right:"(1) Size of new cash vs total mkt cap of holdings — $1.1bn vs $800M means Voyager could buy 100% of all 3 companies and still have cash uninvested. (2) Daily volume &lt; 0.1% of shares outstanding — large purchases will move prices significantly and erode alpha through impact costs.",
+                anchor:"For new contributions: always check (a) cash vs portfolio mkt cap and (b) ADV vs deployment size. Not correlation/active variance."
+              },
+              {
+                num:2, title:"AE vs CC — strategy difference",
+                pattern:"Pattern 3 · Classification",
+                q:"AE: Active Share 0.92, Active Risk 15.1%, 42 holdings, R²=0.72. CC: Active Share 0.71, Active Risk 7.2%, 124 holdings, R²=0.98. Discuss one difference.",
+                wrong:"You said: AE overweights contrarian, CC overweights momentum",
+                right:"AE = concentrated stock-picking (low R² → idiosyncratic dominates, fewer holdings, higher Active Share/Risk). CC = concentrated factor-betting (R²=0.98 → factors explain almost all variance, more holdings).",
+                anchor:"R² is the deciding signal: high R² = factor-driven, low R² = stock-pick-driven."
+              },
+              {
+                num:3, title:"Reed AE — days to purchase max position",
+                pattern:"Pattern 4 · Scale arithmetic (you got this right!)",
+                q:"AUM $2bn, position limit 2% of AUM, max trading = 5% of ADV. Average small-cap = $1bn mkt cap, 2% trades daily. How many days?",
+                wrong:"(you got this right)",
+                right:"Max position = $2bn × 2% = $40M. ADV = $1bn × 2% = $20M. Daily purchase limit = $20M × 5% = $1M. Days = $40M / $1M = <b>40 days</b>.",
+                anchor:"Chain: AUM × position% = $-target, mkt_cap × volume% = ADV, ADV × trading% = daily_max, target ÷ daily_max = days."
+              },
+              {
+                num:4, title:"AE growth in AUM — impact on construction",
+                pattern:"Pattern 3 · Style drift detection",
+                q:"As AE's AUM grew from $235M to $1.77bn, what changed in portfolio construction?",
+                wrong:"(answered partially correct)",
+                right:"Number of positions doubled (18→40); small-cap exposure increased (Size β 0.05→0.20); turnover dropped (40%→20% because small-caps take longer to buy); factor exposures drifted (Quality 0.3→0.0, Momentum 0.0→−0.2, Value 0.2→0.1) — style drift forced by capacity constraints.",
+                anchor:"Growing AUM with same strategy → more positions, lower turnover (illiquidity), style drift to fit the larger universe."
+              },
+              {
+                num:5, title:"Soar Fund classification",
+                pattern:"Pattern 3 · Classification",
+                q:"Soar: emphasizes security-specific factors, low concentration, low idiosyncratic risk, occasionally considers macro events. Classification?",
+                wrong:"A — top-down systematic",
+                right:"B — <b>bottom-up systematic</b>. Security-specific factors = bottom-up. Low idiosyncratic + low concentration = systematic. Occasional macro doesn't override the primary bottom-up driver.",
+                anchor:"\"Security-specific factors\" → bottom-up, regardless of secondary macro consideration."
+              },
+              {
+                num:6, title:"Fund A vs Fund B (Shaw's comments)",
+                pattern:"Pattern 1 · Active Risk vs Active Share",
+                q:"Fund A and B: similar Active Share + similar # positions, but A has 7% active risk (3× B). Which of Shaw's comments is most accurate?",
+                wrong:"A — Fund A's fees, OR C — Fund B's sector bets",
+                right:"B — <b>Fund A's dispersion</b>. Higher active risk = wider dispersion of returns around benchmark. Same Active Share doesn't justify higher fees. Sector bets affect active risk → A makes sector bets, not B.",
+                anchor:"Same Active Share + different Active Risk → the high-AR fund makes sector/idiosyncratic bets."
+              },
+              {
+                num:7, title:"Amity replacement — minimize active risk",
+                pattern:"Pattern 1 · Volatility vs Active Risk",
+                q:"Replace 20% of Amity's index fund. 3 candidates with different covariances. Which minimizes ACTIVE RISK of final portfolio?",
+                wrong:"B (Blue) or C (March)",
+                right:"A — <b>Ash (HIGH covariance with Amity)</b>. Active risk = vol of (R_p − R_b). High covariance with current fund → returns move together with benchmark → lower active risk. Low covariance reduces total VOLATILITY, not active risk.",
+                anchor:"Active Risk wants HIGH covariance with the benchmark/current fund. Total volatility wants LOW covariance between holdings."
+              },
+              {
+                num:8, title:"Fraser Fund — investment process",
+                pattern:"Pattern 3 · Classification",
+                q:"Fraser uses discretionary 4-factor Fama-French approach. Most likely designed around what?",
+                wrong:"A or B (factor exposure / research rules)",
+                right:"C — <b>inclusion of non-financial variables (e.g. pricing power)</b>. Discretionary = firm-specific factors, concentrated portfolio. Systematic = balanced exposure to rewarded factors + research rules + broad universe.",
+                anchor:"Discretionary → firm-specific (pricing power, competitive landscape). Systematic → balanced rewarded factor exposure."
+              },
+              {
+                num:9, title:"Fraser Fund — alpha calculation",
+                pattern:"Pattern 1 · Alpha vs Active Return",
+                q:"R_p=0.55%, R_b=0.72%. Betas to (Market, Size, Value, Momentum)=(0.91, 0.15, 0.60, 0.08). Factor returns=(0.61, 0.17, 0.18, 0.72)%. Alpha?",
+                wrong:"B — −0.17% (that's active return, not alpha)",
+                right:"A — <b>−0.20%</b>. Factor return = 0.91×0.61 + 0.15×0.17 + 0.60×0.18 + 0.08×0.72 = 0.75%. Alpha = R_p − Factor return = 0.55 − 0.75 = −0.20%.",
+                anchor:"Alpha = R_p − Σ(β×F). Active return = R_p − R_b. NEVER interchangeable."
+              },
+              {
+                num:10, title:"Herrick — Country A variance contribution",
+                pattern:"Pattern 2 · Variance contribution formula",
+                q:"Country A weight 30%. Covariance row with Pf given as 0.0276. σ_pf=13.2%. Country A's contribution to portfolio variance?",
+                wrong:"A (20.9%) — used wrong denominator",
+                right:"B — <b>47.5%</b>. Contribution = w_A × Cov(A, Pf) = 0.30 × 0.0276 = 0.00828. Portfolio variance = 0.132² = 0.01742. Proportion = 0.00828 / 0.01742 = 47.5%.",
+                anchor:"Formula: w_k × Cov(k, Pf) ÷ σ²_Pf. NEVER divide by σ_Pf (linear) — must use σ²."
+              },
+              {
+                num:11, title:"LSME — Market factor variance contribution",
+                pattern:"Pattern 2 · Variance contribution formula (multi-term)",
+                q:"LSME Market β=0.29. Cov row of Market with (M,S,V,M) factors. Other factor betas (Size=−0.44, Value=0.55, Momentum=−0.10). σ_pf annualized 12.22%. Market factor's share of variance?",
+                wrong:"16% or 31% (missing cross-covariance terms or forgot to multiply by β_k)",
+                right:"<b>9%</b>. Monthly var = (0.1222/√12)² = 0.001244. Sum of Market covariance terms = (0.29×0.00233)+(−0.44×0.00042)+(0.55×−0.00031)+(−0.10×−0.00063) = 0.0003834. Contribution = 0.29 × 0.0003834 = 0.000111. Proportion = 0.000111 / 0.001244 = 8.9% ≈ 9%.",
+                anchor:"Two multiplications: (1) sum across ALL factors of (β_j × Cov(k,j)). (2) multiply by β_k. THEN divide by σ²_pf."
+              },
+              {
+                num:12, title:"Fund 1 — Market factor contribution (87%)",
+                pattern:"Pattern 2 · Variance contribution formula",
+                q:"Fund 1 betas (M,S,V,M)=(1.080, 0.098, −0.401, 0.034). Market covariance row=(0.00109, 0.00053, 0.00022, −0.00025). σ_pf=3.74% monthly. Market factor's contribution?",
+                wrong:"B (81%) — calculation error",
+                right:"C — <b>87%</b>. Contribution = 1.080 × [1.080×0.00109 + 0.098×0.00053 + (−0.401)×0.00022 + 0.034×(−0.00025)] = 1.080 × 0.001132 = 0.001223. σ² = 0.0374² = 0.001399. Proportion = 0.001223 / 0.001399 = 87%.",
+                anchor:"Same formula as Q11. Practice this until automatic — appears repeatedly in different vignettes."
+              }
+            ];
+
+            // ── Quiz Me ──
+            var pcwErrQord = [], pcwErrQi = 0, pcwErrRevealed = false;
+            function pcwErrQuizStart(){
+              pcwErrQord = [];
+              for(var i=0;i<PCW_ERRORS.length;i++) pcwErrQord.push(i);
+              pcwErrQord.sort(function(){return Math.random()-0.5});
+              pcwErrQi = 0; pcwErrRevealed = false;
+              pcwErrRender();
+            }
+            function pcwErrRender(){
+              if(pcwErrQi >= pcwErrQord.length){
+                document.getElementById('pcwErrQuizBox').innerHTML =
+                  '<div style="text-align:center;padding:20px"><div style="font-family:Georgia,serif;font-size:18px;color:#3DD68C;margin-bottom:8px">All 12 reviewed ✓</div><button class="pcw-btn pcw-btn-primary" onclick="pcwErrQuizStart()">Restart</button></div>';
+                return;
+              }
+              var e = PCW_ERRORS[pcwErrQord[pcwErrQi]];
+              var h = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'+
+                '<span style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#FF7B72;text-transform:uppercase">Q'+e.num+' · '+e.pattern+'</span>'+
+                '<span style="font-family:monospace;font-size:10px;color:#7D8590">'+(pcwErrQi+1)+' / '+pcwErrQord.length+'</span></div>'+
+                '<div style="font-family:Georgia,serif;font-size:14px;color:#D4A017;font-weight:600;margin-bottom:8px">'+e.title+'</div>'+
+                '<div style="font-size:12.5px;line-height:1.65;color:#E6EDF3;margin-bottom:10px">'+e.q+'</div>';
+              if(!pcwErrRevealed){
+                h += '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="pcw-btn pcw-btn-primary" onclick="pcwErrRev()">Show answer</button></div>';
+              } else {
+                h += '<div class="pcw-trap" style="margin-top:8px"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#FF7B72">YOUR WRONG PICK</span>'+e.wrong+'</div>'+
+                  '<div class="pcw-tip" style="margin-top:8px"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#3DD68C">CORRECT ANSWER</span>'+e.right+'</div>'+
+                  '<div class="pcw-info" style="margin-top:8px"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#79C0FF">MEMORY ANCHOR</span>'+e.anchor+'</div>'+
+                  '<div style="margin-top:12px;display:flex;gap:8px"><button class="pcw-btn" onclick="pcwErrNxt()">Next →</button></div>';
+              }
+              document.getElementById('pcwErrQuizBox').innerHTML = h;
+            }
+            function pcwErrRev(){ pcwErrRevealed = true; pcwErrRender(); }
+            function pcwErrNxt(){ pcwErrQi++; pcwErrRevealed = false; pcwErrRender(); }
+
+            // ── All Qs ──
+            function pcwErrAllQ(idx, btn){
+              document.querySelectorAll('#pcw-err-allqs .aw-cqb').forEach(function(b){b.classList.remove('active')});
+              if(btn) btn.classList.add('active');
+              var e = PCW_ERRORS[idx];
+              document.getElementById('pcwErrAllBox').innerHTML =
+                '<div class="aw-cqnum">Q'+e.num+' · '+e.title+' <span class="aw-bwrong">✗ got wrong</span></div>'+
+                '<div style="font-family:monospace;font-size:9.5px;letter-spacing:.06em;color:#7D8590;text-transform:uppercase;margin-bottom:8px">PATTERN: '+e.pattern+'</div>'+
+                '<div class="aw-cqq">'+e.q+'</div>'+
+                '<div class="pcw-trap"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#FF7B72">YOUR WRONG PICK</span>'+e.wrong+'</div>'+
+                '<div class="pcw-tip"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#3DD68C">CORRECT ANSWER</span>'+e.right+'</div>'+
+                '<div class="pcw-info"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#79C0FF">MEMORY ANCHOR</span>'+e.anchor+'</div>';
+            }
+
+            // ── Variance Calculator ──
+            function pcwVarCalc(){
+              var bk = parseFloat(document.getElementById('pcwVcBk').value);
+              var b2 = parseFloat(document.getElementById('pcwVcB2').value);
+              var b3 = parseFloat(document.getElementById('pcwVcB3').value);
+              var b4 = parseFloat(document.getElementById('pcwVcB4').value);
+              var c1 = parseFloat(document.getElementById('pcwVcC1').value);
+              var c2 = parseFloat(document.getElementById('pcwVcC2').value);
+              var c3 = parseFloat(document.getElementById('pcwVcC3').value);
+              var c4 = parseFloat(document.getElementById('pcwVcC4').value);
+              var sig = parseFloat(document.getElementById('pcwVcSig').value);
+
+              document.getElementById('pcwVcBkO').textContent = bk.toFixed(3);
+              document.getElementById('pcwVcB2O').textContent = b2.toFixed(3);
+              document.getElementById('pcwVcB3O').textContent = b3.toFixed(3);
+              document.getElementById('pcwVcB4O').textContent = b4.toFixed(3);
+              document.getElementById('pcwVcC1O').textContent = c1.toFixed(5);
+              document.getElementById('pcwVcC2O').textContent = c2.toFixed(5);
+              document.getElementById('pcwVcC3O').textContent = c3.toFixed(5);
+              document.getElementById('pcwVcC4O').textContent = c4.toFixed(5);
+              document.getElementById('pcwVcSigO').textContent = sig.toFixed(2)+'%';
+
+              var t1 = bk * c1;
+              var t2 = b2 * c2;
+              var t3 = b3 * c3;
+              var t4 = b4 * c4;
+              var sumInner = t1 + t2 + t3 + t4;
+              var contrib = bk * sumInner;
+              var var_pf = (sig/100) * (sig/100);
+              var prop = contrib / var_pf;
+
+              document.getElementById('pcwVarCalcBox').innerHTML =
+                '<div style="font-family:monospace;font-size:9px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Step-by-step</div>'+
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">β_k × Var(k)</span><span class="pcw-sim-val">'+bk.toFixed(3)+' × '+c1.toFixed(5)+' = '+t1.toFixed(7)+'</span></div>'+
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">β_2 × Cov(k,2)</span><span class="pcw-sim-val">'+b2.toFixed(3)+' × '+c2.toFixed(5)+' = '+t2.toFixed(7)+'</span></div>'+
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">β_3 × Cov(k,3)</span><span class="pcw-sim-val">'+b3.toFixed(3)+' × '+c3.toFixed(5)+' = '+t3.toFixed(7)+'</span></div>'+
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">β_4 × Cov(k,4)</span><span class="pcw-sim-val">'+b4.toFixed(3)+' × '+c4.toFixed(5)+' = '+t4.toFixed(7)+'</span></div>'+
+                '<div class="pcw-sim-row" style="border-top:1px solid var(--border);padding-top:6px;margin-top:4px"><span class="pcw-sim-lbl">Sum (inner bracket)</span><span class="pcw-sim-val"><b style="color:#79C0FF">'+sumInner.toFixed(7)+'</b></span></div>'+
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">× β_k = Contribution</span><span class="pcw-sim-val">'+bk.toFixed(3)+' × '+sumInner.toFixed(7)+' = <b style="color:#79C0FF">'+contrib.toFixed(7)+'</b></span></div>'+
+                '<div class="pcw-sim-row"><span class="pcw-sim-lbl">σ²_portfolio</span><span class="pcw-sim-val">('+sig.toFixed(2)+'%)² = '+var_pf.toFixed(7)+'</span></div>'+
+                '<div class="pcw-sim-row" style="border-top:1px solid var(--border);padding-top:9px;margin-top:6px"><span class="pcw-sim-lbl" style="color:#D4A017">Proportion of variance</span><span class="pcw-sim-val" style="color:#3DD68C;font-size:14px;font-weight:600">'+(prop*100).toFixed(2)+'%</span></div>';
             }
           </script>
         </div>
