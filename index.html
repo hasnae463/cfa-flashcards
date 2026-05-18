@@ -6412,6 +6412,965 @@ Fund A active risk 3× Fund B with same Active Share → A makes sector bets, NO
           </script>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════════════════
+             TRADE STRATEGY AND EXECUTION WIDGET (tsw-* prefix)
+             ═══════════════════════════════════════════════════════════════════ -->
+        <div id="tswWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            .tsw-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+            .tsw-tab { font-family:monospace; font-size:10px; letter-spacing:.06em; background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 11px; border-radius:3px; cursor:pointer; transition:all .12s; }
+            .tsw-tab:hover { color:#E6EDF3; border-color:#E6EDF3; }
+            .tsw-tab.active { color:#0D1117; background:#D4A017; border-color:#D4A017; font-weight:500; }
+            .tsw-panel { display:none; }
+            .tsw-panel.active { display:block; }
+            .tsw-card { background:var(--surface); border:1px solid var(--border); border-radius:5px; padding:13px 16px; margin-bottom:11px; }
+            .tsw-title { font-family:Georgia,serif; font-size:14px; color:#D4A017; font-weight:600; margin-bottom:8px; line-height:1.4; }
+            .tsw-body { font-size:12.5px; line-height:1.7; color:#C9D1D9; }
+            .tsw-rule { display:block; border-left:2px solid #8A6810; padding:3px 0 3px 10px; margin:5px 0; font-size:12px; line-height:1.65; color:#C9D1D9; }
+            .tsw-fl { font-family:monospace; font-size:11px; background:rgba(56,139,253,.08); border-left:2px solid #388BFD; padding:8px 11px; border-radius:3px; color:#79C0FF; line-height:1.7; margin:7px 0; white-space:pre-wrap; display:block; }
+            .tsw-trap { background:rgba(192,57,43,.08); border-left:2px solid #C0392B; padding:8px 11px; border-radius:3px; color:#FF7B72; font-size:11.5px; line-height:1.65; margin:7px 0; }
+            .tsw-tip { background:rgba(46,160,67,.08); border-left:2px solid #2EA043; padding:8px 11px; border-radius:3px; color:#7EE787; font-size:11.5px; line-height:1.65; margin:7px 0; }
+            .tsw-info { background:rgba(56,139,253,.08); border-left:2px solid #388BFD; padding:8px 11px; border-radius:3px; color:#79C0FF; font-size:11.5px; line-height:1.65; margin:7px 0; }
+            .tsw-hl { color:#D4A017; font-weight:500; }
+            .tsw-green { color:#3DD68C; font-weight:500; }
+            .tsw-red { color:#FF7B72; font-weight:500; }
+            .tsw-orange { color:#F0A04B; font-weight:500; }
+            .tsw-blue { color:#79C0FF; font-weight:500; }
+            .tsw-table { width:100%; border-collapse:collapse; margin:7px 0; font-size:11.5px; }
+            .tsw-table th { background:var(--surface2); color:#D4A017; font-family:monospace; font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:7px 9px; text-align:left; border:1px solid var(--border); }
+            .tsw-table td { padding:7px 9px; border:1px solid var(--border); color:#C9D1D9; line-height:1.6; vertical-align:top; }
+            /* Animated timeline */
+            .tsw-tl-controls { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
+            .tsw-btn { font-family:monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:7px 14px; border-radius:3px; cursor:pointer; transition:all .12s; }
+            .tsw-btn:hover { color:#D4A017; border-color:#D4A017; }
+            .tsw-btn-primary { background:#D4A017; color:#0D1117; border-color:#D4A017; font-weight:500; }
+            .tsw-btn-primary:hover { opacity:.85; color:#0D1117; }
+            .tsw-tl-svg { background:#0D1117; border:1px solid var(--border); border-radius:5px; padding:12px; margin:6px 0; }
+            .tsw-bm { background:var(--surface); border:1px solid var(--border); border-left:3px solid #2A3441; border-radius:5px; padding:11px 14px; margin-bottom:9px; opacity:0.3; transform:translateY(8px); transition:all .45s ease; }
+            .tsw-bm.revealed { opacity:1; transform:translateY(0); border-left-color:#D4A017; }
+            .tsw-bm-h { display:flex; align-items:center; gap:9px; }
+            .tsw-bm-tag { font-family:monospace; font-size:9px; letter-spacing:.08em; text-transform:uppercase; padding:3px 8px; border-radius:11px; }
+            .tsw-bm-name { font-family:Georgia,serif; font-size:13px; color:#E6EDF3; font-weight:600; }
+            .tsw-bm-body { font-size:12px; line-height:1.65; color:#C9D1D9; margin-top:7px; }
+            .tsw-bm-use { font-family:monospace; font-size:10.5px; color:#3DD68C; background:rgba(46,160,67,.06); padding:5px 8px; border-radius:3px; margin-top:6px; line-height:1.55; }
+            .tsw-cat-pre { color:#79C0FF; border-color:#388BFD; background:rgba(56,139,253,.1); }
+            .tsw-cat-intra { color:#F0A04B; border-color:#D4680A; background:rgba(212,104,10,.1); }
+            .tsw-cat-post { color:#FF7B72; border-color:#C0392B; background:rgba(192,57,43,.1); }
+            .tsw-cat-pt { color:#D4A017; border-color:#D4A017; background:rgba(212,160,23,.1); }
+            .tsw-progress { font-family:monospace; font-size:11px; color:#7D8590; }
+            .tsw-match-row { display:flex; gap:10px; padding:6px 0; align-items:center; border-bottom:1px solid var(--border); font-size:11.5px; }
+            .tsw-match-row:last-child { border-bottom:none; }
+            .tsw-match-mgr { flex:1; color:#C9D1D9; font-family:Georgia,serif; }
+            .tsw-match-arrow { color:#D4A017; font-family:monospace; }
+            .tsw-match-bm { flex:1; color:#D4A017; font-family:monospace; font-size:11px; }
+            /* Urgency driver decomposition */
+            .tsw-drivers { background:rgba(0,0,0,0.2); border-radius:4px; padding:8px 10px; margin:8px 0; }
+            .tsw-drivers-h { font-family:monospace; font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:#7D8590; margin-bottom:6px; }
+            .tsw-drv-row { display:flex; align-items:center; gap:8px; padding:3px 0; font-size:11px; font-family:monospace; }
+            .tsw-drv-lbl { color:#7D8590; min-width:130px; }
+            .tsw-drv-arrow { color:#7D8590; }
+            .tsw-drv-val { flex:1; color:#C9D1D9; font-weight:500; }
+            .tsw-drv-hot { color:#FF7B72; }
+            .tsw-drv-cool { color:#3DD68C; }
+            .tsw-drv-mid { color:#F0A04B; }
+            .tsw-drv-info { color:#79C0FF; }
+          </style>
+
+          <div class="tsw-tabs">
+            <button class="tsw-tab active" onclick="tswTab('refprice',this)">Reference Price Benchmarks</button>
+            <button class="tsw-tab" onclick="tswTab('stratsel',this)">Trading Strategy Selection</button>
+            <button class="tsw-tab" onclick="tswTab('execapp',this)">Execution Approaches</button>
+            <button class="tsw-tab" onclick="tswTab('algos',this)">Which Algorithm?</button>
+            <button class="tsw-tab" onclick="tswTab('markets',this)">Key Markets</button>
+          </div>
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 1 · REFERENCE PRICE BENCHMARKS
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="tsw-refprice" class="tsw-panel active">
+
+            <div class="tsw-card">
+              <div class="tsw-title">Reference prices — what they are and why we need them</div>
+              <div class="tsw-body">A <span class="tsw-hl">reference price</span> is a benchmark price used to (1) determine <span class="tsw-hl">expected trading costs</span> before trading, (2) <span class="tsw-hl">select the optimal trading strategy</span>, and (3) calculate the <span class="tsw-hl">actual cost of trading</span> for post-trade evaluation.</div>
+              <span class="tsw-rule">A trade's "cost" = execution price minus reference price. Choice of reference price drives what you measure.</span>
+              <span class="tsw-rule">4 categories based on WHEN the reference is set: <span class="tsw-hl">Pre-trade</span>, <span class="tsw-hl">Intraday</span>, <span class="tsw-hl">Post-trade</span>, <span class="tsw-hl">Price target</span>.</span>
+              <div class="tsw-info">The category dictates the manager's INTENT: pre-trade = "what did I expect when I decided?", intraday = "how well did I participate?", post-trade = "tracking the close", price-target = "earn alpha vs fair value".</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">Animated trading day — click "Reveal next" to see each benchmark in order</div>
+              <div class="tsw-tl-controls">
+                <button class="tsw-btn tsw-btn-primary" onclick="tswTlNext()">Reveal next →</button>
+                <button class="tsw-btn" onclick="tswTlReset()">Reset</button>
+                <button class="tsw-btn" onclick="tswTlAll()">Reveal all</button>
+                <span class="tsw-progress" id="tswTlProg">0 / 8 benchmarks shown</span>
+              </div>
+
+              <!-- Visual timeline SVG -->
+              <div class="tsw-tl-svg">
+                <svg width="100%" viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+                  <!-- timeline axis -->
+                  <line x1="40" y1="120" x2="660" y2="120" stroke="#7D8590" stroke-width="1.5"/>
+                  <!-- time markers -->
+                  <line x1="60" y1="115" x2="60" y2="125" stroke="#7D8590" stroke-width="1"/>
+                  <text x="60" y="142" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9.5">D-1 close</text>
+                  <line x1="180" y1="115" x2="180" y2="125" stroke="#7D8590" stroke-width="1"/>
+                  <text x="180" y="142" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9.5">Decision</text>
+                  <line x1="280" y1="115" x2="280" y2="125" stroke="#7D8590" stroke-width="1"/>
+                  <text x="280" y="142" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9.5">Open</text>
+                  <line x1="360" y1="115" x2="360" y2="125" stroke="#7D8590" stroke-width="1"/>
+                  <text x="360" y="142" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9.5">Arrival</text>
+                  <text x="490" y="142" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9.5">Intraday</text>
+                  <line x1="610" y1="115" x2="610" y2="125" stroke="#7D8590" stroke-width="1"/>
+                  <text x="610" y="142" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9.5">Close</text>
+
+                  <!-- markers, hidden by default -->
+                  <g id="tswMark0" opacity="0">
+                    <circle cx="180" cy="120" r="6" fill="#79C0FF"/>
+                    <text x="180" y="95" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="10" font-weight="600">Decision price</text>
+                    <text x="180" y="82" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="8.5">PRE-TRADE</text>
+                  </g>
+                  <g id="tswMark1" opacity="0">
+                    <circle cx="60" cy="120" r="6" fill="#79C0FF"/>
+                    <text x="60" y="95" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="10" font-weight="600">Previous close</text>
+                    <text x="60" y="82" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="8.5">PRE-TRADE</text>
+                  </g>
+                  <g id="tswMark2" opacity="0">
+                    <circle cx="280" cy="120" r="6" fill="#79C0FF"/>
+                    <text x="280" y="65" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="10" font-weight="600">Opening price</text>
+                    <text x="280" y="52" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="8.5">PRE-TRADE</text>
+                    <line x1="280" y1="68" x2="280" y2="115" stroke="#79C0FF" stroke-width="0.8" stroke-dasharray="2 2"/>
+                  </g>
+                  <g id="tswMark3" opacity="0">
+                    <circle cx="360" cy="120" r="6" fill="#79C0FF"/>
+                    <text x="360" y="38" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="10" font-weight="600">Arrival price</text>
+                    <text x="360" y="25" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="8.5">PRE-TRADE</text>
+                    <line x1="360" y1="41" x2="360" y2="115" stroke="#79C0FF" stroke-width="0.8" stroke-dasharray="2 2"/>
+                  </g>
+                  <g id="tswMark4" opacity="0">
+                    <rect x="395" y="98" width="190" height="22" rx="3" fill="#F0A04B" opacity="0.18"/>
+                    <text x="490" y="113" text-anchor="middle" fill="#F0A04B" font-family="monospace" font-size="10" font-weight="600">VWAP</text>
+                    <text x="490" y="172" text-anchor="middle" fill="#F0A04B" font-family="monospace" font-size="9">vol-weighted avg</text>
+                  </g>
+                  <g id="tswMark5" opacity="0">
+                    <line x1="395" y1="105" x2="585" y2="105" stroke="#F0A04B" stroke-width="2" stroke-dasharray="6 3"/>
+                    <text x="490" y="185" text-anchor="middle" fill="#F0A04B" font-family="monospace" font-size="9">TWAP — time-weighted avg</text>
+                  </g>
+                  <g id="tswMark6" opacity="0">
+                    <circle cx="610" cy="120" r="6" fill="#FF7B72"/>
+                    <text x="610" y="95" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="10" font-weight="600">Closing price</text>
+                    <text x="610" y="82" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="8.5">POST-TRADE</text>
+                  </g>
+                  <g id="tswMark7" opacity="0">
+                    <line x1="40" y1="55" x2="660" y2="55" stroke="#D4A017" stroke-width="1.2" stroke-dasharray="4 3"/>
+                    <text x="350" y="48" text-anchor="middle" fill="#D4A017" font-family="monospace" font-size="10" font-weight="600">Price target (manager's fair value)</text>
+                    <text x="350" y="35" text-anchor="middle" fill="#D4A017" font-family="monospace" font-size="8.5">PRICE TARGET · independent of time</text>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Reveal cards in same order -->
+              <div class="tsw-bm" id="tswBm0">
+                <div class="tsw-bm-h"><span class="tsw-bm-tag tsw-cat-pre">PRE-TRADE</span><span class="tsw-bm-name">Decision price</span></div>
+                <div class="tsw-bm-body">Price of the security <b>at the moment the portfolio manager made the investment decision</b>. The earliest "anchor" in the workflow.</div>
+                <div class="tsw-bm-use">Use case: standard benchmark for measuring implementation shortfall.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswBm1">
+                <div class="tsw-bm-h"><span class="tsw-bm-tag tsw-cat-pre">PRE-TRADE</span><span class="tsw-bm-name">Previous close</span></div>
+                <div class="tsw-bm-body">Yesterday's closing price. A <b>proxy for decision price</b> often used by <b>quantitative systematic managers</b> running rule-based, data-driven strategies (decisions are made overnight from data ending at prior close).</div>
+                <div class="tsw-bm-use">Use case: quant funds where the decision is generated by the data of D−1.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswBm2">
+                <div class="tsw-bm-h"><span class="tsw-bm-tag tsw-cat-pre">PRE-TRADE</span><span class="tsw-bm-name">Opening price</span></div>
+                <div class="tsw-bm-body">Today's open. Often used as a <b>proxy for decision price by subjective fundamental managers</b> chasing long-term alpha — it doesn't punish or reward traders for overnight news.</div>
+                <div class="tsw-bm-use">Use case: long-term fundamental managers who want a "neutral" reference unaffected by overnight news.</div>
+                <div class="tsw-trap">Trap: if the TRADE itself goes into an opening auction, then the opening auction price IS affected by the trade → <b>opening price is NOT a good benchmark in that case</b>.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswBm3">
+                <div class="tsw-bm-h"><span class="tsw-bm-tag tsw-cat-pre">PRE-TRADE</span><span class="tsw-bm-name">Arrival price</span></div>
+                <div class="tsw-bm-body">Price at the exact moment the order is <b>sent to the market for execution</b>. Active managers trying to generate alpha will often pick arrival price as the benchmark.</div>
+                <div class="tsw-bm-use">Use case: alpha-driven active managers; tightest implementation shortfall measure.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswBm4">
+                <div class="tsw-bm-h"><span class="tsw-bm-tag tsw-cat-intra">INTRADAY</span><span class="tsw-bm-name">VWAP — Volume-Weighted Average Price</span></div>
+                <div class="tsw-bm-body">Average price of all trades, <b>weighted by volume</b>, over the trading horizon. Managers use VWAP when they want to <b>participate with normal volume patterns</b>.</div>
+                <div class="tsw-bm-use">Use case: rebalancing over a day · using sell-side cash to fund buy-side · low-information urgency trades.</div>
+                <div class="tsw-tip">Why VWAP fits rebalancing: you're not pursuing alpha, you're trying to be representative of how the market actually traded that day.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswBm5">
+                <div class="tsw-bm-h"><span class="tsw-bm-tag tsw-cat-intra">INTRADAY</span><span class="tsw-bm-name">TWAP — Time-Weighted Average Price</span></div>
+                <div class="tsw-bm-body">Equal-weighted average price across the trading horizon — <b>ignores volume</b>. Managers use TWAP to <b>remove the impact of outlier trades</b> (large blocks at highs/lows) and during highly volatile volume conditions.</div>
+                <div class="tsw-bm-use">Use case: thinly traded names · highly fluctuating volume · when manager can't participate in extreme block trades.</div>
+                <div class="tsw-info">VWAP vs TWAP: same averaging idea, but VWAP weights by volume, TWAP weights by time. If volume is steady, they converge. If there's a giant block, VWAP gets pulled toward it; TWAP doesn't.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswBm6">
+                <div class="tsw-bm-h"><span class="tsw-bm-tag tsw-cat-post">POST-TRADE</span><span class="tsw-bm-name">Closing price</span></div>
+                <div class="tsw-bm-body">End-of-day price. Most frequent <b>post-trade benchmark</b>. Often used by managers who execute AT the close to <b>reduce tracking error</b> vs the benchmark index (which is also marked to close).</div>
+                <div class="tsw-bm-use">Use case: index funds / index-tracking strategies that fundamentally want zero tracking error.</div>
+                <div class="tsw-trap">Drawback: the closing price isn't known until AFTER trading is done → manager <b>cannot assess trading performance DURING the day</b>. Post-trade only.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswBm7">
+                <div class="tsw-bm-h"><span class="tsw-bm-tag tsw-cat-pt">PRICE TARGET</span><span class="tsw-bm-name">Price target benchmark</span></div>
+                <div class="tsw-bm-body">A price reflecting the manager's view of <b>fair value</b>. Profit-seeking managers chasing short-term alpha will use a price target benchmark.</div>
+                <div class="tsw-fl">Example:
+  Current price: $10
+  Manager's fair value: $10.50
+  Strategy: buy as many shares as possible BELOW $10.50</div>
+                <div class="tsw-bm-use">Use case: short-term alpha extraction · "buy under fair value" or "sell over fair value" tactical strategies.</div>
+              </div>
+            </div>
+
+            <!-- summary table -->
+            <div class="tsw-card">
+              <div class="tsw-title">Quick-reference table — the 8 benchmarks at a glance</div>
+              <table class="tsw-table">
+                <thead><tr><th>Category</th><th>Benchmark</th><th>Set when</th><th>Best for</th></tr></thead>
+                <tbody>
+                  <tr><td rowspan="4"><span class="tsw-hl">Pre-trade</span></td><td><b>Decision price</b></td><td>At investment decision</td><td>Standard implementation shortfall</td></tr>
+                  <tr><td><b>Previous close</b></td><td>End of prior day</td><td>Quant / systematic managers</td></tr>
+                  <tr><td><b>Opening price</b></td><td>Today's open</td><td>Long-term fundamental managers</td></tr>
+                  <tr><td><b>Arrival price</b></td><td>Order sent to market</td><td>Active alpha-seeking managers</td></tr>
+                  <tr><td rowspan="2"><span class="tsw-hl">Intraday</span></td><td><b>VWAP</b></td><td>Volume-weighted over horizon</td><td>Rebalancing, participate with volume</td></tr>
+                  <tr><td><b>TWAP</b></td><td>Time-weighted over horizon</td><td>Volatile volume, thin names, avoid outliers</td></tr>
+                  <tr><td><span class="tsw-hl">Post-trade</span></td><td><b>Closing price</b></td><td>End of day</td><td>Index tracking / minimizing TE</td></tr>
+                  <tr><td><span class="tsw-hl">Price target</span></td><td><b>Fair value target</b></td><td>Manager's estimate</td><td>Short-term alpha extraction</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- matcher: manager type → benchmark -->
+            <div class="tsw-card">
+              <div class="tsw-title">Manager-type matcher — which benchmark does each profile use?</div>
+              <div class="tsw-match-row"><div class="tsw-match-mgr">Quantitative systematic (rule-based, overnight signals)</div><div class="tsw-match-arrow">→</div><div class="tsw-match-bm">Previous close</div></div>
+              <div class="tsw-match-row"><div class="tsw-match-mgr">Subjective fundamental, long-term alpha</div><div class="tsw-match-arrow">→</div><div class="tsw-match-bm">Opening price</div></div>
+              <div class="tsw-match-row"><div class="tsw-match-mgr">Active manager chasing alpha right now</div><div class="tsw-match-arrow">→</div><div class="tsw-match-bm">Arrival price</div></div>
+              <div class="tsw-match-row"><div class="tsw-match-mgr">Profit-seeking, short-term mispricing exploitation</div><div class="tsw-match-arrow">→</div><div class="tsw-match-bm">Price target (fair value)</div></div>
+              <div class="tsw-match-row"><div class="tsw-match-mgr">Rebalancing over a day, no alpha urgency</div><div class="tsw-match-arrow">→</div><div class="tsw-match-bm">VWAP</div></div>
+              <div class="tsw-match-row"><div class="tsw-match-mgr">Trading thin names or volatile volume environment</div><div class="tsw-match-arrow">→</div><div class="tsw-match-bm">TWAP</div></div>
+              <div class="tsw-match-row"><div class="tsw-match-mgr">Index fund minimizing tracking error</div><div class="tsw-match-arrow">→</div><div class="tsw-match-bm">Closing price</div></div>
+              <div class="tsw-match-row"><div class="tsw-match-mgr">Standard implementation shortfall calculation</div><div class="tsw-match-arrow">→</div><div class="tsw-match-bm">Decision price</div></div>
+            </div>
+
+            <!-- exam traps -->
+            <div class="tsw-card">
+              <div class="tsw-title">Exam traps to remember</div>
+              <div class="tsw-trap"><b>Opening auction trap</b>: opening price is normally a good pre-trade benchmark, but if the trade is executed AS PART of the opening auction, the trade itself moves the auction price → it's no longer a clean benchmark.</div>
+              <div class="tsw-trap"><b>Closing price post-trade drawback</b>: the closing price benchmark is unknowable until trading ends → managers can't evaluate trading performance during the horizon, only after.</div>
+              <div class="tsw-trap"><b>VWAP vs TWAP confusion</b>: VWAP weights by volume; TWAP weights equally over time. TWAP is the right choice when you want to avoid being dragged by large blocks at the highs/lows.</div>
+              <div class="tsw-tip">Memory anchor for category → use: <b>Pre-trade</b> = "how good was my decision-vs-execution?" · <b>Intraday</b> = "how well did I participate?" · <b>Post-trade</b> = "where did the day close?" · <b>Price target</b> = "did I beat fair value?"</div>
+            </div>
+
+          </div><!-- /tsw-refprice panel -->
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 2 · TRADING STRATEGY SELECTION (LOS P7.d)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="tsw-stratsel" class="tsw-panel">
+
+            <div class="tsw-card">
+              <div class="tsw-title">The selection framework — match trading strategy to the trade's purpose</div>
+              <div class="tsw-body">Every trade has a <span class="tsw-hl">purpose</span>. The trading strategy (urgency level, reference price benchmark, execution method) should fit that purpose.</div>
+              <div class="tsw-body" style="margin-top:8px"><span class="tsw-hl">Urgency</span> is not a single number — it's the result of 4-5 underlying drivers. Each card below shows the drivers so you see WHY each trade type has its urgency level.</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">The 5 urgency drivers — what makes a trade urgent or not</div>
+              <table class="tsw-table">
+                <thead><tr><th>Driver</th><th>Raises urgency when...</th><th>Lowers urgency when...</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="tsw-hl">Market liquidity</span></td><td>Liquid market (you can move fast)</td><td>Illiquid market (forces patience to avoid impact)</td></tr>
+                  <tr><td><span class="tsw-hl">Time horizon</span></td><td>Short window (intraday, fixed deadline)</td><td>Long window (weeks, months)</td></tr>
+                  <tr><td><span class="tsw-hl">Directional exposure</span></td><td>One-sided trade (open risk during execution)</td><td>Two-sided rebalance (no directional risk)</td></tr>
+                  <tr><td><span class="tsw-hl">Alpha decay risk</span></td><td>Fast decay (mispricing closes in minutes)</td><td>Slow decay (thesis plays out over months) or N/A</td></tr>
+                  <tr><td><span class="tsw-hl">Information leakage cost</span></td><td>Liquid market absorbs your trades anonymously</td><td>Dealers see your size and front-run you</td></tr>
+                </tbody>
+              </table>
+              <div class="tsw-info">Drivers can conflict (e.g. illiquid market raises leakage cost AND raises impact cost — both push toward LOW urgency / slow execution). The dominant driver determines the overall urgency.</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">Reveal the 5 trade types one by one</div>
+              <div class="tsw-tl-controls">
+                <button class="tsw-btn tsw-btn-primary" onclick="tswSsNext()">Reveal next →</button>
+                <button class="tsw-btn" onclick="tswSsReset()">Reset</button>
+                <button class="tsw-btn" onclick="tswSsAll()">Reveal all</button>
+                <span class="tsw-progress" id="tswSsProg">0 / 5 trade types shown</span>
+              </div>
+
+              <div class="tsw-bm" id="tswSs0" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#FF7B72;border:1px solid #C0392B;background:rgba(192,57,43,.1)">URGENCY: HIGH</span>
+                  <span class="tsw-bm-name">Short-term alpha</span>
+                </div>
+                <div class="tsw-bm-body"><b>Objective:</b> Trade short-term mispricing in a liquid equity market (e.g. overreaction to news flow).</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ Why urgency is HIGH — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">HIGH (liquid equity)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Time horizon</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">VERY SHORT (intraday)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Directional exposure</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">YES — one-sided alpha bet</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Alpha decay risk</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">FAST — minutes to hours</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Information leakage cost</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-mid">Tolerable (liquid market absorbs)</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>Reference price:</b> Price target benchmark (manager's fair value) + Arrival price for orders placed in the market</div>
+                <div class="tsw-bm-use"><b>Execution method:</b> Computer algorithm (fast, automated, low-latency)</div>
+              </div>
+
+              <div class="tsw-bm" id="tswSs1" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#3DD68C;border:1px solid #2EA043;background:rgba(46,160,67,.1)">URGENCY: LOW</span>
+                  <span class="tsw-bm-name">Long-term alpha</span>
+                </div>
+                <div class="tsw-bm-body"><b>Objective:</b> Trade over the long term due to changes in fundamental conditions (e.g. sell average-sized positions in illiquid bonds expected to experience deteriorating credit over the next year).</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ Why urgency is LOW — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">LOW (illiquid bonds)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Time horizon</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">LONG (weeks to a year)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Directional exposure</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-mid">YES but slow-moving thesis</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Alpha decay risk</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">SLOW — months</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Information leakage cost</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">HIGH (dealers move prices on you)</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>Reference price:</b> Difficult to use in practice (no clean anchor over weeks/months)</div>
+                <div class="tsw-bm-use"><b>Execution method:</b> Sell securities gradually over a few weeks in small parts to avoid information leakage and pressure on dealer's prices</div>
+                <div class="tsw-tip">Key tension: liquidity is LOW (which would normally raise urgency to "do it quickly before market moves") but leakage cost is HIGH (which forces patience). Patience wins → low urgency, slow execution.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswSs2" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#3DD68C;border:1px solid #2EA043;background:rgba(46,160,67,.1)">URGENCY: LOW</span>
+                  <span class="tsw-bm-name">Risk rebalance</span>
+                </div>
+                <div class="tsw-bm-body"><b>Objective:</b> Rebalance or hedge risk exposure (e.g. reduce risk in liquid FX markets by liquidating long AND short positions to bring fund volatility down to a target level).</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ Why urgency is LOW — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">HIGH (liquid FX markets)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Time horizon</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">FLEXIBLE (a couple of days)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Directional exposure</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">NO — both buying AND selling</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Alpha decay risk</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">N/A — not an alpha trade</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Execution risk</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">LOW (two-sided neutralizes risk)</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>Reference price:</b> TWAP</div>
+                <div class="tsw-bm-use"><b>Execution method:</b> Algorithmically target TWAP over the next couple of days</div>
+                <div class="tsw-tip">Key insight: even though it's a "trade", a two-sided rebalance has NO directional exposure → very low execution risk. One-sided rebalances would carry higher urgency because the trader IS exposed during execution.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswSs3" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#F0A04B;border:1px solid #D4680A;background:rgba(212,104,10,.1)">URGENCY: DAY-END DEADLINE</span>
+                  <span class="tsw-bm-name">Cash flow driven · Client redemption</span>
+                </div>
+                <div class="tsw-bm-body"><b>Objective:</b> Liquidate holdings to meet client redemptions (e.g. liquidate small-cap fund to meet redemptions calculated using the closing prices of portfolio securities). The fund bears the risk that liquidations are NOT made at the closing prices used to calculate the redemption.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ Why urgency is DAY-END — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-mid">VARIABLE (small-cap → low)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Time horizon</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-mid">FIXED to TODAY's close</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Directional exposure</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-mid">YES — must SELL to fund payout</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Alpha decay risk</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">N/A — not an alpha trade</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">NAV tracking risk</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">HIGH if missing close price</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>Reference price:</b> Closing price</div>
+                <div class="tsw-bm-use"><b>Execution method:</b> Execute a reasonable amount of liquidity in the closing auction; execute the remainder before the close of trading (e.g. at VWAP)</div>
+                <div class="tsw-trap">Risk to watch: if the close auction can't absorb all the volume, the rest is traded earlier in the day → may not hit the close benchmark → tracking error to NAV calculation.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswSs4" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#79C0FF;border:1px solid #388BFD;background:rgba(56,139,253,.1)">URGENCY: IMMEDIATE EXPOSURE</span>
+                  <span class="tsw-bm-name">Cash flow driven · New trade mandate</span>
+                </div>
+                <div class="tsw-bm-body"><b>Objective:</b> Invest new client funds (e.g. invest large amount with a mandate to track a small-cap index with 3% tracking error). Performance measurement begins at today's closing price.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ Why urgency is IMMEDIATE — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">LOW in underlying (small-cap)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market liquidity (futures)</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">HIGH (index futures)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Time horizon</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">EXPOSURE: NOW · Build: weeks</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Directional exposure</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">YES — must BUY the index</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Cash drag risk</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">HIGH if uninvested</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Tracking error budget</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">3% (limits how slow you can go)</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>Reference price:</b> Closing price</div>
+                <div class="tsw-bm-use"><b>Execution method:</b> (1) Obtain immediate exposure to the index via a LONG position in <b>index futures</b> to eliminate cash drag; (2) build underlying stock positions OVER TIME to reduce market impact; (3) simultaneously unwind the futures position as cash is deployed</div>
+                <div class="tsw-trap">Two issues: (1) there may not be a closing auction for the futures contract, so the futures trade has to be done <b>as close to the market close as possible</b>; (2) the mandate must <b>allow derivatives positions</b>.</div>
+                <div class="tsw-tip">The split urgency is the key insight: the EXPOSURE is immediate (so futures bridge), but the underlying BUILD is slow (small-cap illiquidity). Two different speeds, one trade.</div>
+              </div>
+            </div>
+
+            <!-- Summary comparison table -->
+            <div class="tsw-card">
+              <div class="tsw-title">Side-by-side comparison — drivers visible for each trade type</div>
+              <table class="tsw-table">
+                <thead><tr><th>Trade type</th><th>Liquidity</th><th>Horizon</th><th>Directional?</th><th>Alpha decay</th><th>→ Urgency</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="tsw-hl">Short-term alpha</span></td><td><span class="tsw-green">High</span></td><td><span class="tsw-red">Intraday</span></td><td><span class="tsw-red">Yes</span></td><td><span class="tsw-red">Fast</span></td><td><span class="tsw-red">HIGH</span></td></tr>
+                  <tr><td><span class="tsw-hl">Long-term alpha</span></td><td><span class="tsw-red">Low</span></td><td><span class="tsw-green">Months</span></td><td><span class="tsw-orange">Yes (slow)</span></td><td><span class="tsw-green">Slow</span></td><td><span class="tsw-green">LOW</span></td></tr>
+                  <tr><td><span class="tsw-hl">Risk rebalance</span></td><td><span class="tsw-green">High</span></td><td><span class="tsw-green">Days</span></td><td><span class="tsw-green">No (2-sided)</span></td><td><span class="tsw-green">N/A</span></td><td><span class="tsw-green">LOW</span></td></tr>
+                  <tr><td><span class="tsw-hl">Redemption</span></td><td><span class="tsw-orange">Variable</span></td><td><span class="tsw-orange">Day-end</span></td><td><span class="tsw-orange">Yes (sell)</span></td><td><span class="tsw-green">N/A</span></td><td><span class="tsw-orange">DAY-END</span></td></tr>
+                  <tr><td><span class="tsw-hl">New mandate</span></td><td><span class="tsw-red">Low (stocks) / High (futures)</span></td><td><span class="tsw-red">Now + slow build</span></td><td><span class="tsw-red">Yes (buy)</span></td><td><span class="tsw-green">N/A</span></td><td><span class="tsw-blue">IMMEDIATE</span></td></tr>
+                </tbody>
+              </table>
+              <table class="tsw-table" style="margin-top:10px">
+                <thead><tr><th>Trade type</th><th>Reference price</th><th>Execution method</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="tsw-hl">Short-term alpha</span></td><td>Price target + arrival</td><td>Computer algorithm</td></tr>
+                  <tr><td><span class="tsw-hl">Long-term alpha</span></td><td>Difficult in practice</td><td>Small slices over weeks</td></tr>
+                  <tr><td><span class="tsw-hl">Risk rebalance</span></td><td>TWAP</td><td>Algorithmic TWAP over days</td></tr>
+                  <tr><td><span class="tsw-hl">Cash flow · redemption</span></td><td>Closing price</td><td>Closing auction + VWAP for the rest</td></tr>
+                  <tr><td><span class="tsw-hl">Cash flow · new mandate</span></td><td>Closing price</td><td>Index futures + gradual unwind into stocks</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Decision matrix using drivers -->
+            <div class="tsw-card">
+              <div class="tsw-title">Quick diagnostic — given a vignette, identify the urgency</div>
+              <table class="tsw-table">
+                <thead><tr><th>If the trade description says...</th><th>Driver signal</th><th>→ Urgency</th><th>→ Strategy hint</th></tr></thead>
+                <tbody>
+                  <tr><td>"Exploiting overreaction / mispricing in liquid market"</td><td>High liquidity + fast alpha decay</td><td><span class="tsw-red">HIGH</span></td><td>Algorithm + arrival/price target</td></tr>
+                  <tr><td>"Sell over the next year due to deteriorating credit"</td><td>Long horizon + illiquid + leakage risk</td><td><span class="tsw-green">LOW</span></td><td>Small slices, no clean benchmark</td></tr>
+                  <tr><td>"Liquidate longs AND shorts to reduce volatility"</td><td>Two-sided → no directional exposure</td><td><span class="tsw-green">LOW</span></td><td>TWAP over days</td></tr>
+                  <tr><td>"Fund redemptions priced at today's close"</td><td>Fixed deadline tied to NAV strike</td><td><span class="tsw-orange">DAY-END</span></td><td>Closing auction + VWAP backup</td></tr>
+                  <tr><td>"Invest new cash now, index mandate, low liquidity in stocks"</td><td>Immediate exposure + slow build needed</td><td><span class="tsw-blue">IMMEDIATE</span></td><td>Futures bridge + gradual unwind</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Exam traps -->
+            <div class="tsw-card">
+              <div class="tsw-title">Exam traps for trading strategy selection</div>
+              <div class="tsw-trap"><b>High urgency ≠ always bad</b>: short-term alpha REQUIRES high urgency. Slowing down kills the alpha. Don't recommend TWAP for an alpha-extraction trade.</div>
+              <div class="tsw-trap"><b>Rebalance ≠ urgent</b>: even though it's a "trade", a two-sided risk rebalance has LOW urgency because there's no directional exposure. Recommending arrival-price aggressive execution would be wrong.</div>
+              <div class="tsw-trap"><b>Long-term alpha has NO clean reference price</b>: this is intentional — over weeks, no single benchmark works. The strategy is about avoiding leakage, not about hitting a price.</div>
+              <div class="tsw-trap"><b>Cash flow redemption AND new mandate both use closing price</b> but for different reasons: redemption = NAV strike, new mandate = performance start. Same benchmark, different urgency profiles.</div>
+              <div class="tsw-tip">Memory anchor by urgency level: <b>High</b> → short-term alpha · <b>Low</b> → long-term alpha + risk rebalance · <b>End-of-day</b> → cash flow redemption · <b>Immediate via derivative</b> → new mandate.</div>
+            </div>
+
+          </div><!-- /tsw-stratsel panel -->
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 3 · EXECUTION APPROACHES (LOS P7.e — high-touch vs electronic)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="tsw-execapp" class="tsw-panel">
+
+            <div class="tsw-card">
+              <div class="tsw-title">Two big families of trade execution</div>
+              <div class="tsw-body">Once you've picked the strategy (urgency + reference price), you still need to choose HOW to execute. Two broad approaches: <span class="tsw-hl">high-touch</span> (human-intensive) vs <span class="tsw-hl">electronic</span> (computer-driven).</div>
+              <table class="tsw-table">
+                <thead><tr><th></th><th>High-touch</th><th>Electronic</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="tsw-hl">Human involvement</span></td><td><span class="tsw-red">HIGH</span> — traders, dealers, brokers</td><td><span class="tsw-green">LOW</span> — algorithms + systems</td></tr>
+                  <tr><td><span class="tsw-hl">Best for</span></td><td>Large trades (block trades), illiquid markets</td><td>More liquid markets, smaller trades</td></tr>
+                  <tr><td><span class="tsw-hl">Why high-touch?</span></td><td>Finding the OTHER side of large/illiquid trades requires discretion + relationships</td><td>Order book + algos can find counterparties efficiently</td></tr>
+                  <tr><td><span class="tsw-hl">Market type</span></td><td>Quote-driven (dealers post quotes)</td><td>Order-driven (limit orders in CLOB)</td></tr>
+                </tbody>
+              </table>
+              <div class="tsw-info">Same trade, two paths: large illiquid → high-touch. Small liquid → electronic. The trade size relative to market liquidity is the master variable.</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">High-touch sub-types — Principal vs Agency</div>
+              <div class="tsw-body">When you go high-touch, there are 2 ways the broker can act:</div>
+
+              <div class="tsw-bm" style="opacity:1;transform:none;border-left-color:#FF7B72;margin-top:10px">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#FF7B72;border:1px solid #C0392B;background:rgba(192,57,43,.1)">PRINCIPAL · BROKER RISK</span>
+                  <span class="tsw-bm-name">Principal trade (broker risk trade)</span>
+                </div>
+                <div class="tsw-bm-body"><b>Mechanism:</b> The dealer/market maker takes the OTHER side of your trade onto their own book — they assume the risk. Their compensation is baked into the bid-ask spread.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ When this is the right choice — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market structure</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">Quote-driven · OTC · off-exchange</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Urgency</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">HIGH (need immediate fill)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">LOW or fragmented</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Risk transfer</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">Broker absorbs execution risk</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>Also used in:</b> Request-for-quote (RFQ) markets — market makers don't post continuous quotes but provide them on request</div>
+              </div>
+
+              <div class="tsw-bm" style="opacity:1;transform:none;border-left-color:#3DD68C;margin-top:10px">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#3DD68C;border:1px solid #2EA043;background:rgba(46,160,67,.1)">AGENCY</span>
+                  <span class="tsw-bm-name">Agency trade</span>
+                </div>
+                <div class="tsw-bm-body"><b>Mechanism:</b> The broker SEARCHES for the other side of the trade. They earn a commission but the execution risk stays with the portfolio manager/trader.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ When this is the right choice — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Urgency</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">LOWER (can wait for natural counterparty)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Risk transfer</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">PM still bears execution risk</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Cost structure</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">Commission (often tighter than spread)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Discretion</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">Broker uses judgement / network</span></div>
+                </div>
+              </div>
+
+              <div class="tsw-tip">Memory anchor: PRINCIPAL = broker BUYS your risk (urgent, illiquid). AGENCY = broker FINDS your buyer (patient, less urgent).</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">Electronic trading basics</div>
+              <span class="tsw-rule"><span class="tsw-hl">Order-driven markets</span>: buyers and sellers post limit orders to a Central Limit Order Book (CLOB). Trades match when orders cross.</span>
+              <span class="tsw-rule"><span class="tsw-hl">Limit order</span>: trade only at a specific price OR BETTER. Buy with limit $20 → execute up to $20. Sell with limit $20 → execute at $20 or higher.</span>
+              <span class="tsw-rule"><span class="tsw-hl">Direct Market Access (DMA)</span>: buy-side traders access the order book DIRECTLY through a broker's technology infrastructure (no broker manual intervention).</span>
+              <span class="tsw-rule"><span class="tsw-hl">Algorithmic trading</span>: programmed rules execute orders electronically (covered in the next tab).</span>
+              <div class="tsw-info">Why electronic dominates in liquid markets: low cost, fast, transparent, scalable. Why it fails for blocks: a large limit order on the book reveals your hand and moves the price against you (information leakage).</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">Quick decision matrix</div>
+              <table class="tsw-table">
+                <thead><tr><th>Trade profile</th><th>Approach</th><th>Sub-type</th></tr></thead>
+                <tbody>
+                  <tr><td>Large block, illiquid market, urgent</td><td><span class="tsw-red">High-touch</span></td><td>Principal (broker risk)</td></tr>
+                  <tr><td>Large block, illiquid market, can wait</td><td><span class="tsw-red">High-touch</span></td><td>Agency</td></tr>
+                  <tr><td>Small order, liquid market, urgent</td><td><span class="tsw-green">Electronic</span></td><td>Arrival price algo or SOR</td></tr>
+                  <tr><td>Small order, liquid market, can wait</td><td><span class="tsw-green">Electronic</span></td><td>Scheduled algo (VWAP/TWAP/POV)</td></tr>
+                  <tr><td>OTC derivatives, FX dealer market</td><td><span class="tsw-red">High-touch</span></td><td>Principal (RFQ)</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div><!-- /tsw-execapp panel -->
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 4 · WHICH ALGORITHM? (LOS P7.e — algorithm selection)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="tsw-algos" class="tsw-panel">
+
+            <div class="tsw-card">
+              <div class="tsw-title">Algorithmic trading — the 2 big purposes</div>
+              <div class="tsw-body">Algorithmic trading = programmed rules to electronically trade orders. Two purposes:</div>
+              <span class="tsw-rule"><span class="tsw-hl">Profit-seeking algos</span>: use real-time market data to decide what to buy/sell. Used by electronic market makers, quant funds, HFTs.</span>
+              <span class="tsw-rule"><span class="tsw-hl">Execution algos</span>: trade according to manager rules to meet the manager's objectives. This is what the exam focuses on.</span>
+              <div class="tsw-info">All 5 algo types below are EXECUTION algos. They don't decide WHAT to trade — the manager already decided. They decide HOW to slice it.</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">The 5 execution algorithm types — animation</div>
+              <div class="tsw-tl-controls">
+                <button class="tsw-btn tsw-btn-primary" onclick="tswAlNext()">Reveal next →</button>
+                <button class="tsw-btn" onclick="tswAlReset()">Reset</button>
+                <button class="tsw-btn" onclick="tswAlAll()">Reveal all</button>
+                <span class="tsw-progress" id="tswAlProg">0 / 5 algorithms shown</span>
+              </div>
+
+              <div class="tsw-bm" id="tswAl0" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#3DD68C;border:1px solid #2EA043;background:rgba(46,160,67,.1)">SCHEDULED</span>
+                  <span class="tsw-bm-name">Scheduled algorithms — POV, VWAP, TWAP</span>
+                </div>
+                <div class="tsw-bm-body">Execute according to rules based on <b>historical volumes</b> or <b>specified time periods</b>. Trade passively throughout the day.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ When this is the right choice — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Order size</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">SMALL relative to ADV</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">HIGH (liquid market)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Urgency</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">LOW (longer horizons tolerated)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Concern</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Minimize market impact</span></div>
+                </div>
+                <div class="tsw-bm-body" style="margin-top:8px"><b>3 sub-types:</b></div>
+                <div class="tsw-bm-use"><b>POV</b> (Percent of Volume / participation): send orders to be e.g. 5% of traded volume. <span class="tsw-green">Advantage:</span> auto-exploits liquidity when available. <span class="tsw-red">Disadvantage:</span> trades at any (potentially adverse) price; may not fill if volume is low.</div>
+                <div class="tsw-bm-use"><b>VWAP</b> (time-slicing on volume profile): carves up trade based on HISTORICAL intraday volumes — more at open/close, less midday. <span class="tsw-green">Advantage:</span> ensures specified shares executed in specified time. <span class="tsw-red">Disadvantage:</span> may force trades in low liquidity, miss high liquidity windows.</div>
+                <div class="tsw-bm-use"><b>TWAP</b> (time-slicing equal): equal shares per time period (e.g. each hour). Same advantage/disadvantage as VWAP but volume-insensitive.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswAl1" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#F0A04B;border:1px solid #D4680A;background:rgba(212,104,10,.1)">LIQUIDITY-SEEKING</span>
+                  <span class="tsw-bm-name">Liquidity-seeking algorithms (opportunistic)</span>
+                </div>
+                <div class="tsw-bm-body">Take advantage of favorable liquidity when it's offered. For a buyer: wait until a large seller appears, then enter a market order. Use BOTH lit and dark venues.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ When this is the right choice — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Order size</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">LARGER</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">LESS LIQUID (sporadic episodes)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Urgency</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">HIGHER</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Information leakage concern</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">HIGH (don't want to display limit orders)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market impact concern</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Mitigated by trading only when liquidity is offered</span></div>
+                </div>
+                <div class="tsw-tip">Memory anchor: "I'm hungry, I'll wait for the buffet" — only trades when the other side shows up.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswAl2" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#FF7B72;border:1px solid #C0392B;background:rgba(192,57,43,.1)">ARRIVAL PRICE</span>
+                  <span class="tsw-bm-name">Arrival price algorithms</span>
+                </div>
+                <div class="tsw-bm-body">Seek to trade close to market prices prevailing at the time the order is entered. Trade <b>MORE AGGRESSIVELY</b> (faster) than other algos, with more shares executed close to the arrival price.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ When this is the right choice — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Order size</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">SMALL (less than 15% of expected volume)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">HIGH (liquid market)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Manager view</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">Prices likely to MOVE AGAINST during horizon</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Profile</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Profit-seeking OR risk-averse minimizing execution risk</span></div>
+                </div>
+                <div class="tsw-tip">Memory anchor: "lock in the price NOW before it gets away" — aggressive, frontloaded execution.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswAl3" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#79C0FF;border:1px solid #388BFD;background:rgba(56,139,253,.1)">DARK / AGGREGATOR</span>
+                  <span class="tsw-bm-name">Dark strategies / liquidity aggregators</span>
+                </div>
+                <div class="tsw-bm-body">Execute trades in <b>dark pools</b> with aggregator algorithms optimizing across multiple dark venues. No order book exposure → no information leakage.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ When this is the right choice — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Order size</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">LARGE</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">ILLIQUID lit markets</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Execution speed</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">LOWER probability of immediate fill</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Urgency</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">CAN WAIT (no need for immediate full fill)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Alternative algos</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">Arrival/scheduled would cause high impact</span></div>
+                </div>
+                <div class="tsw-tip">Memory anchor: "hide and seek in private rooms" — patience trades anonymity for completion risk.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswAl4" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#D4A017;border:1px solid #D4A017;background:rgba(212,160,23,.1)">SMART ORDER ROUTER</span>
+                  <span class="tsw-bm-name">Smart Order Routers (SORs)</span>
+                </div>
+                <div class="tsw-bm-body">Determine the BEST DESTINATION (lit or dark venue) to route an electronic order. For market orders → best price. For limit orders → highest probability of execution.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ When this is the right choice — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Order size</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">SMALL</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market impact</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">LOW</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market dynamics</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Fast-moving market (for market orders)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Multi-venue</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Multiple potential execution venues</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Info leakage</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">LOW concern (small orders don't move markets)</span></div>
+                </div>
+                <div class="tsw-tip">Memory anchor: "GPS for your order" — find the cheapest/fastest route across many venues.</div>
+              </div>
+            </div>
+
+            <!-- Worked example: SFDL / TWEL / UDSL -->
+            <div class="tsw-card">
+              <div class="tsw-title">Worked example — pick the right algo for 3 orders</div>
+              <div class="tsw-body">The PM wants to execute 3 trades. The available strategies are: Scheduled algorithm · High-touch principal · Liquidity-seeking algorithm. Each strategy used only ONCE.</div>
+
+              <table class="tsw-table">
+                <thead><tr><th>Stock</th><th>Side</th><th>Price</th><th>Order size</th><th>ADV</th><th>Order / ADV</th><th>Urgency</th></tr></thead>
+                <tbody>
+                  <tr><td><b>SFDL</b></td><td>Buy</td><td>$8.50</td><td>10,000</td><td>20,000</td><td><span class="tsw-red">50%</span></td><td><span class="tsw-red">HIGH</span></td></tr>
+                  <tr><td><b>TWEL</b></td><td>Buy</td><td>$32.31</td><td>5,000</td><td>100,000</td><td><span class="tsw-green">5%</span></td><td><span class="tsw-green">LOW</span></td></tr>
+                  <tr><td><b>UDSL</b></td><td>Sell</td><td>$2.05</td><td>1,000,000</td><td>1,000,000</td><td><span class="tsw-red">100%</span></td><td>LOW</td></tr>
+                </tbody>
+              </table>
+
+              <div class="tsw-tl-controls" style="margin-top:14px">
+                <button class="tsw-btn tsw-btn-primary" onclick="tswExNext()">Reveal next answer →</button>
+                <button class="tsw-btn" onclick="tswExReset()">Reset</button>
+                <button class="tsw-btn" onclick="tswExAll()">Reveal all</button>
+                <span class="tsw-progress" id="tswExProg">0 / 3 stocks resolved</span>
+              </div>
+
+              <div class="tsw-bm" id="tswEx0" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#F0A04B;border:1px solid #D4680A;background:rgba(212,104,10,.1)">SFDL</span>
+                  <span class="tsw-bm-name">→ Liquidity-seeking algorithm</span>
+                </div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ Why — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Order size vs ADV</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">50% (HIGH — big order)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">LOW (ADV 20k is small)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Urgency</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">HIGH</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market impact concern</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">HIGH (must minimize)</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>Why this algo:</b> trades only when liquidity is offered by the other side → minimizes market impact for a large order in a thin market. High urgency means execution should still occur relatively quickly when liquidity appears.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswEx1" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#3DD68C;border:1px solid #2EA043;background:rgba(46,160,67,.1)">TWEL</span>
+                  <span class="tsw-bm-name">→ Scheduled algorithm (POV, VWAP, or TWAP)</span>
+                </div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ Why — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Order size vs ADV</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">5% (LOW)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">RELATIVELY HIGH</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Urgency</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">LOW</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Adverse price concern</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">LOW (long horizon OK)</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>Why this algo:</b> low urgency means we can tolerate longer trading horizons. Low order size + high liquidity means a scheduled algo can passively trade throughout the day → minimizes market impact cost. Perfect fit.</div>
+              </div>
+
+              <div class="tsw-bm" id="tswEx2" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#FF7B72;border:1px solid #C0392B;background:rgba(192,57,43,.1)">UDSL</span>
+                  <span class="tsw-bm-name">→ High-touch principal approach</span>
+                </div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ Why — the drivers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Order size vs ADV</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">100% (= entire daily volume)</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Information leakage</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">EXTREME risk if displayed</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Market impact</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">PROHIBITIVE for any algo</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Discretion needed</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">YES — find a natural counterparty</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>Why this approach:</b> 100% of ADV = an algorithm would either dump the price (information leakage) or take days to fill (and still leak). Need a human intermediary with relationships to find the other side of a block trade discreetly. The dealer takes on the principal risk and prices it into the spread.</div>
+              </div>
+            </div>
+
+            <!-- Quick decision matrix -->
+            <div class="tsw-card">
+              <div class="tsw-title">Quick decision matrix — algo selection at a glance</div>
+              <table class="tsw-table">
+                <thead><tr><th>Trade profile</th><th>Best algo</th></tr></thead>
+                <tbody>
+                  <tr><td>Small + liquid + low urgency + impact-minimize</td><td><span class="tsw-green">Scheduled (POV/VWAP/TWAP)</span></td></tr>
+                  <tr><td>Large + less liquid + higher urgency + leakage concern</td><td><span class="tsw-orange">Liquidity-seeking</span></td></tr>
+                  <tr><td>Small (&lt;15% ADV) + liquid + price-moves-against worry</td><td><span class="tsw-red">Arrival price</span></td></tr>
+                  <tr><td>Large + illiquid + don't need immediate fill</td><td><span class="tsw-blue">Dark / aggregator</span></td></tr>
+                  <tr><td>Small market or limit orders + multi-venue</td><td><span class="tsw-hl">SOR</span></td></tr>
+                  <tr><td>Massive (≈100% ADV) + need discretion</td><td><span class="tsw-red">High-touch principal (not an algo)</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Recent developments -->
+            <div class="tsw-card">
+              <div class="tsw-title">Recent developments — ML in algorithmic trading</div>
+              <div class="tsw-bm" style="opacity:1;transform:none;border-left-color:#79C0FF;margin-top:6px">
+                <div class="tsw-bm-h"><span class="tsw-bm-name">Clustering</span></div>
+                <div class="tsw-bm-body">Machine learning technique where a computer learns to identify which algorithm is optimal for different trade types, based on key features.</div>
+                <div class="tsw-bm-body" style="margin-top:6px"><b>How it works:</b> groups trades together with similar attributes (e.g. order size as a fraction of ADV). Then quantitatively tests factors for their impact on the performance of different algorithms.</div>
+                <div class="tsw-tip">Key value: clustering can identify features that a human manager hadn't previously considered important.</div>
+              </div>
+              <div class="tsw-bm" style="opacity:1;transform:none;border-left-color:#79C0FF;margin-top:6px">
+                <div class="tsw-bm-h"><span class="tsw-bm-name">High-frequency market forecasting</span></div>
+                <div class="tsw-bm-body">Attempts to model short-term market direction. Challenge: too many potential explanatory variables.</div>
+                <div class="tsw-bm-body" style="margin-top:6px"><b>LASSO (Least Absolute Shrinkage and Selection Operator)</b> = machine learning technique that reduces the number of explanatory variables to a manageable number of significant ones.</div>
+                <div class="tsw-tip">Memory anchor: LASSO = "shrink the variable list to the ones that matter".</div>
+              </div>
+            </div>
+
+          </div><!-- /tsw-algos panel -->
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 5 · KEY MARKETS (LOS P7.f)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="tsw-markets" class="tsw-panel">
+
+            <div class="tsw-card">
+              <div class="tsw-title">5 key markets — each with its own trade implementation pattern</div>
+              <div class="tsw-body">Different asset classes have different market structures → different ways trades get done. The exam asks you to know what's typical for each.</div>
+            </div>
+
+            <div class="tsw-card" style="border-left:3px solid #3DD68C">
+              <div class="tsw-title">Equity markets</div>
+              <span class="tsw-rule"><span class="tsw-hl">Venues:</span> stock exchanges (lit markets) + dark pools</span>
+              <span class="tsw-rule"><span class="tsw-hl">Tech level:</span> MOST advanced of all asset classes</span>
+              <span class="tsw-rule"><span class="tsw-hl">Execution:</span> mostly electronic; <b>algorithmic trading is commonplace</b></span>
+              <span class="tsw-rule"><span class="tsw-hl">Order type:</span> order-driven (CLOB)</span>
+              <div class="tsw-tip">Memory anchor: equities = the gold standard for electronic + algorithmic execution.</div>
+            </div>
+
+            <div class="tsw-card" style="border-left:3px solid #F0A04B">
+              <div class="tsw-title">Fixed-income markets</div>
+              <span class="tsw-rule"><span class="tsw-hl">Structure:</span> large number of heterogeneous securities (many issues per issuer)</span>
+              <span class="tsw-rule"><span class="tsw-hl">Liquidity:</span> generally LOW per security, but typical order size is LARGE</span>
+              <span class="tsw-rule"><span class="tsw-hl">Market type:</span> dealer-based, <b>quote-driven</b></span>
+              <span class="tsw-rule"><span class="tsw-hl">Electronic RFQ:</span> growing, but algorithmic trading is mostly limited to <b>on-the-run U.S. Treasuries + futures contracts</b></span>
+              <span class="tsw-rule"><span class="tsw-hl">Corporate bonds:</span> electronic trading is growing but still a small fraction</span>
+              <div class="tsw-drivers">
+                <div class="tsw-drivers-h">⚙️ Execution method depends on urgency</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Urgent trades</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">Principal (broker risk) trade</span></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Less urgent</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">Broker-agent approach</span></div>
+              </div>
+            </div>
+
+            <div class="tsw-card" style="border-left:3px solid #79C0FF">
+              <div class="tsw-title">Exchange-traded derivatives (options & futures)</div>
+              <span class="tsw-rule"><span class="tsw-hl">Electronic trading:</span> COMMON</span>
+              <span class="tsw-rule"><span class="tsw-hl">Algorithmic trading:</span> NOT as common as in equities — and is used MORE for futures than for options</span>
+              <span class="tsw-rule"><span class="tsw-hl">DMA:</span> buy-side traders generally use Direct Market Access</span>
+              <div class="tsw-tip">Memory anchor: futures > options for algo adoption (futures are simpler, more standardized).</div>
+            </div>
+
+            <div class="tsw-card" style="border-left:3px solid #C0392B">
+              <div class="tsw-title">OTC derivatives</div>
+              <span class="tsw-rule"><span class="tsw-hl">Market type:</span> dealer <b>quote-driven</b></span>
+              <span class="tsw-rule"><span class="tsw-hl">Execution:</span> implemented through <b>high-touch approaches</b></span>
+              <span class="tsw-rule"><span class="tsw-hl">Regulation shift:</span> since 2008 credit crisis, regulators pushed for transparency + central clearing of basic OTC derivatives (e.g. interest rate swaps via Dodd-Frank Act 2010 in the US)</span>
+              <div class="tsw-info">OTC = the most "high-touch" asset class. Discretion + dealer relationships matter more here than in any other market.</div>
+            </div>
+
+            <div class="tsw-card" style="border-left:3px solid #D4A017">
+              <div class="tsw-title">Spot foreign exchange (FX)</div>
+              <span class="tsw-rule"><span class="tsw-hl">Venue:</span> OTC market</span>
+              <span class="tsw-rule"><span class="tsw-hl">Execution:</span> BOTH electronic AND high-touch broker approaches</span>
+              <div class="tsw-body" style="margin-top:8px"><b>3-tier structure (decreasing trade size, increasing spreads):</b></div>
+              <span class="tsw-rule">1. <span class="tsw-hl">Interbank</span> — largest trades, tightest spreads</span>
+              <span class="tsw-rule">2. <span class="tsw-hl">Interdealer</span> — middle tier</span>
+              <span class="tsw-rule">3. <span class="tsw-hl">Bank-to-client</span> — smaller trades, widest spreads</span>
+              <div class="tsw-drivers">
+                <div class="tsw-drivers-h">⚙️ FX execution method by trade type</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Large urgent</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">RFQs with brokers</span></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Large non-urgent</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-mid">Scheduled algorithms OR high-touch agency</span></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Small trades</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-cool">DMA</span></div>
+              </div>
+            </div>
+
+            <!-- Summary comparison -->
+            <div class="tsw-card">
+              <div class="tsw-title">5 markets side by side — quick comparison</div>
+              <table class="tsw-table">
+                <thead><tr><th>Market</th><th>Tech level</th><th>Primary type</th><th>Algo trading?</th><th>Typical method</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="tsw-hl">Equity</span></td><td><span class="tsw-green">Highest</span></td><td>Order-driven</td><td><span class="tsw-green">YES — commonplace</span></td><td>Electronic + algos + dark pools</td></tr>
+                  <tr><td><span class="tsw-hl">Fixed income</span></td><td><span class="tsw-orange">Moderate</span></td><td>Quote-driven (dealer)</td><td>Limited (on-the-run UST + futures only)</td><td>High-touch principal or agency</td></tr>
+                  <tr><td><span class="tsw-hl">Options & Futures</span></td><td><span class="tsw-green">High</span></td><td>Order-driven</td><td>Common (futures &gt; options)</td><td>Electronic + DMA</td></tr>
+                  <tr><td><span class="tsw-hl">OTC derivatives</span></td><td><span class="tsw-red">Low</span></td><td>Quote-driven (dealer)</td><td><span class="tsw-red">NO</span></td><td>High-touch (Dodd-Frank pushing toward central clearing)</td></tr>
+                  <tr><td><span class="tsw-hl">Spot FX</span></td><td><span class="tsw-orange">Mixed</span></td><td>OTC, 3-tier</td><td>Yes (scheduled, for non-urgent)</td><td>Both — depends on tier &amp; size</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">Exam traps for key markets</div>
+              <div class="tsw-trap"><b>Trap 1:</b> "Algorithmic trading is widespread in fixed income" → FALSE. Only on-the-run U.S. Treasuries and futures contracts. Corporate bonds are still mostly high-touch.</div>
+              <div class="tsw-trap"><b>Trap 2:</b> "OTC derivatives are quote-driven order book markets" → FALSE. Quote-driven, yes. But NOT an order book — dealers quote on request, no CLOB.</div>
+              <div class="tsw-trap"><b>Trap 3:</b> "Options have more algo adoption than futures" → FALSE. Reversed: futures &gt; options for algos.</div>
+              <div class="tsw-trap"><b>Trap 4:</b> "FX spot is purely electronic" → FALSE. It's BOTH electronic AND high-touch. Large urgent trades use RFQs with brokers.</div>
+              <div class="tsw-tip">Memory anchor: liquidity + standardization drive algo adoption. Equity wins on both → most algo. OTC derivatives lose on both → least algo.</div>
+            </div>
+
+          </div><!-- /tsw-markets panel -->
+
+          <script>
+            function tswTab(id, btn){
+              document.querySelectorAll('#tswWidget > .tsw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#tswWidget > .tsw-tabs > .tsw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('tsw-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+
+            // ── Timeline animation ──
+            var tswTlCur = 0;
+            var tswTlMax = 8;
+            function tswTlNext(){
+              if(tswTlCur >= tswTlMax) return;
+              var idx = tswTlCur;
+              var bm = document.getElementById('tswBm'+idx);
+              var mk = document.getElementById('tswMark'+idx);
+              if(bm) bm.classList.add('revealed');
+              if(mk) mk.setAttribute('opacity','1');
+              tswTlCur++;
+              document.getElementById('tswTlProg').textContent = tswTlCur + ' / ' + tswTlMax + ' benchmarks shown';
+              if(bm) bm.scrollIntoView({behavior:'smooth', block:'center'});
+            }
+            function tswTlReset(){
+              tswTlCur = 0;
+              for(var i=0;i<tswTlMax;i++){
+                var bm = document.getElementById('tswBm'+i);
+                var mk = document.getElementById('tswMark'+i);
+                if(bm) bm.classList.remove('revealed');
+                if(mk) mk.setAttribute('opacity','0');
+              }
+              document.getElementById('tswTlProg').textContent = '0 / ' + tswTlMax + ' benchmarks shown';
+            }
+            function tswTlAll(){
+              tswTlCur = tswTlMax;
+              for(var i=0;i<tswTlMax;i++){
+                var bm = document.getElementById('tswBm'+i);
+                var mk = document.getElementById('tswMark'+i);
+                if(bm) bm.classList.add('revealed');
+                if(mk) mk.setAttribute('opacity','1');
+              }
+              document.getElementById('tswTlProg').textContent = tswTlMax + ' / ' + tswTlMax + ' ✓';
+            }
+
+            function tswInit(){
+              // nothing required on first paint
+            }
+
+            // ── Trading Strategy Selection animation ──
+            var tswSsCur = 0;
+            var tswSsMax = 5;
+            function tswSsNext(){
+              if(tswSsCur >= tswSsMax) return;
+              var bm = document.getElementById('tswSs'+tswSsCur);
+              if(bm) bm.classList.add('revealed');
+              tswSsCur++;
+              document.getElementById('tswSsProg').textContent = tswSsCur + ' / ' + tswSsMax + ' trade types shown';
+              if(bm) bm.scrollIntoView({behavior:'smooth', block:'center'});
+            }
+            function tswSsReset(){
+              tswSsCur = 0;
+              for(var i=0;i<tswSsMax;i++){
+                var bm = document.getElementById('tswSs'+i);
+                if(bm) bm.classList.remove('revealed');
+              }
+              document.getElementById('tswSsProg').textContent = '0 / ' + tswSsMax + ' trade types shown';
+            }
+            function tswSsAll(){
+              tswSsCur = tswSsMax;
+              for(var i=0;i<tswSsMax;i++){
+                var bm = document.getElementById('tswSs'+i);
+                if(bm) bm.classList.add('revealed');
+              }
+              document.getElementById('tswSsProg').textContent = tswSsMax + ' / ' + tswSsMax + ' ✓';
+            }
+
+            // ── Algorithm types animation (Tab 4) ──
+            var tswAlCur = 0;
+            var tswAlMax = 5;
+            function tswAlNext(){
+              if(tswAlCur >= tswAlMax) return;
+              var bm = document.getElementById('tswAl'+tswAlCur);
+              if(bm) bm.classList.add('revealed');
+              tswAlCur++;
+              document.getElementById('tswAlProg').textContent = tswAlCur + ' / ' + tswAlMax + ' algorithms shown';
+              if(bm) bm.scrollIntoView({behavior:'smooth', block:'center'});
+            }
+            function tswAlReset(){
+              tswAlCur = 0;
+              for(var i=0;i<tswAlMax;i++){
+                var bm = document.getElementById('tswAl'+i);
+                if(bm) bm.classList.remove('revealed');
+              }
+              document.getElementById('tswAlProg').textContent = '0 / ' + tswAlMax + ' algorithms shown';
+            }
+            function tswAlAll(){
+              tswAlCur = tswAlMax;
+              for(var i=0;i<tswAlMax;i++){
+                var bm = document.getElementById('tswAl'+i);
+                if(bm) bm.classList.add('revealed');
+              }
+              document.getElementById('tswAlProg').textContent = tswAlMax + ' / ' + tswAlMax + ' ✓';
+            }
+
+            // ── Worked example animation (Tab 4 — SFDL/TWEL/UDSL) ──
+            var tswExCur = 0;
+            var tswExMax = 3;
+            function tswExNext(){
+              if(tswExCur >= tswExMax) return;
+              var bm = document.getElementById('tswEx'+tswExCur);
+              if(bm) bm.classList.add('revealed');
+              tswExCur++;
+              document.getElementById('tswExProg').textContent = tswExCur + ' / ' + tswExMax + ' stocks resolved';
+              if(bm) bm.scrollIntoView({behavior:'smooth', block:'center'});
+            }
+            function tswExReset(){
+              tswExCur = 0;
+              for(var i=0;i<tswExMax;i++){
+                var bm = document.getElementById('tswEx'+i);
+                if(bm) bm.classList.remove('revealed');
+              }
+              document.getElementById('tswExProg').textContent = '0 / ' + tswExMax + ' stocks resolved';
+            }
+            function tswExAll(){
+              tswExCur = tswExMax;
+              for(var i=0;i<tswExMax;i++){
+                var bm = document.getElementById('tswEx'+i);
+                if(bm) bm.classList.add('revealed');
+              }
+              document.getElementById('tswExProg').textContent = tswExMax + ' / ' + tswExMax + ' ✓';
+            }
+          </script>
+        </div>
+
 
 
         <!-- empty state -->
@@ -6547,7 +7506,7 @@ const DEFAULT_DECK = {
     { name:"Derivatives",        subtopics:["Options Strategies","Futures Hedge","Swaps","Risk Measures"] },
     { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
-    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Fixed Income"] },
+    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution","Fixed Income"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
     { name:"Command Words",      subtopics:["Templates","Thin vs Full"] },
   ],
@@ -7248,7 +8207,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
     ed.focus();
   } else {
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -7260,6 +8219,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'creditWidget' && typeof cwInit === 'function') setTimeout(cwInit, 50);
     if (widgetId === 'indexWidget' && typeof iwInit === 'function') setTimeout(iwInit, 50);
     if (widgetId === 'awWidget' && typeof awInit === 'function') setTimeout(awInit, 50);
+    if (widgetId === 'tswWidget' && typeof tswInit === 'function') setTimeout(tswInit, 50);
   }
 }
 
@@ -7276,11 +8236,12 @@ function openNote(key, topic, subtopic) {
     'PM Pathway||Credit Strategies': 'creditWidget',
     'PM Pathway||Index-Based Strategies': 'indexWidget',
     'PM Pathway||Active Equity Investing: Strategies': 'awWidget',
-    'PM Pathway||Active Equity Investing: Portfolio Construction': 'pcwWidget'
+    'PM Pathway||Active Equity Investing: Portfolio Construction': 'pcwWidget',
+    'PM Pathway||Trade Strategy and Execution': 'tswWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
