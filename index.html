@@ -6482,6 +6482,7 @@ Fund A active risk 3× Fund B with same Active Share → A makes sector bets, NO
             <button class="tsw-tab" onclick="tswTab('execapp',this)">Execution Approaches</button>
             <button class="tsw-tab" onclick="tswTab('algos',this)">Which Algorithm?</button>
             <button class="tsw-tab" onclick="tswTab('markets',this)">Key Markets</button>
+            <button class="tsw-tab" onclick="tswTab('governance',this)">Trade Governance</button>
           </div>
 
           <!-- ═════════════════════════════════════════════════════════════════
@@ -7238,6 +7239,158 @@ Fund A active risk 3× Fund B with same Active Share → A makes sector bets, NO
 
           </div><!-- /tsw-markets panel -->
 
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 6 · TRADE GOVERNANCE (LOS P7.i)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="tsw-governance" class="tsw-panel">
+
+            <div class="tsw-card">
+              <div class="tsw-title">Trade Governance — why it exists</div>
+              <div class="tsw-body">Asset managers must have a <span class="tsw-hl">formal written trade policy</span> that clearly spells out trade procedures. This is BOTH good practice AND usually required by regulation. The policy protects clients from conflicts of interest and ensures consistent execution.</div>
+              <div class="tsw-info">Trade policy has <b>4 key areas</b>. Each is examinable on its own. Together, they describe how the firm finds, evaluates, and monitors execution.</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">The 4 pillars of trade policy — animation</div>
+              <div class="tsw-tl-controls">
+                <button class="tsw-btn tsw-btn-primary" onclick="tswGvNext()">Reveal next pillar →</button>
+                <button class="tsw-btn" onclick="tswGvReset()">Reset</button>
+                <button class="tsw-btn" onclick="tswGvAll()">Reveal all</button>
+                <span class="tsw-progress" id="tswGvProg">0 / 4 pillars shown</span>
+              </div>
+
+              <!-- PILLAR 1 · Meaning of best execution -->
+              <div class="tsw-bm" id="tswGv0" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#D4A017;border:1px solid #D4A017;background:rgba(212,160,23,.1)">PILLAR 1</span>
+                  <span class="tsw-bm-name">Meaning of best execution</span>
+                </div>
+                <div class="tsw-bm-body"><b>Definition:</b> "Best execution" is a regulatory term — the duty of asset managers to seek the best possible <span class="tsw-hl">RESULT</span> for clients when trading. The trade policy must define best execution within the applicable regulatory framework.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ Factors that determine best execution</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Execution price</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Achieved vs benchmark</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Trading costs</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Explicit + implicit</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Speed &amp; likelihood of execution</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Settlement included</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Order size &amp; liquidity</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Size relative to ADV</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Nature of the trade</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Urgency, motivation</span></div>
+                </div>
+                <div class="tsw-trap"><b>Critical exam point:</b> Best execution does NOT simply mean seeking the best price or trading at the lowest cost. It means the best RESULT for the client overall.</div>
+                <div class="tsw-tip"><b>Example:</b> a manager with a large stake in a company they expect to file for bankruptcy might get a better RESULT by selling a BLOCK to a trusted dealer at a discounted price — even if there are higher bids for small quantities on lit venues. Why? Because hitting lit bids would cause information leakage and adverse market movements that would tank the bigger position.</div>
+              </div>
+
+              <!-- PILLAR 2 · Factors that determine the optimal execution approach -->
+              <div class="tsw-bm" id="tswGv1" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#79C0FF;border:1px solid #388BFD;background:rgba(56,139,253,.1)">PILLAR 2</span>
+                  <span class="tsw-bm-name">Factors that determine the optimal execution approach</span>
+                </div>
+                <div class="tsw-bm-body">The trade policy needs to communicate the criteria that determine HOW each trade gets executed. These factors:</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ The criteria the policy must spell out</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Urgency &amp; size of order</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">From the PM's mandate</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Liquidity of security (ADV)</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">+ standardized vs customized</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Characteristics of venues</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Lit / dark / quote-driven</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Investment strategy objectives</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Long-term vs short-term</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Reason for the trade</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Alpha / rebalance / cash flow</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>Regulatory context:</b> different asset classes have different trading conventions. The policy must reflect both the relevant regulations AND the conventions used by the manager.</div>
+                <div class="tsw-trap"><b>MiFID II trap:</b> Markets in Financial Instruments Directive (MiFID II) in Europe has effectively <b>prohibited soft-dollar arrangements</b>.</div>
+                <div class="tsw-bm-use"><b>Soft-dollar arrangements</b> = an asset manager pays for goods or services using REBATES from client commissions in return for executing high volume with a broker. This may jeopardize best execution if the manager uses the client's soft dollars for the manager's OWN benefit (e.g. buying research that helps the manager, not the specific client).</div>
+                <div class="tsw-tip">Memory anchor: asset classes match methods. Equities + exchange-traded derivatives = algorithms. Fixed income = high-touch. The policy must reflect these conventions.</div>
+              </div>
+
+              <!-- PILLAR 3 · List of eligible brokers and execution venues -->
+              <div class="tsw-bm" id="tswGv2" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#3DD68C;border:1px solid #2EA043;background:rgba(46,160,67,.1)">PILLAR 3</span>
+                  <span class="tsw-bm-name">List of eligible brokers and execution venues</span>
+                </div>
+                <div class="tsw-bm-body">The policy includes a <b>list of approved brokers</b> + the process used to create it. Best practice = establish a <b>Best Execution Monitoring Committee (BEMC)</b>.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ BEMC composition</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Portfolio execution</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Traders / PMs</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Compliance</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Regulatory oversight</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Risk personnel</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Counterparty risk view</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>BEMC duties:</b> maintaining, updating, and distributing the list to all parties involved in trade execution.</div>
+                <div class="tsw-info"><b>Why due diligence matters MOST for OTC trades:</b> no exchange rules protection, low transparency, no central clearing → counterparty risk is huge.</div>
+                <div class="tsw-bm-body" style="margin-top:8px"><b>6 principles for broker approval:</b></div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ Criteria the BEMC checks</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Service quality</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Execution price, speed, capacity</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Financial stability</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Mitigates counterparty risk</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Ethical reputation</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Good behavior history</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Settlement facilities</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Adequate infrastructure</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Explicit costs</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Competitive commissions</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Capital commitment</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">Willing to take principal risk in illiquid trades</span></div>
+                </div>
+              </div>
+
+              <!-- PILLAR 4 · Process for monitoring execution arrangements -->
+              <div class="tsw-bm" id="tswGv3" style="border-left-color:#2A3441">
+                <div class="tsw-bm-h">
+                  <span class="tsw-bm-tag" style="color:#FF7B72;border:1px solid #C0392B;background:rgba(192,57,43,.1)">PILLAR 4</span>
+                  <span class="tsw-bm-name">Process for monitoring execution arrangements</span>
+                </div>
+                <div class="tsw-bm-body">The approved broker list must be <b>constantly monitored</b>. Brokers that fail the standard are <b>removed promptly</b>.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drivers-h">⚙️ What's monitored continuously</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Reputational issues</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">News, allegations, regulatory actions</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Trading error frequency</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">Mistakes that cost clients</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Criminal actions</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">Investigations, charges, convictions</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Financial stability</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-hot">Ongoing creditworthiness</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">Execution quality</span><span class="tsw-drv-arrow">→</span><span class="tsw-drv-val tsw-drv-info">vs benchmarks, ongoing</span></div>
+                </div>
+                <div class="tsw-bm-use"><b>Record-keeping:</b> trading records must be kept to (1) facilitate execution quality analysis, (2) address client concerns, (3) respond to regulator inquiries about executions and trade allocations.</div>
+                <div class="tsw-tip">Memory anchor: pillar 3 = onboarding (who's allowed in). Pillar 4 = ongoing surveillance (are they still good enough?). Both work together to enforce best execution.</div>
+              </div>
+            </div>
+
+            <!-- 4-pillars summary table -->
+            <div class="tsw-card">
+              <div class="tsw-title">4 pillars at a glance</div>
+              <table class="tsw-table">
+                <thead><tr><th>#</th><th>Pillar</th><th>What it covers</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td><span class="tsw-hl">Meaning of best execution</span></td><td>Define best RESULT (not lowest price) + the 5 factors that determine it</td></tr>
+                  <tr><td>2</td><td><span class="tsw-hl">Factors determining optimal approach</span></td><td>Urgency, liquidity, venue, strategy, reason for trade + MiFID II / soft dollars</td></tr>
+                  <tr><td>3</td><td><span class="tsw-hl">Approved broker list + BEMC</span></td><td>Composition (PM/compliance/risk) + 6 approval criteria + OTC due diligence</td></tr>
+                  <tr><td>4</td><td><span class="tsw-hl">Monitoring process</span></td><td>Continuous tracking + record-keeping for regulators/clients</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Best execution sub-card -->
+            <div class="tsw-card">
+              <div class="tsw-title">"Best execution" — the most misunderstood concept</div>
+              <div class="tsw-fl">Best execution ≠ Best price
+Best execution ≠ Lowest cost
+Best execution = Best RESULT for the client
+
+The "best result" is a function of:
+  Execution price + Trading costs + Speed + Likelihood of fill
+  + Order size + Liquidity + Nature of the trade
+
+A worse price can be the BEST execution if:
+  - Selling a small piece at a high lit bid would leak info
+  - The lit market would move against the larger remaining position
+  - A block trade with a trusted dealer protects the bigger value</div>
+              <div class="tsw-info">This is a classic CFA exam construction: "manager A got a worse price but better best execution because..." The right answer is the manager who protected the client's overall position, not the one who hit the highest visible bid.</div>
+            </div>
+
+            <!-- Exam traps -->
+            <div class="tsw-card">
+              <div class="tsw-title">Exam traps for Trade Governance</div>
+              <div class="tsw-trap"><b>Trap 1 · "Best execution = best price"</b>. FALSE. Best execution = best RESULT for the client. A worse price can be the right choice if it preserves overall value.</div>
+              <div class="tsw-trap"><b>Trap 2 · Soft dollars allowed everywhere</b>. FALSE. MiFID II in Europe effectively PROHIBITED soft-dollar arrangements. The exam might test US vs EU regulatory differences.</div>
+              <div class="tsw-trap"><b>Trap 3 · BEMC = just the PM</b>. FALSE. BEMC = portfolio execution + compliance + risk personnel. It's cross-functional by design to prevent conflicts of interest.</div>
+              <div class="tsw-trap"><b>Trap 4 · Due diligence equally important everywhere</b>. FALSE. Due diligence on brokers is PARTICULARLY important for OTC trades (no exchange protection, low transparency, no central clearing).</div>
+              <div class="tsw-trap"><b>Trap 5 · One-time broker approval</b>. FALSE. Approved broker list must be CONSTANTLY monitored and updated. Pillar 4 = ongoing surveillance.</div>
+              <div class="tsw-tip">Memory anchor: governance has 4 verbs — DEFINE (pillar 1) → DETERMINE (pillar 2) → APPROVE (pillar 3) → MONITOR (pillar 4).</div>
+            </div>
+
+          </div><!-- /tsw-governance panel -->
+
           <script>
             function tswTab(id, btn){
               document.querySelectorAll('#tswWidget > .tsw-panel').forEach(function(p){p.classList.remove('active')});
@@ -7367,6 +7520,34 @@ Fund A active risk 3× Fund B with same Active Share → A makes sector bets, NO
                 if(bm) bm.classList.add('revealed');
               }
               document.getElementById('tswExProg').textContent = tswExMax + ' / ' + tswExMax + ' ✓';
+            }
+
+            // ── Trade Governance 4 pillars animation (Tab 6) ──
+            var tswGvCur = 0;
+            var tswGvMax = 4;
+            function tswGvNext(){
+              if(tswGvCur >= tswGvMax) return;
+              var bm = document.getElementById('tswGv'+tswGvCur);
+              if(bm) bm.classList.add('revealed');
+              tswGvCur++;
+              document.getElementById('tswGvProg').textContent = tswGvCur + ' / ' + tswGvMax + ' pillars shown';
+              if(bm) bm.scrollIntoView({behavior:'smooth', block:'center'});
+            }
+            function tswGvReset(){
+              tswGvCur = 0;
+              for(var i=0;i<tswGvMax;i++){
+                var bm = document.getElementById('tswGv'+i);
+                if(bm) bm.classList.remove('revealed');
+              }
+              document.getElementById('tswGvProg').textContent = '0 / ' + tswGvMax + ' pillars shown';
+            }
+            function tswGvAll(){
+              tswGvCur = tswGvMax;
+              for(var i=0;i<tswGvMax;i++){
+                var bm = document.getElementById('tswGv'+i);
+                if(bm) bm.classList.add('revealed');
+              }
+              document.getElementById('tswGvProg').textContent = tswGvMax + ' / ' + tswGvMax + ' ✓';
             }
           </script>
         </div>
