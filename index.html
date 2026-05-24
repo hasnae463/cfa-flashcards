@@ -268,6 +268,8 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
         <span class="clp-title" id="notesTitle">Sélectionne un subtopic</span>
         <span style="display:flex;gap:8px;align-items:center">
           <button id="widgetToggleBtn" style="display:none;font-family:var(--mono);font-size:9px;letter-spacing:.08em;background:var(--surface2);border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:3px;cursor:pointer">📊 Widget</button>
+          <button id="noteEditBtn" onclick="noteEnterEdit()" style="display:none;font-family:var(--mono);font-size:14px;background:rgba(212,160,23,0.12);border:1px solid rgba(212,160,23,0.5);color:var(--gold);width:30px;height:30px;border-radius:50%;cursor:pointer;padding:0;align-items:center;justify-content:center;" title="Éditer">✏️</button>
+          <button id="noteDoneBtn" onclick="noteExitEdit()" style="display:none;font-family:var(--mono);font-size:10px;letter-spacing:.08em;background:var(--gold);border:none;color:#0D1117;padding:6px 14px;border-radius:5px;cursor:pointer;font-weight:600">DONE</button>
           <span id="noteSyncStatus" style="font-family:var(--mono);font-size:9px;color:var(--muted);transition:opacity .5s"></span>
         </span>
       </div>
@@ -301,9 +303,9 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
       </div>
 
       <div style="flex:1;overflow-y:auto;min-height:0;">
-        <!-- contenteditable editor -->
+        <!-- contenteditable editor (defaults to read mode) -->
         <div id="noteEditor"
-          contenteditable="true"
+          contenteditable="false"
           spellcheck="false"
           style="display:none;min-height:100%;padding:24px 28px;font-family:var(--sans);font-size:14px;line-height:1.8;color:#C9D1D9;background:var(--surface2);outline:none;"
           oninput="onNoteInput()"
@@ -8379,15 +8381,21 @@ function toggleWidget(widgetId) {
   var ed = document.getElementById('noteEditor');
   var toolbar = document.getElementById('noteToolbar');
   var btn = document.getElementById('widgetToggleBtn');
+  var editBtn = document.getElementById('noteEditBtn');
+  var doneBtn = document.getElementById('noteDoneBtn');
   if (widget.style.display !== 'none') {
+    // Hiding widget → return to note in READ mode
     widget.style.display = 'none';
     ed.style.display = 'block';
-    toolbar.style.display = 'flex';
+    ed.setAttribute('contenteditable', 'false');
+    toolbar.style.display = 'none';
     btn.style.color = '';
     btn.style.borderColor = '';
+    editBtn.style.display = 'inline-flex';
+    doneBtn.style.display = 'none';
     currentWidgetId = null;
-    ed.focus();
   } else {
+    // Showing widget → hide editor + edit controls
     ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
@@ -8396,6 +8404,8 @@ function toggleWidget(widgetId) {
     toolbar.style.display = 'none';
     btn.style.color = 'var(--gold)';
     btn.style.borderColor = 'var(--gold)';
+    editBtn.style.display = 'none';
+    doneBtn.style.display = 'none';
     currentWidgetId = widgetId;
     if (widgetId === 'creditWidget' && typeof cwInit === 'function') setTimeout(cwInit, 50);
     if (widgetId === 'indexWidget' && typeof iwInit === 'function') setTimeout(iwInit, 50);
@@ -8429,17 +8439,59 @@ function openNote(key, topic, subtopic) {
   var ed = document.getElementById('noteEditor');
   var toolbar = document.getElementById('noteToolbar');
   var btn = document.getElementById('widgetToggleBtn');
+  var editBtn = document.getElementById('noteEditBtn');
+  var doneBtn = document.getElementById('noteDoneBtn');
 
   ed.style.display = 'block';
-  toolbar.style.display = 'flex';
+
+  // DEFAULT TO READ MODE
+  ed.setAttribute('contenteditable', 'false');
+  toolbar.style.display = 'none';
+  editBtn.style.display = 'inline-flex';
+  doneBtn.style.display = 'none';
+
   btn.style.color = '';
   btn.style.borderColor = '';
   btn.style.display = widgetId ? 'inline-block' : 'none';
   if (widgetId) { btn.onclick = function() { toggleWidget(widgetId); }; }
 
   ed.innerHTML = notes[key] || '<p><br></p>';
-  ed.focus();
   buildNotesTree();
+}
+
+// ── Read / Edit mode toggle ──
+function noteEnterEdit() {
+  var ed = document.getElementById('noteEditor');
+  var toolbar = document.getElementById('noteToolbar');
+  var editBtn = document.getElementById('noteEditBtn');
+  var doneBtn = document.getElementById('noteDoneBtn');
+  if (!ed) return;
+  ed.setAttribute('contenteditable', 'true');
+  toolbar.style.display = 'flex';
+  editBtn.style.display = 'none';
+  doneBtn.style.display = 'inline-block';
+  // Subtle gold tint on editor to signal edit mode
+  ed.style.background = 'linear-gradient(to bottom, rgba(212,160,23,0.03), var(--surface2) 80px)';
+  ed.focus();
+}
+
+function noteExitEdit() {
+  var ed = document.getElementById('noteEditor');
+  var toolbar = document.getElementById('noteToolbar');
+  var editBtn = document.getElementById('noteEditBtn');
+  var doneBtn = document.getElementById('noteDoneBtn');
+  if (!ed) return;
+  // Save before exiting
+  if (currentNoteKey) {
+    flushNote(currentNoteKey);
+    saveNotes();
+    buildNotesTree();
+  }
+  ed.setAttribute('contenteditable', 'false');
+  toolbar.style.display = 'none';
+  editBtn.style.display = 'inline-flex';
+  doneBtn.style.display = 'none';
+  ed.style.background = 'var(--surface2)';
 }
 
 function flushNote(key) {
