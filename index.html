@@ -6485,6 +6485,7 @@ Fund A active risk 3× Fund B with same Active Share → A makes sector bets, NO
             <button class="tsw-tab" onclick="tswTab('algos',this)">Which Algorithm?</button>
             <button class="tsw-tab" onclick="tswTab('markets',this)">Key Markets</button>
             <button class="tsw-tab" onclick="tswTab('governance',this)">Trade Governance</button>
+            <button class="tsw-tab" onclick="tswTab('errors',this)">Errors &amp; Mastery</button>
           </div>
 
           <!-- ═════════════════════════════════════════════════════════════════
@@ -7393,6 +7394,402 @@ A worse price can be the BEST execution if:
 
           </div><!-- /tsw-governance panel -->
 
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 7 · ERRORS & MASTERY
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="tsw-errors" class="tsw-panel">
+
+            <!-- Sub-tab nav -->
+            <div class="tsw-tabs" style="margin-bottom:14px">
+              <button class="tsw-tab active" onclick="tswErrSub('patterns',this)">4 Patterns</button>
+              <button class="tsw-tab" onclick="tswErrSub('calcArrival',this)">Arrival Cost</button>
+              <button class="tsw-tab" onclick="tswErrSub('calcIS',this)">IS Calculator</button>
+              <button class="tsw-tab" onclick="tswErrSub('calcExpIS',this)">Expanded IS</button>
+              <button class="tsw-tab" onclick="tswErrSub('calcMkt',this)">Market-Adj</button>
+              <button class="tsw-tab" onclick="tswErrSub('drillUrg',this)">Urgency Drill</button>
+              <button class="tsw-tab" onclick="tswErrSub('drillAlgo',this)">Algo Drill</button>
+              <button class="tsw-tab" onclick="tswErrSub('quiz',this)">Quiz Me</button>
+              <button class="tsw-tab" onclick="tswErrSub('allqs',this)">All Qs</button>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 1 · 4 Patterns Overview
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-err-patterns" class="tsw-panel active">
+              <div class="tsw-card">
+                <div class="tsw-title">Your 13 errors cluster into 4 patterns</div>
+                <div class="tsw-body">Fix the patterns, fix the questions. Each pattern has its own drill section.</div>
+              </div>
+
+              <div class="tsw-card" style="border-left:3px solid #FF7B72">
+                <div class="tsw-title">Pattern 1 · IS &amp; cost calculations (the BIG one — 7 errors)</div>
+                <div class="tsw-body">You miss the sign convention for SELL orders and you mix up the components of expanded IS.</div>
+                <table class="tsw-table">
+                  <thead><tr><th>Calculation</th><th>What you missed</th></tr></thead>
+                  <tbody>
+                    <tr><td><span class="tsw-hl">Arrival cost (SRM)</span></td><td>132 bps. Formula : Side × [(Avg − Arrival)/Arrival] × 10,000</td></tr>
+                    <tr><td><span class="tsw-hl">IS for TS sell</span></td><td>$35,450 (you picked $21,650 — forgot opportunity cost or sign for sell)</td></tr>
+                    <tr><td><span class="tsw-hl">IS for West Commerce</span></td><td>206 bps (you picked 139)</td></tr>
+                    <tr><td><span class="tsw-hl">Delay cost (West Commerce)</span></td><td>$1,800 (you picked $2,700)</td></tr>
+                    <tr><td><span class="tsw-hl">Expanded IS favorable (UPX)</span></td><td>Trading cost is most favorable (you picked delay)</td></tr>
+                    <tr><td><span class="tsw-hl">Market-adjusted cost (TEXX)</span></td><td>−44.6 bps wins vs TWAP/VWAP</td></tr>
+                    <tr><td><span class="tsw-hl">Delay cost (LIM)</span></td><td>Calculated arrival − decision price × shares</td></tr>
+                  </tbody>
+                </table>
+                <div class="tsw-trap"><b>The key trap:</b> for SELL orders, shares are <b>NEGATIVE</b>. If you forget the sign, your numbers will be wrong but plausible-looking.</div>
+                <div class="tsw-tip">Drill: 4 separate interactive calculators (Arrival Cost / IS / Expanded IS / Market-Adjusted) preset with each question's numbers.</div>
+              </div>
+
+              <div class="tsw-card" style="border-left:3px solid #F0A04B">
+                <div class="tsw-title">Pattern 2 · Trade urgency drivers (3 errors)</div>
+                <div class="tsw-body">You confuse <b>execution risk</b> (price moves against you while you trade) and <b>market impact</b> (you push the price). They move in OPPOSITE directions with speed.</div>
+                <table class="tsw-table">
+                  <thead><tr><th>Statement</th><th>Truth</th></tr></thead>
+                  <tbody>
+                    <tr><td>"Trading with greater urgency → lower execution risk"</td><td><span class="tsw-green">✓ TRUE</span> (faster = less time exposed to volatility)</td></tr>
+                    <tr><td>"Wide bid-ask spread + longer time → lower execution risk"</td><td><span class="tsw-red">✗ FALSE</span> (longer = MORE exposed to vol)</td></tr>
+                    <tr><td>"Larger size + higher urgency → reduces market impact"</td><td><span class="tsw-red">✗ FALSE</span> (urgency + size → MORE impact)</td></tr>
+                    <tr><td>"High alpha decay → less aggressive trading"</td><td><span class="tsw-red">✗ FALSE</span> (high decay = MUST trade fast, accept impact)</td></tr>
+                    <tr><td>"Info leakage minimized by fast exchange execution"</td><td><span class="tsw-red">✗ FALSE</span> (info leak → dark pools + limit orders)</td></tr>
+                  </tbody>
+                </table>
+                <div class="tsw-fl">Memory anchor — the inverse relationship:
+  FASTER trading → LOWER execution risk  → HIGHER market impact
+  SLOWER trading → HIGHER execution risk → LOWER market impact
+You can't minimize BOTH simultaneously. You pick which to prioritize.</div>
+              </div>
+
+              <div class="tsw-card" style="border-left:3px solid #79C0FF">
+                <div class="tsw-title">Pattern 3 · Algo selection (3 errors)</div>
+                <div class="tsw-body">You pick the wrong algo when the dominant driver isn't "urgency" but something else (info leakage, completion guarantee).</div>
+                <table class="tsw-table">
+                  <thead><tr><th>Case</th><th>Your wrong pick</th><th>Correct</th><th>Decisive driver</th></tr></thead>
+                  <tbody>
+                    <tr><td>Music Plus (20% vol, urgent, leakage concern)</td><td>POV or arrival price</td><td><span class="tsw-green">Liquidity-seeking</span></td><td>Order size &gt; 15% of volume + leakage concern</td></tr>
+                    <tr><td>Dynopax (illiquid, must complete in 1 day)</td><td>VWAP or POV</td><td><span class="tsw-green">TWAP</span></td><td>Completion guarantee in time window</td></tr>
+                    <tr><td>Music Plus open market</td><td>Closing auction or passive</td><td><span class="tsw-green">Open market (active)</span></td><td>HIGH urgency on intraday alpha</td></tr>
+                  </tbody>
+                </table>
+                <div class="tsw-tip">Decision tree: Order size &gt; 15% of vol? → Liquidity-seeking. Must complete in fixed window? → TWAP. High intraday urgency? → Active open market (NOT closing auction).</div>
+              </div>
+
+              <div class="tsw-card" style="border-left:3px solid #3DD68C">
+                <div class="tsw-title">Pattern 4 · Trade policy themes (mineur — 2 erreurs)</div>
+                <div class="tsw-body">You miss what's INAPPROPRIATE in a trade policy.</div>
+                <table class="tsw-table">
+                  <thead><tr><th>Theme statement</th><th>Appropriate?</th></tr></thead>
+                  <tbody>
+                    <tr><td>"Disclose ALL trade errors to clients"</td><td><span class="tsw-red">✗ INAPPROPRIATE</span> — errors go to compliance, priority = no adverse impact for client</td></tr>
+                    <tr><td>"Lowest possible trading cost only"</td><td><span class="tsw-red">✗ INAPPROPRIATE</span> — best execution ≠ lowest cost</td></tr>
+                    <tr><td>"Same execution approach for all asset classes"</td><td><span class="tsw-red">✗ INAPPROPRIATE</span> — depends on asset class &amp; market structure</td></tr>
+                    <tr><td>"Pre-approved broker list, reviewed regularly"</td><td><span class="tsw-green">✓ APPROPRIATE</span></td></tr>
+                    <tr><td>"Pro-rata allocation for partially-executed pooled orders"</td><td><span class="tsw-green">✓ APPROPRIATE</span></td></tr>
+                  </tbody>
+                </table>
+                <div class="tsw-trap">Trap: "treatment of trade errors" policy is NEEDED (errors must be documented in trade error log + reported to compliance) — but NOT necessarily disclosed to clients. Two different things.</div>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 2 · Arrival Cost Calculator
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-err-calcArrival" class="tsw-panel">
+              <div class="tsw-card">
+                <div class="tsw-title">Arrival Cost calculator</div>
+                <div class="tsw-fl">Arrival cost = Side × [(Avg price − Arrival price) / Arrival price] × 10,000 bps
+
+Side = +1 for BUY, −1 for SELL
+Positive arrival cost = trader paid MORE than the arrival price (cost)
+Negative arrival cost = trader paid LESS than the arrival price (benefit)</div>
+
+                <div class="tsw-anim-controls">
+                  <button class="tsw-btn pcw-btn-primary" style="background:#D4A017;color:#0D1117" onclick="tswCalcArrPreset('srm')">Preset: SRM (132 bps)</button>
+                  <button class="tsw-btn" onclick="tswCalcArrPreset('blank')">Clear</button>
+                </div>
+
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Side (BUY=+1 / SELL=−1)</span>
+                  <select id="tswArrSide" onchange="tswCalcArr()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace">
+                    <option value="1">+1 (BUY)</option>
+                    <option value="-1">−1 (SELL)</option>
+                  </select>
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Average execution price ($)</span>
+                  <input type="number" id="tswArrAvg" value="249.75" step="0.01" oninput="tswCalcArr()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:110px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Arrival price ($)</span>
+                  <input type="number" id="tswArrArr" value="246.50" step="0.01" oninput="tswCalcArr()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:110px;text-align:right">
+                </div>
+
+                <div class="tsw-bm" style="opacity:1;transform:none;border-left-color:#D4A017;margin-top:14px" id="tswArrBox"></div>
+
+                <div class="tsw-tip" style="margin-top:10px">Default preset = SRM order (Bahk's buy at $246.50, avg execution $249.75) → expected answer ≈ 132 bps. Try changing Side to SELL → answer flips sign.</div>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 3 · Implementation Shortfall Calculator
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-err-calcIS" class="tsw-panel">
+              <div class="tsw-card">
+                <div class="tsw-title">Implementation Shortfall calculator</div>
+                <div class="tsw-fl">IS = Execution cost + Opportunity cost + Fees
+
+Execution cost = Σ(s_j × p_j) − (Σs_j × p_decision)
+  where s_j = shares of trade j (NEGATIVE for SELL)
+
+Opportunity cost = (S − Σs_j) × (p_n − p_decision)
+  S = total shares ordered (NEGATIVE for SELL)
+  p_n = current/closing price
+  p_decision = decision price
+
+Fees = commission per share × executed shares</div>
+
+                <div class="tsw-anim-controls">
+                  <button class="tsw-btn pcw-btn-primary" style="background:#D4A017;color:#0D1117" onclick="tswCalcIsPreset('ts')">Preset: TS sell ($35,450)</button>
+                  <button class="tsw-btn" onclick="tswCalcIsPreset('wc')">Preset: West Commerce ($5,570)</button>
+                  <button class="tsw-btn" onclick="tswCalcIsPreset('blank')">Clear</button>
+                </div>
+
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Side</span>
+                  <select id="tswIsSide" onchange="tswCalcIs()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace">
+                    <option value="1">BUY</option>
+                    <option value="-1" selected>SELL</option>
+                  </select>
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Total shares ordered (S)</span>
+                  <input type="number" id="tswIsTotal" value="20000" oninput="tswCalcIs()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:110px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Decision price (p_d)</span>
+                  <input type="number" id="tswIsPd" value="122.60" step="0.01" oninput="tswCalcIs()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:110px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Final/closing price (p_n)</span>
+                  <input type="number" id="tswIsPn" value="118.00" step="0.01" oninput="tswCalcIs()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:110px;text-align:right">
+                </div>
+
+                <div style="font-family:monospace;font-size:9.5px;color:#7D8590;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 5px">Trades executed (up to 4 rows)</div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:6px;padding:4px 0">
+                  <span style="font-family:monospace;font-size:10px;color:var(--muted);width:50px">Trade 1</span>
+                  <input type="number" id="tswIsT1s" value="11500" oninput="tswCalcIs()" placeholder="shares" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                  <input type="number" id="tswIsT1p" value="121.80" step="0.01" oninput="tswCalcIs()" placeholder="price" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:6px;padding:4px 0">
+                  <span style="font-family:monospace;font-size:10px;color:var(--muted);width:50px">Trade 2</span>
+                  <input type="number" id="tswIsT2s" value="2500" oninput="tswCalcIs()" placeholder="shares" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                  <input type="number" id="tswIsT2p" value="120.50" step="0.01" oninput="tswCalcIs()" placeholder="price" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:6px;padding:4px 0">
+                  <span style="font-family:monospace;font-size:10px;color:var(--muted);width:50px">Trade 3</span>
+                  <input type="number" id="tswIsT3s" value="3000" oninput="tswCalcIs()" placeholder="shares" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                  <input type="number" id="tswIsT3p" value="120.20" step="0.01" oninput="tswCalcIs()" placeholder="price" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:6px;padding:4px 0">
+                  <span style="font-family:monospace;font-size:10px;color:var(--muted);width:50px">Trade 4</span>
+                  <input type="number" id="tswIsT4s" value="0" oninput="tswCalcIs()" placeholder="shares" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                  <input type="number" id="tswIsT4p" value="0" step="0.01" oninput="tswCalcIs()" placeholder="price" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                </div>
+
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--border);margin-top:8px">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Commission per share ($)</span>
+                  <input type="number" id="tswIsFee" value="0" step="0.01" oninput="tswCalcIs()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:110px;text-align:right">
+                </div>
+
+                <div class="tsw-bm" style="opacity:1;transform:none;border-left-color:#D4A017;margin-top:14px" id="tswIsBox"></div>
+
+                <div class="tsw-tip" style="margin-top:10px">Default preset = TS sell (Bahk's sell, 20k shares ordered, 17k executed at $122.60 decision price, $118 close) → expected IS = $35,450. Toggle Side to BUY → numbers stay positive in formula.</div>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 4 · Expanded IS (Delay + Trade + Opp + Fees)
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-err-calcExpIS" class="tsw-panel">
+              <div class="tsw-card">
+                <div class="tsw-title">Expanded Implementation Shortfall calculator</div>
+                <div class="tsw-fl">Expanded IS = Delay cost + Trading cost + Opportunity cost + Fees
+
+Delay cost      = (shares × arrival price) − (shares × decision price)
+Trading cost    = (shares × execution price) − (shares × arrival price)
+Opportunity cost = unfilled shares × (current − decision price)
+Fees            = commission × executed shares
+
+For SELL orders: number of shares is NEGATIVE.
+Each component can be positive (cost) or negative (favorable).</div>
+
+                <div class="tsw-anim-controls">
+                  <button class="tsw-btn pcw-btn-primary" style="background:#D4A017;color:#0D1117" onclick="tswCalcExpPreset('upx')">Preset: UPX Fund</button>
+                  <button class="tsw-btn" onclick="tswCalcExpPreset('wc')">Preset: West Commerce delay</button>
+                  <button class="tsw-btn" onclick="tswCalcExpPreset('blank')">Clear</button>
+                </div>
+
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Side</span>
+                  <select id="tswExpSide" onchange="tswCalcExp()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace">
+                    <option value="1">BUY</option>
+                    <option value="-1" selected>SELL</option>
+                  </select>
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Value of shares @ decision price ($)</span>
+                  <input type="number" id="tswExpDec" value="5124300" step="100" oninput="tswCalcExp()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:120px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Value of shares @ arrival price ($)</span>
+                  <input type="number" id="tswExpArr" value="5175800" step="100" oninput="tswCalcExp()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:120px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Value of shares @ execution price ($)</span>
+                  <input type="number" id="tswExpExe" value="5545600" step="100" oninput="tswCalcExp()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:120px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Opportunity cost ($) — unfilled shares</span>
+                  <input type="number" id="tswExpOpp" value="0" step="100" oninput="tswCalcExp()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:120px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Fees ($)</span>
+                  <input type="number" id="tswExpFees" value="0" step="1" oninput="tswCalcExp()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:120px;text-align:right">
+                </div>
+
+                <div class="tsw-bm" style="opacity:1;transform:none;border-left-color:#D4A017;margin-top:14px" id="tswExpBox"></div>
+
+                <div class="tsw-tip" style="margin-top:10px">Default preset = UPX Fund sell. The trading cost is the MOST FAVORABLE component because it has the most negative value (selling at higher execution price than arrival price = beneficial for a seller).</div>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 5 · Market-Adjusted Cost Calculator
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-err-calcMkt" class="tsw-panel">
+              <div class="tsw-card">
+                <div class="tsw-title">Market-Adjusted Cost calculator</div>
+                <div class="tsw-fl">Market-adjusted cost = Arrival cost − (β × Index arrival cost)
+
+This isolates the cost CAUSED BY the trade (vs cost caused by general market movement).
+
+Step 1: Compute trade's arrival cost (in bps)
+Step 2: Compute index's arrival cost (in bps) over the trade horizon
+Step 3: Market-adjusted cost = Step 1 − (β × Step 2)
+
+A NEGATIVE market-adjusted cost = the trade looks BETTER than the index move suggests.
+The trade outperformed the broader market move.</div>
+
+                <div class="tsw-anim-controls">
+                  <button class="tsw-btn pcw-btn-primary" style="background:#D4A017;color:#0D1117" onclick="tswCalcMktPreset('texx')">Preset: TEXX (−44.6 bps)</button>
+                  <button class="tsw-btn" onclick="tswCalcMktPreset('lim')">Preset: LIM</button>
+                  <button class="tsw-btn" onclick="tswCalcMktPreset('blank')">Clear</button>
+                </div>
+
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Side</span>
+                  <select id="tswMktSide" onchange="tswCalcMkt()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace">
+                    <option value="1" selected>+1 BUY</option>
+                    <option value="-1">−1 SELL</option>
+                  </select>
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Stock avg execution price ($)</span>
+                  <input type="number" id="tswMktAvg" value="50.55" step="0.01" oninput="tswCalcMkt()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:110px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Stock arrival price ($)</span>
+                  <input type="number" id="tswMktArr" value="50.45" step="0.01" oninput="tswCalcMkt()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:110px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Index VWAP over horizon</span>
+                  <input type="number" id="tswMktIdxAvg" value="1015" step="1" oninput="tswCalcMkt()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:110px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Index arrival price</span>
+                  <input type="number" id="tswMktIdxArr" value="1010" step="1" oninput="tswCalcMkt()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:110px;text-align:right">
+                </div>
+                <div class="pcw-sl-row" style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
+                  <span style="flex:1;font-family:monospace;font-size:11px;color:var(--muted)">Stock beta to index</span>
+                  <input type="number" id="tswMktBeta" value="1.30" step="0.01" oninput="tswCalcMkt()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:110px;text-align:right">
+                </div>
+
+                <div class="tsw-bm" style="opacity:1;transform:none;border-left-color:#D4A017;margin-top:14px" id="tswMktBox"></div>
+
+                <div class="tsw-tip" style="margin-top:10px">Default preset = TEXX buy. The market-adjusted cost of −44.6 bps shows the trade looks BETTER than VWAP (+5.9 bps) or TWAP (−4.0 bps), because most of the apparent cost was actually due to the rising market.</div>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 6 · Urgency Drill
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-err-drillUrg" class="tsw-panel">
+              <div class="tsw-card">
+                <div class="tsw-title">Urgency drivers drill — true or false?</div>
+                <div class="tsw-body">Click on a statement to reveal the truth. Each one is a statement you got wrong.</div>
+                <div id="tswUrgBox" style="margin-top:12px"></div>
+              </div>
+
+              <div class="tsw-card">
+                <div class="tsw-title">The fundamental tradeoff — memorize this</div>
+                <div class="tsw-fl">FASTER trading → LOWER execution risk → HIGHER market impact
+SLOWER trading → HIGHER execution risk → LOWER market impact
+
+You can't minimize BOTH simultaneously.
+
+Which to prioritize depends on:
+  • Alpha decay rate (fast decay → trade fast → accept impact)
+  • Information leakage concern (high → use dark pools, NOT exchanges)
+  • Bid-ask spread (wide spread + long horizon = high execution risk)
+  • Order size vs ADV (large = unavoidable impact)</div>
+                <div class="tsw-tip">The exam frames the same idea 5 different ways. Once you know the tradeoff, you can spot any reformulation.</div>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 7 · Algo Drill
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-err-drillAlgo" class="tsw-panel">
+              <div class="tsw-card">
+                <div class="tsw-title">Algo selection drill — the cases you missed</div>
+                <div class="tsw-body">3 cases where you picked the wrong algo. Click to reveal the deciding driver.</div>
+                <div id="tswAlgoBox" style="margin-top:12px"></div>
+              </div>
+
+              <div class="tsw-card">
+                <div class="tsw-title">Decision tree — when in doubt, ask in this order</div>
+                <table class="tsw-table">
+                  <thead><tr><th>Question</th><th>If YES</th></tr></thead>
+                  <tbody>
+                    <tr><td>Order &gt; 15% of expected volume + leakage concern?</td><td><span class="tsw-orange">Liquidity-seeking</span></td></tr>
+                    <tr><td>Must complete entirely in a fixed time window?</td><td><span class="tsw-green">TWAP</span></td></tr>
+                    <tr><td>Order ≤ 15% vol + price moves against expected?</td><td><span class="tsw-red">Arrival price</span></td></tr>
+                    <tr><td>Low urgency + just track market volume profile?</td><td><span class="tsw-blue">VWAP / POV</span></td></tr>
+                    <tr><td>Order ≈ 100% of ADV?</td><td><span class="tsw-red">High-touch principal (not algo)</span></td></tr>
+                    <tr><td>High urgency + small order + multi-venue?</td><td><span class="tsw-hl">SOR</span></td></tr>
+                    <tr><td>Large + don't need immediate fill?</td><td><span class="tsw-blue">Dark pool</span></td></tr>
+                  </tbody>
+                </table>
+                <div class="tsw-trap">Common mistake: defaulting to POV when "volume" is mentioned. POV chases volume but CAN'T guarantee completion. Use TWAP if completion in a window matters.</div>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 8 · Quiz Me
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-err-quiz" class="tsw-panel">
+              <div class="tsw-card" id="tswErrQuizBox"></div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 9 · All Qs
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-err-allqs" class="tsw-panel">
+              <div class="tsw-cqt" id="tswErrAllBtns"></div>
+              <div id="tswErrAllBox" class="tsw-card"></div>
+            </div>
+
+          </div><!-- /tsw-errors panel -->
+
           <script>
             function tswTab(id, btn){
               document.querySelectorAll('#tswWidget > .tsw-panel').forEach(function(p){p.classList.remove('active')});
@@ -7547,10 +7944,486 @@ A worse price can be the BEST execution if:
               tswGvCur = tswGvMax;
               for(var i=0;i<tswGvMax;i++){
                 var bm = document.getElementById('tswGv'+i);
-                if(bm) bm.classList.add('revealed');
+                if(bm){ bm.classList.add('revealed'); }
               }
               document.getElementById('tswGvProg').textContent = tswGvMax + ' / ' + tswGvMax + ' ✓';
             }
+
+            // ═════════════════════════════════════════════════════════════════
+            // ERRORS & MASTERY TAB
+            // ═════════════════════════════════════════════════════════════════
+
+            function tswErrSub(id, btn){
+              document.querySelectorAll('#tsw-errors > .tsw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#tsw-errors > .tsw-tabs > .tsw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('tsw-err-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'calcArrival') setTimeout(tswCalcArr, 50);
+              if(id === 'calcIS') setTimeout(tswCalcIs, 50);
+              if(id === 'calcExpIS') setTimeout(tswCalcExp, 50);
+              if(id === 'calcMkt') setTimeout(tswCalcMkt, 50);
+              if(id === 'drillUrg') tswRenderUrg();
+              if(id === 'drillAlgo') tswRenderAlgo();
+              if(id === 'quiz') tswErrQuizStart();
+              if(id === 'allqs') tswRenderAllQs();
+            }
+
+            // ── Arrival Cost calculator ──
+            function tswCalcArrPreset(p){
+              if(p === 'srm'){
+                document.getElementById('tswArrSide').value = '1';
+                document.getElementById('tswArrAvg').value = '249.75';
+                document.getElementById('tswArrArr').value = '246.50';
+              } else if(p === 'blank'){
+                document.getElementById('tswArrSide').value = '1';
+                document.getElementById('tswArrAvg').value = '0';
+                document.getElementById('tswArrArr').value = '0';
+              }
+              tswCalcArr();
+            }
+            function tswCalcArr(){
+              var side = parseFloat(document.getElementById('tswArrSide').value);
+              var avg = parseFloat(document.getElementById('tswArrAvg').value);
+              var arr = parseFloat(document.getElementById('tswArrArr').value);
+              if(!arr) {
+                document.getElementById('tswArrBox').innerHTML = '<div style="color:#7D8590;font-family:monospace;font-size:11px">Enter values to compute</div>';
+                return;
+              }
+              var diff = avg - arr;
+              var pct = diff / arr;
+              var bps = side * pct * 10000;
+              document.getElementById('tswArrBox').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">Calculation</div>'+
+                '<div style="font-family:monospace;font-size:11.5px;line-height:1.8;color:#C9D1D9">'+
+                'Difference: $' + avg.toFixed(2) + ' − $' + arr.toFixed(2) + ' = $' + diff.toFixed(4) + '<br>'+
+                'Percentage: $' + diff.toFixed(4) + ' / $' + arr.toFixed(2) + ' = ' + (pct*100).toFixed(4) + '%<br>'+
+                'In bps: ' + (pct*10000).toFixed(2) + ' bps<br>'+
+                'Side × bps: ' + (side===1?'+1':'−1') + ' × ' + (pct*10000).toFixed(2) + ' = <b style="color:#3DD68C">' + bps.toFixed(2) + ' bps</b></div>'+
+                '<div style="margin-top:10px;padding:8px 10px;background:rgba(212,160,23,.08);border-left:2px solid #D4A017;border-radius:3px;font-family:monospace;font-size:13px;color:#D4A017">Arrival Cost = <b>' + bps.toFixed(2) + ' bps</b> (≈ ' + Math.round(bps) + ' bps)</div>';
+            }
+
+            // ── IS calculator ──
+            function tswCalcIsPreset(p){
+              if(p === 'ts'){
+                document.getElementById('tswIsSide').value = '-1';
+                document.getElementById('tswIsTotal').value = '20000';
+                document.getElementById('tswIsPd').value = '122.60';
+                document.getElementById('tswIsPn').value = '118.00';
+                document.getElementById('tswIsT1s').value = '11500'; document.getElementById('tswIsT1p').value = '121.80';
+                document.getElementById('tswIsT2s').value = '2500';  document.getElementById('tswIsT2p').value = '120.50';
+                document.getElementById('tswIsT3s').value = '3000';  document.getElementById('tswIsT3p').value = '120.20';
+                document.getElementById('tswIsT4s').value = '0';     document.getElementById('tswIsT4p').value = '0';
+                document.getElementById('tswIsFee').value = '0';
+              } else if(p === 'wc'){
+                document.getElementById('tswIsSide').value = '-1';
+                document.getElementById('tswIsTotal').value = '10000';
+                document.getElementById('tswIsPd').value = '27.10';
+                document.getElementById('tswIsPn').value = '26.00';
+                document.getElementById('tswIsT1s').value = '6000'; document.getElementById('tswIsT1p').value = '26.80';
+                document.getElementById('tswIsT2s').value = '3000'; document.getElementById('tswIsT2p').value = '26.30';
+                document.getElementById('tswIsT3s').value = '0';    document.getElementById('tswIsT3p').value = '0';
+                document.getElementById('tswIsT4s').value = '0';    document.getElementById('tswIsT4p').value = '0';
+                document.getElementById('tswIsFee').value = '0.03';
+              } else {
+                document.getElementById('tswIsSide').value = '1';
+                document.getElementById('tswIsTotal').value = '0';
+                document.getElementById('tswIsPd').value = '0';
+                document.getElementById('tswIsPn').value = '0';
+                ['T1','T2','T3','T4'].forEach(function(t){
+                  document.getElementById('tswIs'+t+'s').value = '0';
+                  document.getElementById('tswIs'+t+'p').value = '0';
+                });
+                document.getElementById('tswIsFee').value = '0';
+              }
+              tswCalcIs();
+            }
+            function tswCalcIs(){
+              var side = parseFloat(document.getElementById('tswIsSide').value);
+              var S = parseFloat(document.getElementById('tswIsTotal').value) || 0;
+              var pd = parseFloat(document.getElementById('tswIsPd').value) || 0;
+              var pn = parseFloat(document.getElementById('tswIsPn').value) || 0;
+              var trades = [];
+              ['T1','T2','T3','T4'].forEach(function(t){
+                var s = parseFloat(document.getElementById('tswIs'+t+'s').value) || 0;
+                var p = parseFloat(document.getElementById('tswIs'+t+'p').value) || 0;
+                if(s > 0) trades.push({s:s, p:p, name:t});
+              });
+              var fee = parseFloat(document.getElementById('tswIsFee').value) || 0;
+
+              // Apply sign convention
+              var signedS = side * S;
+              var totExecShares = 0;
+              var trDetails = '';
+              var execCost1 = 0; // Σ s_j × p_j
+              trades.forEach(function(t){
+                var signedSj = side * t.s;
+                totExecShares += t.s;
+                execCost1 += signedSj * t.p;
+                trDetails += '  ('+ (signedSj>=0?'+':'') + signedSj + ' × $' + t.p.toFixed(2) + ') = ' + (signedSj*t.p).toFixed(2) + '<br>';
+              });
+              var signedTotExec = side * totExecShares;
+              var execCost2 = signedTotExec * pd;
+              var execCost = execCost1 - execCost2;
+              var unfilledSigned = signedS - signedTotExec;
+              var oppCost = unfilledSigned * (pn - pd);
+              var fees = fee * totExecShares;
+              var IS = execCost + oppCost + fees;
+              var totDollar = Math.abs(signedS) * pd;
+              var IS_bps = totDollar > 0 ? (IS / totDollar) * 10000 : 0;
+
+              document.getElementById('tswIsBox').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">Step-by-step</div>'+
+                '<div style="font-family:monospace;font-size:11px;line-height:1.7;color:#C9D1D9">'+
+                '<b style="color:#79C0FF">1. Execution cost</b><br>'+
+                '  Σ(s_j × p_j) where shares are signed (' + (side===1?'+':'-') + ')<br>'+
+                trDetails +
+                '  Sum = ' + execCost1.toFixed(2) + '<br>'+
+                '  Σs_j × p_d = ' + signedTotExec + ' × ' + pd.toFixed(2) + ' = ' + execCost2.toFixed(2) + '<br>'+
+                '  → Execution cost = ' + execCost1.toFixed(2) + ' − (' + execCost2.toFixed(2) + ') = <b style="color:#3DD68C">$' + execCost.toFixed(2) + '</b><br><br>'+
+                '<b style="color:#79C0FF">2. Opportunity cost</b><br>'+
+                '  Unfilled signed shares: ' + signedS + ' − ' + signedTotExec + ' = ' + unfilledSigned + '<br>'+
+                '  Price gap: ' + pn.toFixed(2) + ' − ' + pd.toFixed(2) + ' = ' + (pn-pd).toFixed(2) + '<br>'+
+                '  → Opportunity cost = ' + unfilledSigned + ' × ' + (pn-pd).toFixed(2) + ' = <b style="color:#3DD68C">$' + oppCost.toFixed(2) + '</b><br><br>'+
+                '<b style="color:#79C0FF">3. Fees</b><br>'+
+                '  ' + totExecShares + ' shares × $' + fee.toFixed(4) + ' = <b style="color:#3DD68C">$' + fees.toFixed(2) + '</b></div>'+
+                '<div style="margin-top:12px;padding:10px;background:rgba(212,160,23,.08);border-left:2px solid #D4A017;border-radius:3px;font-family:monospace;font-size:13px;color:#D4A017">IS ($) = ' + execCost.toFixed(2) + ' + ' + oppCost.toFixed(2) + ' + ' + fees.toFixed(2) + ' = <b>$' + IS.toFixed(2) + '</b><br>IS (bps) = <b>' + IS_bps.toFixed(2) + ' bps</b></div>';
+            }
+
+            // ── Expanded IS calculator ──
+            function tswCalcExpPreset(p){
+              if(p === 'upx'){
+                document.getElementById('tswExpSide').value = '-1';
+                document.getElementById('tswExpDec').value = '5124300';
+                document.getElementById('tswExpArr').value = '5175800';
+                document.getElementById('tswExpExe').value = '5545600';
+                document.getElementById('tswExpOpp').value = '0';
+                document.getElementById('tswExpFees').value = '0';
+              } else if(p === 'wc'){
+                document.getElementById('tswExpSide').value = '-1';
+                document.getElementById('tswExpDec').value = '271000';
+                document.getElementById('tswExpArr').value = '269000';
+                document.getElementById('tswExpExe').value = '240900';
+                document.getElementById('tswExpOpp').value = '1100';
+                document.getElementById('tswExpFees').value = '270';
+              } else {
+                document.getElementById('tswExpSide').value = '1';
+                document.getElementById('tswExpDec').value = '0';
+                document.getElementById('tswExpArr').value = '0';
+                document.getElementById('tswExpExe').value = '0';
+                document.getElementById('tswExpOpp').value = '0';
+                document.getElementById('tswExpFees').value = '0';
+              }
+              tswCalcExp();
+            }
+            function tswCalcExp(){
+              var side = parseFloat(document.getElementById('tswExpSide').value);
+              var dec = parseFloat(document.getElementById('tswExpDec').value) || 0;
+              var arr = parseFloat(document.getElementById('tswExpArr').value) || 0;
+              var exe = parseFloat(document.getElementById('tswExpExe').value) || 0;
+              var opp = parseFloat(document.getElementById('tswExpOpp').value) || 0;
+              var fees = parseFloat(document.getElementById('tswExpFees').value) || 0;
+
+              // Apply sign: for SELL, values become negative
+              var signedDec = side * dec;
+              var signedArr = side * arr;
+              var signedExe = side * exe;
+              var delayCost = signedArr - signedDec;
+              var tradeCost = signedExe - signedArr;
+              var expIS = delayCost + tradeCost + opp + fees;
+
+              function favorability(v){
+                if(v < 0) return '<span style="color:#3DD68C">↓ favorable (reduces IS)</span>';
+                if(v > 0) return '<span style="color:#FF7B72">↑ cost (increases IS)</span>';
+                return '<span style="color:#7D8590">neutral</span>';
+              }
+
+              // Find most favorable (most negative)
+              var components = [
+                {name:'Delay cost', val:delayCost},
+                {name:'Trading cost', val:tradeCost},
+                {name:'Opportunity cost', val:opp},
+                {name:'Fees', val:fees}
+              ];
+              var mostFav = components.reduce(function(a,b){ return a.val < b.val ? a : b; });
+
+              document.getElementById('tswExpBox').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">Step-by-step</div>'+
+                '<div style="font-family:monospace;font-size:11px;line-height:1.7;color:#C9D1D9">'+
+                'Signed @ decision: ' + (side===1?'+':'−') + '$' + dec.toLocaleString() + ' = $' + signedDec.toLocaleString() + '<br>'+
+                'Signed @ arrival:  ' + (side===1?'+':'−') + '$' + arr.toLocaleString() + ' = $' + signedArr.toLocaleString() + '<br>'+
+                'Signed @ execution: ' + (side===1?'+':'−') + '$' + exe.toLocaleString() + ' = $' + signedExe.toLocaleString() + '<br><br>'+
+                '<b style="color:#79C0FF">Delay cost</b> = signed arrival − signed decision<br>'+
+                '  = ' + signedArr.toLocaleString() + ' − (' + signedDec.toLocaleString() + ')<br>'+
+                '  = <b style="color:#3DD68C">$' + delayCost.toLocaleString() + '</b> ' + favorability(delayCost) + '<br><br>'+
+                '<b style="color:#79C0FF">Trading cost</b> = signed execution − signed arrival<br>'+
+                '  = ' + signedExe.toLocaleString() + ' − (' + signedArr.toLocaleString() + ')<br>'+
+                '  = <b style="color:#3DD68C">$' + tradeCost.toLocaleString() + '</b> ' + favorability(tradeCost) + '<br><br>'+
+                '<b style="color:#79C0FF">Opportunity cost</b> = <b style="color:#3DD68C">$' + opp.toLocaleString() + '</b> ' + favorability(opp) + '<br>'+
+                '<b style="color:#79C0FF">Fees</b> = <b style="color:#3DD68C">$' + fees.toLocaleString() + '</b> ' + favorability(fees) +
+                '</div>'+
+                '<div style="margin-top:12px;padding:10px;background:rgba(212,160,23,.08);border-left:2px solid #D4A017;border-radius:3px;font-family:monospace;font-size:13px;color:#D4A017">Expanded IS = ' + delayCost.toLocaleString() + ' + ' + tradeCost.toLocaleString() + ' + ' + opp.toLocaleString() + ' + ' + fees.toLocaleString() + ' = <b>$' + expIS.toLocaleString() + '</b><br><br>Most FAVORABLE component: <b>' + mostFav.name + '</b> ($' + mostFav.val.toLocaleString() + ')</div>';
+            }
+
+            // ── Market-Adjusted Cost calculator ──
+            function tswCalcMktPreset(p){
+              if(p === 'texx'){
+                document.getElementById('tswMktSide').value = '1';
+                document.getElementById('tswMktAvg').value = '50.55';
+                document.getElementById('tswMktArr').value = '50.45';
+                document.getElementById('tswMktIdxAvg').value = '1015';
+                document.getElementById('tswMktIdxArr').value = '1010';
+                document.getElementById('tswMktBeta').value = '1.30';
+              } else if(p === 'lim'){
+                document.getElementById('tswMktSide').value = '1';
+                document.getElementById('tswMktAvg').value = '23.45';
+                document.getElementById('tswMktArr').value = '23.09';
+                document.getElementById('tswMktIdxAvg').value = '2184';
+                document.getElementById('tswMktIdxArr').value = '2150';
+                document.getElementById('tswMktBeta').value = '0.95';
+              } else {
+                document.getElementById('tswMktSide').value = '1';
+                document.getElementById('tswMktAvg').value = '0';
+                document.getElementById('tswMktArr').value = '0';
+                document.getElementById('tswMktIdxAvg').value = '0';
+                document.getElementById('tswMktIdxArr').value = '0';
+                document.getElementById('tswMktBeta').value = '1';
+              }
+              tswCalcMkt();
+            }
+            function tswCalcMkt(){
+              var side = parseFloat(document.getElementById('tswMktSide').value);
+              var avg = parseFloat(document.getElementById('tswMktAvg').value) || 0;
+              var arr = parseFloat(document.getElementById('tswMktArr').value) || 0;
+              var idxAvg = parseFloat(document.getElementById('tswMktIdxAvg').value) || 0;
+              var idxArr = parseFloat(document.getElementById('tswMktIdxArr').value) || 0;
+              var beta = parseFloat(document.getElementById('tswMktBeta').value) || 0;
+              if(!arr || !idxArr) {
+                document.getElementById('tswMktBox').innerHTML = '<div style="color:#7D8590;font-family:monospace;font-size:11px">Enter prices to compute</div>';
+                return;
+              }
+              var stockCost = side * ((avg - arr)/arr) * 10000;
+              var idxCost = side * ((idxAvg - idxArr)/idxArr) * 10000;
+              var mktAdj = stockCost - (beta * idxCost);
+
+              document.getElementById('tswMktBox').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">Step-by-step</div>'+
+                '<div style="font-family:monospace;font-size:11.5px;line-height:1.8;color:#C9D1D9">'+
+                '<b style="color:#79C0FF">Step 1 · Stock arrival cost</b><br>'+
+                '  ' + (side===1?'+1':'−1') + ' × ($' + avg.toFixed(2) + ' − $' + arr.toFixed(2) + ') / $' + arr.toFixed(2) + ' × 10,000<br>'+
+                '  = <b style="color:#3DD68C">' + stockCost.toFixed(2) + ' bps</b><br><br>'+
+                '<b style="color:#79C0FF">Step 2 · Index arrival cost</b><br>'+
+                '  ' + (side===1?'+1':'−1') + ' × (' + idxAvg + ' − ' + idxArr + ') / ' + idxArr + ' × 10,000<br>'+
+                '  = <b style="color:#3DD68C">' + idxCost.toFixed(2) + ' bps</b><br><br>'+
+                '<b style="color:#79C0FF">Step 3 · Market-adjusted</b><br>'+
+                '  = Stock cost − (β × Index cost)<br>'+
+                '  = ' + stockCost.toFixed(2) + ' − (' + beta + ' × ' + idxCost.toFixed(2) + ')<br>'+
+                '  = ' + stockCost.toFixed(2) + ' − ' + (beta * idxCost).toFixed(2) + '</div>'+
+                '<div style="margin-top:10px;padding:8px 10px;background:rgba(212,160,23,.08);border-left:2px solid #D4A017;border-radius:3px;font-family:monospace;font-size:13px;color:#D4A017">Market-adjusted cost = <b>' + mktAdj.toFixed(2) + ' bps</b><br>' + (mktAdj < 0 ? '<span style="color:#3DD68C">Trade outperformed the market move ✓</span>' : '<span style="color:#FF7B72">Trade underperformed even after market adjustment</span>') + '</div>';
+            }
+
+            // ── Urgency Drill (Pattern 2) ──
+            var TSW_URG = [
+              {q:"Trading with greater urgency results in lower execution risk", a:true, why:"Faster trade = less time exposed to price volatility → LESS execution risk. Note: market impact goes the other way."},
+              {q:"An order with a wide bid-ask spread executed over a longer time period has lower execution risk", a:false, why:"FALSE. Longer time = MORE exposure to price movements = HIGHER execution risk. The wider spread adds to the cost."},
+              {q:"Trading larger size orders with higher trade urgency reduces market impact", a:false, why:"FALSE. Both factors INCREASE market impact. Larger size pushes price more, and higher urgency means less time to spread the trade out."},
+              {q:"Securities with high rates of alpha decay require less aggressive trading", a:false, why:"FALSE. High alpha decay = the opportunity vanishes fast → MUST trade MORE aggressively even if it increases market impact. The alpha won't wait."},
+              {q:"The best strategy for minimizing information leakage is to execute fast on exchanges with market orders", a:false, why:"FALSE. Exchanges are LIT venues — your trades are visible. Info leakage minimization → DARK POOLS + mix of market and limit orders."},
+              {q:"Trader is exposed to higher execution risk when an order for a security with a wide bid-ask spread is executed over a longer time period", a:true, why:"TRUE (this is the correct phrasing). Wide spread security + long horizon = high execution risk because price has more time to drift."},
+              {q:"A trader exposed to increased market impact cost for trades with higher rates of alpha decay", a:true, why:"TRUE. Higher alpha decay → must trade fast → market impact goes UP. You accept the impact cost because waiting is worse."}
+            ];
+            function tswRenderUrg(){
+              var html = '';
+              TSW_URG.forEach(function(item, i){
+                html += '<div onclick="tswUrgToggle('+i+')" style="cursor:pointer;background:var(--surface);border:1px solid var(--border);border-left:3px solid #2A3441;border-radius:5px;padding:11px 14px;margin-bottom:8px" id="tswUrgRow'+i+'">'+
+                  '<div style="font-size:12.5px;color:#E6EDF3;line-height:1.5">' + item.q + '</div>'+
+                  '<div style="margin-top:8px;display:none;border-top:1px solid var(--border);padding-top:8px" id="tswUrgAns'+i+'">'+
+                    '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:' + (item.a?'#3DD68C':'#FF7B72') + ';text-transform:uppercase;margin-bottom:4px">' + (item.a?'✓ TRUE':'✗ FALSE') + '</div>'+
+                    '<div style="font-size:11.5px;color:#C9D1D9;line-height:1.6">' + item.why + '</div>'+
+                  '</div>'+
+                '</div>';
+              });
+              document.getElementById('tswUrgBox').innerHTML = html;
+            }
+            function tswUrgToggle(i){
+              var a = document.getElementById('tswUrgAns'+i);
+              var r = document.getElementById('tswUrgRow'+i);
+              if(a.style.display === 'none'){
+                a.style.display = 'block';
+                r.style.borderLeftColor = TSW_URG[i].a ? '#3DD68C' : '#FF7B72';
+              } else {
+                a.style.display = 'none';
+                r.style.borderLeftColor = '#2A3441';
+              }
+            }
+
+            // ── Algo Drill (Pattern 3) ──
+            var TSW_ALGO = [
+              {
+                case_:"Music Plus — sell order = 20% of expected daily volume, urgent (overreaction reversal expected same day), large limit order would leak info",
+                wrong:"POV algorithm or Arrival price algorithm",
+                right:"Liquidity-seeking algorithm",
+                why:"Order size > 15% of volume AND info leakage concern is the dominant driver. Liquidity-seeking algos trade only when liquidity is offered, in dark pools or via opportunistic execution → minimizes market impact for large orders + hides intent from market. POV would chase volume but couldn't hide. Arrival price algo is for SMALL orders (< 15% vol)."
+              },
+              {
+                case_:"Dynopax — illiquid small-cap, sell order, must complete in 1 day, no expectation of adverse price movement, scheduled algo wanted",
+                wrong:"VWAP or POV",
+                right:"TWAP",
+                why:"The deciding driver is COMPLETION in fixed time. VWAP follows historical volume profile → may not complete in low-volume hours. POV follows real-time volume → may also fail to fill in time. TWAP guarantees equal shares per time slice → completion in window."
+              },
+              {
+                case_:"Music Plus — open market trading vs closing auction vs passive trading? High urgency, intraday alpha capture",
+                wrong:"Closing auction or passive (VWAP/TWAP)",
+                right:"Open market (active)",
+                why:"Closing auction is for trades wanting NAV (e.g. fund redemptions). Passive trading is for LOW urgency. Music Plus is HIGH urgency (alpha decays intraday). Active open market trading = the only viable choice."
+              }
+            ];
+            function tswRenderAlgo(){
+              var html = '';
+              TSW_ALGO.forEach(function(item, i){
+                html += '<div style="background:var(--surface);border:1px solid var(--border);border-left:3px solid #79C0FF;border-radius:5px;padding:11px 14px;margin-bottom:10px">'+
+                  '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#79C0FF;text-transform:uppercase;margin-bottom:6px">Case ' + (i+1) + '</div>'+
+                  '<div style="font-size:12.5px;color:#E6EDF3;line-height:1.55;margin-bottom:8px">' + item.case_ + '</div>'+
+                  '<button onclick="tswAlgoReveal('+i+')" id="tswAlgoBtn'+i+'" class="tsw-btn">Reveal answer</button>'+
+                  '<div id="tswAlgoAns'+i+'" style="display:none;margin-top:10px">'+
+                    '<div class="tsw-trap" style="margin-top:0"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#FF7B72">YOUR WRONG PICK</span>' + item.wrong + '</div>'+
+                    '<div class="tsw-tip"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#3DD68C">CORRECT</span>' + item.right + '</div>'+
+                    '<div class="tsw-info"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#79C0FF">WHY</span>' + item.why + '</div>'+
+                  '</div>'+
+                '</div>';
+              });
+              document.getElementById('tswAlgoBox').innerHTML = html;
+            }
+            function tswAlgoReveal(i){
+              document.getElementById('tswAlgoAns'+i).style.display = 'block';
+              document.getElementById('tswAlgoBtn'+i).style.display = 'none';
+            }
+
+            // ── 13 questions (Quiz + All Qs) ──
+            var TSW_ERRORS = [
+              {num:1, title:"Bahk's statements — execution risk vs market impact", pattern:"Pattern 2 · Urgency drivers",
+                q:"Statement 1: Greater urgency → lower execution risk. Statement 2: Higher alpha decay → increased market impact. Statement 3: Minimize info leakage by fast exchange execution. Which is correct?",
+                wrong:"A or C", right:"B — Statement 2", why:"Alpha decay → must trade fast → market impact increases. Statement 1 is correct on its own (faster = less execution risk) BUT 'wide spread + longer horizon' is the trick: WIDE SPREAD + LONG horizon = HIGHER execution risk. Statement 3: info leakage minimized by DARK POOLS, not exchanges.",
+                anchor:"Speed and impact move INVERSELY. Alpha decay forces you onto the impact side."
+              },
+              {num:2, title:"SRM Arrival Cost", pattern:"Pattern 1 · IS Calculation",
+                q:"Buy order. Avg price = $249.75, Arrival = $246.50. Arrival cost?",
+                wrong:"57 bps or 61 bps", right:"132 bps", why:"Side × [(Avg − Arrival)/Arrival] × 10,000 = +1 × [($249.75 − $246.50)/$246.50] × 10,000 = 131.85 ≈ 132 bps.",
+                anchor:"For BUY, positive arrival cost = paid more than arrival = cost. Always divide by ARRIVAL, never by avg."
+              },
+              {num:3, title:"TS Implementation Shortfall", pattern:"Pattern 1 · IS Calculation",
+                q:"Sell 20,000 shares at $122.60 decision. Trade 1: 11,500 @ $121.80. Trade 2: 2,500 @ $120.50. Trade 3: 3,000 @ $120.20. Close: $118. No fees. IS?",
+                wrong:"−$21,650 or $21,650", right:"$35,450", why:"Execution cost = $21,650 (sign correct). Opportunity cost on unfilled 3,000 shares = (−3,000) × ($118 − $122.60) = $13,800. IS = $21,650 + $13,800 + $0 = $35,450.",
+                anchor:"IS = Execution + OPPORTUNITY + Fees. Never forget opportunity cost on unfilled portion."
+              },
+              {num:4, title:"West Commerce IS in bps", pattern:"Pattern 1 · IS Calculation",
+                q:"Sell 10,000 shares decision @ $27.10. Trade 1: 6,000 @ $26.80. Trade 2: 3,000 @ $26.30. Close $26. Fee $0.03/share. IS in bps?",
+                wrong:"139 or 198", right:"206 bps", why:"Exec cost = $4,200. Opp cost = ($-1,000) × ($26 − $27.10) = $1,100. Fees = 9,000 × $0.03 = $270. IS$ = $5,570. IS bps = $5,570 / (10,000 × $27.10) × 10,000 = 205.5 ≈ 206 bps.",
+                anchor:"IS bps = IS$ / (total shares × decision price) × 10,000."
+              },
+              {num:5, title:"West Commerce Delay cost", pattern:"Pattern 1 · IS Calculation",
+                q:"Decision $27.10. Arrival $26.90. 10,000 shares ordered. Delay cost?",
+                wrong:"$2,000 or $2,700", right:"$1,800", why:"Delay cost = Side × shares × (arrival − decision). For SELL: (−10,000) × ($26.90 − $27.10) = (−10,000) × (−$0.20) = +$2,000... wait. The textbook calculates: (signed shares × arrival) − (signed shares × decision) = (−10,000 × 26.90) − (−10,000 × 27.10) = −269,000 + 271,000 = +$2,000. BUT correct answer is $1,800 because delay applies to SHARES EVENTUALLY EXECUTED (9,000), not the full order. (−9,000 × $26.90) − (−9,000 × $27.10) = −$242,100 + $243,900 = $1,800.",
+                anchor:"Delay cost uses EXECUTED shares (not total ordered). For unfilled portion, the cost is captured in OPPORTUNITY cost."
+              },
+              {num:6, title:"UPX Expanded IS most favorable component", pattern:"Pattern 1 · IS Calculation",
+                q:"UPX sell: decision value $5,124,300, arrival $5,175,800, execution $5,545,600. All shares sold. Most favorable component?",
+                wrong:"Delay cost", right:"Trading cost", why:"For SELL, signed values are negative. Delay = (−$5,175,800) − (−$5,124,300) = −$51,500. Trading = (−$5,545,600) − (−$5,175,800) = −$369,800. Opportunity = 0 (all shares sold). Trading cost is MORE negative → MORE favorable (selling executed at higher price than arrival → good for seller).",
+                anchor:"For sellers, getting HIGHER execution price than arrival/decision is favorable. 'Most negative IS component = most favorable.'"
+              },
+              {num:7, title:"TEXX Market-adjusted cost", pattern:"Pattern 1 · IS Calculation",
+                q:"Buy. Avg $50.55, arrival $50.45, index VWAP 1015 vs arrival 1010, β = 1.30. Best benchmark = market-adjusted, TWAP, or VWAP?",
+                wrong:"TWAP or VWAP", right:"Market-adjusted (−44.6 bps)", why:"Stock arrival cost = (50.55−50.45)/50.45 × 10,000 = 19.8 bps. Index arrival cost = (1015−1010)/1010 × 10,000 = 49.5 bps. Market-adj = 19.8 − (1.30 × 49.5) = 19.8 − 64.35 = −44.6 bps. TWAP cost = (50.55−50.57)/50.57 × 10,000 = −4.0 bps. VWAP cost = +5.9 bps. Most favorable is the most NEGATIVE → market-adjusted.",
+                anchor:"Market-adjusted strips out the broad market move. Negative = trade beat the market move."
+              },
+              {num:8, title:"LIM Delay cost", pattern:"Pattern 1 · IS Calculation",
+                q:"Decision 10:05 AM @ $23.09. Order entered @ $23.45 average. Calculate the delay cost.",
+                wrong:"calculated wrong", right:"Use formula: (arrival − decision) × signed shares × 10,000/decision for bps", why:"For LIM 25,000 share buy: arrival vs decision price gap × signed shares. The trader released at $23.45, decision was $23.09. Delay in bps = (23.45 − 23.09)/23.09 × 10,000 = 156 bps.",
+                anchor:"Delay cost captures the SLIPPAGE between decision and order release. Pre-trade execution risk."
+              },
+              {num:9, title:"ABC Yellow's strategy", pattern:"Pattern 3 · Algo Selection",
+                q:"ABC very liquid stock, 30,000 shares (~1% of expected daily vol), high urgency (alpha may dissipate). Trade portion at opening auction then fill remainder at prices close to market price when order was received. What is this strategy?",
+                wrong:"TWAP or VWAP", right:"Arrival price strategy", why:"Arrival price algo targets the market price at the time the order is received. Conditions match: small order (<15% vol), liquid market, urgent. TWAP/VWAP are PASSIVE strategies for non-urgent rebalancing.",
+                anchor:"'Close to market price at order receipt time' = arrival price benchmark. The signature of arrival price algos."
+              },
+              {num:10, title:"Music Plus algorithm", pattern:"Pattern 3 · Algo Selection",
+                q:"Sell 20% of expected daily volume, urgent (price reverting), info leakage concern from large limit order. Best algo?",
+                wrong:"POV or Arrival price", right:"Liquidity-seeking", why:"Order size > 15% AND info leakage concern. Liquidity-seeking trades only when liquidity is offered → no large limit order to display → no leakage. Arrival price algos are for SMALL orders.",
+                anchor:"Order > 15% vol + leakage concern → liquidity-seeking. Not POV (no completion guarantee). Not arrival (too aggressive)."
+              },
+              {num:11, title:"Music Plus open market vs auction", pattern:"Pattern 3 · Algo Selection",
+                q:"Music Plus sell, high urgency, intraday alpha. Use: open market / closing auction / passive trading?",
+                wrong:"Closing auction or passive", right:"Open market (active)", why:"Closing auction = for trades wanting NAV strike (redemptions). Passive = for LOW urgency. High urgency intraday alpha → active open market only.",
+                anchor:"High urgency → active. Closing auction → only for NAV-strike trades. Passive → only for low urgency."
+              },
+              {num:12, title:"Dynopax algorithm choice", pattern:"Pattern 3 · Algo Selection",
+                q:"Dynopax illiquid, sell, no adverse price expected, must complete in 1 day, scheduled algo. POV / VWAP / TWAP?",
+                wrong:"VWAP or POV", right:"TWAP", why:"VWAP/POV follow volume → may not complete in low-volume hours. TWAP sends equal shares per time slice → guarantees completion in the time window.",
+                anchor:"COMPLETION in fixed window = TWAP. Volume-based algos (VWAP, POV) can leave orders unfilled."
+              },
+              {num:13, title:"Trade policy themes — which is INAPPROPRIATE", pattern:"Pattern 4 · Trade policy",
+                q:"ValleyRise should implement Yellow's recommendation related to: (a) eligible brokers list (lowest cost only), (b) trade errors policy, (c) OTC derivatives policy?",
+                wrong:"OTC derivatives or eligible brokers", right:"B — trade errors policy", why:"Trade errors policy IS needed (errors must go to compliance + trade error log). Eligible brokers limited to 'lowest cost' is wrong (best execution ≠ lowest cost). OTC derivatives 'minimum price transparency' is overly specific.",
+                anchor:"Trade error policy = needed. Lowest cost only = wrong (best execution is broader)."
+              }
+            ];
+
+            // Render All Qs button bar
+            function tswRenderAllQs(){
+              var btns = '';
+              for(var i=0;i<TSW_ERRORS.length;i++){
+                btns += '<button class="aw-cqb' + (i===0?' active':'') + '" onclick="tswErrAllQ('+i+',this)">Q' + (i+1) + '</button>';
+              }
+              document.getElementById('tswErrAllBtns').innerHTML = btns;
+              tswErrAllQ(0, document.querySelector('#tswErrAllBtns .aw-cqb'));
+            }
+            function tswErrAllQ(idx, btn){
+              document.querySelectorAll('#tswErrAllBtns .aw-cqb').forEach(function(b){b.classList.remove('active')});
+              if(btn) btn.classList.add('active');
+              var e = TSW_ERRORS[idx];
+              document.getElementById('tswErrAllBox').innerHTML =
+                '<div class="aw-cqnum">Q' + e.num + ' · ' + e.title + ' <span class="aw-bwrong">✗ got wrong</span></div>'+
+                '<div style="font-family:monospace;font-size:9.5px;letter-spacing:.06em;color:#7D8590;text-transform:uppercase;margin-bottom:8px">PATTERN: ' + e.pattern + '</div>'+
+                '<div class="aw-cqq">' + e.q + '</div>'+
+                '<div class="tsw-trap"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#FF7B72">YOUR WRONG PICK</span>' + e.wrong + '</div>'+
+                '<div class="tsw-tip"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#3DD68C">CORRECT</span>' + e.right + '</div>'+
+                '<div class="tsw-info"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#79C0FF">WHY</span>' + e.why + '</div>'+
+                '<div class="pcw-tip"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#3DD68C">MEMORY ANCHOR</span>' + e.anchor + '</div>';
+            }
+
+            // Quiz Me
+            var tswQord = [], tswQi = 0, tswQrev = false;
+            function tswErrQuizStart(){
+              tswQord = [];
+              for(var i=0;i<TSW_ERRORS.length;i++) tswQord.push(i);
+              tswQord.sort(function(){return Math.random()-0.5});
+              tswQi = 0; tswQrev = false;
+              tswQRender();
+            }
+            function tswQRender(){
+              if(tswQi >= tswQord.length){
+                document.getElementById('tswErrQuizBox').innerHTML =
+                  '<div style="text-align:center;padding:20px"><div style="font-family:Georgia,serif;font-size:18px;color:#3DD68C;margin-bottom:8px">All ' + TSW_ERRORS.length + ' reviewed ✓</div><button class="tsw-btn tsw-btn-primary" onclick="tswErrQuizStart()">Restart</button></div>';
+                return;
+              }
+              var e = TSW_ERRORS[tswQord[tswQi]];
+              var h = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">'+
+                '<span style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#FF7B72;text-transform:uppercase">Q' + e.num + ' · ' + e.pattern + '</span>'+
+                '<span style="font-family:monospace;font-size:10px;color:#7D8590">' + (tswQi+1) + ' / ' + tswQord.length + '</span></div>'+
+                '<div style="font-family:Georgia,serif;font-size:14px;color:#D4A017;font-weight:600;margin-bottom:8px">' + e.title + '</div>'+
+                '<div style="font-size:12.5px;line-height:1.65;color:#E6EDF3;margin-bottom:10px">' + e.q + '</div>';
+              if(!tswQrev){
+                h += '<div><button class="tsw-btn tsw-btn-primary" onclick="tswQReveal()">Show answer</button></div>';
+              } else {
+                h += '<div class="tsw-trap" style="margin-top:8px"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#FF7B72">YOUR WRONG PICK</span>'+e.wrong+'</div>'+
+                  '<div class="tsw-tip" style="margin-top:8px"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#3DD68C">CORRECT</span>'+e.right+'</div>'+
+                  '<div class="tsw-info" style="margin-top:8px"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#79C0FF">WHY</span>'+e.why+'</div>'+
+                  '<div class="pcw-tip" style="margin-top:8px"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#3DD68C">ANCHOR</span>'+e.anchor+'</div>'+
+                  '<div style="margin-top:12px;display:flex;gap:8px"><button class="tsw-btn" onclick="tswQNxt()">Next →</button></div>';
+              }
+              document.getElementById('tswErrQuizBox').innerHTML = h;
+            }
+            function tswQReveal(){ tswQrev = true; tswQRender(); }
+            function tswQNxt(){ tswQi++; tswQrev = false; tswQRender(); }
           </script>
         </div>
 
