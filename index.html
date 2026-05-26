@@ -6486,6 +6486,7 @@ Fund A active risk 3× Fund B with same Active Share → A makes sector bets, NO
             <button class="tsw-tab" onclick="tswTab('markets',this)">Key Markets</button>
             <button class="tsw-tab" onclick="tswTab('governance',this)">Trade Governance</button>
             <button class="tsw-tab" onclick="tswTab('errors',this)">Errors &amp; Mastery</button>
+            <button class="tsw-tab" onclick="tswTab('essays',this)">Essay Framework</button>
           </div>
 
           <!-- ═════════════════════════════════════════════════════════════════
@@ -7434,9 +7435,11 @@ A worse price can be the BEST execution if:
                     <tr><td><span class="tsw-hl">Expanded IS favorable (UPX)</span></td><td>Trading cost is most favorable (you picked delay)</td></tr>
                     <tr><td><span class="tsw-hl">Market-adjusted cost (TEXX)</span></td><td>−44.6 bps wins vs TWAP/VWAP</td></tr>
                     <tr><td><span class="tsw-hl">Delay cost (LIM)</span></td><td>Calculated arrival − decision price × shares</td></tr>
+                    <tr><td><span class="tsw-hl">Decision price for ACME</span></td><td>$79.90 (Tuesday close), NOT $80 (limit) — decision is observed, not chosen</td></tr>
                   </tbody>
                 </table>
                 <div class="tsw-trap"><b>The key trap:</b> for SELL orders, shares are <b>NEGATIVE</b>. If you forget the sign, your numbers will be wrong but plausible-looking.</div>
+                <div class="tsw-trap"><b>Second key trap:</b> the <b>decision price ≠ limit price</b>. Decision price is the market price OBSERVED at the moment of decision (previous close if before open, arrival if intraday, today's close if after close). Limit price is just an execution constraint chosen by the PM.</div>
                 <div class="tsw-tip">Drill: 4 separate interactive calculators (Arrival Cost / IS / Expanded IS / Market-Adjusted) preset with each question's numbers.</div>
               </div>
 
@@ -7550,6 +7553,7 @@ Fees = commission per share × executed shares</div>
                 <div class="tsw-anim-controls">
                   <button class="tsw-btn pcw-btn-primary" style="background:#D4A017;color:#0D1117" onclick="tswCalcIsPreset('ts')">Preset: TS sell ($35,450)</button>
                   <button class="tsw-btn" onclick="tswCalcIsPreset('wc')">Preset: West Commerce ($5,570)</button>
+                  <button class="tsw-btn" onclick="tswCalcIsPreset('acme')">Preset: ACME ($22,600)</button>
                   <button class="tsw-btn" onclick="tswCalcIsPreset('blank')">Clear</button>
                 </div>
 
@@ -7790,6 +7794,180 @@ Which to prioritize depends on:
 
           </div><!-- /tsw-errors panel -->
 
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB 8 · ESSAY FRAMEWORK
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="tsw-essays" class="tsw-panel">
+
+            <!-- Sub-tabs -->
+            <div class="tsw-tabs" style="margin-bottom:14px">
+              <button class="tsw-tab active" onclick="tswEssSub('method',this)">The Method</button>
+              <button class="tsw-tab" onclick="tswEssSub('keywords',this)">Keyword Decoder</button>
+              <button class="tsw-tab" onclick="tswEssSub('drill',this)">Drill Mode</button>
+              <button class="tsw-tab" onclick="tswEssSub('library',this)">All Essays</button>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 1 · The Method
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-ess-method" class="tsw-panel active">
+              <div class="tsw-card">
+                <div class="tsw-title">Why you panic on essays — and how to stop</div>
+                <div class="tsw-body">You don't panic because you don't know the content. You panic because you have NO PROCEDURE. Once you have a 4-step procedure, the page is never blank.</div>
+                <div class="tsw-fl">The 4-step universal procedure:
+  1. SCAN the question → identify the instruction KEYWORD
+  2. HUNT the vignette → underline 2-4 signal facts the examiner planted
+  3. PICK the concept(s) the question refers to → define them in 1 line each
+  4. WRITE the 3-block answer: CHOICE → DEFINITION → APPLICATION</div>
+                <div class="tsw-tip">When you can write definitions in 5 seconds and you've highlighted your signals, the writing starts immediately. No more blank page.</div>
+              </div>
+
+              <div class="tsw-card">
+                <div class="tsw-title">The 3-block answer template</div>
+                <div class="tsw-fl">┌─────────────────────────────────────────────────────┐
+│ BLOCK 1 · DIRECT CHOICE                             │
+│ One bold sentence that answers the question.        │
+│ Don't preamble. Don't hedge. State the answer.      │
+└─────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────┐
+│ BLOCK 2 · DEFINITION                                │
+│ One or two sentences defining the concepts named    │
+│ in the question. Shows theoretical mastery.         │
+└─────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────┐
+│ BLOCK 3 · APPLICATION (the most important)          │
+│ 2-3 reasons drawn FROM THE VIGNETTE.                │
+│ Each reason: [vignette fact] → [theoretical effect] │
+│ Examiners reward you for connecting facts to theory.│
+└─────────────────────────────────────────────────────┘</div>
+                <div class="tsw-info">If you skip Block 2, you sound like you guessed. If you skip Block 3, you sound like you wrote a textbook. You need BOTH.</div>
+              </div>
+
+              <div class="tsw-card">
+                <div class="tsw-title">Quality checklist — before you stop writing</div>
+                <span class="tsw-rule"><span class="tsw-green">✓</span> Did I make a clear choice in the first sentence?</span>
+                <span class="tsw-rule"><span class="tsw-green">✓</span> Did I define the key concept(s) named in the question?</span>
+                <span class="tsw-rule"><span class="tsw-green">✓</span> Did I cite at least 2 specific facts from the vignette?</span>
+                <span class="tsw-rule"><span class="tsw-green">✓</span> Did each fact connect to a theoretical effect (driver → consequence)?</span>
+                <span class="tsw-rule"><span class="tsw-green">✓</span> Did I close with a synthesis sentence?</span>
+                <div class="tsw-trap">If you can't answer YES to all 5, your essay is incomplete. Add what's missing before moving on.</div>
+              </div>
+
+              <div class="tsw-card">
+                <div class="tsw-title">Common reasons you block (and the fix)</div>
+                <table class="tsw-table">
+                  <thead><tr><th>Block reason</th><th>Fix</th></tr></thead>
+                  <tbody>
+                    <tr><td>"I don't remember the definition perfectly"</td><td>Write what you DO remember + apply the procedure. Partial definition + good application beats no answer.</td></tr>
+                    <tr><td>"I'm searching for the 'right' wording"</td><td>There's no right wording. There's a right STRUCTURE. Use the 3-block template.</td></tr>
+                    <tr><td>"I don't know which concept they want"</td><td>The question NAMES the concept(s) explicitly. "Trade urgency and alpha decay" = those are the two concepts.</td></tr>
+                    <tr><td>"I don't have enough to say"</td><td>Re-read the vignette. Each unusual detail is a planted signal. 3-year holding, persistent mispricing, etc.</td></tr>
+                    <tr><td>"I want to write more but I'm not sure if it adds points"</td><td>Stop. Concise + structured beats long + rambling. The graders use a rubric.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 2 · Keyword Decoder
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-ess-keywords" class="tsw-panel">
+              <div class="tsw-card">
+                <div class="tsw-title">Decode the instruction keyword first — it dictates your format</div>
+                <div class="tsw-body">Different keywords expect different response formats. Mismatching = lost points even if your content is correct.</div>
+              </div>
+
+              <div class="tsw-card" style="border-left:3px solid #D4A017">
+                <div class="tsw-title">Determine / Identify</div>
+                <div class="tsw-body">Examiner wants: <b>one clear choice</b> in the first sentence, then justification.</div>
+                <div class="tsw-fl">Format:
+  "X is the [most likely / most appropriate / correct] choice because..."
+  [2-3 reasons drawn from vignette]</div>
+                <div class="tsw-tip">Examples: "Determine the most appropriate algorithm." "Identify which fund has higher trade urgency."</div>
+              </div>
+
+              <div class="tsw-card" style="border-left:3px solid #79C0FF">
+                <div class="tsw-title">Calculate</div>
+                <div class="tsw-body">Examiner wants: <b>formula + numbers + result with units</b>.</div>
+                <div class="tsw-fl">Format:
+  Formula: [write the formula clearly]
+  Substitution: [plug in numbers from vignette]
+  Result: [final answer with currency or bps unit]</div>
+                <div class="tsw-tip">Show your work even if you have it right — partial credit if final number is wrong but steps are correct.</div>
+              </div>
+
+              <div class="tsw-card" style="border-left:3px solid #3DD68C">
+                <div class="tsw-title">Discuss / Justify</div>
+                <div class="tsw-body">Examiner wants: <b>2-3 reasons</b> with evidence from the vignette.</div>
+                <div class="tsw-fl">Format:
+  [Topic sentence stating the position]
+  Reason 1: [vignette fact] → [theoretical consequence]
+  Reason 2: [vignette fact] → [theoretical consequence]
+  (Reason 3 if relevant)</div>
+                <div class="tsw-tip">"Justify" = give reasons FOR something already chosen. "Discuss" = present analysis (often pros AND cons or multiple sides).</div>
+              </div>
+
+              <div class="tsw-card" style="border-left:3px solid #F0A04B">
+                <div class="tsw-title">Recommend</div>
+                <div class="tsw-body">Examiner wants: <b>a specific choice</b> + at least 2 justifications based on vignette evidence.</div>
+                <div class="tsw-fl">Format:
+  "I recommend [X] because..."
+  Justification 1: [vignette evidence]
+  Justification 2: [vignette evidence]
+  (Optionally: "[X] is preferred over [alternative] because...")</div>
+              </div>
+
+              <div class="tsw-card" style="border-left:3px solid #FF7B72">
+                <div class="tsw-title">Compare / Contrast</div>
+                <div class="tsw-body">Examiner wants: <b>a side-by-side comparison</b>, ideally as a table.</div>
+                <div class="tsw-fl">Format:
+  Build a 2-column or 2-row structure.
+  For each dimension: state the difference clearly.
+  Example dimensions: urgency, liquidity, risk appetite, time horizon</div>
+                <div class="tsw-tip">If a table isn't feasible, use parallel sentences: "X has [feature A], while Y has [feature B]."</div>
+              </div>
+
+              <div class="tsw-card" style="border-left:3px solid #B8890C">
+                <div class="tsw-title">Evaluate / Critique</div>
+                <div class="tsw-body">Examiner wants: <b>your assessment with reasoning</b> — often "is X appropriate / correct?"</div>
+                <div class="tsw-fl">Format:
+  "X is [appropriate / inappropriate / incorrect] because..."
+  [Reason 1]
+  [Reason 2]
+  [What should be done instead, if relevant]</div>
+                <div class="tsw-tip">For "evaluate the firm's trading policy" or similar, scan for the LOS-required components and check each.</div>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 3 · Drill Mode
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-ess-drill" class="tsw-panel">
+              <div class="tsw-card">
+                <div class="tsw-title">Drill Mode — build your essay step by step</div>
+                <div class="tsw-body">For each question: read the vignette, then progressively reveal the signals, structure, and full answer. Train yourself to spot signals BEFORE reading the answer.</div>
+                <div class="tsw-anim-controls">
+                  <button class="tsw-btn pcw-btn-primary" style="background:#D4A017;color:#0D1117" onclick="tswEssDrillNav(-1)">← Previous</button>
+                  <button class="tsw-btn" onclick="tswEssDrillNav(1)">Next →</button>
+                  <span class="tsw-progress" id="tswEssDrillProg">Essay 1 / 5</span>
+                </div>
+                <div id="tswEssDrillBox"></div>
+              </div>
+            </div>
+
+            <!-- ────────────────────────────────────────────────────
+                 SUB-TAB 4 · Library (all essays)
+                 ──────────────────────────────────────────────────── -->
+            <div id="tsw-ess-library" class="tsw-panel">
+              <div class="tsw-card">
+                <div class="tsw-title">All essays — pick one to review</div>
+                <div class="tsw-cqt" id="tswEssLibBtns"></div>
+                <div id="tswEssLibBox" style="margin-top:14px"></div>
+              </div>
+            </div>
+
+          </div><!-- /tsw-essays panel -->
+
           <script>
             function tswTab(id, btn){
               document.querySelectorAll('#tswWidget > .tsw-panel').forEach(function(p){p.classList.remove('active')});
@@ -8024,6 +8202,16 @@ Which to prioritize depends on:
                 document.getElementById('tswIsT3s').value = '0';    document.getElementById('tswIsT3p').value = '0';
                 document.getElementById('tswIsT4s').value = '0';    document.getElementById('tswIsT4p').value = '0';
                 document.getElementById('tswIsFee').value = '0.03';
+              } else if(p === 'acme'){
+                document.getElementById('tswIsSide').value = '-1';
+                document.getElementById('tswIsTotal').value = '50000';
+                document.getElementById('tswIsPd').value = '79.90';
+                document.getElementById('tswIsPn').value = '79.40';
+                document.getElementById('tswIsT1s').value = '30000'; document.getElementById('tswIsT1p').value = '79.50';
+                document.getElementById('tswIsT2s').value = '0'; document.getElementById('tswIsT2p').value = '0';
+                document.getElementById('tswIsT3s').value = '0'; document.getElementById('tswIsT3p').value = '0';
+                document.getElementById('tswIsT4s').value = '0'; document.getElementById('tswIsT4p').value = '0';
+                document.getElementById('tswIsFee').value = '0.02';
               } else {
                 document.getElementById('tswIsSide').value = '1';
                 document.getElementById('tswIsTotal').value = '0';
@@ -8364,6 +8552,13 @@ Which to prioritize depends on:
                 q:"ValleyRise should implement Yellow's recommendation related to: (a) eligible brokers list (lowest cost only), (b) trade errors policy, (c) OTC derivatives policy?",
                 wrong:"OTC derivatives or eligible brokers", right:"B — trade errors policy", why:"Trade errors policy IS needed (errors must go to compliance + trade error log). Eligible brokers limited to 'lowest cost' is wrong (best execution ≠ lowest cost). OTC derivatives 'minimum price transparency' is overly specific.",
                 anchor:"Trade error policy = needed. Lowest cost only = wrong (best execution is broader)."
+              },
+              {num:14, title:"ACME — decision price vs limit price", pattern:"Pattern 1 · IS Calculation",
+                q:"ACME sell order given before Wednesday open. Tuesday close $79.90. Wed limit $80, no fill. Thu limit $79.50, 30,000/50,000 sold at $79.50. Thu close $79.40. Fee $0.02/share. What's the decision price for IS calculation?",
+                wrong:"$80.00 (the limit price) or $79.50 (Thu order price)",
+                right:"$79.90 — the Tuesday close (last observed market price before the decision was made)",
+                why:"DECISION PRICE = the price OBSERVED in the market when the PM made the decision. The order was given before Wed open → no Wed price yet → use Tuesday's close ($79.90). The $80 limit is just an EXECUTION CONSTRAINT chosen by the PM, NOT a market price. IS = Exec cost + Opp cost + Fees = $12,000 + $10,000 + $600 = $22,600.",
+                anchor:"Decision price is OBSERVED in the market, never CHOSEN by the PM. Variants: decision before open → previous close; intraday → arrival price; after close → today's close. Limit price ≠ decision price, EVER."
               }
             ];
 
@@ -8424,6 +8619,279 @@ Which to prioritize depends on:
             }
             function tswQReveal(){ tswQrev = true; tswQRender(); }
             function tswQNxt(){ tswQi++; tswQrev = false; tswQRender(); }
+
+            // ═════════════════════════════════════════════════════════════════
+            // ESSAY FRAMEWORK TAB
+            // ═════════════════════════════════════════════════════════════════
+
+            var TSW_ESSAYS = [
+              {
+                title: "Ogive Fund — trade urgency and alpha decay",
+                vignette: "The Ogive Fund (large-cap value):<br>• Seeks <b>long-term outperformance</b> vs. S&P 500 by investing in undervalued companies<br>• Evaluates company fundamentals to identify <b>persistent mispricing</b> opportunities<br>• Has a <b>three-year average holding period</b>",
+                question: "Determine, based on Beamon's description of the Ogive Fund's characteristics, his likely inclination to aggressively implement the fund's strategy. Justify your response.",
+                keyword: "Determine + Justify",
+                concepts: "Trade urgency · Alpha decay",
+                signals: [
+                  "<b>Long-term outperformance</b> vs S&P 500 → long horizon, not chasing short-term moves",
+                  "<b>Persistent mispricing</b> → opportunity that doesn't vanish quickly = low alpha decay",
+                  "<b>Three-year average holding period</b> → explicit signal of patient capital, low turnover"
+                ],
+                structure: [
+                  "<b>Block 1 · Direct choice:</b> Beamon is likely to take a measured (low-urgency) approach.",
+                  "<b>Block 2 · Definitions:</b> Trade urgency = speed of execution over the trading horizon. Alpha decay = erosion of short-term alpha after the investment decision.",
+                  "<b>Block 3 · Application:</b> Connect each signal to a consequence — long horizon → low urgency; persistent mispricing → low alpha decay; value-based long-term views aren't quickly arbitraged away."
+                ],
+                fullAnswer: "<b>Beamon is likely to take a measured (non-aggressive) approach in implementing the Ogive Fund's strategy.</b><br><br>Trade urgency refers to how quickly an order is executed over the trading horizon, with greater urgency associated with shorter horizons and lower urgency with longer horizons. Alpha decay refers to the erosion of short-term alpha after the investment decision is made.<br><br>The Ogive Fund's characteristics point to LOW trade urgency and LOW alpha decay for three reasons. First, the fund's three-year average holding period means individual positions are held for years; the trading horizon is therefore long, and minimal trading is required. Second, the fund seeks <b>persistent</b> mispricing — not short-term dislocations — so the value of the trade does not erode quickly, meaning alpha decay is low. Third, value-based long-term investment views are not rapidly acted upon by other market participants, which further suppresses alpha decay.<br><br>Together, these characteristics mean Beamon can afford patient execution: trades can be spread out over longer horizons to minimize market impact without losing alpha to decay."
+              },
+              {
+                title: "Pengwyn Fund — cash management strategy",
+                vignette: "Pengwyn Fund (small-cap value) just received a <b>very large cash inflow</b>. The PM expects equity markets will drift HIGHER in the near term and asks about minimizing <b>cash drag</b> after the inflow.",
+                question: "Describe an appropriate cash management strategy for Barker.",
+                keyword: "Describe",
+                concepts: "Cash drag · Equitization · Index futures/ETFs",
+                signals: [
+                  "<b>Very large cash inflow</b> → too big to deploy immediately in illiquid small-caps",
+                  "<b>Expects markets to drift HIGHER</b> → being uninvested = expected loss vs benchmark",
+                  "<b>Small-cap fund</b> → underlying liquidity is low → need a fast proxy"
+                ],
+                structure: [
+                  "<b>Block 1 · Strategy name:</b> Recommend EQUITIZATION using equity futures or ETFs.",
+                  "<b>Block 2 · Definition:</b> Equitization = temporarily investing cash via futures/ETFs to gain desired equity exposure before deploying into underlyings longer-term.",
+                  "<b>Block 3 · Application:</b> The large inflow + small-cap illiquidity means immediate deployment isn't feasible. Equitize the cash to capture market upside, then gradually unwind futures as you build positions in the underlying small-cap names."
+                ],
+                fullAnswer: "<b>Barker should use an equitization strategy.</b><br><br>Cash drag refers to fund underperformance from holding uninvested cash in a rising market. Equitization refers to temporarily investing cash using equity futures or ETFs to gain the desired equity exposure before investing in the underlying securities longer-term.<br><br>In Pengwyn's situation, the large inflow cannot be invested immediately because of the lack of liquidity in small-cap underlying securities. By equitizing the cash via equity futures or ETFs, Barker can capture the expected market drift higher without being penalized for holding cash. He can then gradually trade into the underlying small-cap positions over time and unwind the futures/ETF position as the underlying portfolio is built up. This approach eliminates cash drag while respecting the liquidity constraints of small-cap securities."
+              },
+              {
+                title: "Valley Ranch vs North Circle — trade strategy criteria",
+                vignette: "Two firms compared:<br>Valley Ranch: short-term long/short, small trades, low risk appetite, listed-only, moderate-to-wide spreads<br>North Circle: long equity value, large trades, moderate-to-high risk appetite, listed + non-listed, very wide spreads in downturn",
+                question: "Identify ONE difference between the trading features for each trade strategy selection criterion: Order Characteristics · Security Characteristics · Market Conditions · Individual Risk Aversion.",
+                keyword: "Identify (×4)",
+                concepts: "4 trade strategy selection criteria",
+                signals: [
+                  "<b>Trade Size</b> column: Small vs Large → Order Characteristics differ",
+                  "<b>Trading Venue</b> column: Listed only vs Listed + non-listed → Security Characteristics differ",
+                  "<b>Bid-Ask in Downturn</b>: Moderate-wide vs Very wide → Market Conditions exposure differs",
+                  "<b>Risk Appetite</b>: Low vs Moderate-high → Individual Risk Aversion differs"
+                ],
+                structure: [
+                  "<b>Format = TABLE.</b> 4 rows, one per criterion.",
+                  "<b>Per row:</b> name the dimension that differs, then state Valley Ranch position vs North Circle position.",
+                  "<b>Be specific:</b> use the exact data from the exhibit, don't paraphrase loosely."
+                ],
+                fullAnswer: "<b>Order Characteristics:</b> Sizes differ — Valley Ranch trades SMALL orders while North Circle trades LARGE orders. Additionally, North Circle skews toward BUY orders (long value investing) while Valley Ranch trades both sides.<br><br><b>Security Characteristics:</b> Security type and liquidity differ. Valley Ranch trades equity AND non-equity LISTED securities only, while North Circle adds NON-LISTED equity securities. The non-listed positions at North Circle have lower liquidity.<br><br><b>Market Conditions:</b> Both are exposed, but North Circle's non-listed securities have greater potential exposure to ADVERSE liquidity conditions, evidenced by the VERY WIDE bid-ask spreads in a downturn.<br><br><b>Individual Risk Aversion:</b> Valley Ranch portfolio managers have HIGHER risk aversion (low appetite), while North Circle's managers have LOWER risk aversion (moderate-to-high appetite).",
+                yourAttempt: "<b>Order Characteristics:</b> Absolute size: small vs large<br><b>Security Characteristics:</b> Listed securities only vs Listed and non-listed securities<br><b>Market conditions:</b> Bid-ask spread moderate to wide vs very wide<br><b>Individual Risk Aversion:</b> high risk aversion vs low risk aversion",
+                gap: "Your answer was TECHNICALLY CORRECT on the dimensions picked, but THIN — you missed richness the model captured:<br><br>• <b>Order Characteristics:</b> you only mentioned size. Model also mentions ORDER SIDE (North Circle skews BUY because long-only value, Valley Ranch trades BOTH sides because long/short).<br><br>• <b>Security Characteristics:</b> you only mentioned listed/non-listed. Model also mentions (a) SECURITY TYPE — Valley Ranch trades equity AND non-equity, North Circle equity only; (b) SHORT-TERM ALPHA FOCUS — Valley Ranch chases short-term moves vs North Circle's long-term value.<br><br>• <b>Market Conditions:</b> you cited the spread data, which is correct, but didn't connect it to a CONSEQUENCE — the very wide spreads at North Circle in downturns indicate GREATER LIQUIDITY RISK exposure in non-listed positions.<br><br>• <b>Individual Risk Aversion:</b> you reversed it — Valley Ranch has LOW risk appetite = HIGH aversion; North Circle has MODERATE-TO-HIGH appetite = LOWER aversion. Read your answer carefully: you wrote 'high vs low' without naming WHICH firm has which.<br><br><b>The lesson:</b> when the question says 'identify ONE difference', it's a minimum — giving the dimension PLUS the consequence/mechanism shows mastery. And always anchor which firm has which feature."
+              },
+              {
+                title: "Sailors execution risk vs market impact — 3 stocks",
+                vignette: "Buy orders, target price = Last Trade. Concerned about minimizing execution risk and market impact.<br>ABC: 45,000 shares · last $310.10 · ADV 195,000 · LOW volatility · spread $309.75-$310.35<br>DEF: 55,000 shares · last $40.45 · ADV 4,125,260 · LOW volatility · spread $40.39-$40.56<br>XYZ: 8,000 shares · last $101.94 · ADV 750,850 · HIGH volatility · spread $100.82-$102.00",
+                question: "Determine which trades exhibit the GREATEST execution risk and the GREATEST market impact. Justify each selection.",
+                keyword: "Determine + Justify (×2 selections)",
+                concepts: "Execution risk (proxied by volatility) · Market impact (proxied by % of ADV)",
+                signals: [
+                  "<b>Volatility column</b> → execution risk driver. XYZ is HIGH, others LOW.",
+                  "<b>Order size vs ADV</b> → market impact driver. ABC = 45,000/195,000 = 23%; DEF = 55,000/4.1M = 1.3%; XYZ = 8,000/750,850 = 1%."
+                ],
+                structure: [
+                  "<b>Block 1 · Execution risk pick:</b> XYZ, because of high price volatility.",
+                  "<b>Block 1b · Market impact pick:</b> ABC, because it's 23% of ADV.",
+                  "<b>Block 2 · Definitions:</b> Execution risk = risk of adverse price movement over the trading horizon (proxied by volatility). Market impact = price change CAUSED by the order's size relative to typical volume.",
+                  "<b>Block 3 · Application:</b> Calculate %ADV for each, point to volatility column."
+                ],
+                fullAnswer: "<b>Execution risk: XYZ</b> exhibits the greatest execution risk. Execution risk is the risk of an adverse price movement occurring over the trading horizon due to a change in fundamental value or trading-induced volatility, and it is often proxied by price volatility. XYZ has HIGH price volatility while ABC and DEF have LOW volatility, so XYZ is most exposed.<br><br><b>Market impact: ABC</b> exhibits the greatest market impact risk. The permanent component of price change associated with an order is the market impact, driven by trade size relative to ADV. ABC's order size of 45,000 shares vs ADV of 195,000 = 23.1% of ADV, which is far greater than DEF (1.3%) or XYZ (1.1%). The larger the order relative to ADV, the larger the expected market impact cost."
+              },
+              {
+                title: "LIM — pre-trade vs intraday vs post-trade vs price target benchmark",
+                vignette: "Yesterday Bradley pegged LIM's fair value at $28. Today LIM overreacts to news.<br>Prior close: $30.05 · Pre-market: $20.34 · Open: $22.15<br>10:00 AM: $23.01, Bradley confirms fair value $28<br>10:05 AM: instructs buy of 25,000 at limit $28 when LIM trading $23.09<br>10:22 AM: trader finishes buy at avg $23.45",
+                question: "Identify the likely appropriate price benchmark for the LIM trade. Justify your response. (Choose: Pre-Trade / Intraday / Post-Trade / Price Target)",
+                keyword: "Identify + Justify",
+                concepts: "4 reference price categories",
+                signals: [
+                  "<b>Bradley's target $28</b> based on valuation principles — set BEFORE the trade",
+                  "<b>10:05 AM decision time</b> — the decision price is observed BEFORE execution",
+                  "<b>Limit $28 = fair value</b> — but limit ≠ benchmark; benchmark = market price at decision moment",
+                  "<b>Waiting for VWAP / close would expire the opportunity</b> — argues against intraday or post-trade"
+                ],
+                structure: [
+                  "<b>Block 1 · Choice:</b> Pre-trade benchmark (with note that BOTH decision and arrival prices are pre-trade variants applicable).",
+                  "<b>Block 2 · Definition:</b> Pre-trade benchmarks are reference prices known BEFORE the trading horizon starts (decision price, previous close, opening, arrival).",
+                  "<b>Block 3 · Application:</b> Bradley set his fair value before market open; an alpha-driven trader specifies decision or arrival price to capture mispricing. Post-trade or intraday benchmarks aren't available until later, too late for this short-horizon alpha trade."
+                ],
+                fullAnswer: "<b>The appropriate price benchmark is a Pre-Trade benchmark.</b><br><br>Pre-trade benchmarks are reference prices known BEFORE the start of the trading horizon. Examples include decision price, previous close, opening price, and arrival price. Pre-trade benchmarks are often specified by portfolio managers buying or selling on the basis of investment decisions or perceived market mispricings.<br><br>For Bradley and his trader, two pre-trade benchmarks are potentially appropriate. The DECISION PRICE is the price when Bradley made the decision to buy (around 10:05 AM when LIM was trading at $23.09). The ARRIVAL PRICE is the price when the order was entered into the market for execution. Portfolio managers who are buying or selling on the basis of alpha expectations or a current market mispricing — exactly Bradley's situation — will often specify an arrival price benchmark, since the alpha opportunity is tied to the price at the moment of execution.<br><br>Waiting for an intraday benchmark (VWAP/TWAP) or a post-trade benchmark (closing price) would risk the alpha opportunity expiring before it could be measured against a reference price."
+              },
+              {
+                title: "Dynopax — POV vs VWAP vs TWAP",
+                vignette: "Beatrice Minchow (algo designer) is working with PM James Bean on a SELL order for Bean's small position in <b>lightly-traded</b> Dynopax Inc. Bean states:<br>• Has <b>NO expectations</b> of adverse price movements during the trade horizon<br>• Wants a <b>scheduled</b> algorithm<br>• Wants to minimize market impact, but is <b>more concerned about getting the sell order COMPLETELY executed in one day</b>",
+                question: "Determine which algorithm Minchow is likely to use for the Dynopax sell order. Justify your response. (Choose: POV / VWAP / TWAP)",
+                keyword: "Determine + Justify",
+                concepts: "Scheduled algos · POV (volume-following) · VWAP (volume-weighted schedule) · TWAP (equal time slices)",
+                signals: [
+                  "<b>Lightly-traded</b> stock → low volume → volume-following algos may not complete",
+                  "<b>Scheduled algorithm</b> wanted → rules out POV (which is reactive, not scheduled)",
+                  "<b>Complete execution in 1 day</b> = the DECISIVE priority → guarantees completion in fixed window",
+                  "<b>No adverse price expectations</b> → no urgency premium, just need to finish"
+                ],
+                structure: [
+                  "<b>Block 1 · Choice:</b> TWAP.",
+                  "<b>Block 2 · Definition:</b> VWAP/TWAP are scheduled algos releasing orders following a time-specified schedule. POV is reactive — follows real-time volume.",
+                  "<b>Block 3 · Elimination + Application:</b> POV may not complete (chases volume, lightly-traded stock = low volume = unfilled). VWAP also volume-based (historical curve) — may not complete in low-volume periods. TWAP sends EQUAL shares per time slice regardless of volume → guarantees completion. Bean's priority of full execution in 1 day matches TWAP exactly."
+                ],
+                fullAnswer: "<b>Minchow is likely to use a TWAP algorithm for the Dynopax sell order.</b><br><br>VWAP and TWAP algorithms release orders to the market following a TIME-SPECIFIED SCHEDULE, trading a predetermined number of shares within a specified time interval (e.g., one day). POV (percentage-of-volume) algorithms incorporate real-time volume by following — or chasing — actual market volume.<br><br>VWAP algorithms follow a fixed schedule based on the HISTORICAL volume profile of the stock. For lightly-traded stocks like Dynopax, this may not be optimal because VWAP may not complete the order during low-volume periods. POV algorithms, while reactive, may also fail to complete the order within the specified time period if volume is insufficient.<br><br>TWAP algorithms send the SAME number of shares (and same percentage of the order) in each time period, regardless of market volume. This structure ensures that the specified number of shares is executed within the specified time period. Given Bean's stated priority of COMPLETE EXECUTION IN ONE DAY, TWAP is the algorithm that aligns with this priority.",
+                yourAttempt: "POV",
+                gap: "Wrong pick. POV is a reactive/opportunistic algo (chases real-time volume), NOT a scheduled algo. Bean explicitly asked for a SCHEDULED algorithm — that eliminates POV immediately.<br><br>The decisive driver here is <b>completion guarantee in fixed time window</b>, not volume-tracking. Among the three:<br>• POV: chases volume → may NOT complete (rules out)<br>• VWAP: follows historical volume curve → may NOT complete in low-volume hours (rules out)<br>• TWAP: equal shares per time slice → completion GUARANTEED in window ✓<br><br><b>The memory anchor:</b> when the question stresses 'must complete in [fixed period]' AND the stock is lightly-traded → TWAP is virtually always the answer. Volume-based algos (POV, VWAP) can leave you unfilled."
+              },
+              {
+                title: "Dark pools — veracity of 2 comments",
+                vignette: "Minchow helps EEP exit a LARGE position in a widely-traded blue chip stock. Trade is <b>NON-URGENT</b> but Bean is worried about <b>telegraphing intentions</b> to the market.<br><br>Minchow's comments on dark pools:<br><b>Comment 1:</b> A feature of a dark pool is that transactions and quantities won't be reported.<br><b>Comment 2:</b> While a dark pool does provide anonymity, there is less certainty of execution.",
+                question: "Determine the veracity of each comment. Justify each response.",
+                keyword: "Determine + Justify (×2)",
+                concepts: "Dark pools · Pre-trade vs post-trade transparency · Lit markets",
+                signals: [
+                  "<b>Comment 1 = TRAP</b>: confuses PRE-trade transparency (which dark pools lack) with POST-trade reporting (which is required EVERYWHERE)",
+                  "<b>Comment 2 = TRUE</b>: dark pools anonymity comes at the cost of execution certainty",
+                  "<b>Key distinction:</b> dark pools hide ORDERS before execution, but TRANSACTIONS are always reported afterward (regulatory requirement)"
+                ],
+                structure: [
+                  "<b>Block 1 · Verdict:</b> Comment 1 INCORRECT. Comment 2 CORRECT.",
+                  "<b>Block 2 · Definitions:</b> Dark pools = trading venues with NO pre-trade transparency (no visible quotes/orders). Lit markets (exchanges) = pre-trade transparent. Post-trade reporting (transactions, quantities) is required REGARDLESS of venue.",
+                  "<b>Block 3 · Application:</b> Comment 1's claim that transactions/quantities won't be reported is FALSE — they always are. Comment 2 is correct because without pre-trade transparency, you can't see resting orders → less certainty of finding a counterparty → less certainty of execution."
+                ],
+                fullAnswer: "<b>Comment 1 is INCORRECT.</b> Regardless of the trading venue, transactions and quantities are ALWAYS REPORTED. The distinguishing feature of a dark pool is the lack of PRE-trade transparency (no visible limit orders), not the suppression of post-trade reporting. Post-trade reporting of executed transactions is a regulatory requirement that applies to all venues, lit or dark.<br><br><b>Comment 2 is CORRECT.</b> Dark pools provide anonymity because no pre-trade transparency exists. Exchanges are known as LIT markets — as opposed to dark markets — because they provide pre-trade transparency: limit orders reflect trader intentions for trade side (buy or sell), price, and size, and these are visible to all participants. With a dark pool, however, traders cannot see resting orders before submission. The cost of this anonymity is LESS CERTAINTY OF EXECUTION compared to an exchange, because the trader doesn't know whether a counterparty is available at their desired price.",
+                yourAttempt: "<b>Comment 1: CORRECT</b> — \"Dark pools are trading systems with low pre-trade transparency, orders entered into a dark venue cannot be seen by other market participants before the order occurs, hence users know that there is no risk of info leakage\"<br><b>Comment 2: CORRECT</b> — \"one of weakness of dark pool is that traders can't see orders side of the trade so they do not know the pre-trade likelihood of execution\"",
+                gap: "Comment 1 was WRONG. You confused two different things:<br><br>• <b>PRE-trade transparency</b> = visibility of ORDERS before execution. Dark pools have NONE (that's their point).<br>• <b>POST-trade reporting</b> = reporting of EXECUTED TRANSACTIONS and quantities afterward. This is required EVERYWHERE, including dark pools.<br><br>Your justification for Comment 1 was about pre-trade transparency, but Comment 1's actual CLAIM was that 'transactions and quantities won't be reported' — that's a POST-trade claim, which is FALSE. The textbook rule: 'Regardless of trading venue, transactions and quantities are always reported.'<br><br>Comment 2 you got right — your justification was on the right track (no visibility of resting orders = less execution certainty).<br><br><b>Memory anchor:</b> Dark pool = no PRE-trade transparency. Post-trade reporting is MANDATORY everywhere. Reading the question carefully would have caught this: 'transactions and quantities won't be reported' is about POST-trade, where dark pools have ZERO exception."
+              },
+              {
+                title: "Green Savannah — 2 inappropriate trade policy themes",
+                vignette: "Green Savannah Securities (equity + fixed-income strategies) is formulating its trade policy. Initial themes:<br><br><b>Theme 1:</b> We should determine an optimal execution approach and apply that approach to EACH asset class managed.<br><b>Theme 2:</b> In aggregating trades for pooled accounts, any partially executed orders need to be allocated on a pro-rata basis.<br><b>Theme 3:</b> The principles behind our process to find a broker should be consistent across each asset class managed.<br><b>Theme 4:</b> To act in our clients' best interests, we need to disclose ALL trade errors to them.",
+                question: "Identify TWO inappropriate themes in the partners' set. Justify your response.",
+                keyword: "Identify + Justify (×2 themes)",
+                concepts: "Trade governance · Optimal execution · Trade error policy · Best execution",
+                signals: [
+                  "<b>Theme 1</b>: 'apply THAT approach to EACH asset class' → wrong because optimal execution depends on asset class, liquidity, market mechanism",
+                  "<b>Theme 2</b>: pro-rata allocation → APPROPRIATE (standard practice for pooled orders)",
+                  "<b>Theme 3</b>: consistent PRINCIPLES (not approaches) across asset classes → APPROPRIATE (principles vs execution method)",
+                  "<b>Theme 4</b>: 'disclose ALL trade errors to clients' → wrong because errors go to COMPLIANCE + trade error log, priority is no adverse impact for client (not disclosure)"
+                ],
+                structure: [
+                  "<b>Block 1 · Verdict:</b> Themes 1 and 4 are inappropriate.",
+                  "<b>Block 2 · Theme 1 justification:</b> Optimal execution VARIES by asset class, security liquidity, and trading mechanism (order-driven / quote-driven / brokered). One size doesn't fit all.",
+                  "<b>Block 3 · Theme 4 justification:</b> Trade errors must be DOCUMENTED in trade error log and disclosed to COMPLIANCE. Priority is resolving errors without adverse client impact, NOT mandatory client disclosure."
+                ],
+                fullAnswer: "<b>Themes 1 and 4 are inappropriate.</b><br><br><b>Theme 1 is inappropriate</b> because the optimal execution approach may differ by ASSET CLASS, level of security liquidity, and security trading mechanism (order-driven markets, quote-driven markets, and brokered markets). Equity execution differs from fixed-income execution, and within each asset class, liquid securities trade differently from illiquid ones. Green Savannah's trade policy document should describe the FACTORS used in determining how an order can be executed in an optimal manner for a given scenario — not impose a single approach across all asset classes.<br><br><b>Theme 4 is inappropriate</b> because, as part of a suitable policy for the treatment of trade errors, those errors and any resulting gains/losses need to be disclosed to Green Savannah's COMPLIANCE DEPARTMENT and documented in a trade error log. The priority is to ensure errors are resolved in a way that PREVENTS ADVERSE IMPACT for the client, not to ensure complete disclosure to clients. Mandatory client disclosure of all errors (including ones with no client impact) is not required by trade governance best practice.",
+                yourAttempt: "<b>Themes 1 and 4.</b><br>Theme 1: because for each asset class managed they should determine an optimal execution approach and not apply the same optimal execution approach to each asset class managed.<br>Theme 4: trade gov doesn't require to disclose all trade errors to client.",
+                gap: "<b>You picked the right themes ✓</b> — Themes 1 and 4 are correct.<br><br>Your justifications were on the right track but THIN. Two improvements to bring you up to full marks:<br><br>• <b>Theme 1:</b> you said 'apply different approaches per asset class' — correct. But ADD the mechanism: optimal execution depends on (i) asset class, (ii) security liquidity, (iii) trading mechanism (order-driven, quote-driven, brokered). Naming the THREE factors signals mastery.<br><br>• <b>Theme 4:</b> you said 'doesn't require disclosing all errors to clients' — correct. But ADD the positive part of the rule: errors must go to COMPLIANCE + trade error log; priority is no adverse impact for the client, not disclosure. The exam wants both 'what's wrong with the theme' AND 'what the correct policy is.'<br><br><b>Memory anchor:</b> when justifying an INAPPROPRIATE theme, give (a) why it's wrong + (b) what the correct policy actually requires. Two pieces, not one."
+              }
+            ];
+
+            var tswEssDrillIdx = 0;
+            var tswEssDrillStep = 0; // 0=question only, 1=signals, 2=structure, 3=full answer
+
+            function tswEssSub(id, btn){
+              document.querySelectorAll('#tsw-essays > .tsw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#tsw-essays > .tsw-tabs > .tsw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('tsw-ess-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'drill') tswEssDrillRender();
+              if(id === 'library') tswEssLibInit();
+            }
+
+            function tswEssDrillNav(dir){
+              var newIdx = tswEssDrillIdx + dir;
+              if(newIdx < 0 || newIdx >= TSW_ESSAYS.length) return;
+              tswEssDrillIdx = newIdx;
+              tswEssDrillStep = 0;
+              tswEssDrillRender();
+            }
+
+            function tswEssDrillStepForward(){
+              if(tswEssDrillStep < 3) tswEssDrillStep++;
+              tswEssDrillRender();
+            }
+
+            function tswEssDrillRender(){
+              var e = TSW_ESSAYS[tswEssDrillIdx];
+              document.getElementById('tswEssDrillProg').textContent = 'Essay ' + (tswEssDrillIdx+1) + ' / ' + TSW_ESSAYS.length;
+
+              var h = '<div style="font-family:monospace;font-size:9.5px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-top:14px;margin-bottom:6px">QUESTION</div>'+
+                '<div style="font-family:Georgia,serif;font-size:14px;color:#D4A017;font-weight:600;margin-bottom:8px">' + e.title + '</div>'+
+                '<div class="tsw-info"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#79C0FF">VIGNETTE</span>' + e.vignette + '</div>'+
+                '<div class="tsw-trap" style="background:rgba(212,160,23,.08);border-left-color:#D4A017;color:#D4A017"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#D4A017">QUESTION</span>' + e.question + '</div>'+
+                '<div class="tsw-info"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#79C0FF">KEYWORD · CONCEPTS</span><b>' + e.keyword + '</b> &nbsp;|&nbsp; ' + e.concepts + '</div>';
+
+              if(tswEssDrillStep === 0){
+                h += '<div style="text-align:center;margin-top:14px;padding:14px;background:rgba(212,160,23,.05);border:1px dashed #D4A017;border-radius:5px">'+
+                  '<div style="font-family:Georgia,serif;font-size:13px;color:#D4A017;margin-bottom:10px">Try to identify the signals in the vignette before clicking below.</div>'+
+                  '<button class="tsw-btn pcw-btn-primary" style="background:#D4A017;color:#0D1117" onclick="tswEssDrillStepForward()">Show signals (Step 1)</button></div>';
+              } else {
+                h += '<div class="tsw-tip"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#3DD68C">STEP 1 · SIGNALS in the vignette</span>';
+                e.signals.forEach(function(s){
+                  h += '<div style="display:flex;gap:6px;align-items:start;margin:6px 0"><span style="color:#3DD68C">→</span><span style="flex:1">' + s + '</span></div>';
+                });
+                h += '</div>';
+              }
+
+              if(tswEssDrillStep === 1){
+                h += '<div style="text-align:center;margin-top:14px"><button class="tsw-btn" onclick="tswEssDrillStepForward()">Show structure (Step 2) →</button></div>';
+              } else if(tswEssDrillStep >= 2){
+                h += '<div class="tsw-info"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#79C0FF">STEP 2 · ANSWER STRUCTURE (3 blocks)</span>';
+                e.structure.forEach(function(s){
+                  h += '<div style="margin:7px 0;padding-left:8px;border-left:2px solid #79C0FF">' + s + '</div>';
+                });
+                h += '</div>';
+              }
+
+              if(tswEssDrillStep === 2){
+                h += '<div style="text-align:center;margin-top:14px"><button class="tsw-btn" onclick="tswEssDrillStepForward()">Show full model answer (Step 3) →</button></div>';
+              } else if(tswEssDrillStep === 3){
+                h += '<div class="tsw-tip" style="background:rgba(46,160,67,.08);border-left-color:#3DD68C"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:6px;color:#3DD68C">STEP 3 · FULL MODEL ANSWER</span>' + e.fullAnswer + '</div>';
+                if(e.yourAttempt){
+                  h += '<div class="tsw-trap" style="background:rgba(255,123,114,.08);border-left-color:#FF7B72;color:#E6EDF3"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:6px;color:#FF7B72">YOUR ACTUAL ATTEMPT</span>' + e.yourAttempt + '</div>';
+                }
+                if(e.gap){
+                  h += '<div class="tsw-info" style="background:rgba(240,160,75,.08);border-left-color:#F0A04B;color:#E6EDF3"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:6px;color:#F0A04B">GAP ANALYSIS</span>' + e.gap + '</div>';
+                }
+              }
+
+              document.getElementById('tswEssDrillBox').innerHTML = h;
+            }
+
+            function tswEssLibInit(){
+              var btns = '';
+              for(var i=0;i<TSW_ESSAYS.length;i++){
+                btns += '<button class="aw-cqb' + (i===0?' active':'') + '" onclick="tswEssLibShow('+i+',this)">E' + (i+1) + '</button>';
+              }
+              document.getElementById('tswEssLibBtns').innerHTML = btns;
+              tswEssLibShow(0, document.querySelector('#tswEssLibBtns .aw-cqb'));
+            }
+
+            function tswEssLibShow(idx, btn){
+              document.querySelectorAll('#tswEssLibBtns .aw-cqb').forEach(function(b){b.classList.remove('active')});
+              if(btn) btn.classList.add('active');
+              var e = TSW_ESSAYS[idx];
+              var h = '<div style="font-family:Georgia,serif;font-size:14px;color:#D4A017;font-weight:600;margin-bottom:8px">' + e.title + '</div>'+
+                '<div class="tsw-info"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#79C0FF">VIGNETTE</span>' + e.vignette + '</div>'+
+                '<div class="tsw-trap" style="background:rgba(212,160,23,.08);border-left-color:#D4A017;color:#D4A017"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#D4A017">QUESTION</span>' + e.question + '</div>'+
+                '<div class="tsw-info"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#79C0FF">KEYWORD · CONCEPTS</span><b>' + e.keyword + '</b> &nbsp;|&nbsp; ' + e.concepts + '</div>'+
+                '<div class="tsw-tip"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#3DD68C">SIGNALS</span>';
+              e.signals.forEach(function(s){
+                h += '<div style="display:flex;gap:6px;align-items:start;margin:5px 0"><span style="color:#3DD68C">→</span><span style="flex:1">' + s + '</span></div>';
+              });
+              h += '</div>'+
+                '<div class="tsw-info"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:4px;color:#79C0FF">STRUCTURE</span>';
+              e.structure.forEach(function(s){
+                h += '<div style="margin:5px 0;padding-left:8px;border-left:2px solid #79C0FF">' + s + '</div>';
+              });
+              h += '</div>'+
+                '<div class="tsw-tip" style="background:rgba(46,160,67,.08);border-left-color:#3DD68C"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:6px;color:#3DD68C">MODEL ANSWER</span>' + e.fullAnswer + '</div>';
+              if(e.yourAttempt){
+                h += '<div class="tsw-trap" style="background:rgba(255,123,114,.08);border-left-color:#FF7B72;color:#E6EDF3"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:6px;color:#FF7B72">YOUR ACTUAL ATTEMPT</span>' + e.yourAttempt + '</div>';
+              }
+              if(e.gap){
+                h += '<div class="tsw-info" style="background:rgba(240,160,75,.08);border-left-color:#F0A04B;color:#E6EDF3"><span style="font-family:monospace;font-size:9px;letter-spacing:.08em;display:block;margin-bottom:6px;color:#F0A04B">GAP ANALYSIS</span>' + e.gap + '</div>';
+              }
+
+              document.getElementById('tswEssLibBox').innerHTML = h;
+            }
           </script>
         </div>
 
