@@ -8896,6 +8896,436 @@ Which to prioritize depends on:
         </div>
 
 
+        <!-- ═════════════════════════════════════════════════════════════════
+             cmeWidget · Capital Market Expectations Pt1: Framework & Macro
+             ═════════════════════════════════════════════════════════════════ -->
+        <div id="cmeWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #cmeWidget { color:#C9D1D9; font-family:var(--sans); font-size:13px; line-height:1.6; }
+            #cmeWidget .cme-tabs { display:flex; gap:2px; border-bottom:1px solid var(--border); margin-bottom:18px; overflow-x:auto; }
+            #cmeWidget .cme-tab { background:none; border:none; padding:9px 13px; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; }
+            #cmeWidget .cme-tab.active { color:#D4A017; border-bottom-color:#D4A017; }
+            #cmeWidget .cme-panel { display:none; }
+            #cmeWidget .cme-panel.active { display:block; }
+            #cmeWidget .cme-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:14px 16px; margin-bottom:12px; }
+            #cmeWidget .cme-title { font-family:var(--serif); font-size:15px; color:#D4A017; font-weight:600; margin-bottom:8px; }
+            #cmeWidget .cme-body { font-size:12.5px; line-height:1.65; color:#C9D1D9; margin-bottom:8px; }
+            #cmeWidget .cme-fl { background:#0B0F14; border-left:2px solid #2A3441; padding:10px 12px; font-family:var(--mono); font-size:11px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; border-radius:3px; margin:8px 0; }
+            #cmeWidget .cme-trap { background:rgba(255,123,114,.07); border-left:2px solid #FF7B72; color:#E6EDF3; padding:10px 12px; border-radius:3px; margin:8px 0; font-size:12px; line-height:1.6; }
+            #cmeWidget .cme-tip { background:rgba(46,160,67,.07); border-left:2px solid #3DD68C; color:#E6EDF3; padding:10px 12px; border-radius:3px; margin:8px 0; font-size:12px; line-height:1.6; }
+            #cmeWidget .cme-info { background:rgba(121,192,255,.07); border-left:2px solid #79C0FF; color:#E6EDF3; padding:10px 12px; border-radius:3px; margin:8px 0; font-size:12px; line-height:1.6; }
+            #cmeWidget .cme-table { width:100%; border-collapse:collapse; margin:8px 0; font-size:11.5px; }
+            #cmeWidget .cme-table th, #cmeWidget .cme-table td { padding:6px 8px; text-align:left; border-bottom:1px solid var(--border); vertical-align:top; }
+            #cmeWidget .cme-table th { color:#D4A017; font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; font-weight:500; }
+            #cmeWidget .cme-rule { display:block; padding:6px 0; border-bottom:1px solid var(--border); font-size:12px; }
+            #cmeWidget .cme-rule:last-child { border-bottom:none; }
+            #cmeWidget .cme-hl { color:#D4A017; font-weight:600; }
+            #cmeWidget .cme-green { color:#3DD68C; }
+            #cmeWidget .cme-red { color:#FF7B72; }
+            #cmeWidget .cme-orange { color:#F0A04B; }
+            #cmeWidget .cme-blue { color:#79C0FF; }
+
+            /* Step flow */
+            #cmeWidget .cme-step { display:flex; gap:12px; margin-bottom:10px; align-items:flex-start; }
+            #cmeWidget .cme-step-num { flex-shrink:0; width:32px; height:32px; border-radius:50%; background:rgba(212,160,23,.15); border:1px solid #D4A017; color:#D4A017; display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-weight:600; font-size:14px; }
+            #cmeWidget .cme-step-body { flex:1; padding-top:5px; }
+            #cmeWidget .cme-step-title { color:#D4A017; font-weight:600; font-size:13px; margin-bottom:3px; }
+            #cmeWidget .cme-step-text { font-size:12px; line-height:1.55; color:#C9D1D9; }
+
+            /* Problem cards (collapsible) */
+            #cmeWidget .cme-problem { background:var(--surface); border:1px solid var(--border); border-left:3px solid #F0A04B; border-radius:5px; margin-bottom:10px; overflow:hidden; }
+            #cmeWidget .cme-problem-head { padding:11px 14px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+            #cmeWidget .cme-problem-head:hover { background:rgba(212,160,23,.04); }
+            #cmeWidget .cme-problem-num { font-family:var(--mono); font-size:10px; color:#7D8590; letter-spacing:.06em; }
+            #cmeWidget .cme-problem-title { flex:1; font-size:13px; color:#E6EDF3; font-weight:500; }
+            #cmeWidget .cme-problem-arrow { color:#7D8590; font-size:11px; transition:transform .2s; }
+            #cmeWidget .cme-problem.open .cme-problem-arrow { transform:rotate(90deg); }
+            #cmeWidget .cme-problem-body { display:none; padding:0 14px 14px; border-top:1px solid var(--border); }
+            #cmeWidget .cme-problem.open .cme-problem-body { display:block; }
+
+            /* Sub-bias rows */
+            #cmeWidget .cme-bias { padding:8px 10px; margin:6px 0; background:#0B0F14; border-left:2px solid #2A3441; border-radius:3px; font-size:12px; line-height:1.55; }
+            #cmeWidget .cme-bias-name { color:#D4A017; font-weight:600; font-size:12px; }
+            #cmeWidget .cme-bias-cat { font-family:var(--mono); font-size:9px; color:#7D8590; letter-spacing:.06em; margin-left:6px; }
+          </style>
+
+          <!-- Tab nav -->
+          <div class="cme-tabs">
+            <button class="cme-tab active" onclick="cmeTab('process',this)">7-Step Process</button>
+            <button class="cme-tab" onclick="cmeTab('problems',this)">9 Forecasting Problems</button>
+            <button class="cme-tab" onclick="cmeTab('errors',this)">Errors &amp; Mastery</button>
+          </div>
+
+          <!-- ════════════════════════════════════════════════════════════
+               TAB 1 · THE 7-STEP PROCESS
+               ════════════════════════════════════════════════════════════ -->
+          <div id="cme-process" class="cme-panel active">
+
+            <div class="cme-card">
+              <div class="cme-title">LOS 1.a · The 7-step process to formulate CME</div>
+              <div class="cme-body">Capital Market Expectations are forward-looking estimates of return, risk, and correlation for asset classes. This is the standardized procedure to build them.</div>
+            </div>
+
+            <div class="cme-card">
+              <div class="cme-step">
+                <div class="cme-step-num">1</div>
+                <div class="cme-step-body">
+                  <div class="cme-step-title">Determine the SPECIFIC CMEs needed</div>
+                  <div class="cme-step-text">Based on investor's <b>allowable asset classes</b> and <b>investment horizon(s)</b>. Time horizon is particularly important in determining which CMEs are needed (e.g. short-horizon investor doesn't need 30-year return forecasts).</div>
+                </div>
+              </div>
+              <div class="cme-step">
+                <div class="cme-step-num">2</div>
+                <div class="cme-step-body">
+                  <div class="cme-step-title">Investigate historical performance + drivers</div>
+                  <div class="cme-step-text">Identify <b>what DROVE past performance</b>, then forecast forward. Establish a plausible range for future performance. Compare forecast to past results — does it pass the sanity check?</div>
+                </div>
+              </div>
+              <div class="cme-step">
+                <div class="cme-step-num">3</div>
+                <div class="cme-step-body">
+                  <div class="cme-step-title">Identify valuation model + requirements</div>
+                  <div class="cme-step-text">E.g. comparables-based / relative value used in US may NOT work for emerging markets. The model must FIT the asset class and market.</div>
+                </div>
+              </div>
+              <div class="cme-step">
+                <div class="cme-step-num">4</div>
+                <div class="cme-step-body">
+                  <div class="cme-step-title">Collect the best data possible</div>
+                  <div class="cme-step-text">Faulty data → faulty conclusions. Financial publications + commercial databases = best sources for reliable asset class data.</div>
+                </div>
+              </div>
+              <div class="cme-step">
+                <div class="cme-step-num">5</div>
+                <div class="cme-step-body">
+                  <div class="cme-step-title">Use experience &amp; judgment for inputs</div>
+                  <div class="cme-step-text">Interpret current investment conditions; decide which values to assign. <b>Verify inputs are consistent ACROSS asset classes</b> (e.g. same inflation assumption everywhere).</div>
+                </div>
+              </div>
+              <div class="cme-step">
+                <div class="cme-step-num">6</div>
+                <div class="cme-step-body">
+                  <div class="cme-step-title">Formulate CMEs — RECORD assumptions</div>
+                  <div class="cme-step-text">Any assumption or rationale used in the analysis should be DOCUMENTED. Without this, you can't audit later or improve the process.</div>
+                </div>
+              </div>
+              <div class="cme-step">
+                <div class="cme-step-num">7</div>
+                <div class="cme-step-body">
+                  <div class="cme-step-title">Monitor performance + refine the process</div>
+                  <div class="cme-step-text">If actual performance varies significantly from forecasts, both the <b>process AND the model</b> should be refined. Continuous learning loop.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cme-card">
+              <div class="cme-title">Information needed to support the investment process</div>
+              <div class="cme-info"><b>Geography:</b> individual countries, economic blocks (e.g. EU), nondomestic vs domestic, regional, global.</div>
+              <div class="cme-info"><b>Major asset classes:</b> fixed income, equity, real assets.</div>
+              <div class="cme-info"><b>Sub-asset classes:</b><br>
+                • Equity: industries, sectors, size, style<br>
+                • Fixed income: nominal vs TIPS, floating vs fixed, credit quality, maturities<br>
+                • Real assets: commodities, real estate, timber</div>
+            </div>
+
+            <div class="cme-card">
+              <div class="cme-title">What makes a GOOD forecast?</div>
+              <span class="cme-rule"><span class="cme-green">✓</span> <b>Unbiased</b> — no systematic over/under estimation</span>
+              <span class="cme-rule"><span class="cme-green">✓</span> <b>Objective</b> — driven by data, not opinion or wish</span>
+              <span class="cme-rule"><span class="cme-green">✓</span> <b>Well researched</b> — supported by evidence and analysis</span>
+              <span class="cme-rule"><span class="cme-green">✓</span> <b>Efficient</b> — small forecasting error</span>
+              <span class="cme-rule"><span class="cme-green">✓</span> <b>Internally consistent</b> — inputs align across asset classes</span>
+              <div class="cme-tip"><b>Rule of thumb:</b> at least <b>30 observations</b> are needed to test a hypothesis. Less = unreliable.</div>
+            </div>
+
+            <div class="cme-card">
+              <div class="cme-title">Memory anchor — DICCUM FM</div>
+              <div class="cme-fl">Step 1: Determine CMEs (asset classes + horizon)
+Step 2: Investigate history (drivers)
+Step 3: Identify valuation model
+Step 4: Collect data
+Step 5: Use judgment for inputs (consistent across classes)
+Step 6: Formulate CMEs (record assumptions)
+Step 7: Monitor &amp; refine</div>
+              <div class="cme-tip">Mnemonic: <b>D-I-I-C-U-F-M</b> · "Determine, Investigate, Identify, Collect, Use, Formulate, Monitor"</div>
+            </div>
+          </div>
+
+          <!-- ════════════════════════════════════════════════════════════
+               TAB 2 · 9 FORECASTING PROBLEMS
+               ════════════════════════════════════════════════════════════ -->
+          <div id="cme-problems" class="cme-panel">
+
+            <div class="cme-card">
+              <div class="cme-title">LOS 1.b · 9 problems in developing capital market forecasts</div>
+              <div class="cme-body">Poor forecasts → inappropriate asset allocations. Click each problem to expand.</div>
+              <div class="cme-fl">1. Economic data limitations          ← data is slow / revised / rebased
+2. Data measurement errors + biases   ← survivorship, appraisal smoothing
+3. Limitations of historical estimates ← regime changes, nonstationary data
+4. Use of ex post for ex ante         ← past low risk ≠ future low risk
+5. Nonrepeating data patterns         ← data mining, time-period bias
+6. Conditioning information ignored   ← beta varies by regime
+7. Misinterpretation of correlations  ← causality, spurious, nonlinear
+8. Psychological biases               ← 6 sub-biases (anchoring, etc.)
+9. Model uncertainty                  ← MOST SERIOUS · 3 types</div>
+            </div>
+
+            <!-- Problem 1 -->
+            <div class="cme-problem" id="cmeP1" onclick="cmePtoggle('cmeP1')">
+              <div class="cme-problem-head">
+                <span class="cme-problem-num">PROBLEM 1</span>
+                <span class="cme-problem-title">Limitations to using economic data</span>
+                <span class="cme-problem-arrow">▶</span>
+              </div>
+              <div class="cme-problem-body" onclick="event.stopPropagation()">
+                <div class="cme-info">Economic data has 3 main issues that distort analysis:</div>
+                <span class="cme-rule">• <b>Time lag</b> — IMF reports data with a lag of <b>up to 2 years</b>. By the time you have it, conditions changed.</span>
+                <span class="cme-rule">• <b>Revisions</b> — data is revised AFTER initial publication. Definitions and methodology change over time (e.g. CPI basket updated every few years).</span>
+                <span class="cme-rule">• <b>Rebasing</b> — base period of indexes changes. Unaware analysts compute % changes incorrectly.</span>
+                <div class="cme-tip"><b>Mitigation:</b> use multiple data sources, know revision schedules, adjust for rebasing before comparing.</div>
+              </div>
+            </div>
+
+            <!-- Problem 2 -->
+            <div class="cme-problem" id="cmeP2" onclick="cmePtoggle('cmeP2')">
+              <div class="cme-problem-head">
+                <span class="cme-problem-num">PROBLEM 2</span>
+                <span class="cme-problem-title">Data measurement errors and biases</span>
+                <span class="cme-problem-arrow">▶</span>
+              </div>
+              <div class="cme-problem-body" onclick="event.stopPropagation()">
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Transcription errors</span>
+                  <span class="cme-bias-cat">misreporting</span><br>
+                  Misreporting or incorrect recording of information. <b>Most serious if BIASED</b> (systematic, not random).
+                </div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Survivorship bias</span>
+                  <span class="cme-bias-cat">selection</span><br>
+                  Managers / securities deleted from historical record. Deletions tied to POOR performance → <b>biases historical return UPWARD</b>.
+                </div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Appraisal (smoothing) data</span>
+                  <span class="cme-bias-cat">illiquid assets</span><br>
+                  Returns for illiquid assets (e.g. real estate, private equity) appraised infrequently → return path appears SMOOTHER than reality. Effect:<br>
+                  • Biases standard deviation DOWNWARD<br>
+                  • Makes returns appear LESS correlated (closer to 0) with liquid assets<br>
+                  Big problem for alternatives.
+                </div>
+              </div>
+            </div>
+
+            <!-- Problem 3 -->
+            <div class="cme-problem" id="cmeP3" onclick="cmePtoggle('cmeP3')">
+              <div class="cme-problem-head">
+                <span class="cme-problem-num">PROBLEM 3</span>
+                <span class="cme-problem-title">Limitations of historical estimates</span>
+                <span class="cme-problem-arrow">▶</span>
+              </div>
+              <div class="cme-problem-body" onclick="event.stopPropagation()">
+                <div class="cme-body">Values from historical data must often be ADJUSTED going forward as economic, political, regulatory, and technological environments change. These changes are <b>regime changes</b> and result in <b>nonstationary data</b>.</div>
+                <div class="cme-info"><b>Example:</b> the 2007–2009 financial crisis produced returns data markedly different from the previous 5 years. Pre-crisis data has different statistical properties than post-crisis data.</div>
+                <div class="cme-tip"><b>Two questions to decide if a long period is INAPPROPRIATE:</b><br>
+                  1. Is there a reason to believe the entire (longer) period is not appropriate?<br>
+                  2. If yes, does a statistical test confirm a regime change exists AND identify where?<br>
+                  If both = yes → use judgment to pick the relevant SUBPERIOD.</div>
+                <div class="cme-trap"><b>Long vs short period tradeoff:</b><br>
+                  • Long = more obs, more precise stats — BUT risks regime changes / nonstationarity<br>
+                  • Short = avoids regimes — BUT tempts you to use HIGHER FREQUENCY data (weekly) → asynchronous data, missing values, distorted correlations. <b>More frequent ≠ more precise.</b></div>
+                <div class="cme-info"><b>Fat tails &amp; skewness:</b> asset returns historically exhibit them, which adds complexity to statistical tests. Sometimes the cost of modeling nonnormality outweighs the benefit.</div>
+              </div>
+            </div>
+
+            <!-- Problem 4 -->
+            <div class="cme-problem" id="cmeP4" onclick="cmePtoggle('cmeP4')">
+              <div class="cme-problem-head">
+                <span class="cme-problem-num">PROBLEM 4</span>
+                <span class="cme-problem-title">Using ex post data for ex ante estimates</span>
+                <span class="cme-problem-arrow">▶</span>
+              </div>
+              <div class="cme-problem-body" onclick="event.stopPropagation()">
+                <div class="cme-body"><b>Ex post</b> = after the fact (historical). <b>Ex ante</b> = before the fact (forward-looking). Using ex post to determine ex ante can mislead.</div>
+                <div class="cme-info"><b>Example (Fed scenario):</b> investors feared Fed would raise rates → depressed stock prices. Inflation abated without Fed intervention → stocks recovered. Ex post: returns look high. The analyst would conclude returns will be HIGH going forward — blind to the PRIOR RISK that was faced. Net: <b>UNDERESTIMATES risk, OVERESTIMATES return</b>.</div>
+                <div class="cme-trap"><b>Inverse case — VaR overestimation:</b> if the data subset INCLUDES outliers / rare negative events, the historical VaR distorts upward, suggesting rare negatives occur MORE frequently than they actually do.</div>
+              </div>
+            </div>
+
+            <!-- Problem 5 -->
+            <div class="cme-problem" id="cmeP5" onclick="cmePtoggle('cmeP5')">
+              <div class="cme-problem-head">
+                <span class="cme-problem-num">PROBLEM 5</span>
+                <span class="cme-problem-title">Nonrepeating data patterns (data biases)</span>
+                <span class="cme-problem-arrow">▶</span>
+              </div>
+              <div class="cme-problem-body" onclick="event.stopPropagation()">
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Data mining</span>
+                  <span class="cme-bias-cat">false patterns</span><br>
+                  Random patterns mistaken for real ones. At 5% significance with 40 random variables, ~2 will appear statistically significant <b>by chance alone</b>.
+                </div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Time-period bias</span>
+                  <span class="cme-bias-cat">window cherry-picking</span><br>
+                  Results depend on the chosen time span. E.g. small-cap US stocks beat large-cap "always" — UNTIL you exclude 2000–2010, then the advantage disappears.
+                </div>
+                <div class="cme-tip"><b>3-step antidote:</b><br>
+                  1. Ask if there's an ECONOMIC basis for the variable to relate to returns<br>
+                  2. Scrutinize the modeling process for susceptibility to bias<br>
+                  3. Test out-of-sample (split data: build on one portion, test on another)</div>
+              </div>
+            </div>
+
+            <!-- Problem 6 -->
+            <div class="cme-problem" id="cmeP6" onclick="cmePtoggle('cmeP6')">
+              <div class="cme-problem-head">
+                <span class="cme-problem-num">PROBLEM 6</span>
+                <span class="cme-problem-title">Failing to account for conditioning information</span>
+                <span class="cme-problem-arrow">▶</span>
+              </div>
+              <div class="cme-problem-body" onclick="event.stopPropagation()">
+                <div class="cme-body">The relationship between security returns and economic variables is <b>NOT constant over time</b>. Historical data reflects MANY different business cycles and conditions. Analysts must account for CURRENT conditions.</div>
+                <div class="cme-info"><b>Example:</b> A firm's beta is 1.2 using all historical data. But split the data:<br>
+                  • In <b>expansions</b>: beta = 1.0<br>
+                  • In <b>recessions</b>: beta = 1.4<br>
+                  Going forward, beta forecast should reflect WHICH regime you expect: 1.0 if expansion expected, 1.4 if recession expected. Using the blended 1.2 is wrong.</div>
+              </div>
+            </div>
+
+            <!-- Problem 7 -->
+            <div class="cme-problem" id="cmeP7" onclick="cmePtoggle('cmeP7')">
+              <div class="cme-problem-head">
+                <span class="cme-problem-num">PROBLEM 7</span>
+                <span class="cme-problem-title">Misinterpretation of correlations</span>
+                <span class="cme-problem-arrow">▶</span>
+              </div>
+              <div class="cme-problem-body" onclick="event.stopPropagation()">
+                <div class="cme-body">Correlation ≠ causality. Three common misinterpretations:</div>
+                <div class="cme-info"><b>Causality direction wrong</b><br>
+                  Example: corn prices correlated with rainfall in Midwest. Reasonable: rainfall influences corn prices. Unreasonable: corn prices influence rainfall.<br>
+                  → Rainfall = <b>EXOGENOUS variable</b> (arises outside the model)<br>
+                  → Corn price = <b>ENDOGENOUS variable</b> (arises within the model)</div>
+                <div class="cme-trap"><b>Spurious correlation</b> — two variables look correlated but neither causes the other; possibly a 3rd variable drives BOTH.</div>
+                <div class="cme-trap"><b>Nonlinear relationships</b> — correlation only captures LINEAR relationships. A strong nonlinear relationship can produce near-zero correlation.</div>
+              </div>
+            </div>
+
+            <!-- Problem 8 -->
+            <div class="cme-problem" id="cmeP8" onclick="cmePtoggle('cmeP8')">
+              <div class="cme-problem-head">
+                <span class="cme-problem-num">PROBLEM 8</span>
+                <span class="cme-problem-title">Psychological biases (6 sub-biases)</span>
+                <span class="cme-problem-arrow">▶</span>
+              </div>
+              <div class="cme-problem-body" onclick="event.stopPropagation()">
+                <div class="cme-body">CFA categorizes biases as <b>cognitive</b> (faulty reasoning) or <b>emotional</b> (feelings override logic).</div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Anchoring bias</span>
+                  <span class="cme-bias-cat">cognitive</span><br>
+                  First information received is overweighted. In a debate on the economy, if the first speaker forecasts a recession, that view is given greater credence.<br>
+                  <span class="cme-green">Counter:</span> consciously question the first input; re-evaluate against fresh data.
+                </div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Status quo bias</span>
+                  <span class="cme-bias-cat">emotional</span><br>
+                  Predictions strongly influenced by recent past. If inflation is 4% today, the forecast becomes 4% — rather than making an active "error of commission" by choosing different.<br>
+                  <span class="cme-green">Counter:</span> require justification for "same as last year" forecasts.
+                </div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Confirmation bias</span>
+                  <span class="cme-bias-cat">cognitive</span><br>
+                  Only information SUPPORTING existing beliefs is considered; contrary evidence is ignored or actively avoided.<br>
+                  <span class="cme-green">Counter:</span> give all evidence equal scrutiny; <b>actively seek out CONTRARY opinions</b>.
+                </div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Overconfidence bias</span>
+                  <span class="cme-bias-cat">emotional</span><br>
+                  Past mistakes are ignored, the lack of comments from others is taken as agreement, and forecast accuracy is overestimated.<br>
+                  <span class="cme-green">Counter:</span> consider a RANGE of potential outcomes, not point estimates.
+                </div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Prudence bias</span>
+                  <span class="cme-bias-cat">cognitive</span><br>
+                  Forecasts overly CONSERVATIVE to avoid the regret of extreme forecasts being wrong.<br>
+                  <span class="cme-green">Counter:</span> consider a range of outcomes (same antidote as overconfidence — symmetry of error).
+                </div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Availability bias</span>
+                  <span class="cme-bias-cat">cognitive</span><br>
+                  What is EASIEST to remember (often an extreme event) is overweighted. Example: many believed the 1929 crash depressed equity values for 30 subsequent years.<br>
+                  <span class="cme-green">Counter:</span> base predictions on OBJECTIVE DATA, not emotions or recollections.
+                </div>
+                <div class="cme-tip"><b>Cognitive vs Emotional cheat-sheet:</b><br>
+                  • <b>Cognitive (4):</b> anchoring, confirmation, prudence, availability<br>
+                  • <b>Emotional (2):</b> status quo, overconfidence</div>
+              </div>
+            </div>
+
+            <!-- Problem 9 -->
+            <div class="cme-problem" id="cmeP9" onclick="cmePtoggle('cmeP9')">
+              <div class="cme-problem-head">
+                <span class="cme-problem-num">PROBLEM 9</span>
+                <span class="cme-problem-title">Model uncertainty (3 types — MOST SERIOUS)</span>
+                <span class="cme-problem-arrow">▶</span>
+              </div>
+              <div class="cme-problem-body" onclick="event.stopPropagation()">
+                <div class="cme-body">Three types of uncertainty, but ONE is the most serious:</div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Model uncertainty</span>
+                  <span class="cme-bias-cat">which model?</span><br>
+                  Unsure whether to use DCF model or relative value model to evaluate expected stock return. <b>Wrong choice of model → invalid conclusions.</b>
+                </div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Parameter uncertainty</span>
+                  <span class="cme-bias-cat">estimation errors</span><br>
+                  Estimation errors in model parameters (e.g. the beta in CAPM is itself an estimate, not a truth).
+                </div>
+                <div class="cme-bias">
+                  <span class="cme-bias-name">Input uncertainty</span>
+                  <span class="cme-bias-cat">knowing correct inputs</span><br>
+                  Knowing the CORRECT input values for the model. Even if DCF is appropriate, the correct growth rate and discount rate are still needed and may be wrong.
+                </div>
+                <div class="cme-trap"><b>Exam trap:</b> <span class="cme-hl">MODEL UNCERTAINTY is the MOST serious</span> of the three. Reasoning: an incorrect model will likely lead to invalid conclusions, regardless of how accurate your parameters or inputs are. Wrong tool, wrong answer.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════════════════════════════════════════════════════════
+               TAB 3 · ERRORS & MASTERY (placeholder)
+               ════════════════════════════════════════════════════════════ -->
+          <div id="cme-errors" class="cme-panel">
+            <div class="cme-card">
+              <div class="cme-title">Errors &amp; Mastery — placeholder</div>
+              <div class="cme-body">This tab is ready to receive your exam errors once you start drilling questions on this module.</div>
+              <div class="cme-info">When you get a question wrong, send the question + your wrong pick + correct answer, and I'll add it here with:<br>
+                • Pattern classification<br>
+                • Memory anchor<br>
+                • Drill mode (Quiz Me + All Qs structure like the Trade Strategy widget)</div>
+              <div class="cme-tip"><b>Likely problem areas to expect (based on typical CFA exam focus on this module):</b><br>
+                • Pattern A — bias classification (cognitive vs emotional)<br>
+                • Pattern B — identifying which problem applies (e.g. is it data mining or time-period bias?)<br>
+                • Pattern C — selecting the appropriate time period (regime changes)<br>
+                • Pattern D — ex post vs ex ante distinction<br>
+                • Pattern E — model uncertainty = MOST serious (very testable single-fact trap)</div>
+            </div>
+          </div>
+
+          <script>
+            function cmeTab(id, btn){
+              document.querySelectorAll('#cmeWidget > .cme-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cmeWidget > .cme-tabs > .cme-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cme-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function cmePtoggle(id){
+              var el = document.getElementById(id);
+              if(el) el.classList.toggle('open');
+            }
+            function cmeInit(){ /* nothing yet */ }
+          </script>
+        </div>
+
+
 
         <!-- empty state -->
         <div id="notesEmpty" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted);">
@@ -9026,7 +9456,7 @@ Which to prioritize depends on:
 const DEFAULT_DECK = {
   topics: [
     { name:"IPS",                subtopics:["Individual","Institutional"] },
-    { name:"Asset Allocation",   subtopics:["SAA / TAA","LDI","Goals-Based","Risk Budgeting"] },
+    { name:"Asset Allocation",   subtopics:["Capital Market Expectations Pt1","SAA / TAA","LDI","Goals-Based","Risk Budgeting"] },
     { name:"Derivatives",        subtopics:["Options Strategies","Futures Hedge","Swaps","Risk Measures"] },
     { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
@@ -9737,7 +10167,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -9752,6 +10182,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'indexWidget' && typeof iwInit === 'function') setTimeout(iwInit, 50);
     if (widgetId === 'awWidget' && typeof awInit === 'function') setTimeout(awInit, 50);
     if (widgetId === 'tswWidget' && typeof tswInit === 'function') setTimeout(tswInit, 50);
+    if (widgetId === 'cmeWidget' && typeof cmeInit === 'function') setTimeout(cmeInit, 50);
   }
 }
 
@@ -9769,11 +10200,12 @@ function openNote(key, topic, subtopic) {
     'PM Pathway||Index-Based Strategies': 'indexWidget',
     'PM Pathway||Active Equity Investing: Strategies': 'awWidget',
     'PM Pathway||Active Equity Investing: Portfolio Construction': 'pcwWidget',
-    'PM Pathway||Trade Strategy and Execution': 'tswWidget'
+    'PM Pathway||Trade Strategy and Execution': 'tswWidget',
+    'Asset Allocation||Capital Market Expectations Pt1': 'cmeWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
