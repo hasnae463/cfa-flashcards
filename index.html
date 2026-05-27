@@ -10447,20 +10447,254 @@ where:
                TAB 4 · ERRORS & MASTERY (placeholder)
                ════════════════════════════════════════════════════════════ -->
           <div id="cme-errors" class="cme-panel">
-            <div class="cme-card">
-              <div class="cme-title">Errors &amp; Mastery — placeholder</div>
-              <div class="cme-body">This tab is ready to receive your exam errors once you start drilling questions on this module.</div>
-              <div class="cme-info">When you get a question wrong, send the question + your wrong pick + correct answer, and I'll add it here with:<br>
-                • Pattern classification<br>
-                • Memory anchor<br>
-                • Drill mode (Quiz Me + All Qs structure like the Trade Strategy widget)</div>
-              <div class="cme-tip"><b>Likely problem areas to expect (based on typical CFA exam focus on this module):</b><br>
-                • Pattern A — bias classification (cognitive vs emotional)<br>
-                • Pattern B — identifying which problem applies (e.g. is it data mining or time-period bias?)<br>
-                • Pattern C — selecting the appropriate time period (regime changes)<br>
-                • Pattern D — ex post vs ex ante distinction<br>
-                • Pattern E — model uncertainty = MOST serious (very testable single-fact trap)</div>
+
+            <style>
+              #cmeWidget .ce-pattern-card { background:var(--surface); border:1px solid var(--border); border-left:3px solid #FF7B72; border-radius:5px; padding:11px 14px; margin-bottom:10px; }
+              #cmeWidget .ce-pattern-num { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:#FF7B72; text-transform:uppercase; margin-bottom:4px; }
+              #cmeWidget .ce-pattern-title { font-family:Georgia,serif; font-size:14px; color:#E6EDF3; font-weight:600; margin-bottom:6px; }
+              #cmeWidget .ce-pattern-body { font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+              #cmeWidget .ce-mcq-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:14px 16px; margin-bottom:12px; }
+              #cmeWidget .ce-essay-card { background:var(--surface); border:1px solid var(--border); border-left:3px solid #79C0FF; border-radius:5px; padding:12px 14px; margin-bottom:10px; cursor:pointer; }
+              #cmeWidget .ce-essay-card:hover { background:rgba(121,192,255,.04); }
+              #cmeWidget .ce-essay-title { font-family:Georgia,serif; font-size:13px; color:#79C0FF; font-weight:600; margin-bottom:4px; }
+              #cmeWidget .ce-essay-meta { font-family:var(--mono); font-size:10px; color:var(--muted); }
+              #cmeWidget .ce-essay-body { display:none; margin-top:12px; padding-top:12px; border-top:1px solid var(--border); }
+              #cmeWidget .ce-essay-card.open .ce-essay-body { display:block; }
+              #cmeWidget .ce-essay-card.open { border-left-color:#3DD68C; }
+              #cmeWidget .ce-section { background:#0B0F14; border-radius:4px; padding:9px 12px; margin:8px 0; font-size:12px; line-height:1.6; }
+              #cmeWidget .ce-section-label { font-family:var(--mono); font-size:9px; letter-spacing:.08em; text-transform:uppercase; display:block; margin-bottom:4px; }
+              #cmeWidget .ce-yc-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:14px 16px; margin-bottom:12px; }
+              #cmeWidget .ce-yc-choices { display:grid; grid-template-columns:repeat(2,1fr); gap:6px; margin:10px 0; }
+              @media (max-width:540px){ #cmeWidget .ce-yc-choices { grid-template-columns:1fr; } }
+              #cmeWidget .ce-yc-choice { background:#0B0F14; border:1px solid var(--border); color:#C9D1D9; padding:9px 12px; text-align:left; border-radius:4px; cursor:pointer; font-size:12px; }
+              #cmeWidget .ce-yc-choice:hover { border-color:#D4A017; background:rgba(212,160,23,.05); }
+              #cmeWidget .ce-yc-choice.correct { border-color:#3DD68C; background:rgba(46,160,67,.1); color:#3DD68C; }
+              #cmeWidget .ce-yc-choice.wrong { border-color:#FF7B72; background:rgba(255,123,114,.1); color:#FF7B72; }
+            </style>
+
+            <!-- Sub-tab nav -->
+            <div class="cme-tabs" style="margin-bottom:14px">
+              <button class="cme-tab active" onclick="cmeErrSub('patterns',this)">Patterns Overview</button>
+              <button class="cme-tab" onclick="cmeErrSub('mcq',this)">MCQ Errors</button>
+              <button class="cme-tab" onclick="cmeErrSub('essays',this)">Essay Gap Analysis</button>
+              <button class="cme-tab" onclick="cmeErrSub('ycdrill',this)">Yield Curve Drill</button>
+              <button class="cme-tab" onclick="cmeErrSub('quiz',this)">Quiz Me</button>
             </div>
+
+            <!-- ─────────────────────────────────────────────────────
+                 SUB-TAB 1 · PATTERNS OVERVIEW
+                 ───────────────────────────────────────────────────── -->
+            <div id="cme-err-patterns" class="cme-panel active">
+
+              <div class="cme-card">
+                <div class="cme-title">Detail Discipline checklist — read this BEFORE every essay</div>
+                <div class="cme-body">Your essays consistently lose points to insufficient detail. Run through this checklist before submitting any essay answer.</div>
+                <span class="cme-rule"><span class="cme-green">✓</span> <b>Direction + Mechanism:</b> don't just say "rising" — explain RELATIVE movement (e.g. "rising more slowly than short rates, so curve flattens") and WHY (e.g. "private sector borrowing puts upward pressure")</span>
+                <span class="cme-rule"><span class="cme-green">✓</span> <b>Attribute to the right person:</b> when discussing biases, name WHO exhibits it. Status quo bias was TOMMANSON's "weight recent data" — NOT Wuyan's.</span>
+                <span class="cme-rule"><span class="cme-green">✓</span> <b>Add mitigation/counter:</b> for biases, always say HOW to fix it. "Data mining → solution: economic rationale + out-of-sample test"</span>
+                <span class="cme-rule"><span class="cme-green">✓</span> <b>Complete the list:</b> if asked for strengths/weaknesses, give 3-5 bullets per category, not 2</span>
+                <span class="cme-rule"><span class="cme-green">✓</span> <b>Separate falling inflation from deflation:</b> cash with falling inflation = unattractive (rates ↓). Cash with deflation + ZLB = attractive. Two different effects.</span>
+                <span class="cme-rule"><span class="cme-green">✓</span> <b>Read transitions, not snapshots:</b> a curve "flattening" doesn't mean Late Expansion — it means transitioning OUT of Recovery. The full sentence matters.</span>
+                <div class="cme-tip"><b>Memory anchor:</b> D-A-M-C-S-T · Direction+mechanism, Attribute, Mitigate, Complete list, Separate effects, Transitions not snapshots.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Error patterns you've made on this module</div>
+                <div class="cme-body">Three MCQ patterns + recurring essay-detail patterns. Drill them in the dedicated sub-tabs.</div>
+
+                <div class="ce-pattern-card">
+                  <div class="ce-pattern-num">PATTERN 1 · Yield curve transitions (you've missed this twice)</div>
+                  <div class="ce-pattern-title">Confusing current SHAPE with directional CHANGE</div>
+                  <div class="ce-pattern-body">"Yield curve is becoming steeper for short-term rates and flattening for longer maturities" → this is Early Expansion (transition AWAY from Recovery steepness), not Late Expansion. Always parse: what shape NOW, what direction it's MOVING.</div>
+                </div>
+
+                <div class="ce-pattern-card" style="border-left-color:#F0A04B">
+                  <div class="ce-pattern-num" style="color:#F0A04B">PATTERN 2 · Forecasting approach vocabulary trap</div>
+                  <div class="ce-pattern-title">"Diffusion index" = leading indicators, NOT checklist</div>
+                  <div class="ce-pattern-body">If the question describes a structural model + diffusion index, the weaknesses are <b>false precision + false signals</b> — NOT "no consistency" (that's checklist). Map keywords: structural/econometric = false precision; leading indicator/diffusion = false signals; checklist = subjective + no consistency.</div>
+                </div>
+
+                <div class="ce-pattern-card" style="border-left-color:#79C0FF">
+                  <div class="ce-pattern-num" style="color:#79C0FF">PATTERN 3 · Curve in slowdown with declining long yields → re-steepening</div>
+                  <div class="ce-pattern-title">Inverted/flat curve + bond yields falling = steepening AHEAD</div>
+                  <div class="ce-pattern-body">When you're in slowdown and bond yields are declining (contractionary conditions emerging), the central bank is about to cut → short rates collapse → curve RE-STEEPENS. Steepest just before Initial Recovery. Don't assume "inversion deepens" — usually inversion is the PEAK of inversion.</div>
+                </div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Essay detail-loss patterns (5 patterns seen across 7 essays)</div>
+                <table class="cme-table">
+                  <thead><tr><th>Pattern</th><th>Example</th><th>Fix</th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td>Direction only, no mechanism</td>
+                      <td>"Bond yields: rising"</td>
+                      <td>"Rising, but MORE SLOWLY than short rates, so curve flattens. Private sector borrowing puts upward pressure."</td>
+                    </tr>
+                    <tr>
+                      <td>Wrong person attribution</td>
+                      <td>Status quo bias attributed to Wuyan's quote</td>
+                      <td>Status quo = Tommanson's "weight recent data more heavily"</td>
+                    </tr>
+                    <tr>
+                      <td>Identified bias, no mitigation</td>
+                      <td>"Data-mining bias" only</td>
+                      <td>Add: "Solution = scrutinize variables + economic rationale + out-of-sample test"</td>
+                    </tr>
+                    <tr>
+                      <td>Incomplete bullet list</td>
+                      <td>2 strengths when 3-4 expected</td>
+                      <td>For "strengths" always give 3-4. Use the full lists from your study materials.</td>
+                    </tr>
+                    <tr>
+                      <td>Falling inflation = deflation (collapse)</td>
+                      <td>"Cash: positive if ZLB"</td>
+                      <td>Separate: falling inflation → cash UNATTRACTIVE (rates ↓). Deflation + ZLB → cash ATTRACTIVE.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────
+                 SUB-TAB 2 · MCQ ERRORS (3 questions)
+                 ───────────────────────────────────────────────────── -->
+            <div id="cme-err-mcq" class="cme-panel">
+
+              <div class="ce-mcq-card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                  <span style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:#FF7B72;text-transform:uppercase">Error 1 · Tolliver (REDD Partners)</span>
+                  <span style="font-family:var(--mono);font-size:9px;color:var(--muted)">PATTERN 1 · Curve transitions</span>
+                </div>
+                <div style="font-family:Georgia,serif;font-size:14px;color:#D4A017;font-weight:600;margin-bottom:6px">Yield curve "steeper short + flattening long" → which phase?</div>
+                <div style="font-size:12.5px;line-height:1.6;color:#E6EDF3;margin-bottom:10px">Tolliver states the economy is likely in the EARLY EXPANSION phase of the business cycle based on the yield curve, and consistent with this phase monetary policy is becoming less stimulative. Is Tolliver's statement correct?</div>
+
+                <div class="ce-section" style="border-left:2px solid #FF7B72;background:rgba(255,123,114,.06)">
+                  <span class="ce-section-label" style="color:#FF7B72">YOUR PICK (wrong)</span>
+                  C — incorrect with the phase of the business cycle
+                </div>
+                <div class="ce-section" style="border-left:2px solid #3DD68C;background:rgba(46,160,67,.06)">
+                  <span class="ce-section-label" style="color:#3DD68C">CORRECT</span>
+                  A — Tolliver is correct
+                </div>
+                <div class="ce-section" style="border-left:2px solid #79C0FF;background:rgba(121,192,255,.06)">
+                  <span class="ce-section-label" style="color:#79C0FF">WHY</span>
+                  "Steeper for short + flattening for long" = the curve is transitioning AWAY from the Recovery steepness. Short rates RISING (because monetary policy becoming less stimulative) and long rates STABILIZING. This is Early Expansion's signature. Monetary becoming less stimulative = correct for Early Expansion.
+                </div>
+                <div class="ce-section" style="border-left:2px solid #D4A017;background:rgba(212,160,23,.06)">
+                  <span class="ce-section-label" style="color:#D4A017">MEMORY ANCHOR</span>
+                  Curve in RECOVERY = steepest. Curve in EARLY EXPANSION = still positive, beginning to flatten (because short rates start rising). Curve in LATE EXPANSION = flat. Don't equate "flattening" with "Late Expansion" — flattening DIRECTION starts well before the curve is actually flat.
+                </div>
+              </div>
+
+              <div class="ce-mcq-card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                  <span style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:#FF7B72;text-transform:uppercase">Error 2 · Wakuluk forecasting approach</span>
+                  <span style="font-family:var(--mono);font-size:9px;color:var(--muted)">PATTERN 2 · Vocabulary</span>
+                </div>
+                <div style="font-family:Georgia,serif;font-size:14px;color:#D4A017;font-weight:600;margin-bottom:6px">Structural model + diffusion index — what are the weaknesses?</div>
+                <div style="font-size:12.5px;line-height:1.6;color:#E6EDF3;margin-bottom:10px">Wakuluk uses a structural model in conjunction with a diffusion index. Which describes her approach's weaknesses?</div>
+
+                <div class="ce-section" style="border-left:2px solid #FF7B72;background:rgba(255,123,114,.06)">
+                  <span class="ce-section-label" style="color:#FF7B72">YOUR PICK (wrong)</span>
+                  C — imposes no consistency of analysis across items or at different points in time
+                </div>
+                <div class="ce-section" style="border-left:2px solid #3DD68C;background:rgba(46,160,67,.06)">
+                  <span class="ce-section-label" style="color:#3DD68C">CORRECT</span>
+                  B — can give a false sense of precision and provide false signals
+                </div>
+                <div class="ce-section" style="border-left:2px solid #79C0FF;background:rgba(121,192,255,.06)">
+                  <span class="ce-section-label" style="color:#79C0FF">WHY</span>
+                  Structural model = econometric → can give a FALSE SENSE OF PRECISION (quantified output looks scientific). Diffusion index = leading-indicator-based → can produce FALSE SIGNALS. Both weaknesses combined = answer B.<br><br>Option C ("no consistency") is the weakness of the CHECKLIST approach — but Wakuluk doesn't use a checklist.
+                </div>
+                <div class="ce-section" style="border-left:2px solid #D4A017;background:rgba(212,160,23,.06)">
+                  <span class="ce-section-label" style="color:#D4A017">MEMORY ANCHOR</span>
+                  Vocabulary mapping:<br>
+                  • Structural / econometric / OLS regression → false PRECISION<br>
+                  • Leading indicator / diffusion index / composite → false SIGNALS<br>
+                  • Checklist / subjective Q&amp;A → no CONSISTENCY across items
+                </div>
+              </div>
+
+              <div class="ce-mcq-card">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                  <span style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:#FF7B72;text-transform:uppercase">Error 3 · Wakuluk Country Y</span>
+                  <span style="font-family:var(--mono);font-size:9px;color:var(--muted)">PATTERN 3 · Re-steepening</span>
+                </div>
+                <div style="font-family:Georgia,serif;font-size:14px;color:#D4A017;font-weight:600;margin-bottom:6px">Curve in slowdown + bond yields declining → what next?</div>
+                <div style="font-size:12.5px;line-height:1.6;color:#E6EDF3;margin-bottom:10px">Observation 3: yield curve suggests slowdown phase, with bond yields starting to reflect contractionary conditions. Based on this, Wakuluk most likely expects Country Y's yield curve in the NEAR TERM to:</div>
+
+                <div class="ce-section" style="border-left:2px solid #FF7B72;background:rgba(255,123,114,.06)">
+                  <span class="ce-section-label" style="color:#FF7B72">YOUR PICK (wrong)</span>
+                  A — invert
+                </div>
+                <div class="ce-section" style="border-left:2px solid #3DD68C;background:rgba(46,160,67,.06)">
+                  <span class="ce-section-label" style="color:#3DD68C">CORRECT</span>
+                  C — steepen
+                </div>
+                <div class="ce-section" style="border-left:2px solid #79C0FF;background:rgba(121,192,255,.06)">
+                  <span class="ce-section-label" style="color:#79C0FF">WHY</span>
+                  We're ALREADY in slowdown (curve already flat-to-inverted). Bond yields are DECLINING (contractionary conditions). Next phase = Contraction. In contraction, the central bank cuts → short rates fall faster than long rates → curve RE-STEEPENS. The curve is steepest just before Initial Recovery.<br><br>Picking "invert" assumes the inversion will deepen — but by the time bond yields are FALLING and we're already in slowdown, the curve has typically reached its maximum inversion and is about to reverse.
+                </div>
+                <div class="ce-section" style="border-left:2px solid #D4A017;background:rgba(212,160,23,.06)">
+                  <span class="ce-section-label" style="color:#D4A017">MEMORY ANCHOR</span>
+                  Curve cycle: STEEP (Recovery) → flattening (Early Exp) → FLAT (Late Exp) → INVERTED (Slowdown) → RE-STEEPENING (Contraction) → STEEPEST just before next Recovery.<br><br>
+                  When you see "bond yields declining" + "slowdown phase": think next phase. Central bank cutting + long rates already falling = curve about to RE-STEEPEN.
+                </div>
+              </div>
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────
+                 SUB-TAB 3 · ESSAY GAP ANALYSIS
+                 ───────────────────────────────────────────────────── -->
+            <div id="cme-err-essays" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">Your essay attempts with detailed gap analysis</div>
+                <div class="cme-body">Click each card to expand. Each shows what you wrote, the model answer, and exactly what detail you missed.</div>
+              </div>
+
+              <div id="cmeErrEssayList"></div>
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────
+                 SUB-TAB 4 · YIELD CURVE TRANSITIONS DRILL
+                 ───────────────────────────────────────────────────── -->
+            <div id="cme-err-ycdrill" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">Yield Curve Transitions Drill</div>
+                <div class="cme-body">15 scenarios drilling the most common exam patterns on curve transitions. Read carefully — the direction of change matters as much as the current shape.</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+                  <button onclick="cmeYcDrillNew()" style="background:#D4A017;color:#0D1117;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.05em;font-weight:600">↻ New round</button>
+                  <span id="cmeYcDrillScore" style="font-family:var(--mono);font-size:11px;color:var(--muted);align-self:center;margin-left:8px"></span>
+                </div>
+                <div id="cmeYcDrillBox"></div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Decision tree for curve scenarios</div>
+                <div class="cme-fl">Step 1: What is the curve's CURRENT shape? (steep / flat / inverted)
+Step 2: What DIRECTION is it moving? (steepening / flattening / re-steepening)
+Step 3: What are RATES doing? (short rising/falling? long rising/falling?)
+Step 4: What is the central bank doing? (easing / tightening / on hold)
+
+Map to phase:
+  STEEPEST           → Initial Recovery (or just before)
+  Steep, flattening  → Early Expansion
+  FLAT               → Late Expansion
+  Inverted           → Slowdown (peak inversion)
+  Re-steepening from inverted → Contraction (in progress)</div>
+              </div>
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────
+                 SUB-TAB 5 · QUIZ ME (random MCQs)
+                 ───────────────────────────────────────────────────── -->
+            <div id="cme-err-quiz" class="cme-panel">
+              <div class="cme-card" id="cmeErrQuizBox"></div>
+            </div>
+
           </div>
 
           <script>
@@ -10943,6 +11177,282 @@ where:
             function cmeYcQToggle(id){
               var ans = document.getElementById('cmeYcAns_'+id);
               if(ans){ ans.style.display = ans.style.display === 'none' ? 'block' : 'none'; }
+            }
+
+            // ═════════════════════════════════════════════════════════════
+            // ERRORS & MASTERY — sub-tab nav + essay gap + yc drill + quiz
+            // ═════════════════════════════════════════════════════════════
+
+            function cmeErrSub(id, btn){
+              document.querySelectorAll('#cme-errors > .cme-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cme-errors > .cme-tabs > .cme-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cme-err-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'essays' && !document.getElementById('cmeErrEssayList').innerHTML) cmeErrEssayRender();
+              if(id === 'ycdrill' && !document.getElementById('cmeYcDrillBox').innerHTML) cmeYcDrillNew();
+              if(id === 'quiz') cmeErrQuizStart();
+            }
+
+            // ── Essay gap analysis ──
+            var CME_ESSAY_GAPS = [
+              {
+                id:"wuyan_steps",
+                title:"Q19 · Wuyan · Additional steps in CME process",
+                question:"Explain what additional steps Wuyan should have taken in the process of setting capital market expectations.",
+                yourAttempt:"Wuyan has determined the specific CMEs needed and has investigated historical performance and drivers; she also identified the relevant variables and determined the best source of data for the model. Wuyan should have used experience and judgment for inputs, formulate CMEs, record assumptions, and Monitor performance and refine the process.",
+                modelAnswer:"The 7-step CME process: (1) Specify expectations needed, (2) Research historical record, (3) Specify methods/models, (4) Determine best information sources, (5) Interpret current environment with experience and judgment, (6) Provide expectations + document assumptions/conclusions, (7) Monitor outcomes vs expectations and feed back to improve the process. Wuyan completed steps 1-5; she should complete steps 6 and 7 — provide the expectations with documented reasoning AND monitor outcomes vs expectations to improve the process.",
+                gap:"You named steps 6 and 7 broadly but didn't tie them concretely to Wuyan's situation. Model wants: (a) explicit identification she's missing steps 6 AND 7, (b) 'document reasoning AND assumptions underlying projections' for step 6, (c) 'comparison provides quantitative evaluation of forecast error → feedback improves process' for step 7.",
+                memory:"For process questions: ALWAYS map what the subject DID complete vs what's MISSING. Then describe each missing step in TERMS OF THE SUBJECT'S SPECIFIC SITUATION — not in generic textbook language."
+              },
+              {
+                id:"wuyan_biases",
+                title:"Q20 · Wuyan/Tommanson · 4 forecasting biases",
+                question:"Discuss how Status quo bias, Data-mining bias, Risk of regime change, and Misinterpretation of correlation affect the setting of CMEs.",
+                yourAttempt:"Status quo bias: She documented a high correlation between nominal GDP and equity returns. [WRONG attribution]\nData-mining bias: Wuyan reports that after repeatedly searching the most recent 10 years of data, she eventually identified variables. [Correct attribution but no mitigation]\nRisk of regime change: [blank]\nMisinterpretation of correlation: Tommanson is reluctant to underweight equities. [WRONG — that's status quo, not correlation]",
+                modelAnswer:"Status quo bias = TOMMANSON's reluctance to underweight equities given strong recent quarter performance + his suggestion to weight recent data more heavily. Tendency to perpetuate recent observations. Mitigation: disciplined effort to avoid anchoring.\nData-mining bias = WUYAN's repeated searching until statistically significant patterns emerged. The pattern will almost inevitably occur but won't have predictive value. Mitigation: scrutinize variables + provide economic rationale + test out-of-sample.\nRisk of regime change = TOMMANSON's suggestion to extend data back 20 years. Includes different technological/political/legal/economic/regulatory environments. Solution: statistical techniques accounting for regime change, OR use only part of the series.\nMisinterpretation of correlation = WUYAN'S statement that high correlation between nominal GDP and equity returns means GDP PREDICTS returns. Correlation ≠ causation: could be reverse causal, third variable, or spurious. Don't use correlation in predictive models without understanding underlying linkages.",
+                gap:"BIG attribution errors:\n• Status quo: you attributed Wuyan's correlation quote — it's Tommanson's reluctance to underweight + his weighting of recent data.\n• Misinterpretation of correlation: you attributed Tommanson's status-quo quote — it's actually Wuyan's GDP-predicts-returns claim.\n• Risk of regime change: you left blank — it's Tommanson's suggestion to extend data 20 years.\nAll 4 biases also missing the MITIGATION step.",
+                memory:"For multi-bias essays: build a quick TABLE on scratch paper before writing — column 1 = bias, column 2 = WHO said it, column 3 = WHAT they said (verbatim signal), column 4 = mitigation. Then write paragraphs. This prevents attribution errors."
+              },
+              {
+                id:"cambo_pe",
+                title:"Q21 · Cambo · P/E contribution calculation",
+                question:"Calculate the implied contribution to Cambo's US equity return forecast from the expected change in the P/E.",
+                yourAttempt:"1.32%",
+                modelAnswer:"Equity return = Nominal GDP growth + Δ(share of profits in GDP) + Δ(P/E) + Dividend yield. Nominal GDP = 0.5% labor + 1.3% productivity + 2.2% inflation = 4.0%. Equity return = 9.0%, dividend = 2.8%, Δ profit share = 0%. So Δ(P/E) contribution = 9.0% − 4.0% − 0% − 2.8% = 2.2%.",
+                gap:"Arithmetic error — you got 1.32% instead of 2.2%. You said you'll redo this so no need for walkthrough.",
+                memory:"Formula: Equity return = Nominal GDP + ΔProfits/GDP + ΔP/E + Dividend yield. Long-term, ΔProfits/GDP and ΔP/E are usually 0; this question gives you a non-zero ΔP/E to back-solve."
+              },
+              {
+                id:"cambo_late_exp",
+                title:"Q22 · Cambo · Late expansion implications",
+                question:"Discuss implications of late expansion for bond yields, equity returns, short-term interest rates.",
+                yourAttempt:"Bond yields: rising. Equity returns: rising/peaking with higher volatility. ST IR: rising.",
+                modelAnswer:"Bond yields: RISING BUT MORE SLOWLY THAN SHORT-TERM RATES, so the curve flattens. Private sector borrowing puts upward pressure while fiscal balances typically improve.\nEquity returns: stocks typically rise but subject to HIGH VOLATILITY as investors become nervous about restrictive monetary policy and signs of a looming slowdown. CYCLICAL assets may UNDERPERFORM while INFLATION HEDGES (commodities) OUTPERFORM.\nShort-term rates: typically RISING as monetary policy becomes RESTRICTIVE because the economy is increasingly in danger of OVERHEATING. The central bank may aim for a SOFT LANDING.",
+                gap:"Direction correct on all three. Missing for full credit:\n• Bond yields: RELATIVE speed vs short rates (rising more slowly → curve flattens). Driver (private sector borrowing). Fiscal balance improving.\n• Equities: WHY volatile (nervous about restrictive policy + slowdown). Sector tilt (cyclical down, inflation hedges up).\n• Short rates: WHY rising (restrictive policy + overheating risk). Central bank's GOAL (soft landing).",
+                memory:"For 'discuss implications' essays: each bullet needs (a) DIRECTION, (b) MECHANISM (why it's moving), (c) RELATIVE comparison or sector tilt where relevant, (d) POLICY context. The exam allocates ~½-1 point per dimension."
+              },
+              {
+                id:"cambo_methods",
+                title:"Q23 · Cambo vs Chief Economist · Forecasting strengths/weaknesses",
+                question:"Discuss strengths and weaknesses of (1) Cambo's leading-indicator approach and (2) Chief Economist's econometric approach.",
+                yourAttempt:"Cambo's Strengths: simple, intuitive and easy to interpret; data readily available from 3rd parties. Weaknesses: forecasting results have been inconsistent; have given false signals.\nCEF Strengths: can incorporate many variables; once specified, model can be reused. Weaknesses: complex and time-consuming to construct; data difficult to forecast; relationships can change.",
+                modelAnswer:"CAMBO'S (leading indicators):\nStrengths: (1) Simple — follows limited number of variables. (2) Focuses on individual/composite variables readily available + easy to track. (3) Focuses on IDENTIFYING/FORECASTING TURNING POINTS in business cycle.\nWeaknesses: (1) Data subject to frequent revisions → 'look-ahead' bias. (2) 'Current' data unreliable as historical input. (3) Overfitted in sample → likely overstates forecast accuracy. (4) Can provide false signals. (5) May provide little more than binary directional guidance.\n\nCHIEF ECONOMIST (econometric):\nStrengths: (1) Robust — can examine impact of many potential variables. (2) New data consistently used to quickly generate output. (3) Useful for SIMULATING EFFECTS of changes in exogenous variables. (4) Imposes DISCIPLINE and CONSISTENCY on forecaster — challenges modeler to reassess.\nWeaknesses: (1) Complex and time-consuming to formulate. (2) Requires forecasts for EXOGENOUS variables → increases estimation error. (3) Model may be mis-specified; relationships change over time. (4) FALSE SENSE OF PRECISION. (5) Perform BADLY at forecasting TURNING POINTS.",
+                gap:"You gave 2 strengths + 2 weaknesses per approach. Model gives 3-5 per category.\nKey missing items:\n• Cambo strengths: TURNING POINTS focus (key distinguishing feature)\n• Cambo weaknesses: LOOK-AHEAD BIAS (data revisions), overfitting, binary-only output\n• CE strengths: SIMULATION capability, DISCIPLINE & CONSISTENCY imposed\n• CE weaknesses: FALSE PRECISION, bad at TURNING POINTS\n\nNotice the elegant mirror: Cambo focuses on turning points = strength; Econometric is bad at turning points = weakness.",
+                memory:"For forecasting approach essays, memorize the 5-item lists per approach. Anchor pairs:\n• Cambo (LI): turning points ✓ vs false signals ✗\n• Econometric: simulation+discipline ✓ vs false precision+bad at turning points ✗\n• Checklist: flexible+simple ✓ vs no consistency ✗"
+              },
+              {
+                id:"hadpret_inflation",
+                title:"Q32 · Hadpret · Inflation forecast implications on holdings",
+                question:"Discuss implications of Hadpret's inflation forecast (lower inflation and possibly deflation over 12 months) on the fund's holdings of cash, bonds, equities, real estate.",
+                yourAttempt:"Cash: positive return if rates bound by 0%. Bonds: positive return, fixed CF have increased purchasing power. Equities: negative return, activity and business decline. Real estate: negative return, property values decline.",
+                modelAnswer:"CASH: with economy contracting + inflation falling, short-term rates will likely be in SHARP DECLINE. Cash unattractive in this environment. HOWEVER, deflation may make cash particularly attractive if ZLB is binding on nominal rates. Otherwise, deflation is simply a component of required short-term real rate.\nBONDS: high-quality bonds BENEFIT from falling inflation or deflation. Falling inflation → CAPITAL GAINS as expected inflation component of yields falls. Persistent deflation benefits HIGHEST-QUALITY bonds (purchasing power of cash flows up). However, it IMPAIRS CREDITWORTHINESS of lower-quality debt.\nEQUITIES: asset-intensive and commodity-producing firms NEGATIVELY AFFECTED. Within equity market, higher inflation benefits firms that can pass costs on; falling inflation/deflation especially detrimental for asset-intensive/commodity firms that can't.\nREAL ESTATE: negatively affected. Falling inflation/deflation puts DOWNWARD PRESSURE on expected rental income + property values. Sub-prime properties may cut rents sharply to avoid rising vacancies.",
+                gap:"You collapsed 'falling inflation' and 'deflation' into one effect — the model treats them as TWO distinct scenarios:\n• Cash with FALLING INFLATION → UNATTRACTIVE (rates dropping). Cash with DEFLATION + ZLB → ATTRACTIVE.\n• Bonds: capital gains mechanism for falling inflation; purchasing power mechanism for deflation. Also missed: HIGHER quality benefits, LOWER quality impaired.\n• Equities: missed the 'cost pass-through' framework + sector-specific (asset-intensive can't pass on).\n• Real estate: missed sub-prime vacancy mechanism.",
+                memory:"For inflation-effect essays: ALWAYS treat 'falling inflation' and 'deflation' as TWO different scenarios in your answer. Two paragraphs per asset class, not one. The exam rewards distinguishing these clearly."
+              },
+              {
+                id:"hadpret_yield_curve",
+                title:"Q33 · Hadpret · Yield curve shape with policy mix",
+                question:"Discuss the relationship between the shape of the yield curve and the monetary (ease) + fiscal (large deficits) policy mix.",
+                yourAttempt:"The yield curve will be steep as the economy is likely to grow because of the stimulative economic and fiscal policies.",
+                modelAnswer:"Impact of MONETARY policy is fairly clear: curve flattening/steepening is largely determined by expected movement in short rates → determined by expected path of monetary policy and state of economy. With central bank EASING + economy CONTRACTING, policy rates declining and expected to decline further. Bond yields also decline but by a LESSER amount → yield curve STEEPENS. The yield curve will typically continue to steepen during the CONTRACTION PHASE as central bank continues to ease, reaching its STEEPEST POINT JUST BEFORE THE INITIAL RECOVERY PHASE.\nImpact of FISCAL policy on yield curve is via relative SUPPLY of bonds at various maturities. Unlike monetary policy, the supply impact is UNCLEAR. Evidence suggests sufficiently large purchases/sales at different maturities only have a TEMPORARY impact on yields. So the large government deficits are unlikely to have a lasting impact — especially since private sector borrowing is FALLING during contraction, partially offsetting the increased government supply.",
+                gap:"You said 'the yield curve will be steep because the policies are stimulative' — this is too generic and skips the mechanism completely. Major gaps:\n• Did not separate monetary impact from fiscal impact.\n• Did not explain WHY curve steepens: short rates fall MORE than long rates.\n• Did not note STEEPENING IS PROGRESSIVE — continues throughout contraction; steepest just before Recovery.\n• Did not discuss fiscal: supply impact is UNCLEAR; large deficits unlikely to have lasting impact especially because private sector borrowing is falling (offsetting effect).",
+                memory:"For yield curve + policy mix essays: TWO paragraphs minimum.\n(1) MONETARY: explain mechanism via short-rate path, state directional change clearly, note WHEN curve is steepest (just before Initial Recovery).\n(2) FISCAL: impact on yield curve is via SUPPLY of bonds, is UNCLEAR, usually only temporary effects, and consider offsetting effects (private sector borrowing direction)."
+              }
+            ];
+
+            function cmeErrEssayRender(){
+              var html = '';
+              for(var i=0; i<CME_ESSAY_GAPS.length; i++){
+                var e = CME_ESSAY_GAPS[i];
+                html += '<div class="ce-essay-card" id="cmeEssay_'+e.id+'" onclick="cmeEssayToggle(\''+e.id+'\')">'+
+                  '<div class="ce-essay-title">'+e.title+'</div>'+
+                  '<div class="ce-essay-meta">Click to expand</div>'+
+                  '<div class="ce-essay-body">'+
+                    '<div class="ce-section" style="border-left:2px solid #D4A017"><span class="ce-section-label" style="color:#D4A017">QUESTION</span>'+e.question+'</div>'+
+                    '<div class="ce-section" style="border-left:2px solid #FF7B72;background:rgba(255,123,114,.04)"><span class="ce-section-label" style="color:#FF7B72">YOUR ATTEMPT</span>'+e.yourAttempt.replace(/\n/g,'<br>')+'</div>'+
+                    '<div class="ce-section" style="border-left:2px solid #3DD68C;background:rgba(46,160,67,.04)"><span class="ce-section-label" style="color:#3DD68C">MODEL ANSWER</span>'+e.modelAnswer.replace(/\n/g,'<br>')+'</div>'+
+                    '<div class="ce-section" style="border-left:2px solid #79C0FF;background:rgba(121,192,255,.04)"><span class="ce-section-label" style="color:#79C0FF">GAP ANALYSIS</span>'+e.gap.replace(/\n/g,'<br>')+'</div>'+
+                    '<div class="ce-section" style="border-left:2px solid #D4A017;background:rgba(212,160,23,.04)"><span class="ce-section-label" style="color:#D4A017">MEMORY ANCHOR</span>'+e.memory.replace(/\n/g,'<br>')+'</div>'+
+                  '</div>'+
+                '</div>';
+              }
+              document.getElementById('cmeErrEssayList').innerHTML = html;
+            }
+
+            function cmeEssayToggle(id){
+              var card = document.getElementById('cmeEssay_'+id);
+              if(card) card.classList.toggle('open');
+            }
+
+            // ── Yield curve transitions drill ──
+            var CME_YC_DRILL = [
+              {scenario:"The yield curve is at its steepest point in years. Short rates are very low and the central bank is signaling continued accommodation. Stock prices are rising.", phase:"recovery", explain:"Steepest curve = bottom of cycle = Initial Recovery. Low short rates from stimulative policy, long rates already pricing in recovery."},
+              {scenario:"Short-term rates have begun rising. Long-term rates are stabilizing. The curve is still positive but has begun to flatten from its previous steepness. Growth is solid with low inflation.", phase:"early_exp", explain:"Curve transitioning AWAY from Recovery steepness. Short rates rising (central bank becoming less stimulative), long rates plateauing. Classic Early Expansion."},
+              {scenario:"The curve is essentially flat. Inflation is rising. The central bank has been aggressively raising rates. Output gap is closed and overheating is a concern.", phase:"late_exp", explain:"Flat curve + aggressive tightening + overheating risk = Late Expansion."},
+              {scenario:"The yield curve has just inverted. Confidence is declining. Inflation is still rising but growth is slowing. Stocks have begun falling.", phase:"slowdown", explain:"Inversion = Slowdown phase. Inflation still lagging while growth weakens. Stocks falling as recession is anticipated."},
+              {scenario:"The curve was inverted but is now rapidly re-steepening. The central bank has begun cutting rates aggressively. Unemployment is rising.", phase:"contraction", explain:"Re-steepening from inversion + central bank easing + rising unemployment = Contraction in progress."},
+              {scenario:"Curve is moderately steep. Monetary policy is stimulative; fiscal policy is restrictive. Implications less clear.", phase:"early_exp", explain:"Moderately steep with conflicting policy mix. Stimulative monetary keeps short rates low while restrictive fiscal limits long-rate pressure. Most consistent with Early Expansion."},
+              {scenario:"Curve is flat. Monetary policy restrictive; fiscal policy stimulative. Both policies conflict.", phase:"late_exp", explain:"Flat curve with policy conflict — restrictive monetary pulls short rates up; stimulative fiscal pulls long rates up via increased borrowing. Net flat. Consistent with Late Expansion."},
+              {scenario:"Yield curve has been steepening for months. Central bank still cutting. Business confidence shows tentative signs of improvement. Bond prices peaking.", phase:"recovery", explain:"Late-contraction re-steepening transitioning into Recovery. Bond prices peaking signals long-rate floor approaching."},
+              {scenario:"Curve is becoming steeper for short-term rates and flattening for longer maturities. Monetary policy is becoming less stimulative.", phase:"early_exp", explain:"This is the Tolliver question pattern. 'Steeper short + flattening long' = directional change away from Recovery's max steepness. Central bank becoming less stimulative = Early Expansion."},
+              {scenario:"The curve is inverted and bond yields are starting to decline reflecting contractionary expectations. The central bank has not yet cut rates.", phase:"slowdown_to_contraction", explain:"Slowdown transitioning to Contraction. Near-term expectation: curve will STEEPEN (not deepen inversion) — central bank about to cut, short rates will fall faster than long rates."},
+              {scenario:"GDP growth is at trend. Inflation is at target. The yield curve is gently upward sloping with normal slope. Monetary policy is at neutral.", phase:"early_exp", explain:"Normal upward curve at neutral policy = mid-expansion equilibrium. Most consistent with Early-to-mid Expansion."},
+              {scenario:"The curve is sharply downward sloping. Short rates are at multi-year highs. Bond yields are starting to fall. Unemployment ticking up.", phase:"slowdown", explain:"Deeply inverted curve + short rates at peak + bond yields starting to fall = Slowdown approaching Contraction. Curve will steepen ahead."},
+              {scenario:"Curve is flattening as the cycle moves through expansion. Output gap narrowing. Inflation rising but still moderate.", phase:"transition_early_to_late", explain:"Curve flattening DURING expansion = transition from Early to Late Expansion. Tightening underway but not yet aggressive."},
+              {scenario:"Yield curve sharply steep again. Central bank rates near zero. Government deficits very large. Stocks rising despite weak fundamentals.", phase:"recovery", explain:"Stimulative monetary (rates near 0) + stimulative fiscal (large deficits) → STEEP curve. Stocks rising ahead of fundamentals = forward-looking, Recovery phase."},
+              {scenario:"Curve is mildly inverted at the short end. Bond yields are still rising at the long end. Confidence is weakening. Inflation has not yet peaked.", phase:"slowdown", explain:"Partial inversion + inflation still rising + weakening confidence = Slowdown. Inversion deepening as central bank still tight, but long-rate rise will soon stall."}
+            ];
+
+            var cmeYcDrillOrder = [], cmeYcDrillIdx = 0, cmeYcDrillCorrect = 0, cmeYcDrillTotal = 0;
+            var CME_YC_PHASE_OPTIONS = [
+              {key:"recovery", label:"1 · Initial Recovery (curve steepest)"},
+              {key:"early_exp", label:"2 · Early Expansion (curve still positive, flattening)"},
+              {key:"transition_early_to_late", label:"2→3 · Transition Early→Late Expansion"},
+              {key:"late_exp", label:"3 · Late Expansion (curve flat)"},
+              {key:"slowdown", label:"4 · Slowdown (curve inverted)"},
+              {key:"slowdown_to_contraction", label:"4→5 · Slowdown→Contraction transition"},
+              {key:"contraction", label:"5 · Contraction (re-steepening)"}
+            ];
+
+            function cmeYcDrillNew(){
+              cmeYcDrillOrder = [];
+              for(var i=0;i<CME_YC_DRILL.length;i++) cmeYcDrillOrder.push(i);
+              cmeYcDrillOrder.sort(function(){ return Math.random()-0.5; });
+              cmeYcDrillIdx = 0;
+              cmeYcDrillCorrect = 0;
+              cmeYcDrillTotal = 0;
+              cmeYcDrillRender();
+            }
+
+            function cmeYcDrillRender(){
+              if(cmeYcDrillIdx >= cmeYcDrillOrder.length){
+                document.getElementById('cmeYcDrillBox').innerHTML =
+                  '<div class="ce-yc-card" style="text-align:center">'+
+                    '<div style="font-family:Georgia,serif;font-size:18px;color:#3DD68C;margin-bottom:10px">Round complete!</div>'+
+                    '<div style="font-size:13px;color:#C9D1D9">Score: <b style="color:#D4A017">'+cmeYcDrillCorrect+'</b> / '+cmeYcDrillTotal+'</div>'+
+                    '<div style="margin-top:14px"><button onclick="cmeYcDrillNew()" style="background:#D4A017;color:#0D1117;border:none;padding:8px 16px;border-radius:5px;cursor:pointer;font-family:monospace;font-size:11px;letter-spacing:.05em;font-weight:600">↻ New round</button></div>'+
+                  '</div>';
+                document.getElementById('cmeYcDrillScore').textContent = '';
+                return;
+              }
+              var q = CME_YC_DRILL[cmeYcDrillOrder[cmeYcDrillIdx]];
+              var html = '<div class="ce-yc-card">'+
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">SCENARIO '+(cmeYcDrillIdx+1)+' / '+cmeYcDrillOrder.length+'</div>'+
+                '<div style="font-size:13px;line-height:1.6;color:#E6EDF3;margin-bottom:10px">'+q.scenario+'</div>'+
+                '<div class="ce-yc-choices">';
+              for(var i=0;i<CME_YC_PHASE_OPTIONS.length;i++){
+                var opt = CME_YC_PHASE_OPTIONS[i];
+                html += '<button class="ce-yc-choice" onclick="cmeYcDrillAnswer(\''+opt.key+'\')" id="cmeYcDC_'+opt.key+'">'+opt.label+'</button>';
+              }
+              html += '</div></div>';
+              document.getElementById('cmeYcDrillBox').innerHTML = html;
+              document.getElementById('cmeYcDrillScore').textContent = 'Score: '+cmeYcDrillCorrect+' / '+cmeYcDrillTotal;
+            }
+
+            function cmeYcDrillAnswer(pickedKey){
+              var q = CME_YC_DRILL[cmeYcDrillOrder[cmeYcDrillIdx]];
+              cmeYcDrillTotal++;
+              for(var i=0;i<CME_YC_PHASE_OPTIONS.length;i++){
+                var key = CME_YC_PHASE_OPTIONS[i].key;
+                var btn = document.getElementById('cmeYcDC_'+key);
+                if(!btn) continue;
+                btn.disabled = true;
+                btn.onclick = null;
+                if(key === q.phase) btn.classList.add('correct');
+                if(key === pickedKey && pickedKey !== q.phase) btn.classList.add('wrong');
+              }
+              var isCorrect = (pickedKey === q.phase);
+              if(isCorrect) cmeYcDrillCorrect++;
+              var fb = '<div style="margin-top:12px;padding:10px 12px;background:'+(isCorrect?'rgba(46,160,67,.08)':'rgba(255,123,114,.08)')+';border-left:2px solid '+(isCorrect?'#3DD68C':'#FF7B72')+';border-radius:3px;font-size:12px">'+
+                '<b style="color:'+(isCorrect?'#3DD68C':'#FF7B72')+'">'+(isCorrect?'✓ Correct':'✗ Incorrect')+'</b> '+
+                '<span style="color:#C9D1D9">'+q.explain+'</span></div>'+
+                '<div style="text-align:right;margin-top:10px"><button onclick="cmeYcDrillNext()" style="background:var(--surface);color:#D4A017;border:1px solid #D4A017;padding:6px 14px;border-radius:4px;cursor:pointer;font-family:monospace;font-size:11px">Next →</button></div>';
+              document.querySelector('#cmeYcDrillBox .ce-yc-card').insertAdjacentHTML('beforeend', fb);
+              document.getElementById('cmeYcDrillScore').textContent = 'Score: '+cmeYcDrillCorrect+' / '+cmeYcDrillTotal;
+            }
+
+            function cmeYcDrillNext(){
+              cmeYcDrillIdx++;
+              cmeYcDrillRender();
+            }
+
+            // ── Quiz Me · 3 MCQ errors in quiz form ──
+            var CME_ERR_QUIZ = [
+              {
+                q:"Tolliver states the economy is likely in the EARLY EXPANSION phase of the business cycle based on the yield curve, and consistent with this phase, monetary policy is becoming less stimulative. The yield curve is becoming steeper for short-term rates and flattening for longer maturities. Tolliver's statement is most likely:",
+                choices:["correct","incorrect with regard to monetary policy","incorrect with the phase of the business cycle"],
+                correct:0,
+                explain:"Correct. 'Steeper short + flattening long' = curve transitioning AWAY from Recovery steepness. Short rates rising as policy becomes less stimulative. This IS Early Expansion behavior."
+              },
+              {
+                q:"Wakuluk uses a structural model with a diffusion index. The weaknesses of this combined approach are best described as:",
+                choices:["flexible and limited in complexity","can give a false sense of precision and provide false signals","imposes no consistency of analysis across items or at different points in time"],
+                correct:1,
+                explain:"Correct. Structural/econometric → false precision. Diffusion index = leading indicator-based → false signals. 'No consistency' is the checklist approach weakness, not relevant here."
+              },
+              {
+                q:"Country Y is in the slowdown phase with bond yields starting to reflect contractionary conditions (yields declining). In the NEAR TERM, the yield curve is most likely to:",
+                choices:["invert","flatten","steepen"],
+                correct:2,
+                explain:"Correct. Already in slowdown (curve already flat-to-inverted) + bond yields falling = next phase is Contraction. Central bank will cut → short rates fall faster than long → curve RE-STEEPENS. Steepest just before Initial Recovery."
+              }
+            ];
+
+            var cmeErrQuizOrder = [], cmeErrQuizIdx = 0, cmeErrQuizCorrect = 0;
+
+            function cmeErrQuizStart(){
+              cmeErrQuizOrder = [];
+              for(var i=0;i<CME_ERR_QUIZ.length;i++) cmeErrQuizOrder.push(i);
+              cmeErrQuizOrder.sort(function(){ return Math.random()-0.5; });
+              cmeErrQuizIdx = 0;
+              cmeErrQuizCorrect = 0;
+              cmeErrQuizRender();
+            }
+
+            function cmeErrQuizRender(){
+              var box = document.getElementById('cmeErrQuizBox');
+              if(cmeErrQuizIdx >= cmeErrQuizOrder.length){
+                box.innerHTML =
+                  '<div style="text-align:center;padding:20px">'+
+                    '<div style="font-family:Georgia,serif;font-size:18px;color:#3DD68C;margin-bottom:10px">Quiz complete!</div>'+
+                    '<div style="font-size:13px;color:#C9D1D9">Score: <b style="color:#D4A017">'+cmeErrQuizCorrect+'</b> / '+cmeErrQuizOrder.length+'</div>'+
+                    '<div style="margin-top:14px"><button onclick="cmeErrQuizStart()" style="background:#D4A017;color:#0D1117;border:none;padding:8px 16px;border-radius:5px;cursor:pointer;font-family:monospace;font-size:11px;letter-spacing:.05em;font-weight:600">↻ Restart</button></div>'+
+                  '</div>';
+                return;
+              }
+              var q = CME_ERR_QUIZ[cmeErrQuizOrder[cmeErrQuizIdx]];
+              var html = '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">QUESTION '+(cmeErrQuizIdx+1)+' / '+cmeErrQuizOrder.length+' · Score: '+cmeErrQuizCorrect+'</div>'+
+                '<div style="font-size:13.5px;line-height:1.6;color:#E6EDF3;margin-bottom:14px">'+q.q+'</div>'+
+                '<div class="cyc-drill-choices">';
+              for(var i=0;i<q.choices.length;i++){
+                html += '<button class="cyc-drill-choice" id="cmeErrQC_'+i+'" onclick="cmeErrQuizReveal('+i+')">'+String.fromCharCode(65+i)+'. '+q.choices[i]+'</button>';
+              }
+              html += '</div>';
+              box.innerHTML = html;
+            }
+
+            function cmeErrQuizReveal(picked){
+              var q = CME_ERR_QUIZ[cmeErrQuizOrder[cmeErrQuizIdx]];
+              for(var i=0;i<q.choices.length;i++){
+                var btn = document.getElementById('cmeErrQC_'+i);
+                if(!btn) continue;
+                btn.disabled = true;
+                btn.onclick = null;
+                if(i === q.correct) btn.classList.add('correct');
+                if(i === picked && picked !== q.correct) btn.classList.add('wrong');
+              }
+              if(picked === q.correct) cmeErrQuizCorrect++;
+              var isCorrect = (picked === q.correct);
+              var fb = '<div style="margin-top:12px;padding:10px 12px;background:'+(isCorrect?'rgba(46,160,67,.08)':'rgba(255,123,114,.08)')+';border-left:2px solid '+(isCorrect?'#3DD68C':'#FF7B72')+';border-radius:3px;font-size:12px">'+
+                '<b style="color:'+(isCorrect?'#3DD68C':'#FF7B72')+'">'+(isCorrect?'✓ ':'✗ ')+'</b>'+
+                '<span style="color:#C9D1D9">'+q.explain+'</span></div>'+
+                '<div style="text-align:right;margin-top:10px"><button onclick="cmeErrQuizNext()" style="background:var(--surface);color:#D4A017;border:1px solid #D4A017;padding:6px 14px;border-radius:4px;cursor:pointer;font-family:monospace;font-size:11px">Next →</button></div>';
+              document.getElementById('cmeErrQuizBox').insertAdjacentHTML('beforeend', fb);
+            }
+
+            function cmeErrQuizNext(){
+              cmeErrQuizIdx++;
+              cmeErrQuizRender();
             }
 
             // ═════════════════════════════════════════════════════════════
