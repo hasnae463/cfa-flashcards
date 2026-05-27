@@ -8953,6 +8953,9 @@ Which to prioritize depends on:
           <div class="cme-tabs">
             <button class="cme-tab active" onclick="cmeTab('process',this)">7-Step Process</button>
             <button class="cme-tab" onclick="cmeTab('problems',this)">9 Forecasting Problems</button>
+            <button class="cme-tab" onclick="cmeTab('trend',this)">Trend Growth (1.2)</button>
+            <button class="cme-tab" onclick="cmeTab('cycle',this)">Business Cycle (1.3)</button>
+            <button class="cme-tab" onclick="cmeTab('policy',this)">Monetary/Fiscal (1.4)</button>
             <button class="cme-tab" onclick="cmeTab('errors',this)">Errors &amp; Mastery</button>
           </div>
 
@@ -9291,7 +9294,1059 @@ Step 7: Monitor &amp; refine</div>
           </div>
 
           <!-- ════════════════════════════════════════════════════════════
-               TAB 3 · ERRORS & MASTERY (placeholder)
+               TAB 3 · MODULE 1.2 — TREND RATE OF GROWTH
+               ════════════════════════════════════════════════════════════ -->
+          <div id="cme-trend" class="cme-panel">
+
+            <!-- Sub-tabs -->
+            <div class="cme-tabs" style="margin-bottom:14px">
+              <button class="cme-tab active" onclick="cmeTrendSub('shocks',this)">Exogenous Shocks (1.c)</button>
+              <button class="cme-tab" onclick="cmeTrendSub('model',this)">Growth Model (1.d)</button>
+              <button class="cme-tab" onclick="cmeTrendSub('equity',this)">Equity Return Calc</button>
+              <button class="cme-tab" onclick="cmeTrendSub('approaches',this)">3 Approaches (1.e)</button>
+            </div>
+
+            <!-- ────────────────────────────────────────────────
+                 SUB-TAB 1 · Exogenous Shocks (LOS 1.c)
+                 ──────────────────────────────────────────────── -->
+            <div id="cme-trend-shocks" class="cme-panel active">
+
+              <div class="cme-card">
+                <div class="cme-title">LOS 1.c · How exogenous shocks affect economic growth trends</div>
+                <div class="cme-body">Economic growth has two components: <b>cyclical variations</b> (short-term) and <b>growth trends</b> (long-term, what matters for CME). Both can be disrupted by shocks.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">The fundamental distinction — EXOGENOUS vs ENDOGENOUS</div>
+                <table class="cme-table">
+                  <thead><tr><th>Type</th><th>Definition</th><th>Built into prices?</th></tr></thead>
+                  <tbody>
+                    <tr><td><span class="cme-red">EXOGENOUS</span></td><td>Unanticipated events <b>outside</b> the normal course of the economy</td><td><b>NOT priced in</b> (because unanticipated)</td></tr>
+                    <tr><td><span class="cme-green">ENDOGENOUS</span></td><td>Normal trends <b>within</b> the economy</td><td><b>Already in market prices</b></td></tr>
+                  </tbody>
+                </table>
+                <div class="cme-trap"><b>Critical implication:</b> Exogenous shocks <b>cause statistical regime changes</b> (the same issue covered in Problem 3 of forecasting problems). This is why historical data may suddenly become inappropriate after a shock.</div>
+                <div class="cme-tip"><b>Memory anchor:</b> Exogenous = OUTSIDE the model + UNANTICIPATED + NOT priced. Endogenous = INSIDE the model + EXPECTED + PRICED.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">The 5 causes of exogenous shocks (memorize these)</div>
+                <div class="cme-fl">1. Changes in government POLICIES        → fiscal, free markets, infrastructure, tax
+2. POLITICAL events                        → geopolitical tensions, defense spending
+3. TECHNOLOGICAL progress                  → new markets, products
+4. NATURAL disasters                       → short-term ↓, possibly long-term ↑
+5. Discovery of NATURAL RESOURCES          → enhances growth (more supply)</div>
+                <div class="cme-tip"><b>Mnemonic:</b> <b>P-P-T-N-N</b> · "Policies, Political, Technology, Natural disasters, Natural resources"</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Decision cards — which type of shock is this?</div>
+                <div class="cme-body">Click each scenario to reveal the answer.</div>
+                <div id="cmeShockCards" style="margin-top:10px"></div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Special case · Financial crises</div>
+                <div class="cme-info"><b>Financial crises</b> are a separate category mentioned in the text. Shocks to the financial system lead to a <b>crisis of confidence</b> among market participants.<br><br>
+                  • Short-term effect: reduce economic output<br>
+                  • Long-term effect: <b>may also decrease the TREND rate of growth</b> (not just cyclical)</div>
+                <div class="cme-trap"><b>Exam trap:</b> a financial crisis affects BOTH cyclical AND trend growth. Many candidates think it's only short-term. The long-term trend can be permanently lowered (think: 2008 productivity slowdown debate).</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Natural disasters — the counterintuitive case</div>
+                <div class="cme-body">Natural disasters likely reduce <b>short-term growth</b>, but may (arguably) <b>encourage long-term growth</b> if more efficient capacity replaces previous capacity.</div>
+                <div class="cme-trap"><b>Professor's Note counter-argument:</b> the owners of capital ALREADY replace old facilities with newer/more efficient ones when the time is right. A natural disaster forcing this acceleration isn't necessarily a "free" growth boost — the replacement would have happened anyway.</div>
+              </div>
+
+            </div>
+
+            <!-- ────────────────────────────────────────────────
+                 SUB-TAB 2 · Growth Model (LOS 1.d)
+                 ──────────────────────────────────────────────── -->
+            <div id="cme-trend-model" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">LOS 1.d · Why the trend rate of growth matters for CME</div>
+                <span class="cme-rule"><span class="cme-green">→</span> DCF models <b>incorporate trend growth</b> as an anchor for long-term forecasts</span>
+                <span class="cme-rule"><span class="cme-green">→</span> Higher trend growth <b>may</b> lead to higher stock returns (if not already priced in)</span>
+                <span class="cme-rule"><span class="cme-green">→</span> Higher trend growth = economy can grow faster before inflation becomes a concern → influences monetary policy</span>
+                <span class="cme-rule"><span class="cme-green">→</span> Higher trend growth tends to generate <b>higher government bond yields</b></span>
+                <div class="cme-tip">Trend growth is <b>relatively stable in developed economies</b>. In <b>emerging economies</b> it's less predictable and can include longer periods of rapid catch-up growth.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">The basic forecasting model — 3 components</div>
+                <div class="cme-fl">Trend Growth = Labor Input + Capital per Worker + Total Factor Productivity</div>
+
+                <div class="cme-info"><b>1. Labor INPUT</b><br>
+                  Based on growth in the labor force AND labor participation.<br>
+                  • Labor force growth = population growth + demographics<br>
+                  • Labor participation = % of population working, affected by real wages, work/leisure decisions, social factors</div>
+
+                <div class="cme-info"><b>2. CAPITAL per worker</b><br>
+                  Increases labor productivity. Each worker has more tools/equipment/technology to use.</div>
+
+                <div class="cme-info"><b>3. TOTAL FACTOR PRODUCTIVITY (TFP)</b><br>
+                  Reflects <b>technological progress</b> and changes in <b>government policies</b>. The "residual" — output growth not explained by labor or capital alone.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Worked example — long-term projected growth rate</div>
+                <div class="cme-fl">Given:
+  Population growth                  = 2.00%
+  Labor force participation growth   = 0.25%
+  Capital input growth               = 2.50%
+  Total factor productivity (TFP)    = 0.50%
+
+Long-term growth = 2.00% + 0.25% + 2.50% + 0.50% = 5.25%</div>
+                <div class="cme-tip">All components ADD. No multiplication. Each one is just summed to give the total trend growth rate.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Quick variant — the "labor input growth" formulation</div>
+                <div class="cme-info">Some questions combine population + participation into <b>"labor input growth"</b>:<br><br>
+                  Labor input growth = labor force growth + labor participation growth<br><br>
+                  Example: labor input growth = 0.4% means population + participation already aggregated.<br>
+                  Then: <b>Real GDP growth = labor input growth + labor productivity growth</b><br>
+                  (where labor productivity growth absorbs both capital per worker AND TFP)</div>
+                <div class="cme-trap"><b>Watch for this trap:</b> if the question gives "labor input growth" AND "labor productivity growth" separately, just add those two (don't double-count). If it gives population, participation, capital, and TFP separately, add all four.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Worked example — Cindy Navaro real GDP</div>
+                <div class="cme-fl">Given (Exhibit 1):
+  Annual labor input growth          = 0.4%
+  Annual labor productivity growth   = 1.4%
+
+Real GDP growth = 0.4% + 1.4% = 1.8%
+
+Then to get NOMINAL GDP, add inflation:
+  Nominal GDP = Real GDP + Inflation = 1.8% + 3.8% = 5.6%</div>
+                <div class="cme-tip">This 5.6% nominal GDP becomes the input to the equity return calculator (next sub-tab).</div>
+              </div>
+
+            </div>
+
+            <!-- ────────────────────────────────────────────────
+                 SUB-TAB 3 · Equity Return Calculator
+                 ──────────────────────────────────────────────── -->
+            <div id="cme-trend-equity" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">Asset Returns and Trend Growth — the equity decomposition</div>
+                <div class="cme-fl">Market value of equity = Nominal GDP × (Earnings/GDP) × (P/E)
+
+Long-term: profits/GDP and P/E cannot continuously increase or decrease.
+Thus, long-term growth in equity value = growth in nominal GDP.
+
+Equity total return = Capital gains + Dividend yield
+Capital gains       = ΔNominal GDP + Δ(profits/GDP) + Δ(P/E)
+
+Over long horizons, Δ(profits/GDP) ≈ 0 and Δ(P/E) ≈ 0
+→ Capital gains ≈ nominal GDP growth
+→ Total equity return ≈ nominal GDP growth + dividend yield</div>
+                <div class="cme-trap"><b>The high-growth trap:</b> "High growth rates in capital investment → high economy growth → but NOT necessarily high equity returns." Why? Because <b>growth is already factored into equity prices</b>. Additional reason: if capital growth rate &gt; economic growth rate, return on capital may DECREASE.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Equity Return Calculator</div>
+                <div class="cme-body">Walk through the Cindy Navaro example — preset gives the textbook 8.2% answer.</div>
+
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+                  <button onclick="cmeEqPreset('navaro')" style="background:#D4A017;color:#0D1117;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.05em;font-weight:600">Preset: Navaro (8.2%)</button>
+                  <button onclick="cmeEqPreset('blank')" style="background:var(--surface2);color:#C9D1D9;border:1px solid var(--border);padding:7px 14px;border-radius:5px;cursor:pointer;font-family:var(--mono);font-size:11px">Clear</button>
+                </div>
+
+                <div class="cme-rule" style="display:flex;align-items:center;gap:10px;padding:6px 0">
+                  <span style="flex:1;font-family:var(--mono);font-size:11px;color:var(--muted)">Labor input growth (%)</span>
+                  <input type="number" id="cmeEqLabor" value="0.4" step="0.01" oninput="cmeEqCalc()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                </div>
+                <div class="cme-rule" style="display:flex;align-items:center;gap:10px;padding:6px 0">
+                  <span style="flex:1;font-family:var(--mono);font-size:11px;color:var(--muted)">Labor productivity growth (%)</span>
+                  <input type="number" id="cmeEqProd" value="1.4" step="0.01" oninput="cmeEqCalc()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                </div>
+                <div class="cme-rule" style="display:flex;align-items:center;gap:10px;padding:6px 0">
+                  <span style="flex:1;font-family:var(--mono);font-size:11px;color:var(--muted)">Inflation (%)</span>
+                  <input type="number" id="cmeEqInfl" value="3.8" step="0.01" oninput="cmeEqCalc()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                </div>
+                <div class="cme-rule" style="display:flex;align-items:center;gap:10px;padding:6px 0">
+                  <span style="flex:1;font-family:var(--mono);font-size:11px;color:var(--muted)">Δ profits/GDP (%) — usually 0 long-term</span>
+                  <input type="number" id="cmeEqProf" value="0" step="0.01" oninput="cmeEqCalc()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                </div>
+                <div class="cme-rule" style="display:flex;align-items:center;gap:10px;padding:6px 0">
+                  <span style="flex:1;font-family:var(--mono);font-size:11px;color:var(--muted)">Δ P/E multiple (%) — usually 0 long-term</span>
+                  <input type="number" id="cmeEqPE" value="0" step="0.01" oninput="cmeEqCalc()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                </div>
+                <div class="cme-rule" style="display:flex;align-items:center;gap:10px;padding:6px 0">
+                  <span style="flex:1;font-family:var(--mono);font-size:11px;color:var(--muted)">Dividend yield (%)</span>
+                  <input type="number" id="cmeEqDiv" value="2.6" step="0.01" oninput="cmeEqCalc()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:4px 8px;border-radius:3px;font-family:monospace;width:90px;text-align:right">
+                </div>
+
+                <div id="cmeEqBox" style="margin-top:14px;padding:12px;background:#0B0F14;border-left:2px solid #D4A017;border-radius:3px;font-family:var(--mono);font-size:11.5px;color:#C9D1D9"></div>
+
+                <div class="cme-tip" style="margin-top:10px"><b>How to read the formula:</b> capital gains comes from nominal GDP growth + any expansion of profits/GDP + any expansion of P/E. Long-term, the last two = 0 (they can't grow forever). Add dividend yield to get TOTAL return.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Dividend yield breakdown (useful side-formula)</div>
+                <div class="cme-fl">Dividend yield = Annual dividends / Market value
+              = (Dividend payout ratio) / (Profit multiple)
+              = (Dividends / Profit) / (Market value / Profit)</div>
+                <div class="cme-info">If a question gives you payout ratio and P/E multiple but not dividend yield directly, this lets you compute it.</div>
+              </div>
+
+            </div>
+
+            <!-- ────────────────────────────────────────────────
+                 SUB-TAB 4 · 3 Forecasting Approaches (LOS 1.e)
+                 ──────────────────────────────────────────────── -->
+            <div id="cme-trend-approaches" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">LOS 1.e · 3 approaches to economic forecasting</div>
+                <div class="cme-body">Each has tradeoffs. Exam will test which approach fits a given situation, and which advantage/disadvantage matches each.</div>
+              </div>
+
+              <div class="cme-card" style="border-left:3px solid #79C0FF">
+                <div class="cme-title">Approach 1 · Econometric analysis</div>
+                <div class="cme-body">Statistical methods to explain economic relationships and formulate forecasting models.</div>
+                <div class="cme-info"><b>Two sub-types:</b><br>
+                  • <b>Structural models</b> — based on economic theory<br>
+                  • <b>Reduced-form models</b> — compact versions of structural approaches<br><br>
+                  Ordinary least squares (OLS) regression is most common.</div>
+                <div class="cme-tip"><b>Advantages:</b><br>
+                  ✓ Can incorporate MANY variables<br>
+                  ✓ Once specified, model can be REUSED<br>
+                  ✓ Output is QUANTIFIED, based on consistent relationships</div>
+                <div class="cme-trap"><b>Disadvantages:</b><br>
+                  ✗ COMPLEX and time-consuming to construct<br>
+                  ✗ Data difficult to forecast, relationships can CHANGE<br>
+                  ✗ Output may need interpretation or be UNREALISTIC<br>
+                  ✗ <b>Does NOT work well for turning points</b> (key exam trap)</div>
+              </div>
+
+              <div class="cme-card" style="border-left:3px solid #3DD68C">
+                <div class="cme-title">Approach 2 · Economic indicators</div>
+                <div class="cme-body">Available from governments (e.g. OECD) and private sources (e.g. Conference Board).</div>
+                <div class="cme-info"><b>Three types of indicators:</b>
+                  <table class="cme-table">
+                    <thead><tr><th>Type</th><th>Timing</th><th>Use</th></tr></thead>
+                    <tbody>
+                      <tr><td><span class="cme-green">LEADING</span></td><td>Move <b>ahead</b> of business cycle</td><td>Predict what comes next</td></tr>
+                      <tr><td><span class="cme-orange">COINCIDENT</span></td><td>Move <b>with</b> business cycle</td><td>Confirm what's happening NOW</td></tr>
+                      <tr><td><span class="cme-red">LAGGING</span></td><td>Move <b>after</b> business cycle</td><td>Confirm what just happened</td></tr>
+                    </tbody>
+                  </table></div>
+                <div class="cme-info"><b>Two ways to use them:</b><br>
+                  • <b>Composite</b> — combine into an index. <b>3 consecutive months of increase/decrease</b> signals start of expansion/contraction (Conference Board's 10 leading indicators for US)<br>
+                  • <b>Diffusion index</b> — count of indicators pointing toward expansion vs contraction</div>
+                <div class="cme-tip"><b>Advantages:</b><br>
+                  ✓ Simple, intuitive, easy to interpret<br>
+                  ✓ Data readily available from third parties<br>
+                  ✓ Lists can be TAILORED to specific forecasting needs</div>
+                <div class="cme-trap"><b>Disadvantages:</b><br>
+                  ✗ Forecasting results have been <b>INCONSISTENT</b><br>
+                  ✗ Have given <b>FALSE SIGNALS</b><br>
+                  ✗ Indicators are revised frequently → can make them appear to fit PAST cycles better than they actually did when first released</div>
+              </div>
+
+              <div class="cme-card" style="border-left:3px solid #F0A04B">
+                <div class="cme-title">Approach 3 · Checklist approach</div>
+                <div class="cme-body">More subjective. Analyst considers a series of questions (e.g., to forecast GDP: "What was the latest employment report? What is the central bank's next move?"). Uses judgment + some statistical modeling to interpret.</div>
+                <div class="cme-tip"><b>Advantages:</b><br>
+                  ✓ <b>LESS complex</b> than econometrics<br>
+                  ✓ <b>FLEXIBLE</b> — mixes objective statistical analysis with judgment to incorporate changing relationships</div>
+                <div class="cme-trap"><b>Disadvantages:</b><br>
+                  ✗ <b>SUBJECTIVE</b> and time-consuming<br>
+                  ✗ Complexity must be limited (manual process)</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Summary comparison — when to use which</div>
+                <table class="cme-table">
+                  <thead><tr><th>If you need...</th><th>Use</th></tr></thead>
+                  <tbody>
+                    <tr><td>Quantified output, many variables, reusable</td><td><span class="cme-blue">Econometric</span></td></tr>
+                    <tr><td>Simple, fast, third-party data</td><td><span class="cme-green">Indicators</span></td></tr>
+                    <tr><td>Flexibility to adapt to changing relationships</td><td><span class="cme-orange">Checklist</span></td></tr>
+                    <tr><td>To forecast TURNING POINTS</td><td><span class="cme-green">NOT econometric</span> (its key weakness)</td></tr>
+                  </tbody>
+                </table>
+                <div class="cme-trap"><b>Classic exam trap:</b> "Which approach is BEST for forecasting turning points?" → <b>Indicators (leading)</b>, NOT econometric. Econometric models fail at turning points because relationships change at those moments.</div>
+              </div>
+
+            </div>
+
+          </div><!-- /cme-trend panel -->
+
+          <!-- ════════════════════════════════════════════════════════════
+               TAB 4 · MODULE 1.3 — THE BUSINESS CYCLE
+               ════════════════════════════════════════════════════════════ -->
+          <div id="cme-cycle" class="cme-panel">
+
+            <style>
+              /* Cycle map specific styling */
+              #cmeWidget .cyc-svg-wrap { background:#0B0F14; border:1px solid #2A3441; border-radius:8px; padding:16px; margin:10px 0; }
+              #cmeWidget .cyc-svg-wrap svg { display:block; width:100%; height:auto; max-height:280px; }
+              #cmeWidget .cyc-phase-dot { cursor:pointer; transition:r .2s, fill .2s; }
+              #cmeWidget .cyc-phase-dot:hover { r:9; }
+              #cmeWidget .cyc-phase-dot.active { r:10; fill:#3DD68C; }
+              #cmeWidget .cyc-overlay-toggle { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0; }
+              #cmeWidget .cyc-tog { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:5px 11px; border-radius:14px; font-family:var(--mono); font-size:10px; letter-spacing:.05em; cursor:pointer; }
+              #cmeWidget .cyc-tog.active { background:rgba(212,160,23,.15); border-color:#D4A017; color:#D4A017; }
+              #cmeWidget .cyc-phase-info { background:var(--surface); border-left:3px solid #D4A017; border-radius:4px; padding:14px 16px; margin-top:12px; }
+              #cmeWidget .cyc-phase-name { font-family:Georgia,serif; font-size:16px; color:#D4A017; font-weight:600; margin-bottom:8px; }
+              #cmeWidget .cyc-phase-meta { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.06em; margin-bottom:10px; }
+              #cmeWidget .cyc-attr { display:flex; gap:10px; padding:5px 0; border-bottom:1px solid var(--border); font-size:12px; }
+              #cmeWidget .cyc-attr:last-child { border-bottom:none; }
+              #cmeWidget .cyc-attr-label { color:var(--muted); font-family:var(--mono); font-size:10.5px; min-width:130px; }
+              #cmeWidget .cyc-attr-val { flex:1; color:#C9D1D9; }
+              #cmeWidget .cyc-overlay-strip { background:rgba(121,192,255,.08); border-left:2px solid #79C0FF; padding:8px 12px; margin-top:10px; border-radius:3px; font-size:12px; }
+              #cmeWidget .cyc-curve { fill:none; stroke:#D4A017; stroke-width:2.5; }
+              #cmeWidget .cyc-axis { stroke:#2A3441; stroke-width:1; stroke-dasharray:3 3; }
+              #cmeWidget .cyc-label { fill:#D4A017; font-family:monospace; font-size:9px; letter-spacing:.06em; text-transform:uppercase; pointer-events:none; }
+              /* drill mode */
+              #cmeWidget .cyc-drill-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:14px 16px; margin-bottom:10px; }
+              #cmeWidget .cyc-drill-choices { display:flex; flex-direction:column; gap:7px; margin:12px 0; }
+              #cmeWidget .cyc-drill-choice { background:#0B0F14; border:1px solid var(--border); color:#C9D1D9; padding:9px 12px; text-align:left; border-radius:4px; cursor:pointer; font-size:12.5px; }
+              #cmeWidget .cyc-drill-choice:hover { border-color:#D4A017; background:rgba(212,160,23,.05); }
+              #cmeWidget .cyc-drill-choice.correct { border-color:#3DD68C; background:rgba(46,160,67,.1); color:#3DD68C; }
+              #cmeWidget .cyc-drill-choice.wrong { border-color:#FF7B72; background:rgba(255,123,114,.1); color:#FF7B72; }
+              /* inflation matrix */
+              #cmeWidget .infl-grid { display:grid; grid-template-columns: 130px 1fr 1fr 1fr 1fr; gap:1px; background:var(--border); border-radius:5px; overflow:hidden; margin:10px 0; }
+              #cmeWidget .infl-cell { background:var(--surface); padding:10px 12px; font-size:11.5px; line-height:1.5; cursor:pointer; transition:background .15s; }
+              #cmeWidget .infl-cell:hover { background:rgba(212,160,23,.06); }
+              #cmeWidget .infl-cell.header { background:#0B0F14; color:#D4A017; font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; cursor:default; font-weight:600; }
+              #cmeWidget .infl-cell.row-label { background:#0B0F14; color:#D4A017; font-family:var(--mono); font-size:10px; letter-spacing:.06em; cursor:default; font-weight:600; }
+              #cmeWidget .infl-sign-pos { color:#3DD68C; font-weight:600; }
+              #cmeWidget .infl-sign-neg { color:#FF7B72; font-weight:600; }
+              #cmeWidget .infl-sign-neu { color:#7D8590; font-weight:600; }
+            </style>
+
+            <!-- Sub-tab nav -->
+            <div class="cme-tabs" style="margin-bottom:14px">
+              <button class="cme-tab active" onclick="cmeCycSub('map',this)">Cycle Map</button>
+              <button class="cme-tab" onclick="cmeCycSub('compare',this)">Phase Comparison</button>
+              <button class="cme-tab" onclick="cmeCycSub('infl',this)">Inflation × Assets</button>
+              <button class="cme-tab" onclick="cmeCycSub('deflation',this)">Deflation Deep-dive</button>
+              <button class="cme-tab" onclick="cmeCycSub('drill',this)">Phase Drill</button>
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────────
+                 SUB-TAB 1 · INTERACTIVE CYCLE MAP
+                 ───────────────────────────────────────────────────────── -->
+            <div id="cme-cycle-map" class="cme-panel active">
+
+              <div class="cme-card">
+                <div class="cme-title">LOS 1.f · The 5 phases of the business cycle</div>
+                <div class="cme-body">Click on any phase dot on the curve to see its full profile. Toggle overlays to see what each asset class does at each phase.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cyc-svg-wrap">
+                  <svg id="cmeCycSvg" viewBox="0 0 540 220" xmlns="http://www.w3.org/2000/svg">
+                    <!-- trend line -->
+                    <line x1="20" y1="110" x2="520" y2="110" class="cyc-axis"/>
+                    <text x="525" y="113" fill="#7D8590" font-family="monospace" font-size="9">trend</text>
+                    <!-- main cycle curve -->
+                    <path d="M 30 155 Q 80 155, 115 110 Q 155 65, 210 55 Q 265 45, 295 90 Q 330 135, 385 165 Q 445 180, 510 140" class="cyc-curve"/>
+                    <!-- phase dots (clickable) -->
+                    <circle cx="50"  cy="150" r="7" class="cyc-phase-dot active" fill="#D4A017" id="cycDot1" onclick="cmeCycShow(1)"/>
+                    <circle cx="155" cy="68"  r="7" class="cyc-phase-dot" fill="#D4A017" id="cycDot2" onclick="cmeCycShow(2)"/>
+                    <circle cx="245" cy="48"  r="7" class="cyc-phase-dot" fill="#D4A017" id="cycDot3" onclick="cmeCycShow(3)"/>
+                    <circle cx="345" cy="142" r="7" class="cyc-phase-dot" fill="#D4A017" id="cycDot4" onclick="cmeCycShow(4)"/>
+                    <circle cx="450" cy="178" r="7" class="cyc-phase-dot" fill="#D4A017" id="cycDot5" onclick="cmeCycShow(5)"/>
+                    <!-- phase labels -->
+                    <text x="50"  y="175" text-anchor="middle" class="cyc-label">1·Recovery</text>
+                    <text x="155" y="55"  text-anchor="middle" class="cyc-label">2·Early Exp</text>
+                    <text x="245" y="36"  text-anchor="middle" class="cyc-label">3·Late Exp</text>
+                    <text x="345" y="130" text-anchor="middle" class="cyc-label">4·Slowdown</text>
+                    <text x="450" y="200" text-anchor="middle" class="cyc-label">5·Contraction</text>
+                    <!-- overlay groups (hidden by default) -->
+                    <g id="cycOvlStocks" style="display:none">
+                      <text x="50"  y="195" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="8">↑ rising</text>
+                      <text x="155" y="88"  text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="8">↑ rising</text>
+                      <text x="245" y="68"  text-anchor="middle" fill="#F0A04B" font-family="monospace" font-size="8">↑↑ peaking</text>
+                      <text x="345" y="160" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="8">↓ falling</text>
+                      <text x="450" y="218" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="8">↑ late stage</text>
+                    </g>
+                    <g id="cycOvlBonds" style="display:none">
+                      <text x="50"  y="195" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="8">price peaking</text>
+                      <text x="155" y="88"  text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="8">price ↓</text>
+                      <text x="245" y="68"  text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="8">yields ↑↑</text>
+                      <text x="345" y="160" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="8">yields peak/↓</text>
+                      <text x="450" y="218" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="8">price ↑</text>
+                    </g>
+                    <g id="cycOvlInfl" style="display:none">
+                      <text x="50"  y="195" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="8">decelerating</text>
+                      <text x="155" y="88"  text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="8">low</text>
+                      <text x="245" y="68"  text-anchor="middle" fill="#F0A04B" font-family="monospace" font-size="8">rising</text>
+                      <text x="345" y="160" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="8">still rising</text>
+                      <text x="450" y="218" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="8">topping out</text>
+                    </g>
+                    <g id="cycOvlRates" style="display:none">
+                      <text x="50"  y="195" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="8">low/falling</text>
+                      <text x="155" y="88"  text-anchor="middle" fill="#F0A04B" font-family="monospace" font-size="8">rising</text>
+                      <text x="245" y="68"  text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="8">rising</text>
+                      <text x="345" y="160" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="8">peak</text>
+                      <text x="450" y="218" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="8">falling</text>
+                    </g>
+                  </svg>
+                </div>
+
+                <div style="font-family:var(--mono);font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:14px;margin-bottom:6px">Overlay what to focus on</div>
+                <div class="cyc-overlay-toggle">
+                  <button class="cyc-tog" id="cycTogStocks" onclick="cmeCycOverlay('Stocks')">📈 Stocks</button>
+                  <button class="cyc-tog" id="cycTogBonds" onclick="cmeCycOverlay('Bonds')">🏦 Bonds</button>
+                  <button class="cyc-tog" id="cycTogInfl" onclick="cmeCycOverlay('Infl')">📊 Inflation</button>
+                  <button class="cyc-tog" id="cycTogRates" onclick="cmeCycOverlay('Rates')">💵 Short Rates</button>
+                </div>
+
+                <div id="cmeCycInfoBox"></div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Memory anchors — the cycle's 3 inflection points</div>
+                <div class="cme-fl">PEAK of GDP        → between Phase 3 (Late Exp) and Phase 4 (Slowdown)
+PEAK of inflation  → between Phase 4 (Slowdown) and Phase 5 (Contraction)
+TROUGH of GDP      → between Phase 5 (Contraction) and Phase 1 (Recovery)
+
+Inflation PEAKS LATE — it lags GDP. Inflation is "topping out" only as the economy enters contraction.
+Inflation TROUGHS EARLY — it decelerates as we approach recession and continues falling into early recovery.</div>
+                <div class="cme-tip"><b>Key insight:</b> stocks lead the real economy. They START RISING in late contraction (anticipating recovery) and START FALLING in slowdown (anticipating contraction).</div>
+              </div>
+
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────────
+                 SUB-TAB 2 · PHASE COMPARISON TABLE
+                 ───────────────────────────────────────────────────────── -->
+            <div id="cme-cycle-compare" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">All 5 phases side-by-side</div>
+                <div class="cme-body">Use this as your reference table when answering "what does X do in Y phase" questions.</div>
+
+                <div style="overflow-x:auto;margin-top:10px">
+                  <table class="cme-table" style="min-width:680px">
+                    <thead>
+                      <tr>
+                        <th style="min-width:120px">Dimension</th>
+                        <th style="color:#3DD68C">1·Recovery</th>
+                        <th style="color:#79C0FF">2·Early Exp</th>
+                        <th style="color:#F0A04B">3·Late Exp</th>
+                        <th style="color:#FF7B72">4·Slowdown</th>
+                        <th style="color:#B8890C">5·Contraction</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><b>Duration</b></td>
+                        <td>Few months</td>
+                        <td>Year → several years</td>
+                        <td>—</td>
+                        <td>Few months → year+</td>
+                        <td>12–18 months</td>
+                      </tr>
+                      <tr>
+                        <td><b>Confidence</b></td>
+                        <td>Rising</td>
+                        <td>Increasing</td>
+                        <td>HIGH</td>
+                        <td>Declining</td>
+                        <td>Declining (low)</td>
+                      </tr>
+                      <tr>
+                        <td><b>Output gap</b></td>
+                        <td>LARGE</td>
+                        <td>Narrowing</td>
+                        <td>ELIMINATED · overheating risk</td>
+                        <td>Reopening</td>
+                        <td>Widening</td>
+                      </tr>
+                      <tr>
+                        <td><b>Inflation</b></td>
+                        <td>Decelerating</td>
+                        <td>LOW</td>
+                        <td>INCREASING</td>
+                        <td>Still rising</td>
+                        <td>Topping out</td>
+                      </tr>
+                      <tr>
+                        <td><b>Monetary policy</b></td>
+                        <td>STIMULATIVE</td>
+                        <td>Becoming less stimulative</td>
+                        <td>Becoming RESTRICTIVE</td>
+                        <td>Becoming less restrictive</td>
+                        <td>EASING</td>
+                      </tr>
+                      <tr>
+                        <td><b>Short-term rates</b></td>
+                        <td>Low / falling</td>
+                        <td>Increasing</td>
+                        <td>Increasing</td>
+                        <td>At PEAK</td>
+                        <td>Declining</td>
+                      </tr>
+                      <tr>
+                        <td><b>Bond yields</b></td>
+                        <td>Bottoming → bond prices PEAK</td>
+                        <td>Bottoming / rising · prices ↓</td>
+                        <td>Rising · prices ↓</td>
+                        <td>Peaking · then ↓ · prices ↑</td>
+                        <td>Declining · prices ↑</td>
+                      </tr>
+                      <tr>
+                        <td><b>Stock prices</b></td>
+                        <td>RISING</td>
+                        <td>Rising</td>
+                        <td>Rising/peaking · ↑ volatility</td>
+                        <td>FALLING</td>
+                        <td>Rising late-stage (anticipating end)</td>
+                      </tr>
+                      <tr>
+                        <td><b>Yield curve</b></td>
+                        <td>Normal/steepening</td>
+                        <td>Normal</td>
+                        <td>Flattening</td>
+                        <td>Possible INVERSION</td>
+                        <td>Steepening</td>
+                      </tr>
+                      <tr>
+                        <td><b>Best assets</b></td>
+                        <td>Small-cap, HY bonds, cyclicals</td>
+                        <td>Equity (broad)</td>
+                        <td>Late-cycle plays · commodities</td>
+                        <td>Treasuries · defensive equity</td>
+                        <td>Treasuries · gold · early stocks late</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="cme-tip" style="margin-top:14px"><b>Pattern to memorize:</b> as you progress through phases 1→5, short rates trace an arch (low→rising→peaking→falling). Inflation lags by about one phase. Bond prices are INVERSE to yields. Stock prices lead the real economy by one phase.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">3 reasons why business cycle ≠ CME (the nuance)</div>
+                <span class="cme-rule"><b>1.</b> Business cycles vary in duration and intensity; turning points are difficult to predict. Variations may result from interactions of many SUBCYCLES with different frequencies.</span>
+                <span class="cme-rule"><b>2.</b> Distinguishing what's CYCLICAL (short-term) vs what's TREND (long-term) is hard in real time.</span>
+                <span class="cme-rule"><b>3.</b> Capital market returns depend on REAL economy + INVESTOR EXPECTATIONS + RISK TOLERANCES — not just economic data.</span>
+                <div class="cme-trap"><b>Application:</b> Business cycle analysis is most useful for trades within a TYPICAL CYCLE horizon. For longer investment horizons that include one or more full cycles, current state of the economy is LESS valuable as input.</div>
+              </div>
+
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────────
+                 SUB-TAB 3 · INFLATION × ASSET CLASS MATRIX
+                 ───────────────────────────────────────────────────────── -->
+            <div id="cme-cycle-infl" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">LOS 1.g · Inflation impact on asset classes (Figure 1.2)</div>
+                <div class="cme-body">3 inflation scenarios × 4 asset classes. Click any cell to see the explanation.</div>
+
+                <div class="infl-grid" style="margin-top:12px">
+                  <!-- Header row -->
+                  <div class="infl-cell header"></div>
+                  <div class="infl-cell header">Cash</div>
+                  <div class="infl-cell header">Bonds</div>
+                  <div class="infl-cell header">Equity</div>
+                  <div class="infl-cell header">Real estate</div>
+
+                  <!-- Row 1: Within expectations -->
+                  <div class="infl-cell row-label">Within<br>expectations</div>
+                  <div class="infl-cell" onclick="cmeInflShow('cash_within')"><span class="infl-sign-neu">●</span> Earn the REAL rate of interest</div>
+                  <div class="infl-cell" onclick="cmeInflShow('bonds_within')"><span class="infl-sign-neu">●</span> Shorter-term yields more volatile than longer-term</div>
+                  <div class="infl-cell" onclick="cmeInflShow('eq_within')"><span class="infl-sign-neu">●</span> NO impact · predictable growth</div>
+                  <div class="infl-cell" onclick="cmeInflShow('re_within')"><span class="infl-sign-neu">●</span> NEUTRAL · typical returns</div>
+
+                  <!-- Row 2: Above/below -->
+                  <div class="infl-cell row-label">Above OR<br>below<br>expectations</div>
+                  <div class="infl-cell" onclick="cmeInflShow('cash_off')"><span class="infl-sign-pos">+/−</span> Positive (negative) with rising (falling) yields</div>
+                  <div class="infl-cell" onclick="cmeInflShow('bonds_off')"><span class="infl-sign-neg">−</span> LONGER-term yields more volatile than shorter-term</div>
+                  <div class="infl-cell" onclick="cmeInflShow('eq_off')"><span class="infl-sign-neg">−</span> NEGATIVE · central bank action / falling prices</div>
+                  <div class="infl-cell" onclick="cmeInflShow('re_off')"><span class="infl-sign-pos">+</span> POSITIVE · real asset values rise with inflation</div>
+
+                  <!-- Row 3: Deflation -->
+                  <div class="infl-cell row-label">Deflation</div>
+                  <div class="infl-cell" onclick="cmeInflShow('cash_defl')"><span class="infl-sign-pos">+</span> POSITIVE if rates bound by 0%</div>
+                  <div class="infl-cell" onclick="cmeInflShow('bonds_defl')"><span class="infl-sign-pos">+</span> POSITIVE · fixed CF have ↑ purchasing power</div>
+                  <div class="infl-cell" onclick="cmeInflShow('eq_defl')"><span class="infl-sign-neg">−</span> NEGATIVE · activity & business decline</div>
+                  <div class="infl-cell" onclick="cmeInflShow('re_defl')"><span class="infl-sign-neg">−</span> NEGATIVE · property values decline</div>
+                </div>
+
+                <div id="cmeInflBox" style="margin-top:12px"></div>
+
+                <div class="cme-trap" style="margin-top:14px"><b>Professor's Note:</b> these generalizations don't hold in every case. They're a starting point for the forecaster taking a MACRO approach. Even if the generalizations always held, it's not easy to determine when a business cycle phase starts, how long it lasts, or when it ends.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Memory anchors for the matrix</div>
+                <div class="cme-info"><b>"Within expectations" row:</b> everything is largely PRICED IN. Cash earns the real rate. Equity/RE are neutral. Bonds have shorter end more volatile (expectations of changes to short-term policy rate dominate).</div>
+                <div class="cme-info"><b>"Above/below expectations" row:</b> the SURPRISE drives volatility. Now it's the LONGER end of curve that's more volatile (expectations of long-run inflation dominate). Equity suffers (central bank tightening). Real estate WINS (real asset hedge against inflation).</div>
+                <div class="cme-trap"><b>Critical trap to memorize:</b> bond yield curve volatility location FLIPS based on whether inflation is within vs off expectations.<br>• Within → SHORT end more volatile<br>• Above/below → LONG end more volatile</div>
+                <div class="cme-info"><b>"Deflation" row:</b> bonds and cash WIN (fixed CF have higher purchasing power; cash benefits from real rate when nominal can't go below 0). Equity and RE LOSE (economic activity declining, property values declining).</div>
+              </div>
+
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────────
+                 SUB-TAB 4 · DEFLATION DEEP-DIVE
+                 ───────────────────────────────────────────────────────── -->
+            <div id="cme-cycle-deflation" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">3 inflation terms — know the differences</div>
+                <table class="cme-table">
+                  <thead><tr><th>Term</th><th>Definition</th><th>CPI example</th><th>Timing in cycle</th></tr></thead>
+                  <tbody>
+                    <tr><td><span class="cme-orange">Inflation</span></td><td>Generally RISING prices</td><td>CPI 100 → 105 = +5%</td><td>Accelerates LATE in cycle (near peak)</td></tr>
+                    <tr><td><span class="cme-blue">Disinflation</span></td><td>DECELERATION in rate of inflation (still positive, just slower)</td><td>CPI 105 → 108 = +3% (slower than +5%)</td><td>Decelerates approaching recession</td></tr>
+                    <tr><td><span class="cme-red">Deflation</span></td><td>Generally FALLING prices (negative inflation)</td><td>CPI 108 → 106 ≈ −2%</td><td>Severe threat — usually in recession</td></tr>
+                  </tbody>
+                </table>
+                <div class="cme-trap"><b>Common confusion:</b> disinflation ≠ deflation. Disinflation = inflation still positive but slowing. Deflation = inflation actually negative (prices falling).</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Why deflation is uniquely dangerous</div>
+                <div class="cme-body">Deflation is a severe threat to economic activity for two main reasons:</div>
+
+                <div class="cme-info"><b>Reason 1 · Encourages debt default</b><br>
+                  Real burden of debt INCREASES as prices fall. Consider a homeowner:<br>
+                  • Home worth $100,000, mortgage $95,000 → equity = $5,000<br>
+                  • Decline of &gt;5% in home prices → NEGATIVE EQUITY<br>
+                  • Triggers panic sales (further depressing prices) and defaults<br>
+                  → Vicious cycle, debt-deflation spiral.</div>
+
+                <div class="cme-info"><b>Reason 2 · Zero Lower Bound (ZLB) on nominal rates</b><br>
+                  With negative inflation, interest rates decline toward zero. Once at the ZLB, central banks CAN'T further lower rates to stimulate.<br>
+                  → Traditional monetary policy loses traction.<br>
+                  → Need unconventional tools: <b>Quantitative Easing (QE)</b>.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Quantitative Easing (QE)</div>
+                <div class="cme-body">Central bank monetary policy used when traditional rate cuts are exhausted (e.g. post-2007-2009 crisis).</div>
+                <table class="cme-table">
+                  <thead><tr><th></th><th>Traditional Open Market Ops</th><th>Quantitative Easing</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Scale</b></td><td>Smaller, temporary</td><td>Much LARGER</td></tr>
+                    <tr><td><b>Securities</b></td><td>High-quality fixed income</td><td>Wider range: MBS, corporate bonds, etc.</td></tr>
+                    <tr><td><b>Intent</b></td><td>Short-term liquidity</td><td>LONG-term increase in bank reserves</td></tr>
+                    <tr><td><b>Duration</b></td><td>Temporary</td><td>Sustained</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Central banks generally target SLIGHTLY POSITIVE inflation</div>
+                <div class="cme-body">Why not target 0% inflation?</div>
+                <span class="cme-rule">• Moderate inflation creates only MODERATE costs for the economy</span>
+                <span class="cme-rule">• Slightly positive inflation gives policy ROOM ABOVE the ZLB</span>
+                <span class="cme-rule">• Investors expect equity and bond prices to reflect SOME positive inflation level</span>
+                <div class="cme-tip">Why this matters for CME: 0% target would be too close to deflation territory. Targeting ~2% provides a buffer.</div>
+              </div>
+
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────────
+                 SUB-TAB 5 · PHASE IDENTIFICATION DRILL
+                 ───────────────────────────────────────────────────────── -->
+            <div id="cme-cycle-drill" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">Phase Identification Drill</div>
+                <div class="cme-body">Read each scenario, then pick the phase. The drill randomizes order each time you click "New round".</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+                  <button onclick="cmeDrillNew()" style="background:#D4A017;color:#0D1117;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.05em;font-weight:600">↻ New round</button>
+                  <span id="cmeDrillScore" style="font-family:var(--mono);font-size:11px;color:var(--muted);align-self:center;margin-left:8px"></span>
+                </div>
+                <div id="cmeDrillBox"></div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Drill strategy — how to identify a phase fast</div>
+                <div class="cme-fl">Step 1: Look at INFLATION first
+  → Decelerating  = Recovery
+  → Low and stable = Early Expansion
+  → Rising         = Late Expansion or Slowdown
+  → Topping out    = Contraction
+
+Step 2: Confirm with SHORT-TERM RATES direction
+  → Low/falling   = Recovery
+  → Rising        = Early or Late Expansion
+  → At peak       = Slowdown
+  → Declining     = Contraction
+
+Step 3: Confirm with CONFIDENCE
+  → Rising        = Recovery or Early Expansion
+  → High          = Late Expansion
+  → Declining     = Slowdown or Contraction
+
+Step 4: Look for SPECIFIC TELLS
+  → "Output gap eliminated, overheating risk"  = Late Expansion
+  → "Yield curve possibly inverting"            = Slowdown
+  → "Stocks rising in latter stages"            = Contraction (anticipating recovery)
+  → "Government stimulus, low rates, deficits"  = Recovery</div>
+              </div>
+
+            </div>
+
+          </div><!-- /cme-cycle panel -->
+
+          <!-- ════════════════════════════════════════════════════════════
+               TAB 5 · MODULE 1.4 — MONETARY AND FISCAL POLICY
+               ════════════════════════════════════════════════════════════ -->
+          <div id="cme-policy" class="cme-panel">
+
+            <style>
+              /* Policy tab specific */
+              #cmeWidget .pol-matrix { display:grid; grid-template-columns: 110px 1fr 1fr; gap:1px; background:var(--border); border-radius:6px; overflow:hidden; margin:12px 0; }
+              #cmeWidget .pol-cell { background:var(--surface); padding:14px 12px; font-size:12px; line-height:1.5; cursor:pointer; transition:background .15s, border-color .15s; text-align:center; border:2px solid transparent; }
+              #cmeWidget .pol-cell:hover { background:rgba(212,160,23,.06); }
+              #cmeWidget .pol-cell.header { background:#0B0F14; color:#D4A017; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; cursor:default; font-weight:600; }
+              #cmeWidget .pol-cell.row-label { background:#0B0F14; color:#D4A017; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; cursor:default; font-weight:600; text-align:left; }
+              #cmeWidget .pol-cell.active { border:2px solid #3DD68C; background:rgba(46,160,67,.08); }
+              #cmeWidget .pol-cell.cell-clear { color:#3DD68C; }
+              #cmeWidget .pol-cell.cell-unclear { color:#F0A04B; }
+              #cmeWidget .pol-result { background:#0B0F14; border-left:3px solid #3DD68C; border-radius:4px; padding:14px 16px; margin-top:12px; min-height:120px; }
+
+              /* Yield curve diagram */
+              #cmeWidget .yc-diagram-wrap { background:#0B0F14; border-radius:6px; padding:14px; margin-top:12px; }
+              #cmeWidget .yc-diagram-wrap svg { display:block; width:100%; max-width:380px; margin:0 auto; height:auto; }
+              #cmeWidget .yc-curve { fill:none; stroke:#D4A017; stroke-width:2.5; }
+              #cmeWidget .yc-axis { stroke:#2A3441; stroke-width:1; }
+              #cmeWidget .yc-axis-label { fill:#7D8590; font-family:monospace; font-size:9px; }
+
+              /* Taylor rule calculator */
+              #cmeWidget .tay-row { display:flex; align-items:center; gap:10px; padding:7px 0; border-bottom:1px solid var(--border); }
+              #cmeWidget .tay-row:last-child { border-bottom:none; }
+              #cmeWidget .tay-label { flex:1; font-family:var(--mono); font-size:11px; color:var(--muted); }
+              #cmeWidget .tay-input { background:var(--surface); color:#C9D1D9; border:1px solid var(--border); padding:5px 8px; border-radius:3px; font-family:monospace; width:90px; text-align:right; }
+              #cmeWidget .tay-box { background:#0B0F14; border-left:2px solid #D4A017; border-radius:3px; padding:14px; margin-top:14px; font-family:monospace; font-size:11.5px; line-height:1.7; color:#C9D1D9; }
+              #cmeWidget .tay-twist { padding:10px 12px; border-radius:4px; margin-top:10px; font-size:12px; line-height:1.6; }
+              #cmeWidget .tay-twist.inflation-dom { background:rgba(255,123,114,.1); border-left:3px solid #FF7B72; color:#FF7B72; }
+              #cmeWidget .tay-twist.growth-dom { background:rgba(121,192,255,.1); border-left:3px solid #79C0FF; color:#79C0FF; }
+              #cmeWidget .tay-twist.balanced { background:rgba(46,160,67,.1); border-left:3px solid #3DD68C; color:#3DD68C; }
+            </style>
+
+            <!-- Sub-tab nav -->
+            <div class="cme-tabs" style="margin-bottom:14px">
+              <button class="cme-tab active" onclick="cmePolSub('monetary',this)">Monetary Policy</button>
+              <button class="cme-tab" onclick="cmePolSub('taylor',this)">Taylor Rule Calc</button>
+              <button class="cme-tab" onclick="cmePolSub('yield',this)">Yield Curve Matrix</button>
+              <button class="cme-tab" onclick="cmePolSub('intl',this)">International (1.j)</button>
+              <button class="cme-tab" onclick="cmePolSub('negative',this)">Negative Rates</button>
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────────
+                 SUB-TAB 1 · MONETARY POLICY
+                 ───────────────────────────────────────────────────────── -->
+            <div id="cme-policy-monetary" class="cme-panel active">
+
+              <div class="cme-card">
+                <div class="cme-title">LOS 1.h · Monetary policy as a countercyclical force</div>
+                <div class="cme-body">Central banks attempt to optimize economic performance by balancing <b>price stability</b> against <b>growth</b>. The goal: keep growth near the long-run sustainable rate.</div>
+                <div class="cme-trap"><b>Late-expansion risk:</b> as expansion matures, inflation typically rises → central banks tighten. The risk is <b>overtightening → recession</b>. Many recessions are policy-induced.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">The transmission mechanism — how monetary policy works</div>
+                <div class="cme-fl">CUT short-term rates → SPUR GROWTH:
+  ↓ rates → ↑ consumer spending
+        → ↑ business spending
+        → ↑ stock prices
+        → ↑ bond prices
+        → ↓ currency value → ↑ exports
+
+RAISE short-term rates → SLOW GROWTH:
+  ↑ rates → opposite effects on all 5 channels</div>
+                <div class="cme-tip"><b>Currency channel is often overlooked.</b> Lower rates → weaker domestic currency → cheaper exports abroad → higher export volumes → stimulates the economy from a 5th angle.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Direction of change AND level both matter</div>
+                <div class="cme-body">An exam trap: rates increasing is NOT automatically restrictive — depends on where they start.</div>
+                <div class="cme-info"><b>Example:</b> Rates raised from 2% to 4% to combat inflation.<br>
+                  If the country's <b>average rate is 6%</b>, the 4% level is still LOW.<br>
+                  → The rise in rates may begin to dampen inflation, BUT the absolute level may still be <b>low enough to allow growth</b>.</div>
+                <div class="cme-tip"><b>Memory anchor:</b> "Is it tight?" depends on direction (going up) AND level (vs neutral rate / vs historical norms).</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">The Neutral Rate</div>
+                <div class="cme-body">The <b>equilibrium interest rate</b> at which a balance between growth and inflation is achieved. It's what most central banks STRIVE to achieve.</div>
+                <div class="cme-fl">Neutral rate = Inflation component
+             + Real growth component
+             + Judgment from policymakers</div>
+                <div class="cme-info"><b>Example:</b> Inflation target = 3% · Economy expected to grow at 2% → <b>Neutral rate ≈ 5%</b></div>
+                <span class="cme-rule"><span class="cme-red">→</span> If inflation too HIGH → central bank raises ABOVE neutral (restrictive)</span>
+                <span class="cme-rule"><span class="cme-green">→</span> If growth too LOW → central bank lowers BELOW neutral (stimulative)</span>
+                <span class="cme-rule"><span class="cme-orange">→</span> At neutral → policy neither stimulative nor restrictive</span>
+              </div>
+
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────────
+                 SUB-TAB 2 · TAYLOR RULE CALCULATOR
+                 ───────────────────────────────────────────────────────── -->
+            <div id="cme-policy-taylor" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">The Taylor Rule</div>
+                <div class="cme-body">Embodies the neutral rate concept. <b>Prescriptive tool</b> (what the central bank SHOULD do) and fairly accurate at predicting central bank action.</div>
+                <div class="cme-fl">n_target = r_neutral + i_expected
+           + [0.5 × (GDP_expected − GDP_trend)
+              + 0.5 × (i_expected − i_target)]
+
+where:
+  n_target    = target NOMINAL short-term interest rate
+  r_neutral   = neutral REAL short-term interest rate
+  i_expected  = expected inflation rate
+  i_target    = target inflation rate
+  GDP_expected = expected GDP growth rate
+  GDP_trend   = long-term trend GDP growth rate</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Interactive Calculator + Twist Analyzer</div>
+                <div class="cme-body">Click "Preset: Textbook 7%" to load the worked example. Modify inputs to see how the twist analyzer identifies whether INFLATION or GROWTH concern dominates.</div>
+
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+                  <button onclick="cmeTayPreset('textbook')" style="background:#D4A017;color:#0D1117;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.05em;font-weight:600">Preset: Textbook 7%</button>
+                  <button onclick="cmeTayPreset('blank')" style="background:var(--surface2);color:#C9D1D9;border:1px solid var(--border);padding:7px 14px;border-radius:5px;cursor:pointer;font-family:var(--mono);font-size:11px">Clear</button>
+                </div>
+
+                <div class="tay-row">
+                  <span class="tay-label">Neutral real rate (r_neutral) %</span>
+                  <input type="number" id="cmeTayNeu" value="3" step="0.1" oninput="cmeTayCalc()" class="tay-input">
+                </div>
+                <div class="tay-row">
+                  <span class="tay-label">Inflation target (i_target) %</span>
+                  <input type="number" id="cmeTayItar" value="2" step="0.1" oninput="cmeTayCalc()" class="tay-input">
+                </div>
+                <div class="tay-row">
+                  <span class="tay-label">Expected inflation (i_expected) %</span>
+                  <input type="number" id="cmeTayIexp" value="4" step="0.1" oninput="cmeTayCalc()" class="tay-input">
+                </div>
+                <div class="tay-row">
+                  <span class="tay-label">GDP long-term trend %</span>
+                  <input type="number" id="cmeTayGtre" value="2" step="0.1" oninput="cmeTayCalc()" class="tay-input">
+                </div>
+                <div class="tay-row">
+                  <span class="tay-label">Expected GDP growth %</span>
+                  <input type="number" id="cmeTayGexp" value="0" step="0.1" oninput="cmeTayCalc()" class="tay-input">
+                </div>
+
+                <div id="cmeTayBox" class="tay-box"></div>
+                <div id="cmeTayTwist"></div>
+
+                <div class="cme-tip" style="margin-top:12px"><b>How to read the twist analyzer:</b><br>
+                  • If INFLATION gap pushes target UP more than growth gap pushes it DOWN → inflation overrides growth concern (raise rates)<br>
+                  • If GROWTH gap pushes target DOWN more than inflation gap → growth overrides inflation concern (cut rates)<br>
+                  • If both push in same direction or cancel → balanced policy stance</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">The textbook example — why net effect is the neutral case</div>
+                <div class="cme-info">In the preset (3% neutral, 2% target inflation, 4% expected inflation, 2% trend GDP, 0% expected growth):<br><br>
+                  • Weak growth: 0.5 × (0% − 2%) = <b>−1%</b> (calls for CUT)<br>
+                  • High inflation: 0.5 × (4% − 2%) = <b>+1%</b> (calls for HIKE)<br>
+                  • Net adjustment: 0%<br>
+                  • Target = 3% (neutral) + 4% (expected inflation) + 0% = <b>7%</b></div>
+                <div class="cme-trap"><b>Trap:</b> the 7% might LOOK like an arbitrary high number. It's actually neutral + expected inflation — the central bank is neither tightening nor easing relative to its rule, because the growth concern and inflation concern cancel.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Real-rate version (Professor's Note)</div>
+                <div class="cme-body">By moving expected inflation to the left-hand side, you get the <b>real Taylor target</b>:</div>
+                <div class="cme-fl">n_target − i_expected = r_neutral
+                  + [0.5(GDP_expected − GDP_trend)
+                     + 0.5(i_expected − i_target)]</div>
+                <div class="cme-info">Useful when you want to compare to the neutral REAL rate directly without nominal inflation noise.</div>
+              </div>
+
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────────
+                 SUB-TAB 3 · YIELD CURVE MATRIX (interactive)
+                 ───────────────────────────────────────────────────────── -->
+            <div id="cme-policy-yield" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">LOS 1.i · The Yield Curve as Economic Predictor</div>
+                <div class="cme-body">The shape of the yield curve depends on the COMBINATION of monetary AND fiscal policy stances. Click any cell to see the curve shape and economic implication.</div>
+
+                <div class="pol-matrix">
+                  <div class="pol-cell header"></div>
+                  <div class="pol-cell header">Fiscal STIMULATIVE</div>
+                  <div class="pol-cell header">Fiscal RESTRICTIVE</div>
+
+                  <div class="pol-cell row-label">Monetary<br>STIMULATIVE</div>
+                  <div class="pol-cell cell-clear" id="polCell_SS" onclick="cmePolPick('SS')">
+                    <b>STEEP</b><br>
+                    <small style="color:#3DD68C">Economy likely to GROW</small>
+                  </div>
+                  <div class="pol-cell cell-unclear" id="polCell_SR" onclick="cmePolPick('SR')">
+                    <b>Moderately STEEP</b><br>
+                    <small style="color:#F0A04B">Implications LESS CLEAR</small>
+                  </div>
+
+                  <div class="pol-cell row-label">Monetary<br>RESTRICTIVE</div>
+                  <div class="pol-cell cell-unclear" id="polCell_RS" onclick="cmePolPick('RS')">
+                    <b>FLAT</b><br>
+                    <small style="color:#F0A04B">Implications LESS CLEAR</small>
+                  </div>
+                  <div class="pol-cell cell-clear" id="polCell_RR" onclick="cmePolPick('RR')">
+                    <b>INVERTED</b><br>
+                    <small style="color:#FF7B72">Economy likely to CONTRACT</small>
+                  </div>
+                </div>
+
+                <div id="cmePolResult" class="pol-result"></div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Yield curve over the business cycle</div>
+                <div class="cme-fl">BOTTOM of cycle (recovery)   → Yield curve typically STEEP
+EXPANSION (cycle moves up)   → Curve tends to FLATTEN
+TOP of cycle (peak)          → Curve is FLAT to INVERTED
+CONTRACTION                  → Curve begins to RE-STEEPEN</div>
+                <div class="cme-tip"><b>Memory anchor:</b> the curve's shape rotates clockwise as the cycle progresses: STEEP → FLAT → INVERTED → RE-STEEPENING. Analysts use the yield curve as a predictor of (a) the state of the economy and (b) the future path of interest rates.</div>
+                <div class="cme-trap"><b>Caution:</b> these relationships may NOT always hold. The yield curve is a useful predictor but has produced false signals (e.g. inversions that didn't lead to recession in some cycles).</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Fiscal Policy — two important nuances</div>
+                <div class="cme-body">Often tested. Easy to get wrong.</div>
+                <div class="cme-info"><b>Nuance 1 · It's the CHANGE in deficit, not the level</b><br>
+                  A deficit by itself doesn't stimulate. <b>INCREASES</b> in the deficit are required to stimulate. A consistent large deficit isn't stimulative — only growing deficits are.</div>
+                <div class="cme-info"><b>Nuance 2 · Cyclical changes don't count</b><br>
+                  In expansion, deficits naturally decline (tax receipts ↑, unemployment payouts ↓). In recession, deficits naturally rise. These <b>auto-adjustments are NEITHER stimulative nor restrictive</b>. Only changes DIRECTED by government policy influence growth.</div>
+                <div class="cme-trap"><b>Exam trap:</b> a country with a large deficit during a recession is NOT necessarily running a stimulative fiscal policy — the deficit may just be cyclical. Look for evidence of <b>discretionary policy decisions</b>.</div>
+              </div>
+
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────────
+                 SUB-TAB 4 · INTERNATIONAL (LOS 1.j)
+                 ───────────────────────────────────────────────────────── -->
+            <div id="cme-policy-intl" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">LOS 1.j · Macroeconomic, interest rate, and exchange rate linkages</div>
+                <div class="cme-body">Globalization increases links between economies — especially important for <b>small countries with undiversified economies</b>. Larger diverse economies (like the US) are less affected but still influenced.</div>
+                <div class="cme-info"><b>How linkages produce convergence:</b><br>
+                  • <b>Trade link</b> — a country's exports/imports depend on trading partners' economies. Slowdown abroad → ↓ exports → economy convergence.<br>
+                  • <b>Capital link</b> — cross-border investment declines as a trading partner contracts.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Current Account vs Capital Account</div>
+                <div class="cme-fl">Current account ≈ net exports (X − M)
+Capital account ≈ net investment flows
+
+The two accounts are OPPOSITES:
+  Surplus in one → deficit in the other
+
+(X − M) = (S − I) + (T − G)
+
+net exports = net private saving + government surplus
+
+where:
+  X = exports        S = private saving      T = tax
+  M = imports        I = investment          G = government spending</div>
+                <div class="cme-tip"><b>How to read the formula:</b> if a country runs a current account DEFICIT (imports > exports), it must be financing this through a capital account SURPLUS (foreign investment coming in). Right side reveals WHY: either private investment exceeds saving (I > S), or government runs deficit (G > T), or both.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">Currency Pegging — the linkage trap</div>
+                <div class="cme-body">When a smaller economy <b>pegs</b> its currency to a larger one:</div>
+                <span class="cme-rule"><span class="cme-orange">●</span> Pegging country must FOLLOW the economic policies of the country it pegs to</span>
+                <span class="cme-rule"><span class="cme-orange">●</span> Business cycles of the two economies will <b>increasingly converge</b></span>
+                <span class="cme-rule"><span class="cme-red">●</span> If pegging country doesn't follow → investors favor one currency over the other → <b>peg fails</b></span>
+                <div class="cme-info"><b>Interest rate differential under a peg:</b><br>
+                  • Pegged currency rates generally EXCEED rates of the currency it's linked to<br>
+                  • Differential FLUCTUATES with market's CONFIDENCE in the peg<br>
+                  • High confidence → small differential<br>
+                  • Doubt → larger differential (compensation for currency risk)</div>
+                <div class="cme-trap"><b>The defense mechanism:</b> if investors lose confidence → pegged currency starts to decline → pegging country must <b>RAISE short-term interest rates</b> to attract capital and maintain the peg.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">FX/Rate movements WITHOUT pegging — 3 drivers</div>
+                <div class="cme-body">In the absence of pegging, the relationship between interest rate differentials and currency movement reflects:</div>
+                <span class="cme-rule"><b>1.</b> If a currency is substantially <b>OVERVALUED and expected to decline</b> → bond yields likely HIGHER to compensate foreign investors for expected currency decline</span>
+                <span class="cme-rule"><b>2.</b> Relative bond yields (both nominal AND real) <b>INCREASE with strong economic activity</b> and increasing demand for funds</span>
+                <span class="cme-rule"><b>3.</b> Savings & investment decisions + capital productivity drive the level of <b>real rates</b>. Real rates tend to <b>move up and down TOGETHER across countries</b> because global savings/investing are linked through the current account</span>
+                <div class="cme-tip"><b>Memory anchor:</b> nominal yields can diverge across countries (currency expectations), but real yields tend to move together (global capital flows level them out).</div>
+              </div>
+
+            </div>
+
+            <!-- ─────────────────────────────────────────────────────────
+                 SUB-TAB 5 · NEGATIVE RATES
+                 ───────────────────────────────────────────────────────── -->
+            <div id="cme-policy-negative" class="cme-panel">
+
+              <div class="cme-card">
+                <div class="cme-title">Negative interest rates — the post-2007 phenomenon</div>
+                <div class="cme-body">Before 2007-2009 financial crisis: negative rates were considered a <b>hypothetical curiosity</b>. After the crisis: several central banks adopted negative rates.</div>
+                <div class="cme-fl">Negative rate = a net PAYMENT made to keep money on deposit
+              at a financial institution
+              OR
+              payment of a net FEE to invest in short-term instruments</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">The theory that broke — why zero was thought to be the floor</div>
+                <div class="cme-info"><b>Pre-crisis logic:</b><br>
+                  • Zero is the sustainable lower bound because investors can hold PHYSICAL CASH (earning 0%)<br>
+                  • If banks charged negative rates → withdrawals → bank balance sheets shrink → less lending → smaller supply of funds → rates UP<br>
+                  • Therefore negative rates couldn't be sustained</div>
+                <div class="cme-trap"><b>The flaw in the theory:</b> negative rates did NOT cause the expected large move into physical cash. Why?<br>
+                  • Daily exchange of funds in modern economies is too LARGE<br>
+                  • Implicit advantages of being able to transfer money quickly outweighed the explicit cost of negative rates<br>
+                  • Without exit from banking system → negative rates were <b>sustainable for extended periods</b></div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">How negative rates / QE are supposed to stimulate</div>
+                <span class="cme-rule"><span class="cme-green">→</span> Holders of funds find it more desirable to SPEND the money → stimulates economic activity</span>
+                <span class="cme-rule"><span class="cme-green">→</span> Or they invest in LONGER-TERM stocks and bonds → drives up prices → wealth effect</span>
+                <span class="cme-rule"><span class="cme-green">→</span> Or consumers and businesses BORROW at zero/negative rates → spend now</span>
+                <div class="cme-info"><b>QE vs negative rates:</b><br>
+                  • <b>QE</b>: central bank injects funds INTO commercial banking system, long-term intent, hoping to stimulate bank lending<br>
+                  • <b>Negative rates</b>: punish deposits to PUSH funds OUT into the real economy</div>
+                <div class="cme-trap"><b>Catch:</b> for these policies to work, consumers/investors must believe the risk of spending NOW is worth it. But negative rates can also signal <b>UNCERTAINTY about the future</b>, which makes people more cautious — the opposite of the intended effect.</div>
+              </div>
+
+              <div class="cme-card">
+                <div class="cme-title">CME complications when rates are negative</div>
+                <div class="cme-body">Negative rates complicate forming capital market expectations:</div>
+                <div class="cme-info"><b>1. Risk-free rate substitute</b><br>
+                  The risk-free rate is the starting point for buildup models. When the risk-free rate is NEGATIVE, use a <b>sustainable expected risk-free rate</b> — like the <b>policy neutral rate (Taylor rule)</b> — as the starting point. <b>Remove a modest default premium</b> since the policy rate isn't fully risk-free.</div>
+                <div class="cme-info"><b>2. Forecast a CONVERGENCE PATH</b><br>
+                  Forecasting over shorter horizons needs a forecast of the TIME PATH over which negative rates will converge to a long-run sustainable risk-free rate. <b>Multiple path projections</b> should be considered for uncertainty.</div>
+                <div class="cme-info"><b>3. Interpret negative rates by cycle position</b><br>
+                  Another approach: interpret negative risk-free rates as being consistent with <b>contraction or early recovery</b> stages of the business cycle. Forecast asset returns based on what would normally happen in those phases.</div>
+                <div class="cme-info"><b>4. Historical data is unreliable</b><br>
+                  Few comparable periods exist. Negative rates suggest significant <b>structural economic changes</b> (regime change). This makes historical statistics less reliable → requires more <b>subjective assessment</b>. Combined with less-tested QE → forecasting is more challenging.</div>
+              </div>
+
+            </div>
+
+          </div><!-- /cme-policy panel -->
+
+
+
+
+
+          <!-- ════════════════════════════════════════════════════════════
+               TAB 4 · ERRORS & MASTERY (placeholder)
                ════════════════════════════════════════════════════════════ -->
           <div id="cme-errors" class="cme-panel">
             <div class="cme-card">
@@ -9322,6 +10377,559 @@ Step 7: Monitor &amp; refine</div>
               if(el) el.classList.toggle('open');
             }
             function cmeInit(){ /* nothing yet */ }
+
+            // ═════════════════════════════════════════════════════════════
+            // MODULE 1.2 — TREND RATE OF GROWTH
+            // ═════════════════════════════════════════════════════════════
+
+            function cmeTrendSub(id, btn){
+              document.querySelectorAll('#cme-trend > .cme-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cme-trend > .cme-tabs > .cme-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cme-trend-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'shocks') cmeRenderShocks();
+              if(id === 'equity') setTimeout(cmeEqCalc, 50);
+            }
+
+            // ── Shock decision cards ──
+            var CME_SHOCKS = [
+              {
+                scenario: "Turmoil in the Middle East raises long-term oil price expectations and changes inflation outlook in developed economies",
+                type: "EXOGENOUS · Political events",
+                why: "Unanticipated geopolitical tension changes resource prices outside the normal course. NOT priced in until it happens."
+              },
+              {
+                scenario: "The US central bank announces a planned rate hike of 25 bps next quarter, already widely expected",
+                type: "ENDOGENOUS",
+                why: "Already anticipated and built into market prices. This is part of the normal course of monetary policy."
+              },
+              {
+                scenario: "A new breakthrough in battery technology suddenly makes EVs cost 40% less to produce",
+                type: "EXOGENOUS · Technological progress",
+                why: "Creates new markets/products in an unanticipated way. The economy can grow at a faster pace before inflation becomes a concern."
+              },
+              {
+                scenario: "A government cuts the corporate tax rate from 25% to 18% as part of an announced fiscal reform program",
+                type: "EXOGENOUS · Changes in government policies",
+                why: "Sound tax policy change. Reduces friction on capital allocation. Will affect long-term growth trend, not just current cycle."
+              },
+              {
+                scenario: "Population grows at the long-term demographic rate of 1.2% per year as projected",
+                type: "ENDOGENOUS",
+                why: "Normal trend, already factored into capital market expectations and long-term growth models."
+              },
+              {
+                scenario: "A major earthquake destroys 15% of a country's manufacturing capacity",
+                type: "EXOGENOUS · Natural disaster",
+                why: "Reduces short-term growth. May (arguably) encourage long-term growth IF replacement capacity is more efficient — but Professor's Note: owners would have replaced old facilities at the right time anyway."
+              },
+              {
+                scenario: "A bank confidence crisis spreads, causing severe slowdown in lending (similar to US 1930s)",
+                type: "EXOGENOUS · Financial crisis",
+                why: "Reduces short-term output AND may decrease the trend rate of growth permanently. This is one of the most severe shocks because it affects BOTH cyclical and trend components."
+              },
+              {
+                scenario: "New offshore oil reserves are discovered, increasing the country's reserve estimate by 30%",
+                type: "EXOGENOUS · Discovery of natural resources",
+                why: "Enhances growth. Production of new natural resources or new ways to recover existing resources adds supply."
+              },
+              {
+                scenario: "Peace settlement allows cuts in defense spending; resources redirected to productive uses",
+                type: "EXOGENOUS · Political events",
+                why: "Higher levels of world peace → cuts in defense → resources redirected to productive uses → INCREASES in growth. Note: this is the inverse direction of geopolitical tension."
+              }
+            ];
+
+            function cmeRenderShocks(){
+              if(document.getElementById('cmeShockCards').innerHTML.length > 100) return; // already rendered
+              var html = '';
+              CME_SHOCKS.forEach(function(s, i){
+                html += '<div onclick="cmeShockToggle('+i+')" style="cursor:pointer;background:var(--surface);border:1px solid var(--border);border-left:3px solid #2A3441;border-radius:5px;padding:10px 13px;margin-bottom:8px" id="cmeShockRow'+i+'">'+
+                  '<div style="font-size:12.5px;color:#E6EDF3;line-height:1.5">' + s.scenario + '</div>'+
+                  '<div style="margin-top:8px;display:none;border-top:1px solid var(--border);padding-top:8px" id="cmeShockAns'+i+'">'+
+                    '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:' + (s.type.indexOf('EXOGENOUS') >= 0 ? '#FF7B72' : '#3DD68C') + ';text-transform:uppercase;margin-bottom:4px">' + s.type + '</div>'+
+                    '<div style="font-size:11.5px;color:#C9D1D9;line-height:1.6">' + s.why + '</div>'+
+                  '</div>'+
+                '</div>';
+              });
+              document.getElementById('cmeShockCards').innerHTML = html;
+            }
+            function cmeShockToggle(i){
+              var a = document.getElementById('cmeShockAns'+i);
+              var r = document.getElementById('cmeShockRow'+i);
+              if(a.style.display === 'none'){
+                a.style.display = 'block';
+                r.style.borderLeftColor = CME_SHOCKS[i].type.indexOf('EXOGENOUS') >= 0 ? '#FF7B72' : '#3DD68C';
+              } else {
+                a.style.display = 'none';
+                r.style.borderLeftColor = '#2A3441';
+              }
+            }
+
+            // ── Equity Return Calculator ──
+            function cmeEqPreset(p){
+              if(p === 'navaro'){
+                document.getElementById('cmeEqLabor').value = '0.4';
+                document.getElementById('cmeEqProd').value = '1.4';
+                document.getElementById('cmeEqInfl').value = '3.8';
+                document.getElementById('cmeEqProf').value = '0';
+                document.getElementById('cmeEqPE').value = '0';
+                document.getElementById('cmeEqDiv').value = '2.6';
+              } else {
+                document.getElementById('cmeEqLabor').value = '0';
+                document.getElementById('cmeEqProd').value = '0';
+                document.getElementById('cmeEqInfl').value = '0';
+                document.getElementById('cmeEqProf').value = '0';
+                document.getElementById('cmeEqPE').value = '0';
+                document.getElementById('cmeEqDiv').value = '0';
+              }
+              cmeEqCalc();
+            }
+
+            function cmeEqCalc(){
+              var lab = parseFloat(document.getElementById('cmeEqLabor').value) || 0;
+              var prod = parseFloat(document.getElementById('cmeEqProd').value) || 0;
+              var infl = parseFloat(document.getElementById('cmeEqInfl').value) || 0;
+              var prof = parseFloat(document.getElementById('cmeEqProf').value) || 0;
+              var pe = parseFloat(document.getElementById('cmeEqPE').value) || 0;
+              var div = parseFloat(document.getElementById('cmeEqDiv').value) || 0;
+
+              var realGDP = lab + prod;
+              var nomGDP = realGDP + infl;
+              var capGains = nomGDP + prof + pe;
+              var total = capGains + div;
+
+              document.getElementById('cmeEqBox').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">Step-by-step</div>'+
+                '<div style="line-height:1.85">'+
+                '<b style="color:#79C0FF">Step 1 · Real GDP growth</b><br>'+
+                '  Labor input + Labor productivity<br>'+
+                '  = ' + lab.toFixed(2) + '% + ' + prod.toFixed(2) + '% = <b style="color:#3DD68C">' + realGDP.toFixed(2) + '%</b><br><br>'+
+                '<b style="color:#79C0FF">Step 2 · Nominal GDP growth</b><br>'+
+                '  Real GDP + Inflation<br>'+
+                '  = ' + realGDP.toFixed(2) + '% + ' + infl.toFixed(2) + '% = <b style="color:#3DD68C">' + nomGDP.toFixed(2) + '%</b><br><br>'+
+                '<b style="color:#79C0FF">Step 3 · Long-term capital gains</b><br>'+
+                '  Nominal GDP + Δ(profits/GDP) + Δ(P/E)<br>'+
+                '  = ' + nomGDP.toFixed(2) + '% + ' + prof.toFixed(2) + '% + ' + pe.toFixed(2) + '%<br>'+
+                '  = <b style="color:#3DD68C">' + capGains.toFixed(2) + '%</b><br><br>'+
+                '<b style="color:#79C0FF">Step 4 · Total equity return</b><br>'+
+                '  Capital gains + Dividend yield<br>'+
+                '  = ' + capGains.toFixed(2) + '% + ' + div.toFixed(2) + '%</div>'+
+                '<div style="margin-top:10px;padding:10px;background:rgba(212,160,23,.1);border-left:2px solid #D4A017;border-radius:3px;color:#D4A017;font-size:13px"><b>Total long-term equity return = ' + total.toFixed(2) + '%</b></div>';
+            }
+
+            // ═════════════════════════════════════════════════════════════
+            // MODULE 1.3 — THE BUSINESS CYCLE
+            // ═════════════════════════════════════════════════════════════
+
+            function cmeCycSub(id, btn){
+              document.querySelectorAll('#cme-cycle > .cme-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cme-cycle > .cme-tabs > .cme-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cme-cycle-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'map' && !document.getElementById('cmeCycInfoBox').innerHTML) cmeCycShow(1);
+              if(id === 'drill') cmeDrillNew();
+            }
+
+            // ── Cycle map: phase details ──
+            var CME_PHASES = [
+              null, // index 0 unused
+              {
+                num:1, name:"Initial Recovery", color:"#3DD68C",
+                duration:"A few months",
+                confidence:"Business confidence RISING",
+                gap:"LARGE output gap",
+                inflation:"DECELERATING inflation",
+                policy:"STIMULATIVE · government stimulus from low rates and/or budget deficits",
+                shortRates:"LOW or FALLING short-term interest rates",
+                bondYields:"Bond yields BOTTOMING OUT · bond prices PEAKING",
+                stocks:"RISING stock prices",
+                assets:"Cyclical, RISKIER assets (small-cap stocks, high-yield bonds) doing well",
+                tells:"Government stimulus, low rates, budget deficits, large output gap, decelerating inflation"
+              },
+              {
+                num:2, name:"Early Expansion", color:"#79C0FF",
+                duration:"A YEAR to SEVERAL YEARS",
+                confidence:"Increasing confidence",
+                gap:"Output gap NARROWING",
+                inflation:"LOW inflation",
+                policy:"Becoming LESS STIMULATIVE",
+                shortRates:"INCREASING short-term rates",
+                bondYields:"Bond yields bottoming or RISING · bond prices declining",
+                stocks:"RISING stock prices",
+                assets:"Broad equity exposure works well",
+                tells:"Increasing growth + LOW inflation + rising confidence + narrowing output gap"
+              },
+              {
+                num:3, name:"Late Expansion", color:"#F0A04B",
+                duration:"Varies",
+                confidence:"HIGH confidence and employment",
+                gap:"Output gap ELIMINATED · economy at risk of OVERHEATING",
+                inflation:"INCREASING inflation",
+                policy:"Becoming RESTRICTIVE · central bank limits money supply growth",
+                shortRates:"RISING short-term rates",
+                bondYields:"RISING bond yields · bond prices declining",
+                stocks:"Rising/PEAKING · increased risk and VOLATILITY",
+                assets:"Late-cycle plays, commodities. Avoid early-cycle names.",
+                tells:"Output gap ELIMINATED + overheating risk + rising inflation + high confidence"
+              },
+              {
+                num:4, name:"Slowdown", color:"#FF7B72",
+                duration:"Few months to a YEAR or longer",
+                confidence:"DECLINING confidence",
+                gap:"Output gap reopening",
+                inflation:"INFLATION STILL RISING (lagging indicator)",
+                policy:"Becoming less restrictive",
+                shortRates:"At PEAK · short rates peaking",
+                bondYields:"Bond yields PEAKING and possibly FALLING · bond prices starting to RISE · POSSIBLE INVERTING YIELD CURVE",
+                stocks:"FALLING stock prices",
+                assets:"Treasuries · defensive equity",
+                tells:"Inflation STILL RISING despite slowing economy + short rates at PEAK + possible YIELD CURVE INVERSION + falling stocks"
+              },
+              {
+                num:5, name:"Contraction (Recession)", color:"#B8890C",
+                duration:"12 to 18 months",
+                confidence:"Declining confidence AND PROFITS",
+                gap:"Output gap WIDE · increase in unemployment and bankruptcies",
+                inflation:"Inflation TOPPING OUT",
+                policy:"EASING",
+                shortRates:"FALLING short-term rates",
+                bondYields:"Falling bond yields · RISING bond prices",
+                stocks:"Stock prices INCREASING DURING LATTER STAGES (anticipating end of recession)",
+                assets:"Treasuries · gold. Stocks start working in LATE contraction.",
+                tells:"Unemployment + bankruptcies + inflation TOPPING OUT + monetary EASING + stocks starting to rise in late stage"
+              }
+            ];
+
+            var cmeCycActive = 1;
+            var cmeCycOvls = []; // array of active overlay names
+
+            function cmeCycShow(n){
+              cmeCycActive = n;
+              // toggle dots
+              for(var i=1;i<=5;i++){
+                var d = document.getElementById('cycDot'+i);
+                if(d){
+                  d.classList.remove('active');
+                  d.setAttribute('fill', '#D4A017');
+                }
+              }
+              var active = document.getElementById('cycDot'+n);
+              if(active){
+                active.classList.add('active');
+                active.setAttribute('fill', '#3DD68C');
+              }
+              // render phase info
+              var p = CME_PHASES[n];
+              var html = '<div class="cyc-phase-info" style="border-left-color:'+p.color+'">'+
+                '<div class="cyc-phase-name" style="color:'+p.color+'">Phase '+p.num+' · '+p.name+'</div>'+
+                '<div class="cyc-phase-meta">Duration: '+p.duration+'</div>'+
+                '<div class="cyc-attr"><span class="cyc-attr-label">Confidence</span><span class="cyc-attr-val">'+p.confidence+'</span></div>'+
+                '<div class="cyc-attr"><span class="cyc-attr-label">Output gap</span><span class="cyc-attr-val">'+p.gap+'</span></div>'+
+                '<div class="cyc-attr"><span class="cyc-attr-label">Inflation</span><span class="cyc-attr-val">'+p.inflation+'</span></div>'+
+                '<div class="cyc-attr"><span class="cyc-attr-label">Monetary policy</span><span class="cyc-attr-val">'+p.policy+'</span></div>'+
+                '<div class="cyc-attr"><span class="cyc-attr-label">Short-term rates</span><span class="cyc-attr-val">'+p.shortRates+'</span></div>'+
+                '<div class="cyc-attr"><span class="cyc-attr-label">Bond yields/prices</span><span class="cyc-attr-val">'+p.bondYields+'</span></div>'+
+                '<div class="cyc-attr"><span class="cyc-attr-label">Stock prices</span><span class="cyc-attr-val">'+p.stocks+'</span></div>'+
+                '<div class="cyc-attr"><span class="cyc-attr-label">Best assets</span><span class="cyc-attr-val">'+p.assets+'</span></div>'+
+                '<div class="cyc-overlay-strip"><b style="color:#79C0FF">Identify by:</b> '+p.tells+'</div>'+
+              '</div>';
+              document.getElementById('cmeCycInfoBox').innerHTML = html;
+            }
+
+            function cmeCycOverlay(name){
+              var idx = cmeCycOvls.indexOf(name);
+              if(idx >= 0){
+                cmeCycOvls.splice(idx, 1);
+                document.getElementById('cycOvl'+name).style.display = 'none';
+                document.getElementById('cycTog'+name).classList.remove('active');
+              } else {
+                cmeCycOvls.push(name);
+                document.getElementById('cycOvl'+name).style.display = '';
+                document.getElementById('cycTog'+name).classList.add('active');
+              }
+            }
+
+            // ── Inflation matrix details ──
+            var CME_INFL = {
+              cash_within: {label:"Cash · Within expectations", text:"Cash equivalents earn the REAL rate of interest. Inflation is already priced into nominal rates, so the cash holder is compensated in real terms."},
+              bonds_within: {label:"Bonds · Within expectations", text:"SHORTER-term yields are MORE VOLATILE than longer-term yields. Why: short-term yields reflect current and expected near-term policy rate moves by central banks. Long-term yields are anchored by stable long-run inflation expectations."},
+              eq_within: {label:"Equity · Within expectations", text:"NO IMPACT given predictable economic growth. Equity prices already reflect expected inflation through earnings forecasts. No surprise = no repricing."},
+              re_within: {label:"Real estate · Within expectations", text:"NEUTRAL impact with typical rates of return. Real estate values track expected inflation as priced in."},
+              cash_off: {label:"Cash · Above/below expectations", text:"Positive (negative) impact with increasing (decreasing) yields. When inflation surprises HIGH, central banks raise rates → cash yields increase → benefits cash holders. Reverse when inflation surprises LOW."},
+              bonds_off: {label:"Bonds · Above/below expectations", text:"LONGER-term yields are MORE VOLATILE than shorter-term yields. Why: a surprise about inflation affects expectations of long-run inflation, repricing long-end yields significantly. Short end is anchored by current policy rate."},
+              eq_off: {label:"Equity · Above/below expectations", text:"NEGATIVE impact given the potential for central bank action OR falling asset prices. Some companies may pass rising costs to customers, but the central bank tightening to combat inflation dominates for most firms."},
+              re_off: {label:"Real estate · Above/below expectations", text:"POSITIVE impact as REAL ASSET values increase with inflation. Real estate is a classic inflation hedge — physical assets retain real value as monetary value declines."},
+              cash_defl: {label:"Cash · Deflation", text:"POSITIVE impact IF nominal interest rates are bound by 0%. Why: in deflation with ZLB, holding cash earns 0% nominal which is POSITIVE in real terms (since prices are falling). Cash is king in deflation."},
+              bonds_defl: {label:"Bonds · Deflation", text:"POSITIVE impact as fixed future cash flows have GREATER PURCHASING POWER (assuming no default on the bonds). The nominal coupons stay the same but each dollar buys more in deflation."},
+              eq_defl: {label:"Equity · Deflation", text:"NEGATIVE impact as economic activity AND business decline. Deflation signals demand collapse, profit margins compress, equity prices fall."},
+              re_defl: {label:"Real estate · Deflation", text:"NEGATIVE impact as property values generally decline. Real estate is highly sensitive to deflation: nominal prices fall AND debt burden rises in real terms, triggering forced sales."}
+            };
+
+            function cmeInflShow(key){
+              var c = CME_INFL[key];
+              if(!c) return;
+              document.getElementById('cmeInflBox').innerHTML =
+                '<div class="cme-info" style="background:rgba(212,160,23,.08);border-left-color:#D4A017">'+
+                  '<div style="font-family:Georgia,serif;font-size:13px;color:#D4A017;font-weight:600;margin-bottom:6px">'+c.label+'</div>'+
+                  '<div style="font-size:12.5px;line-height:1.6">'+c.text+'</div>'+
+                '</div>';
+            }
+
+            // ── Phase identification drill ──
+            var CME_DRILL_BANK = [
+              {scenario:"Confidence is RISING after a long downturn. The government has just announced a major stimulus package with low interest rates and a budget deficit. Output gap is large. Inflation is decelerating from a recent peak.", correct:1, hint:"Government stimulus + decelerating inflation + large gap = Recovery."},
+              {scenario:"GDP has been growing steadily for 2 years with low inflation. Central bank has started slowly raising short-term rates. Confidence is increasing. Stock prices are rising.", correct:2, hint:"Low inflation + growth + early rate hikes = Early Expansion."},
+              {scenario:"The economy is at full employment. Output gap eliminated. Inflation is rising. Central bank is becoming restrictive, limiting money supply growth. Stock prices show increased volatility.", correct:3, hint:"Overheating + rising inflation + restrictive policy = Late Expansion."},
+              {scenario:"Confidence is declining. Inflation is STILL rising despite slowing growth. Short-term rates are at their peak. The yield curve may be inverting. Stock prices are falling.", correct:4, hint:"Inflation still rising + rates at peak + yield curve inverting = Slowdown."},
+              {scenario:"Unemployment and bankruptcies are increasing. Inflation is topping out. Central bank is easing. Short-term rates are declining. In the late stages, stock prices have started increasing.", correct:5, hint:"Unemployment + inflation topping out + easing + stocks rising late = Contraction."},
+              {scenario:"Investor confidence remains HIGH and employment is strong, but inflation is starting to bite. Bond yields are rising and the central bank is becoming restrictive.", correct:3, hint:"High confidence + rising inflation + restrictive policy = Late Expansion."},
+              {scenario:"The economy is recovering from a recession. Stock prices and bond prices are both rising. Cyclical/riskier assets like small-cap stocks and high-yield bonds are leading.", correct:1, hint:"Riskier cyclical assets leading + bond prices peaking = Recovery."},
+              {scenario:"Bond yields are peaking and possibly falling. The yield curve is inverted. Inflation is still rising even though the economy is slowing. Confidence is declining.", correct:4, hint:"Yield curve INVERSION + inflation lag = Slowdown."},
+              {scenario:"The output gap is narrowing. Growth is solid with low inflation. Confidence is improving. Central bank policy is becoming less stimulative.", correct:2, hint:"Narrowing output gap + low inflation + less stimulative = Early Expansion."},
+              {scenario:"Profits are declining sharply. Bankruptcies rising. The central bank has aggressively cut rates and is using easing tools. Late in this phase, stock prices have begun rising despite the weak economy.", correct:5, hint:"Aggressive easing + bankruptcies + stocks rising in latter stages = Contraction."}
+            ];
+
+            var cmeDrillOrder = [], cmeDrillIdx = 0, cmeDrillCorrect = 0, cmeDrillTotal = 0;
+
+            function cmeDrillNew(){
+              cmeDrillOrder = [];
+              for(var i=0;i<CME_DRILL_BANK.length;i++) cmeDrillOrder.push(i);
+              cmeDrillOrder.sort(function(){ return Math.random()-0.5; });
+              cmeDrillIdx = 0;
+              cmeDrillCorrect = 0;
+              cmeDrillTotal = 0;
+              cmeDrillRender();
+            }
+
+            function cmeDrillRender(){
+              if(cmeDrillIdx >= cmeDrillOrder.length){
+                document.getElementById('cmeDrillBox').innerHTML =
+                  '<div class="cyc-drill-card" style="text-align:center">'+
+                    '<div style="font-family:Georgia,serif;font-size:18px;color:#3DD68C;margin-bottom:10px">Round complete!</div>'+
+                    '<div style="font-size:13px;color:#C9D1D9">Score: <b style="color:#D4A017">'+cmeDrillCorrect+'</b> / '+cmeDrillTotal+'</div>'+
+                    '<div style="margin-top:14px"><button onclick="cmeDrillNew()" style="background:#D4A017;color:#0D1117;border:none;padding:8px 16px;border-radius:5px;cursor:pointer;font-family:monospace;font-size:11px;letter-spacing:.05em;font-weight:600">↻ New round</button></div>'+
+                  '</div>';
+                document.getElementById('cmeDrillScore').textContent = '';
+                return;
+              }
+              var q = CME_DRILL_BANK[cmeDrillOrder[cmeDrillIdx]];
+              var phaseNames = ['','1·Recovery','2·Early Expansion','3·Late Expansion','4·Slowdown','5·Contraction'];
+              var html = '<div class="cyc-drill-card">'+
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:var(--muted);margin-bottom:8px">SCENARIO '+(cmeDrillIdx+1)+' / '+cmeDrillOrder.length+'</div>'+
+                '<div style="font-size:13px;line-height:1.6;color:#E6EDF3;margin-bottom:10px">'+q.scenario+'</div>'+
+                '<div class="cyc-drill-choices">';
+              for(var i=1;i<=5;i++){
+                html += '<button class="cyc-drill-choice" onclick="cmeDrillAnswer('+i+')" id="cmeDrillC'+i+'">'+phaseNames[i]+'</button>';
+              }
+              html += '</div></div>';
+              document.getElementById('cmeDrillBox').innerHTML = html;
+              document.getElementById('cmeDrillScore').textContent = 'Score: '+cmeDrillCorrect+' / '+cmeDrillTotal;
+            }
+
+            function cmeDrillAnswer(picked){
+              var q = CME_DRILL_BANK[cmeDrillOrder[cmeDrillIdx]];
+              cmeDrillTotal++;
+              for(var i=1;i<=5;i++){
+                var btn = document.getElementById('cmeDrillC'+i);
+                if(!btn) continue;
+                btn.disabled = true;
+                btn.onclick = null;
+                if(i === q.correct) btn.classList.add('correct');
+                if(i === picked && picked !== q.correct) btn.classList.add('wrong');
+              }
+              var isCorrect = (picked === q.correct);
+              if(isCorrect) cmeDrillCorrect++;
+              // Append feedback + next button
+              var fb = '<div class="cyc-overlay-strip" style="margin-top:12px;border-left-color:'+(isCorrect?'#3DD68C':'#FF7B72')+';background:'+(isCorrect?'rgba(46,160,67,.08)':'rgba(255,123,114,.08)')+'">'+
+                '<b style="color:'+(isCorrect?'#3DD68C':'#FF7B72')+'">'+(isCorrect?'✓ Correct':'✗ Incorrect')+'</b> &nbsp;'+
+                '<span style="color:#C9D1D9">'+q.hint+'</span></div>'+
+                '<div style="text-align:right;margin-top:10px"><button onclick="cmeDrillNext()" style="background:var(--surface);color:#D4A017;border:1px solid #D4A017;padding:6px 14px;border-radius:4px;cursor:pointer;font-family:monospace;font-size:11px">Next →</button></div>';
+              document.querySelector('.cyc-drill-card').insertAdjacentHTML('beforeend', fb);
+              document.getElementById('cmeDrillScore').textContent = 'Score: '+cmeDrillCorrect+' / '+cmeDrillTotal;
+            }
+
+            function cmeDrillNext(){
+              cmeDrillIdx++;
+              cmeDrillRender();
+            }
+
+            // ═════════════════════════════════════════════════════════════
+            // MODULE 1.4 — MONETARY AND FISCAL POLICY
+            // ═════════════════════════════════════════════════════════════
+
+            function cmePolSub(id, btn){
+              document.querySelectorAll('#cme-policy > .cme-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#cme-policy > .cme-tabs > .cme-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('cme-policy-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'taylor') setTimeout(cmeTayCalc, 50);
+              if(id === 'yield' && !document.getElementById('cmePolResult').innerHTML) cmePolPick('SS');
+            }
+
+            // ── Taylor Rule calculator ──
+            function cmeTayPreset(p){
+              if(p === 'textbook'){
+                document.getElementById('cmeTayNeu').value = '3';
+                document.getElementById('cmeTayItar').value = '2';
+                document.getElementById('cmeTayIexp').value = '4';
+                document.getElementById('cmeTayGtre').value = '2';
+                document.getElementById('cmeTayGexp').value = '0';
+              } else {
+                document.getElementById('cmeTayNeu').value = '0';
+                document.getElementById('cmeTayItar').value = '0';
+                document.getElementById('cmeTayIexp').value = '0';
+                document.getElementById('cmeTayGtre').value = '0';
+                document.getElementById('cmeTayGexp').value = '0';
+              }
+              cmeTayCalc();
+            }
+
+            function cmeTayCalc(){
+              var rNeu = parseFloat(document.getElementById('cmeTayNeu').value) || 0;
+              var iTar = parseFloat(document.getElementById('cmeTayItar').value) || 0;
+              var iExp = parseFloat(document.getElementById('cmeTayIexp').value) || 0;
+              var gTre = parseFloat(document.getElementById('cmeTayGtre').value) || 0;
+              var gExp = parseFloat(document.getElementById('cmeTayGexp').value) || 0;
+
+              var gdpGap = gExp - gTre;
+              var infGap = iExp - iTar;
+              var gAdj = 0.5 * gdpGap;
+              var iAdj = 0.5 * infGap;
+              var bracket = gAdj + iAdj;
+              var target = rNeu + iExp + bracket;
+              var versusNeutral = target - (rNeu + iExp);
+
+              document.getElementById('cmeTayBox').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">Step-by-step</div>'+
+                '<b style="color:#79C0FF">GDP gap</b> = GDP_exp − GDP_trend = ' + gExp.toFixed(2) + '% − ' + gTre.toFixed(2) + '% = <b style="color:'+ (gdpGap<0?'#FF7B72':gdpGap>0?'#3DD68C':'#7D8590') + '">' + gdpGap.toFixed(2) + '%</b><br>'+
+                '<b style="color:#79C0FF">Inflation gap</b> = i_exp − i_target = ' + iExp.toFixed(2) + '% − ' + iTar.toFixed(2) + '% = <b style="color:'+ (infGap>0?'#FF7B72':infGap<0?'#3DD68C':'#7D8590') + '">' + infGap.toFixed(2) + '%</b><br><br>'+
+                '<b style="color:#79C0FF">0.5 × GDP gap</b> = ' + gAdj.toFixed(2) + '% &nbsp;&nbsp;(growth side)<br>'+
+                '<b style="color:#79C0FF">0.5 × Inflation gap</b> = ' + iAdj.toFixed(2) + '% &nbsp;&nbsp;(inflation side)<br>'+
+                '<b style="color:#79C0FF">Bracket sum</b> = ' + bracket.toFixed(2) + '%<br><br>'+
+                '<b style="color:#D4A017">n_target</b> = r_neutral + i_expected + bracket<br>'+
+                '         = ' + rNeu.toFixed(2) + '% + ' + iExp.toFixed(2) + '% + (' + bracket.toFixed(2) + '%)<br>'+
+                '         = <b style="color:#D4A017;font-size:14px">' + target.toFixed(2) + '%</b><br><br>'+
+                '<span style="color:#7D8590">vs. neutral (r_neutral + i_expected = ' + (rNeu+iExp).toFixed(2) + '%): policy adjusts by <b>' + (versusNeutral>0?'+':'') + versusNeutral.toFixed(2) + '%</b></span>';
+
+              // Twist analyzer
+              var twist = '';
+              var absInf = Math.abs(iAdj);
+              var absGrw = Math.abs(gAdj);
+              var diff = absInf - absGrw;
+
+              if(Math.abs(diff) < 0.05 && Math.abs(bracket) < 0.05){
+                twist = '<div class="tay-twist balanced"><b>BALANCED · concerns cancel out</b><br>'+
+                  'Growth concern (' + gAdj.toFixed(2) + '%) and inflation concern (' + iAdj.toFixed(2) + '%) cancel each other. '+
+                  'The target rate ends up equal to neutral + expected inflation. Central bank takes a <b>neutral stance</b> — neither tightening nor easing relative to its policy rule.'+
+                  '<br><br><i>Textbook example pattern: weak growth would call for cutting rates 1% but high inflation calls for raising 1% → net 0%, target = 7% which is just neutral + expected inflation.</i></div>';
+              } else if(iAdj > 0 && gAdj < 0){
+                if(absInf > absGrw){
+                  twist = '<div class="tay-twist inflation-dom"><b>INFLATION OVERRIDES growth concern</b><br>'+
+                    'Inflation gap pushes target UP by ' + iAdj.toFixed(2) + '% while growth gap pushes DOWN by ' + Math.abs(gAdj).toFixed(2) + '%. '+
+                    'The higher projected inflation (above target) overrides the weak growth — central bank should <b>raise rates</b> to combat inflation, accepting some growth pain.'+
+                    '<br><br><b>Net policy stance:</b> RESTRICTIVE (target > neutral).</div>';
+                } else {
+                  twist = '<div class="tay-twist growth-dom"><b>GROWTH OVERRIDES inflation concern</b><br>'+
+                    'Growth gap pushes target DOWN by ' + Math.abs(gAdj).toFixed(2) + '% while inflation gap only pushes UP by ' + iAdj.toFixed(2) + '%. '+
+                    'The weak growth dominates — central bank should <b>cut rates</b> to support the economy, accepting some inflation overshoot.'+
+                    '<br><br><b>Net policy stance:</b> STIMULATIVE (target < neutral).</div>';
+                }
+              } else if(iAdj < 0 && gAdj > 0){
+                if(absInf > absGrw){
+                  twist = '<div class="tay-twist growth-dom"><b>LOW INFLATION dominates</b><br>'+
+                    'Inflation gap pushes target DOWN by ' + Math.abs(iAdj).toFixed(2) + '% (inflation below target) while strong growth pushes UP by only ' + gAdj.toFixed(2) + '%. '+
+                    'Central bank should <b>cut rates</b> to push inflation back toward target.</div>';
+                } else {
+                  twist = '<div class="tay-twist inflation-dom"><b>STRONG GROWTH dominates</b><br>'+
+                    'Growth gap pushes target UP by ' + gAdj.toFixed(2) + '% while low inflation pulls DOWN only ' + Math.abs(iAdj).toFixed(2) + '%. '+
+                    'Central bank should <b>raise rates</b> to lean against overheating.</div>';
+                }
+              } else if(iAdj > 0 && gAdj > 0){
+                twist = '<div class="tay-twist inflation-dom"><b>BOTH push for HIGHER rates</b><br>'+
+                  'Strong growth (+' + gAdj.toFixed(2) + '%) AND high inflation (+' + iAdj.toFixed(2) + '%) both call for tightening. '+
+                  'Central bank should clearly <b>raise rates above neutral</b>.</div>';
+              } else if(iAdj < 0 && gAdj < 0){
+                twist = '<div class="tay-twist growth-dom"><b>BOTH push for LOWER rates</b><br>'+
+                  'Weak growth (' + gAdj.toFixed(2) + '%) AND low inflation (' + iAdj.toFixed(2) + '%) both call for easing. '+
+                  'Central bank should clearly <b>cut rates below neutral</b>.</div>';
+              } else {
+                twist = '<div class="tay-twist balanced"><b>Either growth or inflation is at target</b><br>'+
+                  'One gap is zero — the non-zero gap drives the entire adjustment.</div>';
+              }
+              document.getElementById('cmeTayTwist').innerHTML = twist;
+            }
+
+            // ── Yield curve matrix interactive picker ──
+            var CME_POL_COMBOS = {
+              SS: {
+                mon:"Stimulative", fis:"Stimulative",
+                shape:"Sharply upward sloping (STEEP)",
+                color:"#3DD68C",
+                pathD:"M 20 130 Q 80 110, 140 80 T 260 30",
+                meaning:"Both policies reinforce each other in the SAME direction. Short rates are low (monetary), and government is increasing borrowing (fiscal). The yield curve is sharply upward sloping — i.e., short-term rates are LOWER than long-term rates.",
+                economy:"Economy is likely to <b>EXPAND in the future</b>. Both policy tools are pushing growth.",
+                signal:"Classic expansionary signal. Typical at the BOTTOM of cycle (recovery)."
+              },
+              RR: {
+                mon:"Restrictive", fis:"Restrictive",
+                shape:"INVERTED (downward sloping)",
+                color:"#FF7B72",
+                pathD:"M 20 30 Q 80 50, 140 80 T 260 130",
+                meaning:"Both policies reinforce each other against growth. Central bank is keeping short rates high (monetary). Government is reducing deficit or cutting spending (fiscal). The yield curve is INVERTED — short-term rates are HIGHER than long-term rates.",
+                economy:"Economy is likely to <b>CONTRACT in the future</b>. Both policy tools are dampening growth.",
+                signal:"Classic recession signal. Typical near the TOP of cycle just before contraction."
+              },
+              RS: {
+                mon:"Restrictive", fis:"Stimulative",
+                shape:"FLAT",
+                color:"#F0A04B",
+                pathD:"M 20 75 Q 80 70, 140 80 T 260 85",
+                meaning:"Policies CONFLICT — monetary tightening pulls short rates UP, while fiscal stimulus pulls long rates UP too (more government borrowing → demand for funds). Net result: the curve tends to FLATTEN.",
+                economy:"Implications for the economy are <b>LESS CLEAR</b>. The conflicting forces make growth direction harder to predict.",
+                signal:"Difficult-to-interpret signal — the mixed message reduces predictive power."
+              },
+              SR: {
+                mon:"Stimulative", fis:"Restrictive",
+                shape:"Moderately STEEP",
+                color:"#F0A04B",
+                pathD:"M 20 110 Q 80 95, 140 85 T 260 60",
+                meaning:"Policies CONFLICT — monetary easing pulls short rates DOWN, while fiscal restraint reduces government borrowing (long rates may not fall as much). The curve becomes MODERATELY STEEP.",
+                economy:"Implications for the economy are <b>LESS CLEAR</b>. Monetary stimulus may be offset by fiscal restraint.",
+                signal:"Difficult-to-interpret signal — central bank and government working against each other."
+              }
+            };
+
+            function cmePolPick(key){
+              var c = CME_POL_COMBOS[key];
+              if(!c) return;
+              // toggle active state
+              ['SS','SR','RS','RR'].forEach(function(k){
+                var el = document.getElementById('polCell_'+k);
+                if(el) el.classList.remove('active');
+              });
+              var active = document.getElementById('polCell_'+key);
+              if(active) active.classList.add('active');
+
+              var html = '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">Combination: '+c.mon+' monetary · '+c.fis+' fiscal</div>'+
+                '<div style="font-family:Georgia,serif;font-size:15px;color:'+c.color+';font-weight:600;margin-bottom:10px">Yield curve: '+c.shape+'</div>'+
+                '<div class="yc-diagram-wrap">'+
+                  '<svg viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg">'+
+                    '<line x1="20" y1="140" x2="270" y2="140" class="yc-axis"/>'+
+                    '<line x1="20" y1="10" x2="20" y2="140" class="yc-axis"/>'+
+                    '<text x="14" y="20" text-anchor="end" class="yc-axis-label">yield</text>'+
+                    '<text x="270" y="155" text-anchor="end" class="yc-axis-label">maturity →</text>'+
+                    '<path d="'+c.pathD+'" class="yc-curve" stroke="'+c.color+'"/>'+
+                    '<text x="35" y="155" class="yc-axis-label">short</text>'+
+                    '<text x="245" y="155" text-anchor="end" class="yc-axis-label">long</text>'+
+                  '</svg>'+
+                '</div>'+
+                '<div style="margin-top:12px;font-size:12.5px;line-height:1.6;color:#C9D1D9">'+c.meaning+'</div>'+
+                '<div style="margin-top:10px;padding:8px 10px;background:rgba(212,160,23,.08);border-left:2px solid #D4A017;border-radius:3px;font-size:12px;color:#C9D1D9"><b style="color:#D4A017">Economy:</b> '+c.economy+'</div>'+
+                '<div style="margin-top:8px;padding:8px 10px;background:rgba(121,192,255,.08);border-left:2px solid #79C0FF;border-radius:3px;font-size:12px;color:#C9D1D9"><b style="color:#79C0FF">Signal:</b> '+c.signal+'</div>';
+
+              document.getElementById('cmePolResult').innerHTML = html;
+            }
           </script>
         </div>
 
