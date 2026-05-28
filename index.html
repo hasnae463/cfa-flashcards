@@ -11641,6 +11641,11 @@ Map to phase:
 
           <style>
             #fiWidget { --fi-gold:#D4A017; --fi-green:#3DD68C; --fi-red:#FF7B72; --fi-orange:#F0A04B; --fi-blue:#79C0FF; }
+            #fiWidget .fi-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #fiWidget .fi-toptab { background:var(--surface2); border:1px solid var(--fi-gold); color:var(--fi-gold); padding:9px 18px; border-radius:7px; font-family:var(--serif); font-size:14px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #fiWidget .fi-toptab.active { background:var(--fi-gold); color:#0D1117; }
+            #fiWidget .fi-toppanel { display:none; }
+            #fiWidget .fi-toppanel.active { display:block; }
             #fiWidget .fi-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
             #fiWidget .fi-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
             #fiWidget .fi-tab.active { background:rgba(212,160,23,.15); border-color:var(--fi-gold); color:var(--fi-gold); }
@@ -11677,6 +11682,14 @@ Map to phase:
             #fiWidget .fi-stack-sum { background:#0B0F14; border:1px dashed var(--fi-gold); color:var(--fi-gold); padding:12px 14px; border-radius:4px; font-family:var(--mono); font-size:13px; text-align:center; margin-top:6px; }
           </style>
 
+          <!-- TOP-LEVEL asset-class tabs (Fixed Income / Equity / Real Estate ...) -->
+          <div class="fi-toptabs">
+            <button class="fi-toptab active" onclick="fiTop('fixed',this)">Fixed Income Returns</button>
+          </div>
+
+          <!-- ════════════════ TOP TAB · FIXED INCOME RETURNS ════════════════ -->
+          <div id="fir-fixed" class="fi-toppanel active">
+
           <div class="fi-tabs">
             <button class="fi-tab active" onclick="fiTab('dcf',this)">DCF &amp; YTM</button>
             <button class="fi-tab" onclick="fiTab('bb',this)">Building Block</button>
@@ -11687,7 +11700,7 @@ Map to phase:
             <button class="fi-tab" onclick="fiTab('errors',this)">Errors &amp; Mastery</button>
           </div>
 
-          <!-- ═══════════ TAB 1 · DCF & YTM ═══════════ -->
+          <!-- ═══════════ SUBTAB 1 · DCF & YTM ═══════════ -->
           <div id="fi-dcf" class="fi-panel active">
 
             <div class="fi-card">
@@ -11979,10 +11992,20 @@ Horizon ≈ Macaulay duration:
             </div>
           </div>
 
+          </div><!-- /fir-fixed top panel -->
+
           <script>
+            // Top-level asset-class tab switcher
+            function fiTop(id, btn){
+              document.querySelectorAll('#fiWidget > .fi-toppanel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#fiWidget > .fi-toptabs > .fi-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('fir-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'fixed') setTimeout(fiHdCalc, 30);
+            }
             function fiTab(id, btn){
-              document.querySelectorAll('#fiWidget > .fi-panel').forEach(function(p){p.classList.remove('active')});
-              document.querySelectorAll('#fiWidget > .fi-tabs > .fi-tab').forEach(function(b){b.classList.remove('active')});
+              document.querySelectorAll('#fir-fixed > .fi-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#fir-fixed > .fi-tabs > .fi-tab').forEach(function(b){b.classList.remove('active')});
               document.getElementById('fi-'+id).classList.add('active');
               btn.classList.add('active');
               if(id === 'dcf') setTimeout(fiHdCalc, 30);
