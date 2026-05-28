@@ -11634,6 +11634,428 @@ Map to phase:
           </script>
         </div>
 
+        <!-- ═══════════════════════════════════════════════════════════════
+             fiWidget · READING 2 — CME Pt2: FORECASTING FIXED-INCOME RETURNS
+             ═══════════════════════════════════════════════════════════════ -->
+        <div id="fiWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+
+          <style>
+            #fiWidget { --fi-gold:#D4A017; --fi-green:#3DD68C; --fi-red:#FF7B72; --fi-orange:#F0A04B; --fi-blue:#79C0FF; }
+            #fiWidget .fi-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+            #fiWidget .fi-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #fiWidget .fi-tab.active { background:rgba(212,160,23,.15); border-color:var(--fi-gold); color:var(--fi-gold); }
+            #fiWidget .fi-panel { display:none; }
+            #fiWidget .fi-panel.active { display:block; }
+            #fiWidget .fi-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:14px; }
+            #fiWidget .fi-title { font-family:var(--serif); font-size:16px; color:var(--fi-gold); font-weight:600; margin-bottom:10px; }
+            #fiWidget .fi-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:8px; }
+            #fiWidget .fi-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #fiWidget .fi-rule { display:block; padding:6px 0; border-bottom:1px solid var(--border); font-size:12.5px; line-height:1.5; color:#C9D1D9; }
+            #fiWidget .fi-rule:last-child { border-bottom:none; }
+            #fiWidget .fi-tip { background:rgba(46,160,67,.08); border-left:3px solid var(--fi-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #fiWidget .fi-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--fi-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #fiWidget .fi-info { background:rgba(121,192,255,.08); border-left:3px solid var(--fi-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #fiWidget .fi-green { color:var(--fi-green); }
+            #fiWidget .fi-red { color:var(--fi-red); }
+            #fiWidget .fi-orange { color:var(--fi-orange); }
+            #fiWidget .fi-blue { color:var(--fi-blue); }
+            #fiWidget .fi-table { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #fiWidget .fi-table th { background:#0B0F14; color:var(--fi-gold); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #fiWidget .fi-table td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+            /* horizon-duration tool */
+            #fiWidget .fi-hd-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+            #fiWidget .fi-hd-label { flex:1; font-family:var(--mono); font-size:11px; color:var(--muted); }
+            #fiWidget .fi-hd-input { background:var(--surface); color:#C9D1D9; border:1px solid var(--border); padding:5px 8px; border-radius:3px; font-family:monospace; width:90px; text-align:right; }
+            #fiWidget .fi-hd-seg { display:flex; gap:6px; }
+            #fiWidget .fi-hd-seg button { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:5px 12px; border-radius:14px; font-family:var(--mono); font-size:10px; cursor:pointer; }
+            #fiWidget .fi-hd-seg button.active { background:rgba(212,160,23,.15); border-color:var(--fi-gold); color:var(--fi-gold); }
+            #fiWidget .fi-hd-result { background:#0B0F14; border-left:3px solid var(--fi-gold); border-radius:4px; padding:14px 16px; margin-top:14px; }
+            /* stacked building block */
+            #fiWidget .fi-stack { display:flex; flex-direction:column; gap:3px; margin:14px 0; max-width:420px; }
+            #fiWidget .fi-stack-block { padding:12px 14px; border-radius:4px; font-size:12.5px; color:#0D1117; font-weight:600; position:relative; }
+            #fiWidget .fi-stack-block small { display:block; font-weight:400; font-size:10.5px; opacity:.85; margin-top:2px; }
+            #fiWidget .fi-stack-sum { background:#0B0F14; border:1px dashed var(--fi-gold); color:var(--fi-gold); padding:12px 14px; border-radius:4px; font-family:var(--mono); font-size:13px; text-align:center; margin-top:6px; }
+          </style>
+
+          <div class="fi-tabs">
+            <button class="fi-tab active" onclick="fiTab('dcf',this)">DCF &amp; YTM</button>
+            <button class="fi-tab" onclick="fiTab('bb',this)">Building Block</button>
+            <button class="fi-tab" onclick="fiTab('term',this)">Term Premium</button>
+            <button class="fi-tab" onclick="fiTab('credit',this)">Credit Premium</button>
+            <button class="fi-tab" onclick="fiTab('liq',this)">Liquidity Premium</button>
+            <button class="fi-tab" onclick="fiTab('em',this)">EM Bond Risk</button>
+            <button class="fi-tab" onclick="fiTab('errors',this)">Errors &amp; Mastery</button>
+          </div>
+
+          <!-- ═══════════ TAB 1 · DCF & YTM ═══════════ -->
+          <div id="fi-dcf" class="fi-panel active">
+
+            <div class="fi-card">
+              <div class="fi-title">LOS 2.a · Three approaches to forecasting FI returns</div>
+              <div class="fi-body">Forecasting fixed-income returns can be done through:</div>
+              <span class="fi-rule"><b class="fi-blue">1. DCF method</b> — uses YTM as estimate of expected return (this tab)</span>
+              <span class="fi-rule"><b class="fi-blue">2. Risk premium / building block approach</b> — stack premiums on a risk-free base (next tab)</span>
+              <span class="fi-rule"><b class="fi-blue">3. Equilibrium model</b> — assumes supply and demand in global asset markets are in balance</span>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">DCF Analysis — YTM as expected return</div>
+              <div class="fi-body">DCF is useful when future cash flows are KNOWN or can be estimated reasonably accurately. It supports YTM as the estimate of expected return.</div>
+              <div class="fi-info"><b>YTM</b> = the discount rate that makes PV of future bond cash flows = bond's price. It's an IRR calculation → it is the realized return IF (a) cash flows reinvested at the YTM AND (b) bond held to maturity.</div>
+              <span class="fi-rule"><b>Zero-coupon bonds:</b> no cash flows to reinvest, but held-to-maturity assumption still applies</span>
+              <span class="fi-rule"><b>Bond portfolios:</b> YTM = weighted average of individual bonds' YTMs (generally a good approximation)</span>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">Why realized return DEVIATES from initial YTM</div>
+              <div class="fi-body">Even if all expected cash flows are received, realized return can differ from YTM. Two main reasons:</div>
+              <span class="fi-rule"><span class="fi-orange">1.</span> Investor may SELL the bond before maturity → capital gain or loss</span>
+              <span class="fi-rule"><span class="fi-orange">2.</span> Rising/falling rates change REINVESTMENT returns. Falling (rising) rates DECREASE (increase) reinvestment returns.</span>
+              <div class="fi-trap"><b>Also:</b> holding to maturity does NOT factor in optionality → cash flows may not be received as expected (e.g. callable bonds).</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">Interactive · Horizon vs Macaulay Duration</div>
+              <div class="fi-body">This is the most testable concept in 2.1. The relationship between your investment horizon and the bond's Macaulay duration determines whether capital gain/loss or reinvestment risk dominates. Enter the values and rate direction.</div>
+
+              <div class="fi-hd-row">
+                <span class="fi-hd-label">Investment horizon (years)</span>
+                <input type="number" id="fiHdHorizon" value="6" step="0.1" oninput="fiHdCalc()" class="fi-hd-input">
+              </div>
+              <div class="fi-hd-row">
+                <span class="fi-hd-label">Macaulay duration (years)</span>
+                <input type="number" id="fiHdMac" value="5" step="0.1" oninput="fiHdCalc()" class="fi-hd-input">
+              </div>
+              <div class="fi-hd-row">
+                <span class="fi-hd-label">Modified duration (optional → Macaulay)</span>
+                <input type="number" id="fiHdMod" value="" step="0.1" placeholder="× YTM" class="fi-hd-input">
+                <input type="number" id="fiHdYtm" value="" step="0.1" placeholder="YTM %" class="fi-hd-input" style="width:70px">
+                <button onclick="fiHdFromMod()" style="background:var(--surface);border:1px solid var(--border);color:var(--fi-gold);padding:5px 10px;border-radius:4px;cursor:pointer;font-family:monospace;font-size:10px">→ Mac</button>
+              </div>
+              <div class="fi-hd-row" style="border-bottom:none">
+                <span class="fi-hd-label">Interest rates are expected to:</span>
+                <div class="fi-hd-seg">
+                  <button id="fiHdRise" class="active" onclick="fiHdDir('rise')">RISE</button>
+                  <button id="fiHdFall" onclick="fiHdDir('fall')">FALL</button>
+                </div>
+              </div>
+
+              <div id="fiHdResult" class="fi-hd-result"></div>
+
+              <div class="fi-tip" style="margin-top:12px"><b>Exam shortcut:</b> Macaulay duration = modified duration × YTM. (e.g. mod dur 5 × YTM 1.055 ≈ Macaulay 6.6... actually mod × (1+YTM). For the exam Kaplan uses Macaulay = modified × YTM as the quick conversion.)</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">The logic, in words</div>
+              <div class="fi-fl">Horizon SHORTER than Macaulay duration:
+  → CAPITAL gain/loss effect DOMINATES
+  → Falling rates  = HIGHER realized return (price gain wins)
+  → Rising rates   = LOWER realized return (price loss wins)
+
+Horizon LONGER than Macaulay duration:
+  → REINVESTMENT effect DOMINATES
+  → Falling rates  = LOWER realized return (reinvest at less)
+  → Rising rates   = HIGHER realized return (reinvest at more)
+
+Horizon ≈ Macaulay duration:
+  → The two effects roughly OFFSET (immunization)
+  → Realized return ≈ initial YTM</div>
+            </div>
+          </div>
+
+          <!-- ═══════════ TAB 2 · BUILDING BLOCK ═══════════ -->
+          <div id="fi-bb" class="fi-panel">
+
+            <div class="fi-card">
+              <div class="fi-title">The Building Block (Risk Premium) Approach</div>
+              <div class="fi-body">Start with a risk-free rate, then ADD compensation for additional risks. The required return stacks up as:</div>
+
+              <div class="fi-stack">
+                <div class="fi-stack-block" style="background:#79C0FF">Liquidity premium <small>compensation for illiquidity</small></div>
+                <div class="fi-stack-block" style="background:#F0A04B">Credit premium <small>compensation for expected risk of default</small></div>
+                <div class="fi-stack-block" style="background:#3DD68C">Term premium <small>compensation for duration / maturity risk</small></div>
+                <div class="fi-stack-block" style="background:#D4A017">Short-term default-free rate <small>the risk-free base (≈ central bank policy rate)</small></div>
+                <div class="fi-stack-sum">= Required Return on the bond</div>
+              </div>
+
+              <div class="fi-info"><b>Read bottom-up:</b> Required return = short-term default-free rate + term premium + credit premium + liquidity premium.</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">Block 1 · Short-term default-free rate</div>
+              <div class="fi-body">The base of the stack.</div>
+              <span class="fi-rule">• Matches the FORECAST HORIZON; closest to the government zero-coupon yield</span>
+              <span class="fi-rule">• Closely tied to the CENTRAL BANK POLICY RATE</span>
+              <span class="fi-rule">• Observed risk-free rate is typically sufficient; may need to NORMALIZE it</span>
+              <div class="fi-info"><b>When horizon &gt;&gt; short instrument maturity:</b> alternatives may be optimal — (a) use yield of a longer-maturity zero-coupon bond, or (b) take the return realizable by ROLLING OVER the short-term instrument over the horizon. <b>Futures contract rates</b> provide useful proxies for the expected path of short-term rates.</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">The full stack — what each block compensates for</div>
+              <table class="fi-table">
+                <thead><tr><th>Block</th><th>Compensates for</th><th>Key detail</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Short-term default-free rate</b></td><td>Time value (risk-free)</td><td>≈ central bank policy rate; futures for path</td></tr>
+                  <tr><td><b class="fi-green">Term premium</b></td><td>Duration / maturity risk</td><td>4 drivers; positive &amp; related to duration</td></tr>
+                  <tr><td><b class="fi-orange">Credit premium</b></td><td>Expected RISK of default</td><td>Separate from expected default LOSSES</td></tr>
+                  <tr><td><b class="fi-blue">Liquidity premium</b></td><td>Illiquidity</td><td>Highest at earliest stages of bond's life</td></tr>
+                </tbody>
+              </table>
+              <div class="fi-trap"><b>Subtle distinction (credit):</b> the credit premium compensates for the expected RISK of default — which is SEPARATE from the additional compensation for the expected LEVEL of default losses. Both are components of the credit spread.</div>
+            </div>
+          </div>
+
+          <!-- ═══════════ TAB 3 · TERM PREMIUM ═══════════ -->
+          <div id="fi-term" class="fi-panel">
+
+            <div class="fi-card">
+              <div class="fi-title">Term Premium — 4 primary drivers</div>
+              <div class="fi-body">Real term premium CANNOT be derived from the yield curve alone (though spot-curve implied rates give useful info). Empirically, term premiums are POSITIVE and related to duration. The 4 primary drivers:</div>
+
+              <table class="fi-table">
+                <thead><tr><th>Driver</th><th>Mechanism / sub-drivers</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><b class="fi-orange">1. Inflation uncertainty</b></td>
+                    <td>Higher inflation levels → higher inflation uncertainty → nominal yields rise → term premium INCREASES.<br><span style="color:#7D8590">sub-driver: level of inflation → uncertainty about inflation → nominal yield level</span></td>
+                  </tr>
+                  <tr>
+                    <td><b class="fi-orange">2. Recession hedge</b></td>
+                    <td>Depends on the SOURCE of inflation:<br>
+                    • Inflation from strong aggregate <b>DEMAND</b> → nominal bond returns NEGATIVELY correlated with growth → bonds are a good hedge → LOW term premiums<br>
+                    • Inflation from aggregate <b>SUPPLY</b> → nominal bond returns POSITIVELY correlated with growth → bonds are a poor hedge → HIGHER term premiums</td>
+                  </tr>
+                  <tr>
+                    <td><b class="fi-orange">3. Supply and demand</b></td>
+                    <td>Relative supply of short- vs long-term default-free bonds → determines slope of the yield curve → influences the level of term premiums.</td>
+                  </tr>
+                  <tr>
+                    <td><b class="fi-orange">4. Business cycles</b></td>
+                    <td>The slope of the yield curve and the level of term premiums are related to the business cycle (links back to Reading 1, Module 1.3).</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="fi-trap"><b>Recession hedge trap (very testable):</b> DEMAND-driven inflation → bonds hedge → LOW term premium. SUPPLY-driven inflation → bonds don't hedge → HIGH term premium. The source of inflation flips the sign.</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">Other term-premium indicators</div>
+              <div class="fi-body">Beyond the 4 drivers, these also influence term-premium forecasts:</div>
+              <span class="fi-rule">• <b>Ex ante (forecast) real yield</b></span>
+              <span class="fi-rule">• <b>Cochrane and Piazzesi curve factor</b> — captures both slope AND curvature of the yield curve</span>
+              <span class="fi-rule">• <b>Kim and Wright premium</b> — a three-factor model of the term structure</span>
+              <span class="fi-rule">• <b>Slope of the yield curve</b></span>
+              <span class="fi-rule">• <b>Supply indicator</b> — proportion of debt with maturity &gt; 10 years</span>
+              <span class="fi-rule">• <b>Cyclical proxies</b> — corporate profit-to-GDP ratio, business confidence, unemployment rate</span>
+            </div>
+          </div>
+
+          <!-- ═══════════ TAB 4 · CREDIT PREMIUM ═══════════ -->
+          <div id="fi-credit" class="fi-panel">
+
+            <div class="fi-card">
+              <div class="fi-title">Credit Premium</div>
+              <div class="fi-body">Compensates for the expected RISK of default — separate from the additional compensation for expected default LOSSES. Both are components of the credit spread.</div>
+              <div class="fi-trap"><b>Key fact:</b> the yield spread is typically NOT a good predictor of future default rates. Spreads are affected primarily by FINANCIAL MARKET CONDITIONS and the credit premium, and only to a LESSER extent by expected default losses.</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">Predictors of the credit spread — what works, what doesn't</div>
+              <table class="fi-table">
+                <thead><tr><th>Strong predictors ✓</th><th>Weak predictors ✗</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><span class="fi-green">• Stock returns<br>• Stock volatility<br>• Risk-free rate</span></td>
+                    <td><span class="fi-red">• GDP growth<br>• Default rate changes</span></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="fi-info"><b>Memory anchor:</b> credit spreads track the EQUITY market and rates (financial conditions) far better than they track the real economy (GDP) or actual defaults.</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">Credit quality — high grade vs low grade</div>
+              <span class="fi-rule"><b class="fi-green">AAA / AA (high grade):</b> extremely low default rates → credit premium &amp; spreads mainly driven by <b>DOWNGRADE BIAS</b> — an asymmetrical risk (a downgrade is more likely than a credit improvement/upgrade)</span>
+              <span class="fi-rule"><b class="fi-red">Lower-rated / non-IG:</b> credit premium &amp; spreads reflect much HIGHER compensation for credit risk</span>
+              <div class="fi-info"><b>Steep Treasury curves</b> → high credit premiums AND high term premiums → both are BULLISH indicators (they imply larger compensation for credit losses).</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">Credit premium &amp; maturity — the counterintuitive bit</div>
+              <div class="fi-trap"><b>Credit premiums are NOT positively related to maturity.</b> In fact, credit premiums tend to be HIGHER at SHORTER maturities, possibly due to:<br>
+                • <b>Event risk</b> — large credit-negative events (a bond won't pay more than face value, so upside is capped)<br>
+                • <b>Illiquidity</b> — bonds with short time to maturity tend to be illiquid older bonds that aren't actively traded</div>
+              <div class="fi-tip"><b>Barbell strategy:</b> to exploit these credit features, PMs often take ON credit risk from SHORTER-maturity bonds and take DURATION risk from LONGER maturities.</div>
+            </div>
+          </div>
+
+          <!-- ═══════════ TAB 5 · LIQUIDITY PREMIUM ═══════════ -->
+          <div id="fi-liq" class="fi-panel">
+
+            <div class="fi-card">
+              <div class="fi-title">Liquidity Premium</div>
+              <div class="fi-body">Liquidity tends to be HIGHEST at the earliest stages of a bond's life — typically the first few weeks only. Securities with the highest liquidity: <b>sovereign bond issues, current-coupon mortgage-backed securities, high-quality corporate bonds</b>.</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">6 features that make a bond MORE liquid</div>
+              <div class="fi-body">As a general rule, liquidity is higher for bonds that are:</div>
+              <span class="fi-rule"><span class="fi-green">1.</span> Issued at close to PAR or market rates</span>
+              <span class="fi-rule"><span class="fi-green">2.</span> NEW (recently issued)</span>
+              <span class="fi-rule"><span class="fi-green">3.</span> LARGE in size</span>
+              <span class="fi-rule"><span class="fi-green">4.</span> Issued by a FREQUENT and WELL-KNOWN issuer</span>
+              <span class="fi-rule"><span class="fi-green">5.</span> SIMPLE in structure</span>
+              <span class="fi-rule"><span class="fi-green">6.</span> HIGH credit quality</span>
+              <div class="fi-tip"><b>Mnemonic:</b> "Par, New, Large, Known, Simple, Quality" — the more a bond drifts AWAY from these features, the larger the liquidity premium.</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">How to gauge the "true" liquidity premium</div>
+              <div class="fi-info">Compare the yield spread between the HIGHEST-quality issuer (usually the sovereign) and the NEXT-highest-quality issuer. The analyst then makes adjustments to this spread as the bond moves further away from the 6 liquidity features above.</div>
+            </div>
+          </div>
+
+          <!-- ═══════════ TAB 6 · EM BOND RISK ═══════════ -->
+          <div id="fi-em" class="fi-panel">
+
+            <div class="fi-card">
+              <div class="fi-title">LOS 2.b · Emerging Market Bond Risk</div>
+              <div class="fi-body">EM debt offers HIGH expected returns at the expense of HIGHER risk. Many EM countries depend on foreign borrowing, which can create crisis situations. The most significant risk for the bond investor is <b>credit risk</b> — does the country have the ABILITY and WILLINGNESS to pay back its debt? Economic, political, and legal risks also matter.</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">Signs an EM is MORE susceptible to risk</div>
+              <span class="fi-rule">• Wealth concentration</span>
+              <span class="fi-rule">• Income concentration and a less diverse tax base</span>
+              <span class="fi-rule">• Greater dominance of cyclical industries / commodities / less pricing power</span>
+              <span class="fi-rule">• Restrictions on capital flows, trade, and currency</span>
+              <span class="fi-rule">• Inadequate fiscal and monetary policies</span>
+              <span class="fi-rule">• Poor workforce education / infrastructure / weak technology</span>
+              <span class="fi-rule">• Large foreign borrowing in foreign currencies</span>
+              <span class="fi-rule">• Less developed and smaller financial markets</span>
+              <span class="fi-rule">• Exposure to volatile capital flows</span>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">EM health thresholds — MEMORIZE these numbers</div>
+              <div class="fi-body">Potential bond investors should check these factors before committing funds:</div>
+              <table class="fi-table">
+                <thead><tr><th>Metric</th><th>Threshold</th><th>Signal</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Fiscal deficit-to-GDP</b></td><td>&gt; 4%</td><td class="fi-red">Substantial credit risk</td></tr>
+                  <tr><td><b>Debt-to-GDP</b></td><td>70% – 80%</td><td class="fi-orange">Troublesome for EM</td></tr>
+                  <tr><td><b>Real growth rate</b></td><td>&lt; 4%</td><td class="fi-red">Growing too slow (want ≥ 4%)</td></tr>
+                  <tr><td><b>Current account deficit</b></td><td>&gt; 4% of GDP</td><td class="fi-red">Warning sign of difficulty</td></tr>
+                  <tr><td><b>Foreign debt</b></td><td>&gt; 50% of GDP</td><td class="fi-red">Overleveraged</td></tr>
+                  <tr><td><b>Foreign debt</b></td><td>&gt; 200% of current account receipts</td><td class="fi-red">High risk</td></tr>
+                  <tr><td><b>FX reserves</b></td><td>&lt; 100% of short-term debt</td><td class="fi-red">Sign of trouble</td></tr>
+                  <tr><td><b>FX reserves</b></td><td>&gt; 200% of short-term debt</td><td class="fi-green">Considered strong</td></tr>
+                </tbody>
+              </table>
+              <div class="fi-tip"><b>The "4% club":</b> deficit-to-GDP &gt;4%, real growth &lt;4%, current account deficit &gt;4% — three different 4% thresholds all signal trouble. Plus the debt ratios: 50% (foreign/GDP), 70-80% (debt/GDP), 200% (foreign/CA receipts AND FX reserves strong), 100% (FX reserves floor).</div>
+            </div>
+
+            <div class="fi-card">
+              <div class="fi-title">Government &amp; structural factors</div>
+              <span class="fi-rule"><span class="fi-green">Hospitable:</span> government supportive of structural reforms; committed to responsible fiscal policy, competition, privatization of state-owned businesses</span>
+              <span class="fi-rule"><span class="fi-red">Hazard signs:</span> weak enforcement laws, weak property rights laws, nationalization of property, corruption</span>
+              <span class="fi-rule"><span class="fi-orange">Coalition governments</span> seen as riskier due to inherent political — and therefore policy — instability</span>
+            </div>
+          </div>
+
+          <!-- ═══════════ TAB 7 · ERRORS & MASTERY ═══════════ -->
+          <div id="fi-errors" class="fi-panel">
+            <div class="fi-card">
+              <div class="fi-title">Errors &amp; Mastery — ready for your wrong answers</div>
+              <div class="fi-body">This tab will hold the questions you get wrong on this reading, with pattern classification, memory anchors, and drill mode — same as the CME widget.</div>
+              <div class="fi-info">When you miss a question, send: the question + your wrong pick + correct answer. I'll add it here.</div>
+              <div class="fi-tip"><b>Likely problem areas to watch on this reading:</b><br>
+                • Horizon vs Macaulay duration direction (which effect dominates)<br>
+                • Recession hedge: demand-driven (low term premium) vs supply-driven (high term premium)<br>
+                • Credit premium higher at SHORTER maturities (counterintuitive)<br>
+                • Yield spread NOT a good predictor of default rates<br>
+                • EM thresholds (the 4% / 50% / 200% / 100% numbers)<br>
+                • Building block: which premiums stack and in what order</div>
+            </div>
+          </div>
+
+          <script>
+            function fiTab(id, btn){
+              document.querySelectorAll('#fiWidget > .fi-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#fiWidget > .fi-tabs > .fi-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('fi-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'dcf') setTimeout(fiHdCalc, 30);
+            }
+
+            // ── Horizon vs Macaulay duration interactive ──
+            var fiHdDirection = 'rise';
+            function fiHdDir(d){
+              fiHdDirection = d;
+              document.getElementById('fiHdRise').classList.toggle('active', d === 'rise');
+              document.getElementById('fiHdFall').classList.toggle('active', d === 'fall');
+              fiHdCalc();
+            }
+            function fiHdFromMod(){
+              var mod = parseFloat(document.getElementById('fiHdMod').value);
+              var ytm = parseFloat(document.getElementById('fiHdYtm').value);
+              if(!isNaN(mod) && !isNaN(ytm)){
+                var mac = mod * (1 + ytm/100);
+                document.getElementById('fiHdMac').value = mac.toFixed(2);
+                fiHdCalc();
+              }
+            }
+            function fiHdCalc(){
+              var h = parseFloat(document.getElementById('fiHdHorizon').value);
+              var m = parseFloat(document.getElementById('fiHdMac').value);
+              var box = document.getElementById('fiHdResult');
+              if(isNaN(h) || isNaN(m)){ box.innerHTML = '<span style="color:#7D8590;font-size:12px">Enter horizon and Macaulay duration.</span>'; return; }
+
+              var dominant, effect, realized, color, rel;
+              var rising = (fiHdDirection === 'rise');
+
+              if(Math.abs(h - m) < 0.01){
+                box.innerHTML =
+                  '<div style="font-family:Georgia,serif;font-size:15px;color:#F0A04B;font-weight:600;margin-bottom:8px">Horizon ≈ Macaulay duration</div>'+
+                  '<div style="font-size:12.5px;line-height:1.6;color:#C9D1D9">The capital gain/loss effect and the reinvestment effect roughly OFFSET each other. This is the immunization condition. Realized return ≈ initial YTM regardless of rate direction.</div>';
+                return;
+              }
+
+              if(h < m){
+                dominant = 'CAPITAL gain/loss effect dominates';
+                rel = 'horizon ('+h+') &lt; Macaulay duration ('+m+')';
+                if(rising){
+                  effect = 'Rising rates → bond PRICE falls → capital LOSS dominates';
+                  realized = 'LOWER realized return than initial YTM';
+                  color = '#FF7B72';
+                } else {
+                  effect = 'Falling rates → bond PRICE rises → capital GAIN dominates';
+                  realized = 'HIGHER realized return than initial YTM';
+                  color = '#3DD68C';
+                }
+              } else {
+                dominant = 'REINVESTMENT effect dominates';
+                rel = 'horizon ('+h+') &gt; Macaulay duration ('+m+')';
+                if(rising){
+                  effect = 'Rising rates → reinvest coupons at HIGHER rates';
+                  realized = 'HIGHER realized return than initial YTM';
+                  color = '#3DD68C';
+                } else {
+                  effect = 'Falling rates → reinvest coupons at LOWER rates';
+                  realized = 'LOWER realized return than initial YTM';
+                  color = '#FF7B72';
+                }
+              }
+
+              box.style.borderLeftColor = color;
+              box.innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">'+rel+' · rates '+(rising?'RISING':'FALLING')+'</div>'+
+                '<div style="font-family:Georgia,serif;font-size:15px;color:'+color+';font-weight:600;margin-bottom:8px">'+realized+'</div>'+
+                '<div style="font-size:12.5px;line-height:1.6;color:#C9D1D9"><b>'+dominant+'</b><br>'+effect+'</div>';
+            }
+            function fiInit(){ setTimeout(fiHdCalc, 30); }
+          </script>
+        </div>
 
 
         <!-- empty state -->
@@ -12476,7 +12898,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -12492,6 +12914,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'awWidget' && typeof awInit === 'function') setTimeout(awInit, 50);
     if (widgetId === 'tswWidget' && typeof tswInit === 'function') setTimeout(tswInit, 50);
     if (widgetId === 'cmeWidget' && typeof cmeInit === 'function') setTimeout(cmeInit, 50);
+    if (widgetId === 'fiWidget' && typeof fiInit === 'function') setTimeout(fiInit, 50);
   }
 }
 
@@ -12510,11 +12933,12 @@ function openNote(key, topic, subtopic) {
     'PM Pathway||Active Equity Investing: Strategies': 'awWidget',
     'PM Pathway||Active Equity Investing: Portfolio Construction': 'pcwWidget',
     'PM Pathway||Trade Strategy and Execution': 'tswWidget',
-    'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget'
+    'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
+    'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
