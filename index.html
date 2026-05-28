@@ -11685,6 +11685,7 @@ Map to phase:
           <!-- TOP-LEVEL asset-class tabs (Fixed Income / Equity / Real Estate ...) -->
           <div class="fi-toptabs">
             <button class="fi-toptab active" onclick="fiTop('fixed',this)">Fixed Income Returns</button>
+            <button class="fi-toptab" onclick="fiTop('equity',this)">Equity Returns</button>
           </div>
 
           <!-- ════════════════ TOP TAB · FIXED INCOME RETURNS ════════════════ -->
@@ -11994,6 +11995,275 @@ Horizon ≈ Macaulay duration:
 
           </div><!-- /fir-fixed top panel -->
 
+          <!-- ════════════════ TOP TAB · EQUITY RETURNS ════════════════ -->
+          <div id="fir-equity" class="fi-toppanel">
+
+            <div class="fi-tabs">
+              <button class="fi-tab active" onclick="fiEqTab('gk',this)">Grinold-Kroner</button>
+              <button class="fi-tab" onclick="fiEqTab('gkshort',this)">G-K Shortcomings</button>
+              <button class="fi-tab" onclick="fiEqTab('other',this)">Other Approaches</button>
+              <button class="fi-tab" onclick="fiEqTab('st',this)">Singer-Terhaar</button>
+              <button class="fi-tab" onclick="fiEqTab('em',this)">EM Equity Risk</button>
+              <button class="fi-tab" onclick="fiEqTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- ═══════════ SUBTAB 1 · GRINOLD-KRONER ═══════════ -->
+            <div id="fieq-gk" class="fi-panel active">
+
+              <div class="fi-card">
+                <div class="fi-title">LOS 2.c · DCF for equity — Gordon → Grinold-Kroner</div>
+                <div class="fi-body">DCF says intrinsic value = PV of future cash flows; advantage = correct emphasis on future cash flows + ability to back out a required return. Best for LONG-TERM valuation. Applied to equity markets, the most common application is the <b>Gordon (constant) growth model</b>, where the growth rate is proxied by nominal GDP growth (real GDP + inflation), adjusted for differences between the economy's growth and that of the equity index.</div>
+                <div class="fi-info"><b>Grinold-Kroner (2002)</b> takes Gordon one step further by adding: (a) a variable for <b>stock repurchases</b> (cash transferred to shareholders), and (b) <b>changes in market valuation</b> (the P/E ratio).</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">The Grinold-Kroner model</div>
+                <div class="fi-fl">E(R_e) ≈ D/P + (%ΔE − %ΔS) + %ΔP/E
+
+where:
+  E(R_e)   = expected equity return
+  D/P      = dividend yield
+  %ΔE      = expected % change in total earnings
+  %ΔS      = expected % change in shares outstanding
+  %ΔP/E    = expected % change in the P/E ratio</div>
+
+                <div class="fi-body" style="margin-top:10px">Regrouped into <b>3 components</b>:</div>
+                <table class="fi-table">
+                  <thead><tr><th>Component</th><th>Formula</th><th>Meaning</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="fi-blue">1. Expected cash flow (income) return</b></td><td>D/P − %ΔS</td><td>Dividend yield adjusted for share count changes</td></tr>
+                    <tr><td><b class="fi-green">2. Expected nominal earnings growth</b></td><td>%ΔE = real earnings growth + inflation</td><td>The growth engine</td></tr>
+                    <tr><td><b class="fi-orange">3. Expected repricing return</b></td><td>%ΔP/E</td><td>Change in market valuation multiple</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">The %ΔS sign trap (Professor's Note)</div>
+                <div class="fi-trap"><b>Candidates get confused on when to add or subtract %ΔS.</b><br>
+                  • A <b>share REPURCHASE (buyback)</b> = REDUCTION in shares outstanding = company pays cash to investors → a form of POSITIVE return.<br>
+                  • Mathematically, a buyback is a <b>NEGATIVE %ΔS</b> term. Since the model SUBTRACTS %ΔS, subtracting a negative becomes a POSITIVE contribution.<br>
+                  • A share ISSUANCE = positive %ΔS → subtracting it REDUCES return (dilution).</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Interactive · Grinold-Kroner calculator</div>
+                <div class="fi-body">Enter the inputs. Use the toggle to specify whether shares are being repurchased (buyback) or issued — the calculator handles the %ΔS sign automatically. "Preset 9.0%" loads the textbook example.</div>
+
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+                  <button onclick="fiGkPreset()" style="background:var(--fi-gold);color:#0D1117;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.05em;font-weight:600">Preset: Textbook 9.0%</button>
+                </div>
+
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Dividend yield (D/P) %</span>
+                  <input type="number" id="fiGkDp" value="2.1" step="0.1" oninput="fiGkCalc()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Real earnings growth %</span>
+                  <input type="number" id="fiGkReal" value="4.0" step="0.1" oninput="fiGkCalc()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Inflation %</span>
+                  <input type="number" id="fiGkInfl" value="3.1" step="0.1" oninput="fiGkCalc()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Change in shares outstanding (magnitude) %</span>
+                  <input type="number" id="fiGkShares" value="0.5" step="0.1" oninput="fiGkCalc()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Shares are being:</span>
+                  <div class="fi-hd-seg">
+                    <button id="fiGkBuyback" class="active" onclick="fiGkDir('buyback')">REPURCHASED</button>
+                    <button id="fiGkIssue" onclick="fiGkDir('issue')">ISSUED</button>
+                  </div>
+                </div>
+                <div class="fi-hd-row" style="border-bottom:none">
+                  <span class="fi-hd-label">Change in P/E ratio (%ΔP/E) %</span>
+                  <input type="number" id="fiGkPe" value="0.3" step="0.1" oninput="fiGkCalc()" class="fi-hd-input">
+                </div>
+
+                <div id="fiGkResult" class="fi-hd-result"></div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 2 · G-K SHORTCOMINGS ═══════════ -->
+            <div id="fieq-gkshort" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Grinold-Kroner — assumptions &amp; shortcomings</div>
+                <div class="fi-body">The model's assumptions may lead to irrational results because it IGNORES an investor's time horizon.</div>
+                <div class="fi-trap"><b>The P/E growth shortcoming (very testable):</b><br>
+                  Because the model assumes an INFINITE time horizon, an investor who selects ANY positive %ΔP/E growth rate is implicitly assuming an <b>infinitely rising P/E ratio</b> — an implausible result.<br><br>
+                  For very long-term horizons, the theoretically appropriate value is:<br>
+                  <b>%ΔP/E = 0</b> &nbsp;(and &nbsp;<b>%ΔS = 0</b>)</div>
+                <div class="fi-info"><b>Why %ΔS = 0 too:</b> over an infinite horizon, you can't keep buying back (or issuing) shares forever — the share-count change must also settle to zero.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">P/E mean reversion — long-term vs short-term</div>
+                <div class="fi-body">It is relatively easy to observe the model's inputs (from published statistical data). It's more challenging to estimate the change in the P/E ratio.</div>
+                <span class="fi-rule">• The assumption of the P/E (or price relative to other metrics like cash flow or sales) is that it has an observable <b>long-term mean</b></span>
+                <span class="fi-rule">• The ratio will <b>revert to this mean</b></span>
+                <span class="fi-rule">• Empirical evidence: mean reversion is true in the <b>LONG term</b>, but NOT in the SHORT term</span>
+                <div class="fi-tip"><b>Memory anchor:</b> over an infinite/very-long horizon → assume %ΔP/E = 0 (P/E reverts to its long-run mean, so no net change). Over short horizons, P/E can deviate substantially and persistently from its mean.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 3 · OTHER APPROACHES ═══════════ -->
+            <div id="fieq-other" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Three approaches to equity returns</div>
+                <div class="fi-body">Same family as fixed income, applied to equity:</div>
+                <span class="fi-rule"><b class="fi-blue">1. DCF (Gordon / Grinold-Kroner)</b> — most suitable for LONG-TERM valuation</span>
+                <span class="fi-rule"><b class="fi-blue">2. Risk premium approach</b> — equity risk premium = amount equity return exceeds risk-free rate (Module 2.4)</span>
+                <span class="fi-rule"><b class="fi-blue">3. Equilibrium (Singer-Terhaar)</b> — international CAPM blending integrated + segmented (Module 2.4)</span>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Long-horizon data &amp; shrinkage estimators</div>
+                <div class="fi-body">When looking at a very long time horizon — over 100 years — mean real returns of equity markets in various countries do NOT show statistically meaningful differences.</div>
+                <div class="fi-trap"><b>The problem:</b> these sample averages tend to be IMPRECISE, unless the volatility of the data is small.</div>
+                <div class="fi-tip"><b>The solution:</b> <b>shrinkage estimators</b> are typically MORE RELIABLE as predictors of equity returns. (Shrinkage = combine the sample estimate with a target/prior to reduce estimation error.)</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Equity risk premium vs the building block</div>
+                <div class="fi-info"><b>Key distinction (LOS 2.c/2.d):</b><br>
+                  • For <b>bonds</b>: the approach relative to the risk-free rate uses a <b>BUILDING BLOCK</b> (stack term + credit + liquidity premiums).<br>
+                  • For <b>equity</b>: the approach relative to the risk-free rate uses a <b>SINGLE premium</b> for equity (the equity risk premium).<br><br>
+                  Forecasting the equity premium is generally quite challenging regardless of the approach. An analyst must supplement forecasts with other methods of analysis.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 4 · SINGER-TERHAAR ═══════════ -->
+            <div id="fieq-st" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">LOS 2.d · The Equilibrium Approach — Singer-Terhaar</div>
+                <div class="fi-body">The financial equilibrium approach assumes financial models value securities correctly. Singer-Terhaar is based on the international CAPM, using TWO versions: one where global asset markets are fully <b>INTEGRATED</b>, and another where markets are fully <b>SEGMENTED</b>. It then takes a weighted average of the two.</div>
+                <div class="fi-fl">CAPM:  R_i = R_f + β_i,M (R_M − R_f)
+       or alternatively  RP_i = β_i,M × RP_M
+
+where:
+  R_i    = expected return on asset i
+  R_f    = risk-free rate
+  β_i,M  = sensitivity (systematic risk) of asset i to the global investable market
+  R_M    = expected return on the global investable market
+  RP_i   = the asset's risk premium
+  RP_M   = the market's risk premium</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">The 4-step process</div>
+                <table class="fi-table">
+                  <thead><tr><th>Step</th><th>What you do</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Step 1</b></td><td>β_i,M = Cov(R_i,R_M) / Var(R_M) = ρ_i,M × (σ_i / σ_M)</td></tr>
+                    <tr><td><b>Step 2</b></td><td>Rearrange CAPM → RP_i = β_i,M × RP_M = ρ_i,M × σ_i × (RP_M / σ_M)<br><span style="color:#7D8590">i.e. RP = correlation with global × own SD × global Sharpe ratio</span></td></tr>
+                    <tr><td><b>Step 3</b></td><td>Fully SEGMENTED: asset is its own market portfolio → perfectly correlated with itself (β = ρ = 1) → RP_i^S = σ_i × Sharpe. If no local Sharpe given, use global Sharpe.</td></tr>
+                    <tr><td><b>Step 4</b></td><td>Weighted average of the two: <b>RP = φ·RP^G + (1−φ)·RP^S</b><br>φ = degree of integration; G = globally integrated, S = segmented</td></tr>
+                  </tbody>
+                </table>
+                <div class="fi-info"><b>Step 2 in words:</b> the risk premium for an asset = the product of its correlation with the global market portfolio AND the standard deviation of the asset (in parentheses with the global Sharpe ratio). From this we forecast the risk premium and expected return for a market.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Integration vs Segmentation</div>
+                <span class="fi-rule"><b class="fi-green">INTEGRATED:</b> capital flows freely across borders → use the asset's ACTUAL correlation with the global market (ρ &lt; 1) → LOWER risk premium</span>
+                <span class="fi-rule"><b class="fi-red">SEGMENTED:</b> government restrictions block capital flow → asset is its own market → ρ = 1 → HIGHER risk premium. Investment barriers INCREASE the risk premium.</span>
+                <div class="fi-info"><b>Integration estimates:</b> developed-world equity markets ≈ 75%–90% integrated; emerging market equities ≈ 50%–75% integrated.</div>
+                <div class="fi-trap"><b>The key driver:</b> segmented markets always produce a HIGHER risk premium than integrated (because ρ=1 &gt; actual ρ). The more segmented (lower φ), the higher the blended RP.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Interactive · Singer-Terhaar calculator</div>
+                <div class="fi-body">Computes the integrated RP and segmented RP side-by-side, then blends by the degree of integration φ. "Preset" loads the Module Quiz 2.4 Market A example.</div>
+
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0">
+                  <button onclick="fiStPreset('A')" style="background:var(--fi-gold);color:#0D1117;border:none;padding:7px 14px;border-radius:5px;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.05em;font-weight:600">Preset: Market A</button>
+                  <button onclick="fiStPreset('B')" style="background:var(--surface2);color:#C9D1D9;border:1px solid var(--border);padding:7px 14px;border-radius:5px;cursor:pointer;font-family:var(--mono);font-size:11px">Preset: Market B</button>
+                </div>
+
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Global Sharpe ratio (RP_M / σ_M)</span>
+                  <input type="number" id="fiStSharpe" value="0.29" step="0.01" oninput="fiStCalc()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Asset standard deviation (σ_i) %</span>
+                  <input type="number" id="fiStSd" value="18" step="0.5" oninput="fiStCalc()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Correlation with global market (ρ_i,M)</span>
+                  <input type="number" id="fiStRho" value="0.87" step="0.01" oninput="fiStCalc()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row" style="border-bottom:none">
+                  <span class="fi-hd-label">Degree of integration (φ) %</span>
+                  <input type="number" id="fiStPhi" value="80" step="1" oninput="fiStCalc()" class="fi-hd-input">
+                </div>
+
+                <div id="fiStResult" class="fi-hd-result"></div>
+
+                <div class="fi-tip" style="margin-top:12px"><b>Note:</b> this computes only the risk PREMIUM. To get expected return, add the risk-free rate (e.g. Market A example uses rf = 4.5%).</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Worked example — Country X (from the reading)</div>
+                <div class="fi-fl">Given: bonds σ=10%, ρ=0.40; equities σ=15%, ρ=0.70; market Sharpe = 0.35
+
+RP_bonds    = 10% × 0.40 × 0.35 = 1.40%
+RP_equities = 15% × 0.70 × 0.35 = 3.68%
+
+(This is the fully-INTEGRATED case using actual correlations.)</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 5 · EM EQUITY RISK ═══════════ -->
+            <div id="fieq-em" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">LOS 2.d · Emerging Market Equity Risk</div>
+                <div class="fi-body">Emerging markets are often characterized by:</div>
+                <span class="fi-rule">• Fragile economies</span>
+                <span class="fi-rule">• Political and policy instability</span>
+                <span class="fi-rule">• Weaker legal protections — including weak property rights</span>
+                <span class="fi-rule">• Weak disclosure and enforcement standards</span>
+                <div class="fi-trap"><b>Key consequence for forecasting:</b> EM equities tend to exhibit <b>IDIOSYNCRATIC risks</b> where <b>LOCAL country effects tend to be MORE important than GLOBAL effects</b>. Emerging markets tend to be LESS FULLY INTEGRATED than developed markets.</div>
+                <div class="fi-info"><b>Ties to Singer-Terhaar:</b> because EM markets are less integrated (φ ≈ 50–75% vs 75–90% for developed), the SEGMENTED component carries more weight → higher risk premium. Local effects dominating = lower correlation with the global market.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">EM equity vs EM bond risk — connect the readings</div>
+                <table class="fi-table">
+                  <thead><tr><th></th><th>EM Bonds (2.b)</th><th>EM Equity (2.d)</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Primary risk</b></td><td>Credit risk (ability + willingness to pay)</td><td>Idiosyncratic / local country effects</td></tr>
+                    <tr><td><b>Key metrics</b></td><td>Deficit/GDP, debt/GDP, FX reserves, current account</td><td>Integration level, property rights, policy stability</td></tr>
+                    <tr><td><b>Integration</b></td><td>—</td><td>50–75% (vs developed 75–90%)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 6 · ERRORS & MASTERY ═══════════ -->
+            <div id="fieq-errors" class="fi-panel">
+              <div class="fi-card">
+                <div class="fi-title">Errors &amp; Mastery — ready for your wrong answers</div>
+                <div class="fi-body">This tab will hold the equity questions you get wrong, with pattern classification and drill mode.</div>
+                <div class="fi-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+                <div class="fi-tip"><b>Likely problem areas to watch on equity:</b><br>
+                  • Grinold-Kroner %ΔS sign (buyback = negative %ΔS = positive contribution)<br>
+                  • P/E growth assumption over infinite horizon (%ΔP/E = 0, %ΔS = 0)<br>
+                  • Singer-Terhaar segmented (ρ=1) vs integrated (actual ρ) — segmented gives HIGHER premium<br>
+                  • The weighted blend RP = φ·RP^G + (1−φ)·RP^S<br>
+                  • Shrinkage estimators for long-horizon equity returns<br>
+                  • EM equity: local effects &gt; global effects, less integrated</div>
+              </div>
+            </div>
+
+          </div><!-- /fir-equity top panel -->
+
+
           <script>
             // Top-level asset-class tab switcher
             function fiTop(id, btn){
@@ -12002,6 +12272,7 @@ Horizon ≈ Macaulay duration:
               document.getElementById('fir-'+id).classList.add('active');
               btn.classList.add('active');
               if(id === 'fixed') setTimeout(fiHdCalc, 30);
+              if(id === 'equity') setTimeout(fiGkCalc, 30);
             }
             function fiTab(id, btn){
               document.querySelectorAll('#fir-fixed > .fi-panel').forEach(function(p){p.classList.remove('active')});
@@ -12077,6 +12348,116 @@ Horizon ≈ Macaulay duration:
                 '<div style="font-size:12.5px;line-height:1.6;color:#C9D1D9"><b>'+dominant+'</b><br>'+effect+'</div>';
             }
             function fiInit(){ setTimeout(fiHdCalc, 30); }
+
+            // ═════════════════════════════════════════════════════════════
+            // EQUITY RETURNS — sub-tab nav + G-K calc + Singer-Terhaar calc
+            // ═════════════════════════════════════════════════════════════
+
+            function fiEqTab(id, btn){
+              document.querySelectorAll('#fir-equity > .fi-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#fir-equity > .fi-tabs > .fi-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('fieq-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'gk') setTimeout(fiGkCalc, 30);
+              if(id === 'st') setTimeout(fiStCalc, 30);
+            }
+
+            // ── Grinold-Kroner calculator ──
+            var fiGkShareDir = 'buyback';
+            function fiGkDir(d){
+              fiGkShareDir = d;
+              document.getElementById('fiGkBuyback').classList.toggle('active', d === 'buyback');
+              document.getElementById('fiGkIssue').classList.toggle('active', d === 'issue');
+              fiGkCalc();
+            }
+            function fiGkPreset(){
+              document.getElementById('fiGkDp').value = '2.1';
+              document.getElementById('fiGkReal').value = '4.0';
+              document.getElementById('fiGkInfl').value = '3.1';
+              document.getElementById('fiGkShares').value = '0.5';
+              document.getElementById('fiGkPe').value = '0.3';
+              fiGkDir('issue'); // textbook example: 0.5% INCREASE in shares
+            }
+            function fiGkCalc(){
+              var dp = parseFloat(document.getElementById('fiGkDp').value) || 0;
+              var real = parseFloat(document.getElementById('fiGkReal').value) || 0;
+              var infl = parseFloat(document.getElementById('fiGkInfl').value) || 0;
+              var sharesMag = parseFloat(document.getElementById('fiGkShares').value) || 0;
+              var pe = parseFloat(document.getElementById('fiGkPe').value) || 0;
+
+              // Sign of %ΔS: buyback = negative %ΔS, issuance = positive %ΔS
+              var deltaS = (fiGkShareDir === 'buyback') ? -sharesMag : sharesMag;
+
+              var income = dp - deltaS;            // D/P − %ΔS
+              var nominalEarn = real + infl;        // %ΔE = real + inflation
+              var repricing = pe;                   // %ΔP/E
+              var total = income + nominalEarn + repricing;
+
+              var sExplain;
+              if(fiGkShareDir === 'buyback'){
+                sExplain = 'Buyback → %ΔS = <b class="fi-green">−' + sharesMag.toFixed(1) + '%</b>. Income return = D/P − %ΔS = ' + dp.toFixed(1) + '% − (−' + sharesMag.toFixed(1) + '%) = <b>' + income.toFixed(2) + '%</b> (buyback ADDS to return)';
+              } else {
+                sExplain = 'Issuance → %ΔS = <b class="fi-red">+' + sharesMag.toFixed(1) + '%</b>. Income return = D/P − %ΔS = ' + dp.toFixed(1) + '% − ' + sharesMag.toFixed(1) + '% = <b>' + income.toFixed(2) + '%</b> (dilution REDUCES return)';
+              }
+
+              document.getElementById('fiGkResult').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:8px">E(R_e) = [D/P − %ΔS] + [%ΔE] + [%ΔP/E]</div>'+
+                '<div style="font-size:12px;line-height:1.7;color:#C9D1D9">'+
+                  '<b class="fi-blue">① Income return</b> = ' + income.toFixed(2) + '%<br>'+
+                  '<span style="color:#7D8590;font-size:11px">' + sExplain + '</span><br><br>'+
+                  '<b class="fi-green">② Nominal earnings growth</b> = real + inflation = ' + real.toFixed(1) + '% + ' + infl.toFixed(1) + '% = ' + nominalEarn.toFixed(2) + '%<br><br>'+
+                  '<b class="fi-orange">③ Repricing return</b> = %ΔP/E = ' + repricing.toFixed(2) + '%'+
+                '</div>'+
+                '<div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-family:Georgia,serif;font-size:16px;color:var(--fi-gold);font-weight:600">E(R_e) = ' + total.toFixed(2) + '%</div>';
+            }
+
+            // ── Singer-Terhaar calculator ──
+            function fiStPreset(which){
+              if(which === 'A'){
+                document.getElementById('fiStSharpe').value = '0.29';
+                document.getElementById('fiStSd').value = '18';
+                document.getElementById('fiStRho').value = '0.87';
+                document.getElementById('fiStPhi').value = '80';
+              } else {
+                document.getElementById('fiStSharpe').value = '0.29';
+                document.getElementById('fiStSd').value = '26';
+                document.getElementById('fiStRho').value = '0.63';
+                document.getElementById('fiStPhi').value = '65';
+              }
+              fiStCalc();
+            }
+            function fiStCalc(){
+              var sharpe = parseFloat(document.getElementById('fiStSharpe').value) || 0;
+              var sd = parseFloat(document.getElementById('fiStSd').value) || 0;
+              var rho = parseFloat(document.getElementById('fiStRho').value) || 0;
+              var phi = parseFloat(document.getElementById('fiStPhi').value) || 0;
+              var phiDec = phi / 100;
+
+              // Integrated: uses actual correlation. RP = ρ × σ × Sharpe
+              var rpIntegrated = rho * sd * sharpe;
+              // Segmented: ρ = 1. RP = σ × Sharpe
+              var rpSegmented = 1 * sd * sharpe;
+              // Blend
+              var rpBlended = phiDec * rpIntegrated + (1 - phiDec) * rpSegmented;
+
+              document.getElementById('fiStResult').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:8px">RP = φ·RP_integrated + (1−φ)·RP_segmented</div>'+
+                '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">'+
+                  '<div style="flex:1;min-width:150px;background:rgba(46,160,67,.08);border-left:2px solid var(--fi-green);border-radius:3px;padding:9px 11px">'+
+                    '<div style="font-family:monospace;font-size:9px;color:var(--fi-green);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Integrated (ρ = '+rho.toFixed(2)+')</div>'+
+                    '<div style="font-size:11px;color:#C9D1D9;line-height:1.5">ρ × σ × Sharpe<br>'+rho.toFixed(2)+' × '+sd.toFixed(0)+'% × '+sharpe.toFixed(2)+'</div>'+
+                    '<div style="font-family:Georgia,serif;font-size:15px;color:var(--fi-green);font-weight:600;margin-top:4px">'+rpIntegrated.toFixed(2)+'%</div>'+
+                  '</div>'+
+                  '<div style="flex:1;min-width:150px;background:rgba(255,123,114,.08);border-left:2px solid var(--fi-red);border-radius:3px;padding:9px 11px">'+
+                    '<div style="font-family:monospace;font-size:9px;color:var(--fi-red);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Segmented (ρ = 1)</div>'+
+                    '<div style="font-size:11px;color:#C9D1D9;line-height:1.5">1.00 × σ × Sharpe<br>1.00 × '+sd.toFixed(0)+'% × '+sharpe.toFixed(2)+'</div>'+
+                    '<div style="font-family:Georgia,serif;font-size:15px;color:var(--fi-red);font-weight:600;margin-top:4px">'+rpSegmented.toFixed(2)+'%</div>'+
+                  '</div>'+
+                '</div>'+
+                '<div style="font-size:12px;color:#C9D1D9;line-height:1.6">Blend at φ = '+phi.toFixed(0)+'% integration:<br>'+
+                  '<span style="font-family:monospace;font-size:11px;color:#7D8590">'+phiDec.toFixed(2)+' × '+rpIntegrated.toFixed(2)+'% + '+(1-phiDec).toFixed(2)+' × '+rpSegmented.toFixed(2)+'%</span></div>'+
+                '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-family:Georgia,serif;font-size:16px;color:var(--fi-gold);font-weight:600">Risk premium = '+rpBlended.toFixed(2)+'%</div>';
+            }
           </script>
         </div>
 
