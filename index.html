@@ -11674,6 +11674,9 @@ Map to phase:
             #fiWidget .fi-hd-seg { display:flex; gap:6px; }
             #fiWidget .fi-hd-seg button { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:5px 12px; border-radius:14px; font-family:var(--mono); font-size:10px; cursor:pointer; }
             #fiWidget .fi-hd-seg button.active { background:rgba(212,160,23,.15); border-color:var(--fi-gold); color:var(--fi-gold); }
+            #fiWidget .fi-adj-sig { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:7px 12px; border-radius:14px; font-family:var(--mono); font-size:10.5px; cursor:pointer; transition:all .15s; }
+            #fiWidget .fi-adj-sig:hover { border-color:var(--fi-gold); color:#C9D1D9; }
+            #fiWidget .fi-adj-sig.active { background:rgba(212,160,23,.15); border-color:var(--fi-gold); color:var(--fi-gold); font-weight:600; }
             #fiWidget .fi-hd-result { background:#0B0F14; border-left:3px solid var(--fi-gold); border-radius:4px; padding:14px 16px; margin-top:14px; }
             /* stacked building block */
             #fiWidget .fi-stack { display:flex; flex-direction:column; gap:3px; margin:14px 0; max-width:420px; }
@@ -11686,6 +11689,10 @@ Map to phase:
           <div class="fi-toptabs">
             <button class="fi-toptab active" onclick="fiTop('fixed',this)">Fixed Income Returns</button>
             <button class="fi-toptab" onclick="fiTop('equity',this)">Equity Returns</button>
+            <button class="fi-toptab" onclick="fiTop('re',this)">Real Estate Returns</button>
+            <button class="fi-toptab" onclick="fiTop('fx',this)">Exchange Rate Forecasting</button>
+            <button class="fi-toptab" onclick="fiTop('vol',this)">Volatility Forecasting</button>
+            <button class="fi-toptab" onclick="fiTop('adj',this)">Portfolio Adjustments</button>
           </div>
 
           <!-- ════════════════ TOP TAB · FIXED INCOME RETURNS ════════════════ -->
@@ -12263,6 +12270,831 @@ RP_equities = 15% × 0.70 × 0.35 = 3.68%
 
           </div><!-- /fir-equity top panel -->
 
+          <!-- ════════════════ TOP TAB · REAL ESTATE RETURNS ════════════════ -->
+          <div id="fir-re" class="fi-toppanel">
+
+            <div class="fi-tabs">
+              <button class="fi-tab active" onclick="fiReTab('cycles',this)">Characteristics &amp; Cycles</button>
+              <button class="fi-tab" onclick="fiReTab('cap',this)">Cap Rate</button>
+              <button class="fi-tab" onclick="fiReTab('rp',this)">Risk Premiums</button>
+              <button class="fi-tab" onclick="fiReTab('pubpriv',this)">Public vs Private</button>
+              <button class="fi-tab" onclick="fiReTab('resi',this)">Residential</button>
+              <button class="fi-tab" onclick="fiReTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- ═══════════ SUBTAB 1 · CHARACTERISTICS & CYCLES ═══════════ -->
+            <div id="fire-cycles" class="fi-panel active">
+
+              <div class="fi-card">
+                <div class="fi-title">LOS 2.e · What makes real estate different</div>
+                <div class="fi-body">Unlike traditional asset classes (equities, bonds, cash), real estate is:</div>
+                <span class="fi-rule">• <b>Immobile</b> and <b>illiquid</b></span>
+                <span class="fi-rule">• Part of a <b>heterogeneous</b> group — each property has unique characteristics</span>
+                <span class="fi-rule">• Requires maintenance → operating costs can be <b>significant</b></span>
+                <div class="fi-trap"><b>Appraisal smoothing (very testable):</b> RE returns are often calculated through <b>APPRAISALS</b>, which are subject to <b>time lags and data smoothing</b> because they're done infrequently. As a result, appraised values may differ SIGNIFICANTLY from market values. This smoothing artificially LOWERS measured volatility and correlation.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Real Estate Cycles</div>
+                <div class="fi-body">RE values are subject to business cycles, but they also DRIVE business cycles. Because supply is FIXED at any given point, property values exhibit <b>cyclicality</b>, and demand is strongly influenced by the quality and type of property available.</div>
+                <div class="fi-info"><b>Quality matters:</b> HIGH-quality properties fluctuate LESS with business cycles. LOW-quality properties show MORE cyclicality.</div>
+                <table class="fi-table">
+                  <thead><tr><th>Phase</th><th>What happens</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="fi-green">Boom</b></td><td>↑ demand → ↑ property values + lease rates → induces CONSTRUCTION activity → stronger economic activity</td></tr>
+                    <tr><td><b class="fi-red">Bust</b></td><td>Falling demand → overcapacity + overbuilding → values + lease rates DOWN. Leases lock tenants in for long terms + high moving costs → excess supply CAN'T be absorbed quickly.</td></tr>
+                  </tbody>
+                </table>
+                <div class="fi-tip"><b>Note from the reading:</b> the 2008 US commercial RE collapse was caused by <b>leverage and speculation</b>, NOT by business cycle movements.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 2 · CAP RATE ═══════════ -->
+            <div id="fire-cap" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Capitalization Rate (Cap Rate)</div>
+                <div class="fi-body">The cap rate is a commercial RE property's <b>earnings yield</b>:</div>
+                <div class="fi-fl">cap rate = current NOI / property value
+
+(NOI = net operating income)</div>
+                <div class="fi-info">It's similar to the denominator of the Gordon growth model (expected return less the NOI growth rate). The cap rate is used as a <b>long-term measure of the risk/discount rate</b> for RE property valuations — analogous to "expected return net of growth rate" for equities.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Expected return formulas</div>
+                <div class="fi-fl">INFINITE time period:
+  cap rate = E(R_re) − NOI growth rate
+  → E(R_re) = cap rate + NOI growth rate
+
+FINITE time period (subtract change in cap rate):
+  → E(R_re) = cap rate + NOI growth rate − %Δcap rate</div>
+                <div class="fi-info"><b>Grinold-Kroner parallel:</b> NOI growth is a NOMINAL measure incorporating real growth + inflation — just like %ΔE in Grinold-Kroner. During stable periods, long-run NOI growth ≈ GDP growth.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Interactive · Cap rate → expected return</div>
+                <div class="fi-body">Toggle between infinite and finite horizon. In finite mode, the change in cap rate is subtracted.</div>
+
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Cap rate %</span>
+                  <input type="number" id="fiReCap" value="5.0" step="0.1" oninput="fiReCalc()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">NOI growth rate %</span>
+                  <input type="number" id="fiReNoi" value="2.0" step="0.1" oninput="fiReCalc()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Time horizon:</span>
+                  <div class="fi-hd-seg">
+                    <button id="fiReInf" class="active" onclick="fiReHorizon('infinite')">INFINITE</button>
+                    <button id="fiReFin" onclick="fiReHorizon('finite')">FINITE</button>
+                  </div>
+                </div>
+                <div class="fi-hd-row" id="fiReDcapRow" style="border-bottom:none;display:none">
+                  <span class="fi-hd-label">Expected %Δ cap rate %</span>
+                  <input type="number" id="fiReDcap" value="0.5" step="0.1" oninput="fiReCalc()" class="fi-hd-input">
+                </div>
+
+                <div id="fiReResult" class="fi-hd-result"></div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">What drives the cap rate</div>
+                <span class="fi-rule"><b class="fi-red">Positively related</b> to changes in <b>interest rates</b> and <b>vacancy rates</b> (higher rates/vacancy → higher cap rate → lower property value)</span>
+                <span class="fi-rule"><b class="fi-green">Inversely related</b> to the availability of <b>credit and debt financing</b> (lenders less willing to extend credit when risk is perceived higher → higher cap rates)</span>
+                <span class="fi-rule"><b class="fi-blue">Credit spreads</b> (which are countercyclical) MITIGATE the cyclical sensitivity of cap rates</span>
+                <div class="fi-tip"><b>Competitive pressure example:</b> with the rapid growth of online retailers, the cap-rate difference between high- and low-productivity US malls grew from <b>1.2% (2008) to 3.2% (2018)</b> — cap rates are sensitive to competitive pressures.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 3 · RISK PREMIUMS ═══════════ -->
+            <div id="fire-rp" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Risk Premiums on Real Estate</div>
+                <div class="fi-body">RE assets require several risk premiums to compensate for their higher risk:</div>
+                <table class="fi-table">
+                  <thead><tr><th>Premium</th><th>Compensates for</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="fi-green">Term premium</b></td><td>Holding LONG-TERM assets</td></tr>
+                    <tr><td><b class="fi-orange">Credit premium</b></td><td>Risk of tenant NONPAYMENT</td></tr>
+                    <tr><td><b class="fi-blue">Equity risk premium</b></td><td>Fluctuation in RE values, leases, and vacancies (above corporate bond returns)</td></tr>
+                  </tbody>
+                </table>
+                <div class="fi-trap"><b>Combined risk premium ranking (memorize):</b> the combined RE risk premium is <b>HIGHER than corporate bonds but LOWER than equities</b>.<br><br>Bonds &lt; Real Estate &lt; Equities</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Liquidity risk on real estate</div>
+                <div class="fi-body">Liquidity risk is also important:</div>
+                <span class="fi-rule">• <b>Publicly traded RE (incl REITs):</b> liquidity risk = risk the asset cannot be sold quickly at a reasonable price</span>
+                <span class="fi-rule">• <b>RE as an asset group:</b> liquidity risk reflects an inability to sell the asset except at periodic times</span>
+                <div class="fi-info"><b>Liquidity premium for commercial RE is between 2% and 4%.</b></div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Two adjustments for equilibrium models (Module Quiz 2.5)</div>
+                <div class="fi-body">Once the appropriate risk premiums are calculated, RE can be used in equilibrium models like Singer-Terhaar. BUT analysts must make <b>two adjustments</b>:</div>
+                <span class="fi-rule"><span class="fi-orange">1.</span> Adjust for the impact of <b>SMOOTHING</b> — the smoothing must be removed from the data (appraisal smoothing understates true volatility)</span>
+                <span class="fi-rule"><span class="fi-orange">2.</span> Adjust for <b>ILLIQUIDITY</b> — incorporate a liquidity premium</span>
+                <div class="fi-tip"><b>Also consider:</b> the <b>LOCAL rather than global</b> nature of real estate should be considered (similar to EM equities — local effects dominate).</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 4 · PUBLIC VS PRIVATE ═══════════ -->
+            <div id="fire-pubpriv" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Public vs Private Real Estate</div>
+                <div class="fi-body">Wealthy individuals and large institutions can create diversified RE portfolios. Investors with less wealth can choose publicly traded RE (including REITs) to benefit from diversification.</div>
+                <div class="fi-info"><b>Correlation with equities:</b><br>
+                  • REITs are generally STRONGLY correlated with equities in the SHORT term<br>
+                  • Direct real estate shows LOW correlation — BUT this low correlation is partly due to the <b>SMOOTHING</b> of returns data<br>
+                  • Over LONG time horizons, REITs have a relatively HIGH correlation with direct real estate</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Unlevering REITs for comparison</div>
+                <div class="fi-trap"><b>Key step:</b> REITs use significant LEVERAGE, so their returns and risks must first be <b>UNLEVERED</b> to provide an appropriate comparison with direct real estate holdings.</div>
+                <div class="fi-body">When adjusted for leverage, REITs as an asset class historically show:</div>
+                <span class="fi-rule">• HIGHER return and LOWER volatility than direct real estate</span>
+                <div class="fi-info"><b>Why?</b> This difference may be due to REITs capturing much of the <b>liquidity risk premium</b> of direct investments, while ALSO profiting from <b>professional management</b>.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Property-class rankings (memorize)</div>
+                <table class="fi-table">
+                  <thead><tr><th>Category</th><th>Highest return</th><th>Volatility note</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>REITs (by class)</b></td><td class="fi-green">RETAIL REITs — highest return</td><td>Retail: 2nd-LOWEST volatility</td></tr>
+                    <tr><td><b>REITs (worst)</b></td><td class="fi-red">INDUSTRIAL REITs — lowest return</td><td>Industrial: HIGHEST volatility</td></tr>
+                    <tr><td><b>Directly-owned RE</b></td><td class="fi-green">APARTMENTS — highest return</td><td>OFFICES — lowest return</td></tr>
+                  </tbody>
+                </table>
+                <div class="fi-tip"><b>Memory anchors:</b> RETAIL wins among REITs (high return, low vol). INDUSTRIAL is worst among REITs (low return, high vol). Among direct RE: APARTMENTS best, OFFICES worst.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 5 · RESIDENTIAL ═══════════ -->
+            <div id="fire-resi" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Residential Real Estate Returns</div>
+                <div class="fi-body">Residential is the LARGEST class of developed properties, accounting for ~<b>75% of global values</b>.</div>
+                <div class="fi-info"><b>Overall:</b> residential RE outperformed equities on an inflation-adjusted basis with LOWER volatility. But return performance differed before and after WWII, with relatively weaker postwar returns.</div>
+                <table class="fi-table">
+                  <thead><tr><th>Period</th><th>Residential RE vs equities</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>1950–1980</b></td><td class="fi-green">Strongest postwar — generally OUTPERFORMED equities</td></tr>
+                    <tr><td><b>1980–2015</b></td><td class="fi-red">Comparably WEAKER returns</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Diversification — the key fact</div>
+                <div class="fi-trap"><b>Important for diversification:</b> after the war, residential RE returns were <b>UNCORRELATED across countries</b>, while equity returns showed <b>RISING correlations</b>.</div>
+                <div class="fi-tip"><b>Why this matters:</b> as equity markets became more globally correlated (less diversification benefit), residential RE retained its cross-country diversification value — making it attractive in a global portfolio.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 6 · ERRORS & MASTERY ═══════════ -->
+            <div id="fire-errors" class="fi-panel">
+              <div class="fi-card">
+                <div class="fi-title">Errors &amp; Mastery — ready for your wrong answers</div>
+                <div class="fi-body">This tab will hold the real estate questions you get wrong, with pattern classification and drill mode.</div>
+                <div class="fi-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+                <div class="fi-tip"><b>Likely problem areas to watch on real estate:</b><br>
+                  • Cap rate formula: E(R_re) = cap rate + NOI growth (infinite); − %Δcap rate (finite)<br>
+                  • Cap rate positively related to rates/vacancy, inversely to credit availability<br>
+                  • Combined RP ranking: bonds &lt; RE &lt; equities<br>
+                  • Liquidity premium 2–4% for commercial RE<br>
+                  • The 2 equilibrium-model adjustments (smoothing + illiquidity)<br>
+                  • Unlever REITs before comparing to direct RE<br>
+                  • Property rankings: Retail REIT best, Industrial REIT worst; apartments best / offices worst direct<br>
+                  • Appraisal smoothing → understates volatility &amp; correlation<br>
+                  • Residential uncorrelated across countries (diversification)</div>
+              </div>
+            </div>
+
+          </div><!-- /fir-re top panel -->
+
+          <!-- ════════════════ TOP TAB · EXCHANGE RATE FORECASTING ════════════════ -->
+          <div id="fir-fx" class="fi-toppanel">
+
+            <div class="fi-tabs">
+              <button class="fi-tab active" onclick="fiFxTab('trade',this)">Trade Channels</button>
+              <button class="fi-tab" onclick="fiFxTab('ca',this)">Current Account</button>
+              <button class="fi-tab" onclick="fiFxTab('capital',this)">Capital Flows</button>
+              <button class="fi-tab" onclick="fiFxTab('uip',this)">UIP &amp; Hot Money</button>
+              <button class="fi-tab" onclick="fiFxTab('portfolio',this)">Portfolio Balance</button>
+              <button class="fi-tab" onclick="fiFxTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- ═══════════ SUBTAB 1 · TRADE CHANNELS ═══════════ -->
+            <div id="fifx-trade" class="fi-panel active">
+
+              <div class="fi-card">
+                <div class="fi-title">LOS 2.f · Why exchange rates matter &amp; are hard to forecast</div>
+                <div class="fi-body">Currency exchange rate forecasting is particularly DIFFICULT → managers either FULLY HEDGE currency exposure or ACCEPT the volatility. Currencies are the units of account in which asset prices are quoted, so FX movements change the value of ALL assets denominated in one currency relative to all others.</div>
+                <div class="fi-info">Exchange rates are determined by factors influenced by trading, governments, financial systems, geographies, laws, regulations, and customs of a country.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Trade in goods/services — 3 channels affecting FX</div>
+                <div class="fi-body">Trade affects exchange rates through three channels:</div>
+
+                <div class="fi-info"><b>1 · Trade flows</b><br>
+                  The impact of NET trade flows (gross trade flows less exports) tends to be relatively <b>SMALL</b> on exchange rates — ASSUMING they can be financed.<br>
+                  <b>Crisis signal:</b> large trade flows WITHOUT large financing flows in FX markets likely indicates a CRISIS.</div>
+
+                <div class="fi-info"><b>2 · Purchasing Power Parity (PPP)</b><br>
+                  PPP implies prices of goods/services in different countries should reflect changes in FX. Therefore:<br>
+                  • Expected FX movement should follow expected <b>INFLATION RATE DIFFERENTIALS</b><br>
+                  • Expected change in REAL exchange rates should be <b>ZERO</b> (real FX = ratio of price levels converted through a common FX rate)</div>
+
+                <div class="fi-info"><b>3 · Competitiveness &amp; sustainability of the current account</b><br>
+                  Covered in detail in the Current Account sub-tab.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">PPP — when it works and when it doesn't</div>
+                <div class="fi-tip"><b>PPP works BETTER when:</b> long-term horizon, inflation differences are LARGE and determined through money supply.</div>
+                <div class="fi-trap"><b>PPP does NOT work well for:</b> short-term FX changes. Actual real FX may differ from PPP predictions because of:<br>
+                  • Trade barriers<br>
+                  • Certain goods may not be traded (non-traded goods)<br>
+                  • PPP does NOT account for CAPITAL FLOWS (which can exert significant influence)<br>
+                  • FX may also be influenced by economic development independent of PPP</div>
+                <div class="fi-info"><b>Exam application (PPP):</b> if Country A has HIGHER expected inflation than Country B, PPP predicts Country A's currency will DEPRECIATE. An investor would favor assets in the LOWER-inflation country's currency (it appreciates), OR — for an investor whose home currency appreciates — domestic assets become relatively more attractive.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 2 · CURRENT ACCOUNT ═══════════ -->
+            <div id="fifx-ca" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Current account &amp; exchange rates</div>
+                <div class="fi-body">When restrictions are placed on capital flows, exchange rate sensitivity tends to INCREASE relative to the current account balance.</div>
+                <div class="fi-trap"><b>Key nuance (very testable):</b> current account balances have the largest influence on FX when they are <b>PERSISTENT and SUSTAINED</b>. It is NOT the SIZE of the current account balance that matters as much as the <b>LENGTH of the imbalance</b>.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">5 sources of structural current account imbalances</div>
+                <div class="fi-body">Structural imbalances in the current account can exist from:</div>
+                <span class="fi-rule"><span class="fi-orange">1.</span> <b>Fiscal imbalances</b> that persist over time</span>
+                <span class="fi-rule"><span class="fi-orange">2.</span> <b>Demographics and trade preferences</b> that impact savings decisions</span>
+                <span class="fi-rule"><span class="fi-orange">3.</span> How <b>abundant or scarce resources</b> are</span>
+                <span class="fi-rule"><span class="fi-orange">4.</span> <b>Availability (or lack) of viable investment opportunities</b></span>
+                <span class="fi-rule"><span class="fi-orange">5.</span> The <b>terms of trade</b></span>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Adjustments to capital flows → 3 considerations</div>
+                <div class="fi-body">Adjustments to capital flows place substantial pressure on exchange rates. Three important considerations look at the implications on:</div>
+                <span class="fi-rule"><b class="fi-blue">1. Capital mobility</b> — see Capital Flows sub-tab (the formula)</span>
+                <span class="fi-rule"><b class="fi-blue">2. Uncovered interest rate parity (UIP)</b> — see UIP &amp; Hot Money sub-tab</span>
+                <span class="fi-rule"><b class="fi-blue">3. Portfolio balances and compositions</b> — see Portfolio Balance sub-tab</span>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 3 · CAPITAL FLOWS ═══════════ -->
+            <div id="fifx-capital" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Capital mobility — the FX change formula</div>
+                <div class="fi-body">The expected % change in the exchange rate = the difference between nominal short-term interest rates AND the risk premiums of the domestic portfolio over the foreign portfolio:</div>
+                <div class="fi-fl">E(%ΔS_d/f) = (r^d − r^f)
+            + (Term^d − Term^f)
+            + (Credit^d − Credit^f)
+            + (Equity^d − Equity^f)
+            + (Liquid^d − Liquid^f)</div>
+                <div class="fi-info"><b>Reading the formula:</b> a positive E(%ΔS_d/f) means the DOMESTIC currency is expected to DEPRECIATE by that percentage (in d/f quote convention, the domestic price of foreign currency rises). Each bracket is a domestic-minus-foreign differential.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Interactive · Capital mobility calculator</div>
+                <div class="fi-body">Enter the domestic and foreign values for each component. The calculator computes each differential and the total expected FX change.</div>
+
+                <div style="overflow-x:auto">
+                <table class="fi-table" style="min-width:340px">
+                  <thead><tr><th>Component</th><th>Domestic %</th><th>Foreign %</th></tr></thead>
+                  <tbody>
+                    <tr><td>Short-term rate (r)</td>
+                      <td><input type="number" id="fiFxRd" value="3.0" step="0.1" oninput="fiFxCalc()" class="fi-hd-input" style="width:75px"></td>
+                      <td><input type="number" id="fiFxRf" value="2.0" step="0.1" oninput="fiFxCalc()" class="fi-hd-input" style="width:75px"></td></tr>
+                    <tr><td>Term premium</td>
+                      <td><input type="number" id="fiFxTd" value="1.0" step="0.1" oninput="fiFxCalc()" class="fi-hd-input" style="width:75px"></td>
+                      <td><input type="number" id="fiFxTf" value="1.2" step="0.1" oninput="fiFxCalc()" class="fi-hd-input" style="width:75px"></td></tr>
+                    <tr><td>Credit premium</td>
+                      <td><input type="number" id="fiFxCd" value="0.5" step="0.1" oninput="fiFxCalc()" class="fi-hd-input" style="width:75px"></td>
+                      <td><input type="number" id="fiFxCf" value="0.6" step="0.1" oninput="fiFxCalc()" class="fi-hd-input" style="width:75px"></td></tr>
+                    <tr><td>Equity premium</td>
+                      <td><input type="number" id="fiFxEd" value="4.0" step="0.1" oninput="fiFxCalc()" class="fi-hd-input" style="width:75px"></td>
+                      <td><input type="number" id="fiFxEf" value="4.5" step="0.1" oninput="fiFxCalc()" class="fi-hd-input" style="width:75px"></td></tr>
+                    <tr><td>Liquidity premium</td>
+                      <td><input type="number" id="fiFxLd" value="0.2" step="0.1" oninput="fiFxCalc()" class="fi-hd-input" style="width:75px"></td>
+                      <td><input type="number" id="fiFxLf" value="0.3" step="0.1" oninput="fiFxCalc()" class="fi-hd-input" style="width:75px"></td></tr>
+                  </tbody>
+                </table>
+                </div>
+
+                <div id="fiFxResult" class="fi-hd-result" style="margin-top:12px"></div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">The 3-phase overshooting mechanism</div>
+                <div class="fi-body">When there is a relative IMPROVEMENT in investment opportunities in a country, the currency initially appreciates but "OVERSHOOTS" and eventually depreciates. Three phases:</div>
+
+                <div class="fi-hd-result" style="border-left-color:var(--fi-blue)">
+                  <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;max-width:420px;margin:0 auto;height:auto">
+                    <!-- baseline -->
+                    <line x1="30" y1="120" x2="380" y2="120" stroke="#2A3441" stroke-width="1" stroke-dasharray="3 3"/>
+                    <text x="384" y="123" fill="#7D8590" font-family="monospace" font-size="8">start</text>
+                    <!-- axes -->
+                    <line x1="30" y1="20" x2="30" y2="150" stroke="#2A3441" stroke-width="1"/>
+                    <text x="24" y="28" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="8">FX</text>
+                    <text x="370" y="165" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="8">time →</text>
+                    <!-- overshoot path: spike up (appreciate), plateau, revert down -->
+                    <path d="M 30 120 L 90 45 Q 140 35, 200 55 Q 260 72, 320 105 L 360 112" fill="none" stroke="#D4A017" stroke-width="2.5"/>
+                    <!-- phase markers -->
+                    <circle cx="90" cy="45" r="4" fill="#3DD68C"/>
+                    <text x="90" y="38" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="8">①</text>
+                    <circle cx="200" cy="55" r="4" fill="#F0A04B"/>
+                    <text x="200" y="48" text-anchor="middle" fill="#F0A04B" font-family="monospace" font-size="8">②</text>
+                    <circle cx="340" cy="110" r="4" fill="#FF7B72"/>
+                    <text x="340" y="103" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="8">③</text>
+                  </svg>
+                </div>
+
+                <div class="fi-info" style="border-left-color:#3DD68C"><b>① Initial appreciation:</b> the exchange rate will initially SIGNIFICANTLY APPRECIATE as capital flows in to capture the improved investment opportunities.</div>
+                <div class="fi-info" style="border-left-color:#F0A04B"><b>② Reversal expectation:</b> following an extended level of stronger exchange rates in the intermediate term, investors will start to EXPECT A REVERSAL.</div>
+                <div class="fi-info" style="border-left-color:#FF7B72"><b>③ Long-run reversion:</b> the exchange rate will tend to start REVERTING (DEPRECIATE) once the investment opportunities have been realized. This third phase is shown in the formula with a POSITIVE E(%ΔS_d/f) — the domestic currency depreciates by that percentage.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 4 · UIP & HOT MONEY ═══════════ -->
+            <div id="fifx-uip" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Uncovered Interest Rate Parity (UIP)</div>
+                <div class="fi-body">UIP states that exchange rate changes should EQUAL differences in nominal interest rates.</div>
+                <div class="fi-trap"><b>UIP vs the capital mobility formula:</b> UIP implies that in the formula, ONLY the interest rate differential (r^d − r^f) matters — NOT the premium differentials (term, credit, equity, liquidity).</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Carry trades — why they contradict UIP</div>
+                <div class="fi-body">In contrast to UIP, <b>carry trades</b> involve:</div>
+                <span class="fi-rule">• BORROWING in a LOW-rate currency</span>
+                <span class="fi-rule">• LENDING in a HIGH-rate currency</span>
+                <div class="fi-info"><b>Why carry trades work:</b> they are considered successful because they include a RISK PREMIUM. This CONFIRMS the validity of the risk premiums in the capital mobility equation.<br><br>If UIP held perfectly, carry trades would NOT be profitable (the high-rate currency would depreciate exactly enough to offset the rate advantage). The fact that carry trades earn returns is evidence that the premium differentials matter.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Hot Money</div>
+                <div class="fi-body">When capital flows into a country given exchange rate differentials, this is referred to as <b>HOT MONEY</b>. Hot money creates monetary policy issues:</div>
+                <span class="fi-rule"><span class="fi-red">1.</span> Central banks' ability to use monetary policy effectively is LIMITED</span>
+                <span class="fi-rule"><span class="fi-red">2.</span> Firms use SHORT-TERM financing to fund LONG-TERM investments → increases financial market risk</span>
+                <span class="fi-rule"><span class="fi-red">3.</span> Exchange rates tend to OVERSHOOT → creating business disruption</span>
+                <div class="fi-tip"><b>Central bank response:</b> central banks may try to COUNTER the effects of hot money flows through INTERVENTION in currency markets, including:<br>
+                  • Selling government securities to limit the growth of bank reserves<br>
+                  • Maintaining interest rate targets</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 5 · PORTFOLIO BALANCE ═══════════ -->
+            <div id="fifx-portfolio" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Portfolio balance and composition</div>
+                <div class="fi-body">Strong economic growth in a country tends to correspond to an INCREASING share of that country's currency in the global market portfolio.</div>
+                <div class="fi-trap"><b>The mechanism:</b> investors need to be INDUCED to increase their allocations to that country/currency — which <b>WEAKENS the currency</b> and <b>INCREASES the risk premiums</b> of that country and currency.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Mitigating factors — why the currency may NOT weaken</div>
+                <div class="fi-body">A few factors could mitigate this weakening impact:</div>
+                <span class="fi-rule"><span class="fi-green">1.</span> <b>Home country bias:</b> investors tend to have a strong home-country bias, which leads them to absorb a LARGER share of the new assets (less inducement needed → less weakening)</span>
+                <span class="fi-rule"><span class="fi-green">2.</span> <b>Productivity-driven growth:</b> if growth is due to productivity gains, investors may fund it with financial flows AND foreign direct investment</span>
+                <span class="fi-rule"><span class="fi-green">3.</span> <b>High-trend-rate countries:</b> countries that experience high trend rates tend to be smaller EMERGING markets — increasing the weight in these countries generally does NOT weaken their currency</span>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Current account deficits — also weaken FX, with mitigants</div>
+                <div class="fi-body">Similarly, LARGE current account deficits also weaken exchange rates, but several mitigating factors exist:</div>
+                <span class="fi-rule"><span class="fi-green">1.</span> Current account deficits due to large <b>INVESTMENT spending</b> are easier to finance if they are expected to be <b>PROFITABLE</b></span>
+                <span class="fi-rule"><span class="fi-green">2.</span> SMALL current account deficits in global <b>RESERVE currencies</b> (including the US dollar) help provide global LIQUIDITY and are beneficial to the financial system</span>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 6 · ERRORS & MASTERY ═══════════ -->
+            <div id="fifx-errors" class="fi-panel">
+              <div class="fi-card">
+                <div class="fi-title">Errors &amp; Mastery — ready for your wrong answers</div>
+                <div class="fi-body">This tab will hold the exchange rate questions you get wrong, with pattern classification and drill mode.</div>
+                <div class="fi-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+                <div class="fi-tip"><b>Likely problem areas to watch on exchange rates:</b><br>
+                  • PPP: higher inflation → currency depreciates; favor lower-inflation currency<br>
+                  • PPP works long-term / large inflation differences, NOT short-term; ignores capital flows<br>
+                  • Current account: LENGTH of imbalance matters more than SIZE<br>
+                  • Capital mobility formula: positive E(%ΔS_d/f) = domestic DEPRECIATES<br>
+                  • 3-phase overshooting: appreciate → expect reversal → revert (depreciate)<br>
+                  • UIP: only interest rate differential matters (not premiums)<br>
+                  • Carry trades confirm risk premiums exist (contradict UIP)<br>
+                  • Hot money 3 issues + central bank intervention<br>
+                  • Portfolio balance: growth → currency share up → currency weakens (unless home bias / productivity / EM)</div>
+              </div>
+            </div>
+
+          </div><!-- /fir-fx top panel -->
+
+          <!-- ════════════════ TOP TAB · VOLATILITY FORECASTING ════════════════ -->
+          <div id="fir-vol" class="fi-toppanel">
+
+            <div class="fi-tabs">
+              <button class="fi-tab active" onclick="fiVolTab('sample',this)">Sample VCV</button>
+              <button class="fi-tab" onclick="fiVolTab('factor',this)">Factor-Based VCV</button>
+              <button class="fi-tab" onclick="fiVolTab('shrink',this)">Shrinkage</button>
+              <button class="fi-tab" onclick="fiVolTab('smooth',this)">Smoothed Returns</button>
+              <button class="fi-tab" onclick="fiVolTab('arch',this)">ARCH</button>
+              <button class="fi-tab" onclick="fiVolTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- ═══════════ SUBTAB 1 · SAMPLE VCV ═══════════ -->
+            <div id="fivol-sample" class="fi-panel active">
+
+              <div class="fi-card">
+                <div class="fi-title">LOS 2.g · The VCV Matrix</div>
+                <div class="fi-body">Estimating the variance for a SINGLE asset is relatively EASY. Estimating variances for MANY assets is more COMPLEX → requires a <b>variance-covariance (VCV) matrix</b> or other forecasting tools.</div>
+                <div class="fi-info"><b>Professor's note:</b> there are many formulas in this module, included to explain the underlying concepts. It is UNLIKELY you'll be required to do these calculations on the exam — the LOS only asks you to <b>DISCUSS</b> methods of volatility forecasts.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Sample VCV Matrix</div>
+                <div class="fi-body">A constant VCV matrix is most easily estimated from <b>sample statistics</b> (deriving variances and covariances from the sample).</div>
+                <div class="fi-trap"><b>Sample size is critical for large portfolios:</b> the number of assets CANNOT exceed the number of historical observations. If the sample size is small relative to the number of assets, outcomes may be <b>MEANINGLESS</b> — e.g. the matrix may show that a large portfolio is <b>RISKLESS</b>.</div>
+                <div class="fi-tip"><b>Rule of thumb (testable):</b> the number of observations should be at least <b>10× larger</b> than the number of portfolio assets.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Sample VCV — the key advantage</div>
+                <div class="fi-info"><b>Consistent AND unbiased:</b> unlike the factor-based matrix, the sample VCV matrix is both <b>CONSISTENT</b> (converges to the true matrix as the sample grows) and <b>UNBIASED</b> (a predictor of true returns, on average). This is the benchmark the factor model fails against.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 2 · FACTOR-BASED VCV ═══════════ -->
+            <div id="fivol-factor" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Factor-Based VCV Matrices</div>
+                <div class="fi-tip"><b>Main advantage:</b> using multifactor models for VCV matrices significantly REDUCES the number of required observations. Correlations can be estimated from a few common factors, while variances require factors related to specific assets.</div>
+                <div class="fi-body">Return of the ith asset in a multifactor model:</div>
+                <div class="fi-fl">r_i = α_i + Σ(k=1 to K) β_ik · F_k + ε_i</div>
+                <span class="fi-rule"><b>K</b> = number of common factors</span>
+                <span class="fi-rule"><b>α_i</b> = intercept</span>
+                <span class="fi-rule"><b>β_ik</b> = ith asset's sensitivity to the kth factor</span>
+                <span class="fi-rule"><b>F_k</b> = kth factor return</span>
+                <span class="fi-rule"><b>ε_i</b> = factor term unique to asset i (zero mean)</span>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Variance &amp; covariance formulas</div>
+                <div class="fi-fl">Variance of asset i:
+  σ²_i = ΣΣ β_im · β_in · ρ_mn + ν²_i
+
+Covariance between i and j:
+  σ_ij = ΣΣ β_im · β_jn · ρ_mn</div>
+                <span class="fi-rule"><b>ρ_mn</b> = covariance between the mth and nth factors</span>
+                <span class="fi-rule"><b>ν²_i</b> = variance of the unique factor ε_i</span>
+                <div class="fi-info">Assuming these factors are NOT redundant and do NOT have zero terms → ensures matrix outcomes are not meaningless and portfolios don't incorrectly appear riskless.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Interactive · Why factor models need fewer estimates</div>
+                <div class="fi-body">Enter the number of assets (N) and common factors (K). Compare the number of estimates for a full sample VCV vs a factor-based model.</div>
+
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Number of assets (N)</span>
+                  <input type="number" id="fiVolN" value="50" step="1" min="1" oninput="fiVolNK()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row" style="border-bottom:none">
+                  <span class="fi-hd-label">Number of factors (K)</span>
+                  <input type="number" id="fiVolK" value="6" step="1" min="1" oninput="fiVolNK()" class="fi-hd-input">
+                </div>
+
+                <div id="fiVolNKResult" class="fi-hd-result"></div>
+                <div class="fi-tip" style="margin-top:8px"><b>Textbook example:</b> N=50, K=6 → sample VCV needs <b>1,225</b> covariances (50×49/2), while the factor model needs only <b>300</b> sensitivities (50×6) + <b>21</b> factor elements (6×7/2).</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">2 shortcomings of factor-based VCV</div>
+                <div class="fi-trap"><b>1 · BIASED</b><br>
+                  Matrix inputs need to be estimated, so the matrix will be biased (misspecified). As a result, it will NOT be a predictor of the true returns — <b>not even on average</b>.</div>
+                <div class="fi-trap"><b>2 · INCONSISTENT</b><br>
+                  As the sample size increases, the model does NOT converge to the true matrix.</div>
+                <div class="fi-info"><b>Contrast:</b> the SAMPLE VCV matrix is both <b>CONSISTENT and UNBIASED</b> — the two properties the factor-based matrix lacks. (This contrast is the testable point.)</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 3 · SHRINKAGE ═══════════ -->
+            <div id="fivol-shrink" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Shrinkage Estimates</div>
+                <div class="fi-body">Combining information in the SAMPLE VCV matrix with a TARGET matrix (e.g. the factor-based VCV matrix) results in more precise data and reduced estimation error.</div>
+                <div class="fi-fl">shrinkage estimate = weight × sample + (1 − weight) × target
+
+(same weights used for ALL elements of the matrix,
+ including variance and covariance factors)</div>
+                <div class="fi-info"><b>Why it helps:</b> the resulting figures are more EFFICIENT because they have smaller error terms. Even though shrinkage estimates may be biased, MORE PRECISE (less biased) target matrices will result in greater improvement.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Interactive · Shrinkage estimate</div>
+                <div class="fi-body">Replicates the textbook example: sample covariance 180, target 220, weight 60% sample / 40% target → 196.</div>
+
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Sample covariance</span>
+                  <input type="number" id="fiVolSamp" value="180" step="1" oninput="fiVolShrink()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row">
+                  <span class="fi-hd-label">Target covariance (factor-based)</span>
+                  <input type="number" id="fiVolTarg" value="220" step="1" oninput="fiVolShrink()" class="fi-hd-input">
+                </div>
+                <div class="fi-hd-row" style="border-bottom:none">
+                  <span class="fi-hd-label">Weight on SAMPLE %</span>
+                  <input type="number" id="fiVolWt" value="60" step="1" min="0" max="100" oninput="fiVolShrink()" class="fi-hd-input">
+                </div>
+
+                <div id="fiVolShrinkResult" class="fi-hd-result"></div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 4 · SMOOTHED RETURNS ═══════════ -->
+            <div id="fivol-smooth" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Smoothed Returns to Estimate Volatility</div>
+                <div class="fi-trap"><b>The core effect (very testable):</b> smoothing of data leads to:<br>
+                  • UNDERESTIMATING risk<br>
+                  • OVERSTATING returns<br>
+                  • OVERSTATING diversification benefits<br><br>
+                  Not adjusting for smoothing → distorted portfolio analysis and suboptimal asset allocation decisions.</div>
+                <div class="fi-body">Adjust by taking a weighted average of the current "true" returns and previously observed returns:</div>
+                <div class="fi-fl">R_t = (1 − λ)·r_t + λ·R_t−1
+
+(λ = weight between 0 and 1)</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Variance inflation formula</div>
+                <div class="fi-fl">var(r) = ((1 + λ) / (1 − λ)) · var(R)  >  var(R)</div>
+                <div class="fi-info">The TRUE variance var(r) is always GREATER than the observed (smoothed) variance var(R) — confirming that smoothing UNDERSTATES risk.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Interactive · Variance inflation from smoothing</div>
+                <div class="fi-body">Replicates the textbook example: λ = 0.6 → true variance is 1.6/0.4 = 4× the observed variance, and 2× the standard deviation.</div>
+
+                <div class="fi-hd-row" style="border-bottom:none">
+                  <span class="fi-hd-label">Smoothing weight λ (0–1)</span>
+                  <input type="number" id="fiVolLam" value="0.6" step="0.05" min="0" max="0.99" oninput="fiVolSmooth()" class="fi-hd-input">
+                </div>
+
+                <div id="fiVolSmoothResult" class="fi-hd-result"></div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Shortcoming of the smoothing model</div>
+                <div class="fi-trap"><b>One shortcoming:</b> the true CURRENT return (r_t) is NOT directly observable.</div>
+                <div class="fi-tip"><b>Remedy:</b> proxies for estimating the true return include using an <b>asset INDEX</b>.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 5 · ARCH ═══════════ -->
+            <div id="fivol-arch" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">ARCH Models</div>
+                <div class="fi-body">Asset returns generally show periods of HIGH and LOW volatilities, leading to <b>VOLATILITY CLUSTERING</b>. These volatilities can be addressed through <b>autoregressive conditional heteroskedasticity (ARCH)</b> models, used for portfolios with multiple assets in VCV matrix estimations.</div>
+                <div class="fi-info"><b>Professor's note:</b> you encountered ARCH at Level II — use that knowledge to your advantage.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">The simplest ARCH formula</div>
+                <div class="fi-fl">σ²_t = γ + α·σ²_t−1 + β·η²_t
+
+equivalently:
+σ²_t = γ + (α+β)·σ²_t−1 + β·(η²_t − σ²_t−1)</div>
+                <span class="fi-rule"><b>α, β, γ</b> = nonnegative parameters</span>
+                <span class="fi-rule"><b>(α + β) &lt; 1</b> — required constraint</span>
+                <span class="fi-rule"><b>η_t</b> = random variable indicating the unexpected return component</span>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Interpreting α + β</div>
+                <div class="fi-trap"><b>Key relationship (testable):</b> HIGHER α + β terms indicate HIGHER emphasis on PAST information, leading to more <b>VOLATILITY CLUSTERING</b>.</div>
+                <div class="fi-info">Intuition: the more weight placed on the prior period's variance (σ²_t−1) and the prior shock, the more today's volatility "remembers" yesterday's — so high-volatility periods follow high-volatility periods (clustering).</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 6 · ERRORS & MASTERY ═══════════ -->
+            <div id="fivol-errors" class="fi-panel">
+              <div class="fi-card">
+                <div class="fi-title">Errors &amp; Mastery — ready for your wrong answers</div>
+                <div class="fi-body">This tab will hold the volatility-forecasting questions you get wrong, with pattern classification and drill mode.</div>
+                <div class="fi-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+
+                <div class="fi-card" style="margin-top:14px;background:rgba(121,192,255,0.05)">
+                  <div class="fi-title" style="font-size:13px">Module Quiz 2.7 · Q1 framework (the recurring essay setup)</div>
+                  <div class="fi-body"><b>Setup:</b> manager needs 17 asset classes; has weekly sample data over the last 6 months; uses a factor-based matrix but NO shrinkage. Determine strengths and shortcomings.</div>
+                  <div class="fi-tip"><b>Strengths to cite:</b> factor model needs FEWER observations (key, because 6 months of weekly data ≈ 26 observations &lt; 10×17 = 170 needed for a sample VCV → a sample VCV here would be MEANINGLESS / could appear riskless).</div>
+                  <div class="fi-trap"><b>Shortcomings to cite:</b> factor-based matrix is BIASED (not a predictor even on average) and INCONSISTENT (won't converge to true matrix as sample grows).</div>
+                  <div class="fi-info"><b>Q2 remedy:</b> use SHRINKAGE — combine the factor-based (target) matrix with the sample VCV to reduce estimation error and improve efficiency.</div>
+                </div>
+
+                <div class="fi-tip" style="margin-top:12px"><b>Likely problem areas to watch on volatility:</b><br>
+                  • Sample VCV: observations ≥ 10× assets; too few → appears riskless<br>
+                  • Sample VCV is consistent AND unbiased (the benchmark)<br>
+                  • Factor model advantage = fewer observations<br>
+                  • Factor model 2 shortcomings: BIASED + INCONSISTENT<br>
+                  • Shrinkage = weighted avg sample + target (ex: 180×0.6 + 220×0.4 = 196)<br>
+                  • Smoothing → underestimates risk, overstates returns + diversification<br>
+                  • Smoothing variance: ((1+λ)/(1−λ))·var(R); λ=0.6 → 4× variance, 2× SD<br>
+                  • Smoothing shortcoming: true return not observable → use asset index proxy<br>
+                  • ARCH: volatility clustering; (α+β)&lt;1; higher α+β → more clustering</div>
+              </div>
+            </div>
+
+          </div><!-- /fir-vol top panel -->
+
+          <!-- ════════════════ TOP TAB · PORTFOLIO ADJUSTMENTS ════════════════ -->
+          <div id="fir-adj" class="fi-toppanel">
+
+            <div class="fi-tabs">
+              <button class="fi-tab active" onclick="fiAdjTab('questions',this)">The 5 Questions</button>
+              <button class="fi-tab" onclick="fiAdjTab('trend',this)">Trend &amp; Integration</button>
+              <button class="fi-tab" onclick="fiAdjTab('cycle',this)">Business Cycle Playbook</button>
+              <button class="fi-tab" onclick="fiAdjTab('policy',this)">Policy &amp; Current Account</button>
+              <button class="fi-tab" onclick="fiAdjTab('drill',this)">Reallocation Drill</button>
+              <button class="fi-tab" onclick="fiAdjTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- ═══════════ SUBTAB 1 · THE 5 QUESTIONS ═══════════ -->
+            <div id="fiadj-questions" class="fi-panel active">
+
+              <div class="fi-card">
+                <div class="fi-title">LOS 2.h · The goal of this module</div>
+                <div class="fi-body">Recommend and justify changes in the component weights of a global investment portfolio based on TRENDS and EXPECTED CHANGES in macroeconomic factors. The focus is on <b>HOW to adjust a portfolio</b>, not on the particular forecast details.</div>
+                <div class="fi-info">Starting from a typical equities/bonds portfolio, an analyst may change weights between:<br>
+                  • Equities vs bonds<br>
+                  • Domestic vs international<br>
+                  • Credit quality, duration, yield curve positioning, or currency exposures of the underlying assets</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">The 5 questions to keep in mind</div>
+                <div class="fi-body">To aid the decision-making process, keep these five questions in mind:</div>
+                <span class="fi-rule"><span class="fi-orange">1.</span> Have the <b>drivers of trend growth</b> changed significantly?</span>
+                <span class="fi-rule"><span class="fi-orange">2.</span> Are markets becoming more or less <b>integrated</b>?</span>
+                <span class="fi-rule"><span class="fi-orange">3.</span> Where is the country positioned within the <b>business cycle</b>, and are fiscal and monetary policies consistent with the business cycle phase?</span>
+                <span class="fi-rule"><span class="fi-orange">4.</span> What is the trend in <b>current account balances</b>?</span>
+                <span class="fi-rule"><span class="fi-orange">5.</span> Are <b>currencies</b> strong or weak, and how are currencies affecting economic growth and competitiveness?</span>
+                <div class="fi-tip"><b>Mnemonic:</b> Trend → Integration → Cycle → Current account → Currency. Each question maps to one of the other sub-tabs in this module.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 2 · TREND & INTEGRATION ═══════════ -->
+            <div id="fiadj-trend" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Trend Growth → equity vs bond tilt</div>
+                <table class="fi-table">
+                  <thead><tr><th>Trend growth is…</th><th>Effect</th><th>Why</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="fi-green">FAVORABLE</b> to equities</td><td>↑ equity weight</td><td>Implies long-term EARNINGS GROWTH</td></tr>
+                    <tr><td><b class="fi-red">UNFAVORABLE</b> to bonds</td><td>↓ bond weight</td><td>Typically results in HIGHER interest rates</td></tr>
+                  </tbody>
+                </table>
+                <div class="fi-info">The analyst can use country-specific and global expectations through <b>VCV matrices</b> to adjust the allocations between equities and bonds.</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Market Integration → required returns</div>
+                <div class="fi-trap"><b>Key relationship (from Singer-Terhaar):</b> as markets become MORE integrated globally, required returns will <b>FALL</b>. Lower required returns → higher current prices → lower future expected returns.</div>
+                <div class="fi-body">The reallocation rule:</div>
+                <span class="fi-rule"><b class="fi-green">INCREASE</b> allocations toward emerging markets EXPECTED to see INCREASED integration (they'll re-rate up as required returns fall)</span>
+                <span class="fi-rule"><b class="fi-red">DECREASE / move AWAY</b> from markets that are ALREADY highly integrated (the re-rating benefit is already captured)</span>
+                <div class="fi-tip"><b>The intuition:</b> you want to OWN the market BEFORE its required return falls (capturing the price appreciation), not AFTER. Already-integrated markets have already had their required returns fall.</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 3 · BUSINESS CYCLE PLAYBOOK ═══════════ -->
+            <div id="fiadj-cycle" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Trough vs Peak — the reallocation playbook</div>
+                <div class="fi-body">The business cycle position drives the entire reallocation. Each lever is decomposed below.</div>
+
+                <table class="fi-table">
+                  <thead><tr><th>Lever</th><th class="fi-green">TROUGH</th><th class="fi-red">PEAK (reverse)</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Equity weight</b></td><td class="fi-green">INCREASE</td><td class="fi-red">REDUCE</td></tr>
+                    <tr><td><b>Bond weight</b></td><td class="fi-red">REDUCE</td><td class="fi-green">INCREASE</td></tr>
+                    <tr><td><b>Bond duration</b></td><td class="fi-red">REDUCE (shorten)</td><td class="fi-green">INCREASE (extend)</td></tr>
+                    <tr><td><b>Curve structure</b></td><td>BARBELL (short + long, less medium)</td><td>Reverse of barbell</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Why the TROUGH playbook — decomposed</div>
+                <div class="fi-info" style="border-left-color:#3DD68C"><b>Equities perform well at the trough:</b> valuation ratios AND earnings growth are expected to INCREASE. The analyst could use the <b>Grinold-Kroner model</b> to compute the required equity risk premium → INCREASE equity weights.</div>
+                <div class="fi-body" style="margin-top:8px">At the trough, the yield curve is STEEP with high credit and term premiums. So why reduce bonds and shorten duration?</div>
+                <span class="fi-rule"><b>Driver 1 — rising rates expected:</b> the expectation of RISING interest rates means bonds tend to UNDERPERFORM → reduce bond allocation</span>
+                <span class="fi-rule"><b>Driver 2 — duration risk:</b> rising rates hurt long-duration bonds most → REDUCE overall bond duration</span>
+                <span class="fi-rule"><b>Driver 3 — curve positioning:</b> a BARBELL may be optimal — increased short-term exposure (rolls up as rates rise) + long-term exposure, with reduced medium-term exposure</span>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">PEAK — the reverse strategy</div>
+                <div class="fi-trap"><b>At the peak, follow the REVERSE strategy:</b><br>
+                  • REDUCE equity exposure<br>
+                  • INCREASE bond exposure AND durations<br><br>
+                  (Slowing growth + expected rate cuts → bonds outperform, long duration captures the rally.)</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 4 · POLICY & CURRENT ACCOUNT ═══════════ -->
+            <div id="fiadj-policy" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Monetary &amp; Fiscal Policy — focus on STRUCTURAL changes</div>
+                <div class="fi-trap"><b>The key nuance:</b> the analyst should focus LESS on monetary and fiscal policy ACTIVITIES — these are expected to be ALREADY REFLECTED in asset values. Focus instead on <b>STRUCTURAL changes in policy direction.</b></div>
+                <div class="fi-body">Examples of structural changes that CAN influence portfolio reallocation:</div>
+                <span class="fi-rule">• Changes in the <b>tax code</b></span>
+                <span class="fi-rule">• Changes from standard interest rate targeting to other policies, including <b>quantitative easing (QE)</b></span>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Current Account — the LONG-TERM TREND matters</div>
+                <div class="fi-body">Current account balances fluctuate with business cycles, but it is the <b>LONG-TERM TREND</b> in current account balances that is more important in setting portfolio expectations.</div>
+                <div class="fi-info"><b>Rising current account deficits</b> tend to be associated with:<br>
+                  • RISING required returns (and therefore FALLING asset prices)<br>
+                  • INCREASED capital flows to the deficit country to fund its deficit</div>
+              </div>
+
+              <div class="fi-card">
+                <div class="fi-title">Capital Flows → Currency: is it at its PEAK?</div>
+                <div class="fi-body">Capital flows also influence currencies. If assets in a particular currency offer HIGHER risk-adjusted return potential than in other currencies, capital will flow to that country and put UPWARD pressure on its currency.</div>
+                <div class="fi-trap"><b>The analyst's judgment call:</b> determine whether the currency STILL HAS POTENTIAL to appreciate, or whether it is at its <b>PEAK</b> (links to the 3-phase overshooting in the Exchange Rate module — appreciation eventually reverses).</div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 5 · REALLOCATION DRILL ═══════════ -->
+            <div id="fiadj-drill" class="fi-panel">
+
+              <div class="fi-card">
+                <div class="fi-title">Interactive · Reallocation Drill</div>
+                <div class="fi-body">Pick a scenario signal. The drill reads the signal → infers the cycle phase → recommends the reallocation across every lever, with reasoning. Includes the two Module Quiz 2.8 country scenarios.</div>
+
+                <div class="fi-hd-row" style="border-bottom:none;flex-wrap:wrap;gap:6px">
+                  <button class="fi-adj-sig active" onclick="fiAdjDrill('inverted',this)">Country A: inverted (downward) curve</button>
+                  <button class="fi-adj-sig" onclick="fiAdjDrill('deflation',this)">Country B: declining prices</button>
+                  <button class="fi-adj-sig" onclick="fiAdjDrill('trough',this)">Trough / steep curve</button>
+                  <button class="fi-adj-sig" onclick="fiAdjDrill('peak',this)">Peak / flat curve</button>
+                  <button class="fi-adj-sig" onclick="fiAdjDrill('integrating',this)">EM gaining integration</button>
+                </div>
+
+                <div id="fiAdjDrillResult" class="fi-hd-result" style="margin-top:12px"></div>
+              </div>
+            </div>
+
+            <!-- ═══════════ SUBTAB 6 · ERRORS & MASTERY ═══════════ -->
+            <div id="fiadj-errors" class="fi-panel">
+              <div class="fi-card">
+                <div class="fi-title">Errors &amp; Mastery — ready for your wrong answers</div>
+                <div class="fi-body">This tab will hold the portfolio-adjustment questions you get wrong, with pattern classification and drill mode.</div>
+                <div class="fi-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+                <div class="fi-tip"><b>Likely problem areas to watch on portfolio adjustments:</b><br>
+                  • The 5 questions (trend / integration / cycle / current account / currency)<br>
+                  • Trend growth: favors equities, hurts bonds (higher rates)<br>
+                  • More integration → required returns FALL → tilt toward EM gaining integration, away from already-integrated<br>
+                  • TROUGH: ↑equity, ↓bond, ↓duration, BARBELL; use Grinold-Kroner for ERP<br>
+                  • PEAK: reverse — ↓equity, ↑bond, ↑duration<br>
+                  • Inverted/downward curve → late cycle/peak signal → reduce equity, extend bond duration<br>
+                  • Policy: focus on STRUCTURAL changes (tax code, QE), not already-priced activities<br>
+                  • Current account: LONG-TERM TREND matters; rising deficit → rising required returns, falling prices<br>
+                  • Currency: judge whether still appreciating or at PEAK</div>
+              </div>
+            </div>
+
+          </div><!-- /fir-adj top panel -->
+
+
+
+
+
 
           <script>
             // Top-level asset-class tab switcher
@@ -12273,6 +13105,10 @@ RP_equities = 15% × 0.70 × 0.35 = 3.68%
               btn.classList.add('active');
               if(id === 'fixed') setTimeout(fiHdCalc, 30);
               if(id === 'equity') setTimeout(fiGkCalc, 30);
+              if(id === 're') setTimeout(fiReCalc, 30);
+              if(id === 'fx') setTimeout(fiFxCalc, 30);
+              if(id === 'vol') setTimeout(fiVolNK, 30);
+              if(id === 'adj') setTimeout(function(){ fiAdjDrill('inverted', null); }, 30);
             }
             function fiTab(id, btn){
               document.querySelectorAll('#fir-fixed > .fi-panel').forEach(function(p){p.classList.remove('active')});
@@ -12348,6 +13184,285 @@ RP_equities = 15% × 0.70 × 0.35 = 3.68%
                 '<div style="font-size:12.5px;line-height:1.6;color:#C9D1D9"><b>'+dominant+'</b><br>'+effect+'</div>';
             }
             function fiInit(){ setTimeout(fiHdCalc, 30); }
+
+            // ═════════════════════════════════════════════════════════════
+            // PORTFOLIO ADJUSTMENTS — sub-tab nav + reallocation drill
+            // ═════════════════════════════════════════════════════════════
+
+            function fiAdjTab(id, btn){
+              document.querySelectorAll('#fir-adj > .fi-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#fir-adj > .fi-tabs > .fi-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('fiadj-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'drill') setTimeout(function(){ fiAdjDrill(fiAdjCurrentSig, null); }, 30);
+            }
+
+            var fiAdjCurrentSig = 'inverted';
+
+            var FI_ADJ_SCENARIOS = {
+              inverted: {
+                signal: 'Country A — yield curve is DOWNWARD-SLOPING (inverted); current portfolio 60% stocks / 40% bonds',
+                phase: 'Inverted curve → market expects FALLING short rates ahead → signals LATE CYCLE / approaching PEAK or contraction',
+                phaseColor: '#FF7B72',
+                moves: [
+                  ['Equity weight', 'REDUCE below 60%', 'down', 'Late-cycle / peak: equities are most vulnerable as growth slows and earnings expectations roll over'],
+                  ['Bond weight', 'INCREASE above 40%', 'up', 'Falling-rate expectation (the inversion) means bonds are set to OUTPERFORM'],
+                  ['Bond duration', 'INCREASE (extend)', 'up', 'Long duration captures the most price gain when rates fall — the inversion is pricing exactly that'],
+                  ['Curve position', 'Favor LONGER maturities', 'up', 'Reverse of the trough barbell — lengthen to ride the expected rate decline']
+                ],
+                link: 'Cross-link: an inverted curve is the classic late-cycle / pre-recession signal (see CME Yield Curve × Cycle). It is the OPPOSITE of the steep curve seen at the trough.'
+              },
+              deflation: {
+                signal: 'Country B — declining prices, expected to CONTINUE; no funds invested yet; considering bonds, equity, real estate',
+                phase: 'Persistent declining prices = DEFLATION → typically a contraction / weak-demand environment',
+                phaseColor: '#79C0FF',
+                moves: [
+                  ['Bonds (nominal)', 'FAVOR — most attractive', 'up', 'Deflation raises the REAL value of fixed nominal coupons; falling rates lift bond prices'],
+                  ['Equity', 'AVOID / underweight', 'down', 'Deflation crushes nominal revenues, pricing power and earnings; equities perform poorly'],
+                  ['Real estate', 'AVOID / underweight', 'down', 'Property values and rents fall in deflation; leverage amplifies the downside'],
+                ],
+                link: 'Cross-link: deflation deep-dive (CME Inflation × Assets) — nominal bonds are the deflation winner; equities and real assets are losers.'
+              },
+              trough: {
+                signal: 'Economy at the TROUGH of the business cycle; yield curve is STEEP with high credit + term premiums',
+                phase: 'Trough → recovery ahead: valuation ratios and earnings growth expected to INCREASE',
+                phaseColor: '#3DD68C',
+                moves: [
+                  ['Equity weight', 'INCREASE', 'up', 'Equities perform well at the trough; use Grinold-Kroner to compute the required ERP and raise equity weights'],
+                  ['Bond weight', 'REDUCE', 'down', 'Expectation of RISING interest rates means bonds tend to underperform'],
+                  ['Bond duration', 'REDUCE (shorten)', 'down', 'Rising rates hurt long-duration bonds most → shorten duration'],
+                  ['Curve position', 'BARBELL', 'flat', 'Increased short-term + long-term exposure with reduced MEDIUM-term exposure']
+                ],
+                link: 'Cross-link: steep curve = early cycle / trough (CME Yield Curve × Cycle). This is the canonical "buy equities, shorten bonds" setup.'
+              },
+              peak: {
+                signal: 'Economy at the PEAK of the business cycle; curve flattening',
+                phase: 'Peak → contraction ahead: growth and earnings set to slow',
+                phaseColor: '#FF7B72',
+                moves: [
+                  ['Equity weight', 'REDUCE', 'down', 'Reverse of the trough strategy — slowing growth and earnings make equities vulnerable'],
+                  ['Bond weight', 'INCREASE', 'up', 'Bonds outperform as growth slows and rate cuts approach'],
+                  ['Bond duration', 'INCREASE (extend)', 'up', 'Long duration captures the rally when rates fall'],
+                  ['Curve position', 'Reverse of barbell', 'flat', 'Extend exposure rather than barbell — position for falling rates']
+                ],
+                link: 'Cross-link: the peak playbook is the exact REVERSE of the trough playbook.'
+              },
+              integrating: {
+                signal: 'An emerging market is EXPECTED to see INCREASED global integration',
+                phase: 'Integration ↑ → required returns FALL (Singer-Terhaar) → prices re-rate UP',
+                phaseColor: '#3DD68C',
+                moves: [
+                  ['EM allocation', 'INCREASE', 'up', 'Own the market BEFORE required returns fall, to capture the price appreciation from re-rating'],
+                  ['Already-integrated mkts', 'REDUCE / move AWAY', 'down', 'Their required-return decline is already captured — limited further upside'],
+                ],
+                link: 'Cross-link: Singer-Terhaar (Equity module) — the integration parameter φ drives the blend toward the lower integrated required return.'
+              }
+            };
+
+            function fiAdjDrill(key, btn){
+              fiAdjCurrentSig = key;
+              var sc = FI_ADJ_SCENARIOS[key];
+              if(!sc) return;
+              // toggle button active state
+              if(btn){
+                document.querySelectorAll('#fiadj-drill .fi-adj-sig').forEach(function(b){b.classList.remove('active')});
+                btn.classList.add('active');
+              } else {
+                var btns = document.querySelectorAll('#fiadj-drill .fi-adj-sig');
+                btns.forEach(function(b){
+                  b.classList.toggle('active', b.getAttribute('onclick').indexOf("'"+key+"'") !== -1);
+                });
+              }
+
+              function arrow(d){
+                if(d === 'up') return '<span style="color:#3DD68C;font-weight:700">▲</span>';
+                if(d === 'down') return '<span style="color:#FF7B72;font-weight:700">▼</span>';
+                return '<span style="color:#F0A04B;font-weight:700">◆</span>';
+              }
+
+              var movesHtml = sc.moves.map(function(m){
+                return '<div style="padding:8px 0;border-bottom:1px solid var(--border)">'+
+                  '<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">'+
+                    '<span style="font-size:12px;color:#C9D1D9;font-weight:600">'+m[0]+'</span>'+
+                    '<span style="font-size:11.5px;white-space:nowrap">'+arrow(m[2])+' '+m[1]+'</span>'+
+                  '</div>'+
+                  '<div style="font-size:10.5px;color:#7D8590;margin-top:3px;line-height:1.5">'+m[3]+'</div>'+
+                '</div>';
+              }).join('');
+
+              document.getElementById('fiAdjDrillResult').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.06em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">Signal</div>'+
+                '<div style="font-size:12.5px;color:#C9D1D9;line-height:1.55;margin-bottom:10px">'+sc.signal+'</div>'+
+                '<div style="padding:8px 10px;border-radius:8px;background:rgba(255,255,255,.03);border-left:3px solid '+sc.phaseColor+';margin-bottom:12px">'+
+                  '<span style="font-size:10px;letter-spacing:.06em;color:#7D8590;text-transform:uppercase">Cycle read</span><br>'+
+                  '<span style="font-size:12px;color:'+sc.phaseColor+';font-weight:600">'+sc.phase+'</span></div>'+
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.06em;color:#7D8590;text-transform:uppercase;margin-bottom:2px">Recommended reallocation</div>'+
+                movesHtml+
+                '<div style="margin-top:12px;padding:8px 10px;border-radius:8px;background:rgba(121,192,255,.06);font-size:10.5px;color:#79C0FF;line-height:1.55">'+sc.link+'</div>';
+            }
+
+            // ═════════════════════════════════════════════════════════════
+            // VOLATILITY FORECASTING — sub-tab nav + 3 calculators
+            // ═════════════════════════════════════════════════════════════
+
+            function fiVolTab(id, btn){
+              document.querySelectorAll('#fir-vol > .fi-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#fir-vol > .fi-tabs > .fi-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('fivol-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'factor') setTimeout(fiVolNK, 30);
+              if(id === 'shrink') setTimeout(fiVolShrink, 30);
+              if(id === 'smooth') setTimeout(fiVolSmooth, 30);
+            }
+
+            // N/K estimate-count comparison
+            function fiVolNK(){
+              var N = Math.max(1, Math.round(parseFloat(document.getElementById('fiVolN').value) || 0));
+              var K = Math.max(1, Math.round(parseFloat(document.getElementById('fiVolK').value) || 0));
+              var vcvCov = N*(N-1)/2;          // distinct covariances
+              var vcvTotal = N*(N+1)/2;        // covariances + variances (full distinct VCV entries)
+              var facSens = N*K;               // factor sensitivities
+              var facElem = K*(K+1)/2;         // factor VCV elements
+              var facTotal = facSens + facElem;
+              var minObs = 10*N;               // recommended observations for a sample VCV
+
+              document.getElementById('fiVolNKResult').innerHTML =
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:4px 0;border-bottom:1px solid var(--border)">'+
+                  '<span style="color:#7D8590">Sample VCV — covariances (N(N−1)/2)</span><span style="font-family:monospace;color:#FF7B72;font-weight:600">'+vcvCov.toLocaleString()+'</span></div>'+
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:4px 0;border-bottom:1px solid var(--border)">'+
+                  '<span style="color:#7D8590">Factor — sensitivities (N×K)</span><span style="font-family:monospace;color:#3DD68C;font-weight:600">'+facSens.toLocaleString()+'</span></div>'+
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:4px 0;border-bottom:1px solid var(--border)">'+
+                  '<span style="color:#7D8590">Factor — VCV elements (K(K+1)/2)</span><span style="font-family:monospace;color:#3DD68C;font-weight:600">'+facElem.toLocaleString()+'</span></div>'+
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:4px 0;border-bottom:1px solid var(--border)">'+
+                  '<span style="color:#7D8590">Factor — total estimates</span><span style="font-family:monospace;color:#3DD68C;font-weight:600">'+facTotal.toLocaleString()+'</span></div>'+
+                '<div style="margin-top:8px;font-family:Georgia,serif;font-size:13.5px;color:var(--fi-gold)">Sample VCV needs '+vcvCov.toLocaleString()+' covariances vs '+facTotal.toLocaleString()+' factor estimates ('+facSens.toLocaleString()+' + '+facElem.toLocaleString()+')</div>'+
+                '<div style="font-size:11px;color:#7D8590;margin-top:6px">A sample VCV would need ≥ <b style="color:#F0A04B">'+minObs.toLocaleString()+'</b> observations (10× the '+N+' assets) to be reliable.</div>';
+            }
+
+            // Shrinkage estimate
+            function fiVolShrink(){
+              var samp = parseFloat(document.getElementById('fiVolSamp').value) || 0;
+              var targ = parseFloat(document.getElementById('fiVolTarg').value) || 0;
+              var wt = (parseFloat(document.getElementById('fiVolWt').value) || 0) / 100;
+              if(wt < 0) wt = 0; if(wt > 1) wt = 1;
+              var est = samp*wt + targ*(1-wt);
+
+              document.getElementById('fiVolShrinkResult').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">shrinkage = w·sample + (1−w)·target</div>'+
+                '<div style="font-size:12.5px;line-height:1.6;color:#C9D1D9">'+
+                  samp.toFixed(0)+' × '+wt.toFixed(2)+' + '+targ.toFixed(0)+' × '+(1-wt).toFixed(2)+'</div>'+
+                '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-family:Georgia,serif;font-size:16px;color:var(--fi-gold);font-weight:600">shrinkage estimate = '+est.toFixed(2)+'</div>';
+            }
+
+            // Smoothing variance inflation
+            function fiVolSmooth(){
+              var lam = parseFloat(document.getElementById('fiVolLam').value) || 0;
+              if(lam < 0) lam = 0; if(lam > 0.99) lam = 0.99;
+              var varMult = (1+lam)/(1-lam);
+              var sdMult = Math.sqrt(varMult);
+
+              document.getElementById('fiVolSmoothResult').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">var(r) = ((1+λ)/(1−λ)) · var(R)</div>'+
+                '<div style="font-size:12.5px;line-height:1.6;color:#C9D1D9">(1 + '+lam.toFixed(2)+') / (1 − '+lam.toFixed(2)+') = '+(1+lam).toFixed(2)+' / '+(1-lam).toFixed(2)+'</div>'+
+                '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">'+
+                  '<div style="font-family:Georgia,serif;font-size:16px;color:var(--fi-gold);font-weight:600">True variance = '+varMult.toFixed(2)+'× observed</div>'+
+                  '<div style="font-family:Georgia,serif;font-size:13.5px;color:#79C0FF;margin-top:4px">True standard deviation = '+sdMult.toFixed(2)+'× observed</div>'+
+                  '<div style="font-size:10.5px;color:#7D8590;margin-top:4px">True risk &gt; observed risk → smoothing UNDERSTATES risk.</div>'+
+                '</div>';
+            }
+
+            // ═════════════════════════════════════════════════════════════
+            // EXCHANGE RATE FORECASTING — sub-tab nav + capital mobility calc
+            // ═════════════════════════════════════════════════════════════
+
+            function fiFxTab(id, btn){
+              document.querySelectorAll('#fir-fx > .fi-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#fir-fx > .fi-tabs > .fi-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('fifx-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'capital') setTimeout(fiFxCalc, 30);
+            }
+
+            function fiFxCalc(){
+              function g(id){ return parseFloat(document.getElementById(id).value) || 0; }
+              var rd=g('fiFxRd'), rf=g('fiFxRf');
+              var td=g('fiFxTd'), tf=g('fiFxTf');
+              var cd=g('fiFxCd'), cf=g('fiFxCf');
+              var ed=g('fiFxEd'), ef=g('fiFxEf');
+              var ld=g('fiFxLd'), lf=g('fiFxLf');
+
+              var dRate = rd - rf;
+              var dTerm = td - tf;
+              var dCred = cd - cf;
+              var dEq = ed - ef;
+              var dLiq = ld - lf;
+              var total = dRate + dTerm + dCred + dEq + dLiq;
+
+              function row(label, d, f, diff){
+                var col = diff > 0 ? '#FF7B72' : (diff < 0 ? '#3DD68C' : '#7D8590');
+                return '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)">'+
+                  '<span style="color:#7D8590">'+label+'</span>'+
+                  '<span style="font-family:monospace;color:#C9D1D9">'+d.toFixed(1)+' − '+f.toFixed(1)+' = <b style="color:'+col+'">'+(diff>0?'+':'')+diff.toFixed(1)+'%</b></span></div>';
+              }
+
+              var dir, dirColor;
+              if(total > 0.001){ dir = 'DOMESTIC currency expected to DEPRECIATE'; dirColor = '#FF7B72'; }
+              else if(total < -0.001){ dir = 'DOMESTIC currency expected to APPRECIATE'; dirColor = '#3DD68C'; }
+              else { dir = 'No expected change'; dirColor = '#7D8590'; }
+
+              document.getElementById('fiFxResult').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:8px">E(%ΔS_d/f) = sum of (domestic − foreign) differentials</div>'+
+                row('Rate (r)', rd, rf, dRate)+
+                row('Term', td, tf, dTerm)+
+                row('Credit', cd, cf, dCred)+
+                row('Equity', ed, ef, dEq)+
+                row('Liquidity', ld, lf, dLiq)+
+                '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">'+
+                  '<div style="font-family:Georgia,serif;font-size:16px;color:var(--fi-gold);font-weight:600">E(%ΔS_d/f) = '+(total>0?'+':'')+total.toFixed(2)+'%</div>'+
+                  '<div style="font-size:12px;color:'+dirColor+';margin-top:4px;font-weight:600">'+dir+'</div>'+
+                  '<div style="font-size:10.5px;color:#7D8590;margin-top:4px">In d/f convention: positive = more domestic currency per unit of foreign = domestic depreciates.</div>'+
+                '</div>';
+            }
+
+            // ═════════════════════════════════════════════════════════════
+            // REAL ESTATE RETURNS — sub-tab nav + cap rate calculator
+            // ═════════════════════════════════════════════════════════════
+
+            function fiReTab(id, btn){
+              document.querySelectorAll('#fir-re > .fi-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#fir-re > .fi-tabs > .fi-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('fire-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'cap') setTimeout(fiReCalc, 30);
+            }
+
+            var fiReHorizonMode = 'infinite';
+            function fiReHorizon(m){
+              fiReHorizonMode = m;
+              document.getElementById('fiReInf').classList.toggle('active', m === 'infinite');
+              document.getElementById('fiReFin').classList.toggle('active', m === 'finite');
+              document.getElementById('fiReDcapRow').style.display = (m === 'finite') ? 'flex' : 'none';
+              fiReCalc();
+            }
+            function fiReCalc(){
+              var cap = parseFloat(document.getElementById('fiReCap').value) || 0;
+              var noi = parseFloat(document.getElementById('fiReNoi').value) || 0;
+              var dcap = parseFloat(document.getElementById('fiReDcap').value) || 0;
+
+              var er, formula;
+              if(fiReHorizonMode === 'finite'){
+                er = cap + noi - dcap;
+                formula = 'E(R_re) = cap rate + NOI growth − %Δcap rate<br>= ' + cap.toFixed(1) + '% + ' + noi.toFixed(1) + '% − ' + dcap.toFixed(1) + '%';
+              } else {
+                er = cap + noi;
+                formula = 'E(R_re) = cap rate + NOI growth rate<br>= ' + cap.toFixed(1) + '% + ' + noi.toFixed(1) + '%';
+              }
+
+              document.getElementById('fiReResult').innerHTML =
+                '<div style="font-family:monospace;font-size:10px;letter-spacing:.08em;color:#7D8590;text-transform:uppercase;margin-bottom:6px">' + (fiReHorizonMode === 'finite' ? 'Finite horizon' : 'Infinite horizon') + '</div>'+
+                '<div style="font-size:12.5px;line-height:1.6;color:#C9D1D9">' + formula + '</div>'+
+                '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-family:Georgia,serif;font-size:16px;color:var(--fi-gold);font-weight:600">E(R_re) = ' + er.toFixed(2) + '%</div>';
+            }
 
             // ═════════════════════════════════════════════════════════════
             // EQUITY RETURNS — sub-tab nav + G-K calc + Singer-Terhaar calc
