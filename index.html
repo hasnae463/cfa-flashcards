@@ -245,6 +245,7 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
   <button class="main-tab active" onclick="switchScreen('study',this)">Study</button>
   <button class="main-tab" onclick="switchScreen('manage',this)">Manage Cards</button>
   <button class="main-tab" onclick="switchScreen('notes',this)">📝 Notes</button>
+  <button class="main-tab" onclick="switchScreen('essay',this)">📌 Essay Method</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -12876,6 +12877,12 @@ FINITE time period (subtract change in cap rate):
                 <div class="fi-tip"><b>Ranking hook (most → least supportive):</b> Private equity &gt; Public equity &gt; Public debt. "Most vulnerable" = LEAST supportive = the majority-public-debt country (C). Debt has to be paid back; equity doesn't.</div>
               </div>
 
+              <!-- Essay method moved to the global "📌 Essay Method" tab (top bar, next to Notes) -->
+              <div class="fi-card" style="border-left:3px solid #79C0FF;background:rgba(121,192,255,0.05)">
+                <div class="fi-title">📌 Essay method → see the global "Essay Method" tab</div>
+                <div class="fi-body">The command-word decoder (Discuss / Describe / Identify / Over-and-above → required shape → completeness check) now lives in the top-level <b>📌 Essay Method</b> tab next to Notes, since it applies to every reading. Open it before drilling any constructed-response.</div>
+              </div>
+
               <!-- ESSAY COMPLETENESS CALLOUT -->
               <div class="fi-card" style="border-left:3px solid #F0A04B;background:rgba(240,160,75,0.05)">
                 <div class="fi-title">⚠ Pattern · Essay completeness (name-the-bucket-then-stop)</div>
@@ -13829,6 +13836,100 @@ equivalently:
     </div>
   </div>
 </div>
+
+<!-- ══════════════════════════════════════
+     ESSAY METHOD SCREEN (global, all readings)
+══════════════════════════════════════ -->
+<div class="screen" id="screen-essay">
+  <div style="max-width:760px;margin:0 auto;padding:24px 20px 60px;">
+
+    <div style="font-family:var(--serif);font-size:22px;color:var(--gold);margin-bottom:4px;">📌 Read the Command Word</div>
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:18px;">Global essay method · applies to every reading</div>
+
+    <div style="background:var(--surface2);border:1px solid var(--border);border-left:3px solid #79C0FF;border-radius:8px;padding:18px 20px;margin-bottom:18px;">
+      <div style="font-family:var(--sans);font-size:14px;line-height:1.7;color:#C9D1D9;">Before writing an essay answer, read the command verb — it tells you the SHAPE a full-credit answer must take. After writing, count your slots against that shape. This replaces "do I feel done?" (which only tracks whether you said something TRUE) with a structural check (did I fill every slot?).</div>
+    </div>
+
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:18px;">
+      <svg viewBox="0 0 680 360" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;max-width:680px;margin:0 auto;height:auto">
+        <defs>
+          <marker id="esCmdArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#7D8590" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+        </defs>
+        <text x="20" y="22" fill="#C9D1D9" font-family="Georgia,serif" font-size="13" font-weight="600">Command verb → required shape → completeness check</text>
+
+        <rect x="20" y="40" width="150" height="50" rx="7" fill="rgba(212,160,23,0.12)" stroke="#D4A017" stroke-width="1"/>
+        <text x="95" y="62" text-anchor="middle" fill="#D4A017" font-family="monospace" font-size="11" font-weight="700">Discuss / Critique</text>
+        <text x="95" y="78" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">evaluate the statement</text>
+        <line x1="170" y1="65" x2="200" y2="65" stroke="#7D8590" stroke-width="1.2" marker-end="url(#esCmdArrow)"/>
+        <rect x="202" y="40" width="180" height="50" rx="7" fill="rgba(61,214,140,0.1)" stroke="#3DD68C" stroke-width="0.8"/>
+        <text x="292" y="62" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="11" font-weight="700">Concede + challenge</text>
+        <text x="292" y="78" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">what's right, what's wrong</text>
+        <rect x="394" y="40" width="266" height="50" rx="7" fill="rgba(240,160,75,0.08)" stroke="#F0A04B" stroke-width="0.8"/>
+        <text x="408" y="60" fill="#C9D1D9" font-family="monospace" font-size="9.5">Check: did I name a flaw?</text>
+        <text x="408" y="76" fill="#7D8590" font-family="monospace" font-size="9.5">"all / never" = overstatement trap</text>
+
+        <rect x="20" y="100" width="150" height="50" rx="7" fill="rgba(212,160,23,0.12)" stroke="#D4A017" stroke-width="1"/>
+        <text x="95" y="122" text-anchor="middle" fill="#D4A017" font-family="monospace" font-size="11" font-weight="700">Describe / Explain</text>
+        <text x="95" y="138" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">the issues / how it works</text>
+        <line x1="170" y1="125" x2="200" y2="125" stroke="#7D8590" stroke-width="1.2" marker-end="url(#esCmdArrow)"/>
+        <rect x="202" y="100" width="180" height="50" rx="7" fill="rgba(61,214,140,0.1)" stroke="#3DD68C" stroke-width="0.8"/>
+        <text x="292" y="122" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="11" font-weight="700">A chain</text>
+        <text x="292" y="138" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">cause → mechanism → result</text>
+        <rect x="394" y="100" width="266" height="50" rx="7" fill="rgba(240,160,75,0.08)" stroke="#F0A04B" stroke-width="0.8"/>
+        <text x="408" y="120" fill="#C9D1D9" font-family="monospace" font-size="9.5">Check: do I have all 3 links?</text>
+        <text x="408" y="136" fill="#7D8590" font-family="monospace" font-size="9.5">not just the consequence</text>
+
+        <rect x="20" y="160" width="150" height="50" rx="7" fill="rgba(212,160,23,0.12)" stroke="#D4A017" stroke-width="1"/>
+        <text x="95" y="182" text-anchor="middle" fill="#D4A017" font-family="monospace" font-size="11" font-weight="700">Identify the…</text>
+        <text x="95" y="198" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">considerations / factors</text>
+        <line x1="170" y1="185" x2="200" y2="185" stroke="#7D8590" stroke-width="1.2" marker-end="url(#esCmdArrow)"/>
+        <rect x="202" y="160" width="180" height="50" rx="7" fill="rgba(61,214,140,0.1)" stroke="#3DD68C" stroke-width="0.8"/>
+        <text x="292" y="182" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="11" font-weight="700">A list of N</text>
+        <text x="292" y="198" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">the count is usually fixed</text>
+        <rect x="394" y="160" width="266" height="50" rx="7" fill="rgba(240,160,75,0.08)" stroke="#F0A04B" stroke-width="0.8"/>
+        <text x="408" y="180" fill="#C9D1D9" font-family="monospace" font-size="9.5">Check: how many did I write?</text>
+        <text x="408" y="196" fill="#7D8590" font-family="monospace" font-size="9.5">1 of 3 = short, go back</text>
+
+        <rect x="20" y="220" width="150" height="50" rx="7" fill="rgba(212,160,23,0.12)" stroke="#D4A017" stroke-width="1"/>
+        <text x="95" y="242" text-anchor="middle" fill="#D4A017" font-family="monospace" font-size="11" font-weight="700">Over and above…</text>
+        <text x="95" y="258" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">in addition to X</text>
+        <line x1="170" y1="245" x2="200" y2="245" stroke="#7D8590" stroke-width="1.2" marker-end="url(#esCmdArrow)"/>
+        <rect x="202" y="220" width="180" height="50" rx="7" fill="rgba(61,214,140,0.1)" stroke="#3DD68C" stroke-width="0.8"/>
+        <text x="292" y="242" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="11" font-weight="700">Only the delta</text>
+        <text x="292" y="258" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">the extra, not the shared</text>
+        <rect x="394" y="220" width="266" height="50" rx="7" fill="rgba(240,160,75,0.08)" stroke="#F0A04B" stroke-width="0.8"/>
+        <text x="408" y="240" fill="#C9D1D9" font-family="monospace" font-size="9.5">Check: am I re-listing</text>
+        <text x="408" y="256" fill="#7D8590" font-family="monospace" font-size="9.5">what they already have?</text>
+
+        <text x="20" y="298" fill="#7D8590" font-family="monospace" font-size="9">VERB</text>
+        <text x="202" y="298" fill="#7D8590" font-family="monospace" font-size="9">REQUIRED SHAPE</text>
+        <text x="394" y="298" fill="#7D8590" font-family="monospace" font-size="9">COMPLETENESS CHECK</text>
+
+        <rect x="20" y="312" width="640" height="36" rx="7" fill="rgba(121,192,255,0.1)" stroke="#79C0FF" stroke-width="0.8"/>
+        <text x="340" y="334" text-anchor="middle" fill="#79C0FF" font-family="Georgia,serif" font-size="12" font-weight="600">The command word and its qualifiers are instructions, not decoration</text>
+      </svg>
+    </div>
+
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin-bottom:18px;">
+      <div style="font-family:var(--sans);font-size:14px;font-weight:600;color:#C9D1D9;margin-bottom:10px;">The 20-second check, every answer</div>
+      <div style="font-family:var(--sans);font-size:13.5px;line-height:1.9;color:#C9D1D9;">
+        <span style="color:#F0A04B;font-weight:600">1.</span> Circle the command verb in the prompt<br>
+        <span style="color:#F0A04B;font-weight:600">2.</span> Name the shape it demands (concede+challenge? chain? list of N? delta?)<br>
+        <span style="color:#F0A04B;font-weight:600">3.</span> Count your slots against the shape — short means incomplete<br>
+        <span style="color:#F0A04B;font-weight:600">4.</span> Scan for trigger words you read past
+      </div>
+    </div>
+
+    <div style="background:rgba(255,123,114,0.06);border:1px solid rgba(255,123,114,0.3);border-radius:8px;padding:16px 18px;margin-bottom:18px;">
+      <div style="font-family:var(--sans);font-size:13.5px;line-height:1.7;color:#C9D1D9;"><b style="color:#FF7B72">Trigger words = slots the grader put there on purpose:</b> <b>all / every</b> · <b>only / never</b> · <b>over and above / in addition to</b> · <b>two / main / persistent / relative to</b>. Each one is a deliberate instruction. Reading past them is how essay points get silently lost.</div>
+    </div>
+
+    <div style="background:rgba(61,214,140,0.06);border:1px solid rgba(61,214,140,0.3);border-radius:8px;padding:16px 18px;">
+      <div style="font-family:var(--sans);font-size:13.5px;line-height:1.7;color:#C9D1D9;"><b style="color:#3DD68C">Why this works:</b> you're not summoning missing content from nowhere — you're using the PROMPT'S structure to flag an empty slot, which then cues the retrieval. "Describe wants a cause — what's the cause here?" is a far better memory prompt than staring at a blank feeling like you forgot something.</div>
+    </div>
+
+  </div>
+</div>
 <div class="screen active" id="screen-study">
   <div class="filter-row" id="topicFilter"></div>
   <div class="filter-row" id="subtopicFilter" style="padding-top:6px;padding-bottom:6px;"></div>
@@ -14172,6 +14273,7 @@ function switchScreen(name, btn) {
   if(name==='study')  { buildStudyFilters(); renderStudy(); }
   if(name==='manage') { buildTree(); renderCardList(); }
   if(name==='notes')  { buildNotesTree(); }
+  if(name==='essay')  { /* static reference, no build needed */ }
 }
 
 // ══════════════════════════════════════════════════
