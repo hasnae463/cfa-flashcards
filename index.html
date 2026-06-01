@@ -14021,14 +14021,14 @@ equivalently:
     </div>
 
     <div style="overflow-x:auto;border:1px solid var(--border);border-radius:8px;">
-      <table id="ebTable" style="width:100%;border-collapse:collapse;min-width:900px;font-family:var(--sans);font-size:13px;">
+      <table id="ebTable" style="width:100%;border-collapse:collapse;min-width:1100px;font-family:var(--sans);font-size:13px;">
         <thead>
           <tr style="background:#1a2740;">
-            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:120px;">TOPIC</th>
-            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:180px;">Q TITLE</th>
-            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);">ESSAY ANSWER</th>
-            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:130px;">NOTES</th>
-            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:90px;">TAGS</th>
+            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:110px;">TOPIC</th>
+            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:230px;">VIGNETTE</th>
+            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:200px;">Q</th>
+            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#3DD68C;border-bottom:1px solid var(--border);">MY ANSWER</th>
+            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#D4A017;border-bottom:1px solid var(--border);">BOOK ANSWER</th>
             <th style="padding:8px 10px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:90px;">CONF.</th>
             <th style="padding:8px 6px;text-align:center;font-family:var(--mono);font-size:10px;color:#79C0FF;border-bottom:1px solid var(--border);width:36px;"></th>
           </tr>
@@ -14038,7 +14038,7 @@ equivalently:
     </div>
     <div id="ebEmpty" style="display:none;text-align:center;padding:40px 20px;color:var(--muted);font-family:var(--mono);font-size:12px;">No entries yet. Click <b style="color:var(--gold)">+ ADD ROW</b> to start your essay bank.</div>
     <div style="margin-top:10px;font-family:var(--mono);font-size:9.5px;color:var(--muted);line-height:1.6;">
-      Click any cell to edit · use <b>•</b> for bullets and line breaks in the answer · edits autosave to Supabase &amp; sync across devices.
+      Click any cell to edit · select text then use <b>Ctrl/Cmd+B</b> (bold) or <b>Ctrl/Cmd+U</b> (underline) in the answer cells · pasting strips formatting automatically · edits autosave to Supabase &amp; sync across devices.
     </div>
 
   </div>
@@ -14853,6 +14853,8 @@ function ebBuildTopicFilter() {
   sel.value = cur;
 }
 
+function ebStripHtml(h){ const d=document.createElement('div'); d.innerHTML=h||''; return d.innerText||''; }
+
 function ebRender() {
   const body = document.getElementById('ebBody');
   if(!body) return;
@@ -14866,7 +14868,7 @@ function ebRender() {
     if(tf && e.topic !== tf) return false;
     if(cf && e.conf !== cf) return false;
     if(q){
-      const hay = ((e.title||'')+' '+(e.answer||'')+' '+(e.tags||'')).toLowerCase();
+      const hay = ((e.vignette||'')+' '+(e.q||'')+' '+ebStripHtml(e.myAnswer)+' '+ebStripHtml(e.bookAnswer)).toLowerCase();
       if(!hay.includes(q)) return false;
     }
     return true;
@@ -14880,13 +14882,16 @@ function ebRender() {
   body.innerHTML = filtered.map(e=>{
     const conf = EB_CONF[e.conf] || EB_CONF.neutral;
     const cellBase = 'padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;color:#C9D1D9;line-height:1.55;';
-    const editAttr = (field)=>`contenteditable="true" spellcheck="false" data-id="${e.id}" data-field="${field}" oninput="ebCellInput(this)" style="outline:none;min-height:18px;"`;
+    // plain-text cell (topic, vignette, q): saves innerText
+    const plainAttr = (field)=>`contenteditable="true" spellcheck="false" data-id="${e.id}" data-field="${field}" oninput="ebCellPlain(this)" onpaste="ebPastePlain(event)" style="outline:none;min-height:18px;white-space:pre-wrap;"`;
+    // rich cell (myAnswer, bookAnswer): saves innerHTML, allows bold/underline, paste stripped to text
+    const richAttr = (field)=>`contenteditable="true" spellcheck="false" data-id="${e.id}" data-field="${field}" oninput="ebCellRich(this)" onpaste="ebPastePlain(event)" style="outline:none;min-height:18px;white-space:pre-wrap;"`;
     return `<tr data-id="${e.id}">
-      <td style="${cellBase}width:120px;font-weight:500;"><div ${editAttr('topic')}>${ebEscape(e.topic)}</div></td>
-      <td style="${cellBase}width:180px;"><div ${editAttr('title')}>${ebEscape(e.title)}</div></td>
-      <td style="${cellBase}white-space:pre-wrap;"><div ${editAttr('answer')}>${ebEscape(e.answer)}</div></td>
-      <td style="${cellBase}width:130px;"><div ${editAttr('notes')}>${ebEscape(e.notes)}</div></td>
-      <td style="${cellBase}width:90px;font-family:var(--mono);font-size:11px;color:var(--muted);"><div ${editAttr('tags')}>${ebEscape(e.tags)}</div></td>
+      <td style="${cellBase}width:110px;font-weight:500;"><div ${plainAttr('topic')}>${ebEscape(e.topic)}</div></td>
+      <td style="${cellBase}width:230px;font-size:12px;color:#A8B3BE;"><div ${plainAttr('vignette')}>${ebEscape(e.vignette)}</div></td>
+      <td style="${cellBase}width:200px;"><div ${plainAttr('q')}>${ebEscape(e.q)}</div></td>
+      <td style="${cellBase}border-left:2px solid rgba(61,214,140,0.25);"><div ${richAttr('myAnswer')}>${e.myAnswer||''}</div></td>
+      <td style="${cellBase}border-left:2px solid rgba(212,160,23,0.25);"><div ${richAttr('bookAnswer')}>${e.bookAnswer||''}</div></td>
       <td style="${cellBase}width:90px;text-align:center;">
         <select onchange="ebSetConf('${e.id}',this.value)" style="background:${conf.bg};color:${conf.color};border:1px solid ${conf.color};border-radius:12px;padding:3px 6px;font-family:var(--mono);font-size:10px;cursor:pointer;outline:none;">
           <option value="happy" ${e.conf==='happy'?'selected':''}>😊 happy</option>
@@ -14901,12 +14906,31 @@ function ebRender() {
   }).join('');
 }
 
-function ebCellInput(el){
+// paste as plain text only — strips white backgrounds, tables, fonts from copied PDF/web content
+function ebPastePlain(ev){
+  ev.preventDefault();
+  const text = (ev.clipboardData || window.clipboardData).getData('text/plain');
+  // insert at caret as plain text
+  const sel = window.getSelection();
+  if(!sel.rangeCount) { document.execCommand('insertText', false, text); return; }
+  document.execCommand('insertText', false, text);
+}
+
+function ebCellPlain(el){
   const id = el.getAttribute('data-id');
   const field = el.getAttribute('data-field');
   const row = essays.find(e=>e.id===id);
   if(!row) return;
   row[field] = el.innerText;
+  ebSaveDebounced();
+}
+
+function ebCellRich(el){
+  const id = el.getAttribute('data-id');
+  const field = el.getAttribute('data-field');
+  const row = essays.find(e=>e.id===id);
+  if(!row) return;
+  row[field] = el.innerHTML;
   ebSaveDebounced();
 }
 
@@ -14923,10 +14947,10 @@ function ebAddRow(){
   essays.unshift({
     id: 'eb_' + Date.now() + '_' + Math.floor(Math.random()*1000),
     topic: tf || '',
-    title: '',
-    answer: '',
-    notes: '',
-    tags: '',
+    vignette: '',
+    q: '',
+    myAnswer: '',
+    bookAnswer: '',
     conf: 'low'
   });
   ebSaveDebounced();
@@ -14935,7 +14959,7 @@ function ebAddRow(){
 
 function ebDeleteRow(id){
   const row = essays.find(e=>e.id===id);
-  const label = row && row.title ? `"${row.title}"` : 'this entry';
+  const label = row && row.q ? `"${row.q.slice(0,40)}"` : 'this entry';
   if(!confirm(`Delete ${label}? This cannot be undone.`)) return;
   essays = essays.filter(e=>e.id!==id);
   ebSaveDebounced();
