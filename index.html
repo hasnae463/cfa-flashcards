@@ -14020,25 +14020,10 @@ equivalently:
         style="background:var(--gold);border:none;color:#0D1117;padding:7px 14px;border-radius:5px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.06em;cursor:pointer;white-space:nowrap;">+ ADD ROW</button>
     </div>
 
-    <div style="overflow-x:auto;border:1px solid var(--border);border-radius:8px;">
-      <table id="ebTable" style="width:100%;border-collapse:collapse;min-width:1100px;font-family:var(--sans);font-size:13px;">
-        <thead>
-          <tr style="background:#1a2740;">
-            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:110px;">TOPIC</th>
-            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:230px;">VIGNETTE</th>
-            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:200px;">Q</th>
-            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#3DD68C;border-bottom:1px solid var(--border);">MY ANSWER</th>
-            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#D4A017;border-bottom:1px solid var(--border);">BOOK ANSWER</th>
-            <th style="padding:8px 10px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:90px;">CONF.</th>
-            <th style="padding:8px 6px;text-align:center;font-family:var(--mono);font-size:10px;color:#79C0FF;border-bottom:1px solid var(--border);width:36px;"></th>
-          </tr>
-        </thead>
-        <tbody id="ebBody"></tbody>
-      </table>
-    </div>
+    <div id="ebList"></div>
     <div id="ebEmpty" style="display:none;text-align:center;padding:40px 20px;color:var(--muted);font-family:var(--mono);font-size:12px;">No entries yet. Click <b style="color:var(--gold)">+ ADD ROW</b> to start your essay bank.</div>
     <div style="margin-top:10px;font-family:var(--mono);font-size:9.5px;color:var(--muted);line-height:1.6;">
-      Click any cell to edit · select text then use <b>Ctrl/Cmd+B</b> (bold) or <b>Ctrl/Cmd+U</b> (underline) in the answer cells · pasting strips formatting automatically · edits autosave to Supabase &amp; sync across devices.
+      Click a row to expand it · inside, click any field to edit · select text then <b>Ctrl/Cmd+B</b> (bold) or <b>Ctrl/Cmd+U</b> (underline) in the answer fields · pasting strips formatting automatically · edits autosave to Supabase &amp; sync across devices.
     </div>
 
   </div>
@@ -14855,9 +14840,21 @@ function ebBuildTopicFilter() {
 
 function ebStripHtml(h){ const d=document.createElement('div'); d.innerHTML=h||''; return d.innerText||''; }
 
+let ebExpanded = new Set();
+
+function ebToggleExpand(id, ev){
+  // don't toggle if the click came from an editable field, select, or button
+  if(ev){
+    const t = ev.target;
+    if(t.closest('[contenteditable]') || t.closest('select') || t.closest('button')) return;
+  }
+  if(ebExpanded.has(id)) ebExpanded.delete(id); else ebExpanded.add(id);
+  ebRender();
+}
+
 function ebRender() {
-  const body = document.getElementById('ebBody');
-  if(!body) return;
+  const list = document.getElementById('ebList');
+  if(!list) return;
   ebBuildTopicFilter();
 
   const q = (document.getElementById('ebSearch').value || '').toLowerCase().trim();
@@ -14879,30 +14876,42 @@ function ebRender() {
 
   document.getElementById('ebEmpty').style.display = essays.length===0 ? 'block' : 'none';
 
-  body.innerHTML = filtered.map(e=>{
+  const plainAttr = (e,field)=>`contenteditable="true" spellcheck="false" data-id="${e.id}" data-field="${field}" oninput="ebCellPlain(this)" onpaste="ebPastePlain(event)" style="outline:none;min-height:18px;white-space:pre-wrap;"`;
+  const richAttr  = (e,field)=>`contenteditable="true" spellcheck="false" data-id="${e.id}" data-field="${field}" oninput="ebCellRich(this)" onpaste="ebPastePlain(event)" style="outline:none;min-height:40px;white-space:pre-wrap;"`;
+  const fieldLabel = (txt,color)=>`<div style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:${color};text-transform:uppercase;margin-bottom:5px;">${txt}</div>`;
+
+  list.innerHTML = filtered.map(e=>{
     const conf = EB_CONF[e.conf] || EB_CONF.neutral;
-    const cellBase = 'padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;color:#C9D1D9;line-height:1.55;';
-    // plain-text cell (topic, vignette, q): saves innerText
-    const plainAttr = (field)=>`contenteditable="true" spellcheck="false" data-id="${e.id}" data-field="${field}" oninput="ebCellPlain(this)" onpaste="ebPastePlain(event)" style="outline:none;min-height:18px;white-space:pre-wrap;"`;
-    // rich cell (myAnswer, bookAnswer): saves innerHTML, allows bold/underline, paste stripped to text
-    const richAttr = (field)=>`contenteditable="true" spellcheck="false" data-id="${e.id}" data-field="${field}" oninput="ebCellRich(this)" onpaste="ebPastePlain(event)" style="outline:none;min-height:18px;white-space:pre-wrap;"`;
-    return `<tr data-id="${e.id}">
-      <td style="${cellBase}width:110px;font-weight:500;"><div ${plainAttr('topic')}>${ebEscape(e.topic)}</div></td>
-      <td style="${cellBase}width:230px;font-size:12px;color:#A8B3BE;"><div ${plainAttr('vignette')}>${ebEscape(e.vignette)}</div></td>
-      <td style="${cellBase}width:200px;"><div ${plainAttr('q')}>${ebEscape(e.q)}</div></td>
-      <td style="${cellBase}border-left:2px solid rgba(61,214,140,0.25);"><div ${richAttr('myAnswer')}>${e.myAnswer||''}</div></td>
-      <td style="${cellBase}border-left:2px solid rgba(212,160,23,0.25);"><div ${richAttr('bookAnswer')}>${e.bookAnswer||''}</div></td>
-      <td style="${cellBase}width:90px;text-align:center;">
-        <select onchange="ebSetConf('${e.id}',this.value)" style="background:${conf.bg};color:${conf.color};border:1px solid ${conf.color};border-radius:12px;padding:3px 6px;font-family:var(--mono);font-size:10px;cursor:pointer;outline:none;">
-          <option value="happy" ${e.conf==='happy'?'selected':''}>😊 happy</option>
-          <option value="neutral" ${e.conf==='neutral'?'selected':''}>😐 neutral</option>
-          <option value="low" ${e.conf==='low'?'selected':''}>😟 low</option>
-        </select>
-      </td>
-      <td style="${cellBase}width:36px;text-align:center;">
-        <button onclick="ebDeleteRow('${e.id}')" title="Delete row" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:2px 4px;">🗑</button>
-      </td>
-    </tr>`;
+    const open = ebExpanded.has(e.id);
+    const qPreview = ebEscape((e.q||'').slice(0,90)) || '<span style="color:var(--muted)">— untitled —</span>';
+
+    const confSelect = `<select onchange="ebSetConf('${e.id}',this.value)" style="background:${conf.bg};color:${conf.color};border:1px solid ${conf.color};border-radius:12px;padding:3px 8px;font-family:var(--mono);font-size:10px;cursor:pointer;outline:none;">
+        <option value="happy" ${e.conf==='happy'?'selected':''}>😊 happy</option>
+        <option value="neutral" ${e.conf==='neutral'?'selected':''}>😐 neutral</option>
+        <option value="low" ${e.conf==='low'?'selected':''}>😟 low</option>
+      </select>`;
+
+    // compact header row (always visible)
+    const header = `<div onclick="ebToggleExpand('${e.id}',event)" style="display:flex;align-items:center;gap:12px;padding:11px 14px;cursor:pointer;">
+        <span style="color:var(--muted);font-size:12px;transition:transform .15s;transform:rotate(${open?90:0}deg);">▶</span>
+        <span style="font-family:var(--mono);font-size:10px;color:#79C0FF;background:rgba(121,192,255,0.1);padding:2px 8px;border-radius:10px;white-space:nowrap;">${ebEscape(e.topic)||'—'}</span>
+        <span style="flex:1;font-size:13px;color:#C9D1D9;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${qPreview}</span>
+        ${confSelect}
+        <button onclick="ebDeleteRow('${e.id}')" title="Delete" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:2px 4px;">🗑</button>
+      </div>`;
+
+    // expanded detail (full width, stacked)
+    const detail = open ? `<div style="padding:4px 16px 18px;border-top:1px solid var(--border);">
+        <div style="margin-bottom:16px;">${fieldLabel('Topic','#79C0FF')}<div ${plainAttr(e,'topic')}>${ebEscape(e.topic)}</div></div>
+        <div style="margin-bottom:16px;">${fieldLabel('Vignette','#79C0FF')}<div ${plainAttr(e,'vignette')} style="outline:none;min-height:40px;white-space:pre-wrap;color:#A8B3BE;font-size:13px;line-height:1.6;">${ebEscape(e.vignette)}</div></div>
+        <div style="margin-bottom:16px;">${fieldLabel('Question','#79C0FF')}<div ${plainAttr(e,'q')} style="outline:none;min-height:24px;white-space:pre-wrap;font-size:14px;line-height:1.6;">${ebEscape(e.q)}</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div style="border-left:3px solid #3DD68C;padding-left:12px;">${fieldLabel('My answer','#3DD68C')}<div ${richAttr(e,'myAnswer')} style="outline:none;min-height:80px;white-space:pre-wrap;font-size:13.5px;line-height:1.65;">${e.myAnswer||''}</div></div>
+          <div style="border-left:3px solid #D4A017;padding-left:12px;">${fieldLabel('Book answer','#D4A017')}<div ${richAttr(e,'bookAnswer')} style="outline:none;min-height:80px;white-space:pre-wrap;font-size:13.5px;line-height:1.65;">${e.bookAnswer||''}</div></div>
+        </div>
+      </div>` : '';
+
+    return `<div style="border:1px solid var(--border);border-radius:8px;margin-bottom:8px;background:${open?'var(--surface2)':'var(--surface)'};overflow:hidden;">${header}${detail}</div>`;
   }).join('');
 }
 
@@ -14944,8 +14953,9 @@ function ebSetConf(id, val){
 
 function ebAddRow(){
   const tf = document.getElementById('ebTopicFilter').value;
+  const id = 'eb_' + Date.now() + '_' + Math.floor(Math.random()*1000);
   essays.unshift({
-    id: 'eb_' + Date.now() + '_' + Math.floor(Math.random()*1000),
+    id: id,
     topic: tf || '',
     vignette: '',
     q: '',
@@ -14953,6 +14963,7 @@ function ebAddRow(){
     bookAnswer: '',
     conf: 'low'
   });
+  ebExpanded.add(id);
   ebSaveDebounced();
   ebRender();
 }
