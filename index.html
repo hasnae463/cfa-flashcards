@@ -246,6 +246,7 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
   <button class="main-tab" onclick="switchScreen('manage',this)">Manage Cards</button>
   <button class="main-tab" onclick="switchScreen('notes',this)">📝 Notes</button>
   <button class="main-tab" onclick="switchScreen('essay',this)">📌 Essay Method</button>
+  <button class="main-tab" onclick="switchScreen('essaybank',this)">📚 Essay Bank</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -13928,6 +13929,118 @@ equivalently:
       <div style="font-family:var(--sans);font-size:13.5px;line-height:1.7;color:#C9D1D9;"><b style="color:#3DD68C">Why this works:</b> you're not summoning missing content from nowhere — you're using the PROMPT'S structure to flag an empty slot, which then cues the retrieval. "Describe wants a cause — what's the cause here?" is a far better memory prompt than staring at a blank feeling like you forgot something.</div>
     </div>
 
+    <div style="font-family:var(--serif);font-size:18px;color:var(--gold);margin:32px 0 4px;">The 17 CFA command words</div>
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;margin-bottom:16px;">Official definitions · grouped by the answer shape each one demands</div>
+
+    <!-- GROUP 1 · STATE / RECALL -->
+    <div style="border:1px solid var(--border);border-left:3px solid #79C0FF;border-radius:8px;overflow:hidden;margin-bottom:14px;">
+      <div style="background:rgba(121,192,255,0.1);padding:9px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#79C0FF;font-weight:600;">STATE / RECALL — short, precise, no argument needed</div>
+      <table style="width:100%;border-collapse:collapse;font-family:var(--sans);font-size:13px;">
+        <tbody>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);width:120px;font-weight:600;color:#79C0FF;vertical-align:top;">Define</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To state exactly the meaning of</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#79C0FF;vertical-align:top;">Identify</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To recognize, to correctly pick out or name</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#79C0FF;vertical-align:top;">Calculate</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To compute, to determine by mathematical processes</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#79C0FF;vertical-align:top;">Demonstrate</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To show practical mastery of</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#79C0FF;vertical-align:top;">Formulate</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To express in a precise form; to devise</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- GROUP 2 · LAY OUT FEATURES -->
+    <div style="border:1px solid var(--border);border-left:3px solid #D4A017;border-radius:8px;overflow:hidden;margin-bottom:14px;">
+      <div style="background:rgba(212,160,23,0.1);padding:9px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#D4A017;font-weight:600;">LAY OUT FEATURES — the describe-shape: a chain or a list of characteristics</div>
+      <table style="width:100%;border-collapse:collapse;font-family:var(--sans);font-size:13px;">
+        <tbody>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);width:120px;font-weight:600;color:#D4A017;vertical-align:top;">Describe</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To state characteristic features of something, to portray it in words</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#D4A017;vertical-align:top;">Explain</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To make clear and intelligible, provide insight into</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#D4A017;vertical-align:top;">Analyze</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To examine the constituent parts of something and how the parts relate to each other and to the whole</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#D4A017;vertical-align:top;">Interpret</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To explain the meaning or implications of something, to reach a conclusion about something by application of knowledge</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- GROUP 3 · COMPARE / CONTRAST -->
+    <div style="border:1px solid var(--border);border-left:3px solid #F0A04B;border-radius:8px;overflow:hidden;margin-bottom:14px;">
+      <div style="background:rgba(240,160,75,0.1);padding:9px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#F0A04B;font-weight:600;">COMPARE / CONTRAST — two-sided: watch whether they want similarities too</div>
+      <table style="width:100%;border-collapse:collapse;font-family:var(--sans);font-size:13px;">
+        <tbody>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);width:120px;font-weight:600;color:#F0A04B;vertical-align:top;">Compare</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To state the similarities and differences between</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#F0A04B;vertical-align:top;">Contrast</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To state the differences between</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- GROUP 4 · JUDGE / CONCLUDE -->
+    <div style="border:1px solid var(--border);border-left:3px solid #FF7B72;border-radius:8px;overflow:hidden;margin-bottom:8px;">
+      <div style="background:rgba(255,123,114,0.1);padding:9px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#FF7B72;font-weight:600;">JUDGE / CONCLUDE — the highest bar: reach a position and back it</div>
+      <table style="width:100%;border-collapse:collapse;font-family:var(--sans);font-size:13px;">
+        <tbody>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);width:120px;font-weight:600;color:#FF7B72;vertical-align:top;">Discuss</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To examine critically from various points of view, considering pros and cons and relevant details</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#FF7B72;vertical-align:top;">Evaluate</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To reach a conclusion about something by application of knowledge and judgment</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#FF7B72;vertical-align:top;">Justify</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To provide good reasons for, to show to be valid or appropriate</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#FF7B72;vertical-align:top;">Determine</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To decide on through analysis of alternatives, to find or ascertain definitely</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#FF7B72;vertical-align:top;">Recommend</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To advise as suitable or fit for purpose</td></tr>
+          <tr><td style="padding:8px 14px;border-top:1px solid var(--border);font-weight:600;color:#FF7B72;vertical-align:top;">Estimate</td><td style="padding:8px 14px;border-top:1px solid var(--border);color:#C9D1D9;line-height:1.5;">To determine an approximate value for something; to reach an informed but possibly imprecise evaluation of something</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="font-family:var(--mono);font-size:9.5px;color:var(--muted);line-height:1.6;margin-top:6px;">Definitions are the official CFA Institute command-word glossary, verbatim. The grouping maps each verb to the answer shape from the decoder above.</div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     ESSAY BANK SCREEN (editable, Supabase-backed)
+══════════════════════════════════════ -->
+<div class="screen" id="screen-essaybank">
+  <div style="padding:14px 16px 60px;">
+
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+      <span style="font-family:var(--serif);font-size:20px;color:var(--gold);">📚 Essay Bank</span>
+      <span id="ebCount" style="font-family:var(--mono);font-size:10px;color:var(--muted);">0 entries</span>
+      <span id="ebSync" style="font-family:var(--mono);font-size:9px;color:var(--muted);transition:opacity .5s;margin-left:auto;"></span>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+      <input id="ebSearch" type="text" placeholder="🔍 Search title, answer, tags…" oninput="ebRender()"
+        style="flex:1;min-width:180px;background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:7px 10px;font-family:var(--sans);font-size:13px;color:#C9D1D9;outline:none;">
+      <select id="ebTopicFilter" onchange="ebRender()"
+        style="background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:7px 10px;font-family:var(--mono);font-size:10px;color:#C9D1D9;cursor:pointer;">
+        <option value="">All topics</option>
+      </select>
+      <select id="ebConfFilter" onchange="ebRender()"
+        style="background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:7px 10px;font-family:var(--mono);font-size:10px;color:#C9D1D9;cursor:pointer;">
+        <option value="">All confidence</option>
+        <option value="happy">😊 happy</option>
+        <option value="neutral">😐 neutral</option>
+        <option value="low">😟 low</option>
+      </select>
+      <button onclick="ebAddRow()"
+        style="background:var(--gold);border:none;color:#0D1117;padding:7px 14px;border-radius:5px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.06em;cursor:pointer;white-space:nowrap;">+ ADD ROW</button>
+    </div>
+
+    <div style="overflow-x:auto;border:1px solid var(--border);border-radius:8px;">
+      <table id="ebTable" style="width:100%;border-collapse:collapse;min-width:900px;font-family:var(--sans);font-size:13px;">
+        <thead>
+          <tr style="background:#1a2740;">
+            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:120px;">TOPIC</th>
+            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:180px;">Q TITLE</th>
+            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);">ESSAY ANSWER</th>
+            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:130px;">NOTES</th>
+            <th style="padding:8px 10px;text-align:left;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:90px;">TAGS</th>
+            <th style="padding:8px 10px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:#79C0FF;border-bottom:1px solid var(--border);width:90px;">CONF.</th>
+            <th style="padding:8px 6px;text-align:center;font-family:var(--mono);font-size:10px;color:#79C0FF;border-bottom:1px solid var(--border);width:36px;"></th>
+          </tr>
+        </thead>
+        <tbody id="ebBody"></tbody>
+      </table>
+    </div>
+    <div id="ebEmpty" style="display:none;text-align:center;padding:40px 20px;color:var(--muted);font-family:var(--mono);font-size:12px;">No entries yet. Click <b style="color:var(--gold)">+ ADD ROW</b> to start your essay bank.</div>
+    <div style="margin-top:10px;font-family:var(--mono);font-size:9.5px;color:var(--muted);line-height:1.6;">
+      Click any cell to edit · use <b>•</b> for bullets and line breaks in the answer · edits autosave to Supabase &amp; sync across devices.
+    </div>
+
   </div>
 </div>
 <div class="screen active" id="screen-study">
@@ -14274,6 +14387,7 @@ function switchScreen(name, btn) {
   if(name==='manage') { buildTree(); renderCardList(); }
   if(name==='notes')  { buildNotesTree(); }
   if(name==='essay')  { /* static reference, no build needed */ }
+  if(name==='essaybank') { ebRender(); }
 }
 
 // ══════════════════════════════════════════════════
@@ -14687,6 +14801,147 @@ async function saveNotes() {
   } catch(e) { showNoteSync('⚠ offline', '#D4680A'); }
 }
 
+// ══════════════════════════════════════════════════
+// ESSAY BANK — editable table, Supabase-backed
+// ══════════════════════════════════════════════════
+let essays = [];
+let ebSaveTimer = null;
+
+async function loadEssays() {
+  try { const s = await sbGet('cfa_essays'); if (Array.isArray(s)) return s; } catch(e) {}
+  try { const s = localStorage.getItem('cfa_essays'); if(s) { const a = JSON.parse(s); if(Array.isArray(a)) return a; } } catch(e) {}
+  return [];
+}
+
+async function saveEssays() {
+  try {
+    localStorage.setItem('cfa_essays', JSON.stringify(essays));
+    await sbSet('cfa_essays', essays);
+    showEbSync('✓ saved', '#2EA043');
+  } catch(e) { showEbSync('⚠ offline', '#D4680A'); }
+}
+
+function ebSaveDebounced() {
+  showEbSync('saving…', '#D4A017');
+  clearTimeout(ebSaveTimer);
+  ebSaveTimer = setTimeout(saveEssays, 1200);
+}
+
+function showEbSync(msg, color) {
+  const el = document.getElementById('ebSync');
+  if(!el) return;
+  el.textContent = msg; el.style.color = color; el.style.opacity = '1';
+  clearTimeout(showEbSync._t);
+  showEbSync._t = setTimeout(()=>{ el.style.opacity = '0'; }, 2000);
+}
+
+function ebEscape(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+const EB_CONF = {
+  happy:   { label:'😊 happy',   bg:'rgba(46,160,67,0.18)',  color:'#3DD68C' },
+  neutral: { label:'😐 neutral', bg:'rgba(212,160,23,0.18)', color:'#D4A017' },
+  low:     { label:'😟 low',     bg:'rgba(255,123,114,0.18)',color:'#FF7B72' }
+};
+
+function ebBuildTopicFilter() {
+  const sel = document.getElementById('ebTopicFilter');
+  if(!sel) return;
+  const cur = sel.value;
+  const topics = [...new Set(essays.map(e=>e.topic).filter(Boolean))].sort();
+  sel.innerHTML = '<option value="">All topics</option>' +
+    topics.map(t=>`<option value="${ebEscape(t)}">${ebEscape(t)}</option>`).join('');
+  sel.value = cur;
+}
+
+function ebRender() {
+  const body = document.getElementById('ebBody');
+  if(!body) return;
+  ebBuildTopicFilter();
+
+  const q = (document.getElementById('ebSearch').value || '').toLowerCase().trim();
+  const tf = document.getElementById('ebTopicFilter').value;
+  const cf = document.getElementById('ebConfFilter').value;
+
+  const filtered = essays.filter(e=>{
+    if(tf && e.topic !== tf) return false;
+    if(cf && e.conf !== cf) return false;
+    if(q){
+      const hay = ((e.title||'')+' '+(e.answer||'')+' '+(e.tags||'')).toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  document.getElementById('ebCount').textContent = essays.length + (essays.length===1?' entry':' entries') +
+    (filtered.length !== essays.length ? ` · ${filtered.length} shown` : '');
+
+  document.getElementById('ebEmpty').style.display = essays.length===0 ? 'block' : 'none';
+
+  body.innerHTML = filtered.map(e=>{
+    const conf = EB_CONF[e.conf] || EB_CONF.neutral;
+    const cellBase = 'padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top;color:#C9D1D9;line-height:1.55;';
+    const editAttr = (field)=>`contenteditable="true" spellcheck="false" data-id="${e.id}" data-field="${field}" oninput="ebCellInput(this)" style="outline:none;min-height:18px;"`;
+    return `<tr data-id="${e.id}">
+      <td style="${cellBase}width:120px;font-weight:500;"><div ${editAttr('topic')}>${ebEscape(e.topic)}</div></td>
+      <td style="${cellBase}width:180px;"><div ${editAttr('title')}>${ebEscape(e.title)}</div></td>
+      <td style="${cellBase}white-space:pre-wrap;"><div ${editAttr('answer')}>${ebEscape(e.answer)}</div></td>
+      <td style="${cellBase}width:130px;"><div ${editAttr('notes')}>${ebEscape(e.notes)}</div></td>
+      <td style="${cellBase}width:90px;font-family:var(--mono);font-size:11px;color:var(--muted);"><div ${editAttr('tags')}>${ebEscape(e.tags)}</div></td>
+      <td style="${cellBase}width:90px;text-align:center;">
+        <select onchange="ebSetConf('${e.id}',this.value)" style="background:${conf.bg};color:${conf.color};border:1px solid ${conf.color};border-radius:12px;padding:3px 6px;font-family:var(--mono);font-size:10px;cursor:pointer;outline:none;">
+          <option value="happy" ${e.conf==='happy'?'selected':''}>😊 happy</option>
+          <option value="neutral" ${e.conf==='neutral'?'selected':''}>😐 neutral</option>
+          <option value="low" ${e.conf==='low'?'selected':''}>😟 low</option>
+        </select>
+      </td>
+      <td style="${cellBase}width:36px;text-align:center;">
+        <button onclick="ebDeleteRow('${e.id}')" title="Delete row" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:14px;padding:2px 4px;">🗑</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function ebCellInput(el){
+  const id = el.getAttribute('data-id');
+  const field = el.getAttribute('data-field');
+  const row = essays.find(e=>e.id===id);
+  if(!row) return;
+  row[field] = el.innerText;
+  ebSaveDebounced();
+}
+
+function ebSetConf(id, val){
+  const row = essays.find(e=>e.id===id);
+  if(!row) return;
+  row.conf = val;
+  ebSaveDebounced();
+  ebRender();
+}
+
+function ebAddRow(){
+  const tf = document.getElementById('ebTopicFilter').value;
+  essays.unshift({
+    id: 'eb_' + Date.now() + '_' + Math.floor(Math.random()*1000),
+    topic: tf || '',
+    title: '',
+    answer: '',
+    notes: '',
+    tags: '',
+    conf: 'low'
+  });
+  ebSaveDebounced();
+  ebRender();
+}
+
+function ebDeleteRow(id){
+  const row = essays.find(e=>e.id===id);
+  const label = row && row.title ? `"${row.title}"` : 'this entry';
+  if(!confirm(`Delete ${label}? This cannot be undone.`)) return;
+  essays = essays.filter(e=>e.id!==id);
+  ebSaveDebounced();
+  ebRender();
+}
+
 function showNoteSync(msg, color) {
   const el = document.getElementById('noteSyncStatus');
   if (!el) return;
@@ -14929,6 +15184,7 @@ async function init() {
   deck  = await loadDeck();
   marks = await loadMarks();
   notes = await loadNotes();
+  essays = await loadEssays();
   buildStudyFilters();
   applyFilters();
 }
