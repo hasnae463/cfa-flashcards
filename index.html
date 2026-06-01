@@ -11990,6 +11990,20 @@ Horizon ≈ Macaulay duration:
               <div class="fi-title">Errors &amp; Mastery — ready for your wrong answers</div>
               <div class="fi-body">This tab will hold the questions you get wrong on this reading, with pattern classification, memory anchors, and drill mode — same as the CME widget.</div>
               <div class="fi-info">When you miss a question, send: the question + your wrong pick + correct answer. I'll add it here.</div>
+            </div>
+
+            <!-- ESSAY GAP · EM/frontier debt risk "discuss the statement" -->
+            <div class="fi-card" style="border-left:3px solid #F0A04B">
+              <div class="fi-title">📝 Essay gap · "Discuss the statement" on EM/frontier debt risk</div>
+              <div class="fi-body"><b>Prompt:</b> an adviser says "ALL emerging and frontier market fixed income securities pose economic, political and legal risk" — then lists poor fiscal discipline, foreign-borrowing reliance, narrow tax base, industry dependence, capital-flight susceptibility, limited ability to pay, weak property rights, weak contract enforcement, political instability. Discuss.</div>
+              <div class="fi-trap"><b>Your answer:</b> "the statement is correct and reflects the risks of investing in EM; this risk is usually offset by high expected return." → graded as a MISS.</div>
+              <div class="fi-body"><b>What "discuss" wanted — the flaw in the word ALL:</b></div>
+              <span class="fi-rule"><b class="fi-green">Concede what's right:</b> the adviser correctly identifies economic, political and legal risks, and the listed characteristics genuinely affect governments' and corporate borrowers' ABILITY and WILLINGNESS to pay bondholders</span>
+              <span class="fi-rule"><b class="fi-red">Attack the overstatement:</b> the assertion that ALL EM/frontier securities pose such risk is INCORRECT — many countries classified as "emerging" are healthy, prosperous economies</span>
+              <div class="fi-tip"><b>Pattern — the "ALL / ALWAYS / NEVER" overstatement trap:</b> when a "discuss" prompt contains a universal quantifier, the answer is almost always: concede the substance, then reject the universal. The "offset by high return" point wasn't asked and earned nothing. <b>Discuss = find the flaw, not agree.</b></div>
+            </div>
+
+            <div class="fi-card">
               <div class="fi-tip"><b>Likely problem areas to watch on this reading:</b><br>
                 • Horizon vs Macaulay duration direction (which effect dominates)<br>
                 • Recession hedge: demand-driven (low term premium) vs supply-driven (high term premium)<br>
@@ -12258,6 +12272,107 @@ RP_equities = 15% × 0.70 × 0.35 = 3.68%
                 <div class="fi-title">Errors &amp; Mastery — ready for your wrong answers</div>
                 <div class="fi-body">This tab will hold the equity questions you get wrong, with pattern classification and drill mode.</div>
                 <div class="fi-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+              </div>
+
+              <!-- ERROR CARD 1 · Singer-Terhaar integration shift -->
+              <div class="fi-card" style="border-left:3px solid #FF7B72">
+                <div class="fi-title">❌ Error · Singer-Terhaar: which way to shift on integration</div>
+                <div class="fi-body"><b>Q (Bader):</b> Country A = developed, stays HIGHLY INTEGRATED. Country B = EM, becoming MORE SEGMENTED. Country C = EM, becoming MORE FULLY INTEGRATED. Singer-Terhaar implies Bader should shift capital from Country A to…?</div>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;margin:8px 0">
+                  <span style="color:#FF7B72">Your pick: <b>B (only Country B)</b> ✗</span>
+                  <span style="color:#3DD68C">Correct: <b>C (only Country C)</b> ✓</span>
+                </div>
+                <div class="fi-trap"><b>Why you were wrong — the "higher premium" trap:</b> a segmented market DOES end up with a higher risk premium, so it FEELS like you'd want it. But you trade the <b>price re-rating during the transition</b>, not the destination yield.</div>
+
+                <div class="fi-body" style="margin-top:10px"><b>The re-rating mechanic:</b></div>
+                <div class="fi-hd-result" style="border-left-color:#79C0FF">
+                  <svg viewBox="0 0 420 210" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;max-width:440px;margin:0 auto;height:auto">
+                    <!-- divider -->
+                    <line x1="210" y1="20" x2="210" y2="195" stroke="#2A3441" stroke-width="1" stroke-dasharray="3 3"/>
+                    <!-- LEFT: Country C integration -->
+                    <text x="105" y="18" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="10" font-weight="bold">Country C — INTEGRATING</text>
+                    <!-- price path up -->
+                    <line x1="30" y1="170" x2="180" y2="170" stroke="#2A3441" stroke-width="1"/>
+                    <path d="M 40 150 Q 90 145, 110 110 Q 130 75, 170 60" fill="none" stroke="#3DD68C" stroke-width="2.5"/>
+                    <text x="40" y="185" fill="#7D8590" font-family="monospace" font-size="7.5">req. return ↓</text>
+                    <text x="105" y="50" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="8">price ↑ (markup)</text>
+                    <text x="105" y="200" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="8.5" font-weight="bold">BUY before re-rating</text>
+                    <!-- RIGHT: Country B segmentation -->
+                    <text x="315" y="18" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="10" font-weight="bold">Country B — SEGMENTING</text>
+                    <line x1="240" y1="60" x2="390" y2="60" stroke="#2A3441" stroke-width="1"/>
+                    <path d="M 250 75 Q 300 80, 320 115 Q 340 150, 380 165" fill="none" stroke="#FF7B72" stroke-width="2.5"/>
+                    <text x="240" y="50" fill="#7D8590" font-family="monospace" font-size="7.5">req. return ↑</text>
+                    <text x="315" y="185" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="8">price ↓ (markdown)</text>
+                    <text x="315" y="200" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="8.5" font-weight="bold">AVOID — price falls first</text>
+                  </svg>
+                </div>
+                <span class="fi-rule"><b class="fi-green">Integration ↑</b> → required return FALLS → price RISES now (markup) → buy C to capture the gain</span>
+                <span class="fi-rule"><b class="fi-red">Segmentation ↑</b> → required return RISES → price FALLS now (markdown) → avoid B; you'd ride the loss down</span>
+                <span class="fi-rule"><b>Country A</b> already integrated → no re-rating left to harvest → this is the funding source</span>
+                <div class="fi-tip"><b>Memory hook:</b> the risk-premium level is the DESTINATION; the price move during the trip is what you TRADE. Buy the market whose required return is about to FALL (integration), sell/avoid the one about to RISE (segmentation). Shift = A → C only.</div>
+              </div>
+
+              <!-- ERROR CARD 2 · EM risk signal threshold -->
+              <div class="fi-card" style="border-left:3px solid #FF7B72">
+                <div class="fi-title">❌ Error · EM risk — apply the threshold before naming the driver</div>
+                <div class="fi-body"><b>Q (Bader):</b> Country B is (i) experiencing declining per-capita income, (ii) running a persistent current account deficit BELOW 2% of GDP, (iii) transitioning to IFRS with full convergence in 2 years. Which area most signals INCREASING risk?</div>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;margin:8px 0">
+                  <span style="color:#FF7B72">Your pick: <b>B (Competitiveness)</b> ✗</span>
+                  <span style="color:#3DD68C">Correct: <b>A (Politics)</b> ✓</span>
+                </div>
+                <div class="fi-trap"><b>Why you were wrong:</b> you flagged the current account as a competitiveness risk WITHOUT applying the threshold. A persistent deficit signals a lack of competitiveness only when it's <b>&gt; 4% of GDP</b>. Country B's is BELOW 2% → NOT a competitiveness concern.</div>
+                <table class="fi-table">
+                  <thead><tr><th>Signal</th><th>Reads as</th><th>Risk?</th></tr></thead>
+                  <tbody>
+                    <tr><td>Declining per-capita income</td><td class="fi-red">Source of POLITICAL stress</td><td class="fi-red">✓ YES</td></tr>
+                    <tr><td>CA deficit &lt; 2% of GDP</td><td>Below the &gt;4% competitiveness threshold</td><td class="fi-green">✗ no</td></tr>
+                    <tr><td>IFRS convergence in 2 yrs</td><td>BETTER accounting standards</td><td class="fi-green">✗ positive</td></tr>
+                  </tbody>
+                </table>
+                <div class="fi-tip"><b>Threshold to memorize:</b> CA deficit becomes a competitiveness red flag at <b>&gt; 4% of GDP</b> (see EM Bond Risk thresholds). Below that, look elsewhere — here, falling per-capita income → politics.</div>
+              </div>
+
+              <!-- ESSAY GAP · Singer-Terhaar integrated risk-premium calc -->
+              <div class="fi-card" style="border-left:3px solid #3DD68C">
+                <div class="fi-title">📝 Essay (got it right — lock the formula) · Singer-Terhaar integrated RP</div>
+                <div class="fi-body"><b>Prompt:</b> market PERFECTLY INTEGRATED with world markets. GIM risk premium 3.5%, GIM σ 8.5%. Estimate each industry's expected risk premium given its σ and correlation with the GIM.</div>
+                <div class="fi-fl">RP_i = σ_i × ρ_(i,GIM) × (RP_GIM / σ_GIM)
+
+Sharpe of GIM = 3.5 / 8.5 = 0.412</div>
+                <table class="fi-table">
+                  <thead><tr><th>Industry</th><th>σ × ρ × 0.412</th><th>RP</th></tr></thead>
+                  <tbody>
+                    <tr><td>Swiss Healthcare</td><td>12 × 0.7 × 0.412</td><td class="fi-green">3.46%</td></tr>
+                    <tr><td>Swiss Watch</td><td>6 × 0.8 × 0.412</td><td class="fi-green">1.98%</td></tr>
+                    <tr><td>Swiss Consumer Products</td><td>7.5 × 0.8 × 0.412</td><td class="fi-green">2.47%</td></tr>
+                  </tbody>
+                </table>
+                <div class="fi-tip"><b>Why no risk-premium split here:</b> "perfectly integrated" → use the integrated form ONLY (full Sharpe of the GIM). No segmented component, no φ blend. The degree-of-integration blend only appears when the market is PARTIALLY integrated.</div>
+              </div>
+
+              <!-- ESSAY GAP · highest return ≠ most attractive -->
+              <div class="fi-card" style="border-left:3px solid #3DD68C">
+                <div class="fi-title">📝 Essay (subtle point worth keeping) · "Most attractive on valuation?"</div>
+                <div class="fi-body"><b>Prompt:</b> given the RPs above, judge which industry is most attractive from a VALUATION perspective.</div>
+                <div class="fi-trap"><b>The trap:</b> Healthcare has the HIGHEST expected return (3.46%) → tempting to call it "most attractive."</div>
+                <div class="fi-info"><b>Correct answer:</b> that higher expected return is purely COMPENSATION FOR SYSTEMATIC RISK (higher σ × ρ). Based on the data provided, you CANNOT conclude which industry is most attractive from a valuation standpoint — you'd need to compare expected return to a REQUIRED/fair return (i.e. find mispricing).</div>
+                <div class="fi-tip"><b>Memory hook:</b> highest expected return ≠ most attractive. A higher CAPM/S-T return is the hurdle, not alpha. Valuation attractiveness = expected return ABOVE the required return, which this data doesn't give.</div>
+              </div>
+
+              <!-- ESSAY GAP · EM equity governance risk -->
+              <div class="fi-card" style="border-left:3px solid #F0A04B">
+                <div class="fi-title">📝 Essay gap · EM equity risks ABOVE fixed-income risks</div>
+                <div class="fi-body"><b>Prompt:</b> identify risks faced by EM EQUITY investors OVER AND ABOVE those faced by fixed-income investors in the same markets.</div>
+                <div class="fi-trap"><b>Your answer:</b> fragile economies, political instability, weaker legal protection, weak disclosure/enforcement. → graded a MISS — these are the SAME economic/political/legal risks bondholders already face, not the ADDITIONAL ones.</div>
+                <div class="fi-body"><b>The keyword the rubric wanted — CORPORATE GOVERNANCE RISK:</b></div>
+                <span class="fi-rule">• Ownership claims may be EXPROPRIATED by corporate insiders, dominant shareholders, or the government</span>
+                <span class="fi-rule">• Interested parties may MISUSE the company's assets</span>
+                <span class="fi-rule">• Weak disclosure &amp; accounting standards → limited transparency that FAVORS INSIDERS</span>
+                <span class="fi-rule">• Weak checks/balances on government → regulatory uncertainty, seizure of property, NATIONALIZATION</span>
+                <div class="fi-tip"><b>Pattern:</b> the question said "over and above" fixed income → equity holders are RESIDUAL claimants, so the extra risk is about who controls the firm and its assets = <b>corporate governance</b>. Don't re-list the shared economic/political/legal risks.</div>
+              </div>
+
+              <div class="fi-card">
                 <div class="fi-tip"><b>Likely problem areas to watch on equity:</b><br>
                   • Grinold-Kroner %ΔS sign (buyback = negative %ΔS = positive contribution)<br>
                   • P/E growth assumption over infinite horizon (%ΔP/E = 0, %ΔS = 0)<br>
@@ -12465,6 +12580,22 @@ FINITE time period (subtract change in cap rate):
                 <div class="fi-title">Errors &amp; Mastery — ready for your wrong answers</div>
                 <div class="fi-body">This tab will hold the real estate questions you get wrong, with pattern classification and drill mode.</div>
                 <div class="fi-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+              </div>
+
+              <!-- ESSAY GAP · historical analysis of RE returns -->
+              <div class="fi-card" style="border-left:3px solid #F0A04B">
+                <div class="fi-title">📝 Essay gap · Main issues in historical analysis of RE returns</div>
+                <div class="fi-body"><b>Prompt:</b> describe the main issues that arise when conducting historical analysis of real estate returns.</div>
+                <div class="fi-trap"><b>Your answer:</b> appraisal smoothing — subject to time lag and data smoothing, differs significantly from MV, artificially lowers measured volatility and correlation. → you had the CONSEQUENCE but the rubric wanted the CAUSES too.</div>
+                <div class="fi-body"><b>The full set of issues (causes → consequences):</b></div>
+                <span class="fi-rule"><span class="fi-orange">1. Infrequent trading:</span> properties trade infrequently → NO data on simultaneous periodic transaction prices for a selection of properties → analysis must rely on APPRAISALS</span>
+                <span class="fi-rule"><span class="fi-orange">2. Heterogeneity:</span> each property is different (heterogeneous) — not interchangeable like shares</span>
+                <span class="fi-rule"><span class="fi-orange">3. Appraisal = weighted average:</span> returns calculated from appraisals represent weighted averages of UNOBSERVABLE returns</span>
+                <span class="fi-rule"><span class="fi-red">→ Consequence:</span> the published return series is too SMOOTH → sample volatility UNDERSTATES true volatility AND distorts estimates of CORRELATIONS</span>
+                <div class="fi-tip"><b>Pattern (completeness):</b> "describe the issues" wants the chain — WHY appraisals are used (infrequent trading + heterogeneity), WHAT appraisals are (weighted averages of unobservable returns), and the EFFECT (too smooth → understates vol, distorts correlation). You jumped to the effect and skipped the first two links.</div>
+              </div>
+
+              <div class="fi-card">
                 <div class="fi-tip"><b>Likely problem areas to watch on real estate:</b><br>
                   • Cap rate formula: E(R_re) = cap rate + NOI growth (infinite); − %Δcap rate (finite)<br>
                   • Cap rate positively related to rates/vacancy, inversely to credit availability<br>
@@ -12693,6 +12824,117 @@ FINITE time period (subtract change in cap rate):
                 <div class="fi-title">Errors &amp; Mastery — ready for your wrong answers</div>
                 <div class="fi-body">This tab will hold the exchange rate questions you get wrong, with pattern classification and drill mode.</div>
                 <div class="fi-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+              </div>
+
+              <!-- DIRECTIONAL INVERSIONS CALLOUT -->
+              <div class="fi-card" style="border-left:3px solid #F0A04B;background:rgba(240,160,75,0.05)">
+                <div class="fi-title">⚠ Pattern · Directional Inversions (your recurring trap)</div>
+                <div class="fi-body">On the Bader set you flipped the DIRECTION on three otherwise-correct concepts. The concept was right; the side it pointed to was backwards.</div>
+                <span class="fi-rule"><b>Integration trade:</b> bought the segmenting market instead of the integrating one</span>
+                <span class="fi-rule"><b>Sterilization:</b> matched "buys domestic bonds" to the inflow country instead of the outflow country</span>
+                <span class="fi-rule"><b>Crisis vulnerability:</b> picked the MOST-supportive holding (private equity) as the most vulnerable instead of the LEAST (public debt)</span>
+                <div class="fi-tip"><b>Drill habit:</b> after you choose, say out loud which way the arrow points and why. If you can't state the direction in one sentence, you're guessing.</div>
+              </div>
+
+              <!-- ERROR CARD 3 · sterilization direction -->
+              <div class="fi-card" style="border-left:3px solid #FF7B72">
+                <div class="fi-title">❌ Error · Sterilization — who BUYS domestic bonds?</div>
+                <div class="fi-body"><b>Q (Bader, Exhibit 1):</b> which country's central bank is most likely to BUY domestic bonds near term to sterilize the impact of money flows on domestic liquidity? (Country B: hot money flowing OUT. Country C: hot money flowing IN.)</div>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;margin:8px 0">
+                  <span style="color:#FF7B72">Your pick: <b>C</b> ✗</span>
+                  <span style="color:#3DD68C">Correct: <b>B</b> ✓</span>
+                </div>
+                <div class="fi-trap"><b>Why you were wrong:</b> you matched the action to the inflow country. Trace it step by step — the BUY-bonds action belongs to the OUTFLOW country.</div>
+                <table class="fi-table">
+                  <thead><tr><th></th><th class="fi-red">Country B · hot money OUT</th><th class="fi-blue">Country C · hot money IN</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>FX defense</b></td><td>SELL foreign currency to defend domestic FX (drains domestic liquidity)</td><td>(currency under upward pressure)</td></tr>
+                    <tr><td><b>Sterilize via</b></td><td class="fi-green">BUY government bonds → re-injects liquidity ✓</td><td class="fi-red">SELL government securities → drains excess reserves</td></tr>
+                    <tr><td><b>Goal</b></td><td>Offset the liquidity drain, hold rate target</td><td>Limit growth of bank reserves, hold rate target</td></tr>
+                  </tbody>
+                </table>
+                <div class="fi-tip"><b>Direction hook:</b> outflow → CB SELLS FX, BUYS bonds. Inflow → CB BUYS FX, SELLS bonds. The question said "buys domestic bonds" → that's the OUTFLOW country (B). Sterilization always = the OFFSETTING open-market trade to neutralize the liquidity effect.</div>
+              </div>
+
+              <!-- ERROR CARD 4 · currency crisis vulnerability ranking -->
+              <div class="fi-card" style="border-left:3px solid #FF7B72">
+                <div class="fi-title">❌ Error · Currency crisis — supportiveness ranking of holdings</div>
+                <div class="fi-body"><b>Q (Bader):</b> which country is MOST vulnerable to a potential crisis based on its currency-portfolio composition? (A = majority private equity. B = majority public equity. C = majority public debt.)</div>
+                <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;margin:8px 0">
+                  <span style="color:#FF7B72">Your pick: <b>A</b> ✗</span>
+                  <span style="color:#3DD68C">Correct: <b>C</b> ✓</span>
+                </div>
+                <div class="fi-trap"><b>Why you were wrong — exact inversion:</b> you picked the MOST-supportive composition (private equity) as the most vulnerable. The vulnerability ranking is the reverse of the supportiveness ranking.</div>
+                <table class="fi-table">
+                  <thead><tr><th>Holding</th><th>Supportiveness</th><th>Why</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Private equity</b> (Country A)</td><td class="fi-green">MOST supportive</td><td>Long-term committed capital — doesn't flee</td></tr>
+                    <tr><td><b>Public equity</b> (Country B)</td><td class="fi-orange">Middle</td><td>More mobile than private, less than debt</td></tr>
+                    <tr><td><b>Public debt</b> (Country C)</td><td class="fi-red">LEAST supportive → MOST vulnerable</td><td>Must be SERVICED + repaid/refinanced → can trigger a crisis</td></tr>
+                  </tbody>
+                </table>
+                <div class="fi-tip"><b>Ranking hook (most → least supportive):</b> Private equity &gt; Public equity &gt; Public debt. "Most vulnerable" = LEAST supportive = the majority-public-debt country (C). Debt has to be paid back; equity doesn't.</div>
+              </div>
+
+              <!-- ESSAY COMPLETENESS CALLOUT -->
+              <div class="fi-card" style="border-left:3px solid #F0A04B;background:rgba(240,160,75,0.05)">
+                <div class="fi-title">⚠ Pattern · Essay completeness (name-the-bucket-then-stop)</div>
+                <div class="fi-body">On constructed-response you tend to NAME the headline concept and stop, losing the supporting points the rubric enumerates. This is distinct from the answer-choice "directional inversion" trap — here the issue is DEPTH, not direction.</div>
+                <table class="fi-table">
+                  <thead><tr><th>Verb</th><th>What it demands</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Discuss</b></td><td>Concede what's right, then FIND THE FLAW (esp. any ALL/ALWAYS/NEVER)</td></tr>
+                    <tr><td><b>Describe</b></td><td>The full CHAIN: cause → mechanism → consequence</td></tr>
+                    <tr><td><b>Identify the considerations</b></td><td>Fill the bucket — list EACH sub-point, not just the category name</td></tr>
+                  </tbody>
+                </table>
+                <div class="fi-tip"><b>Habit:</b> after naming the concept, ask "what are the 3–4 supporting points the grader is counting?" Write them as bullets. Points are awarded per item, not for the headline.</div>
+              </div>
+
+              <!-- ESSAY GAP · two FX approaches -->
+              <div class="fi-card" style="border-left:3px solid #F0A04B">
+                <div class="fi-title">📝 Essay gap · The two complementary FX forecasting approaches</div>
+                <div class="fi-body"><b>Prompt:</b> identify the main considerations under the firm's two approaches — (1) trade in goods/services, (2) capital flows.</div>
+                <div class="fi-trap"><b>Your answer:</b> approach 1 = PPP (inflation differentials, real FX change = 0); approach 2 = capital mobility. → too thin; each bucket has multiple sub-points.</div>
+                <div class="fi-info"><b>Approach 1 · Trade in goods &amp; services — fill it out:</b><br>
+                  • Net trade flows: how large are exports/imports RELATIVE to the economy and to other (larger) financing/investment flows<br>
+                  • PPP / inflation differentials: expected %ΔFX ≈ difference in inflation rates<br>
+                  • SUSTAINABILITY of current account imbalances (reflects national saving vs investment)</div>
+                <div class="fi-info"><b>Approach 2 · Capital flows &amp; capital mobility — fill it out:</b><br>
+                  • Capital seeks the HIGHEST RISK-ADJUSTED return<br>
+                  • Expected %ΔFX reflects differences in asset characteristics: relative short-term rates + TERM, CREDIT, EQUITY, LIQUIDITY premiums<br>
+                  • HOT MONEY flows<br>
+                  • FX as the across-the-board mechanism for adjusting the relative SIZES of each country's asset portfolio</div>
+                <div class="fi-tip"><b>Memory:</b> Trade approach = flows + PPP + CA sustainability. Capital approach = risk-adjusted return + the 5 differentials + hot money + portfolio-rebalancing role. You had ~1 of 3 and ~1 of 4.</div>
+              </div>
+
+              <!-- ESSAY GAP · Country X vs Y strengthening currency -->
+              <div class="fi-card" style="border-left:3px solid #3DD68C">
+                <div class="fi-title">📝 Essay (got it right — lock the logic) · X vs Y strengthening currency</div>
+                <div class="fi-body"><b>Prompt:</b> for each observation independently, which country shows a strengthening currency?</div>
+                <table class="fi-table">
+                  <thead><tr><th>Observation</th><th>Stronger currency</th><th>Why</th></tr></thead>
+                  <tbody>
+                    <tr><td>Inflation: X 2.0% / Y 3.0%</td><td class="fi-green">Country X</td><td>Lower inflation → PPP appreciation</td></tr>
+                    <tr><td>ST gov rate: X ↓ / Y ↑</td><td class="fi-blue">Country Y</td><td>Higher rate attracts capital</td></tr>
+                    <tr><td>Expected GDP growth: X 2.0% / Y 3.3%</td><td class="fi-blue">Country Y</td><td>Stronger growth → higher risk-adjusted returns → inflows</td></tr>
+                    <tr><td>New FDI-enabling laws: X yes / Y no</td><td class="fi-green">Country X</td><td>Opens market to foreign capital inflows</td></tr>
+                    <tr><td>Current account: X +8% / Y −1%</td><td class="fi-green">Country X</td><td>Surplus supports the currency</td></tr>
+                  </tbody>
+                </table>
+                <div class="fi-tip"><b>The split:</b> X strengthens on inflation, FDI laws, CA surplus. Y strengthens on higher ST rate and higher growth. Each factor judged INDEPENDENTLY — don't net them.</div>
+              </div>
+
+              <!-- ESSAY GAP · Fip PPP over/undervalued -->
+              <div class="fi-card" style="border-left:3px solid #3DD68C">
+                <div class="fi-title">📝 Essay (got it right — lock the logic) · Fip &amp; PPP</div>
+                <div class="fi-body"><b>Prompt:</b> 3 years ago the Fip was at PPP. Since then Fap inflation exceeded other countries' by ~5%/yr, but the Fip stayed broadly unchanged. What should PPP have shown, and is the Fip over- or undervalued?</div>
+                <span class="fi-rule"><b>PPP expectation:</b> to offset the higher Fap inflation, the Fip should have DEPRECIATED against the other currencies by ≈ the inflation difference (~5% per annum)</span>
+                <span class="fi-rule"><b class="fi-green">Verdict:</b> since it did NOT depreciate as PPP required, the Fip is OVERVALUED</span>
+                <div class="fi-tip"><b>Logic:</b> higher domestic inflation should weaken the currency under PPP. A currency that "should have fallen but didn't" is sitting ABOVE its PPP value → overvalued.</div>
+              </div>
+
+              <div class="fi-card">
                 <div class="fi-tip"><b>Likely problem areas to watch on exchange rates:</b><br>
                   • PPP: higher inflation → currency depreciates; favor lower-inflation currency<br>
                   • PPP works long-term / large inflation differences, NOT short-term; ignores capital flows<br>
