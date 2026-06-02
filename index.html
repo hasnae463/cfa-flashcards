@@ -14546,6 +14546,1216 @@ duration · foreign exchange · default risk</div>
           </script>
         </div>
 
+        <div id="paWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #paWidget { --pa-gold:#D4A017; --pa-green:#3DD68C; --pa-red:#FF7B72; --pa-orange:#F0A04B; --pa-blue:#79C0FF; --pa-purple:#BC8CFF; }
+            #paWidget .pa-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #paWidget .pa-toptab { background:var(--surface2); border:1px solid var(--pa-gold); color:var(--pa-gold); padding:9px 18px; border-radius:7px; font-family:var(--serif); font-size:14px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #paWidget .pa-toptab.active { background:var(--pa-gold); color:#0D1117; }
+            #paWidget .pa-toppanel { display:none; }
+            #paWidget .pa-toppanel.active { display:block; }
+            #paWidget .pa-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+            #paWidget .pa-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #paWidget .pa-tab.active { background:rgba(212,160,23,.15); border-color:var(--pa-gold); color:var(--pa-gold); }
+            #paWidget .pa-panel { display:none; }
+            #paWidget .pa-panel.active { display:block; }
+            #paWidget .pa-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:14px; }
+            #paWidget .pa-title { font-family:var(--serif); font-size:16px; color:var(--pa-gold); font-weight:600; margin-bottom:10px; }
+            #paWidget .pa-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:8px; }
+            #paWidget .pa-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #paWidget .pa-rule { display:block; padding:6px 0; border-bottom:1px solid var(--border); font-size:12.5px; line-height:1.5; color:#C9D1D9; }
+            #paWidget .pa-rule:last-child { border-bottom:none; }
+            #paWidget .pa-tip { background:rgba(46,160,67,.08); border-left:3px solid var(--pa-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #paWidget .pa-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--pa-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #paWidget .pa-info { background:rgba(121,192,255,.08); border-left:3px solid var(--pa-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #paWidget .pa-green { color:var(--pa-green); }
+            #paWidget .pa-red { color:var(--pa-red); }
+            #paWidget .pa-orange { color:var(--pa-orange); }
+            #paWidget .pa-blue { color:var(--pa-blue); }
+            #paWidget .pa-gold { color:var(--pa-gold); }
+            #paWidget .pa-purple { color:var(--pa-purple); }
+            #paWidget .pa-table { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #paWidget .pa-table th { background:#0B0F14; color:var(--pa-gold); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #paWidget .pa-table td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+            #paWidget .pa-hd-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+            #paWidget .pa-hd-label { flex:1; font-family:var(--mono); font-size:11px; color:var(--muted); }
+            #paWidget .pa-hd-input { background:var(--surface); color:#C9D1D9; border:1px solid var(--border); padding:5px 8px; border-radius:3px; font-family:monospace; width:90px; text-align:right; }
+            #paWidget .pa-hd-result { background:#0B0F14; border-left:3px solid var(--pa-gold); border-radius:4px; padding:14px 16px; margin-top:14px; }
+            #paWidget .pa-flow { display:flex; align-items:stretch; gap:8px; flex-wrap:wrap; margin:12px 0; }
+            #paWidget .pa-flow-box { flex:1; min-width:130px; background:#0B0F14; border:1px solid var(--border); border-radius:6px; padding:11px 13px; }
+            #paWidget .pa-flow-box .h { font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:var(--pa-gold); margin-bottom:6px; }
+            #paWidget .pa-flow-box ul { margin:0; padding-left:15px; font-size:11.5px; line-height:1.6; color:#C9D1D9; }
+            #paWidget .pa-flow-arrow { display:flex; align-items:center; color:var(--pa-gold); font-size:18px; }
+            #paWidget .pa-revealbtn { background:rgba(212,160,23,.12); border:1px solid rgba(212,160,23,.5); color:var(--pa-gold); font-family:var(--mono); font-size:10.5px; letter-spacing:.04em; padding:5px 12px; border-radius:4px; cursor:pointer; margin-top:8px; }
+          </style>
+
+          <div class="pa-toptabs">
+            <button class="pa-toptab active" onclick="paTop('mvo',this)">Basic MVO (4.1)</button>
+            <button class="pa-toptab" onclick="paTop('ro',this)">Reverse Opt / BL / Resampling (4.2)</button>
+            <button class="pa-toptab" onclick="paTop('ex',this)">Allocation Examples (4.3)</button>
+            <button class="pa-toptab" onclick="paTop('mcs',this)">MCS / Liquidity / Individuals (4.e/4.f/4.c)</button>
+            <button class="pa-toptab" onclick="paTop('rb',this)">Risk Budgeting / Factors (4.g/4.h/4.i)</button>
+            <button class="pa-toptab" onclick="paTop('alm',this)">Asset-Liability Mgmt (4.6)</button>
+            <button class="pa-toptab" onclick="paTop('gb',this)">Goals-Based &amp; Heuristics (4.7)</button>
+            <button class="pa-toptab" onclick="paTop('reb',this)">Rebalancing (4.8)</button>
+          </div>
+
+          <!-- ════════════════ TOP TAB · BASIC MEAN-VARIANCE OPTIMIZATION (4.1) ════════════════ -->
+          <div id="par-mvo" class="pa-toppanel active">
+
+            <div class="pa-tabs">
+              <button class="pa-tab active" onclick="paMvoTab('intro',this)">MVO &amp; Process</button>
+              <button class="pa-tab" onclick="paMvoTab('utility',this)">Utility &amp; Calculator</button>
+              <button class="pa-tab" onclick="paMvoTab('frontier',this)">Efficient Frontier</button>
+              <button class="pa-tab" onclick="paMvoTab('criticisms',this)">6 Criticisms</button>
+              <button class="pa-tab" onclick="paMvoTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · MVO & PROCESS -->
+            <div id="pamvo-intro" class="pa-panel active">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.a · What MVO does</div>
+                <div class="pa-body">Creating a diversified portfolio across multiple asset classes requires two decisions:</div>
+                <table class="pa-table">
+                  <thead><tr><th>Decision</th><th>What it means</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="pa-gold">Asset allocation decision</b></td><td>Use the investor's objectives &amp; constraints to identify the appropriate portfolio <b>weights</b> for the various asset classes.</td></tr>
+                    <tr><td><b class="pa-gold">Implementation decision</b></td><td>Identify the <b>specific assets</b> within each asset class according to the weights set in step 1.</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-body"><b>Mean-variance optimization (MVO)</b> is the most common approach to asset allocation. It assumes investors are <b>risk averse</b> → they prefer more return for the same level of risk.</div>
+                <div class="pa-info">Given an opportunity set of investable assets + their expected returns, variances, and <b>pairwise correlations</b>, MVO identifies the portfolio allocations that <b>maximize return for every level of risk</b> → the efficient frontier.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Figure 4.2 · The MVO process (inputs → MVO → outputs)</div>
+                <div class="pa-flow">
+                  <div class="pa-flow-box">
+                    <div class="h">Inputs</div>
+                    <ul>
+                      <li>Expected returns</li>
+                      <li>Variances</li>
+                      <li>Covariances (correlations)</li>
+                      <li>Risk aversion factor (λ)</li>
+                      <li>Constraints</li>
+                    </ul>
+                  </div>
+                  <div class="pa-flow-arrow">→</div>
+                  <div class="pa-flow-box">
+                    <div class="h">MVO</div>
+                    <ul>
+                      <li>Maximize utility</li>
+                      <li>Subject to constraint(s)</li>
+                    </ul>
+                  </div>
+                  <div class="pa-flow-arrow">→</div>
+                  <div class="pa-flow-box">
+                    <div class="h">Outputs</div>
+                    <ul>
+                      <li>Asset allocations (portfolio weights)</li>
+                      <li>Portfolio expected return</li>
+                      <li>Portfolio variance</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">The two standard constraints in MVO</div>
+                <span class="pa-rule"><b class="pa-gold">Budget (unity) constraint</b> — the most common. Asset weights must add up to <b>100%</b>.</span>
+                <span class="pa-rule"><b class="pa-gold">Non-negativity constraint</b> — next most common. All weights are positive, between <b>0% and 100%</b> → <b>no short positions</b> in the SAA.</span>
+                <div class="pa-info">Maximization problems generally maximize an objective function subject to one or more constraints. In MVO the constraints typically restrict the portfolio weights, the expected return, the variance, or some combination.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">What L1/L2 assumed — and what L3 drops</div>
+                <table class="pa-table">
+                  <thead><tr><th>Old (L1 / L2) assumption</th><th>L3 view</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>All tradable assets</b> are included in the optimization and efficient frontier.</td><td class="pa-red">No longer assume all assets are used, or that the frontier built from all assets is optimal for a given investor.</td></tr>
+                    <tr><td><b>A true risk-free asset exists</b> → optimal allocation line from rf to the frontier gives the market portfolio (highest-Sharpe tangent portfolio) that all investors hold.</td><td class="pa-red">No longer assume a true risk-free asset exists, where "risk-free" means variance of return = 0 AND return is uncorrelated with all other assets (corr = 0).</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · UTILITY & CALCULATOR -->
+            <div id="pamvo-utility" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Utility maximization — finding the optimal point on the frontier</div>
+                <div class="pa-body">One way to find the optimal point on the efficient frontier for a given investor is to maximize that investor's utility:</div>
+                <div class="pa-fl">U(m) = E(R_m) − 0.005 × λ × Var_m
+
+U(m)    = investor's utility from asset allocation m
+E(R_m)  = expected return of portfolio m   (in %, e.g. 8.00)
+λ       = investor's risk-aversion coefficient ("lambda")
+Var_m   = σ²_m = variance of portfolio m    (in %)</div>
+                <div class="pa-info"><b>Coefficient depends on units.</b> If E(R) and Var are in <b>percentage</b> terms (8% → 8.00) the coefficient is <b>0.005</b>. If they're in <b>decimal</b> terms (0.08) use <b>0.5</b>.</div>
+                <div class="pa-tip"><b>U(m) is the certainty-equivalent return.</b> Higher expected return (same risk) ↑ utility. Higher risk (same return) ↓ utility for a risk-averse investor → variance imposes a "penalty" for risk.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Lambda (λ) — risk-aversion coefficient</div>
+                <span class="pa-rule">Captures each investor's preference for trading off risk vs return.</span>
+                <span class="pa-rule">Unique to each individual; based on <b>willingness AND capacity</b> to take on risk.</span>
+                <span class="pa-rule"><b class="pa-gold">Risk-neutral</b> investor → λ = <b>0</b>.</span>
+                <span class="pa-rule">In practice λ is typically assumed between <b>1 and 10</b>, with an <b>average of ~4</b>.</span>
+                <div class="pa-trap"><b>Trap:</b> the 0.005 vs 0.5 coefficient. Mixing percentage inputs with the 0.5 coefficient (or decimals with 0.005) blows up the variance penalty by 100×. Check the units of E(R) and Var <b>before</b> plugging in.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Utility calculator</div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Expected return E(R)</span><input id="paU_er" class="pa-hd-input" type="number" value="8" oninput="paUtilCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Std deviation σ</span><input id="paU_sd" class="pa-hd-input" type="number" value="12" oninput="paUtilCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Risk aversion λ</span><input id="paU_lam" class="pa-hd-input" type="number" value="4" oninput="paUtilCalc()"></div>
+                <div class="pa-hd-row">
+                  <span class="pa-hd-label">Units</span>
+                  <select id="paU_units" class="pa-hd-input" style="width:auto" onchange="paUtilCalc()">
+                    <option value="pct">Percentage (8.00 → 0.005)</option>
+                    <option value="dec">Decimal (0.08 → 0.5)</option>
+                  </select>
+                </div>
+                <div id="paU_out" class="pa-hd-result"></div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · EFFICIENT FRONTIER -->
+            <div id="pamvo-frontier" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Figure 4.1 · Mean-variance efficient frontier</div>
+                <div class="pa-body">When MVO includes all investable risky assets, the result is the familiar efficient frontier (σ on x-axis, expected return on y-axis). The analysis can also be <b>constrained</b> by an investor's objectives &amp; constraints to some <b>subset of assets</b> suitable to that investor.</div>
+                <svg viewBox="0 0 360 240" width="100%" style="max-width:420px;display:block;margin:10px auto;background:#0B0F14;border-radius:6px">
+                  <!-- axes -->
+                  <line x1="45" y1="20" x2="45" y2="205" stroke="#7D8590" stroke-width="1.5"/>
+                  <line x1="45" y1="205" x2="335" y2="205" stroke="#7D8590" stroke-width="1.5"/>
+                  <text x="30" y="28" fill="#C9D1D9" font-size="12" font-style="italic">R̂p</text>
+                  <text x="320" y="225" fill="#C9D1D9" font-size="12" font-style="italic">σ̂p</text>
+                  <!-- full frontier curve (efficient + inefficient lower half) -->
+                  <path d="M 95 165 Q 60 140 75 105 Q 95 60 180 45 Q 270 33 320 28" fill="none" stroke="#D4A017" stroke-width="2.5"/>
+                  <path d="M 95 165 Q 120 185 200 195 Q 270 200 320 203" fill="none" stroke="#7D8590" stroke-width="1.6" stroke-dasharray="4 3"/>
+                  <!-- GMV point -->
+                  <circle cx="75" cy="105" r="5" fill="#3DD68C"/>
+                  <text x="150" y="150" fill="#C9D1D9" font-size="10">Global Minimum</text>
+                  <text x="150" y="162" fill="#C9D1D9" font-size="10">Variance Portfolio</text>
+                  <line x1="148" y1="150" x2="82" y2="108" stroke="#7D8590" stroke-width="1"/>
+                  <!-- efficient frontier label -->
+                  <text x="120" y="50" fill="#D4A017" font-size="10" font-weight="600">Efficient Frontier</text>
+                </svg>
+                <div class="pa-info">The <b class="pa-green">global minimum-variance portfolio (GMV)</b> sits at the leftmost tip. Everything <b class="pa-gold">above &amp; right</b> of it (gold) is the efficient frontier; the dashed grey lower arm is dominated (same risk, lower return) and is not efficient.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 4 · 6 CRITICISMS -->
+            <div id="pamvo-criticisms" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">The 6 criticisms of MVO</div>
+                <div class="pa-body">The reading addresses all six. The <b>first two</b> (GIGO &amp; concentration) are fixed by <b>improving input quality — particularly expected returns</b>.</div>
+                <table class="pa-table">
+                  <thead><tr><th>#</th><th>Criticism</th><th>Core problem</th></tr></thead>
+                  <tbody>
+                    <tr><td>1</td><td><b class="pa-gold">GIGO</b> — garbage in, garbage out</td><td>Output is highly sensitive to input quality (E(R), variances, correlations). All three carry estimation error, but <b>expected returns are particularly problematic</b> → the focus of the fix.</td></tr>
+                    <tr><td>2</td><td><b class="pa-gold">Concentrated asset-class allocations</b></td><td>MVO often produces efficient portfolios highly concentrated in a subset of classes, with <b>zero allocation</b> to others. Lowest calculated σ ≠ practical diversification.</td></tr>
+                    <tr><td>3</td><td><b class="pa-gold">Skewness &amp; kurtosis</b></td><td>MVO only looks at the <b>first two moments</b> (mean &amp; variance). But real returns show significant skewness &amp; kurtosis → not normally distributed.</td></tr>
+                    <tr><td>4</td><td><b class="pa-gold">Risk diversification</b></td><td>MVO diversifies across <b>asset classes</b>, not necessarily across <b>sources of risk</b>. Equities &amp; FI are different classes but share common risk factors → diversifying classes won't necessarily diversify the factors.</td></tr>
+                    <tr><td>5</td><td><b class="pa-gold">Ignores liabilities</b></td><td>Investors hold portfolios as a source of cash for future spending (consumption in retirement; pension liabilities). MVO ignores the liability side &amp; the correlations between liability values and asset returns.</td></tr>
+                    <tr><td>6</td><td><b class="pa-gold">Single-period framework</b></td><td>MVO is single-period → ignores interim cash flows &amp; serial correlation of returns. So it ignores rebalancing costs/benefits as conditions change and allocations drift from the optimal start.</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-tip"><b>Memory hook:</b> "<b>G-C-S-R-L-S</b>" → <u>G</u>IGO · <u>C</u>oncentration · <u>S</u>kew/kurtosis · <u>R</u>isk-factor blindness · <u>L</u>iabilities ignored · <u>S</u>ingle-period. First two = input quality; rest = structural model limits.</div>
+                <div class="pa-trap"><b>Exam trap:</b> "Which criticisms are addressed by improving inputs?" → only <b>#1 GIGO and #2 concentration</b>, and specifically by improving <b>expected-return</b> estimates. The other four need different tools (reverse optimization / Black-Litterman, resampling, factor-based, ALM, multi-period / Monte Carlo).</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 5 · ERRORS & MASTERY -->
+            <div id="pamvo-errors" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Errors &amp; Mastery — Basic MVO</div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on Module 4.1. Send them and I'll drop each in as a reasoning card (your answer · correct answer · the trap).</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════════════ TOP TAB · REVERSE OPT / BLACK-LITTERMAN / RESAMPLING (4.2) ════════════════ -->
+          <div id="par-ro" class="pa-toppanel">
+
+            <div class="pa-tabs">
+              <button class="pa-tab active" onclick="paRoTab('reverse',this)">Reverse Optimization</button>
+              <button class="pa-tab" onclick="paRoTab('bl',this)">Black-Litterman</button>
+              <button class="pa-tab" onclick="paRoTab('constraints',this)">Adding Constraints</button>
+              <button class="pa-tab" onclick="paRoTab('resampled',this)">Resampled MVO</button>
+              <button class="pa-tab" onclick="paRoTab('nonnormal',this)">Non-normal Dist.</button>
+              <button class="pa-tab" onclick="paRoTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · REVERSE OPTIMIZATION -->
+            <div id="paro-reverse" class="pa-panel active">
+              <div class="pa-card">
+                <div class="pa-title">Improving input quality — Reverse Optimization</div>
+                <div class="pa-body">The first two MVO criticisms (GIGO &amp; concentration) are addressed by better inputs — especially <b>expected returns</b>. Reverse optimization improves the return estimates. (Black-Litterman is an extension of it.)</div>
+                <div class="pa-info"><b>Forward (basic) MVO:</b> start with expected returns + other inputs → derive optimal weights.<br><b class="pa-gold">Reverse optimization:</b> flip it. Start with the weights you <b>assume are "optimal"</b> (from the global market portfolio) → derive the expected returns <b>consistent with those weights</b>. Those derived returns are called <b>implied returns</b>.</div>
+                <div class="pa-body">Then feed those implied returns into a <b>traditional MVO</b> to derive optimal weights for your particular investor.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Figure 4.3 · Reverse optimization — the two-stage flow</div>
+                <div class="pa-flow">
+                  <div class="pa-flow-box">
+                    <div class="h">Inputs</div>
+                    <ul><li>Assumed optimal asset allocations</li><li>Variances</li><li>Covariances (corr)</li><li>Risk aversion factor</li><li>Constraints</li></ul>
+                  </div>
+                  <div class="pa-flow-arrow">→</div>
+                  <div class="pa-flow-box">
+                    <div class="h">Reverse MVO</div>
+                    <ul><li>Maximize utility</li><li>Subject to constraint(s)</li></ul>
+                  </div>
+                  <div class="pa-flow-arrow">→</div>
+                  <div class="pa-flow-box" style="border-color:var(--pa-gold)">
+                    <div class="h">Outputs</div>
+                    <ul><li class="pa-gold">Implied returns</li></ul>
+                  </div>
+                </div>
+                <div style="text-align:center;color:var(--pa-gold);font-size:16px;margin:4px 0">↓ feed implied returns back in ↓</div>
+                <div class="pa-flow">
+                  <div class="pa-flow-box" style="border-color:var(--pa-gold)">
+                    <div class="h">Inputs</div>
+                    <ul><li class="pa-gold">Implied returns</li><li>Variances</li><li>Covariances (corr)</li><li>Risk aversion factor</li><li>Constraints</li></ul>
+                  </div>
+                  <div class="pa-flow-arrow">→</div>
+                  <div class="pa-flow-box">
+                    <div class="h">MVO</div>
+                    <ul><li>Maximize utility</li><li>Subject to constraint(s)</li></ul>
+                  </div>
+                  <div class="pa-flow-arrow">→</div>
+                  <div class="pa-flow-box">
+                    <div class="h">Outputs</div>
+                    <ul><li>Revised asset allocations</li><li>Portfolio expected return</li><li>Portfolio variance</li></ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Why the world market portfolio as the starting point?</div>
+                <span class="pa-rule">It's common to assume the <b>world market portfolio</b> provides optimal diversification → appropriate starting weights for reverse optimization.</span>
+                <span class="pa-rule"><b class="pa-green">Advantage:</b> the derived (implied) returns already reflect a <b>highly diversified</b> portfolio → you avoid MVO's tendency to produce highly concentrated allocations.</span>
+                <span class="pa-rule">Other starting points are possible — e.g. the weights from the client's <b>existing IPS</b>.</span>
+                <div class="pa-tip"><b>The fix mapping:</b> reverse optimization tackles criticism #2 (concentration) directly — by construction the inputs come from a diversified portfolio, so the output isn't lopsided.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · BLACK-LITTERMAN -->
+            <div id="paro-bl" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Black-Litterman = reverse optimization + your views</div>
+                <div class="pa-body">The <b class="pa-gold">Black-Litterman model</b> is an <b>extension of reverse optimization</b> in which the implied returns (technically implied <b>excess</b> returns) from a reverse optimization are <b>subsequently adjusted</b> to reflect the investor's unique <b>views of future returns</b>.</div>
+                <div class="pa-info"><b>So the chain is:</b> reverse-optimize the market portfolio → get implied (excess) returns → tilt those returns by your views → run MVO on the tilted returns → revised allocations.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">The two ways to express a view (exam examples)</div>
+                <table class="pa-table">
+                  <thead><tr><th>View type</th><th>Worked example</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="pa-gold">Absolute view</b><br>(adjust one asset's return)</td><td>Reverse opt derives EM equities = <b>6.5%</b>. You think that's too low → adjust up by <b>75 bps</b> → use <b>7.25%</b>. Rerun MVO with the adjusted estimate.</td></tr>
+                    <tr><td><b class="pa-gold">Relative view</b><br>(adjust a return differential)</td><td>Projects UK large-cap = 8.0% and US large-cap = 8.2% → differential of <b>20 bps</b>. You believe US will outperform UK by <b>100 bps</b> → adjust the differential to 100 bps.</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-trap"><b>Trap — absolute vs relative:</b> an absolute view sets a level for one asset; a relative view sets the <b>spread between two</b> assets. The 20→100 bps example is relative — you're changing the differential, not pinning either return.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Figure 4.4 · Black-Litterman model</div>
+                <div class="pa-flow">
+                  <div class="pa-flow-box">
+                    <div class="h">Inputs</div>
+                    <ul><li>Assumed optimal asset allocations</li><li>Variances</li><li>Covariances (corr)</li><li>Risk aversion factor</li><li>Constraints</li></ul>
+                  </div>
+                  <div class="pa-flow-arrow">→</div>
+                  <div class="pa-flow-box">
+                    <div class="h">Reverse MVO</div>
+                    <ul><li>Maximize utility</li><li>S.t. constraint(s)</li></ul>
+                  </div>
+                  <div class="pa-flow-arrow">→</div>
+                  <div class="pa-flow-box">
+                    <div class="h">Outputs</div>
+                    <ul><li>Implied returns</li></ul>
+                  </div>
+                </div>
+                <div style="text-align:center;color:var(--pa-purple);font-size:13px;margin:4px 0">↓ <b>Black-Litterman</b>: tilt implied returns by your views ↓</div>
+                <div class="pa-flow">
+                  <div class="pa-flow-box" style="border-color:var(--pa-purple)">
+                    <div class="h" style="color:var(--pa-purple)">Inputs</div>
+                    <ul><li class="pa-purple">Reverse implied returns (tilted)</li><li>Variances</li><li>Covariances (corr)</li><li>Risk aversion factor</li><li>Constraints</li></ul>
+                  </div>
+                  <div class="pa-flow-arrow">→</div>
+                  <div class="pa-flow-box">
+                    <div class="h">MVO</div>
+                    <ul><li>Maximize utility</li><li>S.t. constraint(s)</li></ul>
+                  </div>
+                  <div class="pa-flow-arrow">→</div>
+                  <div class="pa-flow-box">
+                    <div class="h">Outputs</div>
+                    <ul><li>Revised asset allocations</li><li>Portfolio expected return</li><li>Portfolio variance</li></ul>
+                  </div>
+                </div>
+                <div class="pa-info">Same skeleton as reverse optimization (Fig 4.3) — the <b class="pa-purple">only added block</b> is the Black-Litterman step that adjusts the implied returns for the investor's views before the final MVO.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · ADDING CONSTRAINTS -->
+            <div id="paro-constraints" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Adding constraints beyond budget &amp; non-negativity</div>
+                <div class="pa-body">Extra constraints (beyond the budget &amp; non-negativity constraints) are another way to address GIGO &amp; concentration. They're usually meant to make the allocation more <b>acceptable</b> to the investor — to include or exclude (in whole or part) certain asset classes.</div>
+                <div class="pa-title" style="font-size:14px">Typical additional constraints</div>
+                <span class="pa-rule"><b class="pa-gold">Fixed allocation</b> to one or more assets — often <b>human capital</b> or other nontradable assets.</span>
+                <span class="pa-rule"><b class="pa-gold">Allocation range</b> for an asset class (e.g., 10%–15% for global REITs).</span>
+                <span class="pa-rule"><b class="pa-gold">Upper limit</b> on an asset class to address <b>liquidity</b> issues (e.g., ≤ 10% to private equity).</span>
+                <span class="pa-rule"><b class="pa-gold">Relative allocation</b> between two+ classes (e.g., Asia bonds &lt; Asia equities).</span>
+                <span class="pa-rule"><b class="pa-gold">Liability-hedging</b> constraint (in a liability-relative setting) requiring an allocation to assets that hedge the liability.</span>
+                <div class="pa-trap"><b>Key caveat:</b> if <b>too many</b> constraints exist, you're <b>no longer really optimizing</b> — you're forcing the asset-allocation outcome you already wanted. The optimizer just confirms your pre-set answer.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 4 · RESAMPLED MVO -->
+            <div id="paro-resampled" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Resampled MVO — also fixes GIGO &amp; concentration</div>
+                <div class="pa-body">Resampling combines basic MVO with <b>Monte Carlo simulation</b>. The three steps:</div>
+                <table class="pa-table">
+                  <thead><tr><th>Step</th><th>What happens</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="pa-gold">1. Basic MVO</b></td><td>Run MVO using the <b>best estimates</b> of E(R), σ, and correlations → efficient frontier + the asset allocation for each point on it.</td></tr>
+                    <tr><td><b class="pa-gold">2. Monte Carlo</b></td><td>Generate <b>thousands</b> of random variations of the inputs <b>around the initial estimates</b> → a simulated efficient frontier + allocations for each.</td></tr>
+                    <tr><td><b class="pa-gold">3. Average</b></td><td>The <b>resampled efficient frontier</b> = the <b>average</b> of all simulated frontiers. The allocation for any single point = the <b>average</b> of the possible portfolios for that point.</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-tip"><b>Why it helps (Prof's note logic):</b> an average is <b>more stable</b> than any single set of guesses. And every asset class that appears in <b>any</b> single allocation gets pulled into the average → the resampled allocation typically includes <b>more asset classes</b> (less concentrated) than a single MVO run.</div>
+                <div class="pa-info">The heavy math is beyond the exam — know the <b>concept &amp; the 3 steps</b>, and that it addresses GIGO + concentration via averaging.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 5 · NON-NORMAL DISTRIBUTIONS -->
+            <div id="paro-nonnormal" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Non-normal distributions (skewness &amp; kurtosis)</div>
+                <div class="pa-body">This addresses criticism #3 — MVO only uses the first two moments (mean &amp; variance) and ignores skewness &amp; kurtosis.</div>
+                <span class="pa-rule">Fix via <b>extensions of MVO</b>: directly incorporate <b>skewness, kurtosis, or both</b> into the utility function.</span>
+                <span class="pa-rule">Use an <b class="pa-gold">asymmetric definition of risk</b> instead of variance — e.g. <b>conditional value at risk (CVaR)</b>.</span>
+                <div class="pa-trap"><b>Note:</b> the book writes "(VAR)" but the asymmetric/tail measure intended is <b>conditional VaR (CVaR / expected shortfall)</b> — it captures downside tail risk, unlike symmetric variance. Details of these models are <b>beyond the L3 scope</b> — know the idea, not the math.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 6 · ERRORS & MASTERY -->
+            <div id="paro-errors" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Errors &amp; Mastery — Reverse Opt / BL / Resampling</div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on Module 4.2. Send them and I'll add each as a reasoning card (your answer · correct answer · the trap).</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════════════ TOP TAB · ASSET ALLOCATION EXAMPLES (4.3) ════════════════ -->
+          <div id="par-ex" class="pa-toppanel">
+
+            <div class="pa-tabs">
+              <button class="pa-tab active" onclick="paExTab('overview',this)">Two Scenarios</button>
+              <button class="pa-tab" onclick="paExTab('noRf',this)">No Risk-Free (Bronsten)</button>
+              <button class="pa-tab" onclick="paExTab('rf',this)">Risk-Free Exists (Plowshare)</button>
+              <button class="pa-tab" onclick="paExTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · TWO SCENARIOS OVERVIEW -->
+            <div id="paex-overview" class="pa-panel active">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.b &amp; 4.d · Two ways to pick the SAA from candidate allocations</div>
+                <div class="pa-body">Both LOS give you a table of candidate allocations (corner portfolios) and ask you to recommend one. <b>The method depends on one fork: does a true risk-free asset exist &amp; can it be used to build the SAA?</b></div>
+                <table class="pa-table">
+                  <thead><tr><th>Question</th><th>NO true risk-free asset</th><th>YES — risk-free asset usable</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Which example</b></td><td>Bronsten (4.3)</td><td>Plowshare (end of 4.2)</td></tr>
+                    <tr><td><b>Step 1 metric</b></td><td class="pa-gold">Certainty-equivalent return: U = E(R) − 0.5·λ·Var</td><td class="pa-gold">Sharpe ratio of each allocation = [E(R) − rf] / σ</td></tr>
+                    <tr><td><b>Step 2 metric</b></td><td class="pa-gold">Roy's safety-first: SF = [E(R) − R<sub>L</sub>] / σ</td><td class="pa-gold">Mix the highest-Sharpe allocation with rf to hit the return objective</td></tr>
+                    <tr><td><b>Pick</b></td><td>Highest U that also satisfies the shortfall threshold; SF breaks ties / confirms shortfall protection</td><td>The allocation with the <b>highest Sharpe</b> = optimal risky portfolio (then lever/de-lever with rf)</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-info">Key intuition: <b>without</b> a usable risk-free asset you can't separate into "best risky portfolio + cash," so you score whole allocations on utility &amp; shortfall. <b>With</b> a true risk-free asset, the two-fund separation holds → pick the max-Sharpe portfolio, then blend with rf.</div>
+                <div class="pa-trap"><b>Coefficient trap (again):</b> the worked examples use <b>decimal</b> inputs (0.08, 0.0225) → coefficient <b>0.5</b>. If you ever see percentage inputs (8.00, 225) the coefficient is <b>0.005</b>. The book even shows both forms give the same ranking — only the units differ.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · NO RISK-FREE: BRONSTEN -->
+            <div id="paex-noRf" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Example: Marsha Bronsten (λ = 4, wants P(return &lt; 3%) minimized)</div>
+                <div class="pa-body">Average risk tolerance (λ = 4); wants to minimize the chance of earning less than R<sub>L</sub> = 3%. Three SAAs given with E(R) &amp; variance.</div>
+                <table class="pa-table">
+                  <thead><tr><th>Allocation</th><th>E(R)</th><th>Variance</th><th>σ</th></tr></thead>
+                  <tbody>
+                    <tr><td>1</td><td>8%</td><td>0.0225</td><td>15%</td></tr>
+                    <tr><td>2</td><td>6%</td><td>0.0144</td><td>12%</td></tr>
+                    <tr><td>3</td><td>4%</td><td>0.0025</td><td>5%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Step 1 · Certainty-equivalent return — U = E(R) − 0.5·λ·Var</div>
+                <div class="pa-fl">U₁ = 0.08 − 0.5 × 4 × 0.0225 = 0.0350 = 3.50%
+U₂ = 0.06 − 0.5 × 4 × 0.0144 = 0.0312 = 3.12%
+U₃ = 0.04 − 0.5 × 4 × 0.0025 = 0.0350 = 3.50%</div>
+                <div class="pa-info">On certainty-equivalent return alone, Bronsten is <b>indifferent between Allocations 1 and 3</b> (both 3.50%), and prefers both to Allocation 2.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Step 2 · Roy's safety-first — SF = [E(R) − R<sub>L</sub>] / σ , R<sub>L</sub> = 3%</div>
+                <div class="pa-fl">Allocation 1: (0.08 − 0.03) / √0.0225 = 0.05 / 0.15 = 0.33
+Allocation 3: (0.04 − 0.03) / √0.0025 = 0.01 / 0.05 = 0.20</div>
+                <div class="pa-tip"><b>Tie-break:</b> Allocation 1 has the higher SF ratio → higher probability of exceeding the 3% threshold → <b class="pa-gold">recommend Allocation 1</b>. SF picks the winner among the utility-tied candidates.</div>
+                <div class="pa-trap"><b>Why both steps?</b> Utility tied 1 &amp; 3. Roy's SF is the shortfall-risk metric that breaks the tie — higher SF = better downside protection vs the threshold. Don't stop at certainty-equivalent when there's a stated shortfall threshold.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Calculator · Certainty-equivalent + Roy's SF</div>
+                <div class="pa-hd-row"><span class="pa-hd-label">E(R) (decimal, e.g. 0.08)</span><input id="paB_er" class="pa-hd-input" type="number" step="0.0001" value="0.08" oninput="paBronCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Variance (decimal)</span><input id="paB_var" class="pa-hd-input" type="number" step="0.0001" value="0.0225" oninput="paBronCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Lambda λ</span><input id="paB_lam" class="pa-hd-input" type="number" step="0.1" value="4" oninput="paBronCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Threshold R<sub>L</sub> (decimal)</span><input id="paB_rl" class="pa-hd-input" type="number" step="0.001" value="0.03" oninput="paBronCalc()"></div>
+                <div id="paB_out" class="pa-hd-result"></div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · RISK-FREE EXISTS: PLOWSHARE -->
+            <div id="paex-rf" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Example: Plowshare endowment (return objective 9%, rf = 3%, true risk-free usable)</div>
+                <div class="pa-body">Return objective 9% (covers spending + inflation + costs); risk objective = minimize σ while meeting the min return. Corner portfolios AA/BB/CC/DD given. Because a <b>true risk-free asset exists &amp; can build the SAA</b>, use Sharpe + the risk-free mix.</div>
+                <table class="pa-table">
+                  <thead><tr><th>Allocation</th><th>E(R)</th><th>σ</th></tr></thead>
+                  <tbody>
+                    <tr><td>AA</td><td>15%</td><td>24%</td></tr>
+                    <tr><td>BB</td><td>18%</td><td>27%</td></tr>
+                    <tr><td>CC</td><td>12%</td><td>20%</td></tr>
+                    <tr><td>DD</td><td>10%</td><td>14%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Step 1 · Sharpe ratio of each = [E(R) − rf] / σ , rf = 3%</div>
+                <div class="pa-fl">AA: (15 − 3) / 24 = 0.50
+BB: (18 − 3) / 27 = 0.56   ← highest
+CC: (12 − 3) / 20 = 0.45
+DD: (10 − 3) / 14 = 0.50</div>
+                <div class="pa-info"><b class="pa-gold">Optimal risky allocation = BB</b> — it has the highest Sharpe ratio. This is the tangent portfolio that everyone combines with rf.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Step 2 · Mix BB with rf to hit the 9% return objective</div>
+                <div class="pa-body">Let w = weight in BB. Solve the return equation:</div>
+                <div class="pa-fl">9% = 18%(w) + 3%(1 − w)
+9  = 18w + 3 − 3w
+6  = 15w   →   w_BB = 0.40</div>
+                <div class="pa-body">Optimal portfolio = <b>40% in Allocation BB</b> and <b>60% in the risk-free asset</b>.</div>
+                <div class="pa-title" style="font-size:14px">Risk of the optimal portfolio</div>
+                <div class="pa-fl">σ_p = σ_BB × w_BB = 27% × 0.40 = 10.8%</div>
+                <div class="pa-tip"><b>Why σ_p = σ_BB × w?</b> The risk-free asset has σ = 0 AND zero correlation with BB, so the only contribution to portfolio σ is the weighted BB leg. No covariance term survives → σ_p is just w × σ_BB.</div>
+                <div class="pa-trap"><b>Trap:</b> students compute Sharpe to pick BB, then forget the risk-free leg drops σ proportionally. σ_p is NOT 27% — it's 27% × 0.40. And the return mix uses BB's 18%, not the 9% objective, on the risky side.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Calculator · Sharpe pick + risk-free mix</div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Chosen risky alloc E(R) %</span><input id="paP_er" class="pa-hd-input" type="number" step="0.1" value="18" oninput="paPlowCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Chosen risky alloc σ %</span><input id="paP_sd" class="pa-hd-input" type="number" step="0.1" value="27" oninput="paPlowCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Risk-free rate %</span><input id="paP_rf" class="pa-hd-input" type="number" step="0.1" value="3" oninput="paPlowCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Return objective %</span><input id="paP_obj" class="pa-hd-input" type="number" step="0.1" value="9" oninput="paPlowCalc()"></div>
+                <div id="paP_out" class="pa-hd-result"></div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 4 · ERRORS & MASTERY -->
+            <div id="paex-errors" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Errors &amp; Mastery — Asset Allocation Examples</div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on Module 4.3 (incl. Module Quiz 4.1/4.2/4.3). Send them and I'll add each as a reasoning card.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════════════ TOP TAB · MCS / LIQUIDITY / INDIVIDUALS (4.e / 4.f / 4.c) ════════════════ -->
+          <div id="par-mcs" class="pa-toppanel">
+
+            <div class="pa-tabs">
+              <button class="pa-tab active" onclick="paMcsTab('mcs',this)">Monte Carlo (4.e)</button>
+              <button class="pa-tab" onclick="paMcsTab('liquidity',this)">Liquidity (4.f)</button>
+              <button class="pa-tab" onclick="paMcsTab('individuals',this)">Issues for Individuals (4.c)</button>
+              <button class="pa-tab" onclick="paMcsTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · MONTE CARLO -->
+            <div id="pamcs-mcs" class="pa-panel active">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.e · Monte Carlo simulation (MCS) — two uses</div>
+                <table class="pa-table">
+                  <thead><tr><th>Use</th><th>What it does</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="pa-gold">Address MVO's single-period limitation</b></td><td>MCS handles a <b>multiperiod</b> framework — incorporating rebalancing &amp; taxes that a single-period MVO ignores.</td></tr>
+                    <tr><td><b class="pa-gold">Guide investors to their risk-tolerance level</b></td><td>Illustrates the <b>range &amp; likelihood</b> of possible outcomes under various assumptions. Retirement clients can <b>visually see how often &amp; when</b> they're likely to run out of money.</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-info"><b>Single-period vs multiperiod (the key contrast):</b><br>• <b>Single-period MVO:</b> rebalancing is irrelevant; taxes easy to incorporate.<br>• <b>Multiperiod (MCS):</b> rebalancing to a strategic target means buying/selling → triggers <b>taxable gains &amp; losses</b>; investors also save (add) &amp; spend (withdraw) → <b>interim cash flows</b>. MCS handles all of this at each future point.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Prof's note · The two flavors of MCS (don't confuse them)</div>
+                <div class="pa-body">MCS is essentially a <b>random-number generator</b> — but "random" means random <b>within user-defined boundaries</b>.</div>
+                <table class="pa-table">
+                  <thead><tr><th>Context</th><th>What MCS varies</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="pa-blue">Resampling (4.2)</b></td><td>Generates a range of <b>possible inputs</b> for MVO, around the best-guess inputs.</td></tr>
+                    <tr><td><b class="pa-gold">Here (4.e)</b></td><td>Simulates multiple <b>future return paths</b> for a portfolio over time, around a best guess of E(R) &amp; risk.</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-trap"><b>Exam trap:</b> same tool, different job. Resampling tilts the <b>inputs</b>; here MCS projects <b>future paths through time</b>. If a question says "illustrate the chance of running out of money in retirement," that's the <b>path-projection</b> use, not resampling.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · LIQUIDITY -->
+            <div id="pamcs-liquidity" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.f · Asset-class liquidity considerations</div>
+                <div class="pa-body">Less-liquid classes — <b>direct real estate, infrastructure, private equity</b> — require a <b class="pa-gold">liquidity return premium</b> to compensate the investor for the extra liquidity risk.</div>
+                <div class="pa-title" style="font-size:14px">Why they're hard to include in MVO</div>
+                <span class="pa-rule"><b>Few accurate indexes</b> track these illiquid investments → hard to find data for return, risk, and correlation estimates.</span>
+                <span class="pa-rule">Even where return-data indexes exist, they're generally <b>not investable</b> as a passive alternative to active management of these classes.</span>
+                <span class="pa-rule">The risk-return of a <b>specific</b> RE / PE / infrastructure investment differs from its <b>asset class</b>. A portfolio of all infrastructure (if possible) would reflect only <b>systematic</b> risk; any <b>one</b> fund isn't fully diversified → reflects <b>both systematic AND nonsystematic</b> risk.</span>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Three ways to handle illiquid classes</div>
+                <table class="pa-table">
+                  <thead><tr><th>Approach</th><th>How</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="pa-gold">1. Exclude from MVO</b></td><td>Leave illiquid classes <b>out</b> of the MVO, but <b>separately set target allocations</b> to them.</td></tr>
+                    <tr><td><b class="pa-gold">2. Model the specific investment</b></td><td>Include them in MVO using inputs of the <b>specific</b> (not asset-class) investments you plan to use → risk estimate reflects <b>both nonsystematic &amp; systematic</b> risk.</td></tr>
+                    <tr><td><b class="pa-gold">3. Use highly diversified asset-class inputs</b></td><td>Include them using diversified <b>asset-class</b> inputs, recognizing the actual investments may differ. Inputs normally come from <b>reported alternative-investment indexes</b>.</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-trap"><b>Approach 3 caveat (recurring "homogeneity" trap):</b> alt-investment indexes are <b>not pure</b> representations of the class — they include characteristics of <b>other</b> classes too. This <b>violates the mutually-exclusive requirement</b> and <b>biases reported correlations upward</b>.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · ISSUES FOR INDIVIDUALS -->
+            <div id="pamcs-individuals" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.c · Adapting MVO for human capital &amp; residential real estate</div>
+                <div class="pa-body">So far only tradable financial assets (equities, bonds). But a big chunk of a typical investor's portfolio is <b>human capital</b> and the <b>residential real estate</b> they live in. The MVO framework can be adapted to include them.</div>
+                <div class="pa-info">Adding these two large (but often overlooked) components alongside traditional vehicles <b>increases the investor's capacity to bear risk</b>.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Modeling human capital</div>
+                <table class="pa-table">
+                  <thead><tr><th>Wage profile</th><th>Model human capital as…</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Stable job, consistent wages that rise with inflation</b></td><td class="pa-gold">An <b>inflation-linked bond</b></td></tr>
+                    <tr><td><b>Less certain, more volatile future wages</b></td><td class="pa-gold">A <b>mix</b> of inflation-linked bonds, equities, and corporate bonds</td></tr>
+                  </tbody>
+                </table>
+                <span class="pa-rule">Including this source of economic value <b>increases</b> the individual's capacity to take on additional risk.</span>
+                <span class="pa-rule"><b>Constraint:</b> because human capital is <b>not tradable</b>, one constraint must <b>fix the % allocation to human capital</b> at whatever it's currently valued at, relative to total portfolio value.</span>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Modeling residential real estate</div>
+                <span class="pa-rule">Treated similarly — return &amp; risk inputs estimated using a <b>residential real estate property index</b> for the investor's <b>geographic region</b>.</span>
+                <span class="pa-rule"><b>Constraint:</b> the allocation to the property is <b>fixed at its current value</b> as a % of the investor's total portfolio (same logic as human capital — it's not freely tradable).</span>
+                <div class="pa-tip"><b>Quiz logic (Louise Davey, 26, commission insurance sales, future inheritance):</b> commission income = <b>volatile/equity-like</b> wages → human capital modeled as a <b>mix</b>, not a pure inflation-linked bond. Young + large future inheritance → human capital is a <b>large</b> share of total economic worth, and capacity to bear risk is <b>relatively high</b>. Watch the "small component" and "inflation-linked bond" distractors — both wrong for her.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 4 · ERRORS & MASTERY -->
+            <div id="pamcs-errors" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Errors &amp; Mastery — MCS / Liquidity / Individuals</div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on 4.e / 4.f / 4.c (incl. Module Quiz 4.4). Send them and I'll add each as a reasoning card.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════════════ TOP TAB · RISK BUDGETING / FACTORS (4.g / 4.h / 4.i) ════════════════ -->
+          <div id="par-rb" class="pa-toppanel">
+
+            <div class="pa-tabs">
+              <button class="pa-tab active" onclick="paRbTab('budget',this)">Risk Budgeting (4.g)</button>
+              <button class="pa-tab" onclick="paRbTab('calc',this)">MCTR / ACTR Calculator</button>
+              <button class="pa-tab" onclick="paRbTab('prefs',this)">Client Risk Prefs (4.h)</button>
+              <button class="pa-tab" onclick="paRbTab('factors',this)">Investment Factors (4.i)</button>
+              <button class="pa-tab" onclick="paRbTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · RISK BUDGETING -->
+            <div id="parb-budget" class="pa-panel active">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.g · Risk budgeting — goal &amp; definitions</div>
+                <div class="pa-body">Goal of risk budgeting: <b>maximize return per unit of risk</b>, where risk can be defined as total portfolio risk, active risk, or residual risk.</div>
+                <table class="pa-table">
+                  <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="pa-gold">MCTR</b><br>Marginal contribution to total risk</td><td>The change in total portfolio risk for a <b>small change</b> in the allocation to a specific asset class (the partial derivative of risk w.r.t. that weight).</td></tr>
+                    <tr><td><b class="pa-gold">ACTR</b><br>Absolute contribution to total risk</td><td>The asset class's <b>absolute</b> contribution to portfolio volatility.</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-body">By estimating each class's MCTR you can (1) see what happens to portfolio risk as you change individual allocations, (2) identify optimal allocations, and (3) develop a risk budget.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">The formulas</div>
+                <div class="pa-fl">MCTR_i = β(asset_i vs portfolio) × total portfolio σ
+
+ACTR_i = weight_i × MCTR_i
+
+% of risk contributed by position_i = ACTR_i / total portfolio σ</div>
+                <div class="pa-tip"><b class="pa-gold">Optimality condition:</b> the optimal allocation to each asset class occurs when the <b>ratio of excess return to MCTR is EQUAL for all asset classes</b>, and that common ratio equals the <b>portfolio Sharpe ratio</b>.</div>
+                <div class="pa-info"><b>Ratio of excess return to MCTR</b> = (asset excess return) / MCTR_i. When all assets share the same ratio = portfolio Sharpe, no reallocation improves return-per-unit-risk → risk-budget optimal.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Figure 4.5 · Optimal risk allocation example (60/30/10)</div>
+                <table class="pa-table">
+                  <thead><tr><th>Asset</th><th>Wt</th><th>Excess</th><th>β</th><th>MCTR</th><th>ACTR</th><th>% of risk</th><th>Excess/MCTR</th></tr></thead>
+                  <tbody>
+                    <tr><td>US equities</td><td>60%</td><td>6.50%</td><td>1.300</td><td>15.60%</td><td>9.36%</td><td>78.03%</td><td class="pa-green">0.417</td></tr>
+                    <tr><td>US bonds</td><td>30%</td><td>3.66%</td><td>0.732</td><td>8.78%</td><td>2.64%</td><td>21.97%</td><td class="pa-green">0.417</td></tr>
+                    <tr><td>Cash</td><td>10%</td><td>0.00%</td><td>0.000</td><td>0.00%</td><td>0.00%</td><td>0.00%</td><td>—</td></tr>
+                    <tr><td><b>Total</b></td><td>100%</td><td>5.00%</td><td>1.000</td><td>—</td><td><b>12.00%</b></td><td>100.00%</td><td>—</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-fl">Worked (US equities), total portfolio σ = 12%:
+MCTR = 1.300 × 12.00% = 15.60%
+ACTR = 0.60 × 15.60% = 9.36%
+% contribution = 9.36% / 12.00% = 78.00%
+Excess/MCTR = 6.5% / 15.60% = 0.417</div>
+                <div class="pa-tip"><b>Why this is optimal:</b> US equities &amp; US bonds both show Excess/MCTR = <b>0.417</b>, which equals the portfolio Sharpe ratio (5% / 12% = 0.417). Equal ratios across assets = optimal from a risk-budgeting perspective.</div>
+                <div class="pa-trap"><b>Note on total ACTR:</b> ACTRs sum to total portfolio σ (9.36% + 2.64% + 0% = 12.00%), and the % contributions sum to 100%. Cash contributes 0 (β = 0 → MCTR = 0). Don't expect MCTRs to sum to σ — it's the ACTRs (weight×MCTR) that do.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · MCTR / ACTR CALCULATOR -->
+            <div id="parb-calc" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Calculator · MCTR / ACTR / % risk / Excess-to-MCTR</div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Weight % (e.g. 50)</span><input id="paR_w" class="pa-hd-input" type="number" step="0.01" value="50" oninput="paRbCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Excess return % (e.g. 8.25)</span><input id="paR_er" class="pa-hd-input" type="number" step="0.01" value="8.25" oninput="paRbCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Beta vs portfolio</span><input id="paR_beta" class="pa-hd-input" type="number" step="0.01" value="1.19" oninput="paRbCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Total portfolio σ %</span><input id="paR_sig" class="pa-hd-input" type="number" step="0.01" value="10" oninput="paRbCalc()"></div>
+                <div id="paR_out" class="pa-hd-result"></div>
+                <div class="pa-info" style="margin-top:12px"><b>Quiz 4.5 Q1 setup (Canadian equities):</b> w = 50%, excess = 8.25%, β = 1.19, portfolio σ = 10% → the question asks the <b>ratio of excess return to MCTR</b>. Defaults above reproduce it.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · CLIENT RISK PREFERENCES -->
+            <div id="parb-prefs" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.h · Incorporating client risk preferences — three ways</div>
+                <table class="pa-table">
+                  <thead><tr><th>Method</th><th>Where we saw it</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="pa-gold">Specify additional constraints</b> — limits on allocations to risky classes, or a <b>ceiling on portfolio risk</b></td><td>The <b>Plowshare</b> example.</td></tr>
+                    <tr><td><b class="pa-gold">Specify a risk-aversion factor (λ)</b> for the investor</td><td>The <b>Marsha Bronsten</b> example (average investor, λ = 4).</td></tr>
+                    <tr><td><b class="pa-gold">Use Monte Carlo simulation</b> to illustrate the range of wealth outcomes</td><td>Show outcomes from allocations with <b>different risk levels</b>.</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-tip"><b>Tie-back:</b> these are the three levers from earlier modules, now framed as the explicit answer to "how do you reflect a client's risk preference?" — constraints (4.2/Plowshare), λ (4.3/Bronsten), MCS paths (4.e).</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 4 · INVESTMENT FACTORS -->
+            <div id="parb-factors" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.i · Investment factors as the opportunity set</div>
+                <div class="pa-body">Instead of an opportunity set of <b>asset classes</b> (equities, FI, REITs…), define it as <b>factors</b>: market exposure, size, valuation, momentum, liquidity, duration, credit, volatility.</div>
+                <div class="pa-info">Consistent with <b>fundamental factor return models</b> like the <b class="pa-gold">Fama-French model</b>, where the factors are the market portfolio, size, and value-growth.</div>
+                <div class="pa-title" style="font-size:14px">Factors are zero-dollar long/short portfolios</div>
+                <span class="pa-rule">Each factor = <b>long the better-performing</b> attribute, <b>short the underperforming</b> attribute → <b>zero-dollar (self-financing)</b>.</span>
+                <span class="pa-rule"><b>Fama-French three factors:</b> (1) long small / short large stocks = <b>size</b>; (2) long value (high B/M) / short growth (low B/M) = <b>value-growth</b>; (3) the <b>market portfolio</b>.</span>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Why factors help — and when to use which</div>
+                <span class="pa-rule">Because of how factors are formed, they're <b>not highly correlated</b> with each other or the market → improves the risk-return tradeoff and <b>expands the efficient frontier</b>.</span>
+                <span class="pa-rule">Once factor portfolios + their E(R), variances, covariances are identified, <b>MVO is used the same way</b> as with asset classes.</span>
+                <div class="pa-info"><b>Asset class vs factor — which approach?</b> Research shows that when the two opportunity sets broadly reflect the <b>same underlying exposures</b>, the efficient frontiers are <b>not significantly different</b> (neither is clearly superior). The choice depends on <b>how you form capital market expectations</b>:</div>
+                <table class="pa-table">
+                  <thead><tr><th>You collect data &amp; think in terms of…</th><th>Then allocate risk by…</th></tr></thead>
+                  <tbody>
+                    <tr><td>Asset class</td><td class="pa-gold">Asset class</td></tr>
+                    <tr><td>Risk factors</td><td class="pa-gold">Risk factor</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-trap"><b>Quiz 4.5 Q2 trap:</b> factor-based is NOT "superior" to asset-class-based, and it won't necessarily "replicate" the asset-class allocation. The defensible statement is that <b>factor exposures may be investable by forming zero-dollar long/short portfolios</b>.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 5 · ERRORS & MASTERY -->
+            <div id="parb-errors" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Errors &amp; Mastery — Risk Budgeting / Factors</div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on 4.g / 4.h / 4.i (incl. Module Quiz 4.5). Send them and I'll add each as a reasoning card.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════════════ TOP TAB · ASSET-LIABILITY MANAGEMENT (4.6 · 4.j/4.k/4.l) ════════════════ -->
+          <div id="par-alm" class="pa-toppanel">
+
+            <div class="pa-tabs">
+              <button class="pa-tab active" onclick="paAlmTab('intro',this)">ALM &amp; Funding Ratio</button>
+              <button class="pa-tab" onclick="paAlmTab('liab',this)">Liability Characteristics (4.j)</button>
+              <button class="pa-tab" onclick="paAlmTab('approaches',this)">3 Approaches (4.k/4.l)</button>
+              <button class="pa-tab" onclick="paAlmTab('surplus',this)">Surplus Optimization</button>
+              <button class="pa-tab" onclick="paAlmTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · ALM INTRO & FUNDING RATIO -->
+            <div id="paalm-intro" class="pa-panel active">
+              <div class="pa-card">
+                <div class="pa-title">Liability-relative asset allocation — the MVO criticism it fixes</div>
+                <div class="pa-body">This addresses criticism #5: plain MVO ignores the relationship between the <b>asset portfolio</b> and the <b>liabilities</b> the investor repays using cash flow from that portfolio. Focus: institutional investors — <b>pension funds, insurance companies, banks</b> — all have liabilities they're obligated to meet, with strict regulatory penalties for failure.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">DB pension as the worked example</div>
+                <span class="pa-rule">Two components: the <b>pension liability</b> and the <b>investment portfolio</b> managed to meet the liability's cash-flow needs.</span>
+                <span class="pa-rule">A DB plan promises workers a payment stream at retirement, usually based on <b>years worked</b> and <b>final-years salary</b>.</span>
+                <span class="pa-rule">The pension liability = the <b>present value</b> (at the appropriate discount rate) of those future retirement obligations.</span>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Plan surplus &amp; funding ratio</div>
+                <div class="pa-fl">plan surplus  = market value of assets − PV of pension liabilities
+funding ratio = market value of assets / PV of liabilities</div>
+                <table class="pa-table">
+                  <thead><tr><th>Funding ratio</th><th>Surplus</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr><td>= 1</td><td>0</td><td class="pa-green">Fully funded</td></tr>
+                    <tr><td>&lt; 1</td><td>negative</td><td class="pa-red">Underfunded</td></tr>
+                    <tr><td>&gt; 1</td><td>positive</td><td class="pa-blue">Overfunded</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-info">The characteristics of the pension liability <b>drive the return &amp; risk requirements</b> of the investment portfolio and ultimately the asset allocation. Because assets &amp; liabilities are driven by some of the <b>same factors</b>, the <b>correlations between changes in their values</b> matter.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · LIABILITY CHARACTERISTICS -->
+            <div id="paalm-liab" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.j · Liability characteristics relevant to asset allocation</div>
+                <table class="pa-table">
+                  <thead><tr><th>Characteristic</th><th>What it means</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="pa-gold">Fixed vs contingent</b></td><td><b>Fixed:</b> cash flows whose amount &amp; timing are specified in advance (like a fixed-rate corporate bond). <b>Contingent:</b> cash flows depending on uncertain future events (like a DB pension liability).</td></tr>
+                    <tr><td><b class="pa-gold">Legal vs quasi-legal</b></td><td><b>Legal:</b> obligations defined in a legal agreement. <b>Quasi-legal:</b> not legal obligations but are expected cash outflows essential to the institution's mission (e.g., university endowments → quasi-legal liabilities).</td></tr>
+                    <tr><td><b class="pa-gold">Duration &amp; convexity</b></td><td>Measure the change in a liability's value for a given change in interest rates. Usually discussed for fixed-income, but the concept applies to <b>any</b> liability.</td></tr>
+                    <tr><td><b class="pa-gold">Liability value vs sponsor size</b></td><td>A <b>large</b> liability relative to the sponsor must be accounted for in the allocation; a <b>small</b> one can usually be ignored (minimal effect on the optimal allocation).</td></tr>
+                    <tr><td><b class="pa-gold">Factors affecting future cash flows</b></td><td>Inflation, interest rates, risk premiums, other economic conditions. E.g., DB obligations are influenced by the choice of <b>discount rate</b>.</td></tr>
+                    <tr><td><b class="pa-gold">Timing considerations</b></td><td>Include <b>longevity risk</b>.</td></tr>
+                    <tr><td><b class="pa-gold">Regulations affecting the liability's value</b></td><td>Typically found in the <b>insurance industry</b>.</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-trap"><b>Exam cues:</b> "essential to mission, not legally owed" → <b>quasi-legal</b> (endowment). "Depends on uncertain future events / salary at retirement" → <b>contingent</b>. "Specified amount &amp; timing" → <b>fixed</b>. Longevity → a <b>timing</b> consideration, not a cash-flow-factor one.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · THREE APPROACHES -->
+            <div id="paalm-approaches" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.k/4.l · Three approaches to liability-relative allocation</div>
+                <table class="pa-table">
+                  <thead><tr><th>Approach</th><th>Core idea</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="pa-gold">Surplus optimization</b></td><td>Extension of MVO — efficient frontier based on the <b>surplus</b>, with <b>surplus volatility</b> as the risk measure (in money or % terms).</td></tr>
+                    <tr><td><b class="pa-gold">Two-portfolio (hedging / return-seeking)</b></td><td>Separate the asset portfolio into a <b>hedging portfolio</b> + a <b>return-seeking portfolio</b>.</td></tr>
+                    <tr><td><b class="pa-gold">Integrated asset-liability</b></td><td><b>Jointly</b> optimize both the assets AND the liabilities.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Two-portfolio (hedging / return-seeking) approach</div>
+                <span class="pa-rule">Create an asset portfolio that <b>hedges the liabilities</b>; manage the <b>remainder</b> independently with MVO to maximize utility / find the optimal risk-return tradeoff.</span>
+                <span class="pa-rule">Hedging portfolio built with FI techniques: <b>cash flow matching, duration matching, immunization</b>.</span>
+                <span class="pa-rule">Most used by <b>insurance companies</b> and <b>overfunded pension plans</b> wanting to minimize underfunding risk.</span>
+                <div class="pa-title" style="font-size:14px">Two more aggressive modifications</div>
+                <span class="pa-rule">(1) <b>Partially</b> hedge the liabilities → allocate more to the return-seeking portfolio.</span>
+                <span class="pa-rule">(2) Increase the allocation to the hedging portfolio <b>as the funding ratio &amp; surplus increase</b>.</span>
+                <div class="pa-info">Both modifications are <b>more aggressive</b> than full hedging — they trade higher expected return for higher risk.</div>
+                <div class="pa-trap"><b>Two limitations:</b> (1) if <b>funding ratio &lt; 1</b>, it's hard to build a portfolio that <b>completely</b> hedges the liabilities; (2) a hedging portfolio may <b>not be available</b> for certain risks (e.g., earthquakes).</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Integrated asset-liability approach</div>
+                <span class="pa-rule"><b>Distinctive feature vs two-portfolio &amp; surplus optimization:</b> in those two, the <b>composition of liabilities is already in place</b> when the allocation is decided → the two decisions are made <b>independently</b>.</span>
+                <span class="pa-rule"><b>Banks, hedge funds with short positions, and insurers</b> decide liability composition <b>jointly</b> with asset allocation → a <b>continuous feedback loop</b> → requires a <b>multiperiod model</b>.</span>
+                <div class="pa-tip"><b>Bank example:</b> key risk = is capital enough to absorb losses when asset values fall and/or liability values rise. Both bank assets (loans) &amp; liabilities (deposits) react to rate changes → <b>stress testing</b> must account for <b>both sides of the balance sheet</b> → integrated ALM finds the optimal mix of assets AND liabilities.</div>
+                <div class="pa-trap"><b>Exam discriminator:</b> "decisions made jointly / feedback loop / multiperiod" → <b>integrated</b>. "Liabilities fixed, then allocate" → surplus optimization or two-portfolio. Banks/hedge funds/insurers managing both sides → integrated.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 4 · SURPLUS OPTIMIZATION -->
+            <div id="paalm-surplus" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Surplus optimization — the math</div>
+                <div class="pa-body">Surplus optimization = MVO run on the <b>surplus return</b> instead of the asset return.</div>
+                <div class="pa-fl">R(s,m) = surplus return
+       = (change in asset value − change in liability value) / initial asset value
+
+Objective to maximize:
+U(m) = E[R(s,m)] − 0.005 × λ × Var(s,m)
+
+E[R(s,m)] = expected surplus return
+Var(s,m)  = variance of surplus return</div>
+                <div class="pa-info">Proceed with the <b>same MVO</b> as before, except you also include the <b>expected returns &amp; variances of the liabilities</b>. The <b>correlations</b> reflect the extent to which the assets are useful to <b>hedge</b> the liabilities.</div>
+                <div class="pa-trap"><b>Coefficient note:</b> same 0.005 (percentage inputs) / 0.5 (decimal inputs) rule as the basic utility function — surplus optimization just swaps asset return for surplus return.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Calculator · Surplus return &amp; funding ratio</div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Initial asset value</span><input id="paS_a0" class="pa-hd-input" type="number" step="1" value="1000" oninput="paSurpCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Change in asset value</span><input id="paS_da" class="pa-hd-input" type="number" step="1" value="80" oninput="paSurpCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Change in liability value</span><input id="paS_dl" class="pa-hd-input" type="number" step="1" value="50" oninput="paSurpCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">PV of liabilities (for funding ratio)</span><input id="paS_l0" class="pa-hd-input" type="number" step="1" value="900" oninput="paSurpCalc()"></div>
+                <div id="paS_out" class="pa-hd-result"></div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 5 · ERRORS & MASTERY -->
+            <div id="paalm-errors" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Errors &amp; Mastery — ALM Approach</div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on 4.j / 4.k / 4.l (incl. Module Quiz 4.6). Send them and I'll add each as a reasoning card.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════════════ TOP TAB · GOALS-BASED & MISCELLANEOUS (4.7 · 4.m/4.n) ════════════════ -->
+          <div id="par-gb" class="pa-toppanel">
+
+            <div class="pa-tabs">
+              <button class="pa-tab active" onclick="paGbTab('goals',this)">Goals-Based (4.m)</button>
+              <button class="pa-tab" onclick="paGbTab('calc',this)">Goals-Based Calculator</button>
+              <button class="pa-tab" onclick="paGbTab('heuristic',this)">Heuristics (4.n)</button>
+              <button class="pa-tab" onclick="paGbTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · GOALS-BASED -->
+            <div id="pagb-goals" class="pa-panel active">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.m · Goals-based approach</div>
+                <div class="pa-body">Useful for <b>individual investors</b> who have several (sometimes conflicting) objectives with different <b>time horizons</b> and <b>urgency levels</b> — measured as <b>specified required probabilities of success</b>.</div>
+                <div class="pa-info"><b>Urgency example:</b> "save for college tuition in 10 yrs, 90% required success" is <b>more urgent</b> than "$1,000,000 in 30 yrs for a foundation, 60% success." Higher required probability + shorter horizon = more urgent.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">How the approach works</div>
+                <span class="pa-rule">Portfolio = composed of <b>subportfolios</b>; each investment goal addressed <b>individually</b> with its own subportfolio.</span>
+                <span class="pa-rule"><b>Taxable AND tax-exempt</b> investments are part of the opportunity set.</span>
+                <span class="pa-rule">Instead of expressing a goal as an expected <b>average</b> return, document <b>"minimum expectations"</b> for each goal = the <b>minimum expected return</b> needed to provide a specified <b>minimum required probability of success</b> over the horizon.</span>
+                <div class="pa-body">Often the advisor selects from pre-established subportfolios called <b class="pa-gold">modules</b> rather than building new ones per client. Modules differ by <b>risk-return tradeoffs, liquidity, and inclusion/exclusion of asset classes</b>.</div>
+                <div class="pa-tip"><b class="pa-gold">The decision rule (2 steps):</b><br>(1) For each goal, pick the module with the <b>highest expected return</b> that still meets the <b>specified probability of success over the required horizon</b>.<br>(2) Investment size = <b>PV of the future goal</b>, discounted at <b>that module's expected return</b>. Total portfolio = sum of all the individual investments.</div>
+                <div class="pa-trap"><b>Trap:</b> you do NOT pick the highest return overall — you pick the highest return <b>among modules that satisfy the required success probability at that horizon</b>. The right module can differ by goal because horizons &amp; required probabilities differ.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · GOALS-BASED CALCULATOR -->
+            <div id="pagb-calc" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Worked example — two goals, two modules</div>
+                <div class="pa-body"><b>Goal 1:</b> $500,000 for college in 10 yrs, 90% required success. At 10-yr / 90%, Module A has the highest minimum-expectation return = <b>3.0%</b>.<br>PV = 500,000 / 1.03¹⁰ = <b class="pa-gold">$372,047</b>.</div>
+                <div class="pa-body"><b>Goal 2:</b> $6,000,000 transfer in 30 yrs, 75% required success. At 30-yr / 75%, Module C has the highest return = <b>5.2%</b>.<br>PV = 6,000,000 / 1.052³⁰ = <b class="pa-gold">$1,311,231</b>.</div>
+                <div class="pa-info">Each goal is treated <b>separately</b>; the module choice flips between goals because the horizon &amp; required-success cell changes which module leads.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Calculator · PV of a goal (discounted at the module's return)</div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Future goal amount</span><input id="paG_fv" class="pa-hd-input" type="number" step="1" value="500000" oninput="paGbCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Module expected return %</span><input id="paG_r" class="pa-hd-input" type="number" step="0.01" value="3.0" oninput="paGbCalc()"></div>
+                <div class="pa-hd-row"><span class="pa-hd-label">Years to goal</span><input id="paG_n" class="pa-hd-input" type="number" step="1" value="10" oninput="paGbCalc()"></div>
+                <div id="paG_out" class="pa-hd-result"></div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · HEURISTICS -->
+            <div id="pagb-heuristic" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.n · Heuristic &amp; other (ad hoc) approaches</div>
+                <div class="pa-body">Ad hoc approaches not based on theoretical models. They don't need sophisticated math, but also don't necessarily lead to an "optimal" allocation as defined so far.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">120 minus your age</div>
+                <span class="pa-rule"><b>120 − age = % to equity</b>; remainder to fixed income. A 40-yr-old → <b>80/20</b> stocks/bonds; at 50 → <b>70/30</b>.</span>
+                <span class="pa-rule">Consistent with the idea that as <b>human capital declines with age</b>, capacity to bear risk in the rest of the portfolio declines → shift equity → FI.</span>
+                <span class="pa-rule">Interesting: it comes close to <b>mimicking target-date retirement fund</b> glide paths.</span>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">60/40 split</div>
+                <span class="pa-rule">Maintain <b>60% stocks / 40% bonds</b>. Not as arbitrary as it sounds — the global financial asset portfolio has historically been ~<b>60/40</b> stocks/bonds.</span>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Endowment / Yale model</div>
+                <span class="pa-rule">Allocate <b>larger amounts to alternatives</b> (PE, real estate, natural resources) than a strict MVO would recommend.</span>
+                <span class="pa-rule">Rationale: these markets are <b>less-than-perfectly informationally efficient</b> → skilled managers can outperform; they're <b>less liquid</b>, and certain institutions can take on <b>liquidity risk for a liquidity premium</b> due to <b>long time horizons</b>.</span>
+                <span class="pa-rule">Popular with <b>university endowment funds</b>.</span>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">Risk parity</div>
+                <span class="pa-rule">Each asset class contributes the <b>same amount to total portfolio risk</b>.</span>
+                <span class="pa-rule">Addresses the MVO criticism that diversifying across <b>asset classes</b> doesn't guarantee diversification across <b>risk sources</b>.</span>
+                <div class="pa-trap"><b>Criticism of risk parity:</b> it <b>ignores expected returns</b> and focuses <b>only on risk</b>.</div>
+              </div>
+
+              <div class="pa-card">
+                <div class="pa-title">1/N rule</div>
+                <span class="pa-rule">Equally weight each class → each weighted <b>1/N</b> (N = number of classes). 8 classes → <b>12.5%</b> each. Common method: <b>rebalance to equal weights each quarter</b>.</span>
+                <span class="pa-rule">Sounds simple, but there's <b>empirical evidence it performs better than expected</b>.</span>
+              </div>
+            </div>
+
+            <!-- SUBTAB 4 · ERRORS & MASTERY -->
+            <div id="pagb-errors" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Errors &amp; Mastery — Goals-Based &amp; Heuristics</div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on 4.m / 4.n (incl. Module Quiz 4.7). Send them and I'll add each as a reasoning card.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════════════ TOP TAB · REBALANCING POLICY (4.8 · 4.o) ════════════════ -->
+          <div id="par-reb" class="pa-toppanel">
+
+            <div class="pa-tabs">
+              <button class="pa-tab active" onclick="paRebTab('intro',this)">Rebalancing Basics</button>
+              <button class="pa-tab" onclick="paRebTab('drivers',this)">4 Corridor Drivers (4.o)</button>
+              <button class="pa-tab" onclick="paRebTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · REBALANCING BASICS -->
+            <div id="pareb-intro" class="pa-panel active">
+              <div class="pa-card">
+                <div class="pa-title">LOS 4.o · Rebalancing — the CFA definition</div>
+                <div class="pa-body">Managers rebalance for many reasons (changing client goals, CME, tactical shifts). The CFA definition used here: <b>adjusting allocations to move back toward the originally defined strategic allocation goal.</b></div>
+                <span class="pa-rule"><b class="pa-gold">Percentage-range rebalancing</b>: set <b>trigger points</b> (a corridor) around the optimal % allocation.</span>
+                <span class="pa-rule">When a trigger is hit → rebalance <b>back to the target</b>, or <b>partially correct</b>.</span>
+                <div class="pa-info"><b>Corridor width = the rebalancing range.</b> Wider corridor = rebalance less often (tolerate more drift); narrower = rebalance more often (tighter to target).</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · 4 CORRIDOR DRIVERS -->
+            <div id="pareb-drivers" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">The 4 factors affecting optimal corridor width</div>
+                <table class="pa-table">
+                  <thead><tr><th>Factor ↑</th><th>Corridor</th><th>Why</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="pa-gold">Transaction costs ↑</b></td><td class="pa-blue">WIDER</td><td>Benefits of rebalancing must "pay" for higher costs → rebalance less often.</td></tr>
+                    <tr><td><b class="pa-gold">Risk tolerance ↑</b></td><td class="pa-blue">WIDER</td><td>Investor is <b>less concerned</b> about deviations from the optimal allocation.</td></tr>
+                    <tr><td><b class="pa-gold">Correlation with rest of portfolio ↑</b></td><td class="pa-blue">WIDER</td><td>Portfolio tends to move <b>with</b> the asset class → allocations <b>stray more slowly</b> from target.</td></tr>
+                    <tr><td><b class="pa-gold">Volatility of the asset class ↑</b></td><td class="pa-red">NARROWER</td><td>Higher vol ↑ the likelihood the actual allocation <b>diverges</b> from target over time → tighten to control drift.</td></tr>
+                  </tbody>
+                </table>
+                <div class="pa-tip"><b>Memory hook:</b> 3 widen, 1 narrows. Costs, risk tolerance, correlation → <b>WIDER</b>. Only <b>volatility</b> → <b>NARROWER</b>. (Volatility is the odd one out.)</div>
+                <div class="pa-info"><b>Bottom line:</b> the choice of corridor width is a <b>tradeoff</b> between risk control, transaction costs, and correlations between classes. Complex situations require a <b>quantified cost-benefit analysis</b>.</div>
+                <div class="pa-trap"><b>Common inversion trap:</b> students flip correlation &amp; volatility. High <b>correlation</b> → wider (drifts slowly). High <b>volatility</b> → narrower (drifts fast). Don't swap them.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · ERRORS & MASTERY -->
+            <div id="pareb-errors" class="pa-panel">
+              <div class="pa-card">
+                <div class="pa-title">Errors &amp; Mastery — Rebalancing Policy</div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on 4.o (incl. Module Quiz 4.8). Send them and I'll add each as a reasoning card.</div>
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+
+
+
+          <script>
+            function paTop(id, btn){
+              document.querySelectorAll('#paWidget > .pa-toppanel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#paWidget > .pa-toptabs > .pa-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('par-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function paMvoTab(id, btn){
+              document.querySelectorAll('#par-mvo > .pa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#par-mvo > .pa-tabs > .pa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('pamvo-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function paRoTab(id, btn){
+              document.querySelectorAll('#par-ro > .pa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#par-ro > .pa-tabs > .pa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('paro-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function paExTab(id, btn){
+              document.querySelectorAll('#par-ex > .pa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#par-ex > .pa-tabs > .pa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('paex-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function paMcsTab(id, btn){
+              document.querySelectorAll('#par-mcs > .pa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#par-mcs > .pa-tabs > .pa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('pamcs-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function paRbTab(id, btn){
+              document.querySelectorAll('#par-rb > .pa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#par-rb > .pa-tabs > .pa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('parb-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function paRbCalc(){
+              var w = parseFloat(document.getElementById('paR_w').value);
+              var er = parseFloat(document.getElementById('paR_er').value);
+              var beta = parseFloat(document.getElementById('paR_beta').value);
+              var sig = parseFloat(document.getElementById('paR_sig').value);
+              var out = document.getElementById('paR_out');
+              if (isNaN(w)||isNaN(er)||isNaN(beta)||isNaN(sig)) { out.innerHTML = '<span style="color:#7D8590;font-size:11.5px">Enter all inputs.</span>'; return; }
+              var mctr = beta * sig;
+              var actr = (w/100) * mctr;
+              var pctRisk = (sig !== 0) ? (actr / sig) * 100 : NaN;
+              var ratio = (mctr !== 0) ? er / mctr : NaN;
+              out.innerHTML =
+                '<div style="font-family:monospace;font-size:11px;color:#7D8590;margin-bottom:8px">MCTR=β·σ | ACTR=w·MCTR | %risk=ACTR/σ | ratio=excess/MCTR</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">MCTR = ' + beta + ' × ' + sig + '%</span><span style="font-family:monospace;color:#79C0FF">' + mctr.toFixed(2) + '%</span></div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">ACTR = ' + (w/100).toFixed(2) + ' × MCTR</span><span style="font-family:monospace;color:#D4A017">' + actr.toFixed(2) + '%</span></div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">% contribution to risk</span><span style="font-family:monospace;color:#D4A017">' + (isNaN(pctRisk)?'—':pctRisk.toFixed(2)+'%') + '</span></div>' +
+                '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-family:Georgia,serif;font-size:16px;color:#3DD68C;font-weight:600">Excess / MCTR ratio = ' + (isNaN(ratio)?'—':ratio.toFixed(3)) + '</div>';
+            }
+            function paBronCalc(){
+              var er = parseFloat(document.getElementById('paB_er').value);
+              var v = parseFloat(document.getElementById('paB_var').value);
+              var lam = parseFloat(document.getElementById('paB_lam').value);
+              var rl = parseFloat(document.getElementById('paB_rl').value);
+              var out = document.getElementById('paB_out');
+              if (isNaN(er)||isNaN(v)||isNaN(lam)||isNaN(rl)) { out.innerHTML = '<span style="color:#7D8590;font-size:11.5px">Enter all inputs (decimals).</span>'; return; }
+              var sd = Math.sqrt(v);
+              var u = er - 0.5 * lam * v;
+              var sf = (sd > 0) ? (er - rl) / sd : NaN;
+              out.innerHTML =
+                '<div style="font-family:monospace;font-size:11px;color:#7D8590;margin-bottom:8px">U = E(R) − 0.5·λ·Var  |  SF = [E(R) − R_L] / σ</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">σ = √Var</span><span style="font-family:monospace;color:#79C0FF">' + (sd*100).toFixed(2) + '%</span></div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">Certainty-equiv. U</span><span style="font-family:monospace;color:#D4A017">' + (u*100).toFixed(2) + '%</span></div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0"><span style="color:#7D8590">Roy\'s safety-first SF</span><span style="font-family:monospace;color:#3DD68C">' + (isNaN(sf)?'—':sf.toFixed(3)) + '</span></div>';
+            }
+            function paPlowCalc(){
+              var er = parseFloat(document.getElementById('paP_er').value);
+              var sd = parseFloat(document.getElementById('paP_sd').value);
+              var rf = parseFloat(document.getElementById('paP_rf').value);
+              var obj = parseFloat(document.getElementById('paP_obj').value);
+              var out = document.getElementById('paP_out');
+              if (isNaN(er)||isNaN(sd)||isNaN(rf)||isNaN(obj)) { out.innerHTML = '<span style="color:#7D8590;font-size:11.5px">Enter all inputs (percent).</span>'; return; }
+              var sharpe = (sd !== 0) ? (er - rf) / sd : NaN;
+              var w = (er - rf !== 0) ? (obj - rf) / (er - rf) : NaN;
+              var sigP = (isNaN(w)) ? NaN : sd * w;
+              out.innerHTML =
+                '<div style="font-family:monospace;font-size:11px;color:#7D8590;margin-bottom:8px">Sharpe = [E(R)−rf]/σ  |  obj = w·E(R)+(1−w)·rf  |  σ_p = w·σ</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">Sharpe ratio of risky alloc</span><span style="font-family:monospace;color:#79C0FF">' + (isNaN(sharpe)?'—':sharpe.toFixed(3)) + '</span></div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">Weight in risky alloc (w)</span><span style="font-family:monospace;color:#D4A017">' + (isNaN(w)?'—':(w*100).toFixed(1)+'%') + '</span></div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">Weight in risk-free (1−w)</span><span style="font-family:monospace;color:#D4A017">' + (isNaN(w)?'—':((1-w)*100).toFixed(1)+'%') + '</span></div>' +
+                '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-family:Georgia,serif;font-size:16px;color:#3DD68C;font-weight:600">Portfolio risk σ_p = ' + (isNaN(sigP)?'—':sigP.toFixed(2)+'%') + '</div>';
+            }
+            function paUtilCalc(){
+              var er = parseFloat(document.getElementById('paU_er').value);
+              var sd = parseFloat(document.getElementById('paU_sd').value);
+              var lam = parseFloat(document.getElementById('paU_lam').value);
+              var units = document.getElementById('paU_units').value;
+              var out = document.getElementById('paU_out');
+              if (isNaN(er) || isNaN(sd) || isNaN(lam)) { out.innerHTML = '<span style="color:#7D8590;font-size:11.5px">Enter all three inputs.</span>'; return; }
+              var coef = (units === 'pct') ? 0.005 : 0.5;
+              var variance = sd * sd;
+              var penalty = coef * lam * variance;
+              var u = er - penalty;
+              var unitLbl = (units === 'pct') ? '%' : '';
+              out.innerHTML =
+                '<div style="font-family:monospace;font-size:11.5px;color:#7D8590;margin-bottom:8px">U = E(R) − ' + coef + ' × λ × σ²</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">Variance σ²</span><span style="font-family:monospace;color:#79C0FF">' + variance.toFixed(2) + '</span></div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">Risk penalty (' + coef + ' × ' + lam + ' × ' + variance.toFixed(2) + ')</span><span style="font-family:monospace;color:#FF7B72">−' + penalty.toFixed(3) + '</span></div>' +
+                '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-family:Georgia,serif;font-size:16px;color:#D4A017;font-weight:600">Utility (certainty-equiv. return) = ' + u.toFixed(3) + unitLbl + '</div>';
+            }
+            function paInit(){ setTimeout(paUtilCalc, 30); setTimeout(paBronCalc, 30); setTimeout(paPlowCalc, 30); setTimeout(paRbCalc, 30); setTimeout(paSurpCalc, 30); setTimeout(paGbCalc, 30); }
+            function paGbTab(id, btn){
+              document.querySelectorAll('#par-gb > .pa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#par-gb > .pa-tabs > .pa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('pagb-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function paRebTab(id, btn){
+              document.querySelectorAll('#par-reb > .pa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#par-reb > .pa-tabs > .pa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('pareb-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function paGbCalc(){
+              var fv = parseFloat(document.getElementById('paG_fv').value);
+              var r = parseFloat(document.getElementById('paG_r').value);
+              var n = parseFloat(document.getElementById('paG_n').value);
+              var out = document.getElementById('paG_out');
+              if (isNaN(fv)||isNaN(r)||isNaN(n)) { out.innerHTML = '<span style="color:#7D8590;font-size:11.5px">Enter all inputs.</span>'; return; }
+              var factor = Math.pow(1 + r/100, n);
+              var pv = fv / factor;
+              out.innerHTML =
+                '<div style="font-family:monospace;font-size:11px;color:#7D8590;margin-bottom:8px">PV = FV / (1 + r)^n</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">(1 + ' + r + '%)^' + n + '</span><span style="font-family:monospace;color:#79C0FF">' + factor.toFixed(4) + '</span></div>' +
+                '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-family:Georgia,serif;font-size:16px;color:#D4A017;font-weight:600">Investment needed today (PV) = ' + pv.toLocaleString(undefined,{maximumFractionDigits:0}) + '</div>';
+            }
+            function paAlmTab(id, btn){
+              document.querySelectorAll('#par-alm > .pa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#par-alm > .pa-tabs > .pa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('paalm-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function paSurpCalc(){
+              var a0 = parseFloat(document.getElementById('paS_a0').value);
+              var da = parseFloat(document.getElementById('paS_da').value);
+              var dl = parseFloat(document.getElementById('paS_dl').value);
+              var l0 = parseFloat(document.getElementById('paS_l0').value);
+              var out = document.getElementById('paS_out');
+              if (isNaN(a0)||isNaN(da)||isNaN(dl)||a0===0) { out.innerHTML = '<span style="color:#7D8590;font-size:11.5px">Enter asset/liability changes (initial asset ≠ 0).</span>'; return; }
+              var rs = (da - dl) / a0;
+              var surplus0 = a0 - l0;
+              var fr = (!isNaN(l0) && l0 !== 0) ? a0 / l0 : NaN;
+              var status = isNaN(fr) ? '' : (fr > 1 ? 'Overfunded' : (fr < 1 ? 'Underfunded' : 'Fully funded'));
+              var statusColor = isNaN(fr) ? '#C9D1D9' : (fr > 1 ? '#79C0FF' : (fr < 1 ? '#FF7B72' : '#3DD68C'));
+              out.innerHTML =
+                '<div style="font-family:monospace;font-size:11px;color:#7D8590;margin-bottom:8px">R_s = (ΔA − ΔL) / A₀  |  funding ratio = A / PV(L)</div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">Net surplus change (ΔA − ΔL)</span><span style="font-family:monospace;color:#79C0FF">' + (da - dl).toFixed(2) + '</span></div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">Initial plan surplus (A₀ − PV L)</span><span style="font-family:monospace;color:#D4A017">' + (isNaN(l0)?'—':surplus0.toFixed(2)) + '</span></div>' +
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">Funding ratio</span><span style="font-family:monospace;color:' + statusColor + '">' + (isNaN(fr)?'—':fr.toFixed(3)+' ('+status+')') + '</span></div>' +
+                '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-family:Georgia,serif;font-size:16px;color:#3DD68C;font-weight:600">Surplus return R_s = ' + (rs*100).toFixed(2) + '%</div>';
+            }
+          </script>
+        </div>
+
+
 
         <!-- empty state -->
         <div id="notesEmpty" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted);">
@@ -14867,7 +16077,7 @@ duration · foreign exchange · default risk</div>
 const DEFAULT_DECK = {
   topics: [
     { name:"IPS",                subtopics:["Individual","Institutional"] },
-    { name:"Asset Allocation",   subtopics:["SAA / TAA","LDI","Goals-Based","Risk Budgeting"] },
+    { name:"Asset Allocation",   subtopics:["SAA / TAA","LDI","Goals-Based","Risk Budgeting","Capital Market Expectation: Framework and Macro Considerations","Capital Market Expectation: Forecasting Asset Class Returns","Overview of Asset Allocation","Principles of Asset Allocation"] },
     { name:"Derivatives",        subtopics:["Options Strategies","Futures Hedge","Swaps","Risk Measures"] },
     { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
@@ -15771,7 +16981,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -15789,6 +16999,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'cmeWidget' && typeof cmeInit === 'function') setTimeout(cmeInit, 50);
     if (widgetId === 'fiWidget' && typeof fiInit === 'function') setTimeout(fiInit, 50);
     if (widgetId === 'oaWidget' && typeof oaInit === 'function') setTimeout(oaInit, 50);
+    if (widgetId === 'paWidget' && typeof paInit === 'function') setTimeout(paInit, 50);
   }
 }
 
@@ -15809,11 +17020,12 @@ function openNote(key, topic, subtopic) {
     'PM Pathway||Trade Strategy and Execution': 'tswWidget',
     'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
     'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
-    'Asset Allocation||Overview of Asset Allocation': 'oaWidget'
+    'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
+    'Asset Allocation||Principles of Asset Allocation': 'paWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
