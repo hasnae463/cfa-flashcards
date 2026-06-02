@@ -13826,6 +13826,726 @@ equivalently:
           </script>
         </div>
 
+        <div id="oaWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+
+          <style>
+            #oaWidget { --oa-gold:#D4A017; --oa-green:#3DD68C; --oa-red:#FF7B72; --oa-orange:#F0A04B; --oa-blue:#79C0FF; }
+            #oaWidget .oa-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #oaWidget .oa-toptab { background:var(--surface2); border:1px solid var(--oa-gold); color:var(--oa-gold); padding:9px 18px; border-radius:7px; font-family:var(--serif); font-size:14px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #oaWidget .oa-toptab.active { background:var(--oa-gold); color:#0D1117; }
+            #oaWidget .oa-toppanel { display:none; }
+            #oaWidget .oa-toppanel.active { display:block; }
+            #oaWidget .oa-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+            #oaWidget .oa-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #oaWidget .oa-tab.active { background:rgba(212,160,23,.15); border-color:var(--oa-gold); color:var(--oa-gold); }
+            #oaWidget .oa-panel { display:none; }
+            #oaWidget .oa-panel.active { display:block; }
+            #oaWidget .oa-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:14px; }
+            #oaWidget .oa-title { font-family:var(--serif); font-size:16px; color:var(--oa-gold); font-weight:600; margin-bottom:10px; }
+            #oaWidget .oa-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:8px; }
+            #oaWidget .oa-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #oaWidget .oa-rule { display:block; padding:6px 0; border-bottom:1px solid var(--border); font-size:12.5px; line-height:1.5; color:#C9D1D9; }
+            #oaWidget .oa-rule:last-child { border-bottom:none; }
+            #oaWidget .oa-tip { background:rgba(46,160,67,.08); border-left:3px solid var(--oa-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #oaWidget .oa-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--oa-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #oaWidget .oa-info { background:rgba(121,192,255,.08); border-left:3px solid var(--oa-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #oaWidget .oa-green { color:var(--oa-green); }
+            #oaWidget .oa-red { color:var(--oa-red); }
+            #oaWidget .oa-orange { color:var(--oa-orange); }
+            #oaWidget .oa-blue { color:var(--oa-blue); }
+            #oaWidget .oa-table { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #oaWidget .oa-table th { background:#0B0F14; color:var(--oa-gold); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #oaWidget .oa-table td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+            #oaWidget .oa-hd-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+            #oaWidget .oa-hd-label { flex:1; font-family:var(--mono); font-size:11px; color:var(--muted); }
+            #oaWidget .oa-hd-input { background:var(--surface); color:#C9D1D9; border:1px solid var(--border); padding:5px 8px; border-radius:3px; font-family:monospace; width:90px; text-align:right; }
+            #oaWidget .oa-hd-result { background:#0B0F14; border-left:3px solid var(--oa-gold); border-radius:4px; padding:14px 16px; margin-top:14px; }
+          </style>
+
+          <div class="oa-toptabs">
+            <button class="oa-toptab active" onclick="oaTop('ebs',this)">Economic Balance Sheet</button>
+            <button class="oa-toptab" onclick="oaTop('approaches',this)">Approaches to Asset Allocation</button>
+            <button class="oa-toptab" onclick="oaTop('saa',this)">Allocation &amp; SAA</button>
+            <button class="oa-toptab" onclick="oaTop('other',this)">Other Approaches &amp; Issues</button>
+          </div>
+
+          <!-- ════════════════ TOP TAB · ECONOMIC BALANCE SHEET ════════════════ -->
+          <div id="oar-ebs" class="oa-toppanel active">
+
+            <div class="oa-tabs">
+              <button class="oa-tab active" onclick="oaEbsTab('trad',this)">Traditional vs Economic</button>
+              <button class="oa-tab" onclick="oaEbsTab('extended',this)">Extended Items</button>
+              <button class="oa-tab" onclick="oaEbsTab('sheet',this)">The Balance Sheet</button>
+              <button class="oa-tab" onclick="oaEbsTab('lifecycle',this)">Life-Cycle / Human Capital</button>
+              <button class="oa-tab" onclick="oaEbsTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · TRADITIONAL VS ECONOMIC -->
+            <div id="oaebs-trad" class="oa-panel active">
+              <div class="oa-card">
+                <div class="oa-title">LOS 3.b · Traditional vs Economic Balance Sheet</div>
+                <table class="oa-table">
+                  <thead><tr><th>Balance sheet</th><th>What it contains</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Traditional (accounting)</b></td><td>Assets, liabilities, and owner's equity. Used by accountants to illustrate the financial position of an organization.</td></tr>
+                    <tr><td><b class="oa-gold">Economic</b></td><td>Contains the financial assets/liabilities <b>PLUS</b> any NON-financial assets and liabilities applicable to the asset allocation decision.</td></tr>
+                  </tbody>
+                </table>
+                <div class="oa-info">Those non-financial items are called <b>extended portfolio assets and liabilities</b> — they are NOT included on traditional balance sheets.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Why it matters for asset allocation</div>
+                <div class="oa-body">Investors making appropriate asset allocation decisions should recognize assets and liabilities in <b>BOTH</b> the financial portfolio AND the extended portfolio.</div>
+                <div class="oa-tip">The point of the economic balance sheet is that your "true" wealth and obligations include things like future earnings and future consumption — and your asset allocation should reflect them, not just your brokerage account.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · EXTENDED ITEMS -->
+            <div id="oaebs-extended" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Extended portfolio ASSETS — decomposed</div>
+                <table class="oa-table">
+                  <thead><tr><th>Investor type</th><th>Extended assets</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="oa-green">Individual</b></td><td>PV of expected future earnings = <b>HUMAN CAPITAL</b></td></tr>
+                    <tr><td><b class="oa-blue">Institutional</b></td><td>PV of intellectual-property royalties · PV of underground mineral resources</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="oa-card">
+                <div class="oa-title">Extended portfolio LIABILITIES — decomposed</div>
+                <table class="oa-table">
+                  <thead><tr><th>Investor type</th><th>Extended liabilities</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="oa-green">Individual</b></td><td>PV of expected future <b>CONSUMPTION</b></td></tr>
+                    <tr><td><b class="oa-blue">Institutional</b></td><td>PV of expected <b>foundation payouts</b></td></tr>
+                  </tbody>
+                </table>
+                <div class="oa-tip"><b>Memory hook:</b> individuals → earn (human capital) &amp; spend (consumption). Institutions → royalties/minerals in, payouts out. Each is a PV of a future cash-flow stream.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · THE BALANCE SHEET -->
+            <div id="oaebs-sheet" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Figure 3.1 · Economic Balance Sheet (institutional example)</div>
+                <table class="oa-table">
+                  <thead><tr><th>Assets</th><th></th><th>Liabilities &amp; Net Worth</th><th></th></tr></thead>
+                  <tbody>
+                    <tr><td colspan="2"><i>Financial Assets</i></td><td colspan="2"><i>Financial Liabilities</i></td></tr>
+                    <tr><td>Domestic equity</td><td class="oa-green">400</td><td>Short-term borrowing</td><td class="oa-red">100</td></tr>
+                    <tr><td>Real estate</td><td class="oa-green">250</td><td>Mortgage obligations</td><td class="oa-red">200</td></tr>
+                    <tr><td colspan="2"><i>Extended Assets</i></td><td colspan="2"><i>Extended Liabilities</i></td></tr>
+                    <tr><td>PV of expected royalties</td><td class="oa-green">150</td><td>PV of expected payouts</td><td class="oa-red">300</td></tr>
+                    <tr><td colspan="2"></td><td colspan="2"><i>Economic Net Worth</i></td></tr>
+                    <tr><td colspan="2"></td><td>Economic assets − Economic liabilities</td><td class="oa-gold">200</td></tr>
+                    <tr><td><b>Total</b></td><td><b>800</b></td><td><b>Total</b></td><td><b>800</b></td></tr>
+                  </tbody>
+                </table>
+                <div class="oa-info"><b>Economic net worth</b> = total economic assets − total economic liabilities. Here: 800 − (100+200+300) = <b>200</b>. It is the balancing figure that makes both sides equal 800.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Interactive · Economic net worth</div>
+                <div class="oa-body">Enter the four economic items. The tool sums assets and the two liability types, then computes economic net worth as the plug.</div>
+                <div class="oa-hd-row"><span class="oa-hd-label">Financial assets</span><input type="number" id="oaEbsFA" value="650" step="10" oninput="oaEbsCalc()" class="oa-hd-input"></div>
+                <div class="oa-hd-row"><span class="oa-hd-label">Extended assets</span><input type="number" id="oaEbsEA" value="150" step="10" oninput="oaEbsCalc()" class="oa-hd-input"></div>
+                <div class="oa-hd-row"><span class="oa-hd-label">Financial liabilities</span><input type="number" id="oaEbsFL" value="300" step="10" oninput="oaEbsCalc()" class="oa-hd-input"></div>
+                <div class="oa-hd-row" style="border-bottom:none"><span class="oa-hd-label">Extended liabilities</span><input type="number" id="oaEbsEL" value="300" step="10" oninput="oaEbsCalc()" class="oa-hd-input"></div>
+                <div id="oaEbsResult" class="oa-hd-result"></div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 4 · LIFE-CYCLE / HUMAN CAPITAL -->
+            <div id="oaebs-lifecycle" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Life-cycle balanced fund (target-date / target-retirement fund)</div>
+                <div class="oa-body">A practical application of including HUMAN CAPITAL in an investment. These funds adjust the asset mix over time, accounting for the changing levels of human capital vs financial capital for an individual.</div>
+                <span class="oa-rule"><b>Young (workforce entry):</b> human capital &gt;&gt; financial capital</span>
+                <span class="oa-rule"><b>Aging:</b> financial capital begins to outweigh human capital (PV of future earnings declines)</span>
+                <span class="oa-rule"><b>Retirement:</b> total wealth is made up of FINANCIAL capital</span>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Human vs financial capital over the life cycle</div>
+                <div class="oa-hd-result" style="border-left-color:var(--oa-blue)">
+                  <svg viewBox="0 0 420 230" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;max-width:440px;margin:0 auto;height:auto">
+                    <!-- axes -->
+                    <line x1="40" y1="20" x2="40" y2="180" stroke="#2A3441" stroke-width="1"/>
+                    <line x1="40" y1="180" x2="395" y2="180" stroke="#2A3441" stroke-width="1"/>
+                    <text x="34" y="26" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="8">wealth</text>
+                    <text x="390" y="195" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="8">age →</text>
+                    <!-- human capital: high then declines to ~0 -->
+                    <path d="M 50 40 Q 150 55, 230 110 Q 300 155, 380 172" fill="none" stroke="#3DD68C" stroke-width="2.5"/>
+                    <text x="60" y="36" fill="#3DD68C" font-family="monospace" font-size="8.5">human capital</text>
+                    <!-- financial capital: low then rises -->
+                    <path d="M 50 172 Q 150 160, 230 110 Q 300 60, 380 40" fill="none" stroke="#D4A017" stroke-width="2.5"/>
+                    <text x="305" y="36" fill="#D4A017" font-family="monospace" font-size="8.5">financial capital</text>
+                    <!-- crossover -->
+                    <circle cx="230" cy="110" r="3.5" fill="#79C0FF"/>
+                    <!-- age markers -->
+                    <line x1="60" y1="178" x2="60" y2="182" stroke="#7D8590" stroke-width="1"/>
+                    <text x="60" y="195" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="8">25</text>
+                    <text x="60" y="208" text-anchor="middle" fill="#3DD68C" font-family="monospace" font-size="7.5">85/15</text>
+                    <line x1="370" y1="178" x2="370" y2="182" stroke="#7D8590" stroke-width="1"/>
+                    <text x="370" y="195" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="8">65</text>
+                    <text x="370" y="208" text-anchor="middle" fill="#D4A017" font-family="monospace" font-size="7.5">50/50</text>
+                  </svg>
+                </div>
+                <div class="oa-info"><b>Equity/bond glide path:</b> at age 25 a target-date fund may hold <b>85% equity / 15% bonds</b> — because human capital has significant <b>bond-like</b> characteristics, so the financial portfolio tilts to equity to balance total wealth. As the investor ages and human capital declines, the mix shifts toward bonds; at retirement (~65) it may be closer to <b>50% equity / 50% bonds</b>.</div>
+                <div class="oa-tip"><b>Why equity-heavy when young:</b> a stable salary (human capital) acts like a big bond position on the economic balance sheet. To keep TOTAL wealth balanced, the financial portfolio overweights equity early on, then de-risks as that "bond" (human capital) shrinks.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 5 · ERRORS & MASTERY -->
+            <div id="oaebs-errors" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Errors &amp; Mastery — ready for your wrong answers</div>
+                <div class="oa-body">This tab will hold the economic balance sheet questions you get wrong.</div>
+                <div class="oa-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+                <div class="oa-tip"><b>Watch areas:</b><br>
+                  • Extended assets: individual = human capital; institutional = royalties/minerals<br>
+                  • Extended liabilities: individual = consumption; institutional = foundation payouts<br>
+                  • Economic net worth = economic assets − economic liabilities (balancing figure)<br>
+                  • Human capital is bond-like → young investors hold MORE equity in the financial portfolio<br>
+                  • Glide path: ~85/15 young → ~50/50 at retirement</div>
+              </div>
+            </div>
+
+          </div><!-- /oar-ebs -->
+
+          <!-- ════════════════ TOP TAB · APPROACHES TO ASSET ALLOCATION ════════════════ -->
+          <div id="oar-approaches" class="oa-toppanel">
+
+            <div class="oa-tabs">
+              <button class="oa-tab active" onclick="oaAppTab('three',this)">The 3 Approaches</button>
+              <button class="oa-tab" onclick="oaAppTab('liabvsgoals',this)">Liability vs Goals</button>
+              <button class="oa-tab" onclick="oaAppTab('risk',this)">Relevant Risk Concepts</button>
+              <button class="oa-tab" onclick="oaAppTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · THE 3 APPROACHES -->
+            <div id="oaapp-three" class="oa-panel active">
+              <div class="oa-card">
+                <div class="oa-title">LOS 3.c · Three asset allocation approaches</div>
+                <div class="oa-body">All three attempt to match investors' goals with their optimal level of risk: (1) asset-only, (2) liability-relative, (3) goals-based.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title"><span class="oa-blue">1 · Asset-only</span></div>
+                <span class="oa-rule"><b>Basis:</b> decisions based SOLELY on the investor's assets</span>
+                <span class="oa-rule"><b>Example:</b> mean-variance optimization (MVO) — uses expected returns, volatilities, correlations</span>
+                <span class="oa-rule"><b>Objective:</b> maximize expected return per unit of risk (e.g. maximize the Sharpe ratio)</span>
+                <span class="oa-rule"><b>Constraints:</b> consider IPS constraints + investor risk tolerance</span>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title"><span class="oa-orange">2 · Liability-relative</span></div>
+                <span class="oa-rule"><b>Basis:</b> decisions based on FUNDING LIABILITIES</span>
+                <span class="oa-rule"><b>Objective:</b> pay liabilities when they come due</span>
+                <span class="oa-rule"><b>Example:</b> surplus optimization (from MVO principles). Surplus = investor assets − PV of investor liabilities</span>
+                <span class="oa-rule"><b>Modeling liabilities:</b> short an amount of bonds matching the duration &amp; PV of liabilities, OR build a portfolio designed to hedge the liabilities</span>
+                <span class="oa-rule"><b>Also known as:</b> liability-driven investing (<b>LDI</b>)</span>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title"><span class="oa-green">3 · Goals-based</span></div>
+                <span class="oa-rule"><b>Basis:</b> asset allocations for SUB-PORTFOLIOS that help individuals/families meet lifestyle &amp; aspirational goals</span>
+                <span class="oa-rule"><b>Specify per goal:</b> type of cash flows needed (even / uneven / bullet), the time horizon(s), and the risk tolerance (probability of attaining the goal)</span>
+                <span class="oa-rule"><b>Construction:</b> each sub-portfolio has a unique allocation; summing them produces the overall portfolio SAA</span>
+                <span class="oa-rule"><b>Also known as:</b> goals-based investing (<b>GBI</b>)</span>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · LIABILITY VS GOALS -->
+            <div id="oaapp-liabvsgoals" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Liability-relative vs Goals-based — both focus on meeting liabilities</div>
+                <div class="oa-trap"><b>The main difference:</b> liability-relative focuses on liabilities of <b>INSTITUTIONAL</b> investors; goals-based focuses on liabilities/goals of <b>INDIVIDUAL</b> investors.</div>
+                <table class="oa-table">
+                  <thead><tr><th></th><th class="oa-orange">Institutional (liability-relative)</th><th class="oa-green">Individual (goals-based)</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Obligation type</b></td><td>Legal obligations / debts</td><td>Specific lifestyle goals</td></tr>
+                    <tr><td><b>Penalty for missing</b></td><td class="oa-red">Much HIGHER</td><td>Lower</td></tr>
+                    <tr><td><b>Obligations</b></td><td>Constant &amp; numerous (insurance, pension payments)</td><td>Much less predictable</td></tr>
+                    <tr><td><b>Forecastability</b></td><td class="oa-green">More confidently forecast (large number of obligations → average more certain)</td><td>Uncertain time-horizon needs of ONE individual</td></tr>
+                  </tbody>
+                </table>
+                <div class="oa-info"><b>Why institutional liabilities forecast better:</b> the average of a large number of obligations is more certain than the uncertain time-horizon needs of one individual investor.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · RELEVANT RISK CONCEPTS -->
+            <div id="oaapp-risk" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">LOS 3.d · Risk concepts by approach</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title"><span class="oa-blue">Asset-only risk</span></div>
+                <div class="oa-body">Focus on asset class risk + constructing effective asset-class combinations.</div>
+                <span class="oa-rule"><b>Relevant measure (MVO):</b> standard deviation of portfolio returns (incorporates asset-class volatilities + correlations)</span>
+                <span class="oa-rule"><b>Relative risk:</b> can be modeled with <b>tracking error</b></span>
+                <span class="oa-rule"><b>Downside risk:</b> value at risk (VaR), semivariance, or maximum drawdown</span>
+                <div class="oa-info"><b>Monte Carlo simulation</b> complements MVO: pick optimal portfolios via MVO, then simulate multiple paths to see performance over time → reveals downside risk in market-stress scenarios → refine allocation.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title"><span class="oa-orange">Liability-relative risk</span></div>
+                <span class="oa-rule"><b>Focus:</b> NOT having enough assets to pay liabilities when they come due</span>
+                <span class="oa-rule"><b>Also a risk:</b> the volatility of contributions used for funding liabilities</span>
+                <span class="oa-rule"><b>Relevant measure:</b> standard deviation of the <b>SURPLUS</b></span>
+                <div class="oa-info"><b>Main drivers of risk:</b> the differences between asset and liability characteristics (e.g. size, sensitivity to interest-rate changes).</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title"><span class="oa-green">Goals-based risk</span></div>
+                <span class="oa-rule"><b>Focus:</b> the risk of NOT being able to achieve the stated financial goals</span>
+                <span class="oa-rule"><b>Multiple goals:</b> risks encompass multiple future time periods</span>
+                <span class="oa-rule"><b>Portfolio risk:</b> the <b>WEIGHTED SUM</b> of the risk attached to each goal</span>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Quick contrast (the testable summary)</div>
+                <table class="oa-table">
+                  <thead><tr><th>Approach</th><th>Risk = </th><th>Relevant measure</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="oa-blue">Asset-only</b></td><td>Asset-class risk</td><td>SD of portfolio returns (+ tracking error, VaR)</td></tr>
+                    <tr><td><b class="oa-orange">Liability-relative</b></td><td>Can't pay liabilities when due</td><td>SD of the surplus</td></tr>
+                    <tr><td><b class="oa-green">Goals-based</b></td><td>Can't achieve goals</td><td>Weighted sum of per-goal risk</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- SUBTAB 4 · ERRORS & MASTERY -->
+            <div id="oaapp-errors" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Errors &amp; Mastery — ready for your wrong answers</div>
+                <div class="oa-body">This tab will hold the approaches/risk questions you get wrong.</div>
+                <div class="oa-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+                <div class="oa-tip"><b>Watch areas:</b><br>
+                  • Asset-only = MVO, maximize Sharpe; liability-relative = LDI, surplus optimization; goals-based = GBI, sub-portfolios<br>
+                  • Liability-relative → institutional (higher penalties, more predictable); goals-based → individual (less predictable)<br>
+                  • Risk measures: SD of returns (asset-only) / SD of surplus (liability) / weighted sum per goal (goals-based)<br>
+                  • Monte Carlo complements MVO for downside/stress<br>
+                  • Surplus = assets − PV of liabilities</div>
+              </div>
+            </div>
+
+          </div><!-- /oar-approaches -->
+
+          <!-- ════════════════ TOP TAB · ALLOCATION & SAA ════════════════ -->
+          <div id="oar-saa" class="oa-toppanel">
+
+            <div class="oa-tabs">
+              <button class="oa-tab active" onclick="oaSaaTab('classes',this)">Asset Classes &amp; Risk</button>
+              <button class="oa-tab" onclick="oaSaaTab('criteria',this)">5 Specification Criteria</button>
+              <button class="oa-tab" onclick="oaSaaTab('granularity',this)">Granularity &amp; Sub-classes</button>
+              <button class="oa-tab" onclick="oaSaaTab('factor',this)">Factor-Based Allocation</button>
+              <button class="oa-tab" onclick="oaSaaTab('steps',this)">SAA &amp; 9 Steps</button>
+              <button class="oa-tab" onclick="oaSaaTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · ASSET CLASSES & RISK -->
+            <div id="oasaa-classes" class="oa-panel active">
+              <div class="oa-card">
+                <div class="oa-title">LOS 3.e · Asset classes &amp; systematic risk</div>
+                <div class="oa-body">An asset class is a group of assets with similar investment characteristics. Each asset class has its own <b>quantifiable systematic risk</b>.</div>
+                <div class="oa-trap"><b>The key link:</b> SAA is a conscious effort to gain the DESIRED exposure to systematic risk via specific weights to individual asset classes. In other words, <b>SAA reflects the investor's desired systematic risk exposure</b>.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">The 3 "super asset classes"</div>
+                <table class="oa-table">
+                  <thead><tr><th>Super asset class</th><th>Source of value</th><th>Example</th></tr></thead>
+                  <tbody>
+                    <tr><td><b class="oa-green">Capital assets</b></td><td>Provide a CONTINUOUS source of value</td><td>Dividends (stocks, bonds)</td></tr>
+                    <tr><td><b class="oa-orange">Consumable / transformable</b></td><td>Can be CONSUMED or TRANSFORMED into a source of value</td><td>Commodities</td></tr>
+                    <tr><td><b class="oa-blue">Store-of-value</b></td><td>Provide value when EXCHANGED or SOLD</td><td>Currencies, art</td></tr>
+                  </tbody>
+                </table>
+                <div class="oa-tip"><b>Memory hook:</b> Capital = pays you continuously · Consumable = use it up / convert it · Store-of-value = worth something when you sell it.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · 5 SPECIFICATION CRITERIA -->
+            <div id="oasaa-criteria" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">5 criteria for specifying an asset class</div>
+                <div class="oa-body">Combining classes with obviously different risk/return (e.g. EM equities + domestic equities into one "equities" class) is only appropriate from a general-description standpoint. Use these criteria to specify classes properly:</div>
+                <span class="oa-rule"><span class="oa-orange">1.</span> Assets in a class should have <b>similar attributes</b> from both a DESCRIPTIVE and STATISTICAL perspective</span>
+                <span class="oa-rule"><span class="oa-orange">2.</span> Assets <b>cannot be classified into more than one</b> asset class (if they can, the class descriptions are too vague)</span>
+                <span class="oa-rule"><span class="oa-orange">3.</span> Classes should <b>NOT be highly correlated</b> (high correlation defeats the purpose of holding separate classes for diversification)</span>
+                <span class="oa-rule"><span class="oa-orange">4.</span> Classes should cover <b>all possible investable assets</b> (increases the investable set AND pushes up the efficient frontier — higher expected return at all risk levels)</span>
+                <span class="oa-rule"><span class="oa-orange">5.</span> Classes should contain a sufficiently large percentage of <b>LIQUID assets</b> (if liquidity/transaction costs are significant, the class may not be ideal)</span>
+                <div class="oa-info"><b>Well-accepted asset classes:</b> domestic equity, domestic fixed income, global equity, global fixed income, cash &amp; equivalents, and alternatives (real estate, private equity, etc.).</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · GRANULARITY & SUB-CLASSES -->
+            <div id="oasaa-granularity" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Figure 3.2 · Asset classes &amp; sub-asset classes</div>
+                <table class="oa-table">
+                  <thead><tr><th>Asset class</th><th>Sub-asset class</th><th>Segment</th></tr></thead>
+                  <tbody>
+                    <tr><td rowspan="4"><b>Global equity</b></td><td rowspan="2">U.S. equities</td><td>Large-cap equities</td></tr>
+                    <tr><td>Small-cap equities</td></tr>
+                    <tr><td rowspan="2">Non-U.S. equities</td><td>Developed countries</td></tr>
+                    <tr><td>Emerging countries</td></tr>
+                    <tr><td rowspan="4"><b>Global fixed income</b></td><td rowspan="2">U.S. debt</td><td>Investment-grade debt</td></tr>
+                    <tr><td>High-yield debt</td></tr>
+                    <tr><td rowspan="2">Non-U.S. debt</td><td>Developed countries</td></tr>
+                    <tr><td>Emerging countries</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Granularity: SAA vs TAA</div>
+                <div class="oa-trap"><b>Too much granularity</b> (number of subdivisions) makes it difficult to construct an optimal portfolio based on the investor's required return and risk. Within each class, sub-asset classes are LESS distinct than their broad parent classes.</div>
+                <span class="oa-rule"><b class="oa-green">SAA</b> should focus primarily on asset-class divisions that are <b>distinctly different</b> and provide diversification (e.g. global equity vs global fixed income)</span>
+                <span class="oa-rule">As you move DOWN in granularity, the differential between classes SHRINKS (US vs non-US equity are less distinctly different than equity vs fixed income)</span>
+                <span class="oa-rule"><b class="oa-orange">TAA</b> (tactical) → decisions may focus more on the <b>sub-asset classes</b></span>
+                <div class="oa-tip"><b>Rule of thumb:</b> SAA = broad, distinct classes. TAA = finer sub-classes. More granularity ≠ better; it can make optimization harder.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 4 · FACTOR-BASED ALLOCATION -->
+            <div id="oasaa-factor" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">LOS 3.f · Asset-based vs Factor-based allocation</div>
+                <div class="oa-body">Asset classes have traditionally been the units of analysis → <b>asset-based asset allocation</b> (e.g. MVO using expected return, volatility, correlation of the selected classes).</div>
+                <div class="oa-trap"><b>The problem:</b> using asset classes this way can be problematic due to <b>OVERLAPPING risk factors</b> among asset classes.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Risk factors &amp; overlap</div>
+                <div class="oa-body">An investor selects asset classes based on desired exposure to common <b>risk factors</b>. Examples:</div>
+                <div class="oa-fl">volatility · liquidity · inflation · interest rates
+duration · foreign exchange · default risk</div>
+                <div class="oa-info"><b>Overlap example:</b> domestic equity AND domestic fixed income BOTH share exposure to foreign-exchange (currency changes affect issuer profitability + returns), liquidity, and volatility risk factors. Examining overlapping risk factors helps identify the CORRELATIONS among asset classes.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Factor-based asset allocation</div>
+                <div class="oa-body">Because factors overlap, it may be insightful to focus on RISK FACTORS rather than asset classes as the units of analysis: identify the factors + the desired exposure to each. Multifactor models then create <b>factor portfolios</b> that isolate systematic (nondiversifiable) risk exposures → <b>factor-based asset allocation</b>.</div>
+                <div class="oa-trap"><b>Not inherently superior — it has limitations:</b> investors may not be able to directly invest in all risk factors. But it can offer additional insight, and factors often correspond to expected-return premiums.</div>
+                <div class="oa-tip"><b>Some factors ARE investable</b> via spread positions (long/short) or derivatives:<br>
+                  • <b>Isolate inflation:</b> go LONG Treasuries (compensation for consensus-expected inflation) and SHORT inflation-linked bonds (adjust for actual future inflation)<br>
+                  • <b>Isolate volatility:</b> invest in VIX futures with payoffs based on actual change in volatility</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 5 · SAA & 9 STEPS -->
+            <div id="oasaa-steps" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">LOS 3.g · Strategic Asset Allocation (SAA)</div>
+                <div class="oa-body">SAA combines capital market expectations (expected return, volatility, correlation) with the investor's risk, return, and investment constraints (from the IPS). SAA is <b>LONG-TERM</b> in nature.</div>
+                <div class="oa-info"><b>Vocabulary:</b> the SAA weights are called <b>targets</b>, and the portfolio represented by the SAA is a <b>policy portfolio</b> (= target portfolio = benchmark).</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Utility-theory foundation</div>
+                <div class="oa-body">Most quantitative approaches are based on <b>utility theory</b>: a utility function incorporates investor risk aversion. Expected utility for an allocation is determined with a distribution of ending-wealth values (based on asset-class weights, returns, and beginning wealth). The maximum utility, subject to asset-class constraints, represents the investor's optimal allocation given the investment horizon.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">The 9 steps to select &amp; justify an SAA</div>
+                <span class="oa-rule"><span class="oa-orange">1.</span> <b>Determine investor objectives</b> — how will they use the assets? Liabilities/goals? How measured?</span>
+                <span class="oa-rule"><span class="oa-orange">2.</span> <b>Determine investor tolerance for risk</b> — sensitivities to risk? How is risk measured?</span>
+                <span class="oa-rule"><span class="oa-orange">3.</span> <b>Determine investor time horizon(s)</b> — horizon to evaluate objectives AND risk tolerance</span>
+                <span class="oa-rule"><span class="oa-orange">4.</span> <b>Determine investor constraints</b> — tax situation, ESG considerations, legal/regulatory/political, any IPS constraints</span>
+                <span class="oa-rule"><span class="oa-orange">5.</span> <b>Select the asset allocation approach</b> — asset-only / liability-relative / goals-based</span>
+                <span class="oa-rule"><span class="oa-orange">6.</span> <b>Specify the asset classes</b> — once specified, capital market expectations can be established</span>
+                <span class="oa-rule"><span class="oa-orange">7.</span> <b>Develop potential asset allocations</b> — optimization produces candidate allocations</span>
+                <span class="oa-rule"><span class="oa-orange">8.</span> <b>Simulate results</b> — test whether results align with objectives + risk tolerance over the chosen horizon</span>
+                <span class="oa-rule"><span class="oa-orange">9.</span> <b>Repeat step 7</b> until the optimal asset allocation is discovered</span>
+                <div class="oa-tip"><b>The loop:</b> steps 7 → 8 → 9 iterate — develop, simulate, refine — until the optimal allocation is found. Steps 1–4 profile the investor; step 5 picks the approach; step 6 sets the classes; 7–9 optimize.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 6 · ERRORS & MASTERY -->
+            <div id="oasaa-errors" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Errors &amp; Mastery — ready for your wrong answers</div>
+                <div class="oa-body">This tab will hold the allocation/SAA questions you get wrong.</div>
+                <div class="oa-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+                <div class="oa-tip"><b>Watch areas:</b><br>
+                  • 3 super asset classes: capital (continuous) / consumable (commodities) / store-of-value (currencies, art)<br>
+                  • 5 specification criteria (similar attrs, no double-classing, low correlation, cover all investable, liquid)<br>
+                  • Granularity: SAA = broad distinct classes; TAA = sub-classes; too much granularity hurts optimization<br>
+                  • Factor-based: asset classes have overlapping risk factors → focus on factors; factor portfolios isolate systematic risk<br>
+                  • Isolate inflation = long Treasuries / short inflation-linked; isolate volatility = VIX futures<br>
+                  • SAA = policy/target portfolio/benchmark; long-term; utility-theory based<br>
+                  • The 9 steps (1–4 profile, 5 approach, 6 classes, 7–9 optimize loop)</div>
+              </div>
+            </div>
+
+          </div><!-- /oar-saa -->
+
+          <!-- ════════════════ TOP TAB · OTHER APPROACHES & ISSUES ════════════════ -->
+          <div id="oar-other" class="oa-toppanel">
+
+            <div class="oa-tabs">
+              <button class="oa-tab active" onclick="oaOthTab('gmp',this)">Global Market Portfolio</button>
+              <button class="oa-tab" onclick="oaOthTab('weights',this)">Passive/Active: Weights</button>
+              <button class="oa-tab" onclick="oaOthTab('within',this)">Passive/Active: Within</button>
+              <button class="oa-tab" onclick="oaOthTab('riskbudget',this)">Risk Budgeting</button>
+              <button class="oa-tab" onclick="oaOthTab('rebal',this)">Rebalancing</button>
+              <button class="oa-tab" onclick="oaOthTab('corridor',this)">Corridor Width</button>
+              <button class="oa-tab" onclick="oaOthTab('errors',this)">Errors &amp; Mastery</button>
+            </div>
+
+            <!-- SUBTAB 1 · GLOBAL MARKET PORTFOLIO -->
+            <div id="oaoth-gmp" class="oa-panel active">
+              <div class="oa-card">
+                <div class="oa-title">LOS 3.h · The global market portfolio as a baseline</div>
+                <div class="oa-body">Financial theory proposes that the FIRST asset allocation to consider should be the <b>global market portfolio</b>.</div>
+                <span class="oa-rule">Contains <b>ALL available risky assets</b> (global equity, global FI, real estate, etc.) in proportion to their <b>total market values</b></span>
+                <span class="oa-rule">It is the portfolio that <b>MINIMIZES diversifiable risk</b> — the most diversified portfolio possible</span>
+                <span class="oa-rule">Found on the efficient frontier by drawing a line from the risk-free asset tangent to the frontier (the <b>capital market line</b>); the point of tangency = the global market portfolio</span>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Using it in practice</div>
+                <div class="oa-body">The global market portfolio's weights serve as a good STARTING POINT. The weights can then be adjusted to meet specific investor objectives, constraints, and desires (e.g. a home-country or small-cap bias).</div>
+                <div class="oa-info"><b>Hard to invest in some classes:</b> residential real estate or private equity may not be practical for individual investors. For this reason, investors often use a <b>PROXY</b> to represent the global market portfolio — such as a portfolio of <b>exchange-traded funds (ETFs)</b>.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Professor's note · risk vocabulary</div>
+                <table class="oa-table">
+                  <thead><tr><th>Nondiversifiable risk</th><th>Diversifiable risk</th></tr></thead>
+                  <tbody>
+                    <tr><td class="oa-green">market risk · priced risk · systematic risk</td><td class="oa-red">nonmarket · nonpriced · company-specific · unsystematic</td></tr>
+                  </tbody>
+                </table>
+                <div class="oa-trap"><b>The compensation rule:</b> you should expect compensation (higher expected returns) for taking <b>NONDIVERSIFIABLE</b> risk — but NOT for taking diversifiable risk (you could have diversified it away for free).</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 2 · PASSIVE/ACTIVE: WEIGHTS -->
+            <div id="oaoth-weights" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">LOS 3.i · Passive/active choices for asset class weights</div>
+                <div class="oa-body">Once the SAA is constructed, implementation choices must be made regarding passive/active management for (a) asset-class weights AND (b) allocations within asset classes. First aspect: should the investor DEVIATE from the SAA by adjusting the asset mix?</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title"><span class="oa-orange">TAA</span> — Tactical Asset Allocation</div>
+                <span class="oa-rule">Active strategy that DEVIATES from the SAA to exploit perceived <b>SHORT-TERM</b> opportunities</span>
+                <span class="oa-rule">Introduces additional risk, seeking incremental return — often called <b>ALPHA</b></span>
+                <span class="oa-rule">Deviations restricted by <b>risk budgets / rebalancing ranges</b> that control the amount of deviation</span>
+                <span class="oa-rule">May be based on forecasted asset-class valuation, business-cycle state, or stock-price momentum</span>
+                <div class="oa-trap"><b>TAA tradeoff:</b> potential outperformance vs tracking error. Key limitation = additional trading/monitoring costs + possible capital gains taxes → the decision to implement TAA should be evaluated under a <b>COST-BENEFIT</b> approach.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title"><span class="oa-blue">DAA</span> — Dynamic Asset Allocation</div>
+                <span class="oa-rule">A <b>MULTIPERIOD</b> view of the investment horizon</span>
+                <span class="oa-rule">Recognizes that asset (and liability) performance in ONE period affects the required rate of return and acceptable level of risk for SUBSEQUENT periods</span>
+                <div class="oa-info">Changes to the SAA may be limited to simply adjusting the mix between stocks, bonds, and cash. Conversely, <b>global TAA</b> may involve a broader and more complex multiasset approach.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 3 · PASSIVE/ACTIVE: WITHIN CLASSES -->
+            <div id="oaoth-within" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Passive vs Active within asset classes</div>
+                <table class="oa-table">
+                  <thead><tr><th></th><th class="oa-green">Passive</th><th class="oa-orange">Active</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Insights impact composition?</b></td><td>NO — investor insights/expectations do not impact composition</td><td>YES — composition changes when expectations change</td></tr>
+                    <tr><td><b>Examples</b></td><td>Indexing, holding bonds to maturity</td><td>Security selection, style tilts</td></tr>
+                    <tr><td><b>Goal</b></td><td>Track the index</td><td>Earn risk-adjusted returns &gt; passive benchmark</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">The passive → active spectrum</div>
+                <span class="oa-rule"><b class="oa-green">Most passive:</b> buy &amp; hold a self-rebalancing broad index of risky assets (e.g. global market portfolio)</span>
+                <span class="oa-rule">Tilt toward a style index (e.g. growth equity) — slightly more active (active decision, but still passive indexing implementation)</span>
+                <span class="oa-rule">Growth approach + security selection to enhance returns — more active</span>
+                <span class="oa-rule"><b class="oa-red">Most active:</b> unconstrained mandates, NOT managed with regard to traditional benchmarks</span>
+                <div class="oa-info"><b>Indexing costs:</b> low-cost overall, but some transaction costs (adjusting to index changes; equal-weight tracking costs MORE than market-cap weight; FI indexes incur costs as bonds mature/are called/default). As a portfolio moves from passive → active, <b>tracking error AND expected active return increase</b> — these measures quantify the degree of active management.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">4 factors driving the active/passive choice</div>
+                <span class="oa-rule"><span class="oa-orange">1.</span> Availability of appropriate investments (e.g. a relevant index)</span>
+                <span class="oa-rule"><span class="oa-orange">2.</span> Active management <b>scalability</b> — value added from each active decision</span>
+                <span class="oa-rule"><span class="oa-orange">3.</span> Investor constraints (e.g. social/environmental concerns when using a passive approach)</span>
+                <span class="oa-rule"><span class="oa-orange">4.</span> Investor belief in <b>efficient markets</b> (would discourage active management)</span>
+                <div class="oa-tip"><b>Also:</b> the cost-benefit tradeoff (additional transaction costs needed for excess returns) and the tax status of investors (differs between taxable and tax-exempt).</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 4 · RISK BUDGETING -->
+            <div id="oaoth-riskbudget" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Risk Budgeting</div>
+                <div class="oa-body">Asset allocation can be conducted with a RISK perspective. The types of risk to take — and the amount — are addressed with <b>risk budgeting</b>.</div>
+                <span class="oa-rule">Measuring risk varies by focus: <b>volatility</b> → standard deviation of returns; <b>tail risk</b> → value at risk (VaR)</span>
+                <span class="oa-rule">Quantified in either RELATIVE or ABSOLUTE terms; stated in either money or percentage terms (e.g. 10% return volatility)</span>
+                <div class="oa-trap"><b>Key point:</b> risk budgets specify how RISK should be distributed among portfolio assets — <b>WITHOUT regard to asset expected returns</b>.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Active risk budgeting</div>
+                <div class="oa-body">In the passive/active context, active risk budgeting determines how much ADDITIONAL risk relative to the benchmark the investor is willing to take. Objective: outperform the benchmark while sticking to the risk budget.</div>
+                <table class="oa-table">
+                  <thead><tr><th>Decision level</th><th>Active risk measured relative to…</th></tr></thead>
+                  <tbody>
+                    <tr><td>Asset-class MIX (weights)</td><td class="oa-blue">the <b>SAA benchmark</b></td></tr>
+                    <tr><td>Allocation WITHIN asset classes</td><td class="oa-green">the <b>asset-class benchmark</b></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- SUBTAB 5 · REBALANCING -->
+            <div id="oaoth-rebal" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">LOS 3.j · Why rebalance</div>
+                <div class="oa-body">SAA responds to long-term strategic (policy) needs + long-run CME, expressed via IPS objectives/constraints. The allocation is typically specified as a RANGE (e.g. domestic equity 30%–40%); if the actual % wanders outside the range, rebalance. Triggered by normal asset price changes.</div>
+                <div class="oa-trap"><b>Primary benefit:</b> maintaining the investor's desired exposure to <b>systematic risk factors</b>. If allowed to drift, the riskier assets take over (equities grow → portfolio risk grows). Only rebalancing (sell equities / buy debt) returns the portfolio to its original IPS risk/return.</div>
+                <div class="oa-info"><b>Discipline:</b> rebalancing avoids the "let it ride" temptation after strong equity gains. But "letting it ride" can also fail to realize gains from temporarily overvalued securities before they fall back — a potential COST of NOT rebalancing.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Costs of rebalancing — liquidity demand vs supply</div>
+                <span class="oa-rule"><b class="oa-red">Trade DEMANDS liquidity</b> (selling when others are selling) → transaction cost (bid-ask spread) can be SUBSTANTIAL</span>
+                <span class="oa-rule"><b class="oa-green">Trade PROVIDES liquidity</b> (selling when others are buying) → costs may be MINIMAL</span>
+                <div class="oa-info">Plus: realized capital gains create a tax liability, and transaction costs apply.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Two rebalancing approaches</div>
+                <table class="oa-table">
+                  <thead><tr><th></th><th class="oa-blue">Calendar</th><th class="oa-orange">Percentage-range</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Trigger</b></td><td>Predetermined date (monthly/quarterly)</td><td>Change in VALUE (tolerance bands / corridors)</td></tr>
+                    <tr><td><b>Related to</b></td><td>Passage of TIME</td><td>Portfolio VALUE</td></tr>
+                    <tr><td><b>Benefit</b></td><td>Discipline without constant monitoring</td><td>Minimizes how far classes violate corridors</td></tr>
+                    <tr><td><b>Drawback</b></td><td>Can stray considerably between dates</td><td>Constant monitoring cost + more frequent trading</td></tr>
+                  </tbody>
+                </table>
+                <div class="oa-info"><b>Corridor example:</b> 50% ± 5% → the class must stay within a band of 45%–55%. Calendar frequency generally depends on portfolio volatility; sometimes scheduled to coincide with review dates.</div>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">4 questions for range-based rebalancing</div>
+                <span class="oa-rule"><span class="oa-orange">1.</span> Who is ultimately RESPONSIBLE for rebalancing the portfolio?</span>
+                <span class="oa-rule"><span class="oa-orange">2.</span> How FREQUENTLY should the portfolio be monitored?</span>
+                <span class="oa-rule"><span class="oa-orange">3.</span> What is the SIZE of the rebalancing corridors?</span>
+                <span class="oa-rule"><span class="oa-orange">4.</span> Should rebalancing to target weights be FULLY or only PARTIALLY corrected?</span>
+              </div>
+            </div>
+
+            <!-- SUBTAB 6 · CORRIDOR WIDTH -->
+            <div id="oaoth-corridor" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Strategic considerations · optimal corridor WIDTH (7 drivers)</div>
+                <div class="oa-body">Each driver pushes the corridor wider or tighter. Memorize the DIRECTION and the why.</div>
+                <table class="oa-table">
+                  <thead><tr><th>Driver</th><th>Effect on corridor</th><th>Why</th></tr></thead>
+                  <tbody>
+                    <tr><td><b>Transaction costs</b></td><td class="oa-orange">Higher costs → WIDER</td><td>Expensive/illiquid to trade → rebalance less often → wider corridor</td></tr>
+                    <tr><td><b>Risk tolerance</b></td><td class="oa-red">More risk-averse → TIGHTER</td><td>Less risk-averse → wider (willing to let it drift)</td></tr>
+                    <tr><td><b>Correlations</b></td><td class="oa-green">Higher correlation → rebalance LESS</td><td>If assets move together, weights stay within ranges (both ↑20% → stay in band; one ↑20%/other ↓20% → both breach)</td></tr>
+                    <tr><td><b>Momentum</b></td><td class="oa-orange">Trends continue → WIDER</td><td>If mean reversion anticipated → TIGHTER corridors</td></tr>
+                    <tr><td><b>Liquidity</b></td><td class="oa-orange">Illiquid → WIDER</td><td>PE/real estate → larger trading costs → wider corridors</td></tr>
+                    <tr><td><b>Derivatives</b></td><td class="oa-green">Overlay → can rebalance synthetically</td><td>Lower transaction costs/taxes, quicker/easier; tradeoff = needs additional risk management</td></tr>
+                    <tr><td><b>Taxes</b></td><td class="oa-orange">Taxable → WIDER than tax-exempt</td><td>Realized gains/losses hit taxes; corridors may be ASYMMETRIC (loss harvesting → e.g. 48%–55% for a 50% target)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="oa-card">
+                <div class="oa-title">Volatility — the nuanced one</div>
+                <div class="oa-trap"><b>Most likely:</b> higher volatility → NARROWER corridors to control risk.</div>
+                <div class="oa-info"><b>The complication:</b> higher volatility (in the absence of high positive correlation between classes) makes weights shift MORE quickly. But more frequent rebalancing increases transaction costs (argues for WIDER corridors). So: higher volatility argues for narrower; substantial transaction costs argue for wider.</div>
+                <div class="oa-tip"><b>Most likely conclusion (exam):</b> higher volatility → NARROWER corridors. Ultimately the choice is a tradeoff between risk control, transaction costs, and correlations — in complex situations, a quantified cost-benefit analysis is required.</div>
+              </div>
+            </div>
+
+            <!-- SUBTAB 7 · ERRORS & MASTERY -->
+            <div id="oaoth-errors" class="oa-panel">
+              <div class="oa-card">
+                <div class="oa-title">Errors &amp; Mastery — ready for your wrong answers</div>
+                <div class="oa-body">This tab will hold the other-approaches/rebalancing questions you get wrong.</div>
+                <div class="oa-info">When you miss a question, send: the question + your wrong pick + correct answer.</div>
+                <div class="oa-tip"><b>Watch areas:</b><br>
+                  • Global market portfolio = all risky assets at market value; minimizes DIVERSIFIABLE risk; CML tangency; use ETF proxy<br>
+                  • Compensated for nondiversifiable (systematic) risk only, NOT diversifiable<br>
+                  • TAA = short-term, alpha, deviates from SAA, cost-benefit; DAA = multiperiod<br>
+                  • Passive→active spectrum; tracking error + active return rise toward active<br>
+                  • 4 active/passive factors (availability, scalability, constraints, market efficiency belief)<br>
+                  • Risk budgeting ignores expected returns; active risk vs SAA benchmark (weights) / asset-class benchmark (within)<br>
+                  • Rebalancing maintains systematic risk exposure; liquidity demand (costly) vs supply (cheap)<br>
+                  • Calendar (time-based) vs percentage-range (value-based); the 4 range questions<br>
+                  • Corridor: costs/illiquid/momentum-trends/taxable → WIDER; risk-averse/mean-reversion/volatility → TIGHTER; high correlation → rebalance less</div>
+              </div>
+            </div>
+
+          </div><!-- /oar-other -->
+
+
+
+          <script>
+            function oaTop(id, btn){
+              document.querySelectorAll('#oaWidget > .oa-toppanel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#oaWidget > .oa-toptabs > .oa-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('oar-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'ebs') setTimeout(oaEbsCalc, 30);
+            }
+            function oaEbsTab(id, btn){
+              document.querySelectorAll('#oar-ebs > .oa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#oar-ebs > .oa-tabs > .oa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('oaebs-'+id).classList.add('active');
+              btn.classList.add('active');
+              if(id === 'sheet') setTimeout(oaEbsCalc, 30);
+            }
+            function oaAppTab(id, btn){
+              document.querySelectorAll('#oar-approaches > .oa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#oar-approaches > .oa-tabs > .oa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('oaapp-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function oaSaaTab(id, btn){
+              document.querySelectorAll('#oar-saa > .oa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#oar-saa > .oa-tabs > .oa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('oasaa-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function oaOthTab(id, btn){
+              document.querySelectorAll('#oar-other > .oa-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#oar-other > .oa-tabs > .oa-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('oaoth-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function oaEbsCalc(){
+              function g(id){ return parseFloat(document.getElementById(id).value) || 0; }
+              var fa=g('oaEbsFA'), ea=g('oaEbsEA'), fl=g('oaEbsFL'), el=g('oaEbsEL');
+              var totalA = fa + ea;
+              var totalL = fl + el;
+              var nw = totalA - totalL;
+              var nwColor = nw >= 0 ? '#3DD68C' : '#FF7B72';
+              document.getElementById('oaEbsResult').innerHTML =
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">Total economic assets</span><span style="font-family:monospace;color:#3DD68C">'+totalA.toFixed(0)+'</span></div>'+
+                '<div style="display:flex;justify-content:space-between;font-size:11.5px;padding:3px 0;border-bottom:1px solid var(--border)"><span style="color:#7D8590">Total economic liabilities</span><span style="font-family:monospace;color:#FF7B72">'+totalL.toFixed(0)+'</span></div>'+
+                '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-family:Georgia,serif;font-size:16px;color:'+nwColor+';font-weight:600">Economic net worth = '+nw.toFixed(0)+'</div>'+
+                '<div style="font-size:10.5px;color:#7D8590;margin-top:4px">= total economic assets − total economic liabilities. Both sides of the balance sheet then total '+totalA.toFixed(0)+'.</div>';
+            }
+            function oaInit(){ setTimeout(oaEbsCalc, 30); }
+          </script>
+        </div>
+
 
         <!-- empty state -->
         <div id="notesEmpty" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted);">
@@ -15051,7 +15771,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -15068,6 +15788,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'tswWidget' && typeof tswInit === 'function') setTimeout(tswInit, 50);
     if (widgetId === 'cmeWidget' && typeof cmeInit === 'function') setTimeout(cmeInit, 50);
     if (widgetId === 'fiWidget' && typeof fiInit === 'function') setTimeout(fiInit, 50);
+    if (widgetId === 'oaWidget' && typeof oaInit === 'function') setTimeout(oaInit, 50);
   }
 }
 
@@ -15087,11 +15808,12 @@ function openNote(key, topic, subtopic) {
     'PM Pathway||Active Equity Investing: Portfolio Construction': 'pcwWidget',
     'PM Pathway||Trade Strategy and Execution': 'tswWidget',
     'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
-    'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget'
+    'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
+    'Asset Allocation||Overview of Asset Allocation': 'oaWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
