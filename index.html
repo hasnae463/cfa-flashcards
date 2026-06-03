@@ -14587,14 +14587,6 @@ duration · foreign exchange · default risk</div>
             #paWidget .pa-flow-box ul { margin:0; padding-left:15px; font-size:11.5px; line-height:1.6; color:#C9D1D9; }
             #paWidget .pa-flow-arrow { display:flex; align-items:center; color:var(--pa-gold); font-size:18px; }
             #paWidget .pa-revealbtn { background:rgba(212,160,23,.12); border:1px solid rgba(212,160,23,.5); color:var(--pa-gold); font-family:var(--mono); font-size:10.5px; letter-spacing:.04em; padding:5px 12px; border-radius:4px; cursor:pointer; margin-top:8px; }
-            #paWidget .pa-err { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--pa-red); border-radius:8px; padding:14px 16px; margin-bottom:14px; }
-            #paWidget .pa-err-q { font-size:12.5px; line-height:1.55; color:#C9D1D9; margin-bottom:10px; }
-            #paWidget .pa-err-row { display:flex; gap:10px; margin:5px 0; font-size:12px; line-height:1.45; }
-            #paWidget .pa-err-tag { flex-shrink:0; width:74px; font-family:var(--mono); font-size:9.5px; letter-spacing:.04em; text-transform:uppercase; padding-top:2px; }
-            #paWidget .pa-err-mine { color:var(--pa-red); }
-            #paWidget .pa-err-right { color:var(--pa-green); }
-            #paWidget .pa-err-why { color:var(--pa-gold); }
-            #paWidget .pa-err-txt { color:#C9D1D9; }
           </style>
 
           <div class="pa-toptabs">
@@ -14958,18 +14950,13 @@ Var_m   = σ²_m = variance of portfolio m    (in %)</div>
             <div id="paro-errors" class="pa-panel">
               <div class="pa-card">
                 <div class="pa-title">Errors &amp; Mastery — Reverse Opt / BL / Resampling</div>
-                <div class="pa-err">
-                  <div class="pa-err-q"><b>Q (Montgomery on resampling criticisms):</b> "Resampling is criticized because riskier asset allocations tend to be <i>under-diversified</i>, and the allocations inherit the estimation errors in the original inputs." Is the comment correct?</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">A — correct</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">C — incorrect regarding diversification</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">Riskier resampled allocations are <b>OVER-diversified</b>, not under-diversified — the Monte Carlo averaging spreads weight across every class that ever shows up in a simulated frontier, so high-risk targets end up holding too many small positions. The estimation-error half was correct: the averaged allocations <b>do</b> inherit the original input errors (resampling smooths, it doesn't fix bad inputs). So the comment is wrong on <b>one</b> clause only → "incorrect regarding diversification."</span></div>
-                </div>
-                <div class="pa-err" style="border-left-color:var(--pa-gold)">
-                  <div class="pa-err-q"><b>ESSAY (Patel — reverse optimization vs MVO):</b> Given market caps, betas, rf 2.0%, global MRP 5.5%, and MVO weights — contrast (a) the asset-allocation mix and (b) the expected returns for US equities &amp; global bonds.</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">Didn't answer</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">Mix: reverse-opt weights = <b>inputs</b> (market-cap weights of global mkt pf); MVO weights = <b>outputs</b>. Returns: reverse-opt returns = <b>outputs via CAPM</b>; MVO returns = <b>inputs</b> (historical). US equities 9.7%, global bonds 5.3%.</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">Method</span><span class="pa-err-txt"><b>Reverse opt flips inputs↔outputs vs MVO.</b> (a) Mix: weights are the market-cap shares — cash 4.2/107.8 = 3.9%, US bonds 24.9%, US equities 20.6%, global equities 25.5%, global bonds 25.1%. vs MVO (10/20/35/20/15). So reverse-opt = higher to US bonds (+4.9), global equities (+5.5), global bonds (+10.1); lower to cash (−6.1) and US equities (−14.4). (b) Returns via <b>CAPM: r = rf + β·MRP</b>. US equities = 2.0% + 1.4(5.5%) = <b>9.7%</b>; global bonds = 2.0% + 0.6(5.5%) = <b>5.3%</b>. Both ABOVE the MVO historical inputs (8.6%, 4.7%). These reverse-opt returns are the <b>implied equilibrium</b> (imputed, CAPM-linked) returns. Mantra: reverse opt takes <b>weights as inputs → returns as outputs</b>; MVO takes <b>returns as inputs → weights as outputs</b>.</span></div>
-                </div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on Module 4.2. Send them and I'll add each as a reasoning card (your answer · correct answer · the trap).</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════════════ TOP TAB · ASSET ALLOCATION EXAMPLES (4.3) ════════════════ -->
           <div id="par-ex" class="pa-toppanel">
 
             <div class="pa-tabs">
@@ -15091,12 +15078,7 @@ DD: (10 − 3) / 14 = 0.50</div>
             <div id="paex-errors" class="pa-panel">
               <div class="pa-card">
                 <div class="pa-title">Errors &amp; Mastery — Asset Allocation Examples</div>
-                <div class="pa-err">
-                  <div class="pa-err-q"><b>Q (XTR, risk-free exists):</b> 3 MVO portfolios each combined with rf (1.8%) to hit a 5.7% target. A: σ 18.69%, w_rf 49.35%. B: σ 14.95%, w_rf 39.06%. C: σ 14.18%, w_rf 35.00%. Which is most appropriate?</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">A</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">B (highest Sharpe = 0.428)</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">When a risk-free asset exists you pick the <b>highest-Sharpe</b> combined portfolio — not the one with the lowest risky weight (A) nor the least-risky standalone MVO (C). Key step: the <b>combined</b> risk = σ_MVO × (1 − w_rf), then Sharpe = (5.7 − 1.8) / combined σ. B: σ_comb = 14.95% × (1 − 0.3906) = 9.11% → Sharpe = 3.9/9.11 = <b>0.428</b> (beats A 0.412, C 0.423). Don't judge on raw MVO σ or on rf weight — recompute the blended σ first.</span></div>
-                </div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on Module 4.3 (incl. Module Quiz 4.1/4.2/4.3). Send them and I'll add each as a reasoning card.</div>
               </div>
             </div>
 
@@ -15198,18 +15180,7 @@ DD: (10 − 3) / 14 = 0.50</div>
             <div id="pamcs-errors" class="pa-panel">
               <div class="pa-card">
                 <div class="pa-title">Errors &amp; Mastery — MCS / Liquidity / Individuals</div>
-                <div class="pa-err">
-                  <div class="pa-err-q"><b>Q (Gruber, illiquid assets):</b> Which statement is most accurate? (1) Illiquid assets offer diversification + a return <i>discount</i> as compensation for illiquidity. (2) Easily-tracked indexes in similar classes often don't represent the <i>non-idiosyncratic</i> risk of the illiquid asset. (3) There are no low-cost passive vehicles to track less-liquid classes.</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">Statement 2</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">Statement 3</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">Two word-swaps to catch: (1) illiquid assets carry a return <b>PREMIUM</b>, not a discount — you're paid extra to bear illiquidity. (2) the indexes fail to capture the <b>IDIOSYNCRATIC</b> (nonsystematic) risk of the specific holding, not the "non-idiosyncratic." (3) is clean: low-cost passive vehicles exist for liquid public assets but <b>not</b> for illiquid classes → can't passively track them. Statement 2 flipped idiosyncratic/non-idiosyncratic — that's the one that fooled you.</span></div>
-                </div>
-                <div class="pa-err">
-                  <div class="pa-err-q"><b>Q (Black, Monte Carlo):</b> Black wants to use Monte Carlo simulation to address rebalancing costs and the fact that future return distributions may not be fully described by expected return &amp; volatility. Is his preferred approach correct?</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">B or C (incorrect — said MCS can't handle one of them)</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">A — correct</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">MCS handles <b>both</b>: it's multiperiod so it captures rebalancing costs &amp; interim cash flows, AND it can model <b>non-normal</b> distributions (skew/kurtosis — distributions needing more than mean &amp; variance). This is the multiperiod / path-projection use of MCS (vs the resampling use that perturbs inputs). Any answer claiming MCS "can't" address rebalancing or non-normality is wrong by definition.</span></div>
-                </div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on 4.e / 4.f / 4.c (incl. Module Quiz 4.4). Send them and I'll add each as a reasoning card.</div>
               </div>
             </div>
 
@@ -15333,12 +15304,7 @@ Excess/MCTR = 6.5% / 15.60% = 0.417</div>
             <div id="parb-errors" class="pa-panel">
               <div class="pa-card">
                 <div class="pa-title">Errors &amp; Mastery — Risk Budgeting / Factors</div>
-                <div class="pa-err">
-                  <div class="pa-err-q"><b>Q (Williams, optimal portfolio):</b> Portfolio E(R) 9.5%, σ 21.63%, rf 1.8%, betas given per class. Closest value of the ratio of excess return to MCTR of the portfolio?</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">B (0.439) or C (0.077)</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">A — 0.356</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">At the <b>optimum</b>, excess/MCTR is equal across all classes AND equals the portfolio <b>Sharpe ratio</b>: (9.5 − 1.8)/21.63 = <b>0.356</b>. The betas are a distractor — you don't need them. Trap 0.439 = forgot to subtract rf (used 9.5/21.63, that's a return-to-σ, not excess). Trap 0.077 = Treynor (divided the excess by portfolio β = 1.0, not σ). Remember: excess return uses (k_p − rf), and the ratio matches Sharpe only because the portfolio is optimal.</span></div>
-                </div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on 4.g / 4.h / 4.i (incl. Module Quiz 4.5). Send them and I'll add each as a reasoning card.</div>
               </div>
             </div>
 
@@ -15471,30 +15437,7 @@ Var(s,m)  = variance of surplus return</div>
             <div id="paalm-errors" class="pa-panel">
               <div class="pa-card">
                 <div class="pa-title">Errors &amp; Mastery — ALM Approach</div>
-                <div class="pa-err">
-                  <div class="pa-err-q"><b>Q (Sabonete SPP):</b> Underfunded plan; objectives = reach 100% funded in 5 yrs (then fully hedge liabilities), minimize year-to-year contribution volatility, minimize admin/investment costs. Most appropriate allocation approach?</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">A (MVO) or B (two-portfolio)</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">C — integrated asset-liability</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">The plan is <b>underfunded</b>. Two-portfolio <b>assumes a surplus</b> to put in the return-seeking sleeve — no surplus exists, so it's out. MVO is <b>asset-only</b> → ignores the liability/funding goal entirely. Integrated ALM jointly optimizes assets &amp; liabilities with a multiperiod feedback loop → fits "drive to fully funded + manage contributions over time." Cue: underfunded + funding-status objective = integrated.</span></div>
-                </div>
-                <div class="pa-err">
-                  <div class="pa-err-q"><b>Q (Kealoha):</b> Large fixed obligation due in 10 yrs; client has <b>substantially more funds than needed</b>; wants a competitive risk-adjusted return while keeping high certainty the obligation is met. Most appropriate approach?</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">A — surplus optimization</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">C — hedging / return-seeking (two-portfolio)</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">"High certainty of meeting a <b>fixed</b> obligation" + <b>more than enough</b> funds → the textbook two-portfolio setup: build a <b>hedging portfolio of riskless bonds</b> that pays off the fixed obligation in 10 yrs, then invest the <b>surplus</b> in a return-seeking portfolio for competitive returns. Surplus optimization (your pick) optimizes the surplus's risk/return jointly — it does NOT give the same hard certainty of covering the obligation. The mention of a clean fixed liability + leftover funds is the signal for hedging/return-seeking, not surplus optimization.</span></div>
-                </div>
-                <div class="pa-err" style="border-left-color:var(--pa-gold)">
-                  <div class="pa-err-q"><b>ESSAY (JMI — two-portfolio limitations):</b> Closed DB plan; liabilities = ABO that must <b>keep pace with inflation</b>; surplus slightly <b>negative</b>; JMI won't increase contributions; Kim considers a <b>nominal</b> government bond index as the hedging portfolio. Discuss two limitations.</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">(1) negative surplus → can't fully hedge ✓ &nbsp; (2) "hedging pf may not be available for certain risks" ✗</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">(1) negative surplus → can't fully hedge without a large positive contribution, which JMI refuses. (2) liabilities are <b>inflation-linked</b> but the hedge is a <b>nominal</b> bond index → not a true hedge → <b>basis risk</b>.</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">Your limitation 1 was right. Limitation 2 — you reached for the <b>memorized generic</b> limitation ("can't hedge things like earthquakes"). But the vignette <b>planted</b> the real answer: liabilities must keep pace with <b>inflation</b>, yet Kim's hedge is a <b>nominal</b> govt bond index. A nominal index doesn't track inflation-linked liabilities → mismatch → <b>basis risk</b>. Lesson: when a vignette gives you a specific asset/liability mismatch (nominal hedge vs inflation liability, currency mismatch, duration mismatch), the intended limitation is that <b>specific basis risk</b>, not the generic "some risks aren't hedgeable."</span></div>
-                </div>
-                <div class="pa-err" style="border-left-color:var(--pa-gold)">
-                  <div class="pa-err-q"><b>ESSAY (Johansson — hedging/return-seeking allocation):</b> Pension assets $10B, PV liabilities $8.5B; liability returns driven by <b>index-linked government bonds</b>. Which of 3 allocations fits the hedging/return-seeking approach? (Alloc 1: 70% ILG, 15% cash, 15% equities. Alloc 3: 85% ILG, 5% corp, 10% equities.)</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">Allocation 1</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">Allocation 3</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">Size the hedge to the <b>funding ratio</b>, not to "feels conservative." Hedge first by allocating the <b>PV of liabilities</b> to the matching factor asset (index-linked govies): $8.5B/$10B = <b>85%</b>. Allocation 3 has exactly 85% ILG + 15% return-seeking (corp + equities) → matches. Allocation 1 (70% ILG) <b>under-hedges</b> the liability, leaving 15% in a non-matching factor (cash) that doesn't track the liability. You picked 1 because it <i>looks</i> safe (low equity), but the hedge leg must equal the liability PV. Rule: hedging portfolio = PV(liabilities)/assets in the liability-driving factor; the rest = return-seeking.</span></div>
-                </div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on 4.j / 4.k / 4.l (incl. Module Quiz 4.6). Send them and I'll add each as a reasoning card.</div>
               </div>
             </div>
 
@@ -15591,30 +15534,7 @@ Var(s,m)  = variance of surplus return</div>
             <div id="pagb-errors" class="pa-panel">
               <div class="pa-card">
                 <div class="pa-title">Errors &amp; Mastery — Goals-Based &amp; Heuristics</div>
-                <div class="pa-err">
-                  <div class="pa-err-q"><b>Q (Sebastian, goals-based sizing):</b> $2.9M portfolio. Goal 1 = $120k/yr living expenses over 20 yrs, 90% success, 2.5% inflation, payments at start of year. Goal 2 = $1.5M nominal to charity in 10 yrs, 85% success. Sub-portfolios BY (E(R) 5.70%) &amp; CZ (E(R) 7.10%) with min-expected-return tables by probability/horizon. Which allocation meets both?</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">A (current 40/60) or B (43/57)</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">C — 37% BY / 63% CZ</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">Discount each goal at the <b>minimum expected return for its required probability &amp; horizon</b> — NOT the sub-portfolio's headline E(R). Goal 1 (20yr, 90%) → use <b>5.70%</b> (not CZ's 7.10%); Goal 2 (10yr, 85%) → use <b>3.60%</b> (not BY's 5.70%). Goal 1 is an inflation-growing annuity-<b>due</b>: size CZ so PV of $120k growing 2.5% over 20 yrs is covered → needs ~$1.827M in CZ. Goal 2: PV = 1.5M/1.036¹⁰ = $1.053M ≤ BY allocation. Only 37/63 ($1.073M BY, $1.827M CZ) clears both: CZ throws off $120,432 &gt; $120k AND BY $1.073M &gt; $1.053M needed. Your errors (A, B) under-fund CZ so the annuity falls below $120k.</span></div>
-                </div>
-                <div class="pa-err">
-                  <div class="pa-err-q"><b>Q (D'Alessandro, endowment model):</b> New committee member argues the pension should adopt the endowment model (higher allocation to alternatives) for Option 1. Best response — the proposed model:</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">B or C (defends the illiquidity premium / higher returns)</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">A — not well suited given the 5-yr fund-and-hedge objective</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">The endowment/Yale model earns an <b>illiquidity premium that needs a LONG horizon</b> to capture. The plan hedges its liabilities in <b>5 years</b> → horizon too short to harvest that premium. Plus high costs clash with the stated cost-minimization objective. B and C concede the premium is real and "more than offsets costs" — true in general, but irrelevant because Sabonete can't hold long enough to collect it. Match the model's horizon requirement to the client's horizon.</span></div>
-                </div>
-                <div class="pa-err">
-                  <div class="pa-err-q"><b>Q (Müller, risk parity):</b> 4-asset portfolio. Domestic bonds have the <b>lowest</b> expected return AND the <b>lowest covariance</b> with the other classes. Under risk parity, the weight on domestic bonds should be:</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">B — equal to 25%</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">C — greater than 25%</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">The trap</span><span class="pa-err-txt">Risk parity equalizes each class's <b>contribution to total risk</b> (with 4 classes, each must contribute 25% of risk) — it does NOT equalize the dollar <b>weights</b>. Equal weights (25% each) is the 1/N rule, not risk parity. Because bonds have the <b>lowest</b> risk/covariance, they must be <b>OVERweighted (&gt;25%)</b> to push their risk contribution up to the equal 25% share. Low-risk asset → high weight; high-risk asset → low weight. You defaulted to equal weights — that's the confusion between risk parity and 1/N.</span></div>
-                </div>
-                <div class="pa-err" style="border-left-color:var(--pa-gold)">
-                  <div class="pa-err-q"><b>ESSAY (Armstrong — goals-based modules):</b> $8M, 3 goals. G1: 85% chance, $5M vacation home in 5 yrs. G2: 99% chance, $100k/yr expenses for 10 yrs, 3% inflation from Yr 2. G3: 75% chance, $10M charity in 25 yrs. Modules A–D with horizon/probability-adjusted returns; invest excess in Module A. Determine module &amp; $ for each.</div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-mine">Your ans</span><span class="pa-err-txt">Didn't answer</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-right">Correct</span><span class="pa-err-txt">G1→C@4.4%→$4.03M (50.4%); G2→B@2.2%→$1.01M (12.7%); G3→D@7.5%→$1.64M (20.5%); surplus $1.32M→A (16.4%).</span></div>
-                  <div class="pa-err-row"><span class="pa-err-tag pa-err-why">Method</span><span class="pa-err-txt"><b>Per goal:</b> (1) go to the goal's <b>horizon + required-success cell</b>, pick the module with the <b>highest return</b> in that row; (2) discount the goal's FV at that return to get the $ to invest. <b>G1</b> (5yr/85%): row max is C @ 4.4% → PV = 5M/1.044⁵ = <b>$4.03M</b>. <b>G2</b> (10yr/99%): row max is B @ 2.2% → it's a growing annuity ($100k, 3% from Yr 2, 10yr) → PV ≈ <b>$1.01M</b>. <b>G3</b> (25yr/75%): row max is D @ 7.5% → PV = 10M/1.075²⁵ = <b>$1.64M</b>. <b>Surplus</b> = 8 − 4.03 − 1.01 − 1.64 = <b>$1.32M → Module A</b> (per instruction). Two traps: (i) pick the highest return <b>within the cell</b>, not the highest headline expected return; (ii) don't forget the <b>leftover surplus</b> goes to the named module. Same engine as Sebastian — use the Goals-Based Calculator tab for each PV.</span></div>
-                </div>
+                <div class="pa-body" style="color:var(--muted)">Empty — ready for your practice-exam wrong answers on 4.m / 4.n (incl. Module Quiz 4.7). Send them and I'll add each as a reasoning card.</div>
               </div>
             </div>
 
