@@ -16411,7 +16411,106 @@ Range = 40% ± 7.14% = <span class="rw-green">32.86% – 47.14%</span></div>
 
           <!-- ===================== TOP PANEL 5: ERRORS ===================== -->
           <div id="rwr-err" class="rw-toppanel">
-            <div class="rw-empty">No error cards yet. Submit your Module 5 practice questions and they'll be added here as reasoning cards.</div>
+            <div class="rw-tabs">
+              <button class="rw-tab active" onclick="rwErrTab('triad', this)">Goals/Constraints/Beliefs</button>
+              <button class="rw-tab" onclick="rwErrTab('tax', this)">Tax &amp; Location</button>
+              <button class="rw-tab" onclick="rwErrTab('beh', this)">Behavioral</button>
+              <button class="rw-tab" onclick="rwErrTab('cons', this)">Constraint-Driven</button>
+            </div>
+
+            <div id="rwerr-triad" class="rw-panel active">
+              <div class="rw-card" style="border-left:3px solid var(--rw-gold);background:rgba(212,160,23,.06);">
+                <div class="rw-title">THE TRIAD — lock this distinction</div>
+                <span class="rw-rule"><span class="rw-gold">Goals</span> = change in <b>risk appetite / risk capacity</b> (employment status, starting a family, illness affecting willingness/ability to take risk).</span>
+                <span class="rw-rule"><span class="rw-gold">Constraints</span> = change in <b>time horizon, liquidity needs, asset size, or regulatory/external limits.</b></span>
+                <span class="rw-rule"><span class="rw-gold">Beliefs</span> = change in <b>optimization inputs or guiding principles</b> (macro forecasts, committee makeup, expected returns/vol/correlation).</span>
+                <div class="rw-trap">You missed this triad in <b>opposite directions</b> (Phase 4 → called beliefs "goals"; Young → called constraints "goals"). Drill the table above until the mirror-image trap disappears.</div>
+              </div>
+
+              <div class="rw-err">
+                <div class="rw-err-q"><b>OHF Phase 4</b> — Low oil prices & reduced production "likely to persist through several business cycles" → sought lower withdrawals + higher equity. Best classified as a change in:</div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-mine">Your ans</span><span class="rw-err-txt">A. Goals</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-right">Correct</span><span class="rw-err-txt">B. Beliefs</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-why">The trap</span><span class="rw-err-txt">"Persist through several business cycles" = a revised <b>macroeconomic forecast</b> feeding the optimization inputs → beliefs. The government <b>reaffirmed the fund's purpose</b>, so the goal didn't move. Tell: a forecast statement ≠ a goal statement.</span></div>
+              </div>
+
+              <div class="rw-err">
+                <div class="rw-err-q"><b>Young — early-retirement reassessment</b> — Considering an offer to retire 5 years sooner. Primary reason for reassessment:</div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-mine">Your ans</span><span class="rw-err-txt">Change in goals (retiring 15y → 10y)</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-right">Correct</span><span class="rw-err-txt">Change in constraints</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-why">The trap</span><span class="rw-err-txt">Retiring earlier changes the <b>time horizon</b> — and time horizon is a <b>constraint</b>, not a goal. Her risk appetite/capacity (goals) and guiding principles (beliefs) are unchanged; only the horizon moved. This is the mirror image of the Phase 4 miss.</span></div>
+              </div>
+            </div>
+
+            <div id="rwerr-tax" class="rw-panel">
+              <div class="rw-err" style="border-left-color:var(--rw-green);">
+                <div class="rw-err-q"><b>Simpson — tax-efficient liquidity</b> (you left this blank) — Raise $50k/yr education + $150k wedding in a tax-efficient way.</div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-mine">Your ans</span><span class="rw-err-txt">— (no answer)</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-right">Correct</span><span class="rw-err-txt">Begin liquidating the Lattice position over 3 years — long-term gains taxed at only 10%.</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-why">Method</span><span class="rw-err-txt">Two buried facts combine: Lattice is <b>long-term held</b> + the couple's <b>LTCG rate is 10%</b> (vs 25% on everything else). When a question says "tax-efficient liquidity," scan for the asset taxed at the <b>lowest rate</b>. Bonus: this also breaks his mental-accounting bias.</span></div>
+              </div>
+
+              <div class="rw-err">
+                <div class="rw-err-q"><b>Young — strategic asset location</b> — Which account (education / retirement / reallocated money market / unexpected needs) best fits the broker's long-horizon equity add?</div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-mine">Your ans</span><span class="rw-err-txt">Unexpected needs</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-right">Correct</span><span class="rw-err-txt">Reallocated money market (taxable)</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-why">Rule</span><span class="rw-err-txt"><b>Equities → taxable accounts first</b> (lower tax rate, deferred CG). High-turnover/highly-taxed assets → tax-deferred/exempt. Unexpected-needs must stay liquid/short-term; education is about to fund college. The reallocated money market is the taxable account → equities belong there.</span></div>
+              </div>
+
+              <div class="rw-card" style="border-left:3px solid var(--rw-blue);background:rgba(121,192,255,.06);">
+                <div class="rw-title" style="font-size:13px;">✓ Got right — rebalancing bands (keep the logic)</div>
+                <div class="rw-body">Taxable $5.5M account → <b>wider</b> band (Alt 2, 10.7%): after-tax σ is lower & a wider band avoids triggering taxable sales. Tax-deferred $3M → <b>narrower</b> band (Alt 1, 8.0%). Math: 8.0% / (1 − 0.25) = 10.67%.</div>
+              </div>
+            </div>
+
+            <div id="rwerr-beh" class="rw-panel">
+              <div class="rw-err">
+                <div class="rw-err-q"><b>Young — behavioral biases</b> — Identify the biases she most likely exhibits.</div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-mine">Your ans</span><span class="rw-err-txt">Loss aversion ✓ · Availability ✓ · <span class="rw-red">Illusion of control ✗</span></span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-right">Correct</span><span class="rw-err-txt">Loss aversion · Availability · <b>Mental accounting</b></span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-why">The trap</span><span class="rw-err-txt">You missed <b>mental accounting</b> — she treats the $3M retirement, $500k education, $400k emergency as <b>separate buckets</b> rather than one investable total. Illusion of control wasn't supported: wanting safety ≠ believing you can control outcomes. <b>Named separate accounts → mental accounting is almost always intended.</b></span></div>
+              </div>
+
+              <div class="rw-card" style="border-left:3px solid var(--rw-blue);background:rgba(121,192,255,.06);">
+                <div class="rw-title" style="font-size:13px;">✓ Got right — Simpson / Lattice</div>
+                <div class="rw-body">Mental accounting (views Lattice separately, sells only at retirement) → accommodated by <b>goals-based investing</b> (each goal = discrete subportfolio with its own acceptable risk). Fully correct.</div>
+              </div>
+
+              <div class="rw-err" style="border-left-color:var(--rw-gold);">
+                <div class="rw-err-q"><b>Simpson — TAA risk/benefit</b> — Right ideas, but too thin for full essay credit. Tighten the framing:</div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-mine">Your ans</span><span class="rw-err-txt">Risk: trading costs · Benefit: exploit cyclical conditions</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-right">Full credit</span><span class="rw-err-txt">Risk: additional trading costs <b>and taxes</b>, + concentrates risk vs the policy portfolio. Benefit: can raise returns / risk-adjusted returns <b>IF short-term conditions are correctly anticipated.</b></span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-why">Method</span><span class="rw-err-txt">The "<b>if correctly anticipated</b>" conditional is what earns the benefit mark — graders want the dependency stated explicitly.</span></div>
+              </div>
+            </div>
+
+            <div id="rwerr-cons" class="rw-panel">
+              <div class="rw-err">
+                <div class="rw-err-q"><b>Young — which proposed portfolio?</b> — Wants ≥6% after tax <b>without additional incremental risk.</b></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-mine">Your ans</span><span class="rw-err-txt">Portfolio 1 (highest safety ratio)</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-right">Correct</span><span class="rw-err-txt">Portfolio 3 (~6.68% after tax, σ 15.5%)</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-why">The trap</span><span class="rw-err-txt">Binding constraints decide it, not headline return: P1 σ=28.2% violates the <b>no-additional-risk</b> cap; P2's 5% PE = $275k &lt; the <b>$500k alternatives minimum</b> → not viable. P3 hits ~6.68% at lowest σ with no PE. Look for the <b>binding threshold</b>, not the biggest number.</span></div>
+              </div>
+
+              <div class="rw-err">
+                <div class="rw-err-q"><b>Titan Foundation</b> ($10M) — Two reasons the proposed allocation (↑ equity, ↓ bonds, +10% PE via $1M-min Sun-Fin) is inappropriate.</div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-mine">Your ans</span><span class="rw-err-txt">Got #1 (declining enrollment/donations → needs liquidity, but proposal adds risk). Missed #2.</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-right">Reason #2</span><span class="rw-err-txt"><b>Too small for PE:</b> $1M minimum = 10% of the $10M portfolio → over-concentrated, and a small foundation likely lacks PE expertise/access.</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-why">Method</span><span class="rw-err-txt">Whenever a PE allocation appears, check the <b>minimum-to-portfolio ratio.</b></span></div>
+              </div>
+
+              <div class="rw-err">
+                <div class="rw-err-q"><b>Fordhart Foundation</b> ($2B) — Two reasons the proposed allocation (↓ equity, ↑ bonds, +10% PE via CFQ, $500M AUM) is inappropriate.</div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-mine">Your ans</span><span class="rw-err-txt">Got #1 (strong enrollment + settlement → needs less liquidity, but proposal shifts to bonds — backwards). Missed #2.</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-right">Reason #2</span><span class="rw-err-txt"><b>Too big for the fund:</b> 10% of $2B = $200M into a $500M fund → Fordhart owns <b>40% of the entire CFQ fund</b> → unacceptable operational/concentration risk.</span></div>
+                <div class="rw-err-row"><span class="rw-err-tag rw-err-why">Method</span><span class="rw-err-txt"><b>The foundation pair = opposite size traps:</b> Titan too <b>small</b> for the minimum; Fordhart too <b>big</b> relative to fund AUM. Remember them as a contrasting pair.</span></div>
+              </div>
+
+              <div class="rw-card" style="border-left:3px solid var(--rw-gold);background:rgba(212,160,23,.06);">
+                <div class="rw-title" style="font-size:13px;">The throughline across every miss</div>
+                <div class="rw-body">The answer lived in a <b>specific vignette fact</b> — the 10% LTCG rate, the $500k minimum, the $500M fund AUM, "persist through several business cycles," "retire 5 years sooner" — not in the general concept. You know the concepts; points leak on reading the vignette for the <b>one decisive detail.</b> Practice + stamina fix.</div>
+              </div>
+            </div>
           </div>
 
           <!-- ===================== TOP PANEL 6: MASTERY ===================== -->
@@ -16454,6 +16553,12 @@ Range = 40% ± 7.14% = <span class="rw-green">32.86% – 47.14%</span></div>
               document.querySelectorAll('#rwr-m53 > .rw-panel').forEach(function(p){p.classList.remove('active')});
               document.querySelectorAll('#rwr-m53 > .rw-tabs > .rw-tab').forEach(function(b){b.classList.remove('active')});
               document.getElementById('rwm53-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function rwErrTab(id, btn){
+              document.querySelectorAll('#rwr-err > .rw-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#rwr-err > .rw-tabs > .rw-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('rwerr-'+id).classList.add('active');
               btn.classList.add('active');
             }
             function rwC1(){
