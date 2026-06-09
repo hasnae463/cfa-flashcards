@@ -16636,17 +16636,232 @@ Range = 40% ± 7.14% = <span class="rw-green">32.86% – 47.14%</span></div>
           </style>
 
           <div class="os-toptabs">
-            <button class="os-toptab active" onclick="osTop('collar', this)">Collar (16.6)</button>
+            <button class="os-toptab active" onclick="osTop('basics', this)">Basics &amp; Core (16.1-16.5)</button>
+            <button class="os-toptab" onclick="osTop('collar', this)">Collar (16.6)</button>
             <button class="os-toptab" onclick="osTop('straddle', this)">Straddle (16.7)</button>
             <button class="os-toptab" onclick="osTop('spreads', this)">Spreads (16.8)</button>
             <button class="os-toptab" onclick="osTop('greeks', this)">Greeks (16.9)</button>
             <button class="os-toptab" onclick="osTop('grk2', this)">Greeks II &amp; Vol (16.10/16.11)</button>
+            <button class="os-toptab" onclick="osTop('cheat', this)">Cheat Sheet</button>
             <button class="os-toptab" onclick="osTop('err', this)">Errors</button>
             <button class="os-toptab" onclick="osTop('mas', this)">Mastery</button>
           </div>
 
+          <!-- ===================== BASICS & CORE (16.1 - 16.5) ===================== -->
+          <div id="osr-basics" class="os-toppanel active">
+            <div class="os-tabs">
+              <button class="os-tab active" onclick="osBasTab('term', this)">Terminology / Value</button>
+              <button class="os-tab" onclick="osBasTab('money', this)">Moneyness</button>
+              <button class="os-tab" onclick="osBasTab('payoff', this)">Payoff Diagrams</button>
+              <button class="os-tab" onclick="osBasTab('synth', this)">Synthetics &amp; Parity</button>
+              <button class="os-tab" onclick="osBasTab('cc', this)">Covered Call</button>
+              <button class="os-tab" onclick="osBasTab('pp', this)">Protective Put &amp; Short Hedge</button>
+            </div>
+
+            <!-- ---------- TERMINOLOGY / VALUE ---------- -->
+            <div id="osbas-term" class="os-panel active">
+              <div class="os-card">
+                <div class="os-title">Refresher — calls, puts, parties</div>
+                <span class="os-rule"><span class="os-gold">▪ Call</span> = a right to <b>buy</b> the underlying. <span class="os-gold">▪ Put</span> = a right to <b>sell</b>.</span>
+                <span class="os-rule"><span class="os-blue">▪ Buyer (long)</span> pays the premium and <b>holds the right</b>.</span>
+                <span class="os-rule"><span class="os-red">▪ Seller (short)</span> receives the premium as payment for taking on the contingent liability: a short call must deliver the underlying if exercised (receiving the strike); a short put must take delivery (paying the strike).</span>
+                <span class="os-rule"><span class="os-gold">▪ European</span> = exercisable only at expiration. <span class="os-gold">▪ American</span> = exercisable any trading day up to and including expiration (the labels are not about geography).</span>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Symbols (curriculum notation)</div>
+                <div class="os-fl">X   = exercise (strike) price
+S   = underlying (stock) price
+c, p = call premium, put premium
+subscripts: 0 = position entry, T = expiration
+  e.g. S_T = underlying price at expiry</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Intrinsic value + time value</div>
+                <div class="os-body">An option's total premium decomposes into two parts:</div>
+                <span class="os-rule"><span class="os-green">▪ Intrinsic value</span> = value of immediate exercise; the degree to which the option is in-the-money (ITM). Zero if not ITM.</span>
+                <span class="os-rule"><span class="os-blue">▪ Time value</span> = the extra value reflecting what might happen over the option's remaining life. Driven by volatility, time to expiry, the risk-free rate, and any yield — which is why the first pricing formula (BSM, 1973) was needed.</span>
+                <div class="os-info"><b>Two principles to remember</b> (all else equal): <span class="os-gold">higher volatility → higher premiums</span> (calls AND puts); <span class="os-gold">less time to expiry → lower premiums</span> (calls AND puts).</div>
+                <div class="os-trap"><b>Trap:</b> intrinsic value is NOT profit. An option can be ITM yet still produce a loss for the long if intrinsic value &lt; premium originally paid. "ITM" only means exercise (ignoring premium) would yield a gain.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Implied vs historical volatility</div>
+                <span class="os-rule"><span class="os-gold">▪ Implied volatility</span> = the consensus volatility backed out of the current option price through a pricing model (forward-looking).</span>
+                <span class="os-rule"><span class="os-gold">▪ Historical (realized) volatility</span> = the square root of the actual realized variance of returns to date (backward-looking). The two are not the same.</span>
+              </div>
+            </div>
+
+            <!-- ---------- MONEYNESS ---------- -->
+            <div id="osbas-money" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">ITM / ATM / OTM and intrinsic value</div>
+                <table class="os-table">
+                  <tr><th>Option</th><th>ITM when</th><th>Intrinsic value (if ITM)</th><th>OTM when</th></tr>
+                  <tr><td><b>Call</b></td><td>S &gt; X</td><td class="os-green">S − X</td><td>S &lt; X</td></tr>
+                  <tr><td><b>Put</b></td><td>S &lt; X</td><td class="os-green">X − S</td><td>S &gt; X</td></tr>
+                </table>
+                <span class="os-rule"><span class="os-gold">▪ ATM</span>: S = X (zero intrinsic value). <span class="os-gold">▪ OTM</span>: zero intrinsic value as well.</span>
+                <div class="os-info"><b>Call ITM logic:</b> the right to pay <i>less</i> than market for the underlying; gain = S − X (buy at X, sell at market S). <b>Put ITM logic:</b> the right to receive <i>more</i> than market; gain = X − S (buy at market S, sell at X).</div>
+                <div class="os-trap"><b>Twist:</b> at expiration there is only intrinsic value (no time value) — that intrinsic value is the option's <b>payoff</b>. Before expiry, even an OTM option has positive value (all time value).</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Intrinsic value calculator</div>
+                <div class="os-hd-row"><span class="os-hd-label">Option type</span>
+                  <select id="os-iv-type" class="os-hd-input" onchange="osIvCalc()"><option value="call">Call</option><option value="put">Put</option></select></div>
+                <div class="os-hd-row"><span class="os-hd-label">Underlying S</span><input id="os-iv-s" class="os-hd-input" type="number" value="52.14" oninput="osIvCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Strike X</span><input id="os-iv-x" class="os-hd-input" type="number" value="50" oninput="osIvCalc()"></div>
+                <div class="os-hd-result" id="os-iv-out"></div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">XYZ data used throughout the reading</div>
+                <div class="os-body">Current stock S = <b>$52.14</b> ("now" = 20 March). April/May/June expiries are 31/61/91 days out. Risk-free rate 3%, assumed constant 60% vol, no dividends. Each contract is over 100 shares; the table is per-share.</div>
+                <table class="os-table">
+                  <tr><th colspan="3">Call Price</th><th>Strike</th><th colspan="3">Put Price</th></tr>
+                  <tr><th>APR</th><th>MAY</th><th>JUN</th><th>X</th><th>APR</th><th>MAY</th><th>JUN</th></tr>
+                  <tr><td>4.80</td><td>6.26</td><td>7.40</td><td>50</td><td>2.53</td><td>3.87</td><td>4.88</td></tr>
+                  <tr><td>3.53</td><td>5.05</td><td>6.22</td><td>52.5</td><td>3.75</td><td>5.14</td><td>6.19</td></tr>
+                  <tr><td>2.52</td><td>4.02</td><td>5.20</td><td>55</td><td>5.24</td><td>6.61</td><td>7.65</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- ---------- PAYOFF DIAGRAMS ---------- -->
+            <div id="osbas-payoff" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">The golden rule of payoff diagrams</div>
+                <div class="os-info"><b>Profit line = value line shifted</b> by the net initial premium: <span class="os-gold">down</span> if the net premium was an outflow (you paid), <span class="os-gold">up</span> if it was an inflow (you received). The profit line always has the <b>same shape</b> as the value line. Long and short of the same option have identical breakevens; their max profit/loss just swap (zero-sum).</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title os-green">Long call &nbsp;|&nbsp; Short call</div>
+                <span class="os-rule"><span class="os-green">Long call:</span> max loss = premium paid (expires OTM); breakeven = <b>X + c₀</b>; <b>unlimited</b> max profit. Motivation: profit from a rise, downside limited to the premium.</span>
+                <span class="os-rule"><span class="os-red">Short (naked) call:</span> max profit = premium received; breakeven = X + c₀; <b>unlimited</b> max loss. Limited upside (premium) balanced against unlimited loss if the underlying rises.</span>
+                <div class="os-fl">XYZ MAY 50 call, c₀ = 6.26
+  S=40 → value 0,  profit = 0 − 6.26 = −6.26 (max loss)
+  S=60 → value 10, profit = 10 − 6.26 = +3.74
+  Breakeven = 50 + 6.26 = <span style="color:#D4A017;">56.26</span></div>
+              </div>
+              <div class="os-card">
+                <div class="os-title os-blue">Long put &nbsp;|&nbsp; Short put</div>
+                <span class="os-rule"><span class="os-blue">Long put:</span> max profit = <b>X − p₀</b> (when S→0); breakeven = <b>X − p₀</b>; max loss = premium paid. Note max profit equals breakeven here.</span>
+                <span class="os-rule"><span class="os-red">Short put:</span> max profit = premium received; max loss = <b>X − p₀</b> (= breakeven); large but limited downside (stock can't fall below zero). Profile looks like a covered call.</span>
+                <div class="os-fl">XYZ JUN 50 put, p₀ = 4.88
+  Max profit = max loss of the short = 50 − 4.88 = <span style="color:#D4A017;">45.12</span>
+  Breakeven = 50 − 4.88 = 45.12  (= max profit for the long put)</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Payoff / profit calculator (single option, per share)</div>
+                <div class="os-hd-row"><span class="os-hd-label">Position</span>
+                  <select id="os-po-pos" class="os-hd-input" onchange="osPoCalc()"><option value="lc">Long call</option><option value="sc">Short call</option><option value="lp">Long put</option><option value="sp">Short put</option></select></div>
+                <div class="os-hd-row"><span class="os-hd-label">Strike X</span><input id="os-po-x" class="os-hd-input" type="number" value="50" oninput="osPoCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Premium</span><input id="os-po-prem" class="os-hd-input" type="number" value="6.26" oninput="osPoCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Underlying at expiry S_T</span><input id="os-po-st" class="os-hd-input" type="number" value="60" oninput="osPoCalc()"></div>
+                <div class="os-hd-result" id="os-po-out"></div>
+              </div>
+            </div>
+
+            <!-- ---------- SYNTHETICS & PARITY ---------- -->
+            <div id="osbas-synth" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Synthetic long forward (LOS 16.a)</div>
+                <div class="os-body"><b>Long call + short put</b> (same underlying, same strike, same expiration) = a <b>synthetic long forward</b> position. Value at expiration = <span class="os-gold">S_T − X</span>.</div>
+                <span class="os-rule"><span class="os-green">Above X:</span> the long call is ITM (positive value); the short put is OTM.</span>
+                <span class="os-rule"><span class="os-red">Below X:</span> the short put is ITM — exercised by the counterparty (negative value); the long call is OTM.</span>
+                <div class="os-info">Either way the position ends as if you bought the stock for X — the same payoff as a long forward struck at X. (A cash-secured short put deposits X; a naked short put does not.)</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Put–call parity</div>
+                <div class="os-body">Buying the call &amp; selling the put must cost the same as buying the stock and borrowing PV(X), since both end with value S_T − X:</div>
+                <div class="os-fl">c₀ − p₀ = S₀ − PV(X)
+rearranged:  S₀ + p₀ = c₀ + PV(X)
+
+XYZ check (MAY 50, rf 3%, 61 days):
+  c₀ − p₀ = 6.26 − 3.87 = <span style="color:#3DD68C;">2.39</span>
+  PV(50) = 50 / 1.03^(61/365) = 49.75
+  S₀ − PV(X) = 52.14 − 49.75 = <span style="color:#3DD68C;">2.39</span> ✓</div>
+                <span class="os-rule"><span class="os-gold">Put–call FORWARD parity:</span> substitute PV(F₀(T)) for S₀ → PV(F₀(T)) + p₀ = c₀ + PV(X). For an underlying paying no yield, the fair forward = FV(S₀), so it's just a restatement of standard parity.</span>
+                <div class="os-trap"><b>Note:</b> this parity assumes the underlying pays <b>no yield</b> over the life. If PV(X) exactly equalled S₀, call and put would have identical premiums and X would be the fair forward price.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Put–call parity solver</div>
+                <div class="os-body">Enter any three of c₀, p₀, S₀, PV(X) — leave the unknown blank (0) and pick it below.</div>
+                <div class="os-hd-row"><span class="os-hd-label">Solve for</span>
+                  <select id="os-pcp-for" class="os-hd-input" onchange="osPcpCalc()"><option value="c">c₀</option><option value="p">p₀</option><option value="s">S₀</option><option value="pvx">PV(X)</option></select></div>
+                <div class="os-hd-row"><span class="os-hd-label">Call c₀</span><input id="os-pcp-c" class="os-hd-input" type="number" value="6.26" oninput="osPcpCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Put p₀</span><input id="os-pcp-p" class="os-hd-input" type="number" value="3.87" oninput="osPcpCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Stock S₀</span><input id="os-pcp-s" class="os-hd-input" type="number" value="52.14" oninput="osPcpCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">PV(X)</span><input id="os-pcp-pvx" class="os-hd-input" type="number" value="49.75" oninput="osPcpCalc()"></div>
+                <div class="os-hd-result" id="os-pcp-out"></div>
+              </div>
+            </div>
+
+            <!-- ---------- COVERED CALL ---------- -->
+            <div id="osbas-cc" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Covered call (LOS 16.b)</div>
+                <div class="os-body">Structure: <b>long stock + short call</b>. The short call is hedged by ownership of the stock. Above the strike, the increasingly negative call value exactly offsets the stock's gain, capping the upside.</div>
+                <div class="os-fl">Max profit at expiry = X − S₀ + c₀
+Breakeven = max loss basis = S₀ − c₀
+  (loss increases one-for-one below breakeven; stock floored at 0)</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Three motivations — told apart by strike vs spot</div>
+                <table class="os-table">
+                  <tr><th>Use</th><th>Strike vs spot</th><th>Idea</th></tr>
+                  <tr><td>Yield enhancement</td><td class="os-gold">OTM (possibly far)</td><td>Stock has limited upside; pocket premium as extra yield.</td></tr>
+                  <tr><td>Reduce position at favourable price</td><td class="os-gold">ITM</td><td>Plan to sell; if exercised, sell at strike + keep premium → more than selling at market now.</td></tr>
+                  <tr><td>Target price realization</td><td class="os-gold">marginally OTM</td><td>Happy to sell slightly higher; calls struck just above market.</td></tr>
+                </table>
+                <div class="os-trap"><b>Exam hook:</b> the observable difference between the three uses is purely <b>the strike relative to the current stock price</b>. A question describing intent (income vs disposal vs target) is testing whether you map it to OTM / ITM / marginally-OTM.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Example (yield enhancement)</div>
+                <div class="os-fl">Long XYZ @ 52.14, short APR 55 call, c₀ = 2.52
+Max profit = 55 − 52.14 + 2.52 = <span style="color:#3DD68C;">5.38</span>  (cap at 55: stock gain 2.86 + premium 2.52)
+Breakeven = max loss basis = 52.14 − 2.52 = <span style="color:#D4A017;">49.62</span>
+Worse off than just holding only if S_T &gt; 55 + 2.52 = 57.52</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Covered call calculator (per share)</div>
+                <div class="os-hd-row"><span class="os-hd-label">Stock purchase S₀</span><input id="os-cc2-s" class="os-hd-input" type="number" value="52.14" oninput="osCc2Calc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Call strike X</span><input id="os-cc2-x" class="os-hd-input" type="number" value="55" oninput="osCc2Calc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Call premium received c₀</span><input id="os-cc2-c" class="os-hd-input" type="number" value="2.52" oninput="osCc2Calc()"></div>
+                <div class="os-hd-result" id="os-cc2-out"></div>
+              </div>
+            </div>
+
+            <!-- ---------- PROTECTIVE PUT & SHORT HEDGE ---------- -->
+            <div id="osbas-pp" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Protective put (LOS 16.c)</div>
+                <div class="os-body">Structure: <b>long stock + long put</b>. The classic options hedge for a long position — protects against the underlying falling while retaining full upside.</div>
+                <div class="os-fl">Max loss at expiry = S₀ − X + p₀
+Breakeven = S₀ + p₀
+Max profit = unlimited (stock keeps rising; put just expires)</div>
+                <div class="os-info"><b>XYZ example:</b> long @ 52.14 + MAY 50 put @ 3.87. Stock loss capped at 52.14 − 50 = 2.14; net max loss = 2.14 + 3.87 = <span class="os-gold">6.01</span>. Breakeven = 52.14 + 3.87 = <span class="os-gold">56.01</span>.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Protective put calculator (per share)</div>
+                <div class="os-hd-row"><span class="os-hd-label">Stock purchase S₀</span><input id="os-pp2-s" class="os-hd-input" type="number" value="52.14" oninput="osPp2Calc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Put strike X</span><input id="os-pp2-x" class="os-hd-input" type="number" value="50" oninput="osPp2Calc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Put premium paid p₀</span><input id="os-pp2-p" class="os-hd-input" type="number" value="3.87" oninput="osPp2Calc()"></div>
+                <div class="os-hd-result" id="os-pp2-out"></div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Options as a hedge of a SHORT position (LOS 16.e)</div>
+                <div class="os-body">A short seller gains if the price falls, loses if it rises. The two option overlays mirror the long-position hedges:</div>
+                <span class="os-rule"><span class="os-green">Buy a call (likely OTM):</span> hedges the short against the price <b>rising</b> — the positive call value above the strike offsets short-stock losses. Analogous to a <b>protective put</b> on a long position. Caps the loss, keeps downside gain.</span>
+                <span class="os-rule"><span class="os-red">Sell a put (likely OTM):</span> sells off part of the benefit of the price falling, in the same way a <b>covered call</b> sells off the upside of a long position. Collects premium, caps the gain.</span>
+                <table class="os-table">
+                  <tr><th>Underlying position</th><th>Hedge upside-cap (sell premium)</th><th>Hedge protect (buy insurance)</th></tr>
+                  <tr><td>Long stock</td><td>Covered call (short call)</td><td>Protective put (long put)</td></tr>
+                  <tr><td>Short stock</td><td>Short put</td><td>Long call</td></tr>
+                </table>
+                <div class="os-trap"><b>Mirror map:</b> short-stock ↔ long-stock swaps calls and puts. Buy-call-on-short ≙ buy-put-on-long (protection); sell-put-on-short ≙ sell-call-on-long (income, capped benefit).</div>
+              </div>
+            </div>
+          </div>
+
           <!-- ===================== COLLAR (16.6) ===================== -->
-          <div id="osr-collar" class="os-toppanel active">
+          <div id="osr-collar" class="os-toppanel">
             <div class="os-tabs">
               <button class="os-tab active" onclick="osCollarTab('concept', this)">Concept</button>
               <button class="os-tab" onclick="osCollarTab('example', this)">Example & Payoffs</button>
@@ -17196,6 +17411,91 @@ For each $1 fall in the stock:
             </div>
           </div>
 
+          <!-- ===================== CHEAT SHEET ===================== -->
+          <div id="osr-cheat" class="os-toppanel">
+            <div class="os-card">
+              <div class="os-title">Master summary — max profit, max loss, breakeven &amp; P&amp;L</div>
+              <div class="os-body">Every formula in curriculum notation: X = strike, S₀ = entry stock price, S_T = stock at expiry, c₀ / p₀ = premiums paid (+) or received (−) at entry. "Net" = net premium of a multi-leg position. All per share, transaction costs ignored.</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">Single options</div>
+              <table class="os-table">
+                <tr><th>Strategy</th><th>Max profit</th><th>Max loss</th><th>Breakeven</th><th>View / P&amp;L</th></tr>
+                <tr><td><b>Long call</b><br><span class="os-blue">buy call</span></td><td class="os-green">Unlimited</td><td class="os-red">c₀</td><td>X + c₀</td><td>Bullish; profit rises 1-for-1 above BE, floored at −c₀.</td></tr>
+                <tr><td><b>Short call</b><br><span class="os-red">sell (naked) call</span></td><td class="os-green">c₀</td><td class="os-red">Unlimited</td><td>X + c₀</td><td>Bearish/neutral; mirror of long call (zero-sum).</td></tr>
+                <tr><td><b>Long put</b><br><span class="os-blue">buy put</span></td><td class="os-green">X − p₀</td><td class="os-red">p₀</td><td>X − p₀</td><td>Bearish; max profit at S_T=0; max profit = breakeven value.</td></tr>
+                <tr><td><b>Short put</b><br><span class="os-red">sell put</span></td><td class="os-green">p₀</td><td class="os-red">X − p₀</td><td>X − p₀</td><td>Bullish/neutral; max loss = breakeven; profile like covered call.</td></tr>
+              </table>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">Stock + option overlays (single-stock hedges)</div>
+              <table class="os-table">
+                <tr><th>Strategy</th><th>Structure</th><th>Max profit</th><th>Max loss</th><th>Breakeven</th></tr>
+                <tr><td><b>Covered call</b></td><td>long stock + short call</td><td class="os-green">X − S₀ + c₀</td><td class="os-red">S₀ − c₀</td><td>S₀ − c₀ <span class="os-gold">(= max loss)</span></td></tr>
+                <tr><td><b>Protective put</b></td><td>long stock + long put</td><td class="os-green">Unlimited</td><td class="os-red">S₀ − X + p₀</td><td>S₀ + p₀</td></tr>
+                <tr><td><b>Collar</b></td><td>long stock + long put (lower X_p) + short call (higher X_c); net premium</td><td class="os-green">X_c − S₀ − net</td><td class="os-red">S₀ − X_p + net</td><td>S₀ + net <span class="os-gold">(net = p₀ − c₀)</span></td></tr>
+              </table>
+              <div class="os-info"><b>Short-stock mirror (16.e):</b> short stock + long call ≙ protective put; short stock + short put ≙ covered call. Calls and puts swap when the underlying is short.</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">Spreads (same expiry, two strikes — X_L lower, X_H higher)</div>
+              <table class="os-table">
+                <tr><th>Strategy</th><th>Structure</th><th>Max profit</th><th>Max loss</th><th>Breakeven</th></tr>
+                <tr><td><b>Bull call spread</b><br><span class="os-blue">debit</span></td><td>long call X_L + short call X_H</td><td class="os-green">(X_H − X_L) − net</td><td class="os-red">net paid</td><td>X_L + net</td></tr>
+                <tr><td><b>Bear put spread</b><br><span class="os-blue">debit</span></td><td>long put X_H + short put X_L</td><td class="os-green">(X_H − X_L) − net</td><td class="os-red">net paid</td><td>X_H − net</td></tr>
+                <tr><td><b>Bull put spread</b><br><span class="os-orange">credit</span></td><td>short put X_H + long put X_L</td><td class="os-green">net received</td><td class="os-red">(X_H − X_L) − net</td><td>X_H − net</td></tr>
+                <tr><td><b>Bear call spread</b><br><span class="os-orange">credit</span></td><td>short call X_L + long call X_H</td><td class="os-green">net received</td><td class="os-red">(X_H − X_L) − net</td><td>X_L + net</td></tr>
+              </table>
+              <div class="os-tip"><b>Rules of thumb:</b> debit spread → max loss = net paid, max profit = strike-diff − net. Credit spread → max profit = net received, max loss = strike-diff − net. Call-spread BE = lower strike + net; put-spread BE = higher strike − net.</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">Volatility / combination strategies</div>
+              <table class="os-table">
+                <tr><th>Strategy</th><th>Structure</th><th>Max profit</th><th>Max loss</th><th>Breakeven(s)</th></tr>
+                <tr><td><b>Long straddle</b></td><td>long call + long put, same strike X</td><td class="os-green">Unlimited (up)<br>X − total (down)</td><td class="os-red">total premium</td><td>X + total &amp; X − total</td></tr>
+                <tr><td><b>Short straddle</b></td><td>short call + short put, same strike X</td><td class="os-green">total premium</td><td class="os-red">Unlimited (up)</td><td>X + total &amp; X − total</td></tr>
+                <tr><td><b>Long strangle</b></td><td>long OTM call X_H + long OTM put X_L</td><td class="os-green">Unlimited (up)</td><td class="os-red">total premium</td><td>X_H + total &amp; X_L − total</td></tr>
+                <tr><td><b>Collar (zero-cost)</b></td><td>long stock + protective put financed by short call</td><td class="os-green">X_c − S₀ (net≈0)</td><td class="os-red">S₀ − X_p (net≈0)</td><td>≈ S₀</td></tr>
+              </table>
+              <div class="os-info"><b>"total" = c₀ + p₀</b> (both premiums paid for the straddle/strangle). Straddle uses one shared strike; strangle uses two OTM strikes, so it's cheaper but needs a bigger move.</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">Calendar spreads &amp; risk reversal (advanced)</div>
+              <table class="os-table">
+                <tr><th>Strategy</th><th>Structure</th><th>Profits from</th><th>Key Greek</th></tr>
+                <tr><td><b>Long calendar</b></td><td>buy long-dated + sell short-dated, same strike</td><td>stable market / vol ↑</td><td>exploits theta gap (near-dated bleeds faster)</td></tr>
+                <tr><td><b>Short calendar</b></td><td>sell long-dated + buy short-dated</td><td>big move / vol ↓</td><td>reverse theta gap</td></tr>
+                <tr><td><b>Long risk reversal</b></td><td>long call + short put (same underlying)</td><td>skew anomaly correcting (put IV too high)</td><td>broadly long delta → delta-hedge</td></tr>
+                <tr><td><b>Short risk reversal</b></td><td>short call + long put</td><td>reverse skew anomaly</td><td>broadly short delta</td></tr>
+              </table>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">Greeks quick reference</div>
+              <table class="os-table">
+                <tr><th>Greek</th><th>Measures</th><th>Long call</th><th>Long put</th><th>Peaks / notes</th></tr>
+                <tr><td><b>Delta</b></td><td>Δ value per +1 underlying</td><td class="os-green">+ (0→1)</td><td class="os-red">− (−1→0)</td><td>|Δ|→1 deep ITM, →0 deep OTM</td></tr>
+                <tr><td><b>Gamma</b></td><td>Δ delta per +1 underlying</td><td class="os-green">+</td><td class="os-green">+</td><td>max ATM &amp; near expiry</td></tr>
+                <tr><td><b>Theta</b></td><td>time-value decay / day</td><td class="os-red">−</td><td class="os-red">−</td><td>|θ| max ATM, ↑ as expiry nears</td></tr>
+                <tr><td><b>Vega</b></td><td>Δ value per +1% vol</td><td class="os-green">+</td><td class="os-green">+</td><td>higher with more time; peaks ATM</td></tr>
+              </table>
+              <div class="os-trap"><b>Position delta:</b> Σ(contracts × 100 × delta) + shares. Long straddle = delta-neutral + vega + / theta −; short straddle = delta-neutral + vega −. The vega sign (not delta) distinguishes them.</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">Universal identities worth memorising</div>
+              <span class="os-rule"><span class="os-gold">▪ Profit line</span> = value line shifted by net premium (down if paid, up if received); same shape as value.</span>
+              <span class="os-rule"><span class="os-gold">▪ Put–call parity:</span> c₀ − p₀ = S₀ − PV(X) &nbsp;⇔&nbsp; S₀ + p₀ = c₀ + PV(X).</span>
+              <span class="os-rule"><span class="os-gold">▪ Synthetic long forward</span> = long call + short put (same X, same expiry); value = S_T − X.</span>
+              <span class="os-rule"><span class="os-gold">▪ Long & short of the same option</span> share a breakeven; max profit/loss swap (zero-sum).</span>
+            </div>
+          </div>
+
           <!-- ===================== ERRORS ===================== -->
           <div id="osr-err" class="os-toppanel">
             <div class="os-empty">No error cards yet. Submit your Module 16.6 / 16.7 practice questions and they'll be added here as reasoning cards.</div>
@@ -17212,6 +17512,65 @@ For each $1 fall in the stock:
               document.querySelectorAll('#osWidget > .os-toptabs > .os-toptab').forEach(function(b){b.classList.remove('active')});
               document.getElementById('osr-'+id).classList.add('active');
               btn.classList.add('active');
+            }
+            function osBasTab(id, btn){
+              document.querySelectorAll('#osr-basics > .os-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#osr-basics > .os-tabs > .os-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('osbas-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function osIvCalc(){
+              var t=document.getElementById('os-iv-type').value;
+              var s=parseFloat(document.getElementById('os-iv-s').value)||0;
+              var x=parseFloat(document.getElementById('os-iv-x').value)||0;
+              var iv, money, note;
+              if(t==='call'){ iv=Math.max(s-x,0); }else{ iv=Math.max(x-s,0); }
+              if(Math.abs(s-x)<1e-9){ money='ATM'; }
+              else if(iv>0){ money='ITM'; }
+              else { money='OTM'; }
+              var formula = t==='call' ? 'max(S − X, 0) = max('+s+' − '+x+', 0)' : 'max(X − S, 0) = max('+x+' − '+s+', 0)';
+              document.getElementById('os-iv-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">'+(t==='call'?'Call':'Put')+': intrinsic = '+formula+'<br>Intrinsic value = <span style="color:#D4A017;font-size:15px;">'+iv.toFixed(2)+'</span> &nbsp; Moneyness = <span style="color:#79C0FF;">'+money+'</span></div>';
+            }
+            function osPoCalc(){
+              var pos=document.getElementById('os-po-pos').value;
+              var x=parseFloat(document.getElementById('os-po-x').value)||0;
+              var pr=parseFloat(document.getElementById('os-po-prem').value)||0;
+              var st=parseFloat(document.getElementById('os-po-st').value)||0;
+              var val, profit, be, maxp, maxl;
+              if(pos==='lc'){ val=Math.max(st-x,0); profit=val-pr; be=x+pr; maxp='unlimited'; maxl=pr.toFixed(2); }
+              else if(pos==='sc'){ val=-Math.max(st-x,0); profit=val+pr; be=x+pr; maxp=pr.toFixed(2); maxl='unlimited'; }
+              else if(pos==='lp'){ val=Math.max(x-st,0); profit=val-pr; be=x-pr; maxp=(x-pr).toFixed(2); maxl=pr.toFixed(2); }
+              else { val=-Math.max(x-st,0); profit=val+pr; be=x-pr; maxp=pr.toFixed(2); maxl=(x-pr).toFixed(2); }
+              var label={lc:'Long call',sc:'Short call',lp:'Long put',sp:'Short put'}[pos];
+              document.getElementById('os-po-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">'+label+' @ X='+x+', prem '+pr.toFixed(2)+'<br>Value at S_T='+st+' = <span style="color:#79C0FF;">'+val.toFixed(2)+'</span><br>Profit = <span style="color:#D4A017;font-size:15px;">'+(profit>=0?'+':'')+profit.toFixed(2)+'</span><br>Breakeven = '+be.toFixed(2)+' &nbsp; MaxProfit = <span style="color:#3DD68C;">'+maxp+'</span> &nbsp; MaxLoss = <span style="color:#FF7B72;">'+maxl+'</span></div>';
+            }
+            function osPcpCalc(){
+              var w=document.getElementById('os-pcp-for').value;
+              var c=parseFloat(document.getElementById('os-pcp-c').value)||0;
+              var p=parseFloat(document.getElementById('os-pcp-p').value)||0;
+              var s=parseFloat(document.getElementById('os-pcp-s').value)||0;
+              var pvx=parseFloat(document.getElementById('os-pcp-pvx').value)||0;
+              // identity: c - p = s - pvx  ->  c + pvx = s + p
+              var res, lbl;
+              if(w==='c'){ res=s+p-pvx; lbl='c₀'; }
+              else if(w==='p'){ res=c+pvx-s; lbl='p₀'; }
+              else if(w==='s'){ res=c+pvx-p; lbl='S₀'; }
+              else { res=s+p-c; lbl='PV(X)'; }
+              document.getElementById('os-pcp-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">c₀ − p₀ = S₀ − PV(X)<br>'+lbl+' = <span style="color:#D4A017;font-size:15px;">'+res.toFixed(2)+'</span></div>';
+            }
+            function osCc2Calc(){
+              var s=parseFloat(document.getElementById('os-cc2-s').value)||0;
+              var x=parseFloat(document.getElementById('os-cc2-x').value)||0;
+              var c=parseFloat(document.getElementById('os-cc2-c').value)||0;
+              var mp=x-s+c; var be=s-c; var worse=x+c;
+              document.getElementById('os-cc2-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">Max profit = X − S₀ + c₀ = '+x+' − '+s+' + '+c+' = <span style="color:#3DD68C;font-size:15px;">'+mp.toFixed(2)+'</span><br>Breakeven = max-loss basis = S₀ − c₀ = <span style="color:#D4A017;">'+be.toFixed(2)+'</span><br>Capped (worse than holding) if S_T &gt; X + c₀ = '+worse.toFixed(2)+'</div>';
+            }
+            function osPp2Calc(){
+              var s=parseFloat(document.getElementById('os-pp2-s').value)||0;
+              var x=parseFloat(document.getElementById('os-pp2-x').value)||0;
+              var p=parseFloat(document.getElementById('os-pp2-p').value)||0;
+              var ml=s-x+p; var be=s+p;
+              document.getElementById('os-pp2-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">Max loss = S₀ − X + p₀ = '+s+' − '+x+' + '+p+' = <span style="color:#FF7B72;font-size:15px;">'+ml.toFixed(2)+'</span><br>Breakeven = S₀ + p₀ = <span style="color:#D4A017;">'+be.toFixed(2)+'</span><br>Max profit = <span style="color:#3DD68C;">unlimited</span></div>';
             }
             function osCollarTab(id, btn){
               document.querySelectorAll('#osr-collar > .os-panel').forEach(function(p){p.classList.remove('active')});
@@ -17300,7 +17659,7 @@ For each $1 fall in the stock:
               var out=c+p, beUp=k+out, beDn=k-out;
               document.getElementById('os-st-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">Total outlay = '+c.toFixed(2)+' + '+p.toFixed(2)+' = <span style="color:#FF7B72;">$'+out.toFixed(2)+'</span> (max loss)<br>Upside BE = '+k.toFixed(2)+' + '+out.toFixed(2)+' = <span style="color:#3DD68C;">$'+beUp.toFixed(2)+'</span><br>Downside BE = '+k.toFixed(2)+' − '+out.toFixed(2)+' = <span style="color:#79C0FF;">$'+beDn.toFixed(2)+'</span></div>';
             }
-            function osInit(){ setTimeout(osCcCalc,30); setTimeout(osStCalc,30); setTimeout(osSpCalc,30); setTimeout(osPdCalc,30); setTimeout(osVolCalc,30); setTimeout(osRrCalc,30); }
+            function osInit(){ setTimeout(osIvCalc,30); setTimeout(osPoCalc,30); setTimeout(osPcpCalc,30); setTimeout(osCc2Calc,30); setTimeout(osPp2Calc,30); setTimeout(osCcCalc,30); setTimeout(osStCalc,30); setTimeout(osSpCalc,30); setTimeout(osPdCalc,30); setTimeout(osVolCalc,30); setTimeout(osRrCalc,30); }
           </script>
         </div>
 
