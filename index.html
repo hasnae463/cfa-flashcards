@@ -16593,7 +16593,717 @@ Range = 40% ± 7.14% = <span class="rw-green">32.86% – 47.14%</span></div>
             }
             function rwInit(){ setTimeout(rwC1,30); setTimeout(rwC2,30); setTimeout(rwC3,30); setTimeout(rwC4,30); }
           </script>
+        </div><div id="osWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #osWidget { --os-gold:#D4A017; --os-green:#3DD68C; --os-red:#FF7B72; --os-orange:#F0A04B; --os-blue:#79C0FF; --os-purple:#BC8CFF; }
+            #osWidget .os-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #osWidget .os-toptab { background:var(--surface2); border:1px solid var(--os-gold); color:var(--os-gold); padding:9px 18px; border-radius:7px; font-family:var(--serif); font-size:14px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #osWidget .os-toptab.active { background:var(--os-gold); color:#0D1117; }
+            #osWidget .os-toppanel { display:none; }
+            #osWidget .os-toppanel.active { display:block; }
+            #osWidget .os-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+            #osWidget .os-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #osWidget .os-tab.active { background:rgba(212,160,23,.15); border-color:var(--os-gold); color:var(--os-gold); }
+            #osWidget .os-panel { display:none; }
+            #osWidget .os-panel.active { display:block; }
+            #osWidget .os-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:14px; }
+            #osWidget .os-title { font-family:var(--serif); font-size:16px; color:var(--os-gold); font-weight:600; margin-bottom:10px; }
+            #osWidget .os-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:8px; }
+            #osWidget .os-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #osWidget .os-rule { display:block; padding:6px 0; border-bottom:1px solid var(--border); font-size:12.5px; line-height:1.5; color:#C9D1D9; }
+            #osWidget .os-rule:last-child { border-bottom:none; }
+            #osWidget .os-tip { background:rgba(46,160,67,.08); border-left:3px solid var(--os-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #osWidget .os-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--os-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #osWidget .os-info { background:rgba(121,192,255,.08); border-left:3px solid var(--os-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #osWidget .os-green { color:var(--os-green); }
+            #osWidget .os-red { color:var(--os-red); }
+            #osWidget .os-orange { color:var(--os-orange); }
+            #osWidget .os-blue { color:var(--os-blue); }
+            #osWidget .os-gold { color:var(--os-gold); }
+            #osWidget .os-purple { color:var(--os-purple); }
+            #osWidget .os-table { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #osWidget .os-table th { background:#0B0F14; color:var(--os-gold); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #osWidget .os-table td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+            #osWidget .os-hd-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+            #osWidget .os-hd-label { flex:1; font-family:var(--mono); font-size:11px; color:var(--muted); }
+            #osWidget .os-hd-input { background:var(--surface); color:#C9D1D9; border:1px solid var(--border); padding:5px 8px; border-radius:3px; font-family:monospace; width:90px; text-align:right; }
+            #osWidget .os-hd-result { background:#0B0F14; border-left:3px solid var(--os-gold); border-radius:4px; padding:14px 16px; margin-top:14px; }
+            #osWidget .os-empty { color:var(--muted); font-size:12.5px; font-style:italic; padding:20px; text-align:center; }
+            #osWidget .os-payoff { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+            #osWidget .os-payoff-box { flex:1; min-width:130px; background:#0B0F14; border:1px solid var(--border); border-radius:6px; padding:11px 13px; }
+            #osWidget .os-payoff-box .h { font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:var(--os-gold); margin-bottom:6px; }
+            #osWidget .os-payoff-box .v { font-size:15px; color:#C9D1D9; font-family:var(--mono); }
+          </style>
+
+          <div class="os-toptabs">
+            <button class="os-toptab active" onclick="osTop('collar', this)">Collar (16.6)</button>
+            <button class="os-toptab" onclick="osTop('straddle', this)">Straddle (16.7)</button>
+            <button class="os-toptab" onclick="osTop('spreads', this)">Spreads (16.8)</button>
+            <button class="os-toptab" onclick="osTop('greeks', this)">Greeks (16.9)</button>
+            <button class="os-toptab" onclick="osTop('grk2', this)">Greeks II &amp; Vol (16.10/16.11)</button>
+            <button class="os-toptab" onclick="osTop('err', this)">Errors</button>
+            <button class="os-toptab" onclick="osTop('mas', this)">Mastery</button>
+          </div>
+
+          <!-- ===================== COLLAR (16.6) ===================== -->
+          <div id="osr-collar" class="os-toppanel active">
+            <div class="os-tabs">
+              <button class="os-tab active" onclick="osCollarTab('concept', this)">Concept</button>
+              <button class="os-tab" onclick="osCollarTab('example', this)">Example & Payoffs</button>
+              <button class="os-tab" onclick="osCollarTab('calc', this)">Calculator</button>
+            </div>
+
+            <div id="oscollar-concept" class="os-panel active">
+              <div class="os-card">
+                <div class="os-title">The Collar — protective put + covered call</div>
+                <div class="os-body">A collar is best thought of as a <span class="os-gold">combination of a protective put and a covered call</span>, held on an existing long position in the underlying. Also known as a <i>fence</i> or a <i>hedge wrapper</i>.</div>
+                <span class="os-rule"><span class="os-green">▪ Long the underlying</span> + <span class="os-blue">buy a put (usually OTM)</span> → hedges the stock's downside.</span>
+                <span class="os-rule"><span class="os-orange">▪ Sell a call (usually OTM)</span> → sells off the upside and <span class="os-gold">subsidizes the cost of the put.</span></span>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Zero-cost collar</div>
+                <div class="os-body">Usually the <span class="os-gold">put strike is set first</span>, then an appropriate call strike is chosen so the call and put have the <span class="os-gold">same premium.</span></div>
+                <div class="os-tip">If the options are <span class="os-green">OTC</span> (rather than exchange-traded), matching premiums is easy → <span class="os-gold">no net inflow or outflow at initiation</span> → a <b>zero-cost collar</b>.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Profile (LOS 16.f)</div>
+                <span class="os-rule"><span class="os-gold">Objective:</span> hedge an existing long position cheaply by giving up upside.</span>
+                <span class="os-rule"><span class="os-gold">Structure:</span> long stock + long put (OTM) + short call (OTM).</span>
+                <span class="os-rule"><span class="os-green">Max profit:</span> rise from initial price up to the <b>call strike.</b></span>
+                <span class="os-rule"><span class="os-red">Max loss:</span> fall from initial price down to the <b>put strike.</b></span>
+                <span class="os-rule"><span class="os-blue">Breakeven:</span> the initial stock price (for a zero-cost collar — no net premium).</span>
+                <div class="os-info">The stock value is <span class="os-gold">hedged beyond the strikes</span> — value capped above the call strike, floored at the put strike.</div>
+              </div>
+            </div>
+
+            <div id="oscollar-example" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">EXAMPLE — XYZ zero-cost collar (20 March, price = $52.14)</div>
+                <div class="os-body">Buy a June 50 put (premium $4.88) and sell a June 55.87 call (premium $4.88). Same premium → zero net cost.</div>
+                <div class="os-payoff">
+                  <div class="os-payoff-box"><div class="h">Max profit</div><div class="v os-green">$3.73</div></div>
+                  <div class="os-payoff-box"><div class="h">Max loss</div><div class="v os-red">$2.14</div></div>
+                  <div class="os-payoff-box"><div class="h">Breakeven</div><div class="v os-blue">$52.14</div></div>
+                </div>
+                <div class="os-fl">Max profit = call strike − initial price = $55.87 − $52.14 = <span class="os-green">$3.73</span>
+Max loss   = initial price − put strike  = $52.14 − $50.00 = <span class="os-red">$2.14</span>
+Breakeven  = initial stock price          = <span class="os-blue">$52.14</span>  (zero net premium)</div>
+                <div class="os-info"><b>Chart note:</b> the "stock profit + option values" line is the <span class="os-gold">same as the net profit line</span> because the zero net initial premium means there's nothing to subtract.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Payoff regions</div>
+                <table class="os-table">
+                  <tr><th>Stock at expiration</th><th>Outcome</th></tr>
+                  <tr><td>Below put strike ($50)</td><td><span class="os-red">Floored</span> — put protects; loss capped at $2.14</td></tr>
+                  <tr><td>Between strikes ($50–$55.87)</td><td>Profit/loss tracks the stock; both options expire worthless</td></tr>
+                  <tr><td>Above call strike ($55.87)</td><td><span class="os-green">Capped</span> — short call caps upside; profit capped at $3.73</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="oscollar-calc" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Zero-cost collar calculator</div>
+                <div class="os-hd-row"><span class="os-hd-label">Initial stock price ($)</span><input class="os-hd-input" id="os-cc-s" value="52.14" oninput="osCcCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Put strike ($)</span><input class="os-hd-input" id="os-cc-p" value="50" oninput="osCcCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Call strike ($)</span><input class="os-hd-input" id="os-cc-c" value="55.87" oninput="osCcCalc()"></div>
+                <div class="os-hd-result" id="os-cc-out"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===================== STRADDLE (16.7) ===================== -->
+          <div id="osr-straddle" class="os-toppanel">
+            <div class="os-tabs">
+              <button class="os-tab active" onclick="osStrTab('concept', this)">Concept</button>
+              <button class="os-tab" onclick="osStrTab('example', this)">Long Example & Payoffs</button>
+              <button class="os-tab" onclick="osStrTab('short', this)">Short Straddle</button>
+              <button class="os-tab" onclick="osStrTab('calc', this)">Calculator</button>
+            </div>
+
+            <div id="osstr-concept" class="os-panel active">
+              <div class="os-card">
+                <div class="os-title">The Straddle — the classic volatility play</div>
+                <div class="os-body">A <span class="os-gold">long straddle</span> involves the purchase of an equal number of <span class="os-blue">calls and puts</span> on a given underlying. All options have the <span class="os-gold">same expiry date and strike.</span></div>
+                <div class="os-info"><b>Distinction:</b> unlike covered call / protective put / collar, the straddle (and the spreads) do <span class="os-gold">not involve a position in the underlying</span> — they use options only.</div>
+                <div class="os-tip"><b>Strangle</b> (currency reading): like a straddle, but the call and put have <span class="os-gold">different strikes.</span></div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">At expiration — only one leg is ITM</div>
+                <div class="os-body">Either the call <i>or</i> the put will be ITM, but <span class="os-gold">not both.</span> With strike 52.50: call is ITM for prices <span class="os-green">above 52.50</span>, put is ITM for prices <span class="os-red">below 52.50.</span></div>
+                <div class="os-body">The value line is always <span class="os-gold">V-shaped, centered on the strike</span>, where both options expire worthless so total value = 0.</div>
+              </div>
+            </div>
+
+            <div id="osstr-example" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">EXAMPLE — Long XYZ June 52.5 straddle</div>
+                <div class="os-body">Stock at $52.14 → go long both the June 52.5 call and June 52.5 put (strike close to ATM). Call premium $6.22 + put premium $6.19, both paid at initiation.</div>
+                <div class="os-payoff">
+                  <div class="os-payoff-box"><div class="h">Total outlay = Max loss</div><div class="v os-red">$12.41</div></div>
+                  <div class="os-payoff-box"><div class="h">Upside breakeven</div><div class="v os-green">$64.91</div></div>
+                  <div class="os-payoff-box"><div class="h">Downside breakeven</div><div class="v os-blue">$40.09</div></div>
+                </div>
+                <div class="os-fl">Total outlay = $6.22 + $6.19 = <span class="os-red">$12.41</span>  (max loss, at the strike)
+Upside BE   = strike + outlay = $52.50 + $12.41 = <span class="os-green">$64.91</span>
+Downside BE = strike − outlay = $52.50 − $12.41 = <span class="os-blue">$40.09</span></div>
+                <div class="os-tip"><b>Profit profile:</b> larger profits the further the underlying moves <span class="os-gold">either way.</span> <span class="os-green">No maximum profit on the long call</span> (unlimited upside). Max profit on the long put = <span class="os-gold">strike price − cost of the options.</span></div>
+              </div>
+            </div>
+
+            <div id="osstr-short" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Short Straddle — the neutrality play</div>
+                <div class="os-body">A short straddle involves <span class="os-gold">selling</span> instead of buying — it is a <span class="os-gold">neutrality play.</span></div>
+                <span class="os-rule"><span class="os-green">▪ Makes more profit</span> the closer to the strike the underlying ends up.</span>
+                <span class="os-rule"><span class="os-red">▪ No limit on potential loss</span> (mirror of the long straddle's unlimited profit).</span>
+                <div class="os-trap"><b>Trap:</b> long straddle = volatility play (wants a big move, either way); short straddle = neutrality play (wants the underlying to stay near the strike). Loss is unlimited on the short.</div>
+              </div>
+            </div>
+
+            <div id="osstr-calc" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Long straddle calculator</div>
+                <div class="os-hd-row"><span class="os-hd-label">Strike ($)</span><input class="os-hd-input" id="os-st-k" value="52.50" oninput="osStCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Call premium ($)</span><input class="os-hd-input" id="os-st-c" value="6.22" oninput="osStCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Put premium ($)</span><input class="os-hd-input" id="os-st-p" value="6.19" oninput="osStCalc()"></div>
+                <div class="os-hd-result" id="os-st-out"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===================== SPREADS (16.8) ===================== -->
+          <div id="osr-spreads" class="os-toppanel">
+            <div class="os-tabs">
+              <button class="os-tab active" onclick="osSprTab('concept', this)">Concept</button>
+              <button class="os-tab" onclick="osSprTab('bullcall', this)">Bull Call</button>
+              <button class="os-tab" onclick="osSprTab('bearput', this)">Bear Put</button>
+              <button class="os-tab" onclick="osSprTab('credit', this)">Credit Spreads</button>
+              <button class="os-tab" onclick="osSprTab('formulas', this)">Formulas + Calc</button>
+            </div>
+
+            <div id="osspr-concept" class="os-panel active">
+              <div class="os-card">
+                <div class="os-title">Spreads — the building blocks</div>
+                <div class="os-body">Bull and bear spreads are positions with <span class="os-gold">equal numbers of long options on one strike and short options on a second strike.</span> A spread is constructed using <span class="os-gold">either calls or puts.</span></div>
+                <span class="os-rule"><span class="os-green">▪ Bull spreads</span> = <b>"Buy Low"</b> — long options on the <b>lower</b> strike, short options on the <b>higher</b> strike.</span>
+                <span class="os-rule"><span class="os-red">▪ Bear spreads</span> = short options on the <b>lower</b> strike, long options on the <b>higher</b> strike.</span>
+                <div class="os-info"><b>Key identity:</b> a bear spread is just a <span class="os-gold">short bull spread.</span></div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Debit vs Credit</div>
+                <table class="os-table">
+                  <tr><th>Type</th><th>Strategies</th><th>Net premium</th><th>Why</th></tr>
+                  <tr><td><span class="os-orange">Debit</span></td><td>Bull call · Bear put</td><td>Net outlay (pay)</td><td>The bought (more valuable) option costs more than the sold one</td></tr>
+                  <tr><td><span class="os-green">Credit</span></td><td>Bear call · Bull put</td><td>Net inflow (receive)</td><td>The more valuable option is sold</td></tr>
+                </table>
+                <div class="os-trap"><b>Professor's note:</b> by default assume a <span class="os-gold">bull spread uses calls</span> and a <span class="os-gold">bear spread uses puts</span> (debit spreads preferred over credit spreads) <i>unless the question states otherwise.</i></div>
+              </div>
+            </div>
+
+            <div id="osspr-bullcall" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Bull Call Spread (debit) — bullish, limited</div>
+                <div class="os-body">Buy XYZ June 50 call ($7.40), sell XYZ June 55 call ($5.20). Net outlay = $7.40 − $5.20 = <span class="os-orange">$2.20</span>.</div>
+                <div class="os-payoff">
+                  <div class="os-payoff-box"><div class="h">Max loss</div><div class="v os-red">$2.20</div></div>
+                  <div class="os-payoff-box"><div class="h">Breakeven</div><div class="v os-blue">$52.20</div></div>
+                  <div class="os-payoff-box"><div class="h">Max profit</div><div class="v os-green">$2.80</div></div>
+                </div>
+                <div class="os-fl">At 55+: value = diff between strikes = $5 (max value; further upside hedged by short call)
+Max loss   = net premium paid                = <span class="os-red">$2.20</span>  (value = 0, below lower strike)
+Breakeven  = lower strike + net premium paid = $50 + $2.20 = <span class="os-blue">$52.20</span>
+Max profit = diff strikes − net premium paid = $5 − $2.20 = <span class="os-green">$2.80</span></div>
+                <div class="os-tip">Below 50 → both OTM, value = 0. Between strikes → only long call ITM, value = stock − lower strike. Similar to a <span class="os-gold">covered call</span>, but with a long call taking the place of the stock.</div>
+              </div>
+            </div>
+
+            <div id="osspr-bearput" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Bear Put Spread (debit) — bearish, limited</div>
+                <div class="os-body">Sell a lower-strike put, buy a higher-strike put. Buy XYZ May 55 put ($6.61), sell XYZ May 50 put ($3.87). Net outlay = $6.61 − $3.87 = <span class="os-orange">$2.74</span>.</div>
+                <div class="os-payoff">
+                  <div class="os-payoff-box"><div class="h">Max loss</div><div class="v os-red">$2.74</div></div>
+                  <div class="os-payoff-box"><div class="h">Breakeven</div><div class="v os-blue">$52.26</div></div>
+                  <div class="os-payoff-box"><div class="h">Max profit</div><div class="v os-green">$2.26</div></div>
+                </div>
+                <div class="os-fl">Max loss   = net premium paid                 = <span class="os-red">$2.74</span>
+Breakeven  = higher strike − net premium paid = $55 − $2.74 = <span class="os-blue">$52.26</span>
+Max profit = diff strikes − net premium paid  = $5 − $2.74 = <span class="os-green">$2.26</span></div>
+                <div class="os-tip">Both OTM above the higher strike → value 0. Between strikes, value reflects the moneyness of the long 55 put. At the lower strike (50), value is maxed and hedged for any lower price. Exposure is <span class="os-gold">bearish but limited</span> vs just a long put at 55.</div>
+              </div>
+            </div>
+
+            <div id="osspr-credit" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Bear Call Spread (credit) — using calls for a bear position</div>
+                <div class="os-body">Short XYZ June 50 call ($7.40), long XYZ June 55 call ($5.20). Net initial <span class="os-green">inflow</span> = $7.40 − $5.20 = $2.20.</div>
+                <div class="os-fl">Max profit = net premium received                = <span class="os-green">$2.20</span>  (at 50 and below)
+At 55+: net intrinsic value = −$5
+Max loss   = diff strikes − net premium received = $5 − $2.20 = <span class="os-red">$2.80</span>
+Breakeven  = lower strike + net premium received = $50 + $2.20 = <span class="os-blue">$52.20</span></div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Bull Put Spread (credit) — using puts for a bull position</div>
+                <div class="os-body">Reverse of the bear put spread: short XYZ May 55 put ($6.61), long XYZ May 50 put ($3.87). Net <span class="os-green">inflow</span>.</div>
+                <div class="os-fl">Max profit = net premium received
+Breakeven  = higher strike − net premium received
+Max loss   = diff strikes − net premium received</div>
+                <div class="os-trap"><b>Beware credit spreads with American-style options:</b> the short option may go ITM while the long option is still OTM → the counterparty might <span class="os-red">exercise early</span>, disrupting the strategy.</div>
+              </div>
+            </div>
+
+            <div id="osspr-formulas" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Generalized at-expiration formulas</div>
+                <div class="os-body" style="font-size:12px;"><i>"Net premium" = absolute value of the difference between the premiums.</i></div>
+                <div class="os-title" style="font-size:13px;">Debit spreads (bull call &amp; bear put)</div>
+                <span class="os-rule">Max loss = <span class="os-gold">net premium paid</span></span>
+                <span class="os-rule">Max profit = <span class="os-gold">difference between strikes − net premium paid</span></span>
+                <div class="os-title" style="font-size:13px;">Credit spreads (bear call &amp; bull put)</div>
+                <span class="os-rule">Max profit = <span class="os-gold">net premium received</span></span>
+                <span class="os-rule">Max loss = <span class="os-gold">difference between strikes − net premium received</span></span>
+                <div class="os-title" style="font-size:13px;">Breakeven (by option type)</div>
+                <span class="os-rule"><span class="os-blue">Call spreads:</span> breakeven = <b>lower strike + net premium</b></span>
+                <span class="os-rule"><span class="os-purple">Put spreads:</span> breakeven = <b>higher strike − net premium</b></span>
+              </div>
+
+              <div class="os-card">
+                <div class="os-title">Spread calculator</div>
+                <div class="os-hd-row"><span class="os-hd-label">Spread type</span>
+                  <select class="os-hd-input" id="os-sp-type" style="width:150px;" onchange="osSpCalc()">
+                    <option value="bullcall">Bull call (debit, call)</option>
+                    <option value="bearput">Bear put (debit, put)</option>
+                    <option value="bearcall">Bear call (credit, call)</option>
+                    <option value="bullput">Bull put (credit, put)</option>
+                  </select>
+                </div>
+                <div class="os-hd-row"><span class="os-hd-label">Lower strike ($)</span><input class="os-hd-input" id="os-sp-lo" value="50" oninput="osSpCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Higher strike ($)</span><input class="os-hd-input" id="os-sp-hi" value="55" oninput="osSpCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Premium paid for long leg ($)</span><input class="os-hd-input" id="os-sp-pl" value="7.40" oninput="osSpCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Premium received for short leg ($)</span><input class="os-hd-input" id="os-sp-ps" value="5.20" oninput="osSpCalc()"></div>
+                <div class="os-hd-result" id="os-sp-out"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===================== GREEKS (16.9) ===================== -->
+          <div id="osr-greeks" class="os-toppanel">
+            <div class="os-tabs">
+              <button class="os-tab active" onclick="osGrkTab('overview', this)">Greeks Overview</button>
+              <button class="os-tab" onclick="osGrkTab('delta', this)">Delta</button>
+              <button class="os-tab" onclick="osGrkTab('gamma', this)">Gamma</button>
+              <button class="os-tab" onclick="osGrkTab('posdelta', this)">Position Delta (16.d)</button>
+              <button class="os-tab" onclick="osGrkTab('preexp', this)">CC/PP Pre-Expiry</button>
+            </div>
+
+            <div id="osgrk-overview" class="os-panel active">
+              <div class="os-card">
+                <div class="os-title">The Greeks — each is a ratio of absolute changes</div>
+                <div class="os-body">So far we considered values/profits <i>at expiration</i> (simple one-for-one with intrinsic value). During their lives, options respond to changes in the underlying (and other factors) in a more complex way. The Greeks describe that.</div>
+                <div class="os-info"><b>You won't be asked to calculate the Greeks</b> — if needed they'd be provided. What matters is the meaning and significance of each.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">The four Greeks</div>
+                <table class="os-table">
+                  <tr><th>Greek</th><th>Definition</th><th>Sign (long call)</th><th>Sign (long put)</th></tr>
+                  <tr><td><span class="os-gold">Delta (Δ)</span></td><td>Δ option price per +1 change in stock price</td><td class="os-green">positive</td><td class="os-red">negative</td></tr>
+                  <tr><td><span class="os-gold">Gamma (Γ)</span></td><td>Δ option delta per +1 change in stock price</td><td class="os-green">positive</td><td class="os-green">positive</td></tr>
+                  <tr><td><span class="os-gold">Theta (θ)</span></td><td>daily change in option price (effect of time passing)</td><td class="os-red">negative</td><td class="os-red">negative</td></tr>
+                  <tr><td><span class="os-gold">Vega (ν)</span></td><td>Δ option price per +1% change in volatility</td><td class="os-green">positive</td><td class="os-green">positive</td></tr>
+                </table>
+                <div class="os-tip"><b>Memory anchor:</b> long options are <span class="os-green">long gamma and long vega</span> (both positive), but <span class="os-red">short theta</span> (time decay hurts). Delta is the only one whose sign flips between calls (+) and puts (−).</div>
+              </div>
+            </div>
+
+            <div id="osgrk-delta" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Delta — slope of the value line</div>
+                <div class="os-body">Delta measures the change in option price for a +1 change in the underlying (all else constant — the change must be <span class="os-gold">instantaneous</span>).</div>
+                <div class="os-body">XYZ stock $52.14. MAY 55 call delta = <span class="os-gold">0.47</span>. If stock rises $1 to $53.14, the call rises ~$0.47: $4.02 + $0.47 = <span class="os-blue">$4.49</span> (predicted).</div>
+                <div class="os-trap"><b>Why the pricing model gives $4.51, not $4.49:</b> the option price line is <span class="os-gold">curved</span> (except at expiration), with curvature measured by <span class="os-gold">gamma</span> — so delta itself varies with the underlying. Delta is only accurate for infinitesimal moves.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Time value</div>
+                <div class="os-body">The vertical distance between the (total) value line and the intrinsic value line = <span class="os-gold">time value</span>. It is greatest around <span class="os-gold">ATM</span> and diminishes the more an option is ITM or OTM (time value reflects uncertainty about whether the option expires ITM/OTM — deeply ITM/OTM = less uncertainty).</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Delta sign &amp; magnitude rules</div>
+                <span class="os-rule"><span class="os-green">▪ Long calls:</span> positive delta. <span class="os-red">▪ Long puts:</span> negative delta (line slopes downward).</span>
+                <div class="os-body" style="margin-top:8px;">Simple rule (ignoring the sign), all else equal:</div>
+                <span class="os-rule">▪ The <span class="os-gold">more ITM</span> an option → the <span class="os-gold">higher</span> its absolute delta (closer to 1).</span>
+                <span class="os-rule">▪ The <span class="os-gold">more OTM</span> an option → the <span class="os-gold">lower</span> its absolute delta (closer to 0).</span>
+                <div class="os-info"><b>Delta ranges:</b> Long call 0→+1 · Short call 0→−1 · Long put 0→−1 · Short put 0→+1.</div>
+              </div>
+            </div>
+
+            <div id="osgrk-gamma" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Gamma — curvature of the value line (slope of delta)</div>
+                <div class="os-body">Gamma = change in delta per +1 change in the underlying. It's the slope of the line representing delta, and changes with the underlying too.</div>
+                <div class="os-body">MAY 55 call gamma = <span class="os-gold">0.031</span>. If the share price rises $1, the call's delta rises 0.031: 0.470 + 0.031 = <span class="os-blue">0.501</span>.</div>
+                <div class="os-tip"><b>Gamma adjustment improves the delta estimate:</b> if delta is 0.470 at $52.14 and 0.501 at $53.14, the average delta = (0.470 + 0.501)/2 = <span class="os-gold">0.486</span>. Predicted call value $1 up = $4.02 + $0.486 = <span class="os-green">$4.506</span> — much closer to the model's $4.51 than using initial delta alone.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">When is gamma highest?</div>
+                <div class="os-body">Gamma tends to be higher the closer an option is to <span class="os-gold">ATM</span>, and is at its <span class="os-gold">greatest for ATM options close to expiration.</span></div>
+                <div class="os-trap"><b>Why:</b> with little time left, the option premium line is crammed into a narrow range either side of the strike (low time value), so delta swings sharply from ~0 to ~1 across that range → gamma is highest there. ATM + near expiry = max gamma.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Gamma table — XYZ at $52.14 (20 March)</div>
+                <table class="os-table">
+                  <tr><th>Strike</th><th>Call γ (APR/MAY/JUN)</th><th>Put γ (APR/MAY/JUN)</th></tr>
+                  <tr><td>50</td><td>0.041 / 0.030 / 0.024</td><td>0.041 / 0.030 / 0.024</td></tr>
+                  <tr><td>52.5</td><td>0.044 / 0.031 / 0.025</td><td>0.044 / 0.031 / 0.025</td></tr>
+                  <tr><td>55</td><td>0.043 / 0.031 / 0.026</td><td>0.043 / 0.031 / 0.026</td></tr>
+                </table>
+                <div class="os-info">Note gamma is <span class="os-gold">higher for the nearer expiry (APR &gt; MAY &gt; JUN)</span> and peaks around the ATM strike (52.5). Call gamma = put gamma at the same strike/expiry.</div>
+              </div>
+            </div>
+
+            <div id="osgrk-posdelta" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">LOS 16.d — Position (portfolio) delta</div>
+                <div class="os-body">The overall delta for a combination of options and positions in the underlying = <span class="os-gold">sum of the individual deltas</span> (being careful with signs).</div>
+                <span class="os-rule">▪ Long position in 1 unit of the underlying: delta = <span class="os-green">+1</span>.</span>
+                <span class="os-rule">▪ Short position in 1 unit of the underlying: delta = <span class="os-red">−1</span>.</span>
+                <span class="os-rule">▪ Futures/forwards on a no-yield underlying are proxies → delta <span class="os-green">+1</span> (long) / <span class="os-red">−1</span> (short).</span>
+                <div class="os-info"><b>Contract multiplier:</b> a traded option contract is usually a right over <span class="os-gold">100 shares.</span> A long XYZ call with delta +0.65 → position delta = 100 × +0.65 = <span class="os-gold">+65</span>.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Worked examples</div>
+                <div class="os-fl">100 shares of XYZ → delta = 100 × +1 = +100  (stock +$1 → value +$100)
+
+1,000 shares + 10 long put contracts (put delta −0.6):
+  = (1,000 × +1) + (10 × 100 × −0.6)
+  = 1,000 − 600 = <span class="os-gold">+400</span>
+  → stock falls $1: shares lose $1,000, but net position only falls $400</div>
+                <div class="os-tip"><b>Full forward hedge:</b> long stock + short forward on the same number of shares → delta = shares × (+1 + −1) = <span class="os-green">0</span> → completely hedged against price moves.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Position delta calculator</div>
+                <div class="os-hd-row"><span class="os-hd-label">Shares held (long +, short −)</span><input class="os-hd-input" id="os-pd-sh" value="1000" oninput="osPdCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Option contracts (long +, short −)</span><input class="os-hd-input" id="os-pd-nc" value="10" oninput="osPdCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Shares per contract</span><input class="os-hd-input" id="os-pd-mult" value="100" oninput="osPdCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Option delta</span><input class="os-hd-input" id="os-pd-d" value="-0.6" oninput="osPdCalc()"></div>
+                <div class="os-hd-result" id="os-pd-out"></div>
+              </div>
+            </div>
+
+            <div id="osgrk-preexp" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Protective put pre-expiry</div>
+                <div class="os-body">At expiration we thought of a protective put as retaining full stock exposure above the strike and fully hedging below it. <span class="os-gold">Before expiration</span>, it's better seen as <span class="os-gold">modifying the delta of the long stock</span> from its unhedged +1.</div>
+                <span class="os-rule">▪ Large stock <span class="os-green">rises</span> → put moves substantially OTM → position delta → <span class="os-gold">+1</span> (almost same as unhedged stock).</span>
+                <span class="os-rule">▪ Large stock <span class="os-red">falls</span> → put moves substantially ITM → position delta → <span class="os-gold">0</span> (downside protected).</span>
+                <div class="os-info">Stock + protective put has a net exposure <span class="os-gold">equivalent to a long call.</span></div>
+                <div class="os-trap"><b>Contrast — forward hedge:</b> a forward-based hedge (short forward on the same shares) gives position delta = shares × (+1 + −1) = 0 → completely hedged. The put hedges <i>asymmetrically</i> (keeps upside), the forward hedges <i>both directions.</i></div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Covered call pre-expiry</div>
+                <div class="os-body">As with the protective put, the covered call's position delta varies with the underlying:</div>
+                <span class="os-rule">▪ Call <span class="os-green">deeply OTM</span> (stock low) → position delta close to <span class="os-gold">+1</span> (you still have nearly full stock exposure).</span>
+                <span class="os-rule">▪ Call <span class="os-red">deeply ITM</span> (stock high) → position delta close to <span class="os-gold">0</span> (virtually all the stock's upside is hedged away by the short call).</span>
+                <div class="os-tip">Both covered call and protective put <span class="os-gold">mute the exposure</span> of the underlying — the bull/bear spread pre-expiry behaves similarly (highly muted vs the at-expiration profile).</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">MQ 16.9 #1 — likely deltas just after establishment (3 months out)</div>
+                <div class="os-body">A covered call (long stock + short OTM call) and a protective put (long stock + long OTM put), both newly established with time to expiry.</div>
+                <span class="os-rule"><span class="os-green">▪ Covered call:</span> long stock (+1) + short OTM call (small negative, e.g. −0.55) → net position delta around <span class="os-gold">+0.4 to +0.45</span> (positive, &lt;1).</span>
+                <span class="os-rule"><span class="os-green">▪ Protective put:</span> long stock (+1) + long OTM put (small negative) → net <span class="os-gold">positive but &lt;1</span> as well.</span>
+                <div class="os-trap"><b>Trap:</b> both deltas are <span class="os-gold">positive and between 0 and 1</span> just after establishment — neither is zero, and the protective put's delta is NOT negative (the long-stock +1 dominates the small negative put delta).</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===================== GREEKS II & VOL (16.10 / 16.11) ===================== -->
+          <div id="osr-grk2" class="os-toppanel">
+            <div class="os-tabs">
+              <button class="os-tab active" onclick="osGrk2Tab('theta', this)">Theta</button>
+              <button class="os-tab" onclick="osGrk2Tab('cal', this)">Calendar Spreads</button>
+              <button class="os-tab" onclick="osGrk2Tab('vega', this)">Vega</button>
+              <button class="os-tab" onclick="osGrk2Tab('strd', this)">Straddle Pre-Expiry</button>
+              <button class="os-tab" onclick="osGrk2Tab('skew', this)">Skew / Smile</button>
+              <button class="os-tab" onclick="osGrk2Tab('rr', this)">Risk Reversal</button>
+            </div>
+
+            <!-- ---------- THETA ---------- -->
+            <div id="osgrk2-theta" class="os-panel active">
+              <div class="os-card">
+                <div class="os-title">Theta — speed of time-value decay</div>
+                <div class="os-body">Theta measures how quickly an option loses value as time passes (all else equal). For a <b>long</b> option position theta is always <span class="os-red">negative</span>: less time to expiration means less time value.</div>
+                <table class="os-table">
+                  <tr><th colspan="3">Call Theta</th><th>Strike</th><th colspan="3">Put Theta</th></tr>
+                  <tr><th>APR</th><th>MAY</th><th>JUN</th><th>Price</th><th>APR</th><th>MAY</th><th>JUN</th></tr>
+                  <tr><td>−0.058</td><td>−0.042</td><td>−0.035</td><td>50</td><td>−0.054</td><td>−0.038</td><td>−0.031</td></tr>
+                  <tr><td>−0.061</td><td>−0.043</td><td>−0.036</td><td>52.5</td><td>−0.056</td><td>−0.039</td><td>−0.031</td></tr>
+                  <tr><td>−0.059</td><td>−0.043</td><td>−0.036</td><td>55</td><td>−0.055</td><td>−0.039</td><td>−0.031</td></tr>
+                </table>
+                <span class="os-rule"><span class="os-gold">▪ All negative:</span> long calls AND long puts both lose time value as expiry nears.</span>
+                <span class="os-rule"><span class="os-gold">▪ Shorter-dated = larger |theta|:</span> APR (nearest) thetas are more negative than JUN (furthest) — the near-dated option bleeds time value fastest. This is the engine behind calendar spreads.</span>
+                <div class="os-info"><b>ATM behaviour:</b> options close to ATM have the <b>highest |theta|</b>, and |theta| <b>increases</b> (becomes more negative) as expiration approaches → ATM options lose time value at an <span class="os-gold">increasing rate</span>. A 1-month-to-expiry ATM option loses far more time value over a month than an otherwise-identical 3-month option does over the same period.</div>
+                <div class="os-trap"><b>Contrast — deep OTM / deep ITM:</b> for options far from the money, the decline in time value <span class="os-gold">slows down</span> as maturity approaches (the curve flattens), the opposite of ATM. Don't assume "closer to expiry → faster decay" universally; it's true for ATM, false for deep OTM/ITM.</div>
+              </div>
+            </div>
+
+            <!-- ---------- CALENDAR SPREADS ---------- -->
+            <div id="osgrk2-cal" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Calendar Spreads (LOS 16.g)</div>
+                <div class="os-body"><b>Calendar spreads are the only strategy where the two options have different expirations</b> (same underlying, same strike). The motivation: exploit the difference in <b>theta</b> between a close-to-expiry and a more-distant option.</div>
+                <div class="os-info">For options near ATM, the <b>nearer-dated</b> option has a higher absolute theta (more negative) than the longer-dated one. The calendar spread monetises that gap.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title os-green">Long calendar spread</div>
+                <span class="os-rule"><span class="os-green">Structure:</span> <b>buy</b> longer-dated option + <b>sell</b> shorter-dated option (same strike & underlying).</span>
+                <span class="os-rule"><span class="os-green">Logic:</span> shorter-dated premium falls faster than longer-dated → more value gained on the short leg than lost on the long leg → net profit.</span>
+                <span class="os-rule"><span class="os-green">Conditions:</span> options near ATM (so thetas are the right way round); want <b>little movement</b> in the underlying over the near option's life (large moves undermine profit).</span>
+                <span class="os-rule"><span class="os-green">Calls or puts?</span> reflects longer-term view — <b>calls if bullish, puts if bearish</b>.</span>
+                <span class="os-rule"><span class="os-green">Benefits from:</span> a <span class="os-gold">stable market</span> or an <span class="os-gold">increase in implied volatility</span>.</span>
+              </div>
+              <div class="os-card">
+                <div class="os-title os-red">Short calendar spread</div>
+                <span class="os-rule"><span class="os-red">Structure:</span> reverse — <b>sell</b> longer-dated + <b>buy</b> shorter-dated.</span>
+                <span class="os-rule"><span class="os-red">Vulnerable when:</span> the underlying stays still so the options end up ATM as the short-dated option expires → longer-dated premium rises (a loss, since we're short it) unless implied vol also falls.</span>
+                <span class="os-rule"><span class="os-red">Benefits from:</span> a <span class="os-gold">big move</span> in the underlying or a <span class="os-gold">decrease in implied volatility</span>.</span>
+                <div class="os-tip"><b>Unifying idea:</b> in both cases the strategy sells the option expected to lose value (theta) relatively faster as time passes.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Example — Jenkins long calendar spread</div>
+                <div class="os-body">20 March, XYZ = $52.14. Long-term bullish but expects little movement next month.</div>
+                <div class="os-fl">Buy  4 XYZ June 52.5 calls @ 6.22
+Sell 4 XYZ April 52.5 calls @ 3.53
+Net premium outlay = 2.69 × 4 × 100 = <span style="color:#D4A017;">$1,076</span>
+
+At April expiry, stock still $52.14:
+  • Both calls OTM → April call expires worthless (good, we're short it)
+  • June call now worth $5.00 (from pricing model)
+  Position value = 5.00 × 400 = <span style="color:#3DD68C;">$2,000</span>  (paid $1,076 a month earlier)</div>
+                <div class="os-tip">Profit would be even higher if implied volatility rose — that drives the June call value up.</div>
+              </div>
+            </div>
+
+            <!-- ---------- VEGA ---------- -->
+            <div id="osgrk2-vega" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Vega — sensitivity to a +1% change in volatility</div>
+                <div class="os-body">Vega measures the effect of a 1% increase in implied volatility on the option's value. Vegas are <span class="os-green">always positive</span>: a more volatile underlying makes every option on it more valuable (more uncertainty about the expiry outcome → more time value).</div>
+                <table class="os-table">
+                  <tr><th colspan="3">Call Vega</th><th>Strike</th><th colspan="3">Put Vega</th></tr>
+                  <tr><th>APR</th><th>MAY</th><th>JUN</th><th>Price</th><th>APR</th><th>MAY</th><th>JUN</th></tr>
+                  <tr><td>0.057</td><td>0.081</td><td>0.098</td><td>50</td><td>0.057</td><td>0.081</td><td>0.098</td></tr>
+                  <tr><td>0.060</td><td>0.084</td><td>0.102</td><td>52.5</td><td>0.060</td><td>0.084</td><td>0.102</td></tr>
+                  <tr><td>0.059</td><td>0.084</td><td>0.103</td><td>55</td><td>0.059</td><td>0.084</td><td>0.103</td></tr>
+                </table>
+                <span class="os-rule"><span class="os-gold">▪ More time → higher vega:</span> JUN vegas &gt; MAY &gt; APR. Longer-dated options are more sensitive to vol.</span>
+                <span class="os-rule"><span class="os-gold">▪ Diminishes deep ITM / deep OTM:</span> vega peaks near ATM and falls away as the option moves far in- or out-of-the-money.</span>
+                <span class="os-rule"><span class="os-gold">▪ Call vega = put vega</span> at the same strike/expiry (put–call parity).</span>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Aside — converting volatility between periods</div>
+                <div class="os-body">To convert a volatility (standard deviation) from one period to another, multiply by the <b>square root of the ratio of the period lengths</b>.</div>
+                <div class="os-fl">σ(target) = σ(source) × √(days_target / days_source)
+
+Annual 57% → two-monthly (42 trading days, 252-day year):
+  57% × √(42 / 252) = <span style="color:#3DD68C;">23.27%</span>
+
+Monthly (21 days) → annual:
+  σ_monthly × √(252 / 21)</div>
+                <div class="os-hd-row" style="border-bottom:none;"><div class="os-hd-label" style="flex:1 1 100%;font-weight:600;color:#C9D1D9;">Volatility period converter</div></div>
+                <div class="os-hd-row"><span class="os-hd-label">Source volatility σ (%)</span><input id="os-vol-sig" class="os-hd-input" type="number" value="57" oninput="osVolCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Source period length (days)</span><input id="os-vol-src" class="os-hd-input" type="number" value="252" oninput="osVolCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Target period length (days)</span><input id="os-vol-tgt" class="os-hd-input" type="number" value="42" oninput="osVolCalc()"></div>
+                <div class="os-hd-result" id="os-vol-out"></div>
+              </div>
+            </div>
+
+            <!-- ---------- STRADDLE PRE-EXPIRY ---------- -->
+            <div id="osgrk2-strd" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Straddle value before expiration</div>
+                <div class="os-body">At expiry a long straddle has the familiar V-shape. <b>Before</b> expiry the value curve is smoother (U-shaped) but the same idea holds: value increases the further the underlying moves from the strike.</div>
+                <span class="os-rule"><span class="os-gold">▪ Delta near the strike ≈ 0</span> (the curve is flat at the bottom).</span>
+                <span class="os-rule"><span class="os-gold">▪ Delta → +1</span> as the underlying rises far above strike; <span class="os-gold">→ −1</span> as it falls far below.</span>
+                <div class="os-info"><b>Long volatility:</b> at a given underlying price, a <b>higher level of volatility lifts the whole curve</b> — the long straddle gains value even if the underlying doesn't move. This is the real reason a long straddle is called <span class="os-gold">"going long volatility."</span></div>
+              </div>
+              <div class="os-card">
+                <div class="os-title os-green">Long straddle — Greeks profile</div>
+                <span class="os-rule"><span class="os-green">Delta:</span> long call (+δ) + long put (−δ) → <b>delta-neutral</b> (≈0 near strike) — we don't much care about small moves in the underlying.</span>
+                <span class="os-rule"><span class="os-green">Vega:</span> <b>positive</b> — value rises if vol rises.</span>
+                <span class="os-rule"><span class="os-red">Theta:</span> <b>negative</b> — two long options bleed time value. Vol must rise <span class="os-gold">quickly enough</span> to offset the decay.</span>
+              </div>
+              <div class="os-card">
+                <div class="os-title os-red">Short straddle — Greeks profile</div>
+                <span class="os-rule"><span class="os-red">Delta:</span> <b>delta-neutral</b> as well.</span>
+                <span class="os-rule"><span class="os-red">Vega:</span> <b>negative</b> — a bet on <span class="os-gold">falling volatility</span>.</span>
+                <span class="os-rule"><span class="os-green">Theta:</span> positive — collects time decay.</span>
+                <div class="os-trap"><b>Twist:</b> "delta-neutral" describes BOTH long and short straddles — the distinguishing Greek is <b>vega</b> (long = +vega = long vol; short = −vega = short vol). A question that hinges on delta to tell them apart is a trap.</div>
+              </div>
+            </div>
+
+            <!-- ---------- SKEW / SMILE ---------- -->
+            <div id="osgrk2-skew" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Volatility Skew &amp; Smile (LOS 16.h)</div>
+                <div class="os-body">The XYZ option prices throughout this reading assumed a single volatility of <b>30%</b> for all strikes and expirations — a simplification. In practice, implied volatility computed from actual traded options <b>varies by strike and by expiration</b> (and differs between calls and puts). Holding expiration constant, two patterns appear:</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Smile vs Skew</div>
+                <span class="os-rule"><span class="os-blue">▪ Volatility SMILE:</span> further-from-ATM options (both sides) have <b>higher</b> implied vol → a <b>U-shaped</b> (smiling) curve when IV is plotted against strike. <span class="os-gold">Less common.</span></span>
+                <span class="os-rule"><span class="os-orange">▪ Volatility SKEW:</span> implied vol <b>increases for more OTM puts</b> and <b>decreases for more OTM calls</b>. Explanation: OTM puts are desirable as insurance against market declines, so they're bid up by higher demand (higher value ⇒ higher implied vol); demand for OTM calls is comparatively low. <span class="os-gold">More common.</span></span>
+                <div class="os-trap"><b>Memorise the skew direction:</b> OTM <b>puts</b> → IV <span class="os-red">UP</span>; OTM <b>calls</b> → IV <span class="os-green">DOWN</span>. The reversed wording ("IV up for OTM calls, down for OTM puts") is a classic distractor (it describes neither standard pattern).</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Reading sentiment from skew deviations</div>
+                <span class="os-rule"><span class="os-red">▪ Bearish signal:</span> a sharp increase in the level of the skew <b>plus</b> a surge in the absolute level of implied vol → market sentiment turning bearish.</span>
+                <span class="os-rule"><span class="os-green">▪ Bullish signal:</span> higher implied vols (vs historical) for <b>OTM calls</b> → investors bullish, demand to take on upside exposure is strong.</span>
+                <div class="os-tip">Deviations expected to correct can form the basis of trading strategies — which might use <b>risk reversals</b> (next tab).</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Two more terms</div>
+                <span class="os-rule"><span class="os-gold">▪ Term structure of volatility:</span> implied vols differ across <b>maturities</b>. <i>Contango</i> (longer-dated options having higher implied vol) is quite common.</span>
+                <span class="os-rule"><span class="os-gold">▪ Implied volatility surface:</span> a 3-D graph examining the joint influence of maturity (x-axis) and strike price (y-axis) on implied volatility (z-axis).</span>
+              </div>
+            </div>
+
+            <!-- ---------- RISK REVERSAL ---------- -->
+            <div id="osgrk2-rr" class="os-panel">
+              <div class="os-card">
+                <div class="os-title">Risk Reversal</div>
+                <div class="os-body">A <b>long (short) risk reversal</b> combines <b>long (short) calls</b> and <b>short (long) puts</b> on the same underlying. It's used to exploit a skew that has deviated anomalously from historical levels.</div>
+                <span class="os-rule"><span class="os-green">Long risk reversal:</span> if a trader believes put implied vol is relatively too high vs calls → <b>buy the OTM call</b> (seen as relatively underpriced) + <b>sell the OTM put</b> (seen as relatively overpriced), same expiration.</span>
+                <span class="os-rule"><span class="os-gold">Aim:</span> profit if the <b>anomalous IV relationship corrects</b> — long the options that should gain value, short those that should lose. NOT a directional bet on the stock.</span>
+                <div class="os-trap"><b>Problem:</b> long call + short put both create <b>long exposure to the underlying</b> → the position is "broadly long" the stock, which is problematic if you didn't want directional risk.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Example — PQR risk reversal &amp; delta hedge</div>
+                <div class="os-body">PQR = $50. Buy call (strike 60, IV 50%) + sell put (strike 40, IV 70%). The 20-point IV differential is substantially greater than seen in the past → trade the anomaly.</div>
+                <div class="os-fl">At the current price ($50) the risk reversal delta ≈ <span style="color:#79C0FF;">0.3</span> (well below 1).
+Position = 10 call contracts + 10 put contracts (each on 1,000 shares).
+
+For each $1 fall in the stock:
+  loss ≈ $1 × 0.3 × 1,000 = <span style="color:#FF7B72;">$300</span>   (the net long exposure)</div>
+                <div class="os-info"><b>To remove the unwanted long exposure → delta hedge:</b> sell <span class="os-gold">300 shares</span>. Why 300? A short position of that size produces equal-and-opposite P&amp;L to the risk reversal's stock exposure.<br><br>1,000 shares' worth of options with delta 0.3 are delta-hedged by 1,000 × 0.3 = <b>300 shares</b>. (The hedge size = the other side's notional × its delta.)</div>
+                <div class="os-trap"><b>Dynamic hedge:</b> the delta of the risk reversal does <b>not</b> stay constant — it changes as the stock price moves and as time passes. So the size of the delta hedge must be <b>adjusted periodically (rebalanced)</b>. This is typical of all delta hedges.</div>
+              </div>
+              <div class="os-card">
+                <div class="os-title">Quick delta-hedge calculator</div>
+                <div class="os-hd-row"><span class="os-hd-label">Option notional (shares)</span><input id="os-rr-notl" class="os-hd-input" type="number" value="1000" oninput="osRrCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">Net delta of position</span><input id="os-rr-delta" class="os-hd-input" type="number" value="0.3" step="0.05" oninput="osRrCalc()"></div>
+                <div class="os-hd-row"><span class="os-hd-label">$ move in underlying</span><input id="os-rr-move" class="os-hd-input" type="number" value="1" oninput="osRrCalc()"></div>
+                <div class="os-hd-result" id="os-rr-out"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===================== ERRORS ===================== -->
+          <div id="osr-err" class="os-toppanel">
+            <div class="os-empty">No error cards yet. Submit your Module 16.6 / 16.7 practice questions and they'll be added here as reasoning cards.</div>
+          </div>
+
+          <!-- ===================== MASTERY ===================== -->
+          <div id="osr-mas" class="os-toppanel">
+            <div class="os-empty">Mastery items to be populated.</div>
+          </div>
+
+          <script>
+            function osTop(id, btn){
+              document.querySelectorAll('#osWidget > .os-toppanel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#osWidget > .os-toptabs > .os-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('osr-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function osCollarTab(id, btn){
+              document.querySelectorAll('#osr-collar > .os-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#osr-collar > .os-tabs > .os-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('oscollar-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function osStrTab(id, btn){
+              document.querySelectorAll('#osr-straddle > .os-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#osr-straddle > .os-tabs > .os-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('osstr-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function osSprTab(id, btn){
+              document.querySelectorAll('#osr-spreads > .os-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#osr-spreads > .os-tabs > .os-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('osspr-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function osGrkTab(id, btn){
+              document.querySelectorAll('#osr-greeks > .os-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#osr-greeks > .os-tabs > .os-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('osgrk-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function osGrk2Tab(id, btn){
+              document.querySelectorAll('#osr-grk2 > .os-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#osr-grk2 > .os-tabs > .os-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('osgrk2-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function osVolCalc(){
+              var sig=parseFloat(document.getElementById('os-vol-sig').value)||0;
+              var src=parseFloat(document.getElementById('os-vol-src').value)||0;
+              var tgt=parseFloat(document.getElementById('os-vol-tgt').value)||0;
+              if(src<=0){document.getElementById('os-vol-out').innerHTML='<span style="color:#FF7B72;font-family:var(--mono);font-size:12px;">Source period must be &gt; 0</span>';return;}
+              var f=Math.sqrt(tgt/src);
+              var res=sig*f;
+              document.getElementById('os-vol-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">factor = √('+tgt+' / '+src+') = <span style="color:#79C0FF;">'+f.toFixed(4)+'</span><br>target σ = '+sig+'% × '+f.toFixed(4)+' = <span style="color:#D4A017;font-size:15px;">'+res.toFixed(2)+'%</span></div>';
+            }
+            function osRrCalc(){
+              var n=parseFloat(document.getElementById('os-rr-notl').value)||0;
+              var d=parseFloat(document.getElementById('os-rr-delta').value)||0;
+              var mv=parseFloat(document.getElementById('os-rr-move').value)||0;
+              var hedge=n*d;
+              var pnl=mv*d*n;
+              document.getElementById('os-rr-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">Delta hedge = '+n.toFixed(0)+' × '+d+' = <span style="color:#D4A017;font-size:15px;">'+hedge.toFixed(0)+' shares</span> (sell to neutralise long exposure)<br>P&L per $'+mv+' move = $'+mv+' × '+d+' × '+n.toFixed(0)+' = <span style="color:#F0A04B;">$'+pnl.toFixed(0)+'</span></div>';
+            }
+            function osPdCalc(){
+              var sh=parseFloat(document.getElementById('os-pd-sh').value)||0;
+              var nc=parseFloat(document.getElementById('os-pd-nc').value)||0;
+              var m=parseFloat(document.getElementById('os-pd-mult').value)||0;
+              var d=parseFloat(document.getElementById('os-pd-d').value)||0;
+              var optd=nc*m*d;
+              var tot=sh+optd;
+              document.getElementById('os-pd-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">Shares delta = '+sh.toFixed(0)+' &times; (+1) = <span style="color:#79C0FF;">'+sh.toFixed(0)+'</span><br>Options delta = '+nc.toFixed(0)+' &times; '+m.toFixed(0)+' &times; '+d+' = <span style="color:#F0A04B;">'+optd.toFixed(0)+'</span><br>Position delta = <span style="color:#D4A017;font-size:15px;">'+tot.toFixed(0)+'</span><br><span style="color:#8B949E;">→ stock +$1 ⇒ net position '+(tot>=0?'+':'')+'$'+tot.toFixed(0)+'</span></div>';
+            }
+            function osSpCalc(){
+              var t=document.getElementById('os-sp-type').value;
+              var lo=parseFloat(document.getElementById('os-sp-lo').value)||0;
+              var hi=parseFloat(document.getElementById('os-sp-hi').value)||0;
+              var pl=parseFloat(document.getElementById('os-sp-pl').value)||0;
+              var ps=parseFloat(document.getElementById('os-sp-ps').value)||0;
+              var diff=Math.abs(hi-lo);
+              var net=Math.abs(pl-ps);
+              var isCall=(t==='bullcall'||t==='bearcall');
+              var isDebit=(t==='bullcall'||t==='bearput');
+              var mp,ml,be,netlabel;
+              if(isDebit){ mp=diff-net; ml=net; netlabel='net premium paid'; }
+              else { mp=net; ml=diff-net; netlabel='net premium received'; }
+              be = isCall ? (lo+net) : (hi-net);
+              var belabel = isCall ? ('lower strike + net premium = '+lo.toFixed(2)+' + '+net.toFixed(2)) : ('higher strike − net premium = '+hi.toFixed(2)+' − '+net.toFixed(2));
+              document.getElementById('os-sp-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">Net ('+netlabel+') = <span style="color:#D4A017;">$'+net.toFixed(2)+'</span> · diff strikes = $'+diff.toFixed(2)+'<br>Max profit = <span style="color:#3DD68C;">$'+mp.toFixed(2)+'</span><br>Max loss = <span style="color:#FF7B72;">$'+ml.toFixed(2)+'</span><br>Breakeven = '+belabel+' = <span style="color:#79C0FF;">$'+be.toFixed(2)+'</span></div>';
+            }
+            function osCcCalc(){
+              var s=parseFloat(document.getElementById('os-cc-s').value)||0;
+              var p=parseFloat(document.getElementById('os-cc-p').value)||0;
+              var c=parseFloat(document.getElementById('os-cc-c').value)||0;
+              var mp=c-s, ml=s-p;
+              document.getElementById('os-cc-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">Max profit = '+c.toFixed(2)+' − '+s.toFixed(2)+' = <span style="color:#3DD68C;">$'+mp.toFixed(2)+'</span><br>Max loss = '+s.toFixed(2)+' − '+p.toFixed(2)+' = <span style="color:#FF7B72;">$'+ml.toFixed(2)+'</span><br>Breakeven = <span style="color:#79C0FF;">$'+s.toFixed(2)+'</span> (zero-cost)</div>';
+            }
+            function osStCalc(){
+              var k=parseFloat(document.getElementById('os-st-k').value)||0;
+              var c=parseFloat(document.getElementById('os-st-c').value)||0;
+              var p=parseFloat(document.getElementById('os-st-p').value)||0;
+              var out=c+p, beUp=k+out, beDn=k-out;
+              document.getElementById('os-st-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">Total outlay = '+c.toFixed(2)+' + '+p.toFixed(2)+' = <span style="color:#FF7B72;">$'+out.toFixed(2)+'</span> (max loss)<br>Upside BE = '+k.toFixed(2)+' + '+out.toFixed(2)+' = <span style="color:#3DD68C;">$'+beUp.toFixed(2)+'</span><br>Downside BE = '+k.toFixed(2)+' − '+out.toFixed(2)+' = <span style="color:#79C0FF;">$'+beDn.toFixed(2)+'</span></div>';
+            }
+            function osInit(){ setTimeout(osCcCalc,30); setTimeout(osStCalc,30); setTimeout(osSpCalc,30); setTimeout(osPdCalc,30); setTimeout(osVolCalc,30); setTimeout(osRrCalc,30); }
+          </script>
         </div>
+
 
 
 
@@ -17821,7 +18531,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -17841,6 +18551,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'oaWidget' && typeof oaInit === 'function') setTimeout(oaInit, 50);
     if (widgetId === 'paWidget' && typeof paInit === 'function') setTimeout(paInit, 50);
     if (widgetId === 'rwWidget' && typeof rwInit === 'function') setTimeout(rwInit, 50);
+    if (widgetId === 'osWidget' && typeof osInit === 'function') setTimeout(osInit, 50);
   }
 }
 
@@ -17863,11 +18574,12 @@ function openNote(key, topic, subtopic) {
     'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
     'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
     'Asset Allocation||Principles of Asset Allocation': 'paWidget',
-    'Asset Allocation||Asset Allocation with Real-World Constraints': 'rwWidget'
+    'Asset Allocation||Asset Allocation with Real-World Constraints': 'rwWidget',
+    'Derivatives||Options Strategies': 'osWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
