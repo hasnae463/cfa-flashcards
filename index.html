@@ -16627,6 +16627,8 @@ Range = 40% ± 7.14% = <span class="rw-green">32.86% – 47.14%</span></div>
             #osWidget .os-hd-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
             #osWidget .os-hd-label { flex:1; font-family:var(--mono); font-size:11px; color:var(--muted); }
             #osWidget .os-hd-input { background:var(--surface); color:#C9D1D9; border:1px solid var(--border); padding:5px 8px; border-radius:3px; font-family:monospace; width:90px; text-align:right; }
+            #osWidget .os-dv-out { background:var(--surface); border:1px solid var(--border); border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:12px; line-height:1.75; color:#C9D1D9; white-space:pre-wrap; }
+            #osWidget .os-dv-h { color:#D4A017; font-weight:600; font-size:12.5px; }
             #osWidget .os-hd-result { background:#0B0F14; border-left:3px solid var(--os-gold); border-radius:4px; padding:14px 16px; margin-top:14px; }
             #osWidget .os-empty { color:var(--muted); font-size:12.5px; font-style:italic; padding:20px; text-align:center; }
             #osWidget .os-payoff { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
@@ -17441,6 +17443,99 @@ For each $1 fall in the stock:
             </div>
 
             <div class="os-card">
+              <div class="os-title">★ Two-leg decomposition — why stock+option formulas look the way they do</div>
+              <div class="os-body">The #1 trap on stock+option strategies: forgetting the <b>stock leg</b>. Profit always = (stock leg) + (option leg). The stock you bought at S₀ contributes its own gain/loss <i>separately</i> from the option. Always split them before reaching for a formula.</div>
+              <div class="os-info"><b>Master identity:</b> at any expiry price, total profit = <span class="os-gold">(S_T − S₀)</span> from the stock <b>+</b> <span class="os-gold">option payoff ± premium</span>. The maxima below are just this, evaluated at the best/worst S_T.</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title os-green">Covered call — long stock + short call (strike X, receive c₀)</div>
+              <table class="os-table">
+                <tr><th>Leg</th><th>Contribution at expiry</th></tr>
+                <tr><td>Stock leg</td><td>S_T − S₀</td></tr>
+                <tr><td>Short call leg</td><td>+c₀ − max(S_T − X, 0)</td></tr>
+              </table>
+              <div class="os-fl">BEST CASE: stock ends at (or above) X — say S₀=52.14, X=55, c₀=2.52, S_T=60
+  Stock leg : 60 − 52.14 = <span style="color:#3DD68C;">+7.86</span>
+  Call leg  : +2.52 − (60 − 55) = 2.52 − 5 = <span style="color:#FF7B72;">−2.48</span>
+  Total     : 7.86 − 2.48 = <span style="color:#D4A017;font-size:15px;">5.38</span>
+
+Above X the two legs cancel $1-for-$1 → profit is CAPPED.
+At the cap, S_T = X, so plug in:
+  (X − S₀) + c₀  =  (55 − 52.14) + 2.52  =  2.86 + 2.52  =  5.38</div>
+              <div class="os-trap"><b>Why NOT just c₀?</b> c₀ alone ignores the <span class="os-gold">stock gain from S₀ up to the strike</span> (the 2.86). You bought at 52.14 and effectively sold at 55 — that appreciation is yours, PLUS the premium. c₀ would be the answer only for a <b>naked</b> call (no stock leg).</div>
+              <div class="os-tip"><b>Max profit = (X − S₀) + c₀</b> → stock gain up to strike + premium kept.<br><b>Max loss / breakeven = S₀ − c₀</b> → stock falls to 0; effective cost was S₀ minus the cushion c₀.</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title os-blue">Protective put — long stock + long put (strike X, pay p₀)</div>
+              <table class="os-table">
+                <tr><th>Leg</th><th>Contribution at expiry</th></tr>
+                <tr><td>Stock leg</td><td>S_T − S₀</td></tr>
+                <tr><td>Long put leg</td><td>max(X − S_T, 0) − p₀</td></tr>
+              </table>
+              <div class="os-fl">WORST CASE: stock ends at (or below) X — say S₀=52.14, X=50, p₀=3.87, S_T=40
+  Stock leg : 40 − 52.14 = <span style="color:#FF7B72;">−12.14</span>
+  Put leg   : (50 − 40) − 3.87 = 10 − 3.87 = <span style="color:#3DD68C;">+6.13</span>
+  Total     : −12.14 + 6.13 = <span style="color:#FF7B72;font-size:15px;">−6.01</span>
+
+Below X the put gain offsets further stock losses → loss is FLOORED.
+At the floor, S_T = X, so plug in:
+  (S_T − S₀) + (X − S_T paid premium) = (X − S₀) + p₀ as a loss
+  S₀ − X + p₀  =  52.14 − 50 + 3.87  =  2.14 + 3.87  =  6.01</div>
+              <div class="os-tip"><b>Max loss = S₀ − X + p₀</b> → stock fall down to strike (S₀ − X) + premium spent on insurance.<br><b>Breakeven = S₀ + p₀</b> → stock must rise to cover the put's cost.<br><b>Max profit = unlimited</b> → you still own the stock; the put just expires.</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title os-orange">Collar — long stock + long put (X_p) + short call (X_c), net = p₀ − c₀</div>
+              <table class="os-table">
+                <tr><th>Leg</th><th>Contribution at expiry</th></tr>
+                <tr><td>Stock leg</td><td>S_T − S₀</td></tr>
+                <tr><td>Long put leg (X_p)</td><td>max(X_p − S_T, 0) − p₀</td></tr>
+                <tr><td>Short call leg (X_c)</td><td>+c₀ − max(S_T − X_c, 0)</td></tr>
+              </table>
+              <div class="os-fl">The collar is just covered call + protective put on the same stock.
+  • Below X_p: put protects → floored.   • Above X_c: call caps → ceilinged.
+  • Net premium = p₀ − c₀ (a cost if put dearer than call).
+
+CEILING (S_T = X_c):  (X_c − S₀) − net
+FLOOR    (S_T = X_p):  (S₀ − X_p) + net  (as a loss)
+BREAKEVEN:  S₀ + net</div>
+              <div class="os-trap"><b>Sign of "net":</b> net = p₀ − c₀. If the put costs more than the call you collect (net &gt; 0) it's a debit — it lowers max profit and raises max loss. A <b>zero-cost collar</b> picks strikes so c₀ ≈ p₀ → net ≈ 0, and the formulas collapse to (X_c − S₀) and (S₀ − X_p).</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">The reconstruction habit (use this when you blank)</div>
+              <span class="os-rule"><span class="os-gold">1.</span> Write the <b>stock leg</b>: S_T − S₀. Never skip it.</span>
+              <span class="os-rule"><span class="os-gold">2.</span> Write each <b>option leg</b>: payoff ± its premium (− if you bought, + if you sold).</span>
+              <span class="os-rule"><span class="os-gold">3.</span> For <b>max profit</b>, push S_T to the helpful extreme and add the legs. For <b>max loss</b>, push it the other way.</span>
+              <span class="os-rule"><span class="os-gold">4.</span> For <b>breakeven</b>, set total profit = 0 and solve for S_T.</span>
+              <div class="os-info">Do this once on scratch paper and you'll never confuse "c₀" with "(X − S₀) + c₀" again — the stock leg is right there in front of you.</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">★ Why these formulas? — interactive derivation</div>
+              <div class="os-body">Pick a strategy and enter the inputs. Instead of just the answer, this walks the <b>stock leg + option leg(s)</b> at the best case, worst case, and breakeven — so you see how each formula is built.</div>
+              <div class="os-hd-row"><span class="os-hd-label">Strategy</span>
+                <select id="os-dv-strat" class="os-hd-input" style="width:auto;" onchange="osDeriveToggle();osDerive()">
+                  <option value="lc">Long call</option>
+                  <option value="sc">Short call (naked)</option>
+                  <option value="lp">Long put</option>
+                  <option value="sp">Short put</option>
+                  <option value="cc">Covered call</option>
+                  <option value="pp">Protective put</option>
+                  <option value="col">Collar</option>
+                </select></div>
+              <div class="os-hd-row" id="os-dv-row-s0"><span class="os-hd-label">Stock price S₀</span><input id="os-dv-s0" class="os-hd-input" type="number" value="52.14" oninput="osDerive()"></div>
+              <div class="os-hd-row" id="os-dv-row-x"><span class="os-hd-label">Strike X</span><input id="os-dv-x" class="os-hd-input" type="number" value="55" oninput="osDerive()"></div>
+              <div class="os-hd-row" id="os-dv-row-prem"><span class="os-hd-label" id="os-dv-prem-lbl">Premium</span><input id="os-dv-prem" class="os-hd-input" type="number" value="2.52" oninput="osDerive()"></div>
+              <div class="os-hd-row" id="os-dv-row-xp" style="display:none;"><span class="os-hd-label">Put strike X_p (lower)</span><input id="os-dv-xp" class="os-hd-input" type="number" value="50" oninput="osDerive()"></div>
+              <div class="os-hd-row" id="os-dv-row-xc" style="display:none;"><span class="os-hd-label">Call strike X_c (higher)</span><input id="os-dv-xc" class="os-hd-input" type="number" value="55" oninput="osDerive()"></div>
+              <div class="os-hd-row" id="os-dv-row-pp" style="display:none;"><span class="os-hd-label">Put premium p₀ (paid)</span><input id="os-dv-pp" class="os-hd-input" type="number" value="3.87" oninput="osDerive()"></div>
+              <div class="os-hd-row" id="os-dv-row-cp" style="display:none;"><span class="os-hd-label">Call premium c₀ (received)</span><input id="os-dv-cp" class="os-hd-input" type="number" value="2.52" oninput="osDerive()"></div>
+              <div class="os-dv-out" id="os-dv-out" style="margin-top:12px;"></div>
+            </div>
+            <div class="os-card">
               <div class="os-title">Spreads (same expiry, two strikes — X_L lower, X_H higher)</div>
               <table class="os-table">
                 <tr><th>Strategy</th><th>Structure</th><th>Max profit</th><th>Max loss</th><th>Breakeven</th></tr>
@@ -17512,6 +17607,85 @@ For each $1 fall in the stock:
               document.querySelectorAll('#osWidget > .os-toptabs > .os-toptab').forEach(function(b){b.classList.remove('active')});
               document.getElementById('osr-'+id).classList.add('active');
               btn.classList.add('active');
+            }
+            function osDeriveToggle(){
+              var s=document.getElementById('os-dv-strat').value;
+              var single=(s==='lc'||s==='sc'||s==='lp'||s==='sp');
+              var stockOpt=(s==='cc'||s==='pp');
+              var collar=(s==='col');
+              // single-strike rows
+              document.getElementById('os-dv-row-s0').style.display=(single)?'none':'flex';
+              document.getElementById('os-dv-row-x').style.display=(collar)?'none':'flex';
+              document.getElementById('os-dv-row-prem').style.display=(collar)?'none':'flex';
+              // collar rows
+              document.getElementById('os-dv-row-xp').style.display=(collar)?'flex':'none';
+              document.getElementById('os-dv-row-xc').style.display=(collar)?'flex':'none';
+              document.getElementById('os-dv-row-pp').style.display=(collar)?'flex':'none';
+              document.getElementById('os-dv-row-cp').style.display=(collar)?'flex':'none';
+              // premium label
+              var lbl=document.getElementById('os-dv-prem-lbl');
+              if(s==='lc'||s==='cc'){ lbl.textContent='Call premium c₀'; }
+              else if(s==='sc'){ lbl.textContent='Call premium c₀ (received)'; }
+              else if(s==='lp'||s==='pp'){ lbl.textContent='Put premium p₀'; }
+              else if(s==='sp'){ lbl.textContent='Put premium p₀ (received)'; }
+            }
+            function osDerive(){
+              var s=document.getElementById('os-dv-strat').value;
+              var x=parseFloat(document.getElementById('os-dv-x').value)||0;
+              var s0=parseFloat(document.getElementById('os-dv-s0').value)||0;
+              var pr=parseFloat(document.getElementById('os-dv-prem').value)||0;
+              var out='';
+              function f(n){ return (n>=0?'+':'−')+Math.abs(n).toFixed(2); }
+              function pos(n){ return n.toFixed(2); }
+              if(s==='lc'){
+                out ='<span class="os-dv-h">LONG CALL — buy call at X='+x+', pay c₀='+pr.toFixed(2)+'</span>\n';
+                out+='Value at expiry = max(S_T − X, 0).  Profit = value − c₀.\n\n';
+                out+='WORST CASE — S_T ≤ X (expires OTM):\n  value 0 → profit = 0 − '+pr.toFixed(2)+' = '+f(-pr)+'\n  → MAX LOSS = c₀ = '+pos(pr)+' (can\'t lose more than you paid)\n\n';
+                out+='BREAKEVEN — value must repay the premium:\n  S_T − X = c₀  →  S_T = X + c₀ = '+x+' + '+pr.toFixed(2)+' = '+pos(x+pr)+'\n\n';
+                out+='BEST CASE — S_T rises with no ceiling:\n  profit = (S_T − X) − c₀ → MAX PROFIT = unlimited';
+              } else if(s==='sc'){
+                out ='<span class="os-dv-h">SHORT (naked) CALL — sell call at X='+x+', receive c₀='+pr.toFixed(2)+'</span>\n';
+                out+='Mirror of long call: same breakeven, profit & loss swap.\n\n';
+                out+='BEST CASE — S_T ≤ X (call expires worthless):\n  keep the premium → MAX PROFIT = c₀ = '+pos(pr)+'\n\n';
+                out+='BREAKEVEN — same as long call:\n  S_T = X + c₀ = '+pos(x+pr)+'\n\n';
+                out+='WORST CASE — S_T rises with no ceiling, you must deliver:\n  loss = (S_T − X) − c₀ → MAX LOSS = unlimited\n  (no stock to cover it — that\'s the danger of NAKED)';
+              } else if(s==='lp'){
+                out ='<span class="os-dv-h">LONG PUT — buy put at X='+x+', pay p₀='+pr.toFixed(2)+'</span>\n';
+                out+='Value at expiry = max(X − S_T, 0).  Profit = value − p₀.\n\n';
+                out+='WORST CASE — S_T ≥ X (expires OTM):\n  value 0 → profit = '+f(-pr)+'\n  → MAX LOSS = p₀ = '+pos(pr)+'\n\n';
+                out+='BREAKEVEN — value must repay the premium:\n  X − S_T = p₀  →  S_T = X − p₀ = '+x+' − '+pr.toFixed(2)+' = '+pos(x-pr)+'\n\n';
+                out+='BEST CASE — S_T = 0 (stock can\'t go lower):\n  value = X → profit = X − p₀ = '+pos(x-pr)+'\n  → MAX PROFIT = X − p₀ (capped! same number as breakeven)';
+              } else if(s==='sp'){
+                out ='<span class="os-dv-h">SHORT PUT — sell put at X='+x+', receive p₀='+pr.toFixed(2)+'</span>\n';
+                out+='Mirror of long put: same breakeven, profit & loss swap.\n\n';
+                out+='BEST CASE — S_T ≥ X (put expires worthless):\n  keep premium → MAX PROFIT = p₀ = '+pos(pr)+'\n\n';
+                out+='BREAKEVEN — same as long put:\n  S_T = X − p₀ = '+pos(x-pr)+'\n\n';
+                out+='WORST CASE — S_T = 0:\n  loss = X − p₀ = '+pos(x-pr)+'\n  → MAX LOSS = X − p₀ (bounded — stock floored at 0; = breakeven)';
+              } else if(s==='cc'){
+                out ='<span class="os-dv-h">COVERED CALL — long stock @ S₀='+s0+', short call X='+x+', c₀='+pr.toFixed(2)+'</span>\n';
+                out+='Profit = (stock leg) + (short-call leg)\n  stock leg = S_T − S₀ ; call leg = +c₀ − max(S_T − X, 0)\n\n';
+                out+='BEST CASE — S_T ≥ X (called away, capped):\n  stock leg = X − S₀ = '+f(x-s0)+'   call leg = '+f(pr)+'\n  → MAX PROFIT = (X − S₀) + c₀ = '+f(x-s0)+' '+f(pr)+' = '+pos(x-s0+pr)+'\n  (NOT just c₀ — you also keep the stock gain up to the strike!)\n\n';
+                out+='WORST CASE — S_T = 0 (loss is from stock FALLING, not rising):\n  stock leg = '+f(-s0)+'   call leg = '+f(pr)+' (expires worthless)\n  → MAX LOSS = S₀ − c₀ = '+pos(s0-pr)+'  (bounded, not unlimited — you OWN the stock)\n\n';
+                out+='BREAKEVEN = S₀ − c₀ = '+pos(s0-pr)+'  (= max-loss basis; profile = short put)';
+              } else if(s==='pp'){
+                out ='<span class="os-dv-h">PROTECTIVE PUT — long stock @ S₀='+s0+', long put X='+x+', p₀='+pr.toFixed(2)+'</span>\n';
+                out+='Profit = (stock leg) + (long-put leg)\n  stock leg = S_T − S₀ ; put leg = max(X − S_T, 0) − p₀\n\n';
+                out+='WORST CASE — S_T ≤ X (put protects, floored):\n  stock leg = X − S₀ = '+f(x-s0)+'   put leg = '+f(-pr)+'\n  → MAX LOSS = S₀ − X + p₀ = '+pos(s0-x+pr)+'  (stock fall to strike + insurance cost)\n\n';
+                out+='BREAKEVEN — stock must rise to cover the put cost:\n  S_T = S₀ + p₀ = '+s0+' + '+pr.toFixed(2)+' = '+pos(s0+pr)+'\n\n';
+                out+='BEST CASE — S_T rises, put expires unused:\n  → MAX PROFIT = unlimited (you still own the stock)';
+              } else if(s==='col'){
+                var xp=parseFloat(document.getElementById('os-dv-xp').value)||0;
+                var xc=parseFloat(document.getElementById('os-dv-xc').value)||0;
+                var pp=parseFloat(document.getElementById('os-dv-pp').value)||0;
+                var cp=parseFloat(document.getElementById('os-dv-cp').value)||0;
+                var net=pp-cp;
+                out ='<span class="os-dv-h">COLLAR — long stock @ S₀='+s0+', long put X_p='+xp+', short call X_c='+xc+'</span>\n';
+                out+='= covered call + protective put.  net = p₀ − c₀ = '+pp.toFixed(2)+' − '+cp.toFixed(2)+' = '+f(net)+'\n  (net > 0 = debit, you paid; net < 0 = credit, you collected)\n\n';
+                out+='CEILING — S_T ≥ X_c (call caps):\n  → MAX PROFIT = (X_c − S₀) − net = '+f(xc-s0)+' − ('+net.toFixed(2)+') = '+pos(xc-s0-net)+'\n\n';
+                out+='FLOOR — S_T ≤ X_p (put protects):\n  → MAX LOSS = (S₀ − X_p) + net = '+f(s0-xp)+' '+f(net)+' = '+pos(s0-xp+net)+'\n\n';
+                out+='BREAKEVEN = S₀ + net = '+s0+' '+f(net)+' = '+pos(s0+net)+'\n  (zero-cost collar: pick strikes so net ≈ 0 → MP = X_c − S₀, ML = S₀ − X_p)';
+              }
+              document.getElementById('os-dv-out').innerHTML=out;
             }
             function osBasTab(id, btn){
               document.querySelectorAll('#osr-basics > .os-panel').forEach(function(p){p.classList.remove('active')});
@@ -17659,7 +17833,7 @@ For each $1 fall in the stock:
               var out=c+p, beUp=k+out, beDn=k-out;
               document.getElementById('os-st-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">Total outlay = '+c.toFixed(2)+' + '+p.toFixed(2)+' = <span style="color:#FF7B72;">$'+out.toFixed(2)+'</span> (max loss)<br>Upside BE = '+k.toFixed(2)+' + '+out.toFixed(2)+' = <span style="color:#3DD68C;">$'+beUp.toFixed(2)+'</span><br>Downside BE = '+k.toFixed(2)+' − '+out.toFixed(2)+' = <span style="color:#79C0FF;">$'+beDn.toFixed(2)+'</span></div>';
             }
-            function osInit(){ setTimeout(osIvCalc,30); setTimeout(osPoCalc,30); setTimeout(osPcpCalc,30); setTimeout(osCc2Calc,30); setTimeout(osPp2Calc,30); setTimeout(osCcCalc,30); setTimeout(osStCalc,30); setTimeout(osSpCalc,30); setTimeout(osPdCalc,30); setTimeout(osVolCalc,30); setTimeout(osRrCalc,30); }
+            function osInit(){ setTimeout(osDeriveToggle,30); setTimeout(osDerive,40); setTimeout(osIvCalc,30); setTimeout(osPoCalc,30); setTimeout(osPcpCalc,30); setTimeout(osCc2Calc,30); setTimeout(osPp2Calc,30); setTimeout(osCcCalc,30); setTimeout(osStCalc,30); setTimeout(osSpCalc,30); setTimeout(osPdCalc,30); setTimeout(osVolCalc,30); setTimeout(osRrCalc,30); }
           </script>
         </div>
 
