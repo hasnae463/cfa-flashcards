@@ -17836,6 +17836,1056 @@ BREAKEVEN:  S₀ + net</div>
             function osInit(){ setTimeout(osDeriveToggle,30); setTimeout(osDerive,40); setTimeout(osIvCalc,30); setTimeout(osPoCalc,30); setTimeout(osPcpCalc,30); setTimeout(osCc2Calc,30); setTimeout(osPp2Calc,30); setTimeout(osCcCalc,30); setTimeout(osStCalc,30); setTimeout(osSpCalc,30); setTimeout(osPdCalc,30); setTimeout(osVolCalc,30); setTimeout(osRrCalc,30); }
           </script>
         </div>
+        <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #sfWidget { --sf-main:#A78BFA; --sf-gold:#D4A017; --sf-green:#3DD68C; --sf-red:#FF7B72; --sf-orange:#F0A04B; --sf-blue:#79C0FF; --sf-purple:#BC8CFF; }
+            #sfWidget .sf-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #sfWidget .sf-toptab { background:var(--surface2); border:1px solid var(--sf-main); color:var(--sf-main); padding:9px 18px; border-radius:7px; font-family:var(--serif); font-size:14px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #sfWidget .sf-toptab.active { background:var(--sf-main); color:#0D1117; }
+            #sfWidget .sf-toppanel { display:none; }
+            #sfWidget .sf-toppanel.active { display:block; }
+            #sfWidget .sf-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+            #sfWidget .sf-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #sfWidget .sf-tab.active { background:rgba(167,139,250,.13); border-color:var(--sf-main); color:var(--sf-main); }
+            #sfWidget .sf-panel { display:none; }
+            #sfWidget .sf-panel.active { display:block; }
+            #sfWidget .sf-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:14px; }
+            #sfWidget .sf-title { font-family:var(--serif); font-size:16px; color:var(--sf-main); font-weight:600; margin-bottom:10px; }
+            #sfWidget .sf-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:8px; }
+            #sfWidget .sf-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #sfWidget .sf-rule { display:block; padding:6px 0; border-bottom:1px solid var(--border); font-size:12.5px; line-height:1.5; color:#C9D1D9; }
+            #sfWidget .sf-rule:last-child { border-bottom:none; }
+            #sfWidget .sf-tip { background:rgba(46,160,67,.08); border-left:3px solid var(--sf-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #sfWidget .sf-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--sf-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #sfWidget .sf-info { background:rgba(121,192,255,.08); border-left:3px solid var(--sf-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #sfWidget .sf-green { color:var(--sf-green); }
+            #sfWidget .sf-red { color:var(--sf-red); }
+            #sfWidget .sf-orange { color:var(--sf-orange); }
+            #sfWidget .sf-blue { color:var(--sf-blue); }
+            #sfWidget .sf-gold { color:var(--sf-gold); }
+            #sfWidget .sf-main-c { color:var(--sf-main); }
+            #sfWidget .sf-purple { color:var(--sf-purple); }
+            #sfWidget .sf-table { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #sfWidget .sf-table th { background:#0B0F14; color:var(--sf-main); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #sfWidget .sf-table td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+            #sfWidget .sf-hd-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+            #sfWidget .sf-hd-label { flex:1; font-family:var(--mono); font-size:11px; color:var(--muted); }
+            #sfWidget .sf-hd-input { background:var(--surface); color:#C9D1D9; border:1px solid var(--border); padding:5px 8px; border-radius:3px; font-family:monospace; width:90px; text-align:right; }
+            #sfWidget .sf-hd-result { background:#0B0F14; border-left:3px solid var(--sf-main); border-radius:4px; padding:14px 16px; margin-top:14px; }
+            #sfWidget .sf-dv-out { background:var(--surface); border:1px solid var(--border); border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:12px; line-height:1.75; color:#C9D1D9; white-space:pre-wrap; }
+            #sfWidget .sf-dv-h { color:#A78BFA; font-weight:600; font-size:12.5px; }
+            #sfWidget .sf-empty { color:var(--muted); font-size:12.5px; font-style:italic; padding:20px; text-align:center; }
+          </style>
+
+          <div class="sf-toptabs">
+            <button class="sf-toptab active" onclick="sfTop('ch1', this)">IR Risk (17.1)</button>
+            <button class="sf-toptab" onclick="sfTop('ch2', this)">Currency (17.2)</button>
+            <button class="sf-toptab" onclick="sfTop('ch3', this)">Equity (17.3)</button>
+            <button class="sf-toptab" onclick="sfTop('ch4', this)">Volatility (17.4)</button>
+            <button class="sf-toptab" onclick="sfTop('ch5', this)">Expectations (17.5)</button>
+            <button class="sf-toptab" onclick="sfTop('err', this)">Errors</button>
+            <button class="sf-toptab" onclick="sfTop('mas', this)">Mastery</button>
+          </div>
+
+          <!-- ===================== MODULE 17.1 — MANAGING INTEREST RATE RISK ===================== -->
+          <div id="sfr-ch1" class="sf-toppanel active">
+            <div class="sf-tabs">
+              <button class="sf-tab active" onclick="sfCh1Tab('swap', this)">IR Swaps &amp; Conversion</button>
+              <button class="sf-tab" onclick="sfCh1Tab('dur', this)">Swap Duration &amp; NP&#8347;</button>
+              <button class="sf-tab" onclick="sfCh1Tab('fra', this)">FRAs</button>
+              <button class="sf-tab" onclick="sfCh1Tab('stir', this)">STIR Futures</button>
+              <button class="sf-tab" onclick="sfCh1Tab('ctd', this)">FI Futures &amp; CTD</button>
+              <button class="sf-tab" onclick="sfCh1Tab('bpv', this)">BPVHR Hedging</button>
+            </div>
+
+            <!-- ---------- IR SWAPS & CONVERSION ---------- -->
+            <div id="sfch1-swap" class="sf-panel active">
+              <div class="sf-card">
+                <div class="sf-title">Payer vs Receiver swap — leg by leg</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Payer swap</span> = <b>pay fixed</b>, receive floating (MRR), on a notional principal.</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; floating leg <span class="sf-green">gains</span> when realized floating rates &gt; rates expected at initiation &#8594; payer swap <span class="sf-green">value &#8593;</span></span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; floating rates below expectations &#8594; payer swap <span class="sf-red">value &#8595;</span></span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Receiver swap</span> = the counterparty: <b>receive fixed</b>, pay floating. Mirror image.</span>
+                <span class="sf-rule"><span class="sf-blue">&#9642; Netting:</span> payments are netted at each settlement — the party owing the larger amount pays the difference (reduces credit risk).</span>
+                <span class="sf-rule"><span class="sf-blue">&#9642; First settlement:</span> the floating payment for the first settlement date is <b>known at initiation</b>; later ones are not (set by the MRR at each reset).</span>
+                <div class="sf-info"><b>Capital-market replication:</b> payer swap = <b>issue a fixed-rate bond + buy an FRN</b>. Receiver swap = issue an FRN + buy a fixed-rate note. This replication is what drives swap duration (next tab).</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Converting exposures — interactive (Fig 17.2)</div>
+                <div class="sf-body">Pick the existing exposure; the required swap and its drivers are decomposed below.</div>
+                <div class="sf-hd-row">
+                  <span class="sf-hd-label">Existing exposure</span>
+                  <select id="sf-conv-sel" onchange="sfConvPick()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:6px 8px;border-radius:4px;font-family:var(--mono);font-size:11px;">
+                    <option value="fl">Floating-rate LIABILITY</option>
+                    <option value="xl">Fixed-rate LIABILITY</option>
+                    <option value="fa">Floating-rate ASSET</option>
+                    <option value="xa">Fixed-rate ASSET</option>
+                  </select>
+                </div>
+                <div id="sf-conv-out" class="sf-dv-out" style="margin-top:10px;"></div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — floating liability + payer swap (ABC, Inc.)</div>
+                <div class="sf-body">FRN issuer adds a payer swap with matching settlement dates. Defaults = textbook figures.</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Notional / FRN par ($ millions)</span><input class="sf-hd-input" id="sf-sw-n" type="number" value="30" step="1" oninput="sfSwapCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Swap fixed rate (%)</span><input class="sf-hd-input" id="sf-sw-fx" type="number" value="2" step="0.05" oninput="sfSwapCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Realized MRR at reset (%)</span><input class="sf-hd-input" id="sf-sw-mrr" type="number" value="1.5" step="0.05" oninput="sfSwapCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">FRN margin over MRR (bp)</span><input class="sf-hd-input" id="sf-sw-mg" type="number" value="25" step="5" oninput="sfSwapCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Period (days / 360)</span><input class="sf-hd-input" id="sf-sw-d" type="number" value="180" step="30" oninput="sfSwapCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-sw-out"></div></div>
+                <div class="sf-trap"><b>Trap:</b> the locked-in cost is <b>swap fixed rate + FRN margin</b> — NOT the fixed rate alone. ABC pays 2% + 0.25% = 2.25% regardless of the realized MRR. Dropping the margin is the classic dropped-leg error.</div>
+              </div>
+            </div>
+
+            <!-- ---------- SWAP DURATION & NP ---------- -->
+            <div id="sfch1-dur" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">Why a payer swap has NEGATIVE duration — two-leg decomposition</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Payer swap</span> = issue fixed-rate note + buy FRN</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; leg 1: <span class="sf-red">SHORT fixed-rate note</span> &#8594; short a long-duration instrument &#8594; contributes <b>negative</b> duration</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; leg 2: <span class="sf-green">LONG FRN</span> &#8594; duration &#8776; time to next reset (small) &#8594; contributes &#8776; 0</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; net: <b>MD&#8347; &lt; 0</b> &#8594; payer swap <span class="sf-green">gains value when rates rise</span></span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Receiver swap</span> = mirror &#8594; <b>MD&#8347; &gt; 0</b> &#8594; gains when rates fall (like a long bond)</span>
+                <span class="sf-rule"><span class="sf-gold">&#9642; Portfolio effect:</span> add payer swap &#8594; portfolio duration <span class="sf-red">&#8595;</span> &nbsp;|&nbsp; add receiver swap &#8594; portfolio duration <span class="sf-green">&#8593;</span></span>
+                <div class="sf-info"><b>Professor&#700;s note:</b> all of this uses <b>modified duration</b>, which implicitly assumes a flat yield curve and parallel shifts.</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Notional principal for a target duration</div>
+                <div class="sf-fl">NP&#8347; = [ (MD&#8348; &#8722; MD&#8346;) / MD&#8347; ] &#215; MV&#8346;
+
+NP&#8347; = notional swap principal      MD&#8348; = target modified duration
+MD&#8346; = current portfolio MD         MD&#8347; = modified duration of swap
+MV&#8346; = market value of portfolio</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Target duration MD&#8348;</span><input class="sf-hd-input" id="sf-np-mdt" type="number" value="6" step="0.1" oninput="sfNpCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Portfolio duration MD&#8346;</span><input class="sf-hd-input" id="sf-np-mdp" type="number" value="4.5" step="0.1" oninput="sfNpCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">|MD of swap| (e.g. 2)</span><input class="sf-hd-input" id="sf-np-mds" type="number" value="2" step="0.1" oninput="sfNpCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Portfolio MV (millions)</span><input class="sf-hd-input" id="sf-np-mv" type="number" value="120" step="10" oninput="sfNpCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-np-out"></div></div>
+                <div class="sf-tip"><b>Direction first, formula second:</b> MD&#8348; &gt; MD&#8346; &#8594; need duration &#8593; &#8594; <b>receiver</b> swap (MD&#8347; = +). MD&#8348; &lt; MD&#8346; &#8594; <b>payer</b> swap (MD&#8347; = &#8722;). Textbook: increase 4.5 &#8594; 6 on &#163;120m with MD&#8347; = 2 &#8594; receiver swap, NP&#8347; = &#163;90m.</div>
+              </div>
+            </div>
+
+            <!-- ---------- FRA ---------- -->
+            <div id="sfch1-fra" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">FRA mechanics — who takes which side</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Future BORROWER</span> (fears rates &#8593;) &#8594; <b>LONG FRA</b></span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; if realized MRR &gt; forward rate &#8594; receives payment &#8594; offsets higher borrowing cost</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; if realized MRR &lt; forward rate &#8594; pays &#8594; offsets cheaper borrowing &#8594; cost still locked</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Future LENDER</span> (fears rates &#8595;) &#8594; <b>SHORT FRA</b></span>
+                <span class="sf-rule"><span class="sf-gold">&#9642; Key rule:</span> long FRA value &#8593; when rates <span class="sf-green">rise</span>; short FRA value &#8593; when rates <span class="sf-green">fall</span>.</span>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">2&#215;6 FRA timeline (Fig 17.3)</div>
+                <svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;max-width:640px;margin:0 auto;height:auto;">
+                  <line x1="60" y1="110" x2="580" y2="110" stroke="#7D8590" stroke-width="2"/>
+                  <line x1="60" y1="95" x2="60" y2="125" stroke="#C9D1D9" stroke-width="2"/>
+                  <line x1="230" y1="95" x2="230" y2="125" stroke="#C9D1D9" stroke-width="2"/>
+                  <line x1="580" y1="95" x2="580" y2="125" stroke="#C9D1D9" stroke-width="2"/>
+                  <text x="60" y="85" fill="#C9D1D9" font-size="13" font-family="monospace" text-anchor="middle">T0</text>
+                  <text x="230" y="85" fill="#C9D1D9" font-size="13" font-family="monospace" text-anchor="middle">T60</text>
+                  <text x="580" y="85" fill="#C9D1D9" font-size="13" font-family="monospace" text-anchor="middle">T180</text>
+                  <text x="60" y="45" fill="#A78BFA" font-size="11" text-anchor="middle">Initiation of FRA</text>
+                  <text x="60" y="60" fill="#7D8590" font-size="10" text-anchor="middle">price of FRA = fixed rate</text>
+                  <text x="230" y="30" fill="#A78BFA" font-size="11" text-anchor="middle">FRA expiry</text>
+                  <text x="230" y="45" fill="#7D8590" font-size="10" text-anchor="middle">start of borrowing/lending</text>
+                  <text x="230" y="60" fill="#7D8590" font-size="10" text-anchor="middle">floating 120-day rate discovered</text>
+                  <text x="580" y="45" fill="#A78BFA" font-size="11" text-anchor="middle">End of borrowing</text>
+                  <text x="580" y="60" fill="#7D8590" font-size="10" text-anchor="middle">and lending</text>
+                  <text x="405" y="135" fill="#79C0FF" font-size="11" text-anchor="middle">notional borrowing/lending period: 120 days</text>
+                  <text x="405" y="170" fill="#D4A017" font-size="11" text-anchor="middle">payoff long FRA = (floating &#8722; fixed) &#215; 120/360 &#215; NP</text>
+                  <text x="405" y="190" fill="#7D8590" font-size="10" text-anchor="middle">payoff computed at T180 but DISCOUNTED to T60</text>
+                  <text x="405" y="205" fill="#7D8590" font-size="10" text-anchor="middle">and exchanged at FRA expiry (T60)</text>
+                  <path d="M395 178 Q 250 178 233 130" fill="none" stroke="#D4A017" stroke-width="1" stroke-dasharray="4 3"/>
+                </svg>
+                <div class="sf-trap"><b>Trap:</b> the FRA settlement is the <b>present value</b> of the rate difference, discounted from the end of the loan period back to FRA expiry — it is exchanged at expiry (T60), not at T180.</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — FRA borrowing hedge (Smithies Plc)</div>
+                <div class="sf-body">Borrower hedges a future loan of MRR + margin with a long FRA. Defaults = textbook.</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Loan principal (millions)</span><input class="sf-hd-input" id="sf-fra-n" type="number" value="1" step="0.5" oninput="sfFraCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">FRA forward rate (%)</span><input class="sf-hd-input" id="sf-fra-f" type="number" value="5" step="0.25" oninput="sfFraCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Borrowing margin (bp)</span><input class="sf-hd-input" id="sf-fra-mg" type="number" value="50" step="10" oninput="sfFraCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Loan period (days / 360)</span><input class="sf-hd-input" id="sf-fra-d" type="number" value="180" step="30" oninput="sfFraCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Realized MRR at expiry (%)</span><input class="sf-hd-input" id="sf-fra-r" type="number" value="7" step="0.5" oninput="sfFraCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-fra-out"></div></div>
+                <div class="sf-tip">Try MRR = 7 then 3: the net cost is <b>&#163;27,500 both times</b> = (5% + 50bp) &#215; 180/360 &#215; &#163;1m. The hedge locks the all-in rate at forward + margin.</div>
+              </div>
+            </div>
+
+            <!-- ---------- STIR FUTURES ---------- -->
+            <div id="sfch1-stir" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">STIR / Eurodollar futures — IMM pricing decomposed</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Price convention:</span> futures price = 100 &#8722; annualized forward rate (IMM Index)</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; forward rates <span class="sf-red">fall</span> &#8594; price <span class="sf-green">rises</span> &#8594; LONG futures gains</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Contract size:</span> $1 million deposit, 90-day rate, quarterly maturities</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Tick value:</span> 1 bp = $1m &#215; 0.0001 &#215; 90/360 = <b>$25 per contract</b></span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Contracts needed:</span> amount to hedge / $1 million</span>
+                <div class="sf-trap"><b>TRAP — direction flip vs FRA:</b> a LONG Eurodollar futures gains when rates <b>FALL</b> (price = 100 &#8722; rate), while a LONG FRA gains when rates <b>RISE</b>. Future depositor/lender &#8594; long futures. Future borrower &#8594; short futures (or long FRA). The exam loves this inversion.</div>
+                <div class="sf-info"><b>Futures vs FRA:</b> futures are standardized, exchange-traded, marked to market with margin; FRAs are dealer-customized (not liquid) and carry counterparty risk. Both price off the same forward rate (no-arbitrage).</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — hedge future investing (Luard)</div>
+                <div class="sf-body">Investor expects cash in the future and fears rates falling &#8594; long STIR futures. Defaults = textbook.</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Amount to invest ($ millions)</span><input class="sf-hd-input" id="sf-st-n" type="number" value="20" step="1" oninput="sfStirCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Futures price at initiation</span><input class="sf-hd-input" id="sf-st-p0" type="number" value="95" step="0.25" oninput="sfStirCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Realized 3-mo rate (%)</span><input class="sf-hd-input" id="sf-st-r" type="number" value="3.5" step="0.25" oninput="sfStirCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Deposit spread vs MRR (bp)</span><input class="sf-hd-input" id="sf-st-mg" type="number" value="-25" step="5" oninput="sfStirCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Deposit period (days / 360)</span><input class="sf-hd-input" id="sf-st-d" type="number" value="90" step="30" oninput="sfStirCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-st-out"></div></div>
+                <div class="sf-tip">Try realized rate = 3.5 then 6.5: total return is <b>$237,500 both times</b> — deposit interest and futures P/L offset. Locked rate = (100 &#8722; futures price) + deposit spread.</div>
+              </div>
+            </div>
+
+            <!-- ---------- FI FUTURES & CTD ---------- -->
+            <div id="sfch1-ctd" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">Fixed-income futures — mechanics decomposed</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Notional bond:</span> Treasury futures are priced off a notional government bond with a <b>6% coupon</b>.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Conversion factor (CF):</span> clean price of $1 face of the eligible bond discounted at YTM 6%</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; coupon = 6% &#8594; CF = 1 &nbsp;|&nbsp; coupon &gt; 6% &#8594; CF &gt; 1 &nbsp;|&nbsp; coupon &lt; 6% &#8594; CF &lt; 1</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Delivery option:</span> the SHORT chooses which eligible bond to deliver (e.g. any UST 15&#8211;25y).</span>
+                <div class="sf-fl">principal invoice price = (futures settlement / 100) &#215; $100,000 &#215; CF
+total invoice amount   = principal invoice price + accrued interest
+
+profit/(loss) on delivery = [(settlement &#215; CF) + AI&#8348;] &#8722; (CTD clean + AI&#8348;)</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; CTD identification</span> — two equivalent methods:</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; 1. highest <b>implied repo rate</b> on a cash-and-carry trade</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; 2. lowest <b>basis</b> (basis = spot price &#8722; futures price); lowest basis &#8596; highest implied repo</span>
+                <div class="sf-trap"><b>CF bias trap:</b> CFs assume a flat 6% term structure. Yields <b>below 6%</b> &#8594; bias to <b>short-duration</b> (high coupon, low maturity) bonds as CTD. Yields <b>above 6%</b> &#8594; bias to <b>long-duration</b> bonds.</div>
+                <div class="sf-info"><b>Professor&#700;s note:</b> with mark-to-market, the short does not receive the initial futures price at expiry — daily P/L (FP&#8348; &#8722; FP&#8348;&#8331;&#8321;) settles via margin; at maturity the short receives final settlement &#215; CF (+ AI).</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — identify the CTD at delivery</div>
+                <div class="sf-body">Defaults = textbook example (futures settlement $148.75, AI = 0).</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Futures settlement price</span><input class="sf-hd-input" id="sf-ctd-fp" type="number" value="148.75" step="0.05" oninput="sfCtdCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Bond 1 — clean price</span><input class="sf-hd-input" id="sf-ctd-p1" type="number" value="141.13" step="0.01" oninput="sfCtdCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Bond 1 — CF</span><input class="sf-hd-input" id="sf-ctd-c1" type="number" value="0.9422" step="0.0001" oninput="sfCtdCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Bond 2 — clean price</span><input class="sf-hd-input" id="sf-ctd-p2" type="number" value="145.10" step="0.01" oninput="sfCtdCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Bond 2 — CF</span><input class="sf-hd-input" id="sf-ctd-c2" type="number" value="0.9719" step="0.0001" oninput="sfCtdCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Accrued interest at delivery</span><input class="sf-hd-input" id="sf-ctd-ai" type="number" value="0" step="0.01" oninput="sfCtdCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-ctd-out"></div></div>
+              </div>
+            </div>
+
+            <!-- ---------- BPVHR ---------- -->
+            <div id="sfch1-bpv" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">Hedging with Treasury futures — the logic chain</div>
+                <span class="sf-rule">&#9642; rates &#8593; &#8594; bond prices &#8595; &#8594; futures price &#8595; &#8594; <span class="sf-green">SHORT futures gains</span> &#8594; short futures hedge a long bond portfolio</span>
+                <span class="sf-rule">&#9642; short futures &#8594; portfolio duration <span class="sf-red">&#8595;</span> &nbsp;|&nbsp; long futures &#8594; portfolio duration <span class="sf-green">&#8593;</span></span>
+                <span class="sf-rule">&#9642; futures price tracks the CTD: &#916;futures price = &#916;CTD / CF (CTD and futures share the same duration)</span>
+                <div class="sf-fl">&#916;P = HR &#215; &#916;futures price          HR = (&#916;P / &#916;CTD) &#215; CF
+
+BPVHR (full hedge)   = [ &#8722;BPV&#8346;&#8338;&#8345;&#8348; / BPV&#8267;&#8348;&#8323; ] &#215; CF
+BPVHR (target)       = [ (BPV&#8348;&#8336;&#8345;&#8338;&#8348; &#8722; BPV&#8346;&#8338;&#8345;&#8348;) / BPV&#8267;&#8348;&#8323; ] &#215; CF
+
+BPV&#8346;&#8338;&#8345;&#8348;   = MD&#8346; &#215; 0.0001 &#215; MV&#8346;
+BPV&#8348;&#8336;&#8345;&#8338;&#8348; = MD&#8348; &#215; 0.0001 &#215; MV&#8346;
+BPV&#8267;&#8348;&#8323;    = MD&#8267;&#8348;&#8323; &#215; 0.0001 &#215; MV&#8267;&#8348;&#8323;
+MV&#8267;&#8348;&#8323;     = (CTD price / 100) &#215; $100,000</div>
+                <div class="sf-trap"><b>Two classic dropped details:</b> (1) MV&#8267;&#8348;&#8323; uses the CTD price <b>scaled to $100,000 face</b>, not the raw quote. (2) The result is &#215; CF at the END — multiply, never divide. Negative BPVHR = <b>SELL</b> that many contracts.</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — BPVHR (Gilt example)</div>
+                <div class="sf-body">Defaults = textbook: &#163;60m portfolio, MD 10.75, CTD &#163;139.56 / MD 9.7 / CF 1.0709, target MD 8.7.</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Portfolio MV (millions)</span><input class="sf-hd-input" id="sf-bp-mv" type="number" value="60" step="5" oninput="sfBpvCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Portfolio MD</span><input class="sf-hd-input" id="sf-bp-mdp" type="number" value="10.75" step="0.05" oninput="sfBpvCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">CTD price (per 100)</span><input class="sf-hd-input" id="sf-bp-cp" type="number" value="139.56" step="0.01" oninput="sfBpvCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">CTD modified duration</span><input class="sf-hd-input" id="sf-bp-cmd" type="number" value="9.7" step="0.1" oninput="sfBpvCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">CTD conversion factor</span><input class="sf-hd-input" id="sf-bp-cf" type="number" value="1.0709" step="0.0001" oninput="sfBpvCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Target MD (for part 2)</span><input class="sf-hd-input" id="sf-bp-mdt" type="number" value="8.7" step="0.1" oninput="sfBpvCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-bp-out"></div></div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Why the hedge is imperfect — 3 factors</div>
+                <span class="sf-rule">&#9642; 1. <span class="sf-gold">CTD switch:</span> the hedge is built on the CTD; if the level or slope of the term structure changes significantly, the CTD bond — and hence the futures duration — may change.</span>
+                <span class="sf-rule">&#9642; 2. <span class="sf-gold">Convexity ignored:</span> duration is a linear approximation of price/yield; it ignores the convexity of the bonds.</span>
+                <span class="sf-rule">&#9642; 3. <span class="sf-gold">Shaping risk:</span> modified duration only captures parallel shifts; nonparallel changes (steepening, flattening, curvature) are unhedged.</span>
+                <span class="sf-rule">&#9642; Plus <span class="sf-gold">basis / spread risk:</span> portfolio bonds and the CTD are not perfect substitutes — mismatch between &#916;portfolio and &#916;hedge value.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===================== MODULE 17.2 — MANAGING CURRENCY EXPOSURE ===================== -->
+          <div id="sfr-ch2" class="sf-toppanel">
+            <div class="sf-tabs">
+              <button class="sf-tab active" onclick="sfCh2Tab('cs', this)">Currency Swaps</button>
+              <button class="sf-tab" onclick="sfCh2Tab('basis', this)">Cross-Currency Basis</button>
+              <button class="sf-tab" onclick="sfCh2Tab('fx', this)">FX Forwards &amp; Futures</button>
+            </div>
+
+            <!-- ---------- CURRENCY SWAPS ---------- -->
+            <div id="sfch2-cs" class="sf-panel active">
+              <div class="sf-card">
+                <div class="sf-title">Currency swap — mechanics decomposed</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Structure:</span> each party pays periodic interest on a notional in ONE currency; the two notionals are <b>equivalent at the inception FX rate</b>.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Purpose — synthetic borrowing:</span> a firm without good access to foreign capital markets borrows domestically and swaps &#8594; effectively borrows in the foreign currency, hedging the FX risk of foreign cash flows.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Cross-currency basis swap:</span> the variant where notionals are <b>exchanged at the beginning AND re-exchanged at the end</b>.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Typical legs:</span> fixed or floating, but the standard market swap is <b>floating-for-floating</b>.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Interest direction:</span> each counterparty pays variable interest on the currency it <b>initially received</b>.</span>
+                <div class="sf-trap"><b>Terminology trap:</b> in the euro-company example, the European company is the <b>dollar payer</b> and the dealer the <b>euro payer</b> — the label refers to the <b>interest flows and final principal payment</b>, NOT to the swap of initial principal.</div>
+                <div class="sf-info"><b>No FX risk on principals:</b> at expiration the notionals re-exchanged are the SAME amounts as at initiation — changes in the exchange rate over the life of the swap do not affect the principal flows.</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Cross-currency basis swap — 3 phases (&#8364; company, &#8364;50m @ 1.1236)</div>
+                <svg viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;max-width:640px;margin:0 auto;height:auto;">
+                  <defs><marker id="sfArr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#7D8590" stroke-width="1.5"/></marker></defs>
+                  <text x="20" y="28" fill="#A78BFA" font-size="12" font-weight="600">1. INITIATION — notionals exchanged at spot</text>
+                  <rect x="40" y="40" width="130" height="34" rx="4" fill="none" stroke="#C9D1D9"/><text x="105" y="61" fill="#C9D1D9" font-size="11" text-anchor="middle">European Co.</text>
+                  <rect x="470" y="40" width="130" height="34" rx="4" fill="none" stroke="#C9D1D9"/><text x="535" y="61" fill="#C9D1D9" font-size="11" text-anchor="middle">Swap Dealer</text>
+                  <line x1="175" y1="49" x2="465" y2="49" stroke="#7D8590" stroke-width="1.5" marker-end="url(#sfArr)"/><text x="320" y="44" fill="#3DD68C" font-size="10" text-anchor="middle">&#8364;50m (borrowed from bank)</text>
+                  <line x1="465" y1="68" x2="175" y2="68" stroke="#7D8590" stroke-width="1.5" marker-end="url(#sfArr)"/><text x="320" y="83" fill="#79C0FF" font-size="10" text-anchor="middle">$56.18m = &#8364;50m &#215; 1.1236</text>
+                  <text x="20" y="125" fill="#A78BFA" font-size="12" font-weight="600">2. QUARTERLY SETTLEMENTS — pay interest on what you RECEIVED</text>
+                  <rect x="40" y="137" width="130" height="34" rx="4" fill="none" stroke="#C9D1D9"/><text x="105" y="158" fill="#C9D1D9" font-size="11" text-anchor="middle">European Co.</text>
+                  <rect x="470" y="137" width="130" height="34" rx="4" fill="none" stroke="#C9D1D9"/><text x="535" y="158" fill="#C9D1D9" font-size="11" text-anchor="middle">Swap Dealer</text>
+                  <line x1="175" y1="146" x2="465" y2="146" stroke="#7D8590" stroke-width="1.5" marker-end="url(#sfArr)"/><text x="320" y="141" fill="#79C0FF" font-size="10" text-anchor="middle">$56.18m &#215; quarterly $ reference rate</text>
+                  <line x1="465" y1="165" x2="175" y2="165" stroke="#7D8590" stroke-width="1.5" marker-end="url(#sfArr)"/><text x="320" y="180" fill="#3DD68C" font-size="10" text-anchor="middle">&#8364;50m &#215; quarterly &#8364; reference rate</text>
+                  <text x="105" y="200" fill="#7D8590" font-size="9" text-anchor="middle">&#8594; services its &#8364; bank loan</text>
+                  <text x="20" y="240" fill="#A78BFA" font-size="12" font-weight="600">3. MATURITY (2y) — SAME notionals re-exchanged (no FX risk)</text>
+                  <rect x="40" y="252" width="130" height="34" rx="4" fill="none" stroke="#C9D1D9"/><text x="105" y="273" fill="#C9D1D9" font-size="11" text-anchor="middle">European Co.</text>
+                  <rect x="470" y="252" width="130" height="34" rx="4" fill="none" stroke="#C9D1D9"/><text x="535" y="273" fill="#C9D1D9" font-size="11" text-anchor="middle">Swap Dealer</text>
+                  <line x1="175" y1="261" x2="465" y2="261" stroke="#7D8590" stroke-width="1.5" marker-end="url(#sfArr)"/><text x="320" y="256" fill="#79C0FF" font-size="10" text-anchor="middle">$56.18m back</text>
+                  <line x1="465" y1="280" x2="175" y2="280" stroke="#7D8590" stroke-width="1.5" marker-end="url(#sfArr)"/><text x="320" y="295" fill="#3DD68C" font-size="10" text-anchor="middle">&#8364;50m back &#8594; repays bank loan</text>
+                </svg>
+              </div>
+            </div>
+
+            <!-- ---------- CROSS-CURRENCY BASIS ---------- -->
+            <div id="sfch2-basis" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">Cross-currency basis — what it is, why it exists</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; CIRP:</span> under covered interest rate parity, borrowing USD directly = borrowing foreign currency + hedging with a currency swap. Held well for 3 decades pre-2008.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Definition:</span> basis = the <b>additional cost of borrowing dollars synthetically</b> (via swap) relative to direct USD cash-market borrowing.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Convention:</span> basis is quoted from the <b>foreign-currency perspective</b>, not the USD perspective.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Negative basis</span> = synthetic USD cost &gt; direct USD cost. Most currencies have shown a negative basis vs USD since the crisis.</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; implication: the USD borrower must <b>accept a lower rate on the foreign-currency interest it receives</b>.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Why CIRP fails since 2008</span> — three drivers:</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; 1. stricter <b>capital adequacy rules</b> &#8594; covered interest arbitrage became much more costly for banks</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; 2. <b>high demand for USD loans</b></span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; 3. USD lending via swaps has attracted a <b>premium</b> since the crisis</span>
+                <div class="sf-tip"><b>USD investor angle:</b> when a foreign currency shows a negative basis, a USD investor can swap USD &#8594; foreign currency, buy foreign-currency bonds, and use the swap to convert returns back — earning MORE than direct USD bonds (the basis is harvested as extra yield).</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — synthetic USD borrowing (Boivis)</div>
+                <div class="sf-body">Borrow in &#8364; at &#8364;ref + spread, swap to USD with basis on the &#8364; leg. Defaults = textbook, 1st settlement. For the 2nd settlement set &#8364;ref = 1.6, $ref = 1.9.</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">USD needed ($ millions)</span><input class="sf-hd-input" id="sf-cc-n" type="number" value="50" step="5" oninput="sfCcyCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Spot $/&#8364; at initiation</span><input class="sf-hd-input" id="sf-cc-fx" type="number" value="1.1815" step="0.0001" oninput="sfCcyCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">&#8364; borrowing spread (bp)</span><input class="sf-hd-input" id="sf-cc-sp" type="number" value="60" step="5" oninput="sfCcyCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Swap basis (bp, e.g. &#8722;20)</span><input class="sf-hd-input" id="sf-cc-b" type="number" value="-20" step="5" oninput="sfCcyCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Direct USD spread (bp)</span><input class="sf-hd-input" id="sf-cc-ds" type="number" value="100" step="5" oninput="sfCcyCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">&#8364; reference rate (%)</span><input class="sf-hd-input" id="sf-cc-er" type="number" value="1.5" step="0.1" oninput="sfCcyCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">$ reference rate (%)</span><input class="sf-hd-input" id="sf-cc-ur" type="number" value="2" step="0.1" oninput="sfCcyCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Period (days / 360)</span><input class="sf-hd-input" id="sf-cc-d" type="number" value="90" step="30" oninput="sfCcyCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-cc-out"></div></div>
+                <div class="sf-trap"><b>All-in synthetic rate decomposed:</b> pays &#8364;ref + spread on the loan; receives &#8364;ref + basis on the swap &#8594; net &#8364; outflow = spread &#8722; basis; pays $ref on the swap &#8594; <b>all-in = $ref + (spread &#8722; basis)</b>. Spread 60, basis &#8722;20 &#8594; $ref + 80 bp. A negative basis ADDS to the cost — the sign here is the classic dropped detail.</div>
+              </div>
+            </div>
+
+            <!-- ---------- FX FORWARDS & FUTURES ---------- -->
+            <div id="sfch2-fx" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">Currency forwards vs futures</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Forwards:</span> customized — tailored to the exact quantity AND the exact date of the expected foreign-currency flow.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Futures:</span> standardized quantity and delivery dates; limited currency-pair range; greater <b>liquidity</b> attracts investors and dealers.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Direction:</span> expecting to RECEIVE foreign currency &#8594; <b>SELL</b> futures on it (promise to deliver). Having to PAY foreign currency &#8594; <b>BUY</b>.</span>
+                <div class="sf-fl">HR = amount of currency to be exchanged / futures contract size</div>
+                <div class="sf-trap"><b>Settlement-date mismatch — risk decomposed:</b><br>&#9642; futures settle BEFORE the currency arrives &#8594; exchange-rate risk from settlement until receipt<br>&#9642; futures settle AFTER &#8594; position closed early at the then-futures price &#8800; spot &#8594; <b>basis risk</b> (more or less USD than delivery would have given)</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — FX futures hedge (&#8364;20m receivable)</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Foreign currency amount (millions)</span><input class="sf-hd-input" id="sf-fx-a" type="number" value="20" step="1" oninput="sfFxCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Contract size (thousands)</span><input class="sf-hd-input" id="sf-fx-cs" type="number" value="125" step="25" oninput="sfFxCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Futures price (domestic per foreign)</span><input class="sf-hd-input" id="sf-fx-p" type="number" value="1.3150" step="0.0005" oninput="sfFxCalc()"></div>
+                <div class="sf-hd-row">
+                  <span class="sf-hd-label">Exposure</span>
+                  <select id="sf-fx-dir" onchange="sfFxCalc()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:6px 8px;border-radius:4px;font-family:var(--mono);font-size:11px;">
+                    <option value="recv">RECEIVE foreign currency</option>
+                    <option value="pay">PAY foreign currency</option>
+                  </select>
+                </div>
+                <div class="sf-hd-result"><div id="sf-fx-out"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===================== MODULE 17.3 — MANAGING EQUITY RISK ===================== -->
+          <div id="sfr-ch3" class="sf-toppanel">
+            <div class="sf-tabs">
+              <button class="sf-tab active" onclick="sfCh3Tab('es', this)">Equity Swaps</button>
+              <button class="sf-tab" onclick="sfCh3Tab('fut', this)">Futures &amp; Target Beta</button>
+              <button class="sf-tab" onclick="sfCh3Tab('ce', this)">Cash Equitization</button>
+            </div>
+
+            <!-- ---------- EQUITY SWAPS ---------- -->
+            <div id="sfch3-es" class="sf-panel active">
+              <div class="sf-card">
+                <div class="sf-title">Equity swaps — structure decomposed</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Purpose:</span> synthetic exposure to stocks — the economic benefits of ownership <b>without the cost and expense of ownership</b>.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; 3 main types:</span></span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; 1. pay <b>fixed</b>, receive equity return</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; 2. pay <b>floating</b>, receive equity return</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; 3. pay <b>another equity return</b>, receive equity return (e.g. pay Nasdaq, receive S&amp;P 500)</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Equity return basis:</span> single stock | basket of equities | equity index</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Return type:</span> <b>price return (typical)</b> or total return (price + dividends)</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; To REDUCE exposure:</span> pay equity return, receive floating/fixed = synthetic <b>sell equity + invest in money markets</b></span>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Equity swap vs physical stock (Fig 17.4)</div>
+                <table class="sf-table">
+                  <tr><th>Advantages</th><th>Disadvantages</th></tr>
+                  <tr>
+                    <td>&#9642; gain exposure when physical participation is <b>restricted</b><br>&#9642; avoid <b>tax</b> on physical ownership (e.g. stamp duty)<br>&#9642; avoid <b>custody fees</b><br>&#9642; avoid <b>monitoring costs</b> of corporate actions (dividends, splits, buybacks, M&amp;A)</td>
+                    <td>&#9642; typically require <b>collateral</b><br>&#9642; <b>illiquid</b><br>&#9642; no <b>voting rights</b></td>
+                  </tr>
+                </table>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — increase exposure via swap (DAX pension fund)</div>
+                <div class="sf-body">Pay floating + spread, receive index return on the notional. Defaults = textbook scenario 1; set index end = 11,780 for scenario 2.</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Portfolio MV (millions)</span><input class="sf-hd-input" id="sf-es-mv" type="number" value="200" step="10" oninput="sfEqSwapCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Swap notional (millions)</span><input class="sf-hd-input" id="sf-es-n" type="number" value="80" step="10" oninput="sfEqSwapCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Floating rate (%)</span><input class="sf-hd-input" id="sf-es-r" type="number" value="6" step="0.25" oninput="sfEqSwapCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Spread (bp)</span><input class="sf-hd-input" id="sf-es-sp" type="number" value="30" step="5" oninput="sfEqSwapCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Period (days / 360)</span><input class="sf-hd-input" id="sf-es-d" type="number" value="180" step="30" oninput="sfEqSwapCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Index at initiation</span><input class="sf-hd-input" id="sf-es-i0" type="number" value="12400" step="10" oninput="sfEqSwapCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Index at settlement</span><input class="sf-hd-input" id="sf-es-i1" type="number" value="13020" step="10" oninput="sfEqSwapCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-es-out"></div></div>
+                <div class="sf-trap"><b>Trap (scenario 2):</b> when the index FALLS, the equity-return receiver pays <b>BOTH</b> the floating rate <b>AND</b> the negative equity return — the two legs do not offset, they stack: &#8722;&#8364;4m &#8722; &#8364;2.52m = &#8722;&#8364;6.52m.</div>
+                <div class="sf-info"><b>Replication check:</b> the swap = borrowing the notional at floating + spread and investing it in an index tracker: 80m &#215; [R&#8336; &#8722; (6.3% &#215; 180/360)].</div>
+              </div>
+            </div>
+
+            <!-- ---------- FUTURES & TARGET BETA ---------- -->
+            <div id="sfch3-fut" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">Equity futures &amp; forwards — uses and mechanics</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Futures:</span> exchange-traded, standardized, margin, <b>low transaction costs</b>; on indexes and single stocks.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Uses:</span> tactical allocation (<span class="sf-red">SELL &#8594; reduce</span> / <span class="sf-green">BUY &#8594; increase</span> equity exposure), diversification, international exposure, directional bets.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Forwards:</span> same advantages but illiquid, no mark-to-market, <b>counterparty credit risk</b> (no clearinghouse); major advantage = <b>customization</b>.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Multiplier:</span> actual futures value = quoted points &#215; multiplier (S&amp;P 500: $250 | FTSE 100: &#163;10).</span>
+                <div class="sf-fl">number of contracts (hedge) = monetary value to hedge / (futures price &#215; multiplier)
+
+number of futures required = [ (&#946;&#8348; &#8722; &#946;&#8346;) / &#946;&#8338; ] &#215; [ MV&#8346; / F ]
+F = futures price &#215; multiplier        full hedge: &#946;&#8348; = 0</div>
+                <div class="sf-trap"><b>Trap:</b> negative result = <b>SELL</b> contracts. And a hedged-but-rounded HR leaves a small residual (FTSE example: net &#8722;&#163;300 from rounding 821.9 &#8594; 822).</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — hedge a slice of the portfolio (FTSE)</div>
+                <div class="sf-body">Defaults = textbook: hedge &#163;60m (30% of &#163;200m), futures 7,300 &#215; &#163;10. Try new price 7,665 (+5%) then 6,935 (&#8722;5%).</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Value to hedge (millions)</span><input class="sf-hd-input" id="sf-eh-v" type="number" value="60" step="5" oninput="sfEqHedgeCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Futures price (points)</span><input class="sf-hd-input" id="sf-eh-f0" type="number" value="7300" step="5" oninput="sfEqHedgeCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Multiplier</span><input class="sf-hd-input" id="sf-eh-m" type="number" value="10" step="1" oninput="sfEqHedgeCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Futures price at delivery</span><input class="sf-hd-input" id="sf-eh-f1" type="number" value="7665" step="5" oninput="sfEqHedgeCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Hedged slice move (%)</span><input class="sf-hd-input" id="sf-eh-pct" type="number" value="5" step="0.5" oninput="sfEqHedgeCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-eh-out"></div></div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — target portfolio beta (S&amp;P 500)</div>
+                <div class="sf-body">Defaults = textbook: $60m, &#946; 1.2 &#8594; 0.8, futures 2,984 &#215; $250, market &#8722;1.5%. Set &#946;&#8348; = 0 for a full hedge.</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Portfolio MV (millions)</span><input class="sf-hd-input" id="sf-tb-mv" type="number" value="60" step="5" oninput="sfBetaCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Current beta &#946;&#8346;</span><input class="sf-hd-input" id="sf-tb-bp" type="number" value="1.2" step="0.1" oninput="sfBetaCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Target beta &#946;&#8348;</span><input class="sf-hd-input" id="sf-tb-bt" type="number" value="0.8" step="0.1" oninput="sfBetaCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Futures beta &#946;&#8338;</span><input class="sf-hd-input" id="sf-tb-bf" type="number" value="1" step="0.05" oninput="sfBetaCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Futures price (points)</span><input class="sf-hd-input" id="sf-tb-f" type="number" value="2984" step="1" oninput="sfBetaCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Multiplier ($)</span><input class="sf-hd-input" id="sf-tb-m" type="number" value="250" step="10" oninput="sfBetaCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Index move over period (%)</span><input class="sf-hd-input" id="sf-tb-pct" type="number" value="-1.5" step="0.5" oninput="sfBetaCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-tb-out"></div></div>
+                <div class="sf-tip"><b>Effectiveness check, leg by leg:</b> realized beta = % change in portfolio / % change in index. Textbook: &#8722;1.2% / &#8722;1.5% = 0.8 — the target beta is achieved. A portfolio with &#946; &gt; 1 falls MORE than the market.</div>
+              </div>
+            </div>
+
+            <!-- ---------- CASH EQUITIZATION ---------- -->
+            <div id="sfch3-ce" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">Cash equitization — concept decomposed</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Problem:</span> cash yields less than equity/FI &#8594; cash drag &#8594; risk of underperforming the benchmark.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Solution:</span> BUY index futures to replicate the index return on the cash balance.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Why futures:</span> liquidity + low transaction costs vs direct equity investment.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Aliases:</span> cash securitization, cash overlay.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Alternative:</span> buy calls + sell puts, same strike &amp; expiry = <b>synthetic forward</b> position.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Setup in the beta formula:</span> &#946;&#8346; = 0 (cash), &#946;&#8348; = 1 (match the index), MV&#8346; = cash position.</span>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — equitize excess cash (S&amp;P 500)</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Cash position (millions)</span><input class="sf-hd-input" id="sf-ce-c" type="number" value="8" step="1" oninput="sfCashEqCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Futures price (points)</span><input class="sf-hd-input" id="sf-ce-f" type="number" value="2780" step="5" oninput="sfCashEqCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Multiplier ($)</span><input class="sf-hd-input" id="sf-ce-m" type="number" value="250" step="10" oninput="sfCashEqCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Target beta (index)</span><input class="sf-hd-input" id="sf-ce-bt" type="number" value="1" step="0.05" oninput="sfCashEqCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-ce-out"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===================== MODULE 17.4 — DERIVATIVES ON VOLATILITY ===================== -->
+          <div id="sfr-ch4" class="sf-toppanel">
+            <div class="sf-tabs">
+              <button class="sf-tab active" onclick="sfCh4Tab('vix', this)">VIX &amp; VIX Futures</button>
+              <button class="sf-tab" onclick="sfCh4Tab('ts', this)">Term Structure &amp; Roll Yield</button>
+              <button class="sf-tab" onclick="sfCh4Tab('vs', this)">Variance Swaps</button>
+              <button class="sf-tab" onclick="sfCh4Tab('mtm', this)">Var Swap Mark-to-Market</button>
+            </div>
+
+            <!-- ---------- VIX ---------- -->
+            <div id="sfch4-vix" class="sf-panel active">
+              <div class="sf-card">
+                <div class="sf-title">VIX — what it actually measures</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Definition:</span> <b>implied</b> volatility of the S&amp;P 500 over a forward period of <b>30 days</b> — a weighted average inferred from traded S&amp;P 500 calls AND puts with avg expiration of 30 days.</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; NOT actual/realized volatility — it is the expected volatility <b>priced into options</b> ("fear index / fear gauge").</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Interpretation:</span> annualized SD of expected &#177;% moves over the next 30 days, at <b>68% confidence</b>.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Rules of thumb:</span> &lt; 20 = low-risk environment | &gt; 30 = high-risk. Very low &#8594; excessively bullish market; very high &#8594; excessively bearish.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Two empirical properties:</span> (1) <b>mean reversion</b> — spikes do not last; (2) <b>negative correlation</b> with stock returns, even more pronounced in downturns &#8594; VIX derivatives can offset equity losses.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Other indexes:</span> VSTOXX (EURO STOXX 50), VFTSE (FTSE 100), VDAX-NEW (DAX 30); US: S&amp;P 100, DJIA, Nasdaq, Russell 2000.</span>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — reading a VIX level</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">VIX level</span><input class="sf-hd-input" id="sf-vx-v" type="number" value="20" step="1" oninput="sfVixCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-vx-out"></div></div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">VIX futures — how they differ from every other future</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; No cost-of-carry pricing:</span> impossible to invest directly in spot VIX &#8594; the cost-of-carry model cannot determine fair value.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Price meaning:</span> expected S&amp;P 500 volatility in the <b>30-day period AFTER the futures expiration date</b>.</span>
+                <span class="sf-rule"><span class="sf-green">&#9642; LONG VIX futures</span> = tail-risk protection: vol &#8593; in a crash &#8594; equity portfolio &#8595; but VIX futures &#8593;.</span>
+                <span class="sf-rule"><span class="sf-red">&#9642; SHORT VIX futures</span> = short volatility: captures the <b>volatility risk premium</b> embedded in S&amp;P 500 options — but large losses if expected volatility spikes.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; History:</span> CBOE futures 2004, options 2006 &#8594; volatility became a separate, tradeable asset class (pure-play bets).</span>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">VIX options</div>
+                <span class="sf-rule">&#9642; Cash-settled, <b>European</b>-style — exercisable only at contract maturity.</span>
+                <span class="sf-rule">&#9642; Value driven by <b>expectations of VIX at contract expiry</b> (not spot VIX today): calls gain when expected volatility at maturity &#8593;; puts gain when it &#8595;.</span>
+              </div>
+            </div>
+
+            <!-- ---------- TERM STRUCTURE & ROLL ---------- -->
+            <div id="sfch4-ts" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">Contango vs backwardation — decomposed</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Basis</span> = spot &#8722; futures price. <span class="sf-main-c">Negative basis defines contango</span> (longer-dated &gt; short-dated): market expects 30-day vol to RISE. Typical when VIX is <b>low</b> (textbook: 18 Jul 2011, spot 20.95, upward curve).</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Backwardation:</span> downward curve — market expects vol to FALL back. Typical after a spike (textbook: 9 Aug 2011, spot 35.06 after the S&amp;P US-debt downgrade of 5 Aug 2011).</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Convergence:</span> VIX futures settle against spot VIX &#8594; futures price converges to spot at expiration; the basis moves toward zero over the life of the contract.</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; contango: futures price <b>declines</b> toward spot &#8594; long loses on the roll</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; backwardation: futures price <b>rises</b> toward spot &#8594; long gains on the roll</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Roll yield</span> = the P/L generated as basis &#8594; 0. Steeper short end of the curve &#8594; roll yield <b>magnified</b>.</span>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Roll yield — interactive (position &#215; term structure)</div>
+                <div class="sf-hd-row">
+                  <span class="sf-hd-label">Position</span>
+                  <select id="sf-rl-pos" onchange="sfRollPick()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:6px 8px;border-radius:4px;font-family:var(--mono);font-size:11px;">
+                    <option value="long">LONG futures</option>
+                    <option value="short">SHORT futures</option>
+                  </select>
+                </div>
+                <div class="sf-hd-row">
+                  <span class="sf-hd-label">Term structure</span>
+                  <select id="sf-rl-ts" onchange="sfRollPick()" style="background:var(--surface);color:#C9D1D9;border:1px solid var(--border);padding:6px 8px;border-radius:4px;font-family:var(--mono);font-size:11px;">
+                    <option value="cont">Contango</option>
+                    <option value="back">Backwardation</option>
+                  </select>
+                </div>
+                <div id="sf-rl-out" class="sf-dv-out" style="margin-top:10px;"></div>
+              </div>
+            </div>
+
+            <!-- ---------- VARIANCE SWAPS ---------- -->
+            <div id="sfch4-vs" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">Variance swap — structure decomposed</div>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Payoff basis:</span> <b>variance (&#963;&#178;)</b>, not volatility (SD).</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Fixed leg:</span> implied variance over the period = <b>variance strike</b> — known at initiation.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Variable leg:</span> <b>realized variance</b> of the underlying over the swap life — known only at maturity.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Long (purchaser):</span> RECEIVES realized variance, PAYS the strike. Gains when realized &gt; implied. Pure play on realized vs expected variance.</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Mechanics:</span> NO notional exchange at initiation, NO interim settlements — one single payment at expiration. Value = 0 at initiation (implied vol = best ex ante estimate of realized).</span>
+                <span class="sf-rule"><span class="sf-main-c">&#9642; Any underlying</span> works as long as it is traded with a record of daily prices.</span>
+                <div class="sf-fl">settlement&#8348; = variance notional &#215; (realized variance &#8722; variance strike)
+
+N&#8333;&#8336;&#8345; = vega notional / (2 &#215; K)
+profit/(loss) = N&#8333;&#8336;&#8345; &#215; (&#963;&#178; &#8722; K&#178;) = N&#8332;&#8338;&#8335;&#8336; &#215; (&#963;&#178; &#8722; K&#178;) / (2K)
+
+realized:  R&#7522; = ln(P&#8348; / P&#8348;&#8331;&#8321;)
+daily variance = &#931; R&#7522;&#178; / (N &#8722; 1)     annualized = daily &#215; 252</div>
+                <div class="sf-trap"><b>Two squaring traps:</b> (1) both &#963; and K are <b>quoted as volatilities</b> (SD) — square them before any payoff computation (strike 20 &#8594; K&#178; = 400). (2) Market quotes <b>vega notional</b>, not variance notional — divide by 2K first.</div>
+                <div class="sf-info"><b>Professor&#700;s notes:</b> (1) realized variance does NOT deduct the mean — movement is measured regardless of direction, which makes variances <b>perfectly additive</b> (one-year variance = two equal six-month pieces). That additivity is what powers the MTM valuation. (2) Vega = &#916;premium/&#916;volatility — why vega notional is the natural market quote.</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Convexity — why hedgers love variance swaps</div>
+                <span class="sf-rule">&#9642; Payoff is in <b>variance</b>, strike in volatility &#8594; payoff is <b>convex in volatility</b> (like bond price vs yield).</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; realized vol BELOW strike &#8594; losses <b>smaller</b> than a linear volatility derivative</span>
+                <span class="sf-rule">&nbsp;&nbsp;&#8627; realized vol ABOVE strike &#8594; gains <b>greater</b> than the linear derivative</span>
+                <span class="sf-rule">&#9642; Tail-risk appeal: when equities crash and vol explodes, the swap profit increases at an <b>accelerating</b> rate.</span>
+              </div>
+            </div>
+
+            <!-- ---------- VAR SWAP MTM ---------- -->
+            <div id="sfch4-mtm" class="sf-panel">
+              <div class="sf-card">
+                <div class="sf-title">Valuing a variance swap during its life — 3 steps</div>
+                <div class="sf-fl">Step 1: expected variance at maturity (time-weighted, thanks to additivity)
+  E[var] = &#963;&#8348;&#178; &#215; (t/T) + K&#178;&#8333;&#8348;&#8331;&#8348;&#8334; &#215; ((T&#8722;t)/T)
+  &#963;&#8348;&#178; = realized vol (initiation &#8594; valuation date), squared
+  K&#8333;&#8348;&#8331;&#8348;&#8334; = implied vol quoted NOW for the REMAINING period, squared
+
+Step 2: expected payoff at maturity
+  payoff = N&#8333;&#8336;&#8345; &#215; (E[var] &#8722; original strike&#178;)
+
+Step 3: discount back to the valuation date
+  value = payoff / (1 + r &#215; remaining/12)</div>
+                <div class="sf-trap"><b>Dropped-detail watch:</b> Step 2 uses the <b>ORIGINAL strike</b> (squared), not the currently quoted strike — the current quote only feeds the remaining-period leg of Step 1. And the discount rate is <b>unannualized</b> over the remaining months only.</div>
+              </div>
+
+              <div class="sf-card">
+                <div class="sf-title">Calculator — var swap MTM (Luke Amos)</div>
+                <div class="sf-body">Defaults = textbook: 1y swap, vega notional $100k, strike 20; 9 months in, realized 21%, 3-mo strike 22%, rate 2%.</div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Vega notional</span><input class="sf-hd-input" id="sf-vm-nv" type="number" value="100000" step="10000" oninput="sfVsCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Original strike K (vol %)</span><input class="sf-hd-input" id="sf-vm-k" type="number" value="20" step="1" oninput="sfVsCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Total tenor (months)</span><input class="sf-hd-input" id="sf-vm-T" type="number" value="12" step="1" oninput="sfVsCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Months elapsed (t)</span><input class="sf-hd-input" id="sf-vm-t" type="number" value="9" step="1" oninput="sfVsCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Realized vol to date (%)</span><input class="sf-hd-input" id="sf-vm-rv" type="number" value="21" step="0.5" oninput="sfVsCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Implied vol, remaining period (%)</span><input class="sf-hd-input" id="sf-vm-iv" type="number" value="22" step="0.5" oninput="sfVsCalc()"></div>
+                <div class="sf-hd-row"><span class="sf-hd-label">Annual rate (%)</span><input class="sf-hd-input" id="sf-vm-r" type="number" value="2" step="0.25" oninput="sfVsCalc()"></div>
+                <div class="sf-hd-result"><div id="sf-vm-out"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===================== MODULE 17.5 — INFERRING MARKET EXPECTATIONS ===================== -->
+          <div id="sfr-ch5" class="sf-toppanel">
+            <div class="sf-card">
+              <div class="sf-title">Inferring market expectations — which derivative for what</div>
+              <table class="sf-table">
+                <tr><th>Application</th><th>Derivative</th></tr>
+                <tr><td>Inferring expectations of FOMC moves</td><td><b>Fed funds futures</b></td></tr>
+                <tr><td>Inferring expectations of inflation</td><td><b>CPI swaps</b></td></tr>
+                <tr><td>Inferring expectations of future volatility</td><td><b>VIX futures and options</b></td></tr>
+              </table>
+              <div class="sf-body">Market expectations are derived from market prices — and can change rapidly after a market shock.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Fed funds — the two rates, decomposed</div>
+              <span class="sf-rule"><span class="sf-main-c">&#9642; Federal funds rate:</span> rate deposit institutions charge each other on <b>overnight interbank</b> loans. The <b>FFE</b> (Fed funds effective) = weighted average of rates actually charged.</span>
+              <span class="sf-rule"><span class="sf-main-c">&#9642; Federal funds target rate:</span> set by FOMC governors (8 meetings/year), as a <b>range</b> (e.g. 2.25%&#8211;2.50%), driven mainly by inflation and GDP growth.</span>
+              <span class="sf-rule"><span class="sf-main-c">&#9642; Control mechanism:</span> the Fed does NOT directly set the FFE — it steers it into the range via <b>open-market operations</b> and <b>interest paid on bank reserves</b>.</span>
+              <span class="sf-rule"><span class="sf-main-c">&#9642; Fed funds futures:</span> trade on the CME; price = 100 &#8722; expected average FFE at contract maturity; monthly maturities out to 36 months.</span>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Probability of a target-rate change</div>
+              <div class="sf-fl">% probability of rate change
+  = (FFE implied by futures &#8722; current target rate)
+    / (target rate assuming the change &#8722; current target rate)
+
+  = (implied FFE &#8722; current target) / expected size of change
+
+current target = MIDPOINT of the target range</div>
+              <div class="sf-trap"><b>Trap:</b> "current Fed funds target rate" in the formula = the <b>midpoint of the range</b> (1.50&#8211;1.75 &#8594; 1.625), not the bottom or top of the range.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Calculator — probability of an FOMC move (Stokes)</div>
+              <div class="sf-body">Defaults = textbook: futures 98.1625, target 1.50&#8211;1.75%, +25 bp assumed. Use a negative bp for an expected cut.</div>
+              <div class="sf-hd-row"><span class="sf-hd-label">Fed funds futures price</span><input class="sf-hd-input" id="sf-ff-p" type="number" value="98.1625" step="0.005" oninput="sfFedCalc()"></div>
+              <div class="sf-hd-row"><span class="sf-hd-label">Target range — low (%)</span><input class="sf-hd-input" id="sf-ff-lo" type="number" value="1.50" step="0.25" oninput="sfFedCalc()"></div>
+              <div class="sf-hd-row"><span class="sf-hd-label">Target range — high (%)</span><input class="sf-hd-input" id="sf-ff-hi" type="number" value="1.75" step="0.25" oninput="sfFedCalc()"></div>
+              <div class="sf-hd-row"><span class="sf-hd-label">Assumed change (bp)</span><input class="sf-hd-input" id="sf-ff-ch" type="number" value="25" step="25" oninput="sfFedCalc()"></div>
+              <div class="sf-hd-result"><div id="sf-ff-out"></div></div>
+            </div>
+          </div>
+
+          <!-- ===================== ERRORS ===================== -->
+          <div id="sfr-err" class="sf-toppanel">
+            <div class="sf-card">
+              <div class="sf-title">Errors — wrong answers log</div>
+              <div class="sf-empty">Vide pour l'instant — à remplir avec les erreurs des practice exams.</div>
+            </div>
+          </div>
+
+          <!-- ===================== MASTERY ===================== -->
+          <div id="sfr-mas" class="sf-toppanel">
+            <div class="sf-card">
+              <div class="sf-title">Mastery</div>
+              <div class="sf-empty">Vide pour l'instant.</div>
+            </div>
+          </div>
+
+          <script>
+            function sfTop(id, btn){
+              document.querySelectorAll('#sfWidget > .sf-toppanel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#sfWidget > .sf-toptabs > .sf-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('sfr-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function sfCh1Tab(id, btn){
+              document.querySelectorAll('#sfr-ch1 > .sf-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#sfr-ch1 > .sf-tabs > .sf-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('sfch1-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function sfFmt(n){
+              var sign = n < 0 ? "\u2212" : "";
+              return sign + Math.abs(n).toLocaleString("en-US", {minimumFractionDigits:0, maximumFractionDigits:2});
+            }
+            function sfConvPick(){
+              var v=document.getElementById('sf-conv-sel').value;
+              var d={
+                fl:{exp:'Floating-rate LIABILITY', conv:'floating \u2192 fixed', swap:'PAYER swap', mech:'swap floating receipts offset the liability floating payments \u2192 only the fixed swap leg remains', ben:'floating rates expected to RISE', why:'locking fixed avoids paying the higher future MRR'},
+                xl:{exp:'Fixed-rate LIABILITY', conv:'fixed \u2192 floating', swap:'RECEIVER swap', mech:'fixed swap receipts offset the fixed liability payments \u2192 net payment becomes floating', ben:'floating rates expected to FALL', why:'paying floating is cheaper when rates drop'},
+                fa:{exp:'Floating-rate ASSET', conv:'floating \u2192 fixed', swap:'RECEIVER swap', mech:'floating swap payments offset the floating receipts of the asset \u2192 income becomes fixed', ben:'floating rates expected to FALL', why:'locking fixed income protects against falling MRR'},
+                xa:{exp:'Fixed-rate ASSET', conv:'fixed \u2192 floating', swap:'PAYER swap', mech:'fixed swap payments offset the fixed receipts \u2192 income becomes floating', ben:'floating rates expected to RISE', why:'floating income rises with the MRR'}
+              }[v];
+              var out='<span class="sf-dv-h">'+d.exp+'</span>\n';
+              out+='conversion : '+d.conv+'\n';
+              out+='swap required : <span style="color:#A78BFA;font-weight:600;">'+d.swap+'</span>\n';
+              out+='mechanism : '+d.mech+'\n';
+              out+='beneficial when : <span style="color:#D4A017;">'+d.ben+'</span>\n';
+              out+='driver : '+d.why;
+              document.getElementById('sf-conv-out').innerHTML=out;
+            }
+            function sfSwapCalc(){
+              var n=(parseFloat(document.getElementById('sf-sw-n').value)||0)*1e6;
+              var fx=(parseFloat(document.getElementById('sf-sw-fx').value)||0)/100;
+              var mrr=(parseFloat(document.getElementById('sf-sw-mrr').value)||0)/100;
+              var mg=(parseFloat(document.getElementById('sf-sw-mg').value)||0)/10000;
+              var d=(parseFloat(document.getElementById('sf-sw-d').value)||0)/360;
+              var fixed=n*fx*d, flt=n*mrr*d, net=flt-fixed;
+              var frn=n*(mrr+mg)*d;
+              var total=frn-net;
+              var locked=n*(fx+mg)*d;
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='Swap fixed payment = '+sfFmt(fixed)+'<br>';
+              out+='Swap floating receipt = '+sfFmt(flt)+'<br>';
+              out+='Swap net cash flow = '+sfFmt(flt)+' \u2212 '+sfFmt(fixed)+' = <span style="color:'+(net>=0?'#3DD68C':'#FF7B72')+';">'+sfFmt(net)+'</span><br>';
+              out+='FRN floating payment (MRR + margin) = '+sfFmt(frn)+'<br>';
+              out+='Total payment = <span style="color:#D4A017;">'+sfFmt(total)+'</span><br>';
+              out+='Locked-in = N \u00d7 (fixed + margin) \u00d7 d/360 = <span style="color:#A78BFA;">'+sfFmt(locked)+'</span> every period</div>';
+              document.getElementById('sf-sw-out').innerHTML=out;
+            }
+            function sfNpCalc(){
+              var mdt=parseFloat(document.getElementById('sf-np-mdt').value)||0;
+              var mdp=parseFloat(document.getElementById('sf-np-mdp').value)||0;
+              var mds=Math.abs(parseFloat(document.getElementById('sf-np-mds').value)||1);
+              var mv=parseFloat(document.getElementById('sf-np-mv').value)||0;
+              var type=(mdt>mdp)?'RECEIVER swap (MD\u209b = +'+mds+')':'PAYER swap (MD\u209b = \u2212'+mds+')';
+              var np=Math.abs((mdt-mdp)/mds*mv);
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='Direction: MD\u209c '+(mdt>mdp?'&gt;':'&lt;')+' MD\u209a \u2192 duration must '+(mdt>mdp?'rise':'fall')+' \u2192 <span style="color:#A78BFA;">'+type+'</span><br>';
+              out+='NP\u209b = ('+mdt+' \u2212 '+mdp+') / '+mds+' \u00d7 '+mv+'m = <span style="color:#D4A017;">'+sfFmt(np)+'m</span></div>';
+              document.getElementById('sf-np-out').innerHTML=out;
+            }
+            function sfFraCalc(){
+              var n=(parseFloat(document.getElementById('sf-fra-n').value)||0)*1e6;
+              var f=(parseFloat(document.getElementById('sf-fra-f').value)||0)/100;
+              var mg=(parseFloat(document.getElementById('sf-fra-mg').value)||0)/10000;
+              var d=(parseFloat(document.getElementById('sf-fra-d').value)||0)/360;
+              var r=(parseFloat(document.getElementById('sf-fra-r').value)||0)/100;
+              var cost=n*(r+mg)*d;
+              var fra=n*(r-f)*d;
+              var net=cost-fra;
+              var locked=n*(f+mg)*d;
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='Cost of loan = (MRR + margin) \u00d7 d/360 \u00d7 NP = '+sfFmt(cost)+'<br>';
+              out+='Long FRA '+(fra>=0?'receipt':'payment')+' = (MRR \u2212 fwd) \u00d7 d/360 \u00d7 NP = <span style="color:'+(fra>=0?'#3DD68C':'#FF7B72')+';">'+sfFmt(fra)+'</span><br>';
+              out+='Net cost = <span style="color:#D4A017;">'+sfFmt(net)+'</span><br>';
+              out+='Locked-in = (fwd + margin) \u00d7 d/360 \u00d7 NP = <span style="color:#A78BFA;">'+sfFmt(locked)+'</span></div>';
+              document.getElementById('sf-fra-out').innerHTML=out;
+            }
+            function sfStirCalc(){
+              var n=(parseFloat(document.getElementById('sf-st-n').value)||0)*1e6;
+              var p0=parseFloat(document.getElementById('sf-st-p0').value)||0;
+              var r=parseFloat(document.getElementById('sf-st-r').value)||0;
+              var mg=(parseFloat(document.getElementById('sf-st-mg').value)||0)/100;
+              var d=(parseFloat(document.getElementById('sf-st-d').value)||0)/360;
+              var k=Math.round(n/1e6);
+              var dep=n*((r+mg)/100)*d;
+              var pT=100-r;
+              var bp=Math.round((pT-p0)*100);
+              var fut=bp*25*k;
+              var total=dep+fut;
+              var fwd=100-p0;
+              var locked=n*((fwd+mg)/100)*d;
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='Contracts = '+sfFmt(n)+' / 1m = '+k+' (long)<br>';
+              out+='Deposit interest = N \u00d7 (rate + spread) \u00d7 d/360 = '+sfFmt(dep)+'<br>';
+              out+='Futures settlement price = 100 \u2212 '+r+' = '+pT.toFixed(2)+'<br>';
+              out+='Futures P/L = ('+pT.toFixed(2)+' \u2212 '+p0.toFixed(2)+') = '+bp+' bp \u00d7 $25 \u00d7 '+k+' = <span style="color:'+(fut>=0?'#3DD68C':'#FF7B72')+';">'+sfFmt(fut)+'</span><br>';
+              out+='Total return = <span style="color:#D4A017;">'+sfFmt(total)+'</span><br>';
+              out+='Locked-in = N \u00d7 (fwd '+fwd.toFixed(2)+'% + spread) \u00d7 d/360 = <span style="color:#A78BFA;">'+sfFmt(locked)+'</span></div>';
+              document.getElementById('sf-st-out').innerHTML=out;
+            }
+            function sfCtdCalc(){
+              var fp=parseFloat(document.getElementById('sf-ctd-fp').value)||0;
+              var ai=parseFloat(document.getElementById('sf-ctd-ai').value)||0;
+              var p=[parseFloat(document.getElementById('sf-ctd-p1').value)||0, parseFloat(document.getElementById('sf-ctd-p2').value)||0];
+              var c=[parseFloat(document.getElementById('sf-ctd-c1').value)||0, parseFloat(document.getElementById('sf-ctd-c2').value)||0];
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              var loss=[0,0];
+              for(var i=0;i<2;i++){
+                var inv=Math.round(fp*c[i]*100)/100;
+                var invoiceTot=(inv+ai)*1000;
+                var dirty=(p[i]+ai)*1000;
+                loss[i]=invoiceTot-dirty;
+                out+='<span style="color:#A78BFA;">Bond '+(i+1)+'</span>: invoice = '+fp.toFixed(2)+' \u00d7 '+c[i]+' = '+inv.toFixed(2)+' + AI \u2192 '+sfFmt(invoiceTot)+' per $100k<br>';
+                out+='&nbsp;&nbsp;dirty = '+sfFmt(dirty)+' \u2192 delivery P/L = <span style="color:'+(loss[i]>=0?'#3DD68C':'#FF7B72')+';">'+sfFmt(loss[i])+'</span><br>';
+              }
+              var ctd=(loss[0]>=loss[1])?1:2;
+              out+='<span style="color:#D4A017;">CTD = Bond '+ctd+'</span> (greatest profit / smallest loss to the short)</div>';
+              document.getElementById('sf-ctd-out').innerHTML=out;
+            }
+            function sfBpvCalc(){
+              var mv=(parseFloat(document.getElementById('sf-bp-mv').value)||0)*1e6;
+              var mdp=parseFloat(document.getElementById('sf-bp-mdp').value)||0;
+              var cp=parseFloat(document.getElementById('sf-bp-cp').value)||0;
+              var cmd=parseFloat(document.getElementById('sf-bp-cmd').value)||0;
+              var cf=parseFloat(document.getElementById('sf-bp-cf').value)||1;
+              var mdt=parseFloat(document.getElementById('sf-bp-mdt').value)||0;
+              var bpvp=mdp*0.0001*mv;
+              var mvc=cp/100*100000;
+              var bpvc=cmd*0.0001*mvc;
+              var hrFull=-bpvp/bpvc*cf;
+              var bpvt=mdt*0.0001*mv;
+              var hrTgt=(bpvt-bpvp)/bpvc*cf;
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='BPV\u209a = '+mdp+' \u00d7 0.0001 \u00d7 '+sfFmt(mv)+' = '+sfFmt(bpvp)+'<br>';
+              out+='MV(CTD) = '+cp.toFixed(2)+'/100 \u00d7 100,000 = '+sfFmt(mvc)+'<br>';
+              out+='BPV(CTD) = '+cmd+' \u00d7 0.0001 \u00d7 '+sfFmt(mvc)+' = '+bpvc.toFixed(2)+'<br><br>';
+              out+='<span style="color:#A78BFA;">1. Full hedge</span>: BPVHR = \u2212'+sfFmt(bpvp)+' / '+bpvc.toFixed(2)+' \u00d7 '+cf+' = <span style="color:#D4A017;">'+hrFull.toFixed(2)+'</span> \u2192 '+(hrFull<0?'SELL':'BUY')+' '+Math.abs(Math.round(hrFull))+' contracts<br>';
+              out+='<span style="color:#A78BFA;">2. Target MD '+mdt+'</span>: BPV\u209c = '+sfFmt(bpvt)+'; BPVHR = ('+sfFmt(bpvt)+' \u2212 '+sfFmt(bpvp)+') / '+bpvc.toFixed(2)+' \u00d7 '+cf+' = <span style="color:#D4A017;">'+hrTgt.toFixed(2)+'</span> \u2192 '+(hrTgt<0?'SELL':'BUY')+' '+Math.abs(Math.round(hrTgt))+' contracts</div>';
+              document.getElementById('sf-bp-out').innerHTML=out;
+            }
+            function sfCh2Tab(id, btn){
+              document.querySelectorAll('#sfr-ch2 > .sf-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#sfr-ch2 > .sf-tabs > .sf-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('sfch2-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function sfCcyCalc(){
+              var n=(parseFloat(document.getElementById('sf-cc-n').value)||0)*1e6;
+              var fx=parseFloat(document.getElementById('sf-cc-fx').value)||1;
+              var sp=(parseFloat(document.getElementById('sf-cc-sp').value)||0)/10000;
+              var b=(parseFloat(document.getElementById('sf-cc-b').value)||0)/10000;
+              var ds=(parseFloat(document.getElementById('sf-cc-ds').value)||0)/10000;
+              var er=(parseFloat(document.getElementById('sf-cc-er').value)||0)/100;
+              var ur=(parseFloat(document.getElementById('sf-cc-ur').value)||0)/100;
+              var d=(parseFloat(document.getElementById('sf-cc-d').value)||0)/360;
+              var ep=n/fx;
+              var loanInt=ep*(er+sp)*d;
+              var usdSwap=n*ur*d;
+              var eurSwap=ep*(er+b)*d;
+              var direct=n*(ur+ds)*d;
+              var synth=n*(ur+sp-b)*d;
+              var ben=direct-synth;
+              var allin=((sp-b)*10000).toFixed(0);
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='&#8364; principal = '+sfFmt(n)+' / '+fx+' = <span style="color:#A78BFA;">&#8364;'+sfFmt(Math.round(ep))+'</span> (re-exchanged at maturity, same amounts)<br><br>';
+              out+='PAYS &#8364; loan interest = &#8364;P \u00d7 (&#8364;ref + spread) \u00d7 d/360 = &#8364;'+sfFmt(Math.round(loanInt))+'<br>';
+              out+='PAYS $ swap interest = $N \u00d7 $ref \u00d7 d/360 = $'+sfFmt(Math.round(usdSwap))+'<br>';
+              out+='RECEIVES &#8364; swap interest = &#8364;P \u00d7 (&#8364;ref + basis) \u00d7 d/360 = &#8364;'+sfFmt(Math.round(eurSwap))+'<br><br>';
+              out+='Direct $ borrowing = $N \u00d7 ($ref + direct spread) \u00d7 d/360 = <span style="color:#FF7B72;">$'+sfFmt(Math.round(direct))+'</span><br>';
+              out+='Synthetic $ borrowing = $N \u00d7 ($ref + spread \u2212 basis) \u00d7 d/360 = <span style="color:#3DD68C;">$'+sfFmt(Math.round(synth))+'</span><br>';
+              out+='Net benefit of swap = <span style="color:#D4A017;">$'+sfFmt(Math.round(ben))+'</span><br>';
+              out+='All-in synthetic = $ref + <span style="color:#A78BFA;">'+allin+' bp</span> (locked for the tenor)</div>';
+              document.getElementById('sf-cc-out').innerHTML=out;
+            }
+            function sfFxCalc(){
+              var a=(parseFloat(document.getElementById('sf-fx-a').value)||0)*1e6;
+              var cs=(parseFloat(document.getElementById('sf-fx-cs').value)||1)*1e3;
+              var pr=parseFloat(document.getElementById('sf-fx-p').value)||0;
+              var dir=document.getElementById('sf-fx-dir').value;
+              var hr=a/cs;
+              var dom=a*pr;
+              var side=(dir==='recv')?'SELL':'BUY';
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='HR = '+sfFmt(a)+' / '+sfFmt(cs)+' = <span style="color:#A78BFA;">'+sfFmt(hr)+' contracts</span> \u2192 <span style="color:'+(side==='SELL'?'#FF7B72':'#3DD68C')+';">'+side+'</span><br>';
+              out+='At settlement: deliver/receive '+sfFmt(a)+' foreign \u00d7 '+pr.toFixed(4)+' = <span style="color:#D4A017;">'+sfFmt(dom)+'</span> domestic (locked)</div>';
+              document.getElementById('sf-fx-out').innerHTML=out;
+            }
+            function sfCh3Tab(id, btn){
+              document.querySelectorAll('#sfr-ch3 > .sf-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#sfr-ch3 > .sf-tabs > .sf-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('sfch3-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function sfEqSwapCalc(){
+              var mv=(parseFloat(document.getElementById('sf-es-mv').value)||0)*1e6;
+              var n=(parseFloat(document.getElementById('sf-es-n').value)||0)*1e6;
+              var r=(parseFloat(document.getElementById('sf-es-r').value)||0)/100;
+              var sp=(parseFloat(document.getElementById('sf-es-sp').value)||0)/10000;
+              var d=(parseFloat(document.getElementById('sf-es-d').value)||0)/360;
+              var i0=parseFloat(document.getElementById('sf-es-i0').value)||1;
+              var i1=parseFloat(document.getElementById('sf-es-i1').value)||0;
+              var ret=i1/i0-1;
+              var dp=mv*ret;
+              var eq=n*ret;
+              var fl=n*(r+sp)*d;
+              var net=eq-fl;
+              var pos=dp+net;
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='Index return = '+i1+' / '+i0+' \u2212 1 = <span style="color:'+(ret>=0?'#3DD68C':'#FF7B72')+';">'+(ret*100).toFixed(2)+'%</span><br>';
+              out+='Portfolio \u0394 = MV \u00d7 R = '+sfFmt(Math.round(dp))+'<br>';
+              out+='Equity leg (received) = N \u00d7 R = '+sfFmt(Math.round(eq))+'<br>';
+              out+='Floating leg (paid) = N \u00d7 (rate + spread) \u00d7 d/360 = '+sfFmt(Math.round(fl))+'<br>';
+              out+='Net swap cash flow = <span style="color:'+(net>=0?'#3DD68C':'#FF7B72')+';">'+sfFmt(Math.round(net))+'</span><br>';
+              out+='Fund manager position = \u0394portfolio + net swap = <span style="color:#D4A017;">'+sfFmt(Math.round(pos))+'</span></div>';
+              document.getElementById('sf-es-out').innerHTML=out;
+            }
+            function sfEqHedgeCalc(){
+              var v=(parseFloat(document.getElementById('sf-eh-v').value)||0)*1e6;
+              var f0=parseFloat(document.getElementById('sf-eh-f0').value)||1;
+              var m=parseFloat(document.getElementById('sf-eh-m').value)||1;
+              var f1=parseFloat(document.getElementById('sf-eh-f1').value)||0;
+              var pct=(parseFloat(document.getElementById('sf-eh-pct').value)||0)/100;
+              var raw=-v/(f0*m);
+              var k=Math.round(Math.abs(raw));
+              var fut=(f1-f0)*m*(-k);
+              var slice=v*pct;
+              var resid=fut+slice;
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='N = \u2212'+sfFmt(v)+' / ('+f0+' \u00d7 '+m+') = '+raw.toFixed(1)+' \u2192 <span style="color:#FF7B72;">SELL '+k+' contracts</span><br>';
+              out+='Futures P/L = ('+f1+' \u2212 '+f0+') \u00d7 '+m+' \u00d7 \u2212'+k+' = <span style="color:'+(fut>=0?'#3DD68C':'#FF7B72')+';">'+sfFmt(fut)+'</span><br>';
+              out+='Hedged slice \u0394 = '+sfFmt(v)+' \u00d7 '+(pct*100).toFixed(1)+'% = '+sfFmt(slice)+'<br>';
+              out+='Net on hedged slice = <span style="color:#D4A017;">'+sfFmt(resid)+'</span> (residual = HR rounding)</div>';
+              document.getElementById('sf-eh-out').innerHTML=out;
+            }
+            function sfBetaCalc(){
+              var mv=(parseFloat(document.getElementById('sf-tb-mv').value)||0)*1e6;
+              var bp=parseFloat(document.getElementById('sf-tb-bp').value)||0;
+              var bt=parseFloat(document.getElementById('sf-tb-bt').value)||0;
+              var bf=parseFloat(document.getElementById('sf-tb-bf').value)||1;
+              var f=parseFloat(document.getElementById('sf-tb-f').value)||1;
+              var m=parseFloat(document.getElementById('sf-tb-m').value)||1;
+              var pct=(parseFloat(document.getElementById('sf-tb-pct').value)||0)/100;
+              var F=f*m;
+              var raw=(bt-bp)/bf*(mv/F);
+              var k=Math.round(raw);
+              var pv=mv*(1+pct*bp);
+              var fT=Math.round(f*(1+pct)*2)/2;
+              var fut=(f-fT)*m*(-k)*-1;
+              fut=(fT-f)*m*k;
+              var netv=pv+fut;
+              var ret=netv/mv-1;
+              var rb=(pct!==0)?(ret/pct):0;
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='F = '+f+' \u00d7 '+m+' = '+sfFmt(F)+'<br>';
+              out+='N = ('+bt+' \u2212 '+bp+')/'+bf+' \u00d7 '+sfFmt(mv)+'/'+sfFmt(F)+' = '+raw.toFixed(2)+' \u2192 <span style="color:'+(k<0?'#FF7B72':'#3DD68C')+';">'+(k<0?'SELL ':'BUY ')+Math.abs(k)+' contracts</span><br><br>';
+              out+='Portfolio after = MV \u00d7 [1 + (move \u00d7 \u03b2\u209a)] = '+sfFmt(Math.round(pv))+'<br>';
+              out+='Futures at end = '+f+' \u00d7 (1 + move) \u2248 '+fT+' (nearest 0.5 pt)<br>';
+              out+='Futures profit = ('+fT+' \u2212 '+f+') \u00d7 '+m+' \u00d7 ('+k+') = <span style="color:'+(fut>=0?'#3DD68C':'#FF7B72')+';">'+sfFmt(Math.round(fut))+'</span><br>';
+              out+='Net position = '+sfFmt(Math.round(netv))+' \u2192 return = '+(ret*100).toFixed(2)+'%<br>';
+              out+='Realized beta = '+(ret*100).toFixed(2)+'% / '+(pct*100).toFixed(2)+'% = <span style="color:#D4A017;">'+rb.toFixed(2)+'</span></div>';
+              document.getElementById('sf-tb-out').innerHTML=out;
+            }
+            function sfCashEqCalc(){
+              var c=(parseFloat(document.getElementById('sf-ce-c').value)||0)*1e6;
+              var f=parseFloat(document.getElementById('sf-ce-f').value)||1;
+              var m=parseFloat(document.getElementById('sf-ce-m').value)||1;
+              var bt=parseFloat(document.getElementById('sf-ce-bt').value)||1;
+              var F=f*m;
+              var raw=bt*(c/F);
+              var k=Math.round(raw);
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='F = '+f+' \u00d7 '+m+' = '+sfFmt(F)+'<br>';
+              out+='N = (\u03b2\u209c \u2212 0)/1 \u00d7 cash/F = '+bt+' \u00d7 '+sfFmt(c)+'/'+sfFmt(F)+' = '+raw.toFixed(2)+'<br>';
+              out+='\u2192 <span style="color:#3DD68C;">BUY '+k+' contracts</span> (cash \u03b2 = 0, long futures add \u03b2)</div>';
+              document.getElementById('sf-ce-out').innerHTML=out;
+            }
+            function sfCh4Tab(id, btn){
+              document.querySelectorAll('#sfr-ch4 > .sf-panel').forEach(function(p){p.classList.remove('active')});
+              document.querySelectorAll('#sfr-ch4 > .sf-tabs > .sf-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById('sfch4-'+id).classList.add('active');
+              btn.classList.add('active');
+            }
+            function sfVixCalc(){
+              var v=parseFloat(document.getElementById('sf-vx-v').value)||0;
+              var m=v/Math.sqrt(12);
+              var regime=(v<20)?'<span style="color:#3DD68C;">low-risk environment</span> (rule of thumb: &lt; 20)':(v>30)?'<span style="color:#FF7B72;">high-risk environment</span> (rule of thumb: &gt; 30)':'intermediate zone (20\u201330)';
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='Over ONE YEAR: S&amp;P expected within <span style="color:#A78BFA;">\u00b1'+v.toFixed(2)+'%</span> at 68% confidence<br>';
+              out+='Over the NEXT 30 DAYS: \u00b1 '+v+'/\u221a12 = <span style="color:#D4A017;">\u00b1'+m.toFixed(2)+'%</span><br>';
+              out+='Regime: '+regime+'</div>';
+              document.getElementById('sf-vx-out').innerHTML=out;
+            }
+            function sfRollPick(){
+              var pos=document.getElementById('sf-rl-pos').value;
+              var ts=document.getElementById('sf-rl-ts').value;
+              var yieldPos=(pos==='long')!==(ts==='cont');
+              var mech;
+              if(ts==='cont'){ mech='contango: futures ABOVE spot \u2192 futures price DECLINES toward spot as expiry approaches'; }
+              else { mech='backwardation: futures BELOW spot \u2192 futures price RISES toward spot as expiry approaches'; }
+              var who=(pos==='long')?'long position '+((ts==='cont')?'loses':'gains')+' on that drift':'short position '+((ts==='cont')?'gains':'loses')+' on that drift';
+              var out='<span class="sf-dv-h">'+(pos==='long'?'LONG':'SHORT')+' futures \u00d7 '+(ts==='cont'?'CONTANGO':'BACKWARDATION')+'</span>\n';
+              out+='roll yield : <span style="color:'+(yieldPos?'#3DD68C':'#FF7B72')+';font-weight:600;">'+(yieldPos?'POSITIVE':'NEGATIVE')+'</span>\n';
+              out+='mechanism : '+mech+'\n';
+              out+='driver : basis (spot \u2212 futures) converges to zero at expiry \u2192 '+who+'\n';
+              out+='amplifier : steeper SHORT end of the curve \u2192 roll yield magnified';
+              document.getElementById('sf-rl-out').innerHTML=out;
+            }
+            function sfVsCalc(){
+              var nv=parseFloat(document.getElementById('sf-vm-nv').value)||0;
+              var k=parseFloat(document.getElementById('sf-vm-k').value)||1;
+              var T=parseFloat(document.getElementById('sf-vm-T').value)||1;
+              var t=parseFloat(document.getElementById('sf-vm-t').value)||0;
+              var rv=parseFloat(document.getElementById('sf-vm-rv').value)||0;
+              var iv=parseFloat(document.getElementById('sf-vm-iv').value)||0;
+              var r=(parseFloat(document.getElementById('sf-vm-r').value)||0)/100;
+              var rem=T-t;
+              var leg1=rv*rv*t/T, leg2=iv*iv*rem/T;
+              var evar=leg1+leg2;
+              var nvar=nv/(2*k);
+              var k2=k*k;
+              var payoff=(evar-k2)*nvar;
+              var rr=r*rem/12;
+              var val=payoff/(1+rr);
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='<span style="color:#A78BFA;">Step 1</span> E[var] = '+rv+'\u00b2\u00d7'+t+'/'+T+' + '+iv+'\u00b2\u00d7'+rem+'/'+T+' = '+leg1.toFixed(2)+' + '+leg2.toFixed(2)+' = <b>'+evar.toFixed(2)+'</b><br>';
+              out+='<span style="color:#A78BFA;">Step 2</span> N(var) = '+sfFmt(nv)+' / (2\u00d7'+k+') = '+sfFmt(nvar)+'<br>';
+              out+='&nbsp;&nbsp;payoff = ('+evar.toFixed(2)+' \u2212 '+k2+') \u00d7 '+sfFmt(nvar)+' = <span style="color:'+(payoff>=0?'#3DD68C':'#FF7B72')+';">'+sfFmt(Math.round(payoff))+'</span><br>';
+              out+='<span style="color:#A78BFA;">Step 3</span> unannualized rate = '+(r*100).toFixed(2)+'% \u00d7 '+rem+'/12 = '+(rr*100).toFixed(2)+'%<br>';
+              out+='&nbsp;&nbsp;value = '+sfFmt(Math.round(payoff))+' / '+(1+rr).toFixed(3)+' = <span style="color:#D4A017;">'+sfFmt(Math.round(val))+'</span> '+(val>=0?'(gain to the long, loss to the short)':'(loss to the long, gain to the short)')+'</div>';
+              document.getElementById('sf-vm-out').innerHTML=out;
+            }
+            function sfFedCalc(){
+              var p=parseFloat(document.getElementById('sf-ff-p').value)||0;
+              var lo=parseFloat(document.getElementById('sf-ff-lo').value)||0;
+              var hi=parseFloat(document.getElementById('sf-ff-hi').value)||0;
+              var ch=(parseFloat(document.getElementById('sf-ff-ch').value)||0)/100;
+              var imp=100-p;
+              var mid=(lo+hi)/2;
+              var assumed=mid+ch;
+              var prob=(ch!==0)?((imp-mid)/ch):0;
+              var out='<div style="font-family:var(--mono);font-size:12px;line-height:1.8;color:#C9D1D9;">';
+              out+='Implied FFE at expiry = 100 \u2212 '+p+' = <span style="color:#A78BFA;">'+imp.toFixed(4)+'%</span><br>';
+              out+='Current target (midpoint) = ('+lo+' + '+hi+')/2 = '+mid.toFixed(3)+'%<br>';
+              out+='Target if change = '+mid.toFixed(3)+' '+(ch>=0?'+':'\u2212')+' '+Math.abs(ch).toFixed(2)+' = '+assumed.toFixed(3)+'%<br>';
+              out+='Probability = ('+imp.toFixed(4)+' \u2212 '+mid.toFixed(3)+') / '+ch.toFixed(2)+' = <span style="color:#D4A017;">'+(prob*100).toFixed(0)+'%</span></div>';
+              document.getElementById('sf-ff-out').innerHTML=out;
+            }
+            function sfInit(){ setTimeout(sfConvPick,30); setTimeout(sfSwapCalc,30); setTimeout(sfNpCalc,30); setTimeout(sfFraCalc,30); setTimeout(sfStirCalc,30); setTimeout(sfCtdCalc,30); setTimeout(sfBpvCalc,30); setTimeout(sfCcyCalc,30); setTimeout(sfFxCalc,30); setTimeout(sfEqSwapCalc,30); setTimeout(sfEqHedgeCalc,30); setTimeout(sfBetaCalc,30); setTimeout(sfCashEqCalc,30); setTimeout(sfVixCalc,30); setTimeout(sfRollPick,30); setTimeout(sfVsCalc,30); setTimeout(sfFedCalc,30); }
+          </script>
+        </div>
 
 
 
@@ -18161,7 +19211,7 @@ const DEFAULT_DECK = {
   topics: [
     { name:"IPS",                subtopics:["Individual","Institutional"] },
     { name:"Asset Allocation",   subtopics:["SAA / TAA","LDI","Goals-Based","Risk Budgeting"] },
-    { name:"Derivatives",        subtopics:["Options Strategies","Futures Hedge","Swaps","Risk Measures"] },
+    { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Futures Hedge","Swaps","Risk Measures"] },
     { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
     { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution","Fixed Income"] },
@@ -19064,7 +20114,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -19085,6 +20135,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'paWidget' && typeof paInit === 'function') setTimeout(paInit, 50);
     if (widgetId === 'rwWidget' && typeof rwInit === 'function') setTimeout(rwInit, 50);
     if (widgetId === 'osWidget' && typeof osInit === 'function') setTimeout(osInit, 50);
+    if (widgetId === 'sfWidget' && typeof sfInit === 'function') setTimeout(sfInit, 50);
   }
 }
 
@@ -19108,11 +20159,12 @@ function openNote(key, topic, subtopic) {
     'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
     'Asset Allocation||Principles of Asset Allocation': 'paWidget',
     'Asset Allocation||Asset Allocation with Real-World Constraints': 'rwWidget',
-    'Derivatives||Options Strategies': 'osWidget'
+    'Derivatives||Options Strategies': 'osWidget',
+    'Derivatives||Swaps, Forwards, and Futures Strategies': 'sfWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
