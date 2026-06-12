@@ -18931,6 +18931,7 @@ current target = MIDPOINT of the target range</div>
             <button class="cm-toptab" onclick="cmTop(event,'cm-184')">Implementation &amp; Forwards</button>
             <button class="cm-toptab" onclick="cmTop(event,'cm-185')">Implementation &amp; Options</button>
             <button class="cm-toptab" onclick="cmTop(event,'cm-186')">Advanced Issues &amp; EM</button>
+            <button class="cm-toptab" onclick="cmTop(event,'cm-cheat')">Cheat Sheet</button>
             <button class="cm-toptab" onclick="cmTop(event,'cm-err')">Errors</button>
             <button class="cm-toptab" onclick="cmTop(event,'cm-mast')">Mastery</button>
           </div>
@@ -19292,6 +19293,18 @@ Domestic (USD) as base:  0.74683 / 0.76923 &#8722; 1 = &#8722;2.912%  &#10007;
                   <tr><td><b style="color:var(--cm-red);">Resistance level</b></td><td>Substantial <b>offers</b> from customers to sell</td><td>Price rising to it <b>bounces lower</b> as sales execute</td></tr>
                 </table>
                 <div class="cm-trap"><b>Sticky... until broken:</b> at support/resistance the price becomes "sticky" — but if the market moves <b>through</b> the level, it can <b style="color:var(--cm-red);">accelerate and continue in the same direction</b>.</div>
+                <svg viewBox="0 0 560 230" style="width:100%;max-width:560px;display:block;margin:12px auto;">
+                  <line x1="40" y1="150" x2="520" y2="150" stroke="#3DD68C" stroke-dasharray="6 4" stroke-width="1.5"/>
+                  <text x="44" y="144" fill="#3DD68C" font-size="11" font-family="monospace">support 1.70 (limit buys)</text>
+                  <polyline points="40,60 140,150 190,95 250,150 300,105 360,150" fill="none" stroke="#22D3EE" stroke-width="2.5"/>
+                  <polyline points="360,150 400,175 450,200 520,212" fill="none" stroke="#FF7B72" stroke-width="2.5"/>
+                  <circle cx="140" cy="150" r="4" fill="#3DD68C"/><circle cx="250" cy="150" r="4" fill="#3DD68C"/>
+                  <circle cx="360" cy="150" r="4" fill="#FF7B72"/>
+                  <text x="120" y="172" fill="#8B949E" font-size="10.5" font-family="monospace">bounce</text>
+                  <text x="232" y="172" fill="#8B949E" font-size="10.5" font-family="monospace">bounce</text>
+                  <text x="372" y="192" fill="#FF7B72" font-size="10.5" font-family="monospace">break &#8594; stop-loss sells</text>
+                  <text x="404" y="206" fill="#FF7B72" font-size="10.5" font-family="monospace">&#8594; acceleration</text>
+                </svg>
                 <div class="cm-fl">Kaplan example — support for GBP at 1.70 USD/GBP:
   Traders place LIMIT BUY orders at 1.70
   + STOP-LOSS SELL orders between 1.70 and 1.69
@@ -19345,6 +19358,18 @@ Domestic (USD) as base:  0.74683 / 0.76923 &#8722; 1 = &#8722;2.912%  &#10007;
 
               <div class="cm-card">
                 <div class="cm-title">&#129518; Calculator — Carry trade (BRL/USD, Kaplan)</div>
+                <svg viewBox="0 0 560 120" style="width:100%;max-width:560px;display:block;margin:6px auto 10px;">
+                  <rect x="8" y="35" width="96" height="50" rx="6" fill="none" stroke="#22D3EE"/><text x="56" y="56" fill="#C9D1D9" font-size="10" font-family="monospace" text-anchor="middle">BORROW USD</text><text x="56" y="72" fill="#22D3EE" font-size="10" font-family="monospace" text-anchor="middle">100 @ 1%</text>
+                  <line x1="104" y1="60" x2="120" y2="60" stroke="#8B949E" marker-end="none"/><text x="112" y="52" fill="#8B949E" font-size="11" text-anchor="middle">&#8594;</text>
+                  <rect x="122" y="35" width="96" height="50" rx="6" fill="none" stroke="#22D3EE"/><text x="170" y="56" fill="#C9D1D9" font-size="10" font-family="monospace" text-anchor="middle">CONVERT @2.41</text><text x="170" y="72" fill="#22D3EE" font-size="10" font-family="monospace" text-anchor="middle">BRL 241</text>
+                  <text x="226" y="52" fill="#8B949E" font-size="11" text-anchor="middle">&#8594;</text>
+                  <rect x="236" y="35" width="96" height="50" rx="6" fill="none" stroke="#3DD68C"/><text x="284" y="56" fill="#C9D1D9" font-size="10" font-family="monospace" text-anchor="middle">INVEST @6%</text><text x="284" y="72" fill="#3DD68C" font-size="10" font-family="monospace" text-anchor="middle">BRL 255.46</text>
+                  <text x="340" y="52" fill="#8B949E" font-size="11" text-anchor="middle">&#8594;</text>
+                  <rect x="350" y="35" width="96" height="50" rx="6" fill="none" stroke="#22D3EE"/><text x="398" y="56" fill="#C9D1D9" font-size="10" font-family="monospace" text-anchor="middle">BACK @2.41</text><text x="398" y="72" fill="#22D3EE" font-size="10" font-family="monospace" text-anchor="middle">USD 106.00</text>
+                  <text x="454" y="52" fill="#8B949E" font-size="11" text-anchor="middle">&#8594;</text>
+                  <rect x="464" y="35" width="88" height="50" rx="6" fill="none" stroke="#D4A017"/><text x="508" y="56" fill="#C9D1D9" font-size="10" font-family="monospace" text-anchor="middle">REPAY 101</text><text x="508" y="72" fill="#D4A017" font-size="10" font-family="monospace" text-anchor="middle">+ USD 5.00</text>
+                  <text x="280" y="108" fill="#8B949E" font-size="10" font-family="monospace" text-anchor="middle">spot unchanged &#8594; profit = the 5% rate differential ; BRL &#8722;5%+ &#8594; loss</text>
+                </svg>
                 <div class="cm-grid">
                   <div><span class="cm-lbl">Spot (high/low)</span><input class="cm-in" id="cmc-s0" value="2.41"></div>
                   <div><span class="cm-lbl">Rate high-yield %</span><input class="cm-in" id="cmc-rh" value="6"></div>
@@ -19483,6 +19508,19 @@ Mini example: sell CHF 1m 6-mo fwd at 1.05, spot 1.04
   &#8594; premium &#8594; short earns it: deliver at 1.05 what costs 1.04
   gain USD 10,000 ; unannualized roll = 0.01/1.04 = 0.96%</div>
                 <div class="cm-tip"><b>Prof's note (convergence):</b> F&#8320; &gt; S&#8320; and base sold forward &#8594; F&#84; = S&#84; at expiry whatever spot does &#8594; positive roll for the short <b>regardless of spot direction</b>. Positive roll for the short = negative roll for the long. Roll yield &#8800; total return: total &#916;F = unknown spot change + <b>known-in-advance roll yield</b>.</div>
+                <svg viewBox="0 0 560 250" style="width:100%;max-width:560px;display:block;margin:12px auto;">
+                  <circle cx="70" cy="80" r="3.5" fill="#22D3EE"/><text x="48" y="76" fill="#22D3EE" font-size="12" font-family="monospace">F&#8320;</text>
+                  <circle cx="70" cy="140" r="3.5" fill="#D4A017"/><text x="48" y="156" fill="#D4A017" font-size="12" font-family="monospace">S&#8320;</text>
+                  <path d="M 70 90 Q 60 115 70 130" fill="none" stroke="#8B949E" stroke-width="1.2"/><text x="38" y="118" fill="#8B949E" font-size="9" font-family="monospace">premium</text>
+                  <line x1="70" y1="80" x2="470" y2="38" stroke="#22D3EE" stroke-width="2"/><text x="478" y="42" fill="#22D3EE" font-size="12" font-family="monospace">F&#84;</text>
+                  <line x1="70" y1="140" x2="470" y2="72" stroke="#D4A017" stroke-width="2"/><text x="478" y="76" fill="#D4A017" font-size="12" font-family="monospace">S&#84;</text>
+                  <path d="M 492 46 Q 504 56 494 66" fill="none" stroke="#3DD68C" stroke-width="1.6"/><polygon points="494,66 492,58 500,62" fill="#3DD68C"/>
+                  <line x1="70" y1="80" x2="470" y2="170" stroke="#22D3EE" stroke-width="2"/><text x="478" y="174" fill="#22D3EE" font-size="12" font-family="monospace">F&#84;</text>
+                  <line x1="70" y1="140" x2="470" y2="205" stroke="#D4A017" stroke-width="2"/><text x="478" y="209" fill="#D4A017" font-size="12" font-family="monospace">S&#84;</text>
+                  <path d="M 492 178 Q 504 188 494 198" fill="none" stroke="#3DD68C" stroke-width="1.6"/><polygon points="494,198 492,190 500,194" fill="#3DD68C"/>
+                  <text x="250" y="26" fill="#8B949E" font-size="10.5" font-family="monospace">spot RISES &#8594; F&#84; still converges DOWN onto S&#84;</text>
+                  <text x="240" y="240" fill="#8B949E" font-size="10.5" font-family="monospace">spot FALLS &#8594; same convergence, same positive roll (short)</text>
+                </svg>
               </div>
 
               <div class="cm-card">
@@ -19668,6 +19706,17 @@ Mini example: sell CHF 1m 6-mo fwd at 1.05, spot 1.04
                 <div class="cm-title">Minimum-Variance Hedge Ratio</div>
                 <div class="cm-body">Mathematical hedge ratio: <b>regress past changes in R&#8202;DC on past changes in the hedging instrument's value</b> to minimize tracking error. The hedge ratio = <b style="color:var(--cm-main);">beta (slope coefficient)</b> of that regression.</div>
                 <div class="cm-trap"><b>Kaplan highlight:</b> the MVHR is based on <b>historical</b> returns — if the correlation between portfolio returns and hedging-instrument returns <b>changes, the hedge will not perform as expected</b>.</div>
+                <svg viewBox="0 0 360 210" style="width:100%;max-width:360px;display:block;margin:12px auto;">
+                  <line x1="40" y1="180" x2="340" y2="180" stroke="#30363D" stroke-width="1"/>
+                  <line x1="40" y1="180" x2="40" y2="15" stroke="#30363D" stroke-width="1"/>
+                  <text x="180" y="202" fill="#8B949E" font-size="10.5" font-family="monospace" text-anchor="middle">%&#916;S (USD/EUR) = R&#8202;FX</text>
+                  <text x="18" y="100" fill="#8B949E" font-size="10.5" font-family="monospace" transform="rotate(-90 18 100)" text-anchor="middle">R&#8202;DC</text>
+                  <line x1="50" y1="172" x2="330" y2="32" stroke="#22D3EE" stroke-width="2"/>
+                  <circle cx="80" cy="166" r="3" fill="#D4A017"/><circle cx="110" cy="142" r="3" fill="#D4A017"/><circle cx="135" cy="150" r="3" fill="#D4A017"/><circle cx="165" cy="118" r="3" fill="#D4A017"/><circle cx="190" cy="128" r="3" fill="#D4A017"/><circle cx="215" cy="96" r="3" fill="#D4A017"/><circle cx="245" cy="104" r="3" fill="#D4A017"/><circle cx="270" cy="70" r="3" fill="#D4A017"/><circle cx="300" cy="58" r="3" fill="#D4A017"/>
+                  <text x="246" y="40" fill="#22D3EE" font-size="11.5" font-family="monospace">slope &#946; = 1.25 = MVHR</text>
+                  <text x="120" y="60" fill="#8B949E" font-size="10" font-family="monospace">&#961; = 0.75 &#8594; scatter around</text>
+                  <text x="120" y="74" fill="#8B949E" font-size="10" font-family="monospace">the line = residual risk</text>
+                </svg>
                 <table class="cm-tbl">
                   <tr><th>#</th><th>Practical implication</th></tr>
                   <tr><td>1</td><td><b>Direct hedges need no MVHR</b>: long CHF 1m hedged by selling CHF 1m forward — CHF vs its own forward, corr &#8776; 1.00 &#8594; one-for-one.</td></tr>
@@ -19737,6 +19786,66 @@ Mini example: sell CHF 1m 6-mo fwd at 1.05, spot 1.04
                 <div class="cm-out" id="cmn-out"></div>
                 <div class="cm-trap"><b>Settlement trap:</b> the gain accrues in the restricted currency but is <b>paid in the developed currency, converted at the ENDING spot</b> — divide by S&#84;, not by the forward. Only the net amount changes hands.</div>
               </div>
+            </div>
+          </div>
+
+          <!-- ════════ CHEAT SHEET ════════ -->
+          <div id="cm-cheat" class="cm-toppanel">
+            <div class="cm-card">
+              <div class="cm-title">1 &#8212; Quotes &amp; Forwards</div>
+              <div class="cm-fl">P/B: base = denominator; buy/sell refer to the BASE
+Client buys base &#8594; ASK ; sells base &#8594; BID (spread always paid)
+Points: &#247; 10^(# decimals of spot) ; all-in = spot + points (bid+bid / ask+ask)
+B/P given? take the reciprocal &#8594; P/B</div>
+            </div>
+            <div class="cm-card">
+              <div class="cm-title">2 &#8212; Forward MTM (3 steps)</div>
+              <div class="cm-fl">1. Offset = opposite trade, same maturity (side of the OFFSET!)
+2. P&amp;L = &#916;rate &#215; notional, at original expiry
+3. MTM = P&amp;L / [1 + R &#215; (days/360)]   (remaining tenor, unannualized)</div>
+            </div>
+            <div class="cm-card">
+              <div class="cm-title">3 &#8212; Returns &amp; Risk</div>
+              <div class="cm-fl">Eq1: R&#8202;DC = (1+R&#8202;FC)(1+R&#8202;FX) &#8722; 1  &#8776; R&#8202;FC + R&#8202;FX
+Eq2: R&#8202;DC = &#931; w&#7522; R&#8202;DC,&#7522;       (compound each leg FIRST)
+R&#8202;FX: FOREIGN currency as base &#8212; invert if needed, then EV/BV &#8722; 1
+Eq3: &#963;&#178;(R&#8202;DC) &#8776; &#963;&#178;FC + &#963;&#178;FX + 2&#963;&#963;&#961;   (&#961;+ amplifies, &#961;&#8722; dampens)
+Eq4 (risk-free R&#8202;FC): &#963;(R&#8202;DC) = &#963;(R&#8202;FX)(1 + R&#8202;FC)  &#8212; not from Eq3</div>
+            </div>
+            <div class="cm-card">
+              <div class="cm-title">4 &#8212; Carry Trade</div>
+              <div class="cm-fl">F = S &#215; (1+i&#8341;)/(1+i&#8342;)  ; CIRP holds, UCIRP doesn't
+Borrow low &#8594; convert &#8594; invest high &#8594; convert back &#8594; repay
+Spot unchanged &#8594; profit = differential ; profitable if high-rate ccy
+falls LESS than the forward predicts ; EXIT when volatility spikes</div>
+            </div>
+            <div class="cm-card">
+              <div class="cm-title">5 &#8212; Roll Yield &amp; Hedge Decision</div>
+              <div class="cm-fl">Roll (short, to expiry) = (F&#8320; &#8722; S&#8320;)/S&#8320;
+IRP precise: [(1+i&#8346;)/(1+i&#8344;)]^t &#8722; 1   (analyzed ccy in denominator)
+LONG asset + premium &#8594; +roll, encourages hedge ; discount &#8594; &#8722;roll
+SHORT asset: flip the signs
+Decision: hedge if  F&#8320;/S&#8320; &#8722; 1  &gt;  E[S&#84;]/S&#8320; &#8722; 1</div>
+            </div>
+            <div class="cm-card">
+              <div class="cm-title">6 &#8212; Options Ladder (cost &#8595;)</div>
+              <div class="cm-fl">ATM put &#8594; OTM put &#8594; collar &#8594; put spread &#8594; seagull
+(fwd over/underhedge: &#8776; free, "positive convexity" if right)
+Every euro saved = downside protection or upside given up
+Collar = SHORT the risk reversal ; 1&#215;2 spread doubles tail risk</div>
+            </div>
+            <div class="cm-card">
+              <div class="cm-title">7 &#8212; MVHR &amp; NDF</div>
+              <div class="cm-fl">MVHR: regress R&#8202;DC on instrument &#8594; hedge = exposure &#215; &#946;
+Import-dependent (+&#961;) &#8594; &#946; &gt; 1 ; export-dependent (&#8722;&#961;) &#8594; &#946; &lt; 1
+Past data &#8594; correlation drift = underperformance
+NDF: settle = (S&#84; &#8722; F) &#215; N / S&#84;   in the DM ccy, at ENDING spot</div>
+            </div>
+            <div class="cm-card">
+              <div class="cm-title">8 &#8212; Tactical table</div>
+              <div class="cm-fl">Appreciation &#8594; hedge&#8595; / long&#8593;     Depreciation &#8594; hedge&#8593; / long&#8595;
+Vol&#8593; &#8594; long straddle              Vol&#8595; &#8594; short straddle
+Stable &#8594; carry trade              Crisis &#8594; discontinue carry</div>
             </div>
           </div>
 
@@ -19895,6 +20004,26 @@ Mini example: sell CHF 1m 6-mo fwd at 1.05, spot 1.04
               out+='<b>4. Risk:</b> high-yield ccy declines more than <span style="color:#FF7B72;">'+be.toFixed(1)+'%</span> \u2192 unprofitable';
               document.getElementById('cmc-out').innerHTML=out;
             }
+            function cmStraddleSvg(isLong){
+              var X=function(x){return 45+x*2.9;}, Y=function(y){return 100-y*1.3;}; // y in -55..+55 P&L
+              var s='<svg viewBox="0 0 360 200" style="width:100%;max-width:360px;display:block;margin:12px auto 2px;">';
+              s+='<line x1="45" y1="'+Y(0)+'" x2="340" y2="'+Y(0)+'" stroke="#30363D"/>';
+              s+='<text x="336" y="'+(Y(0)-6)+'" fill="#8B949E" font-size="9.5" font-family="monospace" text-anchor="end">0</text>';
+              s+='<line x1="'+X(50)+'" y1="20" x2="'+X(50)+'" y2="180" stroke="#30363D" stroke-dasharray="3 4"/>';
+              s+='<text x="'+X(50)+'" y="14" fill="#D4A017" font-size="9.5" font-family="monospace" text-anchor="middle">K (ATM)</text>';
+              s+='<text x="195" y="196" fill="#8B949E" font-size="10" font-family="monospace" text-anchor="middle">underlying at expiry</text>';
+              var pts, col, be1=X(25), be2=X(75);
+              if(isLong){ pts=[[0,25],[50,-25],[100,25]]; col='#3DD68C'; }
+              else { pts=[[0,-25],[50,25],[100,-25]]; col='#FF7B72'; }
+              var poly=pts.map(function(p){return X(p[0])+','+Y(p[1]);}).join(' ');
+              s+='<polyline points="'+poly+'" fill="none" stroke="'+col+'" stroke-width="2.6"/>';
+              s+='<circle cx="'+be1+'" cy="'+Y(0)+'" r="3" fill="#D4A017"/><circle cx="'+be2+'" cy="'+Y(0)+'" r="3" fill="#D4A017"/>';
+              s+='<text x="'+be1+'" y="'+(Y(0)+16)+'" fill="#D4A017" font-size="9" font-family="monospace" text-anchor="middle">BE = K \u2212 premiums</text>';
+              s+='<text x="'+be2+'" y="'+(Y(0)+16)+'" fill="#D4A017" font-size="9" font-family="monospace" text-anchor="middle">BE = K + premiums</text>';
+              s+='<text x="'+X(50)+'" y="'+(Y(isLong?-25:25)+(isLong?16:-9))+'" fill="'+col+'" font-size="9.5" font-family="monospace" text-anchor="middle">'+(isLong?'max loss = premiums paid':'max gain = premiums received')+'</text>';
+              s+='</svg>';
+              return s;
+            }
             function cmVolPick(dir){
               document.getElementById('cmv-up').classList.toggle('active',dir==='up');
               document.getElementById('cmv-dn').classList.toggle('active',dir==='dn');
@@ -19904,10 +20033,12 @@ Mini example: sell CHF 1m 6-mo fwd at 1.05, spot 1.04
                   +'Leg deltas: call \u2248 +0.5, put \u2248 \u22120.5 \u2192 <b>equal &amp; opposite \u2192 delta neutral</b><br>'
                   +'Vega: both legs positive \u2192 you are <b>buying volatility</b><br>'
                   +'Vol rises \u2192 both options gain net value \u2192 profit';
+                out+=cmStraddleSvg(true);
               } else {
                 out='<b style="color:#FF7B72;">SHORT STRADDLE</b> \u2014 SELL the ATM call + SELL the ATM put<br><br>'
                   +'Delta neutral for the same reason \u2014 you are <b>selling volatility</b><br>'
                   +'Vol falls \u2192 both options fall in net value \u2192 <b>repurchase at lower prices</b> for a profit';
+                out+=cmStraddleSvg(false);
               }
               document.getElementById('cmv-out').innerHTML=out;
             }
@@ -19962,6 +20093,39 @@ Mini example: sell CHF 1m 6-mo fwd at 1.05, spot 1.04
               ps:{ name:'Put spread', legs:'BUY 35-delta put + SELL 25-delta put', cost:'Lower than OTM put alone (put premium received)', opp:'None on the upside (no call sold)', down:'ONLY between the two strikes \u2014 lost below the sold 25-delta strike', up:'FULL' },
               sea:{ name:'Seagull spread', legs:'BUY 35-delta put + SELL 25-delta put + SELL 35-delta call', cost:'Lowest of the option strategies here', opp:'Upside capped (call sold)', down:'Same as the put spread \u2014 between the strikes only', up:'Capped at the call strike' }
             };
+            function cmPayoffSvg(pts, marks, capNote){
+              // pts: array of [x,y] in 0..100 payoff space (y = hedged portfolio value)
+              var X=function(x){return 45+x*2.9;}, Y=function(y){return 175-y*1.55;};
+              var s='<svg viewBox="0 0 360 200" style="width:100%;max-width:360px;display:block;margin:12px auto 2px;">';
+              s+='<line x1="45" y1="175" x2="340" y2="175" stroke="#30363D"/>';
+              s+='<line x1="45" y1="175" x2="45" y2="15" stroke="#30363D"/>';
+              s+='<text x="195" y="195" fill="#8B949E" font-size="10" font-family="monospace" text-anchor="middle">EUR/CHF at expiry (S_T)</text>';
+              s+='<text x="16" y="95" fill="#8B949E" font-size="10" font-family="monospace" transform="rotate(-90 16 95)" text-anchor="middle">hedged value</text>';
+              // unhedged reference diagonal
+              s+='<line x1="'+X(0)+'" y1="'+Y(0)+'" x2="'+X(100)+'" y2="'+Y(100)+'" stroke="#8B949E" stroke-dasharray="5 4" stroke-width="1.2"/>';
+              s+='<text x="'+(X(86))+'" y="'+(Y(94))+'" fill="#8B949E" font-size="9.5" font-family="monospace">unhedged</text>';
+              // spot vertical
+              s+='<line x1="'+X(50)+'" y1="20" x2="'+X(50)+'" y2="175" stroke="#30363D" stroke-dasharray="3 4"/>';
+              s+='<text x="'+X(50)+'" y="14" fill="#8B949E" font-size="9.5" font-family="monospace" text-anchor="middle">spot</text>';
+              // strikes
+              (marks||[]).forEach(function(m){
+                s+='<line x1="'+X(m[0])+'" y1="'+(Y(m[0])-6)+'" x2="'+X(m[0])+'" y2="'+(Y(m[0])+6)+'" stroke="#D4A017" stroke-width="2"/>';
+                s+='<text x="'+X(m[0])+'" y="'+(Y(m[0])+20)+'" fill="#D4A017" font-size="9.5" font-family="monospace" text-anchor="middle">'+m[1]+'</text>';
+              });
+              var poly=pts.map(function(p){return X(p[0])+','+Y(p[1]);}).join(' ');
+              s+='<polyline points="'+poly+'" fill="none" stroke="#22D3EE" stroke-width="2.6"/>';
+              if(capNote) s+='<text x="'+(X(50))+'" y="'+(Y(2))+'" fill="#8B949E" font-size="9.5" font-family="monospace" text-anchor="middle">'+capNote+'</text>';
+              s+='</svg>';
+              return s;
+            }
+            var CM_PAYOFFS={
+              fwd:{pts:[[0,25],[100,75]], marks:[], note:'50% hedge ratio shown: half the slope of unhedged'},
+              atm:{pts:[[0,50],[50,50],[100,100]], marks:[[50,'K (ATM)']], note:'floor at the strike, full upside kept'},
+              otm:{pts:[[0,35],[35,35],[100,100]], marks:[[35,'K (OTM)']], note:'exposed from spot down to K, floor below'},
+              col:{pts:[[0,35],[35,35],[65,65],[100,65]], marks:[[35,'K put'],[65,'K call']], note:'floor + cap: short the risk reversal'},
+              ps:{pts:[[0,15],[20,35],[35,35],[100,100]], marks:[[35,'K long'],[20,'K short']], note:'protection only between the strikes'},
+              sea:{pts:[[0,15],[20,35],[35,35],[65,65],[100,65]], marks:[[35,'K long put'],[20,'K short put'],[65,'K call']], note:'put spread + cap'}
+            };
             function cmStratPick(k){
               ['fwd','atm','otm','col','ps','sea'].forEach(function(x){ document.getElementById('cmx-'+x).classList.toggle('active',x===k); });
               var s=CM_STRATS[k];
@@ -19971,6 +20135,8 @@ Mini example: sell CHF 1m 6-mo fwd at 1.05, spot 1.04
               out+='Opportunity cost: '+s.opp+'<br>';
               out+='Downside protection: <span style="color:#3DD68C;">'+s.down+'</span><br>';
               out+='Upside potential: '+s.up;
+              var p=CM_PAYOFFS[k];
+              out+=cmPayoffSvg(p.pts,p.marks,p.note);
               document.getElementById('cmx-out').innerHTML=out;
             }
             function cmEcoPick(k){
@@ -20436,6 +20602,82 @@ const DEFAULT_DECK = {
     {id:"c22",topic:"Command Words",subtopic:"Thin vs Full",type:"thin-full",
      q:"The single most common AM mistake — what is it?",
      a:"[hl]Stopping at Layer 1.[/hl]\n\nWriting the correct conclusion without the financial mechanism (Layer 2) or vignette link (Layer 3).\n\nAfter every sentence, ask:\n[rl]'Why is that true financially?' → write Layer 2[/rl][rl]'Where does that come from in the vignette?' → write Layer 3[/rl][rl]'What is the consequence if not done?' → write the impact[/rl]"},
+    // ── Currency Management (Reading 18) ──
+    {id:"cm1",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"P/B quote — which is base, which is price, and what do 'buy'/'sell' refer to?",
+     a:"[rl][hl]Base[/hl] = denominator (B); priced in units of the numerator = [hl]price currency[/hl] (P)[/rl][rl]Unless stated otherwise, [hl]buy and sell refer to the BASE[/hl][/rl]\n\nSell spot 1,000,000 at CAD/USD 0.9800 = sell USD 1m, buy CAD 980,000."},
+    {id:"cm2",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"Bid/ask: which side does the client trade on?",
+     a:"[hl]The customer always pays the spread:[/hl]\n[rl]Client BUYS base → pays the [hl]ASK[/hl] (deliver more price ccy)[/rl][rl]Client SELLS base → receives the [hl]BID[/hl] (receive less)[/rl]\n\n0.9790/0.9810 CAD/USD: buy 1 USD = deliver 0.9810 CAD."},
+    {id:"cm3",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
+     q:"Forward points — how do you convert them to an all-in forward?",
+     a:"[fl]Move the decimal LEFT by the # of decimals in the spot quote\n4 decimals → ÷10,000 ; 3 → ÷1,000 ; 5 → ÷100,000\nAll-in = spot + adjusted points (bid+bid, ask+ask)[/fl]\n[hl]Myth:[/hl] ÷10,000 only works for 4-decimal spots — count the decimals."},
+    {id:"cm4",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
+     q:"Mark-to-market of a forward — the 3 steps",
+     a:"[fl]1. Offset = OPPOSITE trade, SAME maturity\n   all-in = current spot ± remaining points (side of the OFFSET)\n2. P&L = rate difference × notional, settled at original expiry\n3. Discount over REMAINING days, unannualized:\n   ÷ [1 + R × (days/360)][/fl]\n[hl]Trap:[/hl] buying the base on the offset → ask side for spot AND points."},
+    {id:"cm5",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"FX swap — what is it and why does T+2 matter here?",
+     a:"NOT a currency swap: [hl]rolls a maturing forward[/hl].\n[rl]Near leg: SPOT trade offsetting the maturing contract[/rl][rl]Far leg: new FORWARD re-establishing the position[/rl]\n\nT+2 settlement makes the spot leg land exactly on the forward's maturity. Resized far leg (10m spot vs 11m fwd) = [hl]'mismatched' FX swap[/hl]."},
+    {id:"cm6",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
+     q:"R_DC — exact and approximate (Equation 1)",
+     a:"[fl]R_DC = (1 + R_FC)(1 + R_FX) − 1\n     = R_FC + R_FX + (R_FC × R_FX)\nR_DC ≈ R_FC + R_FX[/fl]\nMulti-asset (Eq 2): R_DC = Σ wᵢ × R_DC,ᵢ (weights in domestic terms, each leg compounded separately first)."},
+    {id:"cm7",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"R_FX trap — which currency must be the base?",
+     a:"[hl]The FOREIGN currency must be the base (denominator).[/hl]\n\nUSD investor, EUR assets: use USD/EUR. 1.339/1.300 − 1 = +3.000% ✓\nInverted EUR/USD gives −2.912% ✗ — appreciation of one ≠ −depreciation of the other.\n\n[rl]Label every quote, take reciprocals if needed, then EV/BV − 1[/rl]"},
+    {id:"cm8",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
+     q:"Variance of R_DC (Equation 3) — and the role of ρ",
+     a:"[fl]σ²(R_DC) ≈ σ²(R_FC) + σ²(R_FX) + 2σ(R_FC)σ(R_FX)ρ[/fl]\n[rl]ρ positive → R_FX amplifies R_FC → MORE need to hedge[/rl][rl]ρ negative → natural dampening → LESS need to hedge[/rl]\nApproximation: ignores the (R_FC)(R_FX) cross product."},
+    {id:"cm9",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
+     q:"Foreign asset is RISK-FREE — which risk formula applies?",
+     a:"[fl]Equation 4: σ(R_DC) = σ(R_FX) × (1 + R_FC)[/fl]\nσ(R_FC) = 0 and its correlation with R_FX = 0 → R_FX is the only risk source.\n[hl]Trap:[/hl] special case — CANNOT be derived from Equation 3."},
+    {id:"cm10",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"The 4 currency management strategies — discretion and goal of each",
+     a:"[rl][hl]Passive hedging:[/hl] rule-based, match benchmark exposure — eliminate currency risk[/rl][rl][hl]Discretionary:[/hl] modest band (e.g. ±5%) — reduce risk + modest alpha[/rl][rl][hl]Active:[/hl] larger deviations — alpha, not risk reduction[/rl][rl][hl]Overlay:[/hl] outsourced; can treat currency as an asset class (short SEK with zero exposure) — per mandate[/rl]"},
+    {id:"cm11",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"LOS 18.c — factors pushing toward a FULLY HEDGED program",
+     a:"[rl]Short time horizon[/rl][rl]High risk aversion[/rl][rl]Unconcerned with opportunity cost of missed currency gains[/rl][rl]High short-term income & liquidity needs[/rl][rl]Significant foreign-currency BOND exposure[/rl][rl]Low hedging costs[/rl][rl]Client doubts discretionary management[/rl]\nReverse any factor → more discretion."},
+    {id:"cm12",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"Economic fundamentals — the 5 drivers of currency APPRECIATION",
+     a:"[rl]1. More [hl]undervalued[/hl] vs fundamental value[/rl][rl]2. Greatest [hl]rate of increase[/hl] in fundamental value[/rl][rl]3. Higher [hl]real or nominal rates[/hl][/rl][rl]4. [hl]Lower inflation[/hl] than other countries[/rl][rl]5. [hl]Decreasing risk premium[/hl][/rl]\nOpposites → depreciation. Long term: convergence to fair value (e.g. PPP)."},
+    {id:"cm13",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"Technical analysis — 3 principles + support/resistance behavior",
+     a:"[rl]1. Past prices predict prices (all info already in them)[/rl][rl]2. Humans repeat → patterns repeat[/rl][rl]3. No need to know fair value — only where it will trade[/rl]\n\n[hl]Support[/hl] = bids → bounce up. [hl]Resistance[/hl] = offers → bounce down. Sticky — but a BREAK accelerates in the same direction (stop-losses fire)."},
+    {id:"cm14",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"Carry trade — what does it violate, when does it profit, when does it die?",
+     a:"Exploits a violation of [hl]UCIRP[/hl] = trading the forward rate bias.\n[rl]Profitable if the high-rate ccy declines LESS than the forward predicts[/rl][rl]Usually works; small % of the time → LARGE losses[/rl][rl]Crisis = rising vol → investors flee high-yield ccys → [hl]exit the carry when volatility spikes[/hl][/rl]\nFunding = low-rate DM; investing = high-rate EM."},
+    {id:"cm15",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
+     q:"Carry trade mechanics + CIRP forward",
+     a:"[fl]F = S × (1 + i_high)/(1 + i_low)   (high-yield ccy as base)\nBorrow low → convert at spot → invest high → convert back → repay[/fl]\nSpot unchanged → profit = the rate differential.\n[hl]Unhedged by definition[/hl] — hedging locks CIRP → zero profit."},
+    {id:"cm16",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"Volatility trading — vol up vs vol down, and the rebalancing caveat",
+     a:"[rl]Vol ↑ expected → [hl]LONG straddle[/hl] (buy ATM call + put; deltas ±0.5 → delta neutral; vega positive ×2)[/rl][rl]Vol ↓ → [hl]SHORT straddle[/hl] — repurchase cheaper[/rl][rl]Strangle = OTM versions: cheaper, needs a bigger move, lower likely profit[/rl]\n[hl]Caveat:[/hl] deltas drift → continuous rebalancing to stay delta-neutral."},
+    {id:"cm17",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"Tactical playbook — expectation → action (6 rows)",
+     a:"[rl]Ccy appreciation → reduce hedge OR increase long[/rl][rl]Ccy depreciation → increase hedge or cut long[/rl][rl]Vol rising → long straddle/strangle[/rl][rl]Vol falling → short straddle/strangle[/rl][rl]Stable markets → carry trade[/rl][rl]Crisis → DISCONTINUE the carry[/rl]\nVariants: unequal carry weights; delta-neutral 'tilted' net ± per view."},
+    {id:"cm18",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"Why are forwards preferred over futures for FX hedging? (4)",
+     a:"[rl]Customizable (futures standardized)[/rl][rl]Almost any pair (futures: limited)[/rl][rl]No margin → less operational complexity / cash flows[/rl][rl]Forward & swap volume dwarfs futures → better liquidity[/rl]\n\nStatic hedge = held to expiry; dynamic = rebalanced (periodicity specified)."},
+    {id:"cm19",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
+     q:"Roll yield — formula, sign logic (Figure 18.2)",
+     a:"[fl]Roll (short, to expiry) = (F₀ − S₀)/S₀\nIRP precise: %roll = [(1+i_P)/(1+i_B)]^t − 1  (analyzed ccy = base)[/fl]\n[rl]LONG asset → SHORT fwd: premium → [hl]positive roll[/hl] → encourages hedging; discount → negative → discourages[/rl][rl]SHORT asset → LONG fwd: signs flip[/rl]\nConvergence F_T = S_T makes it certain in advance."},
+    {id:"cm20",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"Hedge-or-not decision rule (KRW example logic)",
+     a:"Compare per currency:\n[fl]Hedged return = F₀/S₀ − 1 (the locked roll yield)\nUnhedged = E[S_T]/S₀ − 1 (manager forecast)[/fl]\n[hl]Hedge where hedged > unhedged.[/hl]\nPositive roll is only ONE factor — expected appreciation can beat it (the USD case: +3.41% unhedged > +0.34% hedged)."},
+    {id:"cm21",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"Options ladder — order by initial cost + the three dials",
+     a:"Highest → lowest initial cost:\n[rl]ATM protective put → OTM put → collar → put spread → seagull[/rl][rl](Fwd over/underhedge: separate, near-zero cost, 'positive convexity' if right)[/rl]\nEvery cost cut = less downside protection or less upside.\n[hl]Collar = SHORT the risk reversal[/hl] (counterparty long OTM call + short OTM put is long it)."},
+    {id:"cm22",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
+     q:"MVHR — what is the hedge ratio, and when is it ≠ 1.0?",
+     a:"[fl]Regress R_DC on the hedging instrument's returns\nHedge ratio = β (slope) ; hedge = exposure × β[/fl]\n[rl]Import-dependent economy: +ρ(R_FX,R_FC) → MVHR > 1.0[/rl][rl]Export-dependent: −ρ → MVHR < 1.0[/rl]\n[hl]Based on PAST data:[/hl] correlation changes → hedge underperforms. Direct hedges (ccy vs own fwd, ρ≈1) need no MVHR."},
+    {id:"cm23",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"Cross hedge vs macro hedge — and the trade-off to state",
+     a:"[rl][hl]Cross (proxy):[/hl] instrument imperfectly correlated with the exposure → residual risk; rarely needed in FX (forwards exist for all pairs)[/rl][rl][hl]Macro:[/hl] cross hedge of portfolio-WIDE factors — e.g. a fixed currency-basket derivative[/rl]\n[hl]Trade-off:[/hl] higher residual currency risk vs lower cost."},
+    {id:"cm24",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"EM currency challenges (LOS 18.i) — list the 7",
+     a:"[rl]Wider bid/ask (low volume; worse in crisis)[/rl][rl]Costlier to EXIT than enter (carry crowd unwinds)[/rl][rl]EM-to-EM executed via EUR component legs[/rl][rl]Non-normal returns: fat tails, negative skew → normal-based models flawed[/rl][rl]High yields → big fwd discounts → negative roll for hedgers[/rl][rl]Contagion: correlations → +1.0 in crisis[/rl][rl]Tail risk: government intervention → artificial calm, then sharp moves[/rl]"},
+    {id:"cm25",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
+     q:"NDF — why it exists, its benefit, and the settlement formula",
+     a:"Governments restrict the ccy (BRL, CNY, RUB) → cash settlement in a DM currency, no notional exchange.\n[fl]Settlement (long base) = (S_T − F) × notional ÷ S_T\n→ paid in the DEVELOPED ccy at the ENDING spot[/fl]\n[rl]Benefit: lower credit risk (only the net gain moves)[/rl][rl]Caveat: exists BECAUSE of restrictions → policy change = tail risk[/rl]"},
   ]
 };
 
