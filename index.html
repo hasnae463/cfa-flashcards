@@ -18890,6 +18890,1125 @@ current target = MIDPOINT of the target range</div>
 
 
 
+
+        <!-- ══════════ cmWidget : Currency Management (Reading 18) ══════════ -->
+        <div id="cmWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #cmWidget { --cm-main:#22D3EE; --cm-gold:#D4A017; --cm-green:#3DD68C; --cm-red:#FF7B72; --cm-orange:#F0A04B; --cm-blue:#79C0FF; --cm-purple:#BC8CFF; }
+            #cmWidget .cm-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #cmWidget .cm-toptab { background:var(--surface2); border:1px solid var(--cm-main); color:var(--cm-main); padding:9px 18px; border-radius:7px; font-family:var(--serif); font-size:14px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #cmWidget .cm-toptab.active { background:var(--cm-main); color:#0D1117; }
+            #cmWidget .cm-toppanel { display:none; }
+            #cmWidget .cm-toppanel.active { display:block; }
+            #cmWidget .cm-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+            #cmWidget .cm-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #cmWidget .cm-tab.active { background:rgba(34,211,238,.13); border-color:var(--cm-main); color:var(--cm-main); }
+            #cmWidget .cm-panel { display:none; }
+            #cmWidget .cm-panel.active { display:block; }
+            #cmWidget .cm-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:14px; }
+            #cmWidget .cm-title { font-family:var(--serif); font-size:16px; color:var(--cm-main); font-weight:600; margin-bottom:10px; }
+            #cmWidget .cm-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:8px; }
+            #cmWidget .cm-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #cmWidget .cm-tip { background:rgba(46,160,67,.08); border-left:3px solid var(--cm-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #cmWidget .cm-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--cm-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #cmWidget .cm-tbl { width:100%; border-collapse:collapse; font-size:12px; margin:10px 0; }
+            #cmWidget .cm-tbl th { background:#0B0F14; color:var(--cm-main); font-family:var(--mono); font-size:10.5px; letter-spacing:.04em; padding:7px 9px; text-align:left; border:1px solid var(--border); }
+            #cmWidget .cm-tbl td { padding:7px 9px; border:1px solid var(--border); color:#C9D1D9; line-height:1.5; vertical-align:top; }
+            #cmWidget .cm-in { background:#0B0F14; border:1px solid var(--border); border-radius:5px; color:#E6EDF3; font-family:var(--mono); font-size:12px; padding:6px 8px; width:110px; }
+            #cmWidget .cm-lbl { font-family:var(--mono); font-size:10.5px; color:var(--muted); display:block; margin-bottom:3px; letter-spacing:.03em; }
+            #cmWidget .cm-grid { display:flex; gap:14px; flex-wrap:wrap; margin:10px 0; }
+            #cmWidget .cm-out { background:#0B0F14; border:1px solid rgba(34,211,238,.35); border-radius:6px; padding:12px 14px; font-family:var(--mono); font-size:12px; line-height:1.8; color:#C9D1D9; margin-top:10px; }
+            #cmWidget .cm-pickrow { display:flex; gap:8px; flex-wrap:wrap; margin:8px 0; }
+            #cmWidget .cm-pick { background:var(--surface2); border:1px solid var(--border); color:#C9D1D9; padding:7px 13px; border-radius:6px; font-family:var(--mono); font-size:11.5px; cursor:pointer; }
+            #cmWidget .cm-pick.active { border-color:var(--cm-main); color:var(--cm-main); background:rgba(34,211,238,.1); }
+            #cmWidget .cm-sub { font-family:var(--mono); font-size:10.5px; color:var(--muted); letter-spacing:.05em; margin:14px 0 6px; text-transform:uppercase; }
+          </style>
+
+          <div class="cm-toptabs">
+            <button class="cm-toptab active" onclick="cmTop(event,'cm-181')">Managing Currency Exposure</button>
+            <button class="cm-toptab" onclick="cmTop(event,'cm-182')">Fundamentals &amp; Technical</button>
+            <button class="cm-toptab" onclick="cmTop(event,'cm-183')">Carry &amp; Volatility</button>
+            <button class="cm-toptab" onclick="cmTop(event,'cm-184')">Implementation &amp; Forwards</button>
+            <button class="cm-toptab" onclick="cmTop(event,'cm-185')">Implementation &amp; Options</button>
+            <button class="cm-toptab" onclick="cmTop(event,'cm-186')">Advanced Issues &amp; EM</button>
+            <button class="cm-toptab" onclick="cmTop(event,'cm-err')">Errors</button>
+            <button class="cm-toptab" onclick="cmTop(event,'cm-mast')">Mastery</button>
+          </div>
+
+          <!-- ════════ TOP 1 : MODULE 18.1 MANAGING CURRENCY EXPOSURE ════════ -->
+          <div id="cm-181" class="cm-toppanel active">
+            <div class="cm-tabs">
+              <button class="cm-tab active" onclick="cmTab(event,'cmq-base')">Base / Price &amp; Bid-Ask</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmq-fwd')">Forward Points</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmq-mtm')">Offsetting &amp; MTM</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmq-swap')">FX Swap</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmq-opt')">Options &amp; Delta</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmr-rdc')">R&#8202;DC Single Asset</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmr-port')">Multi-Asset</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmr-var')">Risk &amp; Variance</button>
+              <button class="cm-tab" onclick="cmTab(event,'cms-spec')">Strategy Spectrum</button>
+              <button class="cm-tab" onclick="cmTab(event,'cms-div')">Diversification &amp; Costs</button>
+            </div>
+
+            <!-- ── Base/Price & Bid/Ask ── -->
+            <div id="cmq-base" class="cm-panel active">
+              <div class="cm-card">
+                <div class="cm-title">Price &amp; Base Currency</div>
+                <div class="cm-body">A quote <b>P/B</b> reads: the <b style="color:var(--cm-main);">base currency B is the denominator</b>, priced in units of the <b>price currency P (numerator)</b>. Unless clearly identified otherwise, <b style="color:var(--cm-gold);">"buy" and "sell" refer to the BASE currency</b>.</div>
+                <div class="cm-fl">Sell spot 1,000,000 at CAD/USD 0.9800
+  &#8594; sell (deliver) USD 1,000,000  &amp;  buy (receive) CAD 980,000
+
+Buy 500,000 USD/CHF 6-mo forward at 1.07
+  &#8594; buy CHF 500,000  vs  sell USD 535,000 (settles in 6 months)</div>
+                <div class="cm-tip"><b>Technique (Prof's note):</b> always think base = denominator, and be ready to read the quote from <i>either</i> perspective (base or price currency).</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Bid/Ask Rules — the 4 interpretations</div>
+                <div class="cm-body">Smaller number first (bid), larger second (ask). The ask can be read as the sale of one currency vs the purchase of the other. The spread is the dealer's margin: <b style="color:var(--cm-red);">the customer always pays it</b> — buy base at ask, sell base at bid. Quote: <b>0.9790 / 0.9810 CAD/USD</b> (base = USD).</div>
+                <div class="cm-pickrow">
+                  <button class="cm-pick active" id="cmba-buy" onclick="cmBidAskPick('buy')">Client BUYS base (USD)</button>
+                  <button class="cm-pick" id="cmba-sell" onclick="cmBidAskPick('sell')">Client SELLS base (USD)</button>
+                </div>
+                <div class="cm-out" id="cmba-out"></div>
+              </div>
+            </div>
+
+            <!-- ── Forward points ── -->
+            <div id="cmq-fwd" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Spot vs Forward &amp; Forward Points</div>
+                <div class="cm-body">Spot = immediate settlement (T+2 by convention, usually ignored — the FX swap is the exception). Forward = price agreed today for delayed settlement. Forward points adjust the spot: <b style="color:var(--cm-main);">move the decimal LEFT by the number of decimals in the spot quote</b>.</div>
+                <table class="cm-tbl">
+                  <tr><th>Spot quote</th><th>Points</th><th>Adjusted</th><th>Forward price</th></tr>
+                  <tr><td>1.33 (2 dec)</td><td>1.1</td><td>1.1 / 100 = 0.011</td><td>1.33 + 0.011 = 1.341</td></tr>
+                  <tr><td>2.554 (3 dec)</td><td>&#8722;9.6</td><td>&#8722;9.6 / 1,000 = &#8722;0.0096</td><td>2.554 &#8722; 0.0096 = 2.5444</td></tr>
+                  <tr><td>0.7654 (4 dec)</td><td>13.67</td><td>13.67 / 10,000 = 0.001367</td><td>0.7654 + 0.001367 = 0.766767</td></tr>
+                </table>
+                <div class="cm-trap"><b>Myth:</b> points are NOT always /10,000 — that only works for 4-decimal spots. 5 decimals on the right &#8594; /100,000. Count the decimals.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#129518; Calculator — All-in forward &amp; delivery (AUD/EUR, Kaplan)</div>
+                <div class="cm-body">Base = EUR, price = AUD. Bid/ask of the points pair with bid/ask of the spot (bid+bid, ask+ask).</div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">Spot bid</span><input class="cm-in" id="cmf-sb" value="1.2571"></div>
+                  <div><span class="cm-lbl">Spot ask</span><input class="cm-in" id="cmf-sa" value="1.2574"></div>
+                  <div><span class="cm-lbl">30d pts bid</span><input class="cm-in" id="cmf-p30b" value="-1.0"></div>
+                  <div><span class="cm-lbl">30d pts ask</span><input class="cm-in" id="cmf-p30a" value="-0.9"></div>
+                  <div><span class="cm-lbl">90d pts bid</span><input class="cm-in" id="cmf-p90b" value="11.7"></div>
+                  <div><span class="cm-lbl">90d pts ask</span><input class="cm-in" id="cmf-p90a" value="12.0"></div>
+                  <div><span class="cm-lbl">AUD sold fwd 90d</span><input class="cm-in" id="cmf-not" value="1000000"></div>
+                </div>
+                <button class="cm-pick" onclick="cmFwdCalc()">Compute</button>
+                <div class="cm-out" id="cmf-out"></div>
+                <div class="cm-trap"><b>Side trap:</b> the manager <b>sells AUD</b> = <b>buys EUR (the base)</b> &#8594; pays the <b>ask</b>. Delivering more AUD per EUR = ask side. Identify the base FIRST, then pick the side.</div>
+              </div>
+            </div>
+
+            <!-- ── Offsetting & MTM ── -->
+            <div id="cmq-mtm" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Mark-to-Market of a Forward — 3 steps</div>
+                <div class="cm-body">MTM value = <b>present value of the gain/loss locked in by an offsetting position</b> to the same maturity date.</div>
+                <div class="cm-fl">Step 1  Offset = OPPOSITE trade, SAME maturity date
+        &#8594; all-in forward = current spot &#177; remaining-tenor points
+        &#8594; pick the side you trade ON THE OFFSET (buy base &#8594; ask)
+Step 2  Gain/loss = (rate difference) &#215; notional, settled at expiry
+Step 3  Discount at the market reference rate of the REMAINING
+        period, unannualized: &#247; [1 + R &#215; (days/360)]</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#129518; Calculator — Offsetting &amp; MTM (sell EUR 10m, Kaplan)</div>
+                <div class="cm-body">Original: sell (deliver) EUR 10,000,000 at 90d all-in AUD/EUR 1.25827. Thirty days later:</div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">Original all-in</span><input class="cm-in" id="cmm-orig" value="1.25827"></div>
+                  <div><span class="cm-lbl">Notional EUR</span><input class="cm-in" id="cmm-not" value="10000000"></div>
+                  <div><span class="cm-lbl">Spot bid</span><input class="cm-in" id="cmm-sb" value="1.3189"></div>
+                  <div><span class="cm-lbl">Spot ask</span><input class="cm-in" id="cmm-sa" value="1.3191"></div>
+                  <div><span class="cm-lbl">Rem. pts bid</span><input class="cm-in" id="cmm-pb" value="10.3"></div>
+                  <div><span class="cm-lbl">Rem. pts ask</span><input class="cm-in" id="cmm-pa" value="10.5"></div>
+                  <div><span class="cm-lbl">Days remaining</span><input class="cm-in" id="cmm-days" value="60"></div>
+                  <div><span class="cm-lbl">Ref rate % (rem.)</span><input class="cm-in" id="cmm-r" value="1.20"></div>
+                </div>
+                <button class="cm-pick" onclick="cmMtmCalc()">Compute</button>
+                <div class="cm-out" id="cmm-out"></div>
+                <div class="cm-trap"><b>3 traps:</b> (1) the offset is a <b>BUY</b> of EUR &#8594; ask side for BOTH spot and points (1.3191 + 10.5pts). (2) Discount over the <b>remaining 60 days, unannualized</b> (60/360) at the 60-day rate. (3) The loss settles at the <b>original</b> expiry (day 90), 60 days after the offset.</div>
+              </div>
+            </div>
+
+            <!-- ── FX swap ── -->
+            <div id="cmq-swap" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">The FX Swap (rollover)</div>
+                <div class="cm-body">An FX swap is <b style="color:var(--cm-red);">not a currency swap</b> (and not a "swap" in the usual sense). It <b>rolls over a maturing forward</b>: a spot transaction offsets the maturing contract, and a new forward re-establishes the position.</div>
+                <div class="cm-fl">Kaplan example — long ZAR 10,000,000 3-mo fwd at ZAR/USD 9.4518
+2 days before expiry, extend 30 days:
+
+  Leg 1  SELL spot ZAR 10,000,000
+         (spot settles T+2 = same day the forward matures
+          &#8594; offsets the maturing contract)
+  Leg 2  BUY ZAR 10,000,000 new 30-day forward
+         (rolls the position over)</div>
+                <div class="cm-tip">The T+2 settlement convention — ignored everywhere else — <b>matters here</b>: it's what makes the spot leg land exactly on the forward's maturity date.</div>
+              </div>
+            </div>
+
+            <!-- ── Options & Delta ── -->
+            <div id="cmq-opt" class="cm-panel">
+            <div class="cm-card">
+              <div class="cm-title">Option Basics — delta anatomy</div>
+              <div class="cm-body"><b>Call</b> = right to buy the underlying; gains as it rises above strike, &#916; &#8594; 1.00 (100-delta); loses below, &#916; &#8594; 0.00. <b>Put</b> = right to sell; gains below strike, &#916; &#8594; &#8722;1.00 (the sign is assumed, "100-delta"); loses above, &#916; &#8594; 0.00.</div>
+              <div class="cm-tip"><b>Pair rule:</b> call + put with identical parameters (expiry, strike, underlying): <b>|&#916;call| + |&#916;put| = 1.00</b> (100-delta).</div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">&#127919; Interactive — where is the underlying?</div>
+              <div class="cm-body">Pick the price region of the <b>base currency</b>; see moneyness + delta of both options.</div>
+              <div class="cm-pickrow">
+                <button class="cm-pick active" id="cmd-below" onclick="cmDeltaPick('below')">0 &#8594; strike</button>
+                <button class="cm-pick" id="cmd-at" onclick="cmDeltaPick('at')">At the strike</button>
+                <button class="cm-pick" id="cmd-above" onclick="cmDeltaPick('above')">Strike &#8594; upward</button>
+              </div>
+              <div class="cm-out" id="cmd-out"></div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">Currency Options — every option is two options</div>
+              <div class="cm-body">Two currencies &#8594; <b style="color:var(--cm-main);">a call on one currency IS a put on the other</b>. Unless otherwise specified, the option is read from the <b>base currency perspective</b>.</div>
+              <div class="cm-fl">Call to buy GBP 10,000,000 at strike ZAR/GBP 14.56
+  = right to buy GBP 10,000,000 and sell ZAR 145,600,000
+  = PUT on ZAR: right to sell ZAR 145,600,000, buy GBP 10,000,000
+
+Put to sell EUR 100,000 at MXN/EUR 20.1
+  = right to sell EUR 100,000 and buy MXN 2,010,000
+  = CALL on MXN: right to buy MXN 2,010,000, sell EUR 100,000</div>
+              <div class="cm-tip"><b>Reflex:</b> notional of the other side = notional &#215; strike. Restating the option from the other currency's perspective flips call &#8596; put.</div>
+            </div>
+          </div>
+
+            <!-- ── RDC single ── -->
+            <div id="cmr-rdc" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Domestic-Currency Return — the two sources</div>
+                <table class="cm-tbl">
+                  <tr><th>Term</th><th>Meaning</th></tr>
+                  <tr><td><b>R<sub>FC</sub></b></td><td>Return of the foreign asset <b>in its local (foreign) currency</b> — "local market return"</td></tr>
+                  <tr><td><b>R<sub>FX</sub></b></td><td>% change in the value of the <b>foreign currency</b> — quote must have the <b style="color:var(--cm-red);">FOREIGN currency as BASE</b></td></tr>
+                  <tr><td><b>R<sub>DC</sub></b></td><td>Return in the investor's domestic currency, combining both</td></tr>
+                </table>
+                <div class="cm-fl">Equation 1:
+  R&#8202;DC = (1 + R&#8202;FC)(1 + R&#8202;FX) &#8722; 1
+       = R&#8202;FC + R&#8202;FX + (R&#8202;FC &#215; R&#8202;FX)
+  R&#8202;DC &#8776; R&#8202;FC + R&#8202;FX            (approximation)</div>
+                <div class="cm-tip"><b>Prof's note — 3 ways to get R&#8202;DC, the case facts decide:</b> (1) approximation R&#8202;FC + R&#8202;FX when precision isn't needed; (2) exact compounding when R&#8202;FX is known — the default; (3) when R&#8202;FX isn't simple (hedged currency, unknowable ending units), compute directly: <b>R&#8202;DC = (EV &#8722; BV) / BV</b> in domestic units.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#129518; Calculator — R&#8202;DC (USD investor, EUR stocks, Kaplan)</div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">R FC %</span><input class="cm-in" id="cmr-rfc" value="5"></div>
+                  <div><span class="cm-lbl">S&#8320; (USD/EUR)</span><input class="cm-in" id="cmr-s0" value="1.300"></div>
+                  <div><span class="cm-lbl">S&#8321; (USD/EUR)</span><input class="cm-in" id="cmr-s1" value="1.339"></div>
+                </div>
+                <button class="cm-pick" onclick="cmRdcCalc()">Compute</button>
+                <div class="cm-out" id="cmr-out"></div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#9888;&#65039; The R&#8202;FX base-currency trap</div>
+                <div class="cm-body">R&#8202;FX must be computed with the <b>foreign currency as base</b> (denominator). Doing it on the inverted quote gives the wrong number — appreciation of one currency is <b>not</b> the negative of the other's depreciation.</div>
+                <div class="cm-fl">Foreign (EUR) as base:   1.339 / 1.300 &#8722; 1 = +3.000%   &#10003; R&#8202;FX
+Domestic (USD) as base:  0.74683 / 0.76923 &#8722; 1 = &#8722;2.912%  &#10007;
+                          (USD depreciation &#8800; &#8722;EUR appreciation)</div>
+                <div class="cm-tip"><b>Prof's note:</b> label every number domestic/foreign or foreign/domestic, take reciprocals if needed, then solve <b>EV / BV &#8722; 1 = R&#8202;FX</b> on the foreign-as-base quote.</div>
+              </div>
+            </div>
+
+            <!-- ── Portfolio ── -->
+            <div id="cmr-port" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Multiple Foreign Investments</div>
+                <div class="cm-fl">Equation 2:   R&#8202;DC = &#931; w&#7522; &#215; R&#8202;DC,&#7522;
+  w&#7522;     = weight (in DOMESTIC currency terms) of market i
+  R&#8202;DC,&#7522; = domestic-currency return of investment i</div>
+                <div class="cm-body">Compute each <b>R&#8202;DC,&#7522;</b> first (each with its own R&#8202;FX, foreign as base), then weight.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#129518; Calculator — EUR investor, GBP + USD assets (Kaplan)</div>
+                <div class="cm-body">Leg 2 quotes are given as USD/EUR (domestic as price... <b>EUR as base</b>) &#8594; must be <b>inverted</b> to EUR/USD before computing R&#8202;FX.</div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">w&#8321; %</span><input class="cm-in" id="cmp-w1" value="75"></div>
+                  <div><span class="cm-lbl">R FC&#8321; %</span><input class="cm-in" id="cmp-rfc1" value="12"></div>
+                  <div><span class="cm-lbl">EUR/GBP S&#8320;</span><input class="cm-in" id="cmp-s01" value="1.1666"></div>
+                  <div><span class="cm-lbl">EUR/GBP S&#8321;</span><input class="cm-in" id="cmp-s11" value="1.1437"></div>
+                </div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">w&#8322; %</span><input class="cm-in" id="cmp-w2" value="25"></div>
+                  <div><span class="cm-lbl">R FC&#8322; %</span><input class="cm-in" id="cmp-rfc2" value="5"></div>
+                  <div><span class="cm-lbl">USD/EUR S&#8320;</span><input class="cm-in" id="cmp-s02" value="1.332"></div>
+                  <div><span class="cm-lbl">USD/EUR S&#8321;</span><input class="cm-in" id="cmp-s12" value="1.324"></div>
+                </div>
+                <button class="cm-pick" onclick="cmPortCalc()">Compute</button>
+                <div class="cm-out" id="cmp-out"></div>
+                <div class="cm-trap"><b>Inversion trap:</b> the USD leg quote has EUR (domestic) as base &#8594; invert: 1/1.332 = 0.7508 and 1/1.324 = 0.7553 EUR/USD. Only then is the foreign currency (USD) the base.</div>
+              </div>
+            </div>
+
+            <!-- ── Variance ── -->
+            <div id="cmr-var" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Risk of R&#8202;DC — two sources, one correlation</div>
+                <div class="cm-body">Two sources of risk: fluctuation of the <b>foreign currency</b> and fluctuation of the <b>foreign asset price</b>. Single foreign asset &#8594; weights = 1.0:</div>
+                <div class="cm-fl">Equation 3 (approx):
+  &#963;&#178;(R&#8202;DC) &#8776; &#963;&#178;(R&#8202;FC) + &#963;&#178;(R&#8202;FX)
+            + 2 &#963;(R&#8202;FC) &#963;(R&#8202;FX) &#961;(R&#8202;FC, R&#8202;FX)</div>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">&#961; <b style="color:var(--cm-red);">positive</b> &#8594; R&#8202;FX amplifies R&#8202;FC &#8594; volatility to the domestic investor <b>increases</b></span>
+                <span class="cm-rule" style="display:block;padding:6px 0;font-size:12.5px;color:#C9D1D9;">&#961; <b style="color:var(--cm-green);">negative</b> &#8594; R&#8202;FX dampens R&#8202;FC &#8594; volatility <b>decreases</b> (&#8594; minimum-variance hedge ratio topic)</span>
+                <div class="cm-tip"><b>Prof's note:</b> Equation 3 is an <b>approximation</b> (ignores the (R&#8202;FC)(R&#8202;FX) cross product). True variance would need every correlation pair: 2 foreign assets + 2 currencies = 4 variables = 6 pairs; 3 foreign assets &#8594; 15 pairs — unrealistic, false precision.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Special case — R&#8202;FC is RISK-FREE</div>
+                <div class="cm-body">If the foreign asset is risk-free, &#963;(R&#8202;FC) = 0 and its correlation with R&#8202;FX is 0: R&#8202;FX is the <b>only</b> source of risk, and the calculation becomes direct and precise:</div>
+                <div class="cm-fl">Equation 4:   &#963;(R&#8202;DC) = &#963;(R&#8202;FX) &#215; (1 + R&#8202;FC)</div>
+                <div class="cm-trap"><b>Exam trap:</b> Equation 4 is a special case — it <b>cannot be derived from Equation 3</b>. Spot the words "risk-free foreign asset" and switch formulas.</div>
+              </div>
+            </div>
+
+            <div id="cms-spec" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Hedge or not? — the two camps</div>
+                <table class="cm-tbl">
+                  <tr><th>Arguments for NOT hedging</th><th>Argument for ACTIVE management</th></tr>
+                  <tr><td>&#8226; Avoid the time and cost of hedging/trading<br>&#8226; Long run: currency effects are a <b>zero-sum game</b> (one appreciates, another depreciates)<br>&#8226; Long run: currencies <b>revert to theoretical fair value</b></td><td>&#8226; Short run: currency moves can be <b>extreme</b><br>&#8226; Inefficient pricing: many FX trades are dictated by international trade or central-bank policy, <b>not fair value</b> &#8594; prices can be exploited for return</td></tr>
+                </table>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">The 4 strategies — discretion decomposed</div>
+                <table class="cm-tbl">
+                  <tr><th>Strategy</th><th>Discretion</th><th>Mechanism</th><th>Goal</th></tr>
+                  <tr><td><b style="color:var(--cm-green);">Passive hedging</b></td><td>None — rule-based</td><td>Match the portfolio's currency exposure to the <b>benchmark's</b>; periodic rebalancing to maintain the match</td><td><b>Eliminate</b> currency risk vs benchmark</td></tr>
+                  <tr><td><b style="color:var(--cm-blue);">Discretionary hedging</b></td><td>Modest — e.g. &#177;5% around benchmark exposure</td><td>Deviate from passive within a specified band</td><td><b>Reduce risk</b> + modest incremental return</td></tr>
+                  <tr><td><b style="color:var(--cm-orange);">Active management</b></td><td>Greater deviations allowed</td><td>Manager expected to take positions vs benchmark exposures</td><td><b>Alpha</b>, not risk reduction</td></tr>
+                  <tr><td><b style="color:var(--cm-purple);">Currency overlay</b></td><td>Broad — outsourced</td><td>Outside specialist; at the extreme treats currency as an <b>asset class</b> (e.g. short SEK with zero SEK exposure)</td><td>Pure alpha, pure risk reduction, or hybrid — per mandate</td></tr>
+                </table>
+                <div class="cm-tip"><b>IPS must specify:</b> target hedge % &#8226; allowable discretion around it &#8226; rebalancing frequency &#8226; benchmarks for evaluating currency decisions &#8226; allowed/prohibited hedging tools. Relevant IPS sections: objectives (risk tolerance), horizon, liquidity needs, benchmark.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Why rebalance with no trades? (Kaplan example)</div>
+                <div class="cm-body">US client and index both 10% UK equities, GBP sold forward. Over the month, benchmark UK stocks <b>fall</b> (&#8722;R&#8202;FC) while portfolio UK stocks <b>rise</b> (+R&#8202;FC): the index reduces its GBP short, the manager must <b>increase</b> his. Rebalancing reflects not just explicit trades but <b style="color:var(--cm-main);">R&#8202;FC differentials between index and portfolio</b>.</div>
+                <div class="cm-tip">Short-term performance focus &#8594; match or deliberately deviate from index currency exposure; "currency doesn't matter long-run" is inappropriate. Low liquidity needs &#8594; <b>reduces</b> the need to hedge (less risk of liquidating foreign assets at depressed values).</div>
+              </div>
+            </div>
+
+            <div id="cms-div" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Strategic Diversification Issues</div>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">&#9202; Long run: currency volatility is <b>lower</b> than short run &#8594; less need to hedge for long-horizon portfolios</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">&#961;(R&#8202;FC, R&#8202;FX) <b style="color:var(--cm-red);">positive</b> &#8594; more R&#8202;DC volatility &#8594; <b>more need to hedge</b>; negative &#8594; natural dampening &#8594; less need</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">&#961; varies by period &#8594; a <b>varying hedge ratio</b> is appropriate</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">&#128176; Bonds: asset&#8211;currency correlation tends <b>higher</b> than equities &#8594; <b>more reason to hedge bond portfolios</b></span>
+                <span class="cm-rule" style="display:block;padding:6px 0;font-size:12.5px;color:#C9D1D9;">Hedge ratio (the % of exposure hedged) varies by <b>manager preference</b></span>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Strategic Cost Issues — hedging isn't free</div>
+                <table class="cm-tbl">
+                  <tr><th>Cost</th><th>Driver</th></tr>
+                  <tr><td>Transaction costs</td><td>Single bid/ask small, but <b>repeated</b> trades add up — full hedging + frequent rebalancing is costly</td></tr>
+                  <tr><td>Option premium</td><td>Paid upfront; <b>lost</b> if the option expires OTM</td></tr>
+                  <tr><td>Rollover (FX swap)</td><td>Forwards shorter than the hedge period &#8594; rollovers realize gains/losses &#8594; <b>cash-flow volatility</b>; financing outflows costly when rates are high</td></tr>
+                  <tr><td>Overhead</td><td>Back office, trading infrastructure, multi-currency cash accounts for settlements/margin</td></tr>
+                  <tr><td>Opportunity cost</td><td>100% hedge forgoes all favorable moves &#8594; some "split the difference" with a <b>50% strategic ratio</b></td></tr>
+                </table>
+                <div class="cm-body">Managers generally choose <b>partial hedges</b>: hedge/rebalance monthly rather than daily, or accept some negative currency return rather than zero.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">LOS 18.c — factors pushing toward FULLY HEDGED</div>
+                <div class="cm-fl">&#8226; Short time horizon for portfolio objectives
+&#8226; High risk aversion
+&#8226; Client unconcerned with opportunity cost of missing
+  positive currency returns
+&#8226; High short-term income &amp; liquidity needs
+&#8226; Significant foreign-currency BOND exposure
+&#8226; Low hedging costs
+&#8226; Client doubts the benefits of discretionary management</div>
+                <div class="cm-tip">Reverse any factor &#8594; argument for benchmark-neutral / more discretion. Classic essay LOS: justify from case facts.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ TOP 2 : MODULE 18.2 ACTIVE STRATEGIES: FUNDAMENTALS & TECHNICAL ════════ -->
+          <div id="cm-182" class="cm-toppanel">
+            <div class="cm-tabs">
+              <button class="cm-tab active" onclick="cmTab(event,'cmf-fund')">Economic Fundamentals</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmf-tech')">Technical Analysis</button>
+            </div>
+
+            <!-- ── Economic Fundamentals ── -->
+            <div id="cmf-fund" class="cm-panel active">
+              <div class="cm-card">
+                <div class="cm-title">Strategic vs Tactical (LOS 18.d)</div>
+                <div class="cm-body">The <b>strategic</b> decision sets the portfolio's normal hedging policy. Within allowed discretion, the manager makes <b>tactical</b> decisions to increase return — every one of them requires <b style="color:var(--cm-gold);">a view or prediction</b>. Four broad approaches: <b>fundamentals, technical, carry trade, volatility trading</b> — and <b style="color:var(--cm-red);">none works consistently</b>.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Economic Fundamentals — convergence to fair value</div>
+                <div class="cm-body">Assumes long-term currency value <b>converges to fair value</b>, e.g. purchasing power parity sets long-run rates:</div>
+                <div class="cm-fl">PPP: basket costs 100 units of A's currency, 200 units of B's
+     &#8594; exchange rate A to B = 100/200 = 0.50 A/B</div>
+                <div class="cm-body">Short/intermediate path of convergence — a currency <b style="color:var(--cm-green);">APPRECIATES</b> when it is/has:</div>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">1. More <b>undervalued</b> relative to its fundamental value</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">2. The greatest <b>rate of increase</b> in its fundamental value</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">3. Higher <b>real or nominal interest rates</b></span>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">4. <b>Lower inflation</b> relative to other countries</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;font-size:12.5px;color:#C9D1D9;">5. A <b>decreasing risk premium</b></span>
+                <div class="cm-tip">Opposite conditions &#8594; declining currency value. Exam reflex: scan the vignette for these 5 drivers and their direction.</div>
+              </div>
+            </div>
+
+            <!-- ── Technical Analysis ── -->
+            <div id="cmf-tech" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Technical Analysis — the 3 principles</div>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">1. <b>Past price data predicts future prices</b> — prices already reflect fundamentals and all relevant info, so no need to analyze it</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">2. <b>Fallible humans react to similar events in similar ways</b> &#8594; past price patterns tend to repeat</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;font-size:12.5px;color:#C9D1D9;">3. Unnecessary to know what the currency <b>should be worth</b> — only <b>where it will trade</b></span>
+                <div class="cm-body" style="margin-top:8px;">FX technical analysis focuses on <b>price trends</b> (volume data generally less available) and works best in markets with <b>identifiable trends</b>.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Patterns — overbought, support, resistance</div>
+                <table class="cm-tbl">
+                  <tr><th>Pattern</th><th>What it is</th><th>Expected behavior</th></tr>
+                  <tr><td><b>Overbought / oversold</b></td><td>Market has gone up (down) <b>too far</b></td><td>Price likely to <b>reverse</b></td></tr>
+                  <tr><td><b style="color:var(--cm-green);">Support level</b></td><td>Substantial <b>bids</b> from customers to buy</td><td>Price falling to it <b>bounces higher</b> as purchases execute</td></tr>
+                  <tr><td><b style="color:var(--cm-red);">Resistance level</b></td><td>Substantial <b>offers</b> from customers to sell</td><td>Price rising to it <b>bounces lower</b> as sales execute</td></tr>
+                </table>
+                <div class="cm-trap"><b>Sticky... until broken:</b> at support/resistance the price becomes "sticky" — but if the market moves <b>through</b> the level, it can <b style="color:var(--cm-red);">accelerate and continue in the same direction</b>.</div>
+                <div class="cm-fl">Kaplan example — support for GBP at 1.70 USD/GBP:
+  Traders place LIMIT BUY orders at 1.70
+  + STOP-LOSS SELL orders between 1.70 and 1.69
+
+  GBP falls to 1.70  &#8594; buy orders execute &#8594; price supported
+                       ("sticky price behavior")
+  GBP breaks lower   &#8594; stop-loss sells execute
+                     &#8594; drives GBP further down through support</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Moving averages — the crossover rule</div>
+                <div class="cm-body">Shorter-term MA crossing a longer-term MA triggers a signal:</div>
+                <div class="cm-fl">50-day MA rises ABOVE 200-day MA  &#8594; BUY signal
+50-day MA falls BELOW 200-day MA  &#8594; SELL signal</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ TOP 3 : MODULE 18.3 ACTIVE STRATEGIES: CARRY & VOLATILITY ════════ -->
+          <div id="cm-183" class="cm-toppanel">
+            <div class="cm-tabs">
+              <button class="cm-tab active" onclick="cmTab(event,'cmc-carry')">Carry Trade</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmc-vol')">Volatility Trading</button>
+            </div>
+
+            <!-- ── Carry Trade ── -->
+            <div id="cmc-carry" class="cm-panel active">
+              <div class="cm-card">
+                <div class="cm-title">Carry Trade — the 3 issues</div>
+                <div class="cm-body">Borrow the <b>lower</b>-rate currency, invest in the <b>higher</b>-rate currency.</div>
+                <table class="cm-tbl">
+                  <tr><th>Issue</th><th>Content</th></tr>
+                  <tr><td><b>1. CIRP</b><br><span style="color:var(--muted);font-size:11px;">holds by arbitrage</span></td><td>F&#8320; &#8722; S&#8320; reflects the periodic rate differential.<br>Higher-rate currency &#8594; <b>forward discount</b> (F&#8320; &lt; S&#8320;)<br>Lower-rate currency &#8594; <b>forward premium</b> (F&#8320; &gt; S&#8320;)</td></tr>
+                  <tr><td><b>2. UCIRP</b><br><span style="color:var(--muted);font-size:11px;">does NOT hold</span></td><td>Asserts the CIRP forward is an unbiased estimate of future spot: higher-rate currency would <b>depreciate by the differential</b>, lower-rate appreciate by it. If true, a carry trade earns <b style="color:var(--cm-red);">zero</b>.</td></tr>
+                  <tr><td><b>3. Forward rate bias</b><br><span style="color:var(--muted);font-size:11px;">what carry exploits</span></td><td>Historically: the higher-rate currency usually depreciates <b>less than IRP predicts</b> (or even appreciates) &#8594; profit. But a small % of the time it depreciates <b>far more</b> &#8594; <b style="color:var(--cm-red);">large losses</b>.</td></tr>
+                </table>
+                <div class="cm-tip"><b>Profitability condition:</b> the carry trade is profitable if the spot of the higher-rate currency <b>declines LESS than predicted by the forward rate</b>.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Figure 18.1 — two equivalent readings</div>
+                <table class="cm-tbl">
+                  <tr><th>The carry trade...</th><th>Lower-yield / fwd premium side</th><th>Higher-yield / fwd discount side</th></tr>
+                  <tr><td>Is implemented by</td><td><b>Borrow</b> + sell spot the <b>lower-yield</b> currency</td><td>Buy + <b>invest</b> in the <b>higher-yield</b> currency</td></tr>
+                  <tr><td>Is trading the forward rate bias</td><td>Sell spot the currency at a <b>forward premium</b></td><td>Buy spot the currency at a <b>forward discount</b></td></tr>
+                </table>
+                <div class="cm-body"><b>Funding currencies</b> = lower-rate, developed economies. <b>Investing currencies</b> = higher-rate, emerging economies.</div>
+                <div class="cm-trap"><b>Crash risk:</b> profitable in normal conditions, but in financial distress the high-yield EM currencies depreciate sharply &#8594; large losses. Stress = rising FX volatility &#8594; <b>traders exit carry trades when volatility rises significantly</b>.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#129518; Calculator — Carry trade (BRL/USD, Kaplan)</div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">Spot (high/low)</span><input class="cm-in" id="cmc-s0" value="2.41"></div>
+                  <div><span class="cm-lbl">Rate high-yield %</span><input class="cm-in" id="cmc-rh" value="6"></div>
+                  <div><span class="cm-lbl">Rate low-yield %</span><input class="cm-in" id="cmc-rl" value="1"></div>
+                  <div><span class="cm-lbl">Borrow (low ccy)</span><input class="cm-in" id="cmc-b" value="100"></div>
+                </div>
+                <button class="cm-pick" onclick="cmCarryCalc()">Compute</button>
+                <div class="cm-out" id="cmc-out"></div>
+                <div class="cm-trap"><b>Unhedged by definition:</b> hedging with the forward would lock in CIRP &#8594; zero profit. The primary risk is the ending value of the high-yield currency: decline beyond the rate differential &#8594; trade unprofitable.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Prof's note — the forward is NOT a forecast</div>
+                <div class="cm-body">Under IRP the higher-rate currency trades at a forward discount; UCIRP claims that discount predicts the future spot. The L3 curriculum <b style="color:var(--cm-red);">rejects</b> this: evidence shows the higher-rate currency tends to <b>appreciate</b>, not depreciate, and the carry trade exists precisely because spot moves less than UCIRP suggests. The forward rate is a <b>hedging tool, not a predictor</b> — "unless you want a very short career as a currency manager."</div>
+              </div>
+            </div>
+
+            <!-- ── Volatility Trading ── -->
+            <div id="cmc-vol" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Vol Trading — delta, vega, delta-neutral</div>
+                <table class="cm-tbl">
+                  <tr><th>Greek</th><th>Measures</th><th>Key property</th></tr>
+                  <tr><td><b>Delta</b></td><td>Change in option value for a change in the <b>underlying</b></td><td>Direction exposure — what delta hedging removes</td></tr>
+                  <tr><td><b>Vega</b></td><td>Change in option value for a change in <b>volatility</b></td><td><b style="color:var(--cm-green);">Positive for both puts and calls</b> — higher expected vol raises both</td></tr>
+                </table>
+                <div class="cm-body"><b>Delta hedging</b> creates a <b>delta-neutral position</b> (delta = 0): no gain/loss on small moves in the underlying, but it <b>gains or loses as implied volatility changes</b> — a pure bet on vol.</div>
+                <div class="cm-trap"><b>Prof's note:</b> deltas change as the underlying moves &#8594; the position must be <b>continually rebalanced</b> to stay delta-neutral.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#127919; Interactive — your volatility view</div>
+                <div class="cm-pickrow">
+                  <button class="cm-pick active" id="cmv-up" onclick="cmVolPick('up')">Vol will RISE</button>
+                  <button class="cm-pick" id="cmv-dn" onclick="cmVolPick('dn')">Vol will FALL</button>
+                </div>
+                <div class="cm-out" id="cmv-out"></div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Straddle vs Strangle</div>
+                <table class="cm-tbl">
+                  <tr><th></th><th>Straddle</th><th>Strangle</th></tr>
+                  <tr><td>Legs</td><td><b>ATM</b> call + ATM put</td><td><b>OTM</b> call + OTM put, same |&#916;|</td></tr>
+                  <tr><td>Initial cost</td><td>Higher</td><td><b style="color:var(--cm-green);">Lower</b></td></tr>
+                  <tr><td>Move needed for intrinsic value</td><td>Smaller</td><td><b style="color:var(--cm-red);">Larger</b></td></tr>
+                  <tr><td>Likely profit</td><td>Higher</td><td>Lower — "similar but more moderate payoffs"</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ TOP 4 : MODULE 18.4 IMPLEMENTATION AND FORWARDS ════════ -->
+          <div id="cm-184" class="cm-toppanel">
+            <div class="cm-tabs">
+              <button class="cm-tab active" onclick="cmTab(event,'cmi-tact')">Tactical Playbook</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmi-tips')">Exam Tips</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmi-fwd')">Forwards &amp; Static/Dynamic</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmi-roll')">Roll Yield</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmi-dec')">Hedge Decision</button>
+            </div>
+
+            <!-- ── Tactical playbook ── -->
+            <div id="cmi-tact" class="cm-panel active">
+              <div class="cm-card">
+                <div class="cm-title">Expectation &#8594; Action (LOS 18.e)</div>
+                <div class="cm-body">Active = risky: the manager forms expectations; wrong view or uncovered transaction costs &#8594; return reduced.</div>
+                <table class="cm-tbl">
+                  <tr><th>Expectation</th><th></th><th>Action</th></tr>
+                  <tr><td rowspan="2"><b>Relative currency</b></td><td style="color:var(--cm-green);">Appreciation</td><td><b>Reduce the hedge</b> (short position) OR <b>increase the long</b> position in the currency</td></tr>
+                  <tr><td style="color:var(--cm-red);">Depreciation</td><td><b>Increase the hedge</b> or <b>decrease the long</b> position</td></tr>
+                  <tr><td rowspan="2"><b>Volatility</b></td><td>Rising</td><td><b>Long straddle</b> (or strangle)</td></tr>
+                  <tr><td>Falling</td><td><b>Short straddle</b> (or strangle)</td></tr>
+                  <tr><td rowspan="2"><b>Market conditions</b></td><td>Stable</td><td><b>Carry trade</b></td></tr>
+                  <tr><td>Crisis</td><td><b style="color:var(--cm-red);">Discontinue</b> the carry trade</td></tr>
+                </table>
+                <div class="cm-tip"><b>Subtle variations:</b> (1) a carry trade can bundle several funding/investing currencies with <b>unequal weights</b> — overweight the long (or cut the short) in the currency expected to gain the most; (2) delta-neutral positions can be <b>"tilted"</b>: expect appreciation &#8594; net <b>positive</b> delta, depreciation &#8594; net negative delta.</div>
+              </div>
+            </div>
+
+            <!-- ── Exam tips ── -->
+            <div id="cmi-tips" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">7 tips to sort through currency questions</div>
+                <table class="cm-tbl">
+                  <tr><th>#</th><th>Tip</th></tr>
+                  <tr><td>1</td><td><b>What exposure needs hedging?</b> Typically the portfolio's exposure to fluctuation in a foreign currency's value.</td></tr>
+                  <tr><td>2</td><td>Easier when the foreign currency is the <b>base</b>. Quote given as B/P &#8594; <b>take the reciprocal</b> to make it P/B.</td></tr>
+                  <tr><td>3</td><td>Assume statements refer to the <b>base currency</b> unless indicated — but be explicit in answers and <b>state the currency</b>.</td></tr>
+                  <tr><td>4</td><td><b>Buy or sell the base?</b><br>&#8226; Buy forwards/futures or buy <b>calls</b> on base &#8594; <b style="color:var(--cm-green);">increases</b> exposure to base<br>&#8226; Sell forwards/futures or buy <b>puts</b> on base &#8594; <b style="color:var(--cm-red);">decreases</b> exposure<br>&#8226; Call on base = put on pricing ccy; put on base = call on pricing ccy</td></tr>
+                  <tr><td>5</td><td><b>Hedging is not free</b><br>&#8226; Forwards: no/minimal initial cost, <b>high opportunity cost</b> (upside eliminated)<br>&#8226; Bought options: high initial cost, <b>upside retained</b> (protective put)<br>&#8226; Lowering cost = giving up downside protection or upside, via: <b>writing options</b> (premium inflow), adjusting <b>strikes</b>, adjusting <b>notional</b>, adding <b>exotic features</b></td></tr>
+                  <tr><td>6</td><td><b>Discretionary hedging</b>: deviating from policy-neutral can lower costs and enhance return, but <b>increases underperformance risk</b>.</td></tr>
+                  <tr><td>7</td><td>The <b>IPS defines the strategic policy-neutral hedge</b> — generally a <b>100% hedge</b> matching the benchmark's currency exposure.</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- ── Forwards & static/dynamic ── -->
+            <div id="cmi-fwd" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Why forwards beat futures for FX hedging (LOS 18.f)</div>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;"><b>Customizable</b> vs standardized futures</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">Available for almost <b>any currency pair</b> vs limited futures listings</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">Futures require <b>margin</b> &#8594; operational complexity + periodic cash flows</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;font-size:12.5px;color:#C9D1D9;">FX forward/swap volume <b>dwarfs</b> futures &#8594; better <b>liquidity</b></span>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Static vs Dynamic — CHF 10m &#8594; 11m (Kaplan)</div>
+                <div class="cm-body"><b>Static</b> = established and held to expiration. <b>Dynamic</b> = periodically rebalanced. EUR-based manager hedges CHF 10,000,000; one month later the asset is worth CHF 11,000,000.</div>
+                <div class="cm-fl"><b>Option 1 — 1-month forward, roll at expiry</b>
+  Rollover realizes gain/loss + cash flow; new contract can be
+  resized to 11m &#8594; static within the month, dynamic at rollover.
+  Via FX swap (2 days before expiry):
+    near leg:  BUY CHF 10m SPOT  (covers maturing short)
+    far leg:   SELL CHF 11m FORWARD (rolls + resizes)
+  &#8594; "MISMATCHED" FX swap: near spot leg &#8800; far forward leg
+  CHF fell EUR 0.01? short fwd pays 0.01 &#215; 10m = EUR 100,000 cash
+
+<b>Option 2 — 3-month forward, look at month 1</b>
+  Underhedged: short 10m vs asset 11m
+  a. Static  &#8594; do nothing
+  b. Dynamic &#8594; SELL extra CHF 1m fwd (2 months) &#8594; short 11m
+     nothing closed &#8594; all gains/losses DEFERRED to month 3</div>
+                <div class="cm-tip"><b>Choice of approach:</b> shorter contracts / dynamic hedges = more frequent rebalancing &#8594; more transaction costs but <b>better hedge results</b>. Higher risk aversion &#8594; more frequent rebalancing. Lower risk aversion + strong views &#8594; more discretion around the strategic policy.</div>
+              </div>
+            </div>
+
+            <!-- ── Roll yield ── -->
+            <div id="cmi-roll" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Roll Yield — the hedge's hidden carry</div>
+                <div class="cm-body">Return from the <b>forward price converging toward spot</b> over time = the P&amp;L on the contract <b>if spot is unchanged at expiry</b>. Sign depends on two factors: (1) forward <b>premium or discount</b>, (2) contract <b>bought or sold</b>.</div>
+                <div class="cm-fl">Roll yield (held to expiry) = (F&#8320; &#8722; S&#8320;) / S&#8320;  for the short
+Mini example: sell CHF 1m 6-mo fwd at 1.05, spot 1.04
+  &#8594; premium &#8594; short earns it: deliver at 1.05 what costs 1.04
+  gain USD 10,000 ; unannualized roll = 0.01/1.04 = 0.96%</div>
+                <div class="cm-tip"><b>Prof's note (convergence):</b> F&#8320; &gt; S&#8320; and base sold forward &#8594; F&#84; = S&#84; at expiry whatever spot does &#8594; positive roll for the short <b>regardless of spot direction</b>. Positive roll for the short = negative roll for the long. Roll yield &#8800; total return: total &#916;F = unknown spot change + <b>known-in-advance roll yield</b>.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#127919; Figure 18.2 — your position &#215; the curve</div>
+                <div class="cm-pickrow">
+                  <button class="cm-pick active" id="cmh-long" onclick="cmHedgePick(this.id)">LONG foreign asset</button>
+                  <button class="cm-pick" id="cmh-short" onclick="cmHedgePick(this.id)">SHORT foreign asset</button>
+                </div>
+                <div class="cm-pickrow">
+                  <button class="cm-pick active" id="cmh-prem" onclick="cmHedgePick(this.id)">F &gt; S (premium, i&#66; &lt; i&#80;)</button>
+                  <button class="cm-pick" id="cmh-disc" onclick="cmHedgePick(this.id)">F &lt; S (discount, i&#66; &gt; i&#80;)</button>
+                </div>
+                <div class="cm-out" id="cmh-out"></div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#129518; Calculator — Roll yield via IRP (ZAR, Kaplan)</div>
+                <div class="cm-body">USD investor long ZAR, hedges 6 months: sells ZAR fwd / buys USD. IRP: gain the rate of the currency <b>purchased</b>, lose the rate of the currency <b>sold</b>. Analyze the ZAR &#8594; ZAR is <b>base, in the denominator of every term</b>.</div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">i&#80; % (purchased)</span><input class="cm-in" id="cmz-ip" value="2.8"></div>
+                  <div><span class="cm-lbl">i&#66; % (sold/base)</span><input class="cm-in" id="cmz-ib" value="3.6"></div>
+                  <div><span class="cm-lbl">Horizon (years)</span><input class="cm-in" id="cmz-t" value="0.5"></div>
+                </div>
+                <button class="cm-pick" onclick="cmZarCalc()">Compute</button>
+                <div class="cm-out" id="cmz-out"></div>
+                <div class="cm-tip"><b>Prof's note (similarity with the carry trade):</b> both roll yield and the forward rate bias depend on the initial rate differential. The carry trade buys the ZAR <b>spot</b> to earn the higher rate; an investor needing ZAR exposure buys it <b>forward at a discount</b> and earns positive roll. The similarity: <b>buying the higher-yielding currency</b>.</div>
+              </div>
+            </div>
+
+            <!-- ── Hedge decision ── -->
+            <div id="cmi-dec" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">&#129518; Calculator — Hedge or not? (KRW portfolio, Kaplan)</div>
+                <div class="cm-body">Reporting currency KRW; positions in EUR, USD, CHF. Compare <b>unhedged expected return</b> (forecast/spot &#8722; 1) with <b>hedged return</b> (F/S &#8722; 1 = the roll yield locked in): the active manager hedges where the hedge <b>improves return</b>.</div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">EUR spot</span><input class="cm-in" id="cmk-s1" value="1483.99"></div>
+                  <div><span class="cm-lbl">EUR 6-mo fwd</span><input class="cm-in" id="cmk-f1" value="1499.23"></div>
+                  <div><span class="cm-lbl">EUR forecast</span><input class="cm-in" id="cmk-e1" value="1450.87"></div>
+                </div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">USD spot</span><input class="cm-in" id="cmk-s2" value="1108.78"></div>
+                  <div><span class="cm-lbl">USD 6-mo fwd</span><input class="cm-in" id="cmk-f2" value="1112.56"></div>
+                  <div><span class="cm-lbl">USD forecast</span><input class="cm-in" id="cmk-e2" value="1146.63"></div>
+                </div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">CHF spot</span><input class="cm-in" id="cmk-s3" value="1265.22"></div>
+                  <div><span class="cm-lbl">CHF 6-mo fwd</span><input class="cm-in" id="cmk-f3" value="1257.89"></div>
+                  <div><span class="cm-lbl">CHF forecast</span><input class="cm-in" id="cmk-e3" value="1212.55"></div>
+                </div>
+                <button class="cm-pick" onclick="cmKrwCalc()">Compute</button>
+                <div class="cm-out" id="cmk-out"></div>
+                <div class="cm-trap"><b>Two traps:</b> (1) F &gt; S = forward premium &#8594; selling that currency forward <b>earns</b> positive roll (EUR, USD) — but roll yield is <b>only one factor</b>: USD's +3.41% expected appreciation beats the +0.34% locked by the hedge &#8594; leave USD unhedged. (2) The hedged return IS the implied roll yield: (F&#8320; &#8722; S&#8320;)/S&#8320; — for CHF, 1,257.89/1,265.22 &#8722; 1 = &#8722;0.58%; hedging <b>locks the forward as the end-of-period rate</b>.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ TOP 5 : MODULE 18.5 IMPLEMENTATION AND OPTIONS ════════ -->
+          <div id="cm-185" class="cm-toppanel">
+            <div class="cm-tabs">
+              <button class="cm-tab active" onclick="cmTab(event,'cmo-ladder')">Options Ladder</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmo-explore')">Strategy Explorer</button>
+              <button class="cm-tab" onclick="cmTab(event,'cmo-steps')">Selection Steps &amp; Multi-Ccy</button>
+            </div>
+
+            <!-- ── Ladder ── -->
+            <div id="cmo-ladder" class="cm-panel active">
+              <div class="cm-card">
+                <div class="cm-title">The trade-off (LOS 18.g)</div>
+                <div class="cm-body">Perfect hedging is expensive: forwards have <b>opportunity cost</b> (upside eliminated), insuring downside while keeping upside costs more. Every cost reduction = <b style="color:var(--cm-red);">less downside protection or less upside</b>, moving away from a 100% hedge ratio and/or toward more active decisions. Context: manager hedges <b>long CHF exposure</b>, quotes EUR/CHF (CHF = base). Roll-yield lever: <b>increase</b> trades earning positive roll, <b>reduce</b> trades earning negative roll.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">The ladder — highest &#8594; lowest initial option cost</div>
+                <table class="cm-tbl">
+                  <tr><th>#</th><th>Strategy</th><th>Legs</th><th>Key trade-off</th></tr>
+                  <tr><td>1</td><td><b>Over/underhedge with forwards</b><br><span style="color:var(--muted);font-size:11px;">(view-driven, low cost)</span></td><td>Adjust hedge ratio: CHF&#8593; expected &#8594; hedge <b>less</b>; CHF&#8595; &#8594; hedge <b>more</b> than full exposure</td><td>If right: <b>"positive convexity"</b> — gains increased, losses reduced</td></tr>
+                  <tr><td>2</td><td><b>ATM protective put</b><br><span style="color:var(--muted);font-size:11px;">(portfolio insurance)</span></td><td>Buy 50-delta put</td><td>Asymmetric: ALL downside removed, ALL upside kept. Only time value &#8594; <b style="color:var(--cm-red);">highest initial cost</b>, zero opportunity cost</td></tr>
+                  <tr><td>3</td><td><b>OTM put</b></td><td>Buy 35-delta (or 25-delta, further OTM) put</td><td>Cheaper, but exposed <b>down to the strike</b></td></tr>
+                  <tr><td>4</td><td><b>Collar</b></td><td>Buy 35-delta put + <b>sell 35-delta call</b></td><td>Call premium cuts initial cost, but upside capped (opportunity cost &#8593;)</td></tr>
+                  <tr><td>5</td><td><b>Put spread</b></td><td>Buy 35-delta put + <b>sell 25-delta put</b></td><td>Protection only between the two strikes — lost below the sold strike</td></tr>
+                  <tr><td>6</td><td><b>Seagull spread</b></td><td>Put spread + <b>sell 35-delta call</b></td><td>Less cost than put spread, same downside protection, upside limited</td></tr>
+                </table>
+                <div class="cm-tip"><b>Delta vocabulary:</b> ATM put &#8776; &#8722;0.50 = "50-delta" (sign ignored). OTM puts have |&#916;| &lt; 0.50: a 35-delta put is OTM, a 25-delta put further OTM — cheaper, less protective.</div>
+                <div class="cm-trap"><b>Risk reversal (collar's mirror):</b> the counterparty who <b>buys the OTM call and sells the OTM put</b> is LONG the risk reversal — profits above the call strike, loses below the put strike. The collar user (sells the call, buys the put) is <b>SHORT the risk reversal</b>.</div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Notional variations &amp; exotic options</div>
+                <div class="cm-fl">1&#215;2 put spread: buy 100 40-delta puts, SELL 200 30-delta puts
+  &#8594; extra premium cuts initial cost
+  &#8594; but DOUBLES downside risk below the 30-delta strike</div>
+                <table class="cm-tbl">
+                  <tr><th>Exotic</th><th>Feature</th></tr>
+                  <tr><td><b>Knock-in</b></td><td>Plain vanilla that only <b>comes into existence</b> if the underlying first reaches a prespecified level</td></tr>
+                  <tr><td><b>Knock-out</b></td><td>Standard option that <b>ceases to exist</b> if the underlying reaches a prespecified level</td></tr>
+                  <tr><td><b>Binary / digital</b></td><td>Pays a <b>fixed amount</b>, regardless of the strike-vs-underlying distance</td></tr>
+                </table>
+                <div class="cm-tip"><b>Prof's note:</b> endless combinations and odd names — what matters is how each strategy moves the three dials: <b>cost of the hedge &#8226; downside protection &#8226; upside potential</b>.</div>
+              </div>
+            </div>
+
+            <!-- ── Explorer ── -->
+            <div id="cmo-explore" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">&#127919; Strategy Explorer — the three dials, decomposed</div>
+                <div class="cm-body">Long CHF exposure, EUR/CHF quotes. Pick a strategy:</div>
+                <div class="cm-pickrow">
+                  <button class="cm-pick active" id="cmx-fwd" onclick="cmStratPick('fwd')">Fwd ratio</button>
+                  <button class="cm-pick" id="cmx-atm" onclick="cmStratPick('atm')">ATM put</button>
+                  <button class="cm-pick" id="cmx-otm" onclick="cmStratPick('otm')">OTM put</button>
+                  <button class="cm-pick" id="cmx-col" onclick="cmStratPick('col')">Collar</button>
+                  <button class="cm-pick" id="cmx-ps" onclick="cmStratPick('ps')">Put spread</button>
+                  <button class="cm-pick" id="cmx-sea" onclick="cmStratPick('sea')">Seagull</button>
+                </div>
+                <div class="cm-out" id="cmx-out"></div>
+              </div>
+            </div>
+
+            <!-- ── Steps & multi-ccy ── -->
+            <div id="cmo-steps" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Selecting a hedge — the 6 steps</div>
+                <table class="cm-tbl">
+                  <tr><th>#</th><th>Step</th></tr>
+                  <tr><td>1</td><td><b>Determine the base</b> in the P/B quote. USD/CHF: CHF is base — quoted price &#8593; (&#8595;) = CHF appreciates (depreciates).</td></tr>
+                  <tr><td>2</td><td><b>Base bought or sold?</b> Bought + price &#8593; = gain (price &#8595; = loss). Sold + price &#8593; = loss (price &#8595; = gain).</td></tr>
+                  <tr><td>3</td><td>Need to <b>BUY the base</b> to hedge &#8594; buy forwards or <b>calls</b>. Buying OTM calls or writing options cuts cost but cuts downside protection or upside.</td></tr>
+                  <tr><td>4</td><td>Need to <b>SELL the base</b> &#8594; sell forwards or buy <b>puts</b>. Same cost lever: OTM puts / writing options.</td></tr>
+                  <tr><td>5</td><td>Higher risk tolerance + stronger manager views &#8594; <b>less likely a simple 100% hedge</b>.</td></tr>
+                  <tr><td>6</td><td>Combinations of options, strikes, and sizes can cut initial cost <b>even to zero</b> — but only by giving up downside protection or upside.</td></tr>
+                </table>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Hedging Multiple Currencies — natural hedges</div>
+                <div class="cm-body">International portfolios hold several foreign currencies; hedging <b>each exposure individually</b> is unnecessary, expensive, and time-consuming.</div>
+                <div class="cm-fl">European investor: UNDERWEIGHT AUD, OVERWEIGHT NZD
+  Mechanical fix: long AUD + short NZD to neutral weights
+  But AUD &amp; NZD: very similar economies &#8594; strong POSITIVE
+  correlation &#8594; the two positions are NATURAL HEDGES
+  Equal over/underweights &#8594; possibly NO additional hedging needed</div>
+                <div class="cm-tip">The follow-up (Module 18.6): when the correlation is imperfect, the residual is <b>cross-hedge risk</b> — little, but not zero, for AUD/NZD.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ TOP 6 : MODULE 18.6 MORE ADVANCED IMPLEMENTATION ISSUES ════════ -->
+          <div id="cm-186" class="cm-toppanel">
+            <div class="cm-tabs">
+              <button class="cm-tab active" onclick="cmTab(event,'cma-cross')">Cross &amp; Macro Hedges</button>
+              <button class="cm-tab" onclick="cmTab(event,'cma-mvhr')">MVHR</button>
+              <button class="cm-tab" onclick="cmTab(event,'cma-em')">EM Currency</button>
+              <button class="cm-tab" onclick="cmTab(event,'cma-ndf')">NDFs</button>
+            </div>
+
+            <!-- ── Cross & macro ── -->
+            <div id="cma-cross" class="cm-panel active">
+              <div class="cm-card">
+                <div class="cm-title">Cross Hedge (proxy hedge) — LOS 18.h</div>
+                <div class="cm-body">Hedging with an instrument <b>not perfectly correlated</b> with the exposure (e.g. S&amp;P futures vs a non-identical diversified US portfolio). Generally <b>unnecessary in FX</b> — forwards exist for virtually all pairs — but can improve hedging <b>efficiency</b>.</div>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">Imperfect correlation &#8594; <b style="color:var(--cm-red);">residual risk</b> increases</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;">AUD/NZD: high positive correlation &#8594; hedging an AUD underweight with an NZD overweight has <b>little, but not zero</b>, cross-hedge risk</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;font-size:12.5px;color:#C9D1D9;">Historical correlation is <b>no guarantee</b>: corr &#8594; 0 &#8594; hedge underperforms; performance can benefit OR suffer from a correlation change</span>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">Macro Hedge — portfolio-wide factors</div>
+                <div class="cm-body">A type of cross hedge targeting <b>portfolio-wide risk factors</b> rather than individual assets. Bond portfolio illustration:</div>
+                <table class="cm-tbl">
+                  <tr><th>Risk factor</th><th>Macro-hedge instrument</th></tr>
+                  <tr><td>Interest rate risk</td><td><b>Bond futures</b> (modify duration)</td></tr>
+                  <tr><td>Credit risk</td><td><b>Credit derivatives</b></td></tr>
+                  <tr><td>Volatility risk</td><td><b>Volatility trading</b></td></tr>
+                </table>
+                <div class="cm-body">Currency version: a derivative on a <b>fixed basket of currencies</b>. The basket won't precisely match the portfolio's exposures, but it's <b>cheaper than hedging each currency individually</b>.</div>
+                <div class="cm-trap"><b>The trade-off to state on the exam:</b> accepting <b>higher residual currency risk</b> versus <b>lower cost</b>.</div>
+              </div>
+            </div>
+
+            <!-- ── MVHR ── -->
+            <div id="cma-mvhr" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Minimum-Variance Hedge Ratio</div>
+                <div class="cm-body">Mathematical hedge ratio: <b>regress past changes in R&#8202;DC on past changes in the hedging instrument's value</b> to minimize tracking error. The hedge ratio = <b style="color:var(--cm-main);">beta (slope coefficient)</b> of that regression.</div>
+                <div class="cm-trap"><b>Kaplan highlight:</b> the MVHR is based on <b>historical</b> returns — if the correlation between portfolio returns and hedging-instrument returns <b>changes, the hedge will not perform as expected</b>.</div>
+                <table class="cm-tbl">
+                  <tr><th>#</th><th>Practical implication</th></tr>
+                  <tr><td>1</td><td><b>Direct hedges need no MVHR</b>: long CHF 1m hedged by selling CHF 1m forward — CHF vs its own forward, corr &#8776; 1.00 &#8594; one-for-one.</td></tr>
+                  <tr><td>2</td><td><b>Cross/macro hedges are "indirect"</b>: correlation may not be 1.00 &#8594; MVHR may not be one-for-one.</td></tr>
+                  <tr><td>3</td><td>The MVHR <b>jointly optimizes over R&#8202;FX and R&#8202;FC</b> to minimize the volatility of R&#8202;DC.</td></tr>
+                </table>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#127919; Why MVHR &#8800; 1.0 — the economy type</div>
+                <div class="cm-pickrow">
+                  <button class="cm-pick active" id="cme-imp" onclick="cmEcoPick('imp')">IMPORT-dependent economy</button>
+                  <button class="cm-pick" id="cme-exp" onclick="cmEcoPick('exp')">EXPORT-dependent economy</button>
+                </div>
+                <div class="cm-out" id="cme-out"></div>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#129518; Calculator — MVHR (US investor long EUR, Kaplan)</div>
+                <div class="cm-body">Regression on weekly data, currency quotes adjusted to <b>USD/EUR</b> (foreign as base): R&#8202;DC = &#945; + &#946;(%&#916;S) + &#949;.</div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">Exposure (EUR)</span><input class="cm-in" id="cmv2-n" value="2000000"></div>
+                  <div><span class="cm-lbl">Beta (slope)</span><input class="cm-in" id="cmv2-b" value="1.25"></div>
+                  <div><span class="cm-lbl">Correlation</span><input class="cm-in" id="cmv2-r" value="0.75"></div>
+                </div>
+                <button class="cm-pick" onclick="cmMvhrCalc()">Compute</button>
+                <div class="cm-out" id="cmv2-out"></div>
+              </div>
+            </div>
+
+            <!-- ── EM ── -->
+            <div id="cma-em" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Managing Emerging Market Currency (LOS 18.i)</div>
+                <div class="cm-body">Most investable assets and FX flow through the <b>six largest developed-market currencies</b>. Everything else brings two core problems: <b>(1) higher transaction costs ("high markups")</b> and <b>(2) higher probability of extreme events</b>. The mechanisms:</div>
+                <table class="cm-tbl">
+                  <tr><th>Challenge</th><th>Mechanism</th></tr>
+                  <tr><td><b>Wider bid/ask spreads</b></td><td>Low trading volume &#8594; dealers charge more; spreads widen <b>further in crisis</b></td></tr>
+                  <tr><td><b>Asymmetric liquidity</b></td><td>Costlier to <b>exit</b> than enter: carry traders accumulate long EM positions, then mass-exit in crisis &#8594; EM currency driven <b>below fundamental value</b>, trading disrupted</td></tr>
+                  <tr><td><b>EM-to-EM pairs costlier still</b></td><td>Few dealers make direct markets: a MYR/HUF quote is actually executed as <b>EUR/MYR + EUR/HUF</b> component trades</td></tr>
+                  <tr><td><b>Non-normal returns</b></td><td>Higher extreme-event probability, <b>negative skew</b> &#8594; strategies and risk measures assuming normality are <b>flawed</b></td></tr>
+                  <tr><td><b>Negative roll yield</b></td><td>Higher EM yields &#8594; large <b>forward discounts</b> &#8594; negative roll for investors who must <b>sell forward</b> (hedgers)</td></tr>
+                  <tr><td><b>Contagion</b></td><td>In crisis, EM correlations (markets <b>and</b> currencies) converge toward <b>+1.0</b> &#8594; diversification disappears exactly when needed</td></tr>
+                  <tr><td><b>Tail risk</b></td><td>Governments intervene &#8594; long <b>artificial stability</b>, then sharp moves when market forces overwhelm them &#8594; negative events more frequent than the normal distribution assumes</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- ── NDFs ── -->
+            <div id="cma-ndf" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Non-Deliverable Forwards</div>
+                <div class="cm-body">EM governments often restrict currency movement in/out of the country (<b>BRL, CNY, RUB</b>). NDFs replace deliverable forwards: <b>cash settlement of the gain/loss in a developed-market currency</b> — no exchange of notionals.</div>
+                <span class="cm-rule" style="display:block;padding:6px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:#C9D1D9;"><b style="color:var(--cm-green);">Benefit:</b> lower <b>credit risk</b> — no notional delivery; only the gain to one party is paid at settlement</span>
+                <span class="cm-rule" style="display:block;padding:6px 0;font-size:12.5px;color:#C9D1D9;"><b style="color:var(--cm-red);">Caveat:</b> NDFs exist <b>because</b> the government restricts the market — policy changes can cause sharp currency moves (<b>tail risk</b>)</span>
+              </div>
+
+              <div class="cm-card">
+                <div class="cm-title">&#129518; Calculator — NDF cash settlement (RUB/EUR, Kaplan)</div>
+                <div class="cm-body">Trader <b>buys the base</b> (EUR) forward; the NDF settles at the ending spot, in the developed currency.</div>
+                <div class="cm-grid">
+                  <div><span class="cm-lbl">Notional (base)</span><input class="cm-in" id="cmn-n" value="1000000"></div>
+                  <div><span class="cm-lbl">Forward rate</span><input class="cm-in" id="cmn-f" value="39"></div>
+                  <div><span class="cm-lbl">Spot at expiry</span><input class="cm-in" id="cmn-s" value="40"></div>
+                </div>
+                <button class="cm-pick" onclick="cmNdfCalc()">Compute</button>
+                <div class="cm-out" id="cmn-out"></div>
+                <div class="cm-trap"><b>Settlement trap:</b> the gain accrues in the restricted currency but is <b>paid in the developed currency, converted at the ENDING spot</b> — divide by S&#84;, not by the forward. Only the net amount changes hands.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ ERRORS ════════ -->
+          <div id="cm-err" class="cm-toppanel">
+            <div class="cm-card">
+              <div class="cm-title">Errors — Reading 18</div>
+              <div class="cm-body" style="color:var(--muted);">Practice-exam errors land here. Send me the questions you got wrong.</div>
+            </div>
+          </div>
+
+          <!-- ════════ MASTERY ════════ -->
+          <div id="cm-mast" class="cm-toppanel">
+            <div class="cm-card">
+              <div class="cm-title">Mastery — Reading 18</div>
+              <div class="cm-body" style="color:var(--muted);">Mastered traps &amp; patterns will be tracked here.</div>
+            </div>
+          </div>
+
+          <script>
+            function cmFmt(n,d){ if(d===undefined)d=2; var s=Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}); return (n<0?'\u2212':'')+s; }
+            function cmTop(ev,id){
+              var w=document.getElementById('cmWidget');
+              w.querySelectorAll('.cm-toptab').forEach(function(b){b.classList.remove('active');});
+              w.querySelectorAll('.cm-toppanel').forEach(function(p){p.classList.remove('active');});
+              ev.currentTarget.classList.add('active');
+              document.getElementById(id).classList.add('active');
+            }
+            function cmSwitch(ev,id,panelSel){
+              var top=document.getElementById(id).closest('.cm-toppanel');
+              top.querySelectorAll('.cm-tab').forEach(function(b){b.classList.remove('active');});
+              top.querySelectorAll('.cm-panel').forEach(function(p){p.classList.remove('active');});
+              ev.currentTarget.classList.add('active');
+              document.getElementById(id).classList.add('active');
+            }
+            function cmTab(ev,id){ cmSwitch(ev,id); }
+
+            function cmBidAskPick(side){
+              document.getElementById('cmba-buy').classList.toggle('active',side==='buy');
+              document.getElementById('cmba-sell').classList.toggle('active',side==='sell');
+              var out;
+              if(side==='buy'){
+                out='Client buys the base (USD) \u2192 pays the <span style="color:#FF7B72;">ASK 0.9810</span> \u2014 "deliver more CAD"<br><br>'
+                  +'Phrasing 1: <span style="color:#22D3EE;">Buy 1.0000 USD</span> and deliver (sell) 0.9810 CAD<br>'
+                  +'Phrasing 2: <span style="color:#22D3EE;">Sell 0.9810 CAD</span> and receive (buy) 1.0000 USD';
+              } else {
+                out='Client sells the base (USD) \u2192 receives the <span style="color:#3DD68C;">BID 0.9790</span> \u2014 "receive less CAD"<br><br>'
+                  +'Phrasing 1: <span style="color:#22D3EE;">Sell 1.0000 USD</span> and receive (buy) 0.9790 CAD<br>'
+                  +'Phrasing 2: <span style="color:#22D3EE;">Buy 0.9790 CAD</span> and deliver (sell) 1.0000 USD';
+              }
+              document.getElementById('cmba-out').innerHTML=out;
+            }
+
+            function cmDeltaPick(zone){
+              ['below','at','above'].forEach(function(z){ document.getElementById('cmd-'+z).classList.toggle('active',z===zone); });
+              var out;
+              if(zone==='below'){
+                out='<b>CALL</b>: <span style="color:#FF7B72;">out-of-the-money</span>, rising in value \u2014 \u0394 shifting 0.0 \u2192 0.5 (0-delta \u2192 50-delta)<br>'
+                  +'<b>PUT</b>: <span style="color:#3DD68C;">in-the-money</span>, falling in value \u2014 \u0394 shifting \u22121.0 \u2192 \u22120.5 (100-delta \u2192 50-delta)';
+              } else if(zone==='at'){
+                out='<b>CALL</b>: at-the-money \u2014 \u0394 \u2248 0.5 (50-delta)<br>'
+                  +'<b>PUT</b>: at-the-money \u2014 \u0394 \u2248 \u22120.5 (50-delta)';
+              } else {
+                out='<b>CALL</b>: <span style="color:#3DD68C;">in-the-money</span>, rising in value \u2014 \u0394 shifting 0.5 \u2192 1.0 (50-delta \u2192 100-delta)<br>'
+                  +'<b>PUT</b>: <span style="color:#FF7B72;">out-of-the-money</span>, falling in value \u2014 \u0394 shifting \u22120.5 \u2192 0.0 (50-delta \u2192 0-delta)';
+              }
+              out+='<br><span style="color:#8B949E;">Check: |\u0394call| + |\u0394put| = 1.00 everywhere on the curve</span>';
+              document.getElementById('cmd-out').innerHTML=out;
+            }
+
+            function cmFwdCalc(){
+              var sb=parseFloat(document.getElementById('cmf-sb').value), sa=parseFloat(document.getElementById('cmf-sa').value);
+              var p30b=parseFloat(document.getElementById('cmf-p30b').value), p30a=parseFloat(document.getElementById('cmf-p30a').value);
+              var p90b=parseFloat(document.getElementById('cmf-p90b').value), p90a=parseFloat(document.getElementById('cmf-p90a').value);
+              var not_=parseFloat(document.getElementById('cmf-not').value);
+              var dec=(String(document.getElementById('cmf-sb').value).split('.')[1]||'').length;
+              var div=Math.pow(10,dec);
+              var f30b=sb+p30b/div, f30a=sa+p30a/div;
+              var f90b=sb+p90b/div, f90a=sa+p90a/div;
+              var eur=not_/f90a;
+              var out='<b>Decimal rule</b>: spot has '+dec+' decimals \u2192 points \u00F7 '+div.toLocaleString('en-US')+'<br><br>';
+              out+='30-day all-in: '+f30b.toFixed(5)+' / '+f30a.toFixed(5)+'<br>';
+              out+='90-day all-in: <span style="color:#22D3EE;">'+f90b.toFixed(5)+' / '+f90a.toFixed(5)+'</span><br><br>';
+              out+='<b>Sell AUD '+cmFmt(not_,0)+' 90d fwd</b> = buy EUR (base) \u2192 pay the ask '+f90a.toFixed(5)+'<br>';
+              out+='EUR received = '+cmFmt(not_,0)+' / '+f90a.toFixed(5)+' = <span style="color:#D4A017;">EUR '+cmFmt(eur,2)+'</span>';
+              document.getElementById('cmf-out').innerHTML=out;
+            }
+
+            function cmMtmCalc(){
+              var orig=parseFloat(document.getElementById('cmm-orig').value), not_=parseFloat(document.getElementById('cmm-not').value);
+              var sa=parseFloat(document.getElementById('cmm-sa').value);
+              var pa=parseFloat(document.getElementById('cmm-pa').value);
+              var days=parseFloat(document.getElementById('cmm-days').value), r=parseFloat(document.getElementById('cmm-r').value)/100;
+              var dec=(String(document.getElementById('cmm-sa').value).split('.')[1]||'').length;
+              var div=Math.pow(10,dec);
+              var off=sa+pa/div;
+              var pnl=(orig-off)*not_;   // sold base at orig, buy back at off
+              var disc=1+r*days/360;
+              var mtm=pnl/disc;
+              var out='<b>Step 1</b> \u2014 Offset = BUY EUR '+cmFmt(not_,0)+' '+days+'d fwd \u2192 ask side:<br>';
+              out+='all-in = '+sa.toFixed(4)+' + '+pa.toFixed(1)+'/'+div.toLocaleString('en-US')+' = <span style="color:#22D3EE;">'+off.toFixed(5)+'</span><br><br>';
+              out+='<b>Step 2</b> \u2014 Sold at '+orig.toFixed(5)+', buy back at '+off.toFixed(5)+':<br>';
+              out+='P&amp;L at expiry = ('+orig.toFixed(5)+' \u2212 '+off.toFixed(5)+') \u00D7 '+cmFmt(not_,0)+' = <span style="color:'+(pnl<0?'#FF7B72':'#3DD68C')+';">AUD '+cmFmt(pnl,0)+'</span><br><br>';
+              out+='<b>Step 3</b> \u2014 Discount '+days+'/360 at '+(r*100).toFixed(2)+'%:<br>';
+              out+='MTM = '+cmFmt(pnl,0)+' / [1 + '+(r).toFixed(3)+' \u00D7 ('+days+'/360)] = <span style="color:#D4A017;">AUD '+cmFmt(mtm,2)+'</span>'+(pnl<0?' (loss)':' (gain)');
+              document.getElementById('cmm-out').innerHTML=out;
+            }
+
+            function cmRdcCalc(){
+              var rfc=parseFloat(document.getElementById('cmr-rfc').value)/100;
+              var s0=parseFloat(document.getElementById('cmr-s0').value), s1=parseFloat(document.getElementById('cmr-s1').value);
+              var rfx=s1/s0-1;
+              var rdc=(1+rfc)*(1+rfx)-1;
+              var approx=rfc+rfx;
+              var out='R\u2009FX = '+s1.toFixed(3)+' / '+s0.toFixed(3)+' \u2212 1 = <span style="color:#22D3EE;">'+(rfx*100).toFixed(2).replace('-','\u2212')+'%</span> (foreign currency '+(rfx>=0?'appreciated':'depreciated')+')<br><br>';
+              out+='Exact:  R\u2009DC = (1 + '+(rfc*100).toFixed(1)+'%)(1 + '+(rfx*100).toFixed(1)+'%) \u2212 1 = <span style="color:#D4A017;">'+(rdc*100).toFixed(2).replace('-','\u2212')+'%</span><br>';
+              out+='Approx: R\u2009FC + R\u2009FX = <span style="color:#8B949E;">'+(approx*100).toFixed(2).replace('-','\u2212')+'%</span> (cross term = '+(rfc*rfx*100).toFixed(2).replace('-','\u2212')+'%)';
+              document.getElementById('cmr-out').innerHTML=out;
+            }
+
+            function cmPortCalc(){
+              var w1=parseFloat(document.getElementById('cmp-w1').value)/100, rfc1=parseFloat(document.getElementById('cmp-rfc1').value)/100;
+              var s01=parseFloat(document.getElementById('cmp-s01').value), s11=parseFloat(document.getElementById('cmp-s11').value);
+              var w2=parseFloat(document.getElementById('cmp-w2').value)/100, rfc2=parseFloat(document.getElementById('cmp-rfc2').value)/100;
+              var s02=parseFloat(document.getElementById('cmp-s02').value), s12=parseFloat(document.getElementById('cmp-s12').value);
+              var rfx1=s11/s01-1;
+              var rdc1=(1+rfc1)*(1+rfx1)-1;
+              var i0=1/s02, i1=1/s12;          // invert: foreign (USD) as base
+              var rfx2=i1/i0-1;
+              var rdc2=(1+rfc2)*(1+rfx2)-1;
+              var port=w1*rdc1+w2*rdc2;
+              var out='<b>Leg 1 (GBP)</b> \u2014 quote already foreign-as-base:<br>';
+              out+='R\u2009DC,1 = '+(1+rfc1).toFixed(2)+' \u00D7 ('+s11.toFixed(4)+'/'+s01.toFixed(4)+') \u2212 1 = <span style="color:#22D3EE;">'+(rdc1*100).toFixed(2).replace('-','\u2212')+'%</span><br><br>';
+              out+='<b>Leg 2 (USD)</b> \u2014 INVERT first: 1/'+s02.toFixed(3)+' = '+i0.toFixed(4)+', 1/'+s12.toFixed(3)+' = '+i1.toFixed(4)+' EUR/USD<br>';
+              out+='R\u2009DC,2 = '+(1+rfc2).toFixed(2)+' \u00D7 ('+i1.toFixed(4)+'/'+i0.toFixed(4)+') \u2212 1 = <span style="color:#22D3EE;">'+(rdc2*100).toFixed(2).replace('-','\u2212')+'%</span><br><br>';
+              out+='<b>Portfolio</b> = '+(w1*100).toFixed(0)+'% \u00D7 '+(rdc1*100).toFixed(2)+' + '+(w2*100).toFixed(0)+'% \u00D7 '+(rdc2*100).toFixed(2)+' = '+(w1*rdc1*100).toFixed(2)+' + '+(w2*rdc2*100).toFixed(2)+' = <span style="color:#D4A017;">'+(port*100).toFixed(2).replace('-','\u2212')+'%</span>';
+              document.getElementById('cmp-out').innerHTML=out;
+            }
+
+            function cmCarryCalc(){
+              var s0=parseFloat(document.getElementById('cmc-s0').value), rh=parseFloat(document.getElementById('cmc-rh').value)/100, rl=parseFloat(document.getElementById('cmc-rl').value)/100, b=parseFloat(document.getElementById('cmc-b').value);
+              var fwd=s0*(1+rh)/(1+rl);
+              var conv=b*s0;
+              var inv=conv*(1+rh);
+              var back=inv/s0;
+              var loan=b*(1+rl);
+              var profit=back-loan;
+              var be=(fwd/s0-1)*100;   // % decline of high-yield ccy that kills the trade
+              var out='<b>1. CIRP forward</b> = '+s0.toFixed(2)+' \u00D7 (1+'+(rh*100).toFixed(0)+'%)/(1+'+(rl*100).toFixed(0)+'%) = <span style="color:#22D3EE;">'+fwd.toFixed(3)+'</span> (high-yield ccy at fwd discount)<br><br>';
+              out+='<b>2\u20133. Spot unchanged:</b><br>';
+              out+='Borrow '+cmFmt(b,0)+' low-yield \u2192 loan payable '+cmFmt(loan,2)+'<br>';
+              out+='Convert: '+cmFmt(b,0)+' \u00D7 '+s0.toFixed(2)+' = '+cmFmt(conv,0)+' high-yield<br>';
+              out+='Invest at '+(rh*100).toFixed(0)+'%: '+cmFmt(conv,0)+' \u00D7 '+(1+rh).toFixed(2)+' = '+cmFmt(inv,2)+'<br>';
+              out+='Convert back at '+s0.toFixed(2)+': '+cmFmt(inv,2)+' / '+s0.toFixed(2)+' = '+cmFmt(back,2)+'<br>';
+              out+='Repay loan: '+cmFmt(back,2)+' \u2212 '+cmFmt(loan,2)+' = <span style="color:#D4A017;">profit '+cmFmt(profit,2)+'</span> on '+cmFmt(b,0)+' (= the '+((rh-rl)*100).toFixed(0)+'% differential)<br><br>';
+              out+='<b>4. Risk:</b> high-yield ccy declines more than <span style="color:#FF7B72;">'+be.toFixed(1)+'%</span> \u2192 unprofitable';
+              document.getElementById('cmc-out').innerHTML=out;
+            }
+            function cmVolPick(dir){
+              document.getElementById('cmv-up').classList.toggle('active',dir==='up');
+              document.getElementById('cmv-dn').classList.toggle('active',dir==='dn');
+              var out;
+              if(dir==='up'){
+                out='<b style="color:#3DD68C;">LONG STRADDLE</b> \u2014 BUY the ATM call + BUY the ATM put<br><br>'
+                  +'Leg deltas: call \u2248 +0.5, put \u2248 \u22120.5 \u2192 <b>equal &amp; opposite \u2192 delta neutral</b><br>'
+                  +'Vega: both legs positive \u2192 you are <b>buying volatility</b><br>'
+                  +'Vol rises \u2192 both options gain net value \u2192 profit';
+              } else {
+                out='<b style="color:#FF7B72;">SHORT STRADDLE</b> \u2014 SELL the ATM call + SELL the ATM put<br><br>'
+                  +'Delta neutral for the same reason \u2014 you are <b>selling volatility</b><br>'
+                  +'Vol falls \u2192 both options fall in net value \u2192 <b>repurchase at lower prices</b> for a profit';
+              }
+              document.getElementById('cmv-out').innerHTML=out;
+            }
+            function cmHedgePick(t){
+              if(t==='cmh-long'||t==='cmh-short'){ document.getElementById('cmh-long').classList.toggle('active',t==='cmh-long'); document.getElementById('cmh-short').classList.toggle('active',t==='cmh-short'); }
+              if(t==='cmh-prem'||t==='cmh-disc'){ document.getElementById('cmh-prem').classList.toggle('active',t==='cmh-prem'); document.getElementById('cmh-disc').classList.toggle('active',t==='cmh-disc'); }
+              var isLong=document.getElementById('cmh-long').classList.contains('active');
+              var isPrem=document.getElementById('cmh-prem').classList.contains('active');
+              var hedge=isLong?'SHORT forward on Currency B':'LONG forward on Currency B';
+              var pos, cost, verdict;
+              if(isLong&&isPrem){ pos='POSITIVE'; cost='decreases'; verdict='ENCOURAGES hedging'; }
+              else if(isLong&&!isPrem){ pos='NEGATIVE'; cost='increases'; verdict='DISCOURAGES hedging'; }
+              else if(!isLong&&isPrem){ pos='NEGATIVE'; cost='increases'; verdict='DISCOURAGES hedging'; }
+              else { pos='POSITIVE'; cost='decreases'; verdict='ENCOURAGES hedging'; }
+              var curve=isPrem?'upward-sloping (premium)':'downward-sloping (discount)';
+              var out='Forward price curve: '+curve+'<br>';
+              out+='The hedge requires: <span style="color:#22D3EE;">'+hedge+'</span><br>';
+              out+='The hedge earns: <span style="color:'+(pos==='POSITIVE'?'#3DD68C':'#FF7B72')+';">'+pos+' roll yield</span><br>';
+              out+='\u2192 '+cost+' hedging cost \u2192 <b>'+verdict+'</b>';
+              document.getElementById('cmh-out').innerHTML=out;
+            }
+            function cmZarCalc(){
+              var ip=parseFloat(document.getElementById('cmz-ip').value)/100, ib=parseFloat(document.getElementById('cmz-ib').value)/100, t=parseFloat(document.getElementById('cmz-t').value);
+              var approx=(ip-ib)*t*100;
+              var precise=(Math.pow((1+ip)/(1+ib),t)-1)*100;
+              var out='<b>Approximation</b>: +'+(ip*100).toFixed(1)+'%\u00D7'+t+' \u2212 '+(ib*100).toFixed(1)+'%\u00D7'+t+' = <span style="color:#8B949E;">'+approx.toFixed(1).replace('-','\u2212')+'% forward '+(approx<0?'discount':'premium')+'</span><br><br>';
+              out+='<b>Precise (IRP)</b>: F = S \u00D7 [(1+i\u209A)/(1+i\u0299)]<br>';
+              out+='% roll = (1.00) \u00D7 ('+(1+ip).toFixed(3)+' / '+(1+ib).toFixed(3)+')^'+t+' \u2212 1 = <span style="color:#D4A017;">'+precise.toFixed(3).replace('-','\u2212')+'%</span><br><br>';
+              out+=(precise<0?'Selling the base fwd at a discount \u2192 <span style=\"color:#FF7B72;\">negative roll, a cost of hedging</span>':'Selling the base fwd at a premium \u2192 <span style=\"color:#3DD68C;\">positive roll, reduces hedging cost</span>');
+              document.getElementById('cmz-out').innerHTML=out;
+            }
+            function cmKrwCalc(){
+              var names=['EUR','USD','CHF'], rows='', hedgeList=[];
+              for(var i=1;i<=3;i++){
+                var s=parseFloat(document.getElementById('cmk-s'+i).value), f=parseFloat(document.getElementById('cmk-f'+i).value), e=parseFloat(document.getElementById('cmk-e'+i).value);
+                var un=(e/s-1)*100, he=(f/s-1)*100;
+                var dec=he>un;
+                if(dec) hedgeList.push(names[i-1]);
+                rows+='<b>'+names[i-1]+'</b> \u2014 fwd '+(f>s?'<span style=\"color:#3DD68C;\">premium</span>':'<span style=\"color:#FF7B72;\">discount</span>')+'<br>';
+                rows+='&nbsp;&nbsp;Unhedged: '+e.toFixed(2)+'/'+s.toFixed(2)+' \u2212 1 = '+un.toFixed(2).replace('-','\u2212')+'%<br>';
+                rows+='&nbsp;&nbsp;Hedged (roll): '+f.toFixed(2)+'/'+s.toFixed(2)+' \u2212 1 = '+he.toFixed(2).replace('-','\u2212')+'%<br>';
+                rows+='&nbsp;&nbsp;\u2192 '+(dec?'<span style=\"color:#3DD68C;\">HEDGE</span>':'<span style=\"color:#FF7B72;\">DON\u2019T HEDGE</span>')+' (hedged '+(dec?'&gt;':'&lt;')+' unhedged)<br><br>';
+              }
+              rows+='<b>Decision: hedge '+hedgeList.join(' and ')+'</b>';
+              document.getElementById('cmk-out').innerHTML=rows;
+            }
+            var CM_STRATS={
+              fwd:{ name:'Over/underhedge with forwards', legs:'Adjust the hedge ratio around 100% per the view (CHF\u2191 \u2192 hedge less; CHF\u2193 \u2192 hedge more)', cost:'Very low (forwards \u2248 free to enter)', opp:'Depends on the view \u2014 if right, "positive convexity": gains increased, losses reduced', down:'Partial \u2014 whatever fraction stays hedged', up:'Partial \u2014 whatever fraction stays unhedged' },
+              atm:{ name:'ATM protective put (portfolio insurance)', legs:'BUY 50-delta put on CHF', cost:'HIGHEST \u2014 pure time value', opp:'NONE \u2014 all upside retained', down:'TOTAL \u2014 all downside eliminated', up:'FULL' },
+              otm:{ name:'OTM put', legs:'BUY 35-delta (or 25-delta) put', cost:'Lower than ATM; cheaper the further OTM', opp:'None from options sold (nothing sold)', down:'Only BELOW the strike \u2014 exposed from spot down to it', up:'FULL' },
+              col:{ name:'Collar', legs:'BUY 35-delta put + SELL 35-delta call', cost:'Lower than OTM put alone (call premium received)', opp:'Upside CAPPED above the call strike', down:'Below the put strike', up:'Capped at the call strike \u2014 short the risk reversal' },
+              ps:{ name:'Put spread', legs:'BUY 35-delta put + SELL 25-delta put', cost:'Lower than OTM put alone (put premium received)', opp:'None on the upside (no call sold)', down:'ONLY between the two strikes \u2014 lost below the sold 25-delta strike', up:'FULL' },
+              sea:{ name:'Seagull spread', legs:'BUY 35-delta put + SELL 25-delta put + SELL 35-delta call', cost:'Lowest of the option strategies here', opp:'Upside capped (call sold)', down:'Same as the put spread \u2014 between the strikes only', up:'Capped at the call strike' }
+            };
+            function cmStratPick(k){
+              ['fwd','atm','otm','col','ps','sea'].forEach(function(x){ document.getElementById('cmx-'+x).classList.toggle('active',x===k); });
+              var s=CM_STRATS[k];
+              var out='<b style="color:#22D3EE;">'+s.name+'</b><br><br>';
+              out+='Legs: '+s.legs+'<br>';
+              out+='Initial cost: <span style="color:#D4A017;">'+s.cost+'</span><br>';
+              out+='Opportunity cost: '+s.opp+'<br>';
+              out+='Downside protection: <span style="color:#3DD68C;">'+s.down+'</span><br>';
+              out+='Upside potential: '+s.up;
+              document.getElementById('cmx-out').innerHTML=out;
+            }
+            function cmEcoPick(k){
+              document.getElementById('cme-imp').classList.toggle('active',k==='imp');
+              document.getElementById('cme-exp').classList.toggle('active',k==='exp');
+              var out;
+              if(k==='imp'){
+                out='Currency appreciates (+R\u2009FX) \u2192 imports cheaper \u2192 production costs \u2193 \u2192 profits &amp; asset values \u2191 (+R\u2009FC)<br><br>'
+                  +'\u2192 <b style="color:#FF7B72;">strong POSITIVE \u03C1(R\u2009FX, R\u2009FC)</b> \u2192 volatility of R\u2009DC <b>amplified</b><br>'
+                  +'\u2192 MVHR <span style="color:#D4A017;">GREATER than 1.0</span> reduces the volatility of R\u2009DC';
+              } else {
+                out='Currency appreciates (+R\u2009FX) \u2192 exports more expensive \u2192 sales, profits &amp; asset values \u2193 (\u2212R\u2009FC)<br><br>'
+                  +'\u2192 <b style="color:#3DD68C;">strong NEGATIVE \u03C1(R\u2009FX, R\u2009FC)</b> \u2192 natural dampening of R\u2009DC volatility<br>'
+                  +'\u2192 MVHR <span style="color:#D4A017;">LESS than 1.0</span> suffices';
+              }
+              document.getElementById('cme-out').innerHTML=out;
+            }
+            function cmMvhrCalc(){
+              var n=parseFloat(document.getElementById('cmv2-n').value), b=parseFloat(document.getElementById('cmv2-b').value), r=parseFloat(document.getElementById('cmv2-r').value);
+              var h=n*b;
+              var out='Hedge = exposure \u00D7 \u03B2 = '+cmFmt(n,0)+' \u00D7 '+b.toFixed(2)+' = <span style="color:#D4A017;">SHORT EUR '+cmFmt(h,0)+'</span><br><br>';
+              out+='Effectiveness: cross hedge based on <b>past</b> correlation ('+r.toFixed(2)+') \u2014 it can change, so the hedge may perform better or worse than expected; and '+r.toFixed(2)+' \u2260 1.00 \u2192 random variation even in the past data.';
+              document.getElementById('cmv2-out').innerHTML=out;
+            }
+            function cmNdfCalc(){
+              var n=parseFloat(document.getElementById('cmn-n').value), f=parseFloat(document.getElementById('cmn-f').value), s=parseFloat(document.getElementById('cmn-s').value);
+              var pnl=(s-f)*n;   // long base: agreed to pay f, worth s
+              var settle=pnl/s;
+              var out='Agreed: "sell" '+cmFmt(f*n,0)+' restricted ccy for '+cmFmt(n,0)+' base<br>';
+              out+='At expiry, '+cmFmt(n,0)+' base is worth '+cmFmt(s*n,0)+' \u2192 <span style="color:'+(pnl>=0?'#3DD68C':'#FF7B72')+';">'+(pnl>=0?'gain':'loss')+' '+cmFmt(Math.abs(pnl),0)+' (restricted ccy)</span><br><br>';
+              out+='NDF settles in the developed ccy at ENDING spot:<br>';
+              out+=cmFmt(pnl,0)+' / '+s.toFixed(2)+' = <span style="color:#D4A017;">'+(pnl>=0?'receive ':'pay ')+cmFmt(Math.abs(settle),0)+' (base ccy)</span> \u2014 net exchange only';
+              document.getElementById('cmn-out').innerHTML=out;
+            }
+            function cmInit(){ setTimeout(function(){cmBidAskPick('buy');},30); setTimeout(function(){cmDeltaPick('below');},30); setTimeout(function(){cmVolPick('up');},30); setTimeout(function(){cmStratPick('fwd');},30); setTimeout(function(){cmEcoPick('imp');},30); setTimeout(cmFwdCalc,30); setTimeout(cmMtmCalc,30); setTimeout(cmRdcCalc,30); setTimeout(cmPortCalc,30); setTimeout(cmCarryCalc,30); setTimeout(cmHedgePick,30); setTimeout(cmZarCalc,30); setTimeout(cmKrwCalc,30); setTimeout(cmMvhrCalc,30); setTimeout(cmNdfCalc,30); }
+          </script>
+        </div>
+
         <!-- empty state -->
         <div id="notesEmpty" style="height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted);">
           <div style="font-size:28px">📝</div>
@@ -19211,7 +20330,7 @@ const DEFAULT_DECK = {
   topics: [
     { name:"IPS",                subtopics:["Individual","Institutional"] },
     { name:"Asset Allocation",   subtopics:["SAA / TAA","LDI","Goals-Based","Risk Budgeting"] },
-    { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Futures Hedge","Swaps","Risk Measures"] },
+    { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Currency Management","Futures Hedge","Swaps","Risk Measures"] },
     { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
     { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution","Fixed Income"] },
@@ -20114,7 +21233,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -20136,6 +21255,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'rwWidget' && typeof rwInit === 'function') setTimeout(rwInit, 50);
     if (widgetId === 'osWidget' && typeof osInit === 'function') setTimeout(osInit, 50);
     if (widgetId === 'sfWidget' && typeof sfInit === 'function') setTimeout(sfInit, 50);
+    if (widgetId === 'cmWidget' && typeof cmInit === 'function') setTimeout(cmInit, 50);
   }
 }
 
@@ -20160,11 +21280,12 @@ function openNote(key, topic, subtopic) {
     'Asset Allocation||Principles of Asset Allocation': 'paWidget',
     'Asset Allocation||Asset Allocation with Real-World Constraints': 'rwWidget',
     'Derivatives||Options Strategies': 'osWidget',
-    'Derivatives||Swaps, Forwards, and Futures Strategies': 'sfWidget'
+    'Derivatives||Swaps, Forwards, and Futures Strategies': 'sfWidget',
+    'Derivatives||Currency Management': 'cmWidget'
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
