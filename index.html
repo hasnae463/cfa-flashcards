@@ -19847,21 +19847,102 @@ NDF: settle = (S&#84; &#8722; F) &#215; N / S&#84;   in the DM ccy, at ENDING sp
 Vol&#8593; &#8594; long straddle              Vol&#8595; &#8594; short straddle
 Stable &#8594; carry trade              Crisis &#8594; discontinue carry</div>
             </div>
+            <div class="cm-card">
+              <div class="cm-title">9 &#8212; Essay add-ons (mock gaps)</div>
+              <div class="cm-fl">MVHR from stats:  h = &#961; &#215; &#963;(R&#8202;DC) / &#963;(R&#8202;FX)   ; hedge = h &#215; exposure
+Currency contribution = R&#8202;DC &#8722; &#931;w&#183;R&#8202;FC  (= &#931;w&#183;R&#8202;FX + cross terms)
+R&#8202;FX sign reflex: R&#8202;FX &gt; 0 = FOREIGN appreciated = domestic fell
+Negative carry: borrow HIGH, invest LOW &#8212; profitable only if
+  fwd FX return (F/S &#8722; 1) &gt; net borrowing cost (i&#8345; &#8722; i&#8342;)
+Trading costs: bid/ask churn | option premium | roll cash flows |
+  overhead     (opportunity cost = a SEPARATE bucket)
+Band width: &#177;5% discretionary | &#177;25% active | rule-based passive</div>
+            </div>
           </div>
 
           <!-- ════════ ERRORS ════════ -->
           <div id="cm-err" class="cm-toppanel">
-            <div class="cm-card">
-              <div class="cm-title">Errors — Reading 18</div>
-              <div class="cm-body" style="color:var(--muted);">Practice-exam errors land here. Send me the questions you got wrong.</div>
+            <div class="cm-tabs">
+              <button class="cm-tab active" onclick="cmTab(event,'cme-mcq')">MCQ Traps (13)</button>
+              <button class="cm-tab" onclick="cmTab(event,'cme-essay')">Essay Gaps</button>
+            </div>
+
+            <div id="cme-mcq" class="cm-panel active">
+              <div class="cm-card">
+                <div class="cm-title">Mock — Reading 18 MCQ errors (June 2026)</div>
+                <table class="cm-tbl">
+                  <tr><th>#</th><th>Question</th><th>You &#8594; Correct</th><th>Trap &amp; reflex</th></tr>
+                  <tr><td>1</td><td><b>Testa's EUR reasons</b> — which supports appreciation?</td><td>B &#8594; A</td><td><b>Narrative over mechanism.</b> Defaults + IMF rescue = rising risk premium = depreciation; falling US trade deficit = less EUR demand. Only "higher real rates" attracts capital. Reflex: ignore the story — does it raise or lower demand for the currency?</td></tr>
+                  <tr><td>2</td><td><b>Roll yield if hedge rolled</b> (EUR at fwd discount, EUR appreciated)</td><td>B &#8594; C</td><td><b>Two signs to stack.</b> Sold base at a discount &#8594; rolls UP to spot &#8594; sell low / buy high = negative roll. EUR also appreciated &#8594; even MORE negative. Run the Fig 18.2 picker until automatic.</td></tr>
+                  <tr><td>3</td><td><b>2015 AUD/NZD hedge</b> (both LONG, &#961;=0.85, minimize FX)</td><td>C &#8594; A</td><td><b>Position signs decide, not correlation.</b> Cross-hedge/MVHR exploit high &#961; only with one LONG + one SHORT. Two longs point the same way &#8594; nothing nets &#8594; direct hedge each. "High correlation" is bait.</td></tr>
+                  <tr><td>4</td><td><b>Peixaria options, vol &#8593; expected</b> — LEAST likely</td><td>B &#8594; C</td><td><b>Stem inversion.</b> You picked a VALID strategy (50-delta straddle). Least likely = the one betting the other way: short 15-delta strangle = selling vol. Eliminate valid answers first on "least likely".</td></tr>
+                  <tr><td>5</td><td><b>Campos seagulls</b> — exploit views + cut costs?</td><td>A &#8594; C</td><td><b>Strikes vs forecast.</b> AUD forecast 2.0355 but short put kills protection at 2.1006 — hedge dies above the level the view says you need. Always test every strike against the forecast number.</td></tr>
+                  <tr><td>6</td><td><b>Guten: R&#8202;DC &gt; R&#8202;FC for which assets?</b> (quotes XXX/EUR)</td><td>A &#8594; C</td><td><b>Base inversion.</b> EUR is the BASE in the market quotes — foreign appreciates when the quote FALLS. Only CHF/EUR fell &#8594; CHF. Write "base = ?" before reading choices.</td></tr>
+                  <tr><td>7</td><td><b>&#961; forecast 0.50 &#8594; 0.80</b> — effect on E[R&#8202;DC]?</td><td>B &#8594; C</td><td><b>Risk &#8800; return.</b> &#961; lives in Eq 3 (variance) only. Expected return (Eq 1) unchanged — her R&#8202;FC forecast didn't move.</td></tr>
+                  <tr><td>8</td><td><b>Ostermann (markets efficient) — hedge %?</b></td><td>C &#8594; A</td><td><b>Efficient &#8594; 0%, not 100%.</b> If currency is zero-sum net of costs, hedging is pure cost. Long horizon + no liquidity needs &#8594; forgo hedging. "Efficient &#8594; passive &#8594; 100%" is the trap chain.</td></tr>
+                  <tr><td>9</td><td><b>Subscriber 2: KRW weakens vs USD</b> — instrument?</td><td>B &#8594; C</td><td><b>Map the view through the BASE.</b> KRW/USD: USD = base; KRW&#8595; &#8594; rate&#8593; &#8594; LONG the base &#8594; long forward; KRW restricted &#8594; NDF. A put profits if the rate FALLS — wrong direction, and vol&#8593; makes it expensive.</td></tr>
+                  <tr><td>10</td><td><b>Bj&#246;rk: assets fell GBP 7m</b> — rebalance how?</td><td>A &#8594; B</td><td><b>Offset = same maturity.</b> Overhedged short &#8594; buy GBP 7m FORWARD to Dec 1. Spot doesn't offset a forward — MTM Step 1 rule.</td></tr>
+                  <tr><td>11</td><td><b>Bj&#246;rk: hedge long CHF, cut cost, limited upside</b></td><td>B &#8594; C</td><td><b>Long asset &#8594; PUT on the base.</b> Calls never protect downside. OTM put + write OTM call = short risk reversal (collar). Selection Step 4.</td></tr>
+                </table>
+              </div>
+              <div class="cm-card">
+                <div class="cm-title">Asked mid-test (answered live)</div>
+                <table class="cm-tbl">
+                  <tr><th>#</th><th>Question</th><th>Answer</th><th>Key steps</th></tr>
+                  <tr><td>12</td><td><b>Close out the EUR hedge after 3 months</b> (Exhibit 1, EUR 18m)</td><td>B — 489,850</td><td>Sold at 6-mo fwd <b>bid</b> 1.39160; offset = BUY at 3-mo fwd <b>ask</b> 1.41890; loss 0.02730 &#215; 18m = 491,400 at maturity; <b>discount at USD MRR</b> (ccy of the cash flow): 491,400/1.0031650 = 489,850. Distractors: no discounting (C) / EUR rate (A).</td></tr>
+                  <tr><td>13</td><td><b>Traldi: negative &#961; &#8594; hedge all? Overlay needs high-&#961; alpha?</b></td><td>B — both wrong</td><td>Negative &#961;(R&#8202;FC,R&#8202;FX) DAMPENS R&#8202;DC vol &#8594; LESS need to hedge. Overlay alpha adds value when correlation with the portfolio is <b>LOW</b>, not high. Grade the LAST clause of the statement, not the opening definition.</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="cme-essay" class="cm-panel">
+              <div class="cm-card">
+                <div class="cm-title">Essay errors</div>
+                <table class="cm-tbl">
+                  <tr><th>Question</th><th>What happened</th><th>Fix</th></tr>
+                  <tr><td><b>CNY carry trade + "explain two risks"</b></td><td>Construction &#10003;, risks = blank. Half the points gone on a skipped sub-command.</td><td>Risks menu: crisis unwinding (flight from high-yield), leverage magnifies losses, high-yield = high-risk countries. <b>Count the command verbs, answer each.</b></td></tr>
+                  <tr><td><b>Gupta Portfolio A — USD app/dep?</b></td><td>Computed positive R&#8202;FX then concluded "appreciated". Plus 1.19 vs 1.195.</td><td><b>R&#8202;FX &gt; 0 = FOREIGN appreciated = domestic DEPRECIATED.</b> One-liner: R&#8202;DC (19.5%) &gt; R&#8202;FC (15%) &#8594; currency helped &#8594; USD depreciated. Exact: (1.195/1.15)&#8722;1 = 3.91%.</td></tr>
+                  <tr><td><b>"Two forms of TRADING costs"</b></td><td>Gave 1 trading cost + opportunity cost — wrong category; the NEXT question was opportunity cost.</td><td>Trading costs menu: bid/ask churning &#8226; option premium lost &#8226; roll/cash-flow costs &#8226; overhead. Opportunity cost is its own bucket.</td></tr>
+                  <tr><td><b>Negative carry MXN — incomplete</b></td><td>Construction &#10003; but stopped before the economics.</td><td>Forward return (19.72/18.90 &#8722; 1 = 4.34%) &gt; net borrowing cost (4.50&#8722;2.21 = 2.29%) &#8594; locked profit. The forward column is in the exhibit FOR this.</td></tr>
+                  <tr><td><b>Justifications too thin</b> (Beth, Peters)</td><td>L1 + instrument, no mechanism.</td><td>Your own c4 framework: L1 answer / <b>L2 mechanism</b> / L3 vignette number. Beth: "base = USD" IS the L2.</td></tr>
+                </table>
+              </div>
+              <div class="cm-card">
+                <div class="cm-title">The 14 blanks — what they needed</div>
+                <table class="cm-tbl">
+                  <tr><th>Blank</th><th>The answer in one line</th></tr>
+                  <tr><td><b>MVHR (JI/HKD)</b></td><td>h = &#961; &#215; &#963;(R&#8202;DC)/&#963;(R&#8202;FX) = 0.26 &#215; 5.10/3.61 = <b>0.367</b> &#8594; short GBP/HKD fwd, HKD 67.95m</td></tr>
+                  <tr><td><b>Currency contribution (Bhatt)</b></td><td>Contribution = R&#8202;DC &#8722; &#931;w&#183;R&#8202;FC = 7.0% &#8722; 5.5% = <b>1.5%</b></td></tr>
+                  <tr><td><b>Bhatt strategy</b></td><td>&#177;25% band = <b>ACTIVE</b> management (&#177;5% = discretionary — band width decides)</td></tr>
+                  <tr><td><b>Bhatt forwards</b></td><td>View USD&#8593; &#8594; <b>under-hedge</b>: sell USD fwd at &#8805;75% ratio (IPS floor)</td></tr>
+                  <tr><td><b>Wilson overlay attribute</b></td><td>Alpha <b>UNCORRELATED</b> with the portfolio's other programs (= the Traldi point)</td></tr>
+                  <tr><td><b>Static hedge risk + alternative</b></td><td>Static accumulates mismatch as asset values move &#8594; dynamic rebalancing; cost = more transactions</td></tr>
+                  <tr><td><b>Delgado net cash flow</b></td><td>Sell USD fwd = buy EUR base &#8594; <b>offer</b> 1.1724 &#8594; EUR 2,132,378; buy USD spot = sell EUR &#8594; <b>bid</b> 1.1575 &#8594; EUR 2,159,827; net outflow <b>EUR 27,449.18</b></td></tr>
+                  <tr><td><b>Two positive-roll strategies</b></td><td>Carry trade &#8801; trade the fwd rate bias: buy the discount/high-yield ccy, sell the premium/low-yield</td></tr>
+                  <tr><td><b>Konev vs institutionals</b></td><td>Speculator: net SHORT vol (earn premium); hedgers: net LONG vol (pay for protection, bear theta)</td></tr>
+                  <tr><td><b>Murimi technicals</b></td><td>3 principles + overbought/oversold &#8594; time entry/exit around the USD peak</td></tr>
+                  <tr><td><b>CCM EM distributions</b></td><td>Fat tails + negative skew &#8594; VAR/Sharpe on normal distributions understate risk; stable periods breed overconfidence</td></tr>
+                </table>
+                <div class="cm-trap"><b>Pattern over the whole mock:</b> (1) R&#8202;FX/base sign — 4 hits; (2) one decisive detail skipped (strike vs forecast, maturity, long/long) — 3 hits; (3) sub-commands left unanswered + 14 blanks that were mostly formula plugs. Pre-answer ritual: <b>write the base &#8226; write the position sign &#8226; count the command verbs.</b></div>
+              </div>
             </div>
           </div>
 
           <!-- ════════ MASTERY ════════ -->
           <div id="cm-mast" class="cm-toppanel">
             <div class="cm-card">
-              <div class="cm-title">Mastery — Reading 18</div>
-              <div class="cm-body" style="color:var(--muted);">Mastered traps &amp; patterns will be tracked here.</div>
+              <div class="cm-title">Solid on the mock (June 2026)</div>
+              <table class="cm-tbl">
+                <tr><th>Item</th><th>Evidence</th></tr>
+                <tr><td><b>Carry trade construction</b></td><td>CNY build correct, conversion step included (better than the model answer)</td></tr>
+                <tr><td><b>Solving Eq 1 for R&#8202;FC</b></td><td>Portfolio B: &#8722;4.76% exact</td></tr>
+                <tr><td><b>Opportunity cost of 100% hedge</b></td><td>Full answer incl. the 50% strategic ratio</td></tr>
+                <tr><td><b>Currency overlay as alpha solution</b></td><td>Outsourcing + mandate types — clean</td></tr>
+                <tr><td><b>Speculator vs hedger of volatility</b></td><td>Net short premium vs net long protection — matches the book</td></tr>
+                <tr><td><b>Dynamic forward choice (Rivera)</b></td><td>Right call; just label which reason justifies which dimension</td></tr>
+                <tr><td><b>Statement screening (Beth #3)</b></td><td>Put on CNY/USD = put on the base — identified correctly live</td></tr>
+              </table>
+              <div class="cm-tip">Zero conceptual gaps in the whole mock — every miss was trap-class execution. The knowledge is in.</div>
             </div>
           </div>
 
@@ -20678,6 +20759,24 @@ const DEFAULT_DECK = {
     {id:"cm25",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
      q:"NDF — why it exists, its benefit, and the settlement formula",
      a:"Governments restrict the ccy (BRL, CNY, RUB) → cash settlement in a DM currency, no notional exchange.\n[fl]Settlement (long base) = (S_T − F) × notional ÷ S_T\n→ paid in the DEVELOPED ccy at the ENDING spot[/fl]\n[rl]Benefit: lower credit risk (only the net gain moves)[/rl][rl]Caveat: exists BECAUSE of restrictions → policy change = tail risk[/rl]"},
+    {id:"cm26",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
+     q:"MVHR from correlation and standard deviations (no regression given)",
+     a:"[fl]h = ρ(R_DC; R_FX) × [σ(R_DC) / σ(R_FX)]\nHedge position = h × exposure[/fl]\nJI example: 0.26 × (5.10/3.61) = 0.367 → short GBP/HKD fwd, HKD 67.95m.\n[hl]Same β as the regression slope[/hl] — two routes to one number."},
+    {id:"cm27",topic:"Derivatives",subtopic:"Currency Management",type:"formula",
+     q:"Contribution of currency to a multi-asset portfolio return",
+     a:"[fl]Contribution = R_DC − Σwᵢ·R_FC,ᵢ\n            = Σwᵢ·R_FX,ᵢ + Σwᵢ·(R_FC,ᵢ × R_FX,ᵢ)[/fl]\nBhatt: 7.0% − [0.5×10 + 0.25×5 + 0.25×(−3)] = 7.0% − 5.5% = [hl]1.5%[/hl]\nDomestic asset has R_FX = 0."},
+    {id:"cm28",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"Negative carry trade — when does borrowing HIGH and investing LOW make sense?",
+     a:"Only if the FX move pays for it:\n[fl]Profit if forward FX return (F/S − 1) > net borrowing cost (i_high − i_low)[/fl]\nMXN/USD: borrow MXN 4.50%, invest USD 2.21% → cost 2.29%; forward 19.72/18.90 − 1 = [hl]4.34% > 2.29%[/hl] → locked profit.\n[hl]Always check the forward column[/hl] — it is in the exhibit for this."},
+    {id:"cm29",topic:"Derivatives",subtopic:"Currency Management",type:"command",
+     q:"'Two forms of TRADING costs' — what is on the menu, what is NOT?",
+     a:"[rl]Bid/ask spread churning from frequent rebalancing[/rl][rl]Option premium lost if OTM at expiry[/rl][rl]Roll/FX-swap cash-flow volatility + financing[/rl][rl]Overhead: staff, systems, multi-ccy accounts[/rl]\n[bad]Opportunity cost — NOT a trading cost[/bad] — it is its own category (forgone upside of the hedged ccy)."},
+    {id:"cm30",topic:"Derivatives",subtopic:"Currency Management",type:"framework",
+     q:"R_FX sign reflex — positive R_FX means what for the domestic currency?",
+     a:"[hl]R_FX > 0 = FOREIGN currency appreciated = DOMESTIC depreciated.[/hl]\n\nShortcut without computing: R_DC > R_FC → currency helped → foreign appreciated → domestic fell.\nGupta A: 19.5% > 15% → USD depreciated (R_FX = 1.195/1.15 − 1 = +3.91%).\nBurned 4× on one mock — write the conclusion from the sign, not from intuition."},
+    {id:"cm31",topic:"Derivatives",subtopic:"Currency Management",type:"command",
+     q:"Essay ritual for currency questions — the 3 pre-answer checks",
+     a:"[rl]1. Write [hl]base = ?[/hl] for every quote before reading choices[/rl][rl]2. Write the [hl]position sign[/hl] (long/short the base) — signs decide cross-hedge vs direct, put vs call[/rl][rl]3. [hl]Count the command verbs[/hl] — 'Explain two risks', 'Identify AND describe' = separate labeled blocks, answer ALL of them[/rl]\nThen L1 answer / L2 mechanism / L3 vignette number."},
   ]
 };
 
