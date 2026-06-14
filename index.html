@@ -43,7 +43,9 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
 .hstat.total  .hstat-n { color: var(--gold); }
 
 /* ── NAV TABS ── */
-.main-tabs { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 16px; }
+.main-tabs { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; -ms-overflow-style: none; }
+.main-tabs::-webkit-scrollbar { display: none; }
+.main-tab { flex: 0 0 auto; }
 .main-tab { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; padding: 11px 16px; cursor: pointer; transition: color .15s; white-space: nowrap; }
 .main-tab:hover { color: var(--text); }
 .main-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
