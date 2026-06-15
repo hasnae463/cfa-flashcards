@@ -17371,6 +17371,13 @@ Monthly (21 days) → annual:
                 <span class="os-rule"><span class="os-blue">▪ Volatility SMILE:</span> further-from-ATM options (both sides) have <b>higher</b> implied vol → a <b>U-shaped</b> (smiling) curve when IV is plotted against strike. <span class="os-gold">Less common.</span></span>
                 <span class="os-rule"><span class="os-orange">▪ Volatility SKEW:</span> implied vol <b>increases for more OTM puts</b> and <b>decreases for more OTM calls</b>. Explanation: OTM puts are desirable as insurance against market declines, so they're bid up by higher demand (higher value ⇒ higher implied vol); demand for OTM calls is comparatively low. <span class="os-gold">More common.</span></span>
                 <div class="os-trap"><b>Memorise the skew direction:</b> OTM <b>puts</b> → IV <span class="os-red">UP</span>; OTM <b>calls</b> → IV <span class="os-green">DOWN</span>. The reversed wording ("IV up for OTM calls, down for OTM puts") is a classic distractor (it describes neither standard pattern).</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px;">
+                  <button class="os-tab active" id="osk-skew" onclick="osSkewPick('skew')">Skew (common)</button>
+                  <button class="os-tab" id="osk-smile" onclick="osSkewPick('smile')">Smile</button>
+                  <button class="os-tab" id="osk-flat" onclick="osSkewPick('flat')">Flat (the 30% assumption)</button>
+                </div>
+                <div id="osk-svg"></div>
+                <div id="osk-note" class="os-body" style="margin-top:6px;"></div>
               </div>
               <div class="os-card">
                 <div class="os-title">Reading sentiment from skew deviations</div>
@@ -17835,7 +17842,41 @@ BREAKEVEN:  S₀ + net</div>
               var out=c+p, beUp=k+out, beDn=k-out;
               document.getElementById('os-st-out').innerHTML='<div style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#C9D1D9;">Total outlay = '+c.toFixed(2)+' + '+p.toFixed(2)+' = <span style="color:#FF7B72;">$'+out.toFixed(2)+'</span> (max loss)<br>Upside BE = '+k.toFixed(2)+' + '+out.toFixed(2)+' = <span style="color:#3DD68C;">$'+beUp.toFixed(2)+'</span><br>Downside BE = '+k.toFixed(2)+' − '+out.toFixed(2)+' = <span style="color:#79C0FF;">$'+beDn.toFixed(2)+'</span></div>';
             }
-            function osInit(){ setTimeout(osDeriveToggle,30); setTimeout(osDerive,40); setTimeout(osIvCalc,30); setTimeout(osPoCalc,30); setTimeout(osPcpCalc,30); setTimeout(osCc2Calc,30); setTimeout(osPp2Calc,30); setTimeout(osCcCalc,30); setTimeout(osStCalc,30); setTimeout(osSpCalc,30); setTimeout(osPdCalc,30); setTimeout(osVolCalc,30); setTimeout(osRrCalc,30); }
+            function osSkewPick(kind){
+              ['skew','smile','flat'].forEach(function(k){ var b=document.getElementById('osk-'+k); if(b) b.classList.toggle('active',k===kind); });
+              var X=function(x){return 50+x*4.4;}, Y=function(iv){return 150-(iv-20)*4.5;};
+              var pts, note, col;
+              if(kind==='skew'){
+                pts=[[5,40],[20,36],[35,33],[50,30],[65,28.5],[80,27.5],[95,27]];
+                col='#F0A04B';
+                note='<span style="color:#F0A04B;">SKEW</span> \u2014 IV <b>rises for OTM puts</b> (left, low strikes) and <b>falls for OTM calls</b> (right). OTM puts are bid up as crash insurance. <b>The common equity pattern.</b>';
+              } else if(kind==='smile'){
+                pts=[[5,38],[20,33],[35,30.5],[50,29],[65,30.5],[80,33],[95,38]];
+                col='#79C0FF';
+                note='<span style="color:#79C0FF;">SMILE</span> \u2014 both wings (OTM puts AND OTM calls) carry <b>higher</b> IV \u2192 U-shape. Less common.';
+              } else {
+                pts=[[5,30],[50,30],[95,30]];
+                col='#8B949E';
+                note='<span style="color:#8B949E;">FLAT 30%</span> \u2014 the single-vol assumption used for the XYZ prices throughout this reading. A simplification: real IV varies by strike.';
+              }
+              var poly=pts.map(function(p){return X(p[0])+','+Y(p[1]);}).join(' ');
+              var svg='<svg viewBox="0 0 460 185" style="width:100%;max-width:460px;display:block;margin:10px auto 2px;">';
+              svg+='<line x1="50" y1="150" x2="440" y2="150" stroke="#30363D"/>';
+              svg+='<line x1="50" y1="150" x2="50" y2="20" stroke="#30363D"/>';
+              svg+='<text x="245" y="172" fill="#8B949E" font-size="10.5" font-family="monospace" text-anchor="middle">strike  (low = OTM puts  \u2192  high = OTM calls)</text>';
+              svg+='<text x="20" y="90" fill="#8B949E" font-size="10.5" font-family="monospace" transform="rotate(-90 20 90)" text-anchor="middle">implied vol</text>';
+              svg+='<line x1="'+X(50)+'" y1="22" x2="'+X(50)+'" y2="150" stroke="#30363D" stroke-dasharray="3 4"/>';
+              svg+='<text x="'+X(50)+'" y="16" fill="#8B949E" font-size="9.5" font-family="monospace" text-anchor="middle">ATM</text>';
+              svg+='<polyline points="'+poly+'" fill="none" stroke="'+col+'" stroke-width="2.6"/>';
+              if(kind==='skew'){
+                svg+='<circle cx="'+X(10)+'" cy="'+Y(39)+'" r="3.5" fill="#FF7B72"/><text x="'+(X(10)+8)+'" y="'+(Y(39)-4)+'" fill="#FF7B72" font-size="9.5" font-family="monospace">OTM puts: IV UP</text>';
+                svg+='<circle cx="'+X(92)+'" cy="'+Y(27)+'" r="3.5" fill="#3DD68C"/><text x="'+(X(92)-2)+'" y="'+(Y(27)+16)+'" fill="#3DD68C" font-size="9.5" font-family="monospace" text-anchor="end">OTM calls: IV DOWN</text>';
+              }
+              svg+='</svg>';
+              document.getElementById('osk-svg').innerHTML=svg;
+              document.getElementById('osk-note').innerHTML=note;
+            }
+            function osInit(){ setTimeout(osDeriveToggle,30); setTimeout(osDerive,40); setTimeout(osIvCalc,30); setTimeout(osPoCalc,30); setTimeout(osPcpCalc,30); setTimeout(osCc2Calc,30); setTimeout(osPp2Calc,30); setTimeout(osCcCalc,30); setTimeout(osStCalc,30); setTimeout(osSpCalc,30); setTimeout(osPdCalc,30); setTimeout(osVolCalc,30); setTimeout(osRrCalc,30); setTimeout(function(){osSkewPick('skew');},30); }
           </script>
         </div>
         <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
@@ -20582,11 +20623,11 @@ Band width: &#177;5% discretionary | &#177;25% active | rule-based passive</div>
 const DEFAULT_DECK = {
   topics: [
     { name:"IPS",                subtopics:["Individual","Institutional"] },
-    { name:"Asset Allocation",   subtopics:["SAA / TAA","LDI","Goals-Based","Risk Budgeting"] },
-    { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Currency Management","Futures Hedge","Swaps","Risk Measures"] },
+    { name:"Asset Allocation",   subtopics:[] },
+    { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Currency Management"] },
     { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
-    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution","Fixed Income"] },
+    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
     { name:"Command Words",      subtopics:["Templates","Thin vs Full"] },
   ],
@@ -20609,24 +20650,24 @@ const DEFAULT_DECK = {
      a:"[bad]Thin: 'Liquidity need is €80,000 for education.'[/bad]\n\n[good]Full: 'The IPS should specify a reserve of €80,000 required within 2 years — a known, non-deferrable outflow that must be ring-fenced in low-risk liquid instruments to prevent a forced sale of growth assets at an inopportune time.'[/good]\n\n[hl]What thin misses:[/hl] ring-fencing rationale, timing, consequence of not separating."},
 
     // Asset Allocation
-    {id:"c6",topic:"Asset Allocation",subtopic:"LDI",type:"formula",
+    {id:"c6",topic:"PM Pathway",subtopic:"Liab-Driven Strategies",type:"formula",
      q:"Duration gap — formula and what it signals for a pension fund",
      a:"[fl]Duration gap = Duration(Liabilities) − Duration(Assets)[/fl]\nA [hl]positive gap[/hl] means liabilities are more rate-sensitive than assets.\n\n[fl]If rates fall 100bps:\nΔL ≈ Duration(L) × 1% × PV(L)\nΔA ≈ Duration(A) × 1% × MV(A)[/fl]\nGap > 0 → liabilities rise more than assets → [hl]funding ratio worsens[/hl]."},
-    {id:"c7",topic:"Asset Allocation",subtopic:"LDI",type:"framework",
+    {id:"c7",topic:"PM Pathway",subtopic:"Liab-Driven Strategies",type:"framework",
      q:"LDI — three conditions for cash flow matching immunisation",
      a:"[rl]1. [hl]Duration match:[/hl] Asset duration = Liability duration[/rl][rl]2. [hl]PV match:[/hl] PV(assets) ≥ PV(liabilities)[/rl][rl]3. [hl]Convexity:[/hl] Asset convexity ≥ Liability convexity (non-parallel shifts)[/rl]\n\nAM tip: duration match alone is insufficient — always add the convexity condition when asked to 'fully immunise'."},
-    {id:"c8",topic:"Asset Allocation",subtopic:"LDI",type:"framework",
+    {id:"c8",topic:"PM Pathway",subtopic:"Liab-Driven Strategies",type:"framework",
      q:"4 factors that argue FOR de-risking a pension fund (LDI over equity)",
      a:"[rl]1. [hl]Large duration gap[/hl] → rate risk amplifies funding deficit[/rl][rl]2. [hl]Weak/stressed sponsor[/hl] → cannot backstop drawdowns with contributions[/rl][rl]3. [hl]Closed/mature plan[/hl] → shorter horizon, nearer cash flows[/rl][rl]4. [hl]Low funding ratio[/hl] → already underfunded; equity drawdown deepens deficit[/rl]"},
 
     // Derivatives
-    {id:"c9",topic:"Derivatives",subtopic:"Futures Hedge",type:"formula",
+    {id:"c9",topic:"Derivatives",subtopic:"Swaps, Forwards, and Futures Strategies",type:"formula",
      q:"Equity futures hedge — number of contracts formula",
      a:"[fl]N = (β_target − β_portfolio) / β_futures × (V_portfolio / V_futures)[/fl]\n[hl]Signs:[/hl]\n[rl]N < 0 → SELL (reducing beta)[/rl][rl]N > 0 → BUY (increasing beta)[/rl]\n\nAlways state direction explicitly — the number alone loses a point."},
     {id:"c10",topic:"Derivatives",subtopic:"Options Strategies",type:"framework",
      q:"3 options strategies — when to use each",
      a:"[rl][hl]Protective put:[/hl] Bullish + fear drawdown. Floor on loss, unlimited upside. Costs premium.[/rl][rl][hl]Covered call:[/hl] Neutral/mildly bullish. Generate income. Caps upside. No downside protection.[/rl][rl][hl]Collar:[/hl] Limit cost of protection. Short call offsets put cost. Caps both downside AND upside.[/rl]\n\nAM rule: 'downside protection AND retains upside' → always Protective Put, never Collar."},
-    {id:"c11",topic:"Derivatives",subtopic:"Risk Measures",type:"framework",
+    {id:"c11",topic:"Portfolio Construction",subtopic:"Portfolio Risk",type:"framework",
      q:"VaR — 3 limitations to know for the AM",
      a:"[rl]1. [hl]Tail severity:[/hl] VaR says nothing about loss magnitude BEYOND the threshold (use CVaR)[/rl][rl]2. [hl]Normality assumption:[/hl] equity returns are fat-tailed; VaR understates crisis tail risk[/rl][rl]3. [hl]Historical bias:[/hl] historical VaR assumes past correlations hold in stress periods[/rl]\n\nAlways name CVaR as the alternative when critiquing VaR."},
 
