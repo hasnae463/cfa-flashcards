@@ -18479,6 +18479,887 @@ Inclusion: exhaustive (CRSP) vs selective (S&P500, DJIA)</div>
           </script>
         </div>
 
+        <div id="fipmWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #fipmWidget { --fipm-main:#2DD4BF; --fipm-gold:#D4A017; --fipm-green:#3DD68C; --fipm-red:#FF7B72; --fipm-orange:#F0A04B; --fipm-blue:#79C0FF; --fipm-purple:#BC8CFF; }
+            #fipmWidget .fipm-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #fipmWidget .fipm-toptab { background:var(--surface2); border:1px solid var(--fipm-main); color:var(--fipm-main); padding:9px 18px; border-radius:7px; font-family:var(--serif); font-size:14px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #fipmWidget .fipm-toptab.active { background:var(--fipm-main); color:#0D1117; }
+            #fipmWidget .fipm-toppanel { display:none; }
+            #fipmWidget .fipm-toppanel.active { display:block; }
+            #fipmWidget .fipm-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+            #fipmWidget .fipm-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #fipmWidget .fipm-tab.active { background:rgba(45,212,191,.13); border-color:var(--fipm-main); color:var(--fipm-main); }
+            #fipmWidget .fipm-panel { display:none; }
+            #fipmWidget .fipm-panel.active { display:block; }
+            #fipmWidget .fipm-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:14px; }
+            #fipmWidget .fipm-title { font-family:var(--serif); font-size:16px; color:var(--fipm-main); font-weight:600; margin-bottom:10px; }
+            #fipmWidget .fipm-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:8px; }
+            #fipmWidget .fipm-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #fipmWidget .fipm-rule { display:block; padding:6px 0; border-bottom:1px solid var(--border); font-size:12.5px; line-height:1.5; color:#C9D1D9; }
+            #fipmWidget .fipm-rule:last-child { border-bottom:none; }
+            #fipmWidget .fipm-tip { background:rgba(46,160,67,.08); border-left:3px solid var(--fipm-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #fipmWidget .fipm-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--fipm-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #fipmWidget .fipm-info { background:rgba(121,192,255,.08); border-left:3px solid var(--fipm-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #fipmWidget .fipm-green { color:var(--fipm-green); }
+            #fipmWidget .fipm-red { color:var(--fipm-red); }
+            #fipmWidget .fipm-orange { color:var(--fipm-orange); }
+            #fipmWidget .fipm-blue { color:var(--fipm-blue); }
+            #fipmWidget .fipm-gold { color:var(--fipm-gold); }
+            #fipmWidget .fipm-main-c { color:var(--fipm-main); }
+            #fipmWidget .fipm-purple { color:var(--fipm-purple); }
+            #fipmWidget .fipm-tbl { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #fipmWidget .fipm-tbl th { background:#0B0F14; color:var(--fipm-main); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #fipmWidget .fipm-tbl td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+            #fipmWidget .fipm-pick-row { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0; }
+            #fipmWidget .fipm-pick { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:7px 13px; border-radius:6px; font-family:var(--mono); font-size:11px; cursor:pointer; }
+            #fipmWidget .fipm-pick.active { background:rgba(45,212,191,.13); border-color:var(--fipm-main); color:var(--fipm-main); }
+            #fipmWidget .fipm-out { background:#0B0F14; border-left:3px solid var(--fipm-main); border-radius:4px; padding:13px 15px; margin-top:12px; font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+            #fipmWidget .fipm-inp { background:#0B0F14; border:1px solid var(--border); color:#E6EDF3; border-radius:5px; padding:7px 9px; font-family:var(--mono); font-size:12px; width:90px; }
+            #fipmWidget .fipm-lbl { font-family:var(--mono); font-size:11px; color:var(--muted); display:inline-block; margin:5px 8px 5px 0; }
+            #fipmWidget .fipm-btn { background:var(--fipm-main); color:#0D1117; border:none; border-radius:6px; padding:8px 16px; font-family:var(--mono); font-size:12px; font-weight:600; cursor:pointer; margin-top:8px; }
+            #fipmWidget .fipm-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:4px; margin:12px 0; }
+            #fipmWidget .fipm-leg { background:#0B0F14; border:1px solid var(--border); border-radius:6px; padding:11px 13px; margin:8px 0; }
+            #fipmWidget .fipm-leg-h { font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:var(--fipm-main); margin-bottom:6px; }
+          </style>
+
+          <div class="fipm-toptabs">
+            <button class="fipm-toptab active" onclick="fipmTop(event,'fipm-roles')">Roles &amp; Mandates (7.a)</button>
+            <button class="fipm-toptab" onclick="fipmTop(event,'fipm-meas')">Risk Measures (7.b)</button>
+            <button class="fipm-toptab" onclick="fipmTop(event,'fipm-liq')">Liquidity (7.c)</button>
+            <button class="fipm-toptab" onclick="fipmTop(event,'fipm-ret')">Return Model (7.d)</button>
+            <button class="fipm-toptab" onclick="fipmTop(event,'fipm-lev')">Leverage &amp; Tax (7.e/7.f)</button>
+            <button class="fipm-toptab" onclick="fipmTop(event,'fipm-ldi')">LDI &amp; Ladders (7.g&ndash;i)</button>
+            <button class="fipm-toptab" onclick="fipmTop(event,'fipm-cheat')">Cheat Sheet</button>
+            <button class="fipm-toptab" onclick="fipmTop(event,'fipm-quiz')">Quiz &amp; Traps</button>
+          </div>
+
+          <!-- ════════ ROLES & MANDATES 7.a ════════ -->
+          <div id="fipm-roles" class="fipm-toppanel active">
+            <div class="fipm-tabs">
+              <button class="fipm-tab active" onclick="fipmTab(event,'fipmr-roles')">3 Roles</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmr-infl')">Inflation Comparator</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmr-mand')">Mandates</button>
+            </div>
+
+            <div id="fipmr-roles" class="fipm-panel active">
+              <div class="fipm-card">
+                <div class="fipm-title">LOS 7.a — Three roles of fixed income in a portfolio</div>
+                <div class="fipm-body">Each role is a separate driver. Under exam pressure, name the role AND its mechanism — don't collapse them.</div>
+                <table class="fipm-tbl">
+                  <tr><th>Role</th><th>Driver / mechanism</th><th>Detail to remember</th></tr>
+                  <tr><td><b class="fipm-blue">1. Diversification</b></td><td>Low (often &lt; +1) correlation to equities &rarr; improves risk-adjusted return</td><td><b>Lower</b> the correlation, <b>greater</b> the benefit. 2000–2019: ranged <b>−0.30</b> (10y US Treasury) to <b>+0.63</b> (US high-yield) vs S&amp;P 500.</td></tr>
+                  <tr><td><b class="fipm-green">2. Regular cash flow</b></td><td>Predictable coupon/principal to meet future obligations</td><td>Suits individuals (living expenses, tuition) &amp; insurers (policyholder payouts). Build a <b>buy-and-hold laddered</b> portfolio: no sales planned, ~equal par maturing periodically.</td></tr>
+                  <tr><td><b class="fipm-orange">3. Inflation hedge</b></td><td>Some structures pass inflation through to coupon and/or principal</td><td>Not the first thing investors think of. <b>Standard nominal (fixed-coupon) bonds do NOT protect.</b> Linked &amp; floating do (different ways — see comparator).</td></tr>
+                </table>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Diversification — decomposed drivers</div>
+                <span class="fipm-rule"><b class="fipm-main-c">Cross-asset:</b> adding a low-correlation class to a portfolio raises risk-adjusted return; numbers vary by period &amp; instrument type.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Internal (within FI):</b> achievable too — driven by <b>credit-spread changes</b> causing IG vs HY (below-IG) performance to diverge.</span>
+                <span class="fipm-rule"><b class="fipm-red">Not stable over time:</b> a particular problem is <b>flight to quality</b>.</span>
+                <div class="fipm-trap"><b>Flight-to-quality trap.</b> In market stress, <b>all lower-quality / riskier assets</b> (HY bonds + equities) decline together &rarr; their correlation approaches <b class="fipm-red">+1</b> (diversification evaporates when you need it). Meanwhile investors buy high-quality developed-market government bonds for safety &rarr; <b>government-bond correlation to risky assets falls and may go negative</b>. Also: bond-return <b>volatility rises</b> over time, especially HY in a crisis.</div>
+              </div>
+            </div>
+
+            <div id="fipmr-infl" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Inflation protection — the 3 structures (interactive)</div>
+                <div class="fipm-body">Pick a structure. Watch which leg moves: <b>par</b>, <b>coupon</b>, or neither. This is the single most tested distinction in 7.a.</div>
+                <div class="fipm-pick-row">
+                  <button class="fipm-pick active" onclick="fipmInfl(this,'nom')">Nominal (fixed-coupon)</button>
+                  <button class="fipm-pick" onclick="fipmInfl(this,'link')">Inflation-linked</button>
+                  <button class="fipm-pick" onclick="fipmInfl(this,'float')">Floating-coupon</button>
+                </div>
+                <div class="fipm-grid2">
+                  <div class="fipm-leg"><div class="fipm-leg-h">Principal (par) leg</div><div id="fipm-infl-par" style="font-size:12.5px;"></div></div>
+                  <div class="fipm-leg"><div class="fipm-leg-h">Coupon leg</div><div id="fipm-infl-cpn" style="font-size:12.5px;"></div></div>
+                </div>
+                <div id="fipm-infl-out" class="fipm-out"></div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Worked example — inflation rises 3% &rarr; 5% (par = 1,000,000)</div>
+                <table class="fipm-tbl">
+                  <tr><th></th><th>Inflation-linked</th><th>Floating-coupon</th></tr>
+                  <tr><td><b>Par</b></td><td>Adjusts +5% &rarr; <b class="fipm-green">1,050,000</b></td><td><b class="fipm-red">Unchanged</b> 1,000,000</td></tr>
+                  <tr><td><b>Coupon rule</b></td><td>real rate × adjusted par</td><td>(MRR + spread) × par</td></tr>
+                  <tr><td><b>First coupon</b></td><td>0.5% × 1,050,000 = <b>5,250</b></td><td>(3.5%+1%)×1m = <b>45,000</b></td></tr>
+                  <tr><td><b>After +2% inflation</b></td><td>par &amp; coupon keep adjusting +5% each period</td><td>MRR &rarr; 5.5%; coupon = (5.5%+1%)×1m = <b>65,000</b></td></tr>
+                  <tr><td><b>Coupon change</b></td><td>tracks cumulative inflation</td><td>45,000 &rarr; 65,000 = <b class="fipm-orange">+44.4%</b></td></tr>
+                  <tr><td><b>What's protected</b></td><td><b class="fipm-green">Coupon AND principal</b></td><td><b class="fipm-orange">Coupon only — NOT principal</b></td></tr>
+                </table>
+                <div class="fipm-info"><b>Prof's note:</b> In a fully efficient market, NR / linked / floating from the same issuer &amp; maturity are priced to the <b>same expected return</b> (small differences from differing inflation-risk response). If realized inflation &gt; (&lt;) initial consensus, linked &amp; floating returns beat (lag) the NR bond. Which of linked vs floating wins depends on the <b>actual path</b> of inflation. Accept the reading's conclusions — they're correct.</div>
+              </div>
+            </div>
+
+            <div id="fipmr-mand" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Fixed-income mandates — two major types</div>
+                <div class="fipm-body">First branch in the classification tree. Liability-based = fund a liability; total return = beat/match a benchmark.</div>
+                <table class="fipm-tbl">
+                  <tr><th></th><th class="fipm-blue">Liability-based</th><th class="fipm-orange">Total return</th></tr>
+                  <tr><td><b>Goal</b></td><td>Manage assets <b>solely</b> to meet expected future liability payouts</td><td><b>Not</b> funding liabilities; target an absolute return OR (more commonly) match/outperform a <b>benchmark</b></td></tr>
+                  <tr><td><b>Mechanism</b></td><td>All asset cash flows reinvested until paid out &rarr; <b>immunization</b></td><td>Measured by <b>active return</b> (= value added / alpha) &amp; <b>active risk</b> (= tracking error / tracking risk)</td></tr>
+                  <tr><td><b>Sub-types</b></td><td>Cash flow matching · Duration matching · Contingent immunization (CI) · Derivatives overlays</td><td>Pure indexing · Enhanced indexing · Active management</td></tr>
+                </table>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Liability-based — immunization variations</div>
+                <span class="fipm-rule"><b class="fipm-main-c">Cash flow matching</b> — simplest. Assets selected so cash flows occur <b>when &amp; in the size</b> the liabilities need.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Duration matching</b> — match asset duration to liability duration so ending values move similarly as rates change &rarr; values stay matched.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Contingent immunization (CI)</b> — hybrid of active + immunization. Funded with <b>more than required</b>; PVA − PVL = surplus.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Derivatives overlays</b> — futures/swaps to implement duration matching or CI.</span>
+                <div class="fipm-tip"><b>CI surplus logic (decomposed):</b><br>• Surplus = <b>PVA − PVL</b>; while <b class="fipm-green">positive</b>, manager can run the assets actively any way they believe adds value.<br>• If active mgmt <b class="fipm-green">succeeds</b> &rarr; surplus grows &rarr; ultimate cost of CI &lt; cost of initially immunizing.<br>• If surplus <b class="fipm-red">declines to zero</b> &rarr; portfolio <b>must be immediately immunized</b> &rarr; ultimate cost of CI &gt; initial immunization, <b>but by a known amount</b>.</div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Total return — the indexing spectrum</div>
+                <table class="fipm-tbl">
+                  <tr><th>Type</th><th>Active return target</th><th>Duration vs index</th><th>Turnover</th></tr>
+                  <tr><td><b class="fipm-blue">Pure indexing</b></td><td><b>~Zero</b> active return &amp; risk</td><td>Match all risk factors (duration, credit/quality, sectors, prepayment); leeway on individual bonds</td><td><b>Low</b>, similar to index</td></tr>
+                  <tr><td><b class="fipm-main-c">Enhanced indexing</b></td><td><b>Modest</b> active return</td><td>Duration <b>still matched</b>; small sector/quality over/underweights allowed</td><td>Slightly higher</td></tr>
+                  <tr><td><b class="fipm-orange">Active management</b></td><td><b>Larger</b> active return</td><td>Duration <b>can be mismatched</b>; large deviations from index risk factors</td><td>Much higher</td></tr>
+                </table>
+                <div class="fipm-trap"><b>Pure indexing trap (Quiz Q2).</b> Most pure bond indexing does <b>NOT</b> literally replicate (hold every issue at index weight) — the huge number of bonds &amp; their illiquidity make that impractical. It instead <b>exactly matches the index risk factors</b> while allowing leeway on the individual bonds selected. "Allows large deviations / high active return" = active mgmt, not pure indexing.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ RISK MEASURES 7.b ════════ -->
+          <div id="fipm-meas" class="fipm-toppanel">
+            <div class="fipm-tabs">
+              <button class="fipm-tab active" onclick="fipmTab(event,'fipmm-tbl')">Measures Table</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmm-edcalc')">Eff. Dur/Convex Calc</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmm-port')">Portfolio Aggregation</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmm-corr')">Correlations</button>
+            </div>
+
+            <div id="fipmm-tbl" class="fipm-panel active">
+              <div class="fipm-card">
+                <div class="fipm-title">LOS 7.b — Key bond risk &amp; return measures</div>
+                <div class="fipm-info"><b>Exam framing:</b> L3 is <b>less about calculation</b>, more about <b>interpretation &amp; use</b> in a PM situation. Know what each measure <i>tells you</i>.</div>
+                <table class="fipm-tbl">
+                  <tr><th>Measure</th><th>Definition</th><th>Interpretation</th></tr>
+                  <tr><td><b class="fipm-main-c">Macaulay duration</b></td><td>Weighted-avg <b>time</b> to receive cash flows; weights = PV of cash flows</td><td>Higher &rarr; investors wait longer &rarr; higher price volatility when yields change</td></tr>
+                  <tr><td><b class="fipm-main-c">Modified duration</b></td><td>Macaulay ÷ (1 + periodic yield)</td><td>Approx % price change for a <b>1% yield</b> change. ModDur 7 &rarr; price ≈ −7% if yields +1%</td></tr>
+                  <tr><td><b class="fipm-main-c">Effective duration</b></td><td>Price sensitivity to a <b>parallel shift</b> in benchmark curve (modeled, not formula)</td><td>Approx % change for 1% benchmark-curve change. Used for <b>complex bonds</b> (uncertain CF, embedded options)</td></tr>
+                  <tr><td><b class="fipm-main-c">Key rate (partial) duration</b></td><td>Sensitivity to a change at one <b>specific maturity</b>, others held constant</td><td>Assesses <b>nonparallel</b> curve exposure. 10y key-rate dur 7 &rarr; −7% if 10y yield +1% while others unchanged</td></tr>
+                  <tr><td><b class="fipm-main-c">Empirical duration</b></td><td>Interest-rate sensitivity from <b>regressing</b> bond returns vs benchmark yield changes</td><td>Same idea as effective duration, but from <b>past observed market behavior</b> rather than modeling</td></tr>
+                  <tr><td><b class="fipm-main-c">Money (dollar) duration</b></td><td>Modified duration × market value</td><td><b>Absolute</b> (currency) value gain/loss for a 1% yield change. Higher &rarr; larger absolute P&amp;L</td></tr>
+                  <tr><td><b class="fipm-main-c">PVBP / DV01 / BPV</b></td><td>Money duration × 0.0001</td><td>Absolute currency change for a <b>1 basis point</b> move</td></tr>
+                  <tr><td><b class="fipm-main-c">Convexity</b></td><td>Extent price–yield relationship is <b>nonlinear</b>; positive for option-free fixed-coupon bonds</td><td>Price rises <b>more</b> than duration implies when yields fall, falls <b>less</b> when yields rise</td></tr>
+                  <tr><td><b class="fipm-main-c">Effective convexity</b></td><td>Nonlinear price–curve relationship via modeling</td><td>Used for <b>complex bonds</b> (uncertain CF, embedded options)</td></tr>
+                </table>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Convexity — three key facts</div>
+                <span class="fipm-rule"><b class="fipm-main-c">1. Valuable when yields are expected to change</b> — positive convexity = up more / down less than duration predicts &rarr; investors <b>pay higher prices</b> (accept lower yields) for higher-convexity bonds.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">2. Second-order measure</b> — measures how price-vs-yield sensitivity itself <b>changes</b> as yields move. Approx ∝ <b>duration²</b>: dur-20 bond ≈ <b>4×</b> the convexity of a dur-10 bond (20² = 4 × 10²).</span>
+                <span class="fipm-rule"><b class="fipm-main-c">3. Related to cash-flow dispersion</b> — directly tied to dispersion of CFs in time around Macaulay duration. For a given Macaulay duration, the <b>lowest-convexity bond is a zero-coupon</b> (one CF at maturity).</span>
+              </div>
+            </div>
+
+            <div id="fipmm-edcalc" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Effective duration &amp; convexity calculator</div>
+                <div class="fipm-fl">effective duration   = (PV₋ − PV₊) / [2 · Δcurve · PV₀]
+effective convexity  = (PV₋ + PV₊ − 2·PV₀) / [Δcurve² · PV₀]</div>
+                <div class="fipm-body" style="margin-top:6px;">PV₀ = current value · PV₋ = value if curve shifts <b>down</b> · PV₊ = value if curve shifts <b>up</b> · Δcurve = size of the shift (decimal, e.g. 0.01 for 1%).</div>
+                <div>
+                  <span class="fipm-lbl">PV₀ <input id="fipm-ed-pv0" class="fipm-inp" type="number" value="100"></span>
+                  <span class="fipm-lbl">PV₋ (down) <input id="fipm-ed-pvm" class="fipm-inp" type="number" value="101.5"></span>
+                  <span class="fipm-lbl">PV₊ (up) <input id="fipm-ed-pvp" class="fipm-inp" type="number" value="98.6"></span>
+                  <span class="fipm-lbl">Δcurve <input id="fipm-ed-dc" class="fipm-inp" type="number" step="0.0001" value="0.01"></span>
+                </div>
+                <button class="fipm-btn" onclick="fipmEdCalc()">Compute</button>
+                <div id="fipm-ed-out" class="fipm-out"></div>
+              </div>
+            </div>
+
+            <div id="fipmm-port" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Combining bonds into a portfolio</div>
+                <span class="fipm-rule"><b class="fipm-main-c">Macaulay duration of a portfolio</b> = cash-weighted (market-value-weighted) duration of the individual assets. Applies to <b>all basic duration measures</b>.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Modified duration &amp; convexity</b> of a portfolio = cash-weighted of the individual assets (same process).</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Effective duration &amp; convexity</b> of a portfolio = use the PV₋ / PV₊ / PV₀ formulas on the whole portfolio value.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Spread duration</b> = portfolio % sensitivity to a <b>1% change in credit spreads</b>.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Duration times spread (DTS)</b> = spread duration × the bond's credit spread. Gives <b>higher</b> sensitivity when spreads are already high (spread <i>changes</i> tend to be proportional to spread <i>levels</i>).</span>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Cash-weighted portfolio duration calculator</div>
+                <div class="fipm-body">Enter weight,duration pairs (one per line, e.g. <span class="fipm-main-c">0.4,10</span>). Weights normalize automatically. Textbook check: 0.4,10 &amp; 0.6,15 &rarr; 13.</div>
+                <textarea id="fipm-pd-in" class="fipm-inp" style="width:100%;height:70px;font-family:var(--mono);">0.4,10
+0.6,15</textarea>
+                <button class="fipm-btn" onclick="fipmPortDur()">Compute portfolio duration</button>
+                <div id="fipm-pd-out" class="fipm-out"></div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">DTS calculator</div>
+                <div>
+                  <span class="fipm-lbl">Spread duration <input id="fipm-dts-sd" class="fipm-inp" type="number" value="5"></span>
+                  <span class="fipm-lbl">Credit spread (bps) <input id="fipm-dts-cs" class="fipm-inp" type="number" value="150"></span>
+                </div>
+                <button class="fipm-btn" onclick="fipmDts()">Compute DTS</button>
+                <div id="fipm-dts-out" class="fipm-out"></div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Active management moves (decomposed)</div>
+                <table class="fipm-tbl">
+                  <tr><th>View</th><th>Action</th><th>Why</th></tr>
+                  <tr><td>Rates expected to <b class="fipm-green">fall</b></td><td><b>Increase</b> portfolio duration</td><td>Amplify the price rise as yields drop</td></tr>
+                  <tr><td>Rates expected to <b class="fipm-red">rise</b></td><td><b>Lower</b> portfolio duration</td><td>Cushion the price fall as yields climb</td></tr>
+                  <tr><td>Spreads expected to <b class="fipm-green">narrow</b></td><td><b>Increase</b> spread duration / DTS; <b>lower</b> avg credit rating (hold riskier bonds)</td><td>Capture the larger price rise from spread tightening</td></tr>
+                  <tr><td>Spreads expected to <b class="fipm-red">widen</b></td><td><b>Decrease</b> spread duration; <b>increase</b> avg credit rating</td><td>Reduce loss from spread widening</td></tr>
+                  <tr><td>Bond selection</td><td>Use <b>relative value</b> (valuation, issuer traits, technicals) to rank bonds</td><td>e.g. expecting narrowing &rarr; pick bonds with DTS &gt; benchmark's</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="fipmm-corr" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Correlations between fixed-income sectors</div>
+                <span class="fipm-rule"><b class="fipm-main-c">Same market</b> &rarr; correlations likely <b>high</b> (shared overarching macro conditions).</span>
+                <span class="fipm-rule"><b class="fipm-blue">Investment-grade (low credit risk)</b> &rarr; returns driven primarily by the <b>benchmark sovereign yield curve</b>.</span>
+                <span class="fipm-rule"><b class="fipm-orange">High-yield</b> &rarr; more affected by <b>spread</b> changes than benchmark rates.</span>
+                <div class="fipm-info"><b>The negative rate–spread relationship (decomposed):</b> in poor economic conditions, interest rates tend to be <b>low</b> but credit spreads <b>high</b> (and vice versa) &rarr; benchmark rates &amp; spreads move oppositely. Because HY is spread-driven, this makes <b>HY behave more like equity</b> &rarr; HY shows <b>higher correlation with equities</b>.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ LIQUIDITY 7.c ════════ -->
+          <div id="fipm-liq" class="fipm-toppanel">
+            <div class="fipm-tabs">
+              <button class="fipm-tab active" onclick="fipmTab(event,'fipml-basics')">Basics &amp; Drivers</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipml-sub')">By Subsector</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipml-eff')">Effects on PM</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipml-alt')">Alternatives</button>
+            </div>
+
+            <div id="fipml-basics" class="fipm-panel active">
+              <div class="fipm-card">
+                <div class="fipm-title">LOS 7.c — What bond liquidity is</div>
+                <div class="fipm-body"><b>Liquidity</b> = ability to transact in <b>relatively large size, quickly, with minimal deviation</b> from market price. In bonds: most recently issued (<b class="fipm-green">on-the-run</b>) developed-market govt bonds are quite liquid; <b class="fipm-red">other bonds may be quite illiquid</b> — trading rarely or at very wide bid-ask spreads.</div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Why bonds are illiquid — the drivers</div>
+                <span class="fipm-rule"><b class="fipm-main-c">Huge number of issues</b> — one issuer can have dozens of separate bonds (different maturity, coupon, call features); each issue is small. Vs equity: one issuer usually has <b>one</b> class of common stock.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Heterogeneous</b> — bonds of one issuer differ; stock is homogeneous.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">OTC trading</b> — raises search cost to find a counterparty; less transparent (hard to find past price/volume).</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Dealer inventory</b> — recently issued bonds more liquid (dealers hold inventory). Over time bonds settle into buy-and-hold portfolios.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">On-the-run &rarr; off-the-run</b> — when a new similar-maturity issue arrives, the older one becomes <b>off-the-run</b>, liquidity drops, trades at <b>higher YTM</b> = a <b>liquidity premium</b>.</span>
+                <div class="fipm-info"><b>Prof's note:</b> "illiquidity premium" and "liquidity premium" mean the same thing; L3 calls it <b>liquidity premium</b> = extra yield compensation for lack of liquidity. As liquidity falls, the premium and yield <b>rise</b>.</div>
+              </div>
+            </div>
+
+            <div id="fipml-sub" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Liquidity by bond market subsector</div>
+                <table class="fipm-tbl">
+                  <tr><th>Subsector</th><th>Liquidity</th><th>Drivers</th></tr>
+                  <tr><td><b class="fipm-green">On-the-run sovereign (high quality)</b></td><td><b class="fipm-green">Highest</b></td><td>Large size, homogeneous, used as pricing benchmarks &amp; repo collateral. Declines somewhat for older off-the-run.</td></tr>
+                  <tr><td><b class="fipm-orange">Corporate bonds</b></td><td><b class="fipm-orange">Varies widely</b></td><td>Falls with <b>lower quality</b> (riskier) and <b>smaller issue size</b>. Small issuers also often excluded from indexes. Same analysis effort for small vs large issuer, but harder to build a large holding.</td></tr>
+                </table>
+                <div class="fipm-tip"><b>Quiz Q3:</b> highest liquidity = <b>on-the-run sovereign government debt</b>. A <i>small</i> corporate issue or a <i>below-investment-grade</i> issue would be <b>less</b> liquid.</div>
+              </div>
+            </div>
+
+            <div id="fipml-eff" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Effects of liquidity on bond portfolio management</div>
+                <span class="fipm-rule"><b class="fipm-main-c">Pricing data</b> — OTC trades historically unreported &rarr; hard to find prices. Absent reporting / with infrequent trading, use <b>matrix pricing</b>: infer price from YTM of recent trades in bonds with similar maturity, quality, coupon.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Portfolio construction</b> — <b>buy-and-hold</b> investors need less liquidity (no plan to sell) &rarr; may prefer <b>less liquid</b> bonds for the higher yield. <b>Active</b> investors / those who may need to sell &rarr; prefer <b>more liquid</b> bonds.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Dealer bid-ask</b> — most trading is in dealer markets; dealers <b>widen</b> bid-ask on less liquid bonds (longer to resell &rarr; more compensation for inventory risk).</span>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Bid-ask trading cost calculator</div>
+                <div class="fipm-fl">cost ≈ bond duration × (ask yield − bid yield)</div>
+                <div class="fipm-body" style="margin-top:6px;">Textbook: duration 10, bid-ask spread 20 bps &rarr; 10 × 0.002 = <b>0.02 = 2%</b> (if bought at ask &amp; immediately sold at bid).</div>
+                <div>
+                  <span class="fipm-lbl">Duration <input id="fipm-ba-d" class="fipm-inp" type="number" value="10"></span>
+                  <span class="fipm-lbl">Bid-ask spread (bps) <input id="fipm-ba-s" class="fipm-inp" type="number" value="20"></span>
+                </div>
+                <button class="fipm-btn" onclick="fipmBaCalc()">Compute cost</button>
+                <div id="fipm-ba-out" class="fipm-out"></div>
+              </div>
+            </div>
+
+            <div id="fipml-alt" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Alternatives to direct investment in bonds</div>
+                <table class="fipm-tbl">
+                  <tr><th>Vehicle</th><th>What it is</th><th>Key point</th></tr>
+                  <tr><td><b class="fipm-main-c">Fixed-income ETFs</b></td><td>Replicate many FI sectors; listed on an exchange</td><td>Easily traded throughout the day &rarr; <b>high liquidity</b></td></tr>
+                  <tr><td><b class="fipm-main-c">Open-end mutual funds</b></td><td>Subscribe / redeem units <b>daily</b></td><td>Diversification &amp; economies of scale smaller investors can't get directly</td></tr>
+                  <tr><td><b class="fipm-main-c">Derivatives</b></td><td>Exchange-traded bond futures &amp; options; OTC interest-rate swaps &amp; total return swaps (TRS)</td><td>See TRS decomposition below</td></tr>
+                </table>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Total Return Swap (TRS) — decomposed</div>
+                <div class="fipm-grid2">
+                  <div class="fipm-leg"><div class="fipm-leg-h">Total return receiver pays</div><div style="font-size:12.5px;">Interest rate <b>+ a spread</b></div></div>
+                  <div class="fipm-leg"><div class="fipm-leg-h">Total return receiver gets</div><div style="font-size:12.5px;">Total return on a <b>reference bond portfolio</b></div></div>
+                </div>
+                <span class="fipm-rule"><b class="fipm-green">Advantage:</b> only a relatively <b>small amount of capital</b> posted as collateral vs fully funding an ETF position to access bond-market returns.</span>
+                <span class="fipm-rule"><b class="fipm-red">Drawback 1:</b> <b>counterparty risk</b> of the total-return payer.</span>
+                <span class="fipm-rule"><b class="fipm-red">Drawback 2:</b> <b>rollover risk</b> — renewing contracts at maturity.</span>
+                <span class="fipm-rule"><b class="fipm-red">Drawback 3:</b> potential <b>regulatory reform</b> requiring higher collateral &amp; raising contract costs.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ CHEAT SHEET ════════ -->
+          <!-- ════════ RETURN MODEL 7.d ════════ -->
+          <div id="fipm-ret" class="fipm-toppanel">
+            <div class="fipm-tabs">
+              <button class="fipm-tab active" onclick="fipmTab(event,'fipmt-comp')">5 Components</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmt-calc')">Interactive Calculator</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmt-notes')">Rules &amp; Traps</button>
+            </div>
+
+            <div id="fipmt-comp" class="fipm-panel active">
+              <div class="fipm-card">
+                <div class="fipm-title">LOS 7.d — Expected fixed-income return = sum of 5 components</div>
+                <div class="fipm-body">Can be <b>projected</b> (expected return) or computed <b>after the fact</b> (decompose realized return). For a portfolio it uses aggregate data. Each component is a separate slot — name all five, don't merge.</div>
+                <table class="fipm-tbl">
+                  <tr><th>#</th><th>Component</th><th>Formula</th><th>Example value</th></tr>
+                  <tr><td><b>1</b></td><td><b class="fipm-main-c">Coupon income</b></td><td>annual coupon ÷ current price</td><td>3.0 / 101.50 = <b class="fipm-green">2.956%</b></td></tr>
+                  <tr><td><b>2</b></td><td><b class="fipm-main-c">Rolldown return</b></td><td>(end-horizon projected price − beginning price) ÷ beginning price <span style="color:var(--muted);">(yield curve unchanged)</span></td><td>(102.419 − 101.50) / 101.50 = <b class="fipm-green">0.905%</b></td></tr>
+                  <tr><td colspan="3" style="text-align:right;"><b class="fipm-gold">Rolling yield = #1 + #2</b></td><td><b class="fipm-gold">3.86%</b></td></tr>
+                  <tr><td><b>3</b></td><td><b class="fipm-main-c">Δ price from benchmark yield Δ (ΔY)</b></td><td>(−MD × ΔY) + (½ × C × ΔY²)</td><td>(−5.6×−0.0054)+(½×28×−0.0054²)<br>= 0.03024 + 0.00041 = <b class="fipm-green">3.065%</b></td></tr>
+                  <tr><td><b>4</b></td><td><b class="fipm-main-c">Δ price from credit spread Δ (ΔS)</b></td><td>(−MD × ΔS) + (½ × C × ΔS²)</td><td>(−5.6×−0.0006)+(½×28×−0.0006²)<br>= 0.00336 + 0.000005 = <b class="fipm-green">0.337%</b></td></tr>
+                  <tr><td><b>5</b></td><td><b class="fipm-main-c">Currency gain/loss vs investor's currency</b></td><td>Δcurrency × foreign weight</td><td>3.925% × 0.40 = <b class="fipm-green">1.570%</b></td></tr>
+                  <tr><td colspan="3" style="text-align:right;"><b class="fipm-main-c">Total expected return</b></td><td><b class="fipm-main-c">8.833%</b></td></tr>
+                </table>
+                <div class="fipm-info"><b>Example inputs:</b> par 50m · coupon 3.0% semiannual · 1-yr horizon · current price 101.500 · projected price (unchanged curve) 102.419 · convexity C = 28 · modified duration MD = 5.60 · expected ΔYTM −0.54% · expected Δspread −0.06% · currency gain 3.925% on 40% foreign. Assumes <b>no reinvestment of cash flow</b> (so semiannual vs annual coupon timing doesn't matter — 1.50 at 6m + 1.50 at 12m = 3.00 per 100 par).</div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">What's solid vs what's a projection</div>
+                <span class="fipm-rule"><b class="fipm-green">Near-certain:</b> #1 coupon income (the yield income), if no default.</span>
+                <span class="fipm-rule"><b class="fipm-orange">Assumption-based:</b> #2 rolldown assumes the yield curve is <b>unchanged</b>; curve plotting varies (on-the-run vs off-the-run, which carry a liquidity premium).</span>
+                <span class="fipm-rule"><b class="fipm-red">Pure predictions:</b> #3 (ΔY) &amp; #4 (ΔS) price changes, and #5 currency G/L.</span>
+                <span class="fipm-rule"><b class="fipm-red">Not captured:</b> shifts in individual bonds' <b>relative valuation</b>, and <b>credit losses</b>. Predicted price change rests only on duration &amp; convexity.</span>
+              </div>
+            </div>
+
+            <div id="fipmt-calc" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">5-component return calculator</div>
+                <div class="fipm-body">Pre-loaded with the textbook example (→ 8.833%). Change any input. Enter ΔY, ΔS as <b>decimals</b> (−0.0054 = −54 bps); coupon &amp; prices per 100 par; currency gain &amp; foreign weight as %.</div>
+                <div>
+                  <span class="fipm-lbl">Annual coupon <input id="fipm-rt-cpn" class="fipm-inp" type="number" step="0.01" value="3.0"></span>
+                  <span class="fipm-lbl">Current price <input id="fipm-rt-p0" class="fipm-inp" type="number" step="0.001" value="101.50"></span>
+                  <span class="fipm-lbl">Projected price (curve unch.) <input id="fipm-rt-p1" class="fipm-inp" type="number" step="0.001" value="102.419"></span>
+                </div>
+                <div>
+                  <span class="fipm-lbl">Modified duration <input id="fipm-rt-md" class="fipm-inp" type="number" step="0.01" value="5.60"></span>
+                  <span class="fipm-lbl">Convexity C <input id="fipm-rt-c" class="fipm-inp" type="number" step="0.1" value="28"></span>
+                </div>
+                <div>
+                  <span class="fipm-lbl">ΔY (decimal) <input id="fipm-rt-dy" class="fipm-inp" type="number" step="0.0001" value="-0.0054"></span>
+                  <span class="fipm-lbl">ΔS (decimal) <input id="fipm-rt-ds" class="fipm-inp" type="number" step="0.0001" value="-0.0006"></span>
+                </div>
+                <div>
+                  <span class="fipm-lbl">Currency gain % <input id="fipm-rt-cur" class="fipm-inp" type="number" step="0.001" value="3.925"></span>
+                  <span class="fipm-lbl">Foreign weight % <input id="fipm-rt-fw" class="fipm-inp" type="number" step="1" value="40"></span>
+                </div>
+                <button class="fipm-btn" onclick="fipmRetCalc()">Compute all 5 components</button>
+                <div id="fipm-rt-out" class="fipm-out"></div>
+              </div>
+            </div>
+
+            <div id="fipmt-notes" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Rolldown direction rule</div>
+                <span class="fipm-rule"><b class="fipm-main-c">Flat curve, bond at a premium</b> &rarr; projected end price <b>lower</b> than start (price pulled toward par as maturity nears).</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Flat curve, bond at a discount</b> &rarr; projected end price <b>higher</b> than start (pulled up toward par).</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Upward-sloping curve</b> &rarr; rolldown return is <b>higher</b> than the start-of-period YTM: as the bond ages it "rolls down" the curve to a <b>lower</b> YTM &rarr; higher price at horizon end. Downward-sloping &rarr; opposite (lower rolldown, higher YTM at horizon end).</span>
+                <div class="fipm-info">"Rolldown" = projecting bond prices with the yield curve held unchanged; the bond simply gets shorter in maturity and re-prices off the (assumed unchanged) curve.</div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Convexity is a second-order effect</div>
+                <div class="fipm-body">In the example the convexity term added only <b>+0.041%</b> to Component 3. For option-free bonds it's often <b>insignificant unless ΔY is large</b>. Bonds with <b>embedded options</b> &rarr; must use <b>effective</b> duration &amp; convexity. <b>Floating-rate</b> securities complicate it: their duration is low, but they still have spread sensitivity.</div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Prof's note — which duration in Component 4?</div>
+                <div class="fipm-trap"><b>Technically Component 4 (ΔS) should use SPREAD duration, not modified duration.</b> The CFA-curriculum example uses MD, assuming spread duration ≈ modified duration. That's a fair approximation for a <b class="fipm-green">fixed-coupon</b> bond, but <b class="fipm-red">NOT for floating-rate</b> bonds — there MD is low (coupons reset with benchmark rates) while spread duration stays high (spread increases don't flow through to higher coupons).</div>
+                <div class="fipm-tip"><b>Exam rule:</b> if a question gives you BOTH effective duration/convexity AND spread duration/convexity &rarr; use <b>effective</b> for Part 3 (ΔY) and <b>spread</b> for Part 4 (ΔS).</div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Why this framework matters</div>
+                <div class="fipm-info">This return decomposition is the framework used to <b>analyze returns from active strategies</b> across the next several readings — a very important series of calculations. Know the five slots cold.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ LEVERAGE & TAX 7.e / 7.f ════════ -->
+          <div id="fipm-lev" class="fipm-toppanel">
+            <div class="fipm-tabs">
+              <button class="fipm-tab active" onclick="fipmTab(event,'fipmlv-basics')">Leverage Basics (7.e)</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmlv-meth')">Methods</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmlv-risk')">Risks</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmlv-tax')">Tax (7.f)</button>
+            </div>
+
+            <div id="fipmlv-basics" class="fipm-panel active">
+              <div class="fipm-card">
+                <div class="fipm-title">LOS 7.e — Leverage: the core idea</div>
+                <div class="fipm-body">Leverage = borrow funds to increase portfolio return (return on investor's equity). Particularly attractive in periods of <b>low interest rates</b> (and low expected return).</div>
+                <span class="fipm-rule"><b class="fipm-green">If r<sub>I</sub> &gt; r<sub>B</sub></b> (asset return &gt; borrow cost) &rarr; leverage <b>enhances</b> portfolio return.</span>
+                <span class="fipm-rule"><b class="fipm-red">If r<sub>I</sub> &lt; r<sub>B</sub></b> (asset return &lt; borrow cost) &rarr; leverage <b>amplifies losses</b>.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Duration note:</b> borrowing is normally at <b>shorter-term</b> rates, whose cost can rise faster than asset returns &rarr; in a leveraged portfolio <b>asset duration normally EXCEEDS liability duration</b>. Leverage also raises exposure to interest-rate risk.</span>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Leveraged return formula + calculator</div>
+                <div class="fipm-fl">r_p = r_I + [ (V_B / V_E) × (r_I − r_B) ]
+
+r_p = portfolio (equity) return    r_I = return on invested assets
+r_B = rate paid on borrowings      V_B = amount of leverage (borrowed)
+V_E = amount of equity invested</div>
+                <div>
+                  <span class="fipm-lbl">r_I (%) <input id="fipm-lv-ri" class="fipm-inp" type="number" step="0.01" value="6"></span>
+                  <span class="fipm-lbl">r_B (%) <input id="fipm-lv-rb" class="fipm-inp" type="number" step="0.01" value="2.5"></span>
+                  <span class="fipm-lbl">V_B (borrowed) <input id="fipm-lv-vb" class="fipm-inp" type="number" value="50"></span>
+                  <span class="fipm-lbl">V_E (equity) <input id="fipm-lv-ve" class="fipm-inp" type="number" value="100"></span>
+                </div>
+                <button class="fipm-btn" onclick="fipmLevCalc()">Compute leveraged return</button>
+                <div id="fipm-lv-out" class="fipm-out"></div>
+              </div>
+            </div>
+
+            <div id="fipmlv-meth" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Four ways to achieve leverage</div>
+                <table class="fipm-tbl">
+                  <tr><th>Method</th><th>How it leverages</th><th>Key detail</th></tr>
+                  <tr><td><b class="fipm-main-c">1. Repurchase agreements (repos)</b></td><td>Sell a security for cash + agree to buy it back later; assets = collateral &rarr; explicit borrowing</td><td>Usually <b>overnight</b> (can renegotiate daily / longer). Functionally a loan secured by the security.</td></tr>
+                  <tr><td><b class="fipm-main-c">2. Futures contracts</b></td><td>Small initial <b>margin</b> controls the full contract value (price × multiplier)</td><td>leverage = (notional − margin) / margin</td></tr>
+                  <tr><td><b class="fipm-main-c">3. Swap agreements</b></td><td>Receive-fixed / pay-MRR swap ≈ buy bonds + borrow floating &rarr; raises bond exposure &amp; duration, <b>no explicit funds</b></td><td>Receive-floating / pay-fixed = opposite. Post-2007–09 many cleared centrally.</td></tr>
+                  <tr><td><b class="fipm-main-c">4. Securities lending</b></td><td>Lend securities for collateral; supports <b>short selling</b> (sell what you don't own, borrow to deliver)</td><td>Open-ended (no maturity). Earnings depend on how badly the borrower needs the specific collateral.</td></tr>
+                </table>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Repo mechanics — decomposed</div>
+                <span class="fipm-rule"><b class="fipm-main-c">Repo rate math:</b> $100m overnight at 2.5% &rarr; dealer receives 100m, repays 100m × [1 + (0.025 / 360)] next day (standard repo-rate convention, 360-day).</span>
+                <span class="fipm-rule"><b class="fipm-main-c">General collateral</b> — any previously agreed securities can be delivered (e.g. any domestic govt bond). <b class="fipm-main-c">Security-driven (specific)</b> — lender wants a specific security (hedging/arb) &rarr; offers a <b>lower</b> repo rate; this is a form of securities lending.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Haircut</b> — collateral worth MORE than the loan (e.g. market value = 102% of repo amount &rarr; 2% haircut) protects the lender; <b>larger for riskier / less-liquid</b> collateral.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Cash- vs security-driven:</b> cash-driven = borrower wants cash, any collateral; security-driven = lender wants a specific security.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Bilateral vs tri-party:</b> tri-party uses an intermediary (usually a bank) to hold collateral &amp; record ownership &rarr; cheaper than physically exchanging; repo rate may not need adjusting since the bank manages collateral quality.</span>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Futures leverage calculator</div>
+                <div class="fipm-fl">leverage = (notional value of contract − margin amount) / margin amount</div>
+                <div>
+                  <span class="fipm-lbl">Notional value <input id="fipm-fl-not" class="fipm-inp" type="number" value="105607"></span>
+                  <span class="fipm-lbl">Margin amount <input id="fipm-fl-mar" class="fipm-inp" type="number" value="5000"></span>
+                </div>
+                <button class="fipm-btn" onclick="fipmFutLev()">Compute leverage</button>
+                <div id="fipm-fl-out" class="fipm-out"></div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Securities lending — rebate rate</div>
+                <div class="fipm-fl">rebate rate = collateral earnings rate − security lending rate</div>
+                <div class="fipm-body" style="margin-top:6px;">Lender of securities can take <b>cash</b> collateral and invest it to earn interest (usually &gt; value of securities lent). A portion of those earnings may be <b>rebated</b> to the securities borrower. If the borrower badly needs the specific collateral, the lender can demand an explicit fee, more cash collateral, or more general collateral — all raise lender earnings.</div>
+                <div class="fipm-info"><b>Open-ended risk:</b> unlike repos, securities-lending agreements usually have <b>no specified maturity</b> — they continue until one party requires settlement (return of collateral). This creates risk if the counterparty isn't prepared to reverse.</div>
+              </div>
+            </div>
+
+            <div id="fipmlv-risk" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Risks created by leverage</div>
+                <span class="fipm-rule"><b class="fipm-red">Obvious risk:</b> if borrowing cost rises ABOVE earnings on the assets &rarr; loss (magnified by the leverage ratio).</span>
+                <span class="fipm-rule"><b class="fipm-red">Rate increase &rarr; value decline:</b> rising rates lower the value of the leveraged portfolio AND its collateral.</span>
+                <span class="fipm-rule"><b class="fipm-red">Forced liquidation / fire sale:</b> lenders demand repayment &rarr; assets sold when DOWN in value (distressed conditions).</span>
+                <span class="fipm-rule"><b class="fipm-red">Vicious cycle:</b> if liquidations are widespread, each round of sales drives prices down &rarr; other credit providers, repo participants &amp; securities lenders demand repayment and/or stop lending &rarr; cascade.</span>
+                <div class="fipm-trap"><b>Why asset duration &gt; liability duration matters here:</b> borrowing is short-term (low liability duration) while assets are longer (high asset duration). When short rates rise, borrowing costs reprice fast while the long assets fall in price — squeezing the leveraged equity from both sides.</div>
+              </div>
+            </div>
+
+            <div id="fipmlv-tax" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">LOS 7.f — Taxable vs tax-exempt: the core difference</div>
+                <div class="fipm-body">Both seek the <b>highest risk-adjusted return net of fees &amp; transaction costs</b>, consistent with objectives/constraints. It's <b>more complex for taxable</b> investors — taxes must be factored into after-tax return AND risk. Rules differ by jurisdiction.</div>
+                <table class="fipm-tbl">
+                  <tr><th>Tax fact</th><th>Detail</th></tr>
+                  <tr><td><b class="fipm-main-c">Two return sources taxed differently</b></td><td>Income (coupon) vs capital gains (price change), usually at different rates</td></tr>
+                  <tr><td><b class="fipm-main-c">Gains taxed when realized</b></td><td>Usually only at sale. <b>Exception:</b> zero-coupon imputed income (accretion toward par) may be taxed yearly even with NO cash flow</td></tr>
+                  <tr><td><b class="fipm-main-c">Holding period</b></td><td>Long-term gains often taxed LOWER than interest income; short-term holdings often higher</td></tr>
+                  <tr><td><b class="fipm-main-c">Capital losses</b></td><td>Offset capital gains (not other income). Excess losses may be carried FORWARD; sometimes carried BACK for a refund on a prior year</td></tr>
+                  <tr><td><b class="fipm-main-c">Tax-sheltered accounts</b></td><td>May be possible to hold some of the portfolio in tax-advantaged accounts</td></tr>
+                </table>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Strategies for taxable accounts</div>
+                <span class="fipm-rule"><b class="fipm-green">Realize LOSSES to offset gains</b> — incl. selective <b>tax-loss harvesting</b> on partial sales when bought at multiple prices (lots).</span>
+                <span class="fipm-rule"><b class="fipm-green">Extend holding periods</b> to realize <b>long-term</b> rather than short-term gains (lower rate).</span>
+                <span class="fipm-rule"><b class="fipm-green">Extend holding periods to DEFER</b> taxes.</span>
+                <span class="fipm-rule"><b class="fipm-green">Consider income-vs-gain rate differentials</b> when selecting investments.</span>
+                <div class="fipm-trap"><b>Quiz 7.3 Q3 traps:</b> it's realize <b>LOSSES</b> (not gains) to offset gains; and <b>EXTEND</b> (not shorten) holding periods for long-term treatment. The correct general strategy is considering income-vs-gain rate differentials.</div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Funds vs separately managed accounts (SMA)</div>
+                <span class="fipm-rule"><b class="fipm-main-c">Mutual / collective funds:</b> income is taxable to the fund regardless of payout or reinvestment. Gains treatment varies: <b>pass-through</b> (investor taxed when the fund realizes the gain; that payment then reduces tax when shares are sold) vs <b>deferred</b> (investor taxed on all gains only when fund shares are sold).</span>
+                <span class="fipm-rule"><b class="fipm-main-c">SMA:</b> when a client hires a manager for a separately managed account, <b>all</b> income, gains &amp; losses pass to the client and are reported on the client's tax return.</span>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Worked example — which bond to sell (taxable vs tax-exempt)</div>
+                <div class="fipm-info">Raise EUR 5m. Income tax 38%, cap gains 15%. Bond A = unrealized <b>GAIN</b>; Bond B = unrealized <b>LOSS</b>; otherwise identical except <b>B has a slightly higher yield</b>. Sell all of one.</div>
+                <table class="fipm-tbl">
+                  <tr><th>Investor</th><th>Sell</th><th>Why</th></tr>
+                  <tr><td><b class="fipm-main-c">1. Taxable</b></td><td><b class="fipm-red">Sell Bond B</b></td><td>Avoid realizing the gain (and paying tax now) on Bond A — defer the tax. Selling the loss bond is tax-friendlier.</td></tr>
+                  <tr><td><b class="fipm-main-c">2. Tax-exempt</b></td><td><b class="fipm-green">Sell Bond A</b></td><td>Taxes are irrelevant, so retain Bond B for its <b>slightly better yield</b>.</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ LDI & LADDERS 7.g / 7.h / 7.i ════════ -->
+          <div id="fipm-ldi" class="fipm-toppanel">
+            <div class="fipm-tabs">
+              <button class="fipm-tab active" onclick="fipmTab(event,'fipmld-basics')">LDI Basics (7.g)</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmld-types')">Liability Types</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmld-cfm')">Cash Flow Match (7.h)</button>
+              <button class="fipm-tab" onclick="fipmTab(event,'fipmld-ladder')">Ladders (7.i)</button>
+            </div>
+
+            <div id="fipmld-basics" class="fipm-panel active">
+              <div class="fipm-card">
+                <div class="fipm-title">LOS 7.g — Liability-driven investing (LDI)</div>
+                <div class="fipm-body">Used when there are <b>definable future liabilities</b> to be paid from portfolio assets. Classified as <b>passive total return</b> — but "passive" does NOT mean do nothing: it still requires continual monitoring &amp; adjustment. (Active management = outperform a benchmark.) Mostly institutional; the specific LDI approach depends on the nature of the liabilities.</div>
+                <div class="fipm-trap"><b>Trap:</b> LDI is <b>passive</b> total return, yet still needs ongoing monitoring/adjustment. Don't equate "passive" with "no action."</div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Three related terms — what's taken as given</div>
+                <table class="fipm-tbl">
+                  <tr><th>Term</th><th>What's GIVEN</th><th>What's MANAGED</th><th>Example / when</th></tr>
+                  <tr><td><b class="fipm-blue">ALM</b> (asset-liability mgmt)</td><td>Neither — considered together</td><td>Assets <b>in relation to</b> liabilities</td><td>Appropriate when BOTH asset PV and liability PV change with interest rates</td></tr>
+                  <tr><td><b class="fipm-main-c">LDI</b> (liability-driven)</td><td><b>Liabilities</b> given</td><td>Assets managed to meet liability values</td><td>Insurer, DB pension funding payouts. <b>This reading's focus.</b></td></tr>
+                  <tr><td><b class="fipm-orange">ADL</b> (asset-driven liabilities)</td><td><b>Assets</b> given</td><td>Liability structure managed/designed to match assets</td><td>Leasing company structuring floating/fixed-rate liabilities to match its assets</td></tr>
+                </table>
+                <div class="fipm-info"><b>LDI for individuals:</b> e.g. a married person retiring in 12 years, planning to use a bond portfolio to fund an annuity purchase — reinvests bond cash flows and adds a regular amount each year to meet the goal.</div>
+              </div>
+            </div>
+
+            <div id="fipmld-types" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">Four types of liabilities (interactive)</div>
+                <div class="fipm-body">Classified on two axes: is the future <b>amount</b> known? is the <b>payout date</b> known? Tap a type:</div>
+                <div class="fipm-pick-row">
+                  <button class="fipm-pick active" onclick="fipmLiab(this,'1')">Type I</button>
+                  <button class="fipm-pick" onclick="fipmLiab(this,'2')">Type II</button>
+                  <button class="fipm-pick" onclick="fipmLiab(this,'3')">Type III</button>
+                  <button class="fipm-pick" onclick="fipmLiab(this,'4')">Type IV</button>
+                </div>
+                <div class="fipm-grid2">
+                  <div class="fipm-leg"><div class="fipm-leg-h">Amount</div><div id="fipm-liab-amt" style="font-size:12.5px;"></div></div>
+                  <div class="fipm-leg"><div class="fipm-leg-h">Payout date</div><div id="fipm-liab-dt" style="font-size:12.5px;"></div></div>
+                </div>
+                <div id="fipm-liab-out" class="fipm-out"></div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Reference grid</div>
+                <table class="fipm-tbl">
+                  <tr><th>Type</th><th>Amount</th><th>Date</th><th>Examples</th><th>Modeling</th></tr>
+                  <tr><td><b class="fipm-main-c">I</b></td><td>Known</td><td>Known</td><td>Option-free fixed-rate bond</td><td><b>Simple duration</b> (Macaulay/modified) adequate</td></tr>
+                  <tr><td><b class="fipm-main-c">II</b></td><td>Known</td><td>Uncertain</td><td>Callable/putable bond; term life insurance (date uncertain, but law of large numbers estimates payouts/period)</td><td><b>Effective duration</b></td></tr>
+                  <tr><td><b class="fipm-main-c">III</b></td><td>Uncertain</td><td>Known</td><td>Floating-rate instruments; real-rate bonds (TIPS)</td><td><b>Effective duration</b></td></tr>
+                  <tr><td><b class="fipm-main-c">IV</b></td><td>Uncertain</td><td>Uncertain</td><td>Property &amp; casualty; some DB plan liabilities</td><td><b>Effective duration</b></td></tr>
+                </table>
+                <div class="fipm-info"><b>Modeling rule:</b> only <b>Type I</b> can use simple (Macaulay/modified) duration. Types II–IV need <b>effective duration</b> — modeled to reflect the initial yield-curve shape PLUS assumed up/down curve shifts, to estimate the amount &amp; timing of payouts.</div>
+              </div>
+            </div>
+
+            <div id="fipmld-cfm" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">LOS 7.h — Cash flow matching</div>
+                <div class="fipm-body"><b>Simplest but least flexible</b> approach to immunizing.</div>
+                <span class="fipm-rule"><b class="fipm-main-c">Single liability:</b> buy a <b>zero-coupon</b> bond with par &amp; maturity matching the liability &rarr; no cash flow to reinvest, no bonds to sell &rarr; <b>no reinvestment or price risk</b>. Bonds must be <b>default-free</b>.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Accounting defeasance:</b> assets legally set aside &amp; dedicated to meet the liabilities &rarr; both assets AND liabilities can be removed from the organization's balance sheet.</span>
+                <span class="fipm-rule"><b class="fipm-main-c">Multiple liabilities (recursive):</b> buy a bond maturing on/with par + final coupon to exactly fund the <b>LONGEST</b> liability; its earlier coupons partially meet earlier liabilities. Then recursively fund the next-longest (net of coupons from bonds already bought for longer liabilities), and so on backward.</span>
+                <div class="fipm-trap"><b>Cash-in-advance constraint:</b> perfect-matching coupon bonds are unlikely to exist. So require the funding bond to mature <b>BEFORE</b> the liability's payout date. This exposes the portfolio to <b class="fipm-red">reinvestment risk in an upward-sloping curve</b> — cash arrives early and must be reinvested short-term at the lower rates at the short end of the curve.</div>
+              </div>
+            </div>
+
+            <div id="fipmld-ladder" class="fipm-panel">
+              <div class="fipm-card">
+                <div class="fipm-title">LOS 7.i — Laddered bond portfolio</div>
+                <div class="fipm-body">Roughly <b>equal par</b> amounts purchased across <b>different maturities</b>. Can also be used to cash-flow-match multiple liabilities.</div>
+                <table class="fipm-tbl">
+                  <tr><th>Structure</th><th>Holdings</th><th>Same duration?</th></tr>
+                  <tr><td><b class="fipm-main-c">Ladder</b></td><td>Equal par across many maturities</td><td rowspan="3">If all three share the same duration &rarr; <b>same price sensitivity to a parallel shift</b></td></tr>
+                  <tr><td><b class="fipm-blue">Bullet</b></td><td>Concentrated in a single middle duration</td></tr>
+                  <tr><td><b class="fipm-orange">Barbell</b></td><td>Short + long duration holdings combined</td></tr>
+                </table>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Ladder advantages — decomposed</div>
+                <span class="fipm-rule"><b class="fipm-green">Regular liquidity:</b> some bonds mature each year &rarr; less need to sell at large bid-ask (esp. for less-liquid corporates). Near-maturity bonds are good collateral &rarr; borrow at favorable rates.</span>
+                <span class="fipm-rule"><b class="fipm-green">Broad cash-flow diversification across time:</b> less concentrated exposure to nonparallel curve changes at specific maturities.</span>
+                <span class="fipm-rule"><b class="fipm-green">Price-risk vs reinvestment-risk diversification:</b> long-dated bonds carry price risk, short-dated carry reinvestment risk. Maturing bonds reinvested long-term (typically higher rates) &rarr; keeps overall duration stable over time.</span>
+                <span class="fipm-rule"><b class="fipm-green">More convexity than a bullet:</b> benefit in large parallel shifts (convexity &prop; dispersion of cash flows across time). <b class="fipm-red">BUT a ladder is NOT as convex as a barbell.</b></span>
+                <div class="fipm-trap"><b>Convexity ranking (decisive):</b> Barbell &gt; Ladder &gt; Bullet. The ladder beats the bullet on convexity but loses to the barbell.</div>
+              </div>
+              <div class="fipm-card">
+                <div class="fipm-title">Building ladders without individual bonds</div>
+                <span class="fipm-rule"><b class="fipm-main-c">Target-date (fixed-maturity) bond ETFs:</b> each ETF has a designated year when it matures &amp; is paid off; passively managed to replicate a bond maturing that year. Often <b>cost advantages</b> vs individual bonds + more liquidity if unanticipated sales are needed.</span>
+                <span class="fipm-rule"><b class="fipm-orange">Disadvantage:</b> for some investors an <b>ongoing (no target date) passive index or active bond fund</b> may be better — larger, greater diversification of credit risk, more liquid than directly holding the underlying bonds.</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="fipm-cheat" class="fipm-toppanel">
+            <div class="fipm-card">
+              <div class="fipm-title">Module 7.1 — one-screen recall</div>
+              <table class="fipm-tbl">
+                <tr><th>Block</th><th>Must-recall</th></tr>
+                <tr><td><b class="fipm-blue">3 roles (7.a)</b></td><td>Diversification (corr −0.30 UST to +0.63 HY, 2000–19) · Regular cash flow (buy-hold ladder) · Inflation hedge</td></tr>
+                <tr><td><b class="fipm-orange">Inflation</b></td><td>Nominal = no protect · Linked = par+coupon (par→1.05m) · Floating = coupon only, NOT principal (45k→65k, +44.4%)</td></tr>
+                <tr><td><b class="fipm-main-c">Mandates</b></td><td>Liability-based (immunization: CF match / dur match / CI / overlays) vs Total return (pure / enhanced index / active); active return = alpha, active risk = tracking error</td></tr>
+                <tr><td><b class="fipm-green">CI</b></td><td>Surplus = PVA − PVL; succeed → cost &lt; immunize; surplus→0 → must immunize, cost &gt; immunize by a known amount</td></tr>
+                <tr><td><b class="fipm-purple">Durations</b></td><td>Mac = time · Mod = ÷(1+y), %Δprice for 1% · Effective = parallel shift, modeled, complex bonds · Key rate = one maturity · Empirical = regression · Money = ModDur×MV · PVBP = money×0.0001</td></tr>
+                <tr><td><b class="fipm-main-c">Convexity</b></td><td>Up more / down less; ∝ dur²; ∝ CF dispersion → zero-coupon = lowest for given Mac dur</td></tr>
+                <tr><td><b class="fipm-blue">Spread/DTS</b></td><td>Spread dur = %Δ per 1% spread; DTS = spread dur × spread (higher sensitivity when spreads high)</td></tr>
+                <tr><td><b class="fipm-orange">Correlations</b></td><td>Same market high · IG ← benchmark curve · HY ← spreads · rates &amp; spreads negatively related → HY ~ equity</td></tr>
+                <tr><td><b class="fipm-green">Liquidity</b></td><td>On-the-run sovereign = most liquid; off-the-run → liquidity premium (higher YTM); corporates vary by quality &amp; size; matrix pricing; bid-ask cost ≈ dur × (ask−bid yield)</td></tr>
+                <tr><td><b class="fipm-main-c">Alternatives</b></td><td>ETFs (liquid) · open-end funds (daily) · derivatives incl TRS (receiver pays rate+spread, gets total return; low capital; risks: counterparty, rollover, regulatory)</td></tr>
+                <tr><td><b class="fipm-gold">Return model (7.d)</b></td><td>5 components: (1) coupon = cpn/price (2) rolldown = (P₁−P₀)/P₀ at unchanged curve → 1+2 = rolling yield · (3) ΔY: −MD·ΔY + ½C·ΔY² (4) ΔS: −MD·ΔS + ½C·ΔS² (5) currency: Δfx × foreign wt. Example sums to 8.833%; rolling yield 3.86%. Use effective dur for #3, spread dur for #4 if both given.</td></tr>
+                <tr><td><b class="fipm-purple">Leverage (7.e)</b></td><td>r_p = r_I + (V_B/V_E)(r_I−r_B); enhances if r_I&gt;r_B, amplifies loss if r_I&lt;r_B; asset dur &gt; liability dur. Methods: repos (sell+buyback, haircut, GC vs specific, bilateral/tri-party), futures (lev=(notional−margin)/margin), swaps (recv-fixed = +duration, no funds), sec lending (shorts; rebate = collateral earnings − lending rate). Risk: rates↑ → fire sale → vicious cycle.</td></tr>
+                <tr><td><b class="fipm-blue">Tax (7.f)</b></td><td>Taxable more complex (after-tax). Income vs gains taxed differently; gains taxed at realization (zero-coupon imputed yearly); long-term lower than short; losses offset gains (carry fwd/back). Strategies: realize LOSSES, EXTEND holding (long-term/defer), income-vs-gain differentials. Sell: taxable→loss bond; tax-exempt→gain bond (keep higher yield). SMA passes all to client; funds pass-through vs deferred.</td></tr>
+                <tr><td><b class="fipm-green">LDI (7.g)</b></td><td>Passive total return but needs monitoring. ALM (both together) · LDI (liabilities given→manage assets) · ADL (assets given→manage liabilities). Liability types: I known/known (simple duration; option-free fixed bond) · II known/uncertain-date (callable, term life) · III uncertain-amt/known-date (floaters, TIPS) · IV both uncertain (P&amp;C, some DB) → II–IV need effective duration.</td></tr>
+                <tr><td><b class="fipm-main-c">CF match (7.h)</b></td><td>Simplest, least flexible. Single liability: default-free zero matching par+maturity → no reinvest/price risk. Defeasance removes assets+liabilities from B/S. Multiple: fund longest first, coupons cover earlier, recurse. Cash-in-advance (mature before payout) → reinvestment risk in upward-sloping curve.</td></tr>
+                <tr><td><b class="fipm-orange">Ladder (7.i)</b></td><td>Equal par across maturities. Ladder/bullet/barbell same duration → same parallel-shift sensitivity. Advantages: regular liquidity (collateral), CF diversification across time, price-vs-reinvestment risk diversification, more convexity than bullet (but &lt; barbell). Build via target-date bond ETFs (cost/liquidity); ongoing index/active fund may be better (bigger, more credit diversification, more liquid).</td></tr>
+              </table>
+            </div>
+            <div class="fipm-card">
+              <div class="fipm-title">Formula strip</div>
+              <div class="fipm-fl">Modified duration   = Macaulay / (1 + periodic yield)
+Money duration      = modified duration × market value
+PVBP / DV01 / BPV   = money duration × 0.0001
+DTS                 = spread duration × credit spread
+eff. duration       = (PV₋ − PV₊) / (2 · Δcurve · PV₀)
+eff. convexity      = (PV₋ + PV₊ − 2·PV₀) / (Δcurve² · PV₀)
+portfolio duration  = Σ wᵢ · durationᵢ   (cash/MV weighted)
+bid-ask trade cost  ≈ duration × (ask yield − bid yield)</div>
+            </div>
+          </div>
+
+          <!-- ════════ QUIZ & TRAPS ════════ -->
+          <div id="fipm-quiz" class="fipm-toppanel">
+            <div class="fipm-card">
+              <div class="fipm-title">Module Quiz 7.1 — worked</div>
+              <table class="fipm-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b><br><span style="color:var(--muted);">Which security protects <b>both coupon AND notional principal</b> from inflation?</span></td><td><b class="fipm-green">B — Inflation-linked bonds</b></td><td>Linked bonds adjust <b>par</b> for inflation, and the coupon = rate × adjusted par &rarr; <b>both</b> protected. <span class="fipm-red">Fixed-coupon (A)</span> = no protection. <span class="fipm-red">Floating-coupon (C)</span> protects the <b>coupon only</b> — principal is unchanged. The word "principal" is the decisive slot.</td></tr>
+                <tr><td><b>2</b><br><span style="color:var(--muted);">Which most accurately describes a <b>pure indexing</b> strategy?</span></td><td><b class="fipm-green">C — exactly match index risk factors, leeway on individual bonds</b></td><td>Pure indexing targets ~zero active return; literal replication is impractical (too many illiquid bonds), so it matches <b>all risk factors</b> with leeway on bond selection. <span class="fipm-red">A</span> (large deviations / high active return) = active mgmt. <span class="fipm-red">B</span> (duration matched but sector/quality mismatches allowed) = <b>enhanced</b> indexing.</td></tr>
+                <tr><td><b>3</b><br><span style="color:var(--muted);">Which issue leads to <b>higher</b> liquidity?</span></td><td><b class="fipm-green">B — on-the-run sovereign government debt</b></td><td>On-the-run sovereigns are large, homogeneous, benchmark/collateral bonds &rarr; most liquid. <span class="fipm-red">A</span> small corporate &amp; <span class="fipm-red">C</span> below-IG both reduce liquidity (small size, lower quality).</td></tr>
+              </table>
+            </div>
+            <div class="fipm-card">
+              <div class="fipm-title">Module Quiz 7.2 / 7.3 — worked</div>
+              <table class="fipm-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b><br><span style="color:var(--muted);">25m notional, 5% coupon, duration 8, convexity 0.5, expected ΔY +0.35%, no spread change. Expected price change?</span></td><td><b class="fipm-green">B — −2.799%</b></td><td>Price Δ = (−MD×ΔY) + (½×C×ΔY²) = (−8×0.0035) + (½×0.5×0.0035²) = −0.028 + 0.0000031 = <b>−2.7997%</b> ≈ −2.799%. Notional &amp; coupon are distractors — only duration, convexity &amp; ΔY enter the price-change formula. Convexity term is tiny here.</td></tr>
+                <tr><td><b>2</b><br><span style="color:var(--muted);">Most correct statement on leverage &amp; its risks?</span></td><td><b class="fipm-green">C — leverage enhances return as long as funds are borrowed at rates below the return earned on investments</b></td><td>This is the core leverage principle (r<sub>I</sub> &gt; r<sub>B</sub>). <span class="fipm-red">B</span> is wrong — in a leveraged portfolio <b>asset duration normally EXCEEDS liability duration</b> (borrowing is short-term). <span class="fipm-red">A</span> (rates up &rarr; portfolio &amp; collateral decline) is a true risk but isn't the "most correct" statement about how leverage works.</td></tr>
+                <tr><td><b>3</b><br><span style="color:var(--muted);">Best strategy for a TAXABLE fixed-income portfolio?</span></td><td><b class="fipm-green">C — consider differentials in income vs gain tax rates when selecting investments</b></td><td><span class="fipm-red">A</span> is backwards — realize <b>LOSSES</b> to offset gains, not gains. <span class="fipm-red">B</span> is backwards — <b>EXTEND</b> (not shorten) holding periods to get long-term rather than short-term treatment.</td></tr>
+              </table>
+            </div>
+            <div class="fipm-card">
+              <div class="fipm-title">Module Quiz 7.4 — worked</div>
+              <table class="fipm-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b><br><span style="color:var(--muted);">Issuer wants a liability that's easily managed with <b>known future amounts AND payout dates</b>. Which type?</span></td><td><b class="fipm-green">B — Option-free fixed-rate bonds</b></td><td>Known amount + known date = <b>Type I</b> (easiest to model, simple duration works) = option-free fixed-rate bond. <span class="fipm-red">A</span> callable = uncertain DATE = Type II. <span class="fipm-red">C</span> TIPS = uncertain AMOUNT = Type III.</td></tr>
+                <tr><td><b>2</b><br><span style="color:var(--muted);">Most correct on laddered-portfolio construction/advantages?</span></td><td><b class="fipm-green">A — the investor is diversified between price risk and reinvestment risk</b></td><td>Long-dated bonds bring price risk, short-dated bring reinvestment risk &rarr; a ladder diversifies between the two. <span class="fipm-red">B</span> wrong — a ladder spreads cash flow, so it has <b>less</b> concentrated reinvestment risk in any single year, not more vs a barbell. <span class="fipm-red">C</span> wrong — more distributed cash flows give <b>MORE</b> convexity than a bullet (convexity &prop; CF dispersion), not less.</td></tr>
+              </table>
+            </div>
+            <div class="fipm-card">
+              <div class="fipm-title">High-probability traps</div>
+              <span class="fipm-rule"><b class="fipm-red">Linked vs floating principal:</b> BOTH protect the coupon — only <b>inflation-linked</b> protects the <b>principal</b>. Floating par is unchanged.</span>
+              <span class="fipm-rule"><b class="fipm-red">Nominal bonds:</b> standard fixed-coupon (nominal-rate) bonds give <b>no</b> inflation protection — don't let "fixed income" imply "inflation safe."</span>
+              <span class="fipm-rule"><b class="fipm-red">Pure vs enhanced indexing:</b> pure = duration matched + match ALL risk factors; enhanced = duration still matched but small sector/quality mismatches allowed. Active = duration CAN be mismatched.</span>
+              <span class="fipm-rule"><b class="fipm-red">CI cost direction:</b> succeed → CI cost &lt; immunizing; fail (surplus→0) → must immunize, cost &gt; immunizing but by a KNOWN amount.</span>
+              <span class="fipm-rule"><b class="fipm-red">Effective vs modified duration:</b> effective = benchmark <b>curve</b> shift (complex/optioned bonds); modified = <b>own yield</b> change.</span>
+              <span class="fipm-rule"><b class="fipm-red">DTS direction:</b> expecting spreads to NARROW → INCREASE spread duration/DTS &amp; LOWER credit rating (hold riskier). Widen → opposite.</span>
+              <span class="fipm-rule"><b class="fipm-red">Rates vs spreads (active):</b> rates fall → raise duration; spreads narrow → raise spread duration. Two different levers.</span>
+              <span class="fipm-rule"><b class="fipm-red">Convexity ∝ dur²:</b> dur-20 ≈ 4× convexity of dur-10, not 2×. Zero-coupon = lowest convexity for a given Macaulay duration.</span>
+              <span class="fipm-rule"><b class="fipm-red">Liquidity premium sign:</b> less liquid → HIGHER YTM (premium), so off-the-run trades at higher yield than on-the-run.</span>
+              <span class="fipm-rule"><b class="fipm-red">Buy-hold vs active liquidity preference:</b> buy-hold prefers LESS liquid (higher yield); active prefers MORE liquid.</span>
+              <span class="fipm-rule"><b class="fipm-red">Leverage duration:</b> in a leveraged portfolio asset duration normally EXCEEDS liability duration (borrowing is short-term) — NOT the reverse.</span>
+              <span class="fipm-rule"><b class="fipm-red">Leverage benefit condition:</b> leverage enhances return only when r<sub>I</sub> &gt; r<sub>B</sub>; if borrow cost exceeds asset return it AMPLIFIES losses.</span>
+              <span class="fipm-rule"><b class="fipm-red">Repo direction:</b> the security OWNER sells &amp; agrees to buy back = the borrower of cash. Specific-collateral (security-driven) repo carries a LOWER repo rate.</span>
+              <span class="fipm-rule"><b class="fipm-red">Haircut:</b> collateral value &gt; loan (102% = 2% haircut); bigger for riskier/less-liquid collateral — protects the LENDER.</span>
+              <span class="fipm-rule"><b class="fipm-red">Tax — realize which?:</b> realize LOSSES to offset gains (not gains); EXTEND holding periods for long-term treatment / deferral (not shorten).</span>
+              <span class="fipm-rule"><b class="fipm-red">Which bond to sell:</b> taxable → sell the LOSS bond (defer the gain's tax); tax-exempt → sell the GAIN bond, keep the higher-yield bond (taxes irrelevant).</span>
+              <span class="fipm-rule"><b class="fipm-red">Zero-coupon tax:</b> imputed accretion income can be taxed yearly even with NO cash flow.</span>
+              <span class="fipm-rule"><b class="fipm-red">LDI is passive:</b> LDI = passive total return, but still requires ongoing monitoring/adjustment — "passive" ≠ "do nothing."</span>
+              <span class="fipm-rule"><b class="fipm-red">ALM vs LDI vs ADL:</b> ALM = both together; LDI = liabilities given, manage assets; ADL = assets given, manage/design liabilities.</span>
+              <span class="fipm-rule"><b class="fipm-red">Liability types:</b> I = known amt + known date (only one that uses SIMPLE duration); II = known amt, uncertain date (callable, term life); III = uncertain amt, known date (floaters, TIPS); IV = both uncertain (P&amp;C, some DB).</span>
+              <span class="fipm-rule"><b class="fipm-red">Convexity ranking:</b> Barbell &gt; Ladder &gt; Bullet. Ladder beats bullet but is NOT as convex as a barbell.</span>
+              <span class="fipm-rule"><b class="fipm-red">Cash-in-advance constraint:</b> bond matures BEFORE the payout → reinvestment risk in an upward-sloping curve (reinvest early cash short at lower rates).</span>
+              <span class="fipm-rule"><b class="fipm-red">Cash flow matching single liability:</b> a default-free ZERO-COUPON matching par &amp; maturity removes BOTH reinvestment and price risk.</span>
+            </div>
+          </div>
+
+          <script>
+            function fipmTop(ev,id){
+              var w=document.getElementById('fipmWidget');
+              w.querySelectorAll('.fipm-toppanel').forEach(function(p){p.classList.remove('active')});
+              w.querySelectorAll('.fipm-toptabs > .fipm-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function fipmTab(ev,id){
+              var p=ev.currentTarget.closest('.fipm-toppanel');
+              p.querySelectorAll(':scope > .fipm-panel').forEach(function(x){x.classList.remove('active')});
+              p.querySelectorAll(':scope > .fipm-tabs > .fipm-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function fipmInfl(btn,kind){
+              var w=document.getElementById('fipmWidget');
+              btn.parentNode.querySelectorAll('.fipm-pick').forEach(function(b){b.classList.remove('active')});
+              btn.classList.add('active');
+              var par,cpn,out;
+              if(kind==='nom'){
+                par='<b class="fipm-red">Unchanged.</b> Fixed at issue par.';
+                cpn='<b class="fipm-red">Fixed.</b> Coupon rate × par, set at purchase.';
+                out='<b class="fipm-orange">Nominal (fixed-coupon):</b> NO inflation protection. Purchase yield = coupon rate = real return + nominal compensation for <i>expected</i> inflation. If inflation rises above that expectation, the investor suffers on an inflation-adjusted basis and the bond price falls (a new investor demands higher yield).';
+              } else if(kind==='link'){
+                par='<b class="fipm-green">Adjusts with inflation.</b> 1m par + 5% inflation &rarr; 1.05m.';
+                cpn='<b class="fipm-green">Adjusts.</b> Coupon = real rate × <b>adjusted</b> par. 0.5% × 1.05m = 5,250. Continues every period for cumulative inflation.';
+                out='<b class="fipm-green">Inflation-linked (real-rate / real-return):</b> BOTH coupon and principal protected. At expiration the inflation-adjusted par is paid. Par moves first; coupon follows because it is a rate applied to the grown par.';
+              } else {
+                par='<b class="fipm-red">Unchanged.</b> No adjustment to par.';
+                cpn='<b class="fipm-green">Resets.</b> Coupon = (MRR + spread) × par. MRR 3.5%+1% &rarr; 45,000 on 1m; inflation +2% lifts MRR to 5.5% &rarr; 65,000 (+44.4%).';
+                out='<b class="fipm-orange">Floating-coupon (floating-rate):</b> coupon protected, <b>principal NOT</b>. Coupon tracks the market reference rate (which moves with inflation); par stays fixed. "Coupons are inflation protected but not the principal."';
+              }
+              document.getElementById('fipm-infl-par').innerHTML=par;
+              document.getElementById('fipm-infl-cpn').innerHTML=cpn;
+              document.getElementById('fipm-infl-out').innerHTML=out;
+            }
+            function fipmEdCalc(){
+              var pv0=parseFloat(document.getElementById('fipm-ed-pv0').value);
+              var pvm=parseFloat(document.getElementById('fipm-ed-pvm').value);
+              var pvp=parseFloat(document.getElementById('fipm-ed-pvp').value);
+              var dc=parseFloat(document.getElementById('fipm-ed-dc').value);
+              if([pv0,pvm,pvp,dc].some(function(x){return isNaN(x);})||pv0===0||dc===0){
+                document.getElementById('fipm-ed-out').innerHTML='<span class="fipm-red">Enter all four values (PV₀ and Δcurve ≠ 0).</span>'; return;
+              }
+              var ed=(pvm-pvp)/(2*dc*pv0);
+              var ec=(pvm+pvp-2*pv0)/(dc*dc*pv0);
+              document.getElementById('fipm-ed-out').innerHTML=
+                '<b>Effective duration</b> = (PV₋ − PV₊) / (2·Δcurve·PV₀)<br>= ('+pvm+' − '+pvp+') / (2 × '+dc+' × '+pv0+') = <b class="fipm-main-c">'+ed.toFixed(3)+'</b>'+
+                '<br><br><b>Effective convexity</b> = (PV₋ + PV₊ − 2·PV₀) / (Δcurve²·PV₀)<br>= ('+pvm+' + '+pvp+' − '+(2*pv0)+') / ('+dc+'² × '+pv0+') = <b class="fipm-green">'+ec.toFixed(2)+'</b>'+
+                '<br><span style="color:var(--muted);">Interpretation: a 1% (100 bp) parallel curve move changes value by ≈ '+ed.toFixed(2)+'%, before the convexity adjustment.</span>';
+            }
+            function fipmPortDur(){
+              var raw=(document.getElementById('fipm-pd-in')||{value:''}).value;
+              var lines=raw.split('\n').map(function(l){return l.trim();}).filter(function(l){return l.length;});
+              var ws=[],ds=[],bad=false;
+              lines.forEach(function(l){
+                var p=l.split(',').map(function(x){return parseFloat(x.trim());});
+                if(p.length<2||isNaN(p[0])||isNaN(p[1])){bad=true;return;}
+                ws.push(p[0]); ds.push(p[1]);
+              });
+              if(bad||!ws.length){ document.getElementById('fipm-pd-out').innerHTML='<span class="fipm-red">Each line needs weight,duration (e.g. 0.4,10).</span>'; return; }
+              var sum=ws.reduce(function(a,b){return a+b;},0);
+              var dur=0, detail='';
+              for(var i=0;i<ws.length;i++){ var nw=ws[i]/sum; dur+=nw*ds[i]; detail+=(i?' + ':'')+'('+nw.toFixed(3)+'×'+ds[i]+')'; }
+              document.getElementById('fipm-pd-out').innerHTML=
+                '<b>Weights summed to</b> '+sum.toFixed(3)+(Math.abs(sum-1)>0.001?' (normalized to 1)':'')+
+                '<br><b>Portfolio duration</b> = '+detail+'<br>= <b class="fipm-main-c">'+dur.toFixed(3)+'</b>';
+            }
+            function fipmDts(){
+              var sd=parseFloat(document.getElementById('fipm-dts-sd').value);
+              var cs=parseFloat(document.getElementById('fipm-dts-cs').value);
+              if(isNaN(sd)||isNaN(cs)){ document.getElementById('fipm-dts-out').innerHTML='<span class="fipm-red">Enter spread duration and credit spread.</span>'; return; }
+              var csDec=cs/10000;
+              var dts=sd*cs;
+              document.getElementById('fipm-dts-out').innerHTML=
+                '<b>DTS</b> = spread duration × credit spread<br>= '+sd+' × '+cs+' bps = <b class="fipm-main-c">'+dts.toFixed(0)+'</b> (bps-years)'+
+                '<br><span style="color:var(--muted);">A proportional spread change is what bites: if this bond\'s spread moves, sensitivity scales with the current '+cs+' bp level. Two bonds with equal spread duration but different spreads have different DTS.</span>';
+            }
+            function fipmBaCalc(){
+              var d=parseFloat(document.getElementById('fipm-ba-d').value);
+              var s=parseFloat(document.getElementById('fipm-ba-s').value);
+              if(isNaN(d)||isNaN(s)){ document.getElementById('fipm-ba-out').innerHTML='<span class="fipm-red">Enter duration and bid-ask spread.</span>'; return; }
+              var sDec=s/10000;
+              var cost=d*sDec;
+              document.getElementById('fipm-ba-out').innerHTML=
+                '<b>Trade cost</b> ≈ duration × (ask − bid yield)<br>= '+d+' × '+sDec.toFixed(4)+' = <b class="fipm-main-c">'+(cost*100).toFixed(3)+'%</b>'+
+                '<br><span style="color:var(--muted);">Cost if bought at the ask and immediately sold at the bid. Longer duration and wider bid-ask both raise the cost — why illiquid, long bonds are expensive to trade.</span>';
+            }
+            function fipmRetCalc(){
+              var g=function(id){return parseFloat(document.getElementById(id).value);};
+              var cpn=g('fipm-rt-cpn'), p0=g('fipm-rt-p0'), p1=g('fipm-rt-p1'), md=g('fipm-rt-md'), c=g('fipm-rt-c'), dy=g('fipm-rt-dy'), ds=g('fipm-rt-ds'), cur=g('fipm-rt-cur'), fw=g('fipm-rt-fw');
+              if([cpn,p0,p1,md,c,dy,ds,cur,fw].some(function(x){return isNaN(x);})||p0===0){
+                document.getElementById('fipm-rt-out').innerHTML='<span class="fipm-red">Fill every field (current price ≠ 0).</span>'; return;
+              }
+              var c1=cpn/p0*100;
+              var c2=(p1-p0)/p0*100;
+              var c3lin=-md*dy, c3cvx=0.5*c*dy*dy, c3=(c3lin+c3cvx)*100;
+              var c4lin=-md*ds, c4cvx=0.5*c*ds*ds, c4=(c4lin+c4cvx)*100;
+              var c5=cur*(fw/100);
+              var roll=c1+c2;
+              var tot=c1+c2+c3+c4+c5;
+              document.getElementById('fipm-rt-out').innerHTML=
+                '<b>1 · Coupon income</b> = '+cpn+' / '+p0+' = <b class="fipm-main-c">'+c1.toFixed(3)+'%</b>'+
+                '<br><b>2 · Rolldown</b> = ('+p1+' − '+p0+') / '+p0+' = <b class="fipm-main-c">'+c2.toFixed(3)+'%</b>'+
+                '<br><span class="fipm-gold"><b>Rolling yield (1+2)</b> = '+roll.toFixed(3)+'%</span>'+
+                '<br><b>3 · Δ from ΔY</b> = (−MD·ΔY) + (½·C·ΔY²) = '+(c3lin*100).toFixed(3)+'% + '+(c3cvx*100).toFixed(3)+'% = <b class="fipm-main-c">'+c3.toFixed(3)+'%</b>'+
+                '<br><b>4 · Δ from ΔS</b> = (−MD·ΔS) + (½·C·ΔS²) = '+(c4lin*100).toFixed(3)+'% + '+(c4cvx*100).toFixed(4)+'% = <b class="fipm-main-c">'+c4.toFixed(3)+'%</b>'+
+                '<br><b>5 · Currency</b> = '+cur+'% × '+(fw/100).toFixed(2)+' = <b class="fipm-main-c">'+c5.toFixed(3)+'%</b>'+
+                '<br><br><b>Total expected return</b> = <b class="fipm-green">'+tot.toFixed(3)+'%</b>'+
+                '<br><span style="color:var(--muted);">Convexity contributed '+(c3cvx*100).toFixed(3)+'% to #3 and '+(c4cvx*100).toFixed(4)+'% to #4 — second-order, small unless ΔY/ΔS is large.</span>';
+            }
+            function fipmLevCalc(){
+              var g=function(id){return parseFloat(document.getElementById(id).value);};
+              var ri=g('fipm-lv-ri'), rb=g('fipm-lv-rb'), vb=g('fipm-lv-vb'), ve=g('fipm-lv-ve');
+              if([ri,rb,vb,ve].some(function(x){return isNaN(x);})||ve===0){
+                document.getElementById('fipm-lv-out').innerHTML='<span class="fipm-red">Fill every field (equity V_E ≠ 0).</span>'; return;
+              }
+              var rp=ri+(vb/ve)*(ri-rb);
+              var spread=ri-rb;
+              var note = spread>0 ? '<span class="fipm-green">r_I > r_B → leverage ENHANCES return.</span>' : (spread<0 ? '<span class="fipm-red">r_I < r_B → leverage AMPLIFIES the loss.</span>' : 'r_I = r_B → leverage is neutral.');
+              document.getElementById('fipm-lv-out').innerHTML=
+                '<b>r_p</b> = r_I + [(V_B/V_E) × (r_I − r_B)]<br>= '+ri+'% + [('+vb+'/'+ve+') × ('+ri+'% − '+rb+'%)]'+
+                '<br>= '+ri+'% + ['+(vb/ve).toFixed(3)+' × '+spread.toFixed(3)+'%] = <b class="fipm-main-c">'+rp.toFixed(3)+'%</b>'+
+                '<br><span style="color:var(--muted);">Leverage ratio V_B/V_E = '+(vb/ve).toFixed(3)+'. '+note+'</span>';
+            }
+            function fipmFutLev(){
+              var n=parseFloat(document.getElementById('fipm-fl-not').value);
+              var m=parseFloat(document.getElementById('fipm-fl-mar').value);
+              if(isNaN(n)||isNaN(m)||m===0){ document.getElementById('fipm-fl-out').innerHTML='<span class="fipm-red">Enter notional and margin (margin ≠ 0).</span>'; return; }
+              var lev=(n-m)/m;
+              document.getElementById('fipm-fl-out').innerHTML=
+                '<b>Leverage</b> = (notional − margin) / margin<br>= ('+n+' − '+m+') / '+m+' = <b class="fipm-main-c">'+lev.toFixed(2)+'×</b>'+
+                '<br><span style="color:var(--muted);">A small margin controls the full contract value — '+lev.toFixed(1)+'× the invested margin is exposed to underlying price moves.</span>';
+            }
+            function fipmLiab(btn,t){
+              btn.parentNode.querySelectorAll('.fipm-pick').forEach(function(b){b.classList.remove('active')});
+              btn.classList.add('active');
+              var data={
+                '1':{amt:'<b class="fipm-green">KNOWN</b>',dt:'<b class="fipm-green">KNOWN</b>',out:'<b class="fipm-main-c">Type I</b> — option-free fixed-rate bond. The <b>easiest</b> liability to model. <b>Simple duration</b> (Macaulay or modified) is adequate.'},
+                '2':{amt:'<b class="fipm-green">KNOWN</b>',dt:'<b class="fipm-red">UNCERTAIN</b>',out:'<b class="fipm-main-c">Type II</b> — callable/putable bond; term life insurance (payout amount known, date not — but the law of large numbers estimates likely payouts per period with considerable accuracy). Needs <b>effective duration</b>.'},
+                '3':{amt:'<b class="fipm-red">UNCERTAIN</b>',dt:'<b class="fipm-green">KNOWN</b>',out:'<b class="fipm-main-c">Type III</b> — floating-rate instruments and real-rate bonds such as TIPS. Needs <b>effective duration</b>.'},
+                '4':{amt:'<b class="fipm-red">UNCERTAIN</b>',dt:'<b class="fipm-red">UNCERTAIN</b>',out:'<b class="fipm-main-c">Type IV</b> — property &amp; casualty, and some DB plan liabilities. Needs <b>effective duration</b>.'}
+              };
+              var d=data[t];
+              document.getElementById('fipm-liab-amt').innerHTML=d.amt;
+              document.getElementById('fipm-liab-dt').innerHTML=d.dt;
+              document.getElementById('fipm-liab-out').innerHTML=d.out+(t==='1'?'':'<br><span style="color:var(--muted);">Effective duration is modeled to reflect the initial yield-curve shape plus assumed up/down shifts, to estimate the amount &amp; timing of payouts.</span>');
+            }
+            function fipmInit(){
+              setTimeout(function(){var b=document.querySelector('#fipmr-infl .fipm-pick.active'); if(b) fipmInfl(b,'nom');},30);
+              setTimeout(function(){if(document.getElementById('fipm-ed-out')) fipmEdCalc();},30);
+              setTimeout(function(){if(document.getElementById('fipm-pd-out')) fipmPortDur();},30);
+              setTimeout(function(){if(document.getElementById('fipm-dts-out')) fipmDts();},30);
+              setTimeout(function(){if(document.getElementById('fipm-ba-out')) fipmBaCalc();},30);
+              setTimeout(function(){if(document.getElementById('fipm-rt-out')) fipmRetCalc();},30);
+              setTimeout(function(){if(document.getElementById('fipm-lv-out')) fipmLevCalc();},30);
+              setTimeout(function(){if(document.getElementById('fipm-fl-out')) fipmFutLev();},30);
+              setTimeout(function(){var b=document.querySelector('#fipmld-types .fipm-pick.active'); if(b) fipmLiab(b,'1');},30);
+            }
+          </script>
+        </div>
+
         <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
           <style>
             #sfWidget { --sf-main:#A78BFA; --sf-gold:#D4A017; --sf-green:#3DD68C; --sf-red:#FF7B72; --sf-orange:#F0A04B; --sf-blue:#79C0FF; --sf-purple:#BC8CFF; }
@@ -21225,7 +22106,7 @@ const DEFAULT_DECK = {
     { name:"IPS",                subtopics:["Individual","Institutional"] },
     { name:"Asset Allocation",   subtopics:[] },
     { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Currency Management"] },
-    { name:"Portfolio Construction", subtopics:["Overview of Equity Portfolio Management","Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
+    { name:"Portfolio Construction", subtopics:["Overview of Equity Portfolio Management","Overview Of Fixed-Income Portfolio Management","Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
     { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
@@ -21508,6 +22389,129 @@ const DEFAULT_DECK = {
     {id:"eq27",topic:"Portfolio Construction",subtopic:"Overview of Equity Portfolio Management",type:"framework",
      q:"Buffering vs packeting (cutting migration costs)",
      a:"[hl]Buffering = DELAY the move[/hl]: set a rank threshold (buffer zone) before a stock migrates. Ex: large=top 200, mid=next 300; a mid-cap rising into top 200 isn't moved until rank passes the buffer (e.g. reaches 150).\n[hl]Packeting = SPLIT the move[/hl]: move HALF the position at reconstitution; if it still qualifies next reconstitution, move the remainder.\nBoth reduce reconstitution trading costs."},
+    {id:"fipm1",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Three roles of fixed income in a portfolio (LOS 7.a)",
+     a:"[rl][hl]1. Diversification[/hl] — low (often <+1) correlation to equities raises risk-adjusted return; lower corr = bigger benefit. 2000–19: −0.30 (10y UST) to +0.63 (US HY) vs S&P 500[/rl][rl][hl]2. Regular cash flow[/hl] — predictable coupon/principal for future obligations; build a buy-and-hold LADDER (no sales planned, ~equal par maturing periodically)[/rl][rl][hl]3. Inflation hedge[/hl] — some structures pass inflation to coupon and/or principal; standard nominal bonds do NOT[/rl]"},
+    {id:"fipm2",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"command",
+     q:"Flight to quality — what happens to correlations in market stress",
+     a:"[rl]Lower-quality/riskier assets (HY bonds + equities) [hl]decline together[/hl] → their correlation approaches [hl]+1[/hl] → diversification evaporates when needed[/rl][rl]Investors buy high-quality developed-market GOVERNMENT bonds for safety → govt-bond correlation to risky assets [hl]falls, may go negative[/hl][/rl]\nInternal FI diversification (IG vs HY) is driven by credit-spread changes. Bond volatility also rises over time, esp. HY in a crisis."},
+    {id:"fipm3",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Inflation protection: nominal vs inflation-linked vs floating-coupon",
+     a:"[rl][hl]Nominal (fixed-coupon)[/hl] — NO protection. Par fixed, coupon fixed[/rl][rl][hl]Inflation-linked[/hl] — par ADJUSTS for inflation; coupon = real rate × adjusted par → BOTH coupon AND principal protected[/rl][rl][hl]Floating-coupon[/hl] — coupon = (MRR+spread)×par resets with rates; par UNCHANGED → coupon protected, principal NOT[/rl]\nTRAP: only inflation-linked protects PRINCIPAL."},
+    {id:"fipm4",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Inflation worked example: inflation 3%→5%, par 1,000,000",
+     a:"[hl]Inflation-linked:[/hl] par +5% → 1,050,000; first coupon (real 0.5%) = 0.5%×1.05m = 5,250; par & coupon keep adjusting → coupon + principal protected.\n[hl]Floating-coupon:[/hl] par unchanged; coupon (MRR 3.5%+spread 1%)×1m = 45,000; inflation +2% lifts MRR to 5.5% → (5.5%+1%)×1m = 65,000 = [hl]+44.4%[/hl] coupon, but principal unchanged."},
+    {id:"fipm5",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Prof's note: how are NR, linked, floating priced in an efficient market?",
+     a:"All three (same issuer & maturity) priced to the [hl]SAME expected return[/hl] (small differences from differing inflation-risk response).\nIf realized inflation > consensus → linked & floating BEAT the nominal-rate bond; if < consensus → they LAG.\nWhich of linked vs floating wins depends on the actual PATH of future inflation."},
+    {id:"fipm6",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Two fixed-income mandate types and their metrics",
+     a:"[rl][hl]Liability-based[/hl] — assets managed SOLELY to meet future liability payouts; cash flows reinvested until paid → IMMUNIZATION[/rl][rl][hl]Total return[/hl] — target absolute return or match/beat a BENCHMARK; metrics: active return (= value added / alpha) and active risk (= tracking error / tracking risk)[/rl]"},
+    {id:"fipm7",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Liability-based mandate — four immunization variations",
+     a:"[rl][hl]Cash flow matching[/hl] — simplest; assets give cash flows WHEN & in the SIZE liabilities need[/rl][rl][hl]Duration matching[/hl] — match asset & liability duration so ending values stay matched as rates change[/rl][rl][hl]Contingent immunization (CI)[/hl] — hybrid active+immunization; funded with MORE than required[/rl][rl][hl]Derivatives overlays[/hl] — futures/swaps to implement duration matching or CI[/rl]"},
+    {id:"fipm8",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"command",
+     q:"Contingent immunization (CI) — surplus logic and cost direction",
+     a:"Surplus = [hl]PVA − PVL[/hl]. While surplus POSITIVE → manage actively any way that adds value.\n[rl]If active mgmt SUCCEEDS → surplus grows → ultimate CI cost [hl]< [/hl]cost of initially immunizing[/rl][rl]If surplus DECLINES TO ZERO → must IMMEDIATELY immunize → ultimate CI cost [hl]>[/hl] initial immunization, but by a KNOWN amount[/rl]"},
+    {id:"fipm9",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Total return: pure vs enhanced indexing vs active management",
+     a:"[rl][hl]Pure indexing[/hl] — ~zero active return/risk; match ALL index risk factors (duration, credit, sectors, prepay), leeway on individual bonds; low turnover[/rl][rl][hl]Enhanced indexing[/hl] — modest active return; duration STILL matched; small sector/quality over/underweights[/rl][rl][hl]Active management[/hl] — larger active return; duration CAN be mismatched; large deviations, high turnover[/rl]"},
+    {id:"fipm10",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Why pure bond indexing doesn't literally replicate the index",
+     a:"The huge number of individual bonds and their potential ILLIQUIDITY make literal duplication (every issue at index weight) [hl]impractical[/hl].\nInstead pure indexing seeks to EXACTLY MATCH all the index RISK FACTORS while allowing the manager some leeway on the individual bonds selected. Turnover stays low and similar to the index."},
+    {id:"fipm11",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Macaulay, Modified, Effective duration — definitions & interpretation",
+     a:"[rl][hl]Macaulay[/hl] = weighted-avg TIME to receive CFs (weights = PV of CFs); higher → more price volatility[/rl][rl][hl]Modified[/hl] = Macaulay ÷ (1+periodic yield); ≈ %Δprice for a 1% change in the bond's OWN yield (ModDur 7 → −7% if +1%)[/rl][rl][hl]Effective[/hl] = price sensitivity to a parallel BENCHMARK-CURVE shift (modeled); for COMPLEX bonds (uncertain CF, embedded options)[/rl]"},
+    {id:"fipm12",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Key rate, empirical, money duration, PVBP — definitions",
+     a:"[rl][hl]Key rate (partial) duration[/hl] — sensitivity to a change at ONE specific maturity, others held constant; assesses NONPARALLEL curve exposure[/rl][rl][hl]Empirical duration[/hl] — from REGRESSING bond returns vs benchmark yield changes; same as effective but from past market behavior not modeling[/rl][rl][hl]Money (dollar) duration[/hl] = ModDur × market value; ABSOLUTE P&L for 1% yield change[/rl][rl][hl]PVBP / DV01 / BPV[/hl] = money duration × 0.0001; absolute change for 1 bp[/rl]"},
+    {id:"fipm13",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Convexity vs effective convexity + interpretation",
+     a:"[hl]Convexity[/hl] = extent price–yield relationship is NONLINEAR; positive for option-free fixed-coupon bonds → price rises MORE than duration implies when yields fall, falls LESS when yields rise.\n[hl]Effective convexity[/hl] = nonlinear price–CURVE relationship via modeling; for complex bonds with embedded options / uncertain CFs."},
+    {id:"fipm14",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Convexity — three key facts",
+     a:"[rl]1. [hl]Valuable when yields are expected to change[/hl] → investors pay HIGHER prices / accept lower yields for higher-convexity bonds[/rl][rl]2. [hl]Second-order measure[/hl] — how price-vs-yield sensitivity itself changes; ≈ ∝ duration² (dur-20 ≈ 4× convexity of dur-10)[/rl][rl]3. [hl]∝ CF dispersion[/hl] around Macaulay duration → for a given Mac duration, the LOWEST-convexity bond is a ZERO-COUPON[/rl]"},
+    {id:"fipm15",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Portfolio aggregation of duration/convexity + effective formulas",
+     a:"Macaulay, modified duration & convexity of a portfolio = [hl]cash (MV) weighted[/hl] average of the individual assets. Ex: 0.4×10 + 0.6×15 = 13.\nEffective duration = (PV₋ − PV₊) / [2·Δcurve·PV₀]\nEffective convexity = (PV₋ + PV₊ − 2·PV₀) / [Δcurve²·PV₀]\nPV₋ = curve shifted DOWN, PV₊ = curve shifted UP, PV₀ = current value."},
+    {id:"fipm16",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Spread duration and Duration times spread (DTS)",
+     a:"[hl]Spread duration[/hl] = portfolio % sensitivity to a 1% change in CREDIT SPREADS.\n[hl]DTS[/hl] = spread duration × the bond's credit spread → gives HIGHER sensitivity when spreads are already high. Reflects that spread CHANGES tend to be proportional to spread LEVELS, not the same absolute amount across bonds."},
+    {id:"fipm17",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"command",
+     q:"Active management levers: rates view and spreads view",
+     a:"[rl]Rates expected to FALL → [hl]INCREASE duration[/hl] (amplify price rise); rates rise → lower duration[/rl][rl]Spreads expected to NARROW → [hl]INCREASE spread duration/DTS[/hl] & lower avg credit rating (hold riskier bonds); spreads widen → decrease spread duration & raise credit quality[/rl][rl]Bond selection: use [hl]relative value[/hl] (valuation, issuer traits, technicals) — e.g. expecting narrowing → pick bonds with DTS > benchmark[/rl]"},
+    {id:"fipm18",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Correlations between fixed-income sectors",
+     a:"Same market → correlations likely [hl]HIGH[/hl] (shared macro).\n[rl][hl]Investment-grade[/hl] (low credit risk) → returns driven by the benchmark sovereign YIELD CURVE[/rl][rl][hl]High-yield[/hl] → driven more by SPREAD changes[/rl]\nRates & spreads are NEGATIVELY related (poor economy → low rates, high spreads) → HY behaves like equity → HY has HIGHER correlation with equities."},
+    {id:"fipm19",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Bond liquidity: definition, on-the-run vs off-the-run, liquidity premium",
+     a:"[hl]Liquidity[/hl] = transact in relatively large size, quickly, with minimal price deviation. Most recently issued ([hl]on-the-run[/hl]) developed-market govt bonds = liquid; others may be illiquid.\nWhen a new similar-maturity issue arrives, the older becomes [hl]off-the-run[/hl] → liquidity drops → trades at HIGHER YTM = a [hl]liquidity premium[/hl] (= illiquidity premium; same thing). Less liquid → higher premium & yield."},
+    {id:"fipm20",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Liquidity drivers + liquidity by subsector",
+     a:"Drivers of bond illiquidity: huge number of small, HETEROGENEOUS issues (one issuer has many bonds vs one stock); OTC trading (search cost, low transparency); dealer inventory favors recent issues.\n[rl][hl]On-the-run sovereign[/hl] = highest liquidity (large, homogeneous, benchmark & repo collateral)[/rl][rl][hl]Corporates[/hl] vary widely — liquidity FALLS with lower quality & smaller issue size; small issuers may be excluded from indexes[/rl]"},
+    {id:"fipm21",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Effects of liquidity on bond portfolio management",
+     a:"[rl][hl]Pricing data[/hl] — OTC trades often unreported → use MATRIX PRICING (infer price from YTM of recent trades in similar maturity/quality/coupon bonds)[/rl][rl][hl]Portfolio construction[/hl] — buy-and-hold prefer LESS liquid (higher yield); active / may-need-to-sell prefer MORE liquid[/rl][rl][hl]Dealer bid-ask[/hl] — dealers WIDEN bid-ask on less liquid bonds; trade cost ≈ duration × (ask − bid yield), e.g. 10×0.002 = 2%[/rl]"},
+    {id:"fipm22",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Alternatives to direct bond investment + TRS decomposition",
+     a:"[rl][hl]Fixed-income ETFs[/hl] — replicate FI sectors, exchange-listed → high liquidity[/rl][rl][hl]Open-end mutual funds[/hl] — subscribe/redeem daily; diversification & scale[/rl][rl][hl]Derivatives[/hl] — bond futures/options, IRS, total return swaps[/rl]\n[hl]TRS:[/hl] total-return RECEIVER pays (interest rate + spread), GETS total return on a reference bond portfolio. Pro: small capital posted vs funding an ETF. Cons: counterparty risk, rollover risk, regulatory reform (higher collateral/cost)."},
+    {id:"fipm23",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Five components of expected fixed-income return (LOS 7.d)",
+     a:"[rl][hl]1 Coupon income[/hl] = annual coupon / current price[/rl][rl][hl]2 Rolldown return[/hl] = (end-horizon projected price − beginning price)/beginning price, yield curve UNCHANGED[/rl][rl][hl]3 Δprice from ΔY[/hl] = (−MD×ΔY) + (½×C×ΔY²)[/rl][rl][hl]4 Δprice from Δspread ΔS[/hl] = (−MD×ΔS) + (½×C×ΔS²)[/rl][rl][hl]5 Currency G/L[/hl] = Δcurrency × foreign weight[/rl]\nTotal = sum of all five. Can be projected (expected) or computed after the fact (decompose realized return)."},
+    {id:"fipm24",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"command",
+     q:"Worked 5-component example → total expected return",
+     a:"Inputs: cpn 3.0, price 101.50, projected 102.419, MD 5.6, C 28, ΔY −0.54%, ΔS −0.06%, currency +3.925% on 40% foreign.\n[rl]1: 3.0/101.50 = [hl]2.956%[/hl][/rl][rl]2: (102.419−101.50)/101.50 = [hl]0.905%[/hl][/rl][rl]3: (−5.6×−0.0054)+(½×28×−0.0054²)=0.03024+0.00041 = [hl]3.065%[/hl][/rl][rl]4: (−5.6×−0.0006)+(½×28×−0.0006²)=0.00336+0.000005 = [hl]0.337%[/hl][/rl][rl]5: 3.925%×0.40 = [hl]1.570%[/hl][/rl]\nTotal = [hl]8.833%[/hl]."},
+    {id:"fipm25",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Rolling yield + rolldown direction rule",
+     a:"[hl]Rolling yield = Component 1 + Component 2[/hl] = coupon income + rolldown = 2.956%+0.905% = 3.86%.\nRolldown (curve unchanged):\n[rl]Flat curve, bond at PREMIUM → end price LOWER (pulled to par); at DISCOUNT → end price HIGHER[/rl][rl]UPWARD-sloping curve → rolldown return HIGHER than start YTM (bond ages, rolls to lower YTM → higher price); downward-sloping → opposite[/rl]"},
+    {id:"fipm26",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Return model: convexity effect & which duration in each part",
+     a:"Convexity is a [hl]second-order effect[/hl] — in the example it added only +0.041% to #3; often insignificant for option-free bonds unless ΔY is large. Embedded options → use EFFECTIVE duration & convexity; floating-rate → low duration but still spread sensitive.\n[hl]Component 4 should technically use SPREAD duration[/hl] (CFA example uses MD, assuming spread dur ≈ MD — fine for fixed-coupon, NOT floating-rate). Exam: if given both, use EFFECTIVE for #3, SPREAD for #4."},
+    {id:"fipm27",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Return model: what is solid vs projected; why it matters",
+     a:"[rl][hl]Near-certain:[/hl] #1 coupon income (yield income), absent default[/rl][rl][hl]Assumption:[/hl] #2 rolldown assumes UNCHANGED curve (plotted from on/off-the-run yields incl. liquidity premium)[/rl][rl][hl]Pure predictions:[/hl] #3 ΔY, #4 ΔS, #5 currency[/rl]\nNOT captured: relative-valuation shifts between bonds, and credit losses. This decomposition is the framework used to analyze ACTIVE-strategy returns over the next several readings."},
+    {id:"fipm28",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Leverage: benefit condition + leveraged return formula (LOS 7.e)",
+     a:"Leverage raises portfolio return; attractive in LOW-rate periods.\n[rl]If [hl]r_I > r_B[/hl] (asset return > borrow cost) → ENHANCES return[/rl][rl]If [hl]r_I < r_B[/hl] → AMPLIFIES losses[/rl]\n[hl]r_p = r_I + [(V_B / V_E) × (r_I − r_B)][/hl]\nr_I = return on invested assets, r_B = borrow rate, V_B = borrowed, V_E = equity. Borrowing is short-term → asset duration normally EXCEEDS liability duration."},
+    {id:"fipm29",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Four methods of achieving leverage",
+     a:"[rl][hl]Repos[/hl] — sell security for cash + agree to buy back; assets = collateral; usually overnight[/rl][rl][hl]Futures[/hl] — small margin controls full contract; leverage = (notional − margin)/margin[/rl][rl][hl]Swaps[/hl] — receive-fixed/pay-MRR ≈ buy bonds + borrow floating → +duration, no explicit funds[/rl][rl][hl]Securities lending[/hl] — lend securities for collateral; supports short selling; open-ended[/rl]"},
+    {id:"fipm30",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Repo mechanics: rate, collateral, haircut, tri-party",
+     a:"Repo rate (360-day): 100m overnight @2.5% → repay 100m×[1+(0.025/360)].\n[rl][hl]General collateral[/hl] = any agreed securities; [hl]security-driven (specific)[/hl] = lender wants a specific bond → LOWER repo rate (a form of sec lending)[/rl][rl][hl]Haircut[/hl] = collateral worth MORE than loan (102% = 2% haircut); bigger for riskier/less-liquid collateral → protects lender[/rl][rl][hl]Bilateral vs tri-party[/hl] = tri-party uses an intermediary bank to hold collateral & record ownership (cheaper)[/rl]"},
+    {id:"fipm31",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Securities lending: short selling + rebate rate",
+     a:"Supports [hl]short selling[/hl] (sell a security you don't own → must borrow to deliver). Lender can take CASH collateral and invest it.\n[hl]rebate rate = collateral earnings rate − security lending rate[/hl]\nEarnings depend on how badly the borrower needs the specific collateral (high need → explicit fee, more cash/general collateral). Open-ended: no maturity → risk if counterparty won't reverse."},
+    {id:"fipm32",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Risks created by leverage",
+     a:"[rl]Borrowing cost rises ABOVE asset earnings → magnified loss[/rl][rl]Rates ↑ → leveraged portfolio AND collateral DECLINE in value[/rl][rl]Lenders demand repayment → forced liquidation = [hl]FIRE SALE[/hl] (sell when down, distressed)[/rl][rl]Widespread → [hl]vicious cycle[/hl]: each round of sales drives prices down → other credit providers, repo participants, sec lenders demand repayment / stop lending[/rl]"},
+    {id:"fipm33",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Taxable vs tax-exempt: facts + taxable-account strategies (LOS 7.f)",
+     a:"Both seek highest risk-adjusted return net of fees; TAXABLE more complex (after-tax return & risk).\nFacts: income vs gains taxed differently; gains taxed at REALIZATION (zero-coupon imputed income taxed yearly w/ no cash flow); long-term often lower than interest; losses offset gains (carry fwd, sometimes back for refund).\nStrategies: [hl]realize LOSSES to offset gains[/hl]; [hl]EXTEND holding periods[/hl] for long-term & to defer; consider income-vs-gain rate differentials."},
+    {id:"fipm34",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"command",
+     q:"Which bond to sell — taxable vs tax-exempt (Bond A gain, Bond B loss, B higher yield)",
+     a:"[rl][hl]Taxable → SELL Bond B[/hl] (the loss bond): avoid realizing the gain on A and paying tax now — defer the tax[/rl][rl][hl]Tax-exempt → SELL Bond A[/hl] (the gain bond): taxes irrelevant, so keep Bond B for its slightly better yield[/rl]\nFunds: income taxable to fund regardless of payout; gains pass-through (taxed when fund realizes) vs deferred (taxed when shares sold). SMA: all income/gains/losses pass to client."},
+    {id:"fipm35",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"LDI: ALM vs LDI vs ADL (LOS 7.g)",
+     a:"LDI = used when there are definable future liabilities paid from portfolio assets; classified as [hl]passive total return[/hl] (but still needs monitoring/adjustment).\n[rl][hl]ALM[/hl] — consider assets IN RELATION to liabilities; used when both asset PV and liability PV move with rates[/rl][rl][hl]LDI[/hl] — liabilities GIVEN → manage assets to meet them (insurer, DB pension). This reading's focus[/rl][rl][hl]ADL[/hl] — assets GIVEN → manage/design the liability structure to match assets (e.g. leasing co.)[/rl]"},
+    {id:"fipm36",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Four types of liabilities + which duration to use",
+     a:"[rl][hl]Type I[/hl] — amount KNOWN, date KNOWN → option-free fixed-rate bond; easiest; SIMPLE duration adequate[/rl][rl][hl]Type II[/hl] — amount KNOWN, date UNCERTAIN → callable/putable bond, term life insurance[/rl][rl][hl]Type III[/hl] — amount UNCERTAIN, date KNOWN → floating-rate, real-rate bonds (TIPS)[/rl][rl][hl]Type IV[/hl] — amount UNCERTAIN, date UNCERTAIN → property & casualty, some DB liabilities[/rl]\nOnly Type I uses simple duration; II–IV need EFFECTIVE duration (initial curve shape + assumed shifts)."},
+    {id:"fipm37",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Cash flow matching — single liability + defeasance (LOS 7.h)",
+     a:"Cash flow matching = [hl]simplest but least flexible[/hl] immunization.\nSingle liability: buy a [hl]default-free ZERO-COUPON[/hl] with par & maturity matching the liability → no cash flows to reinvest, no bonds to sell → NO reinvestment or price risk.\n[hl]Accounting defeasance[/hl]: assets legally set aside & dedicated to the liabilities → BOTH assets and liabilities removed from the balance sheet."},
+    {id:"fipm38",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Cash flow matching — multiple liabilities + cash-in-advance",
+     a:"Multiple liabilities (recursive): buy a bond maturing on/with par + final coupon to exactly fund the [hl]LONGEST[/hl] liability; its earlier coupons partially meet earlier liabilities. Recurse backward to the next-longest (net of coupons already bought).\n[hl]Cash-in-advance constraint[/hl]: perfect-match bonds rarely exist → require the bond to mature BEFORE the payout date → exposes to [hl]reinvestment risk in an upward-sloping curve[/hl] (early cash reinvested short at lower rates)."},
+    {id:"fipm39",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Laddered portfolio: structure vs bullet & barbell (LOS 7.i)",
+     a:"[hl]Ladder[/hl] = roughly EQUAL par across DIFFERENT maturities. Same duration also achievable via [hl]bullet[/hl] (single middle duration) or [hl]barbell[/hl] (short + long).\nIf all three share the same duration → same price sensitivity to a PARALLEL shift.\nConvexity ranking: [hl]Barbell > Ladder > Bullet[/hl] (convexity ∝ dispersion of cash flows; ladder beats bullet but is NOT as convex as a barbell)."},
+    {id:"fipm40",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Laddered portfolio — four advantages",
+     a:"[rl][hl]Regular liquidity[/hl] — bonds mature each year → less need to sell at wide bid-ask; near-maturity bonds = good collateral → borrow favorably[/rl][rl][hl]CF diversification across time[/hl] — less concentrated exposure to nonparallel curve changes at specific maturities[/rl][rl][hl]Price-vs-reinvestment risk diversification[/hl] — long bonds (price risk) + short bonds (reinvestment risk); maturing bonds reinvested long-term (higher rates) keep duration stable[/rl][rl][hl]More convexity than a bullet[/hl] (helps in large parallel shifts) — but less convex than a barbell[/rl]"},
+    {id:"fipm41",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
+     q:"Building ladders without individual bonds",
+     a:"[hl]Target-date (fixed-maturity) bond ETFs[/hl]: each ETF has a designated maturity year, passively managed to replicate a bond maturing that year. Cost advantages vs individual bonds + more liquidity if unanticipated sales are needed.\n[hl]Disadvantage / alternative[/hl]: for some investors an ongoing (no target date) passive index or active bond fund may be better — larger, greater credit-risk diversification, more liquid than holding the underlying bonds directly."},
   ]
 };
 
@@ -22305,7 +23309,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -22329,6 +23333,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'sfWidget' && typeof sfInit === 'function') setTimeout(sfInit, 50);
     if (widgetId === 'cmWidget' && typeof cmInit === 'function') setTimeout(cmInit, 50);
     if (widgetId === 'eqWidget' && typeof eqInit === 'function') setTimeout(eqInit, 50);
+    if (widgetId === 'fipmWidget' && typeof fipmInit === 'function') setTimeout(fipmInit, 50);
   }
 }
 
@@ -22348,6 +23353,7 @@ function openNote(key, topic, subtopic) {
     'PM Pathway||Active Equity Investing: Portfolio Construction': 'pcwWidget',
     'PM Pathway||Trade Strategy and Execution': 'tswWidget',
     'Portfolio Construction||Overview of Equity Portfolio Management': 'eqWidget',
+    'Portfolio Construction||Overview Of Fixed-Income Portfolio Management': 'fipmWidget',
     'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
     'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
     'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
@@ -22359,7 +23365,7 @@ function openNote(key, topic, subtopic) {
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
