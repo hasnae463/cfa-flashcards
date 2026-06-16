@@ -17879,6 +17879,606 @@ BREAKEVEN:  S₀ + net</div>
             function osInit(){ setTimeout(osDeriveToggle,30); setTimeout(osDerive,40); setTimeout(osIvCalc,30); setTimeout(osPoCalc,30); setTimeout(osPcpCalc,30); setTimeout(osCc2Calc,30); setTimeout(osPp2Calc,30); setTimeout(osCcCalc,30); setTimeout(osStCalc,30); setTimeout(osSpCalc,30); setTimeout(osPdCalc,30); setTimeout(osVolCalc,30); setTimeout(osRrCalc,30); setTimeout(function(){osSkewPick('skew');},30); }
           </script>
         </div>
+        <div id="eqWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #eqWidget { --eq-main:#818CF8; --eq-gold:#D4A017; --eq-green:#3DD68C; --eq-red:#FF7B72; --eq-orange:#F0A04B; --eq-blue:#79C0FF; --eq-purple:#BC8CFF; }
+            #eqWidget .eq-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #eqWidget .eq-toptab { background:var(--surface2); border:1px solid var(--eq-main); color:var(--eq-main); padding:9px 18px; border-radius:7px; font-family:var(--serif); font-size:14px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #eqWidget .eq-toptab.active { background:var(--eq-main); color:#0D1117; }
+            #eqWidget .eq-toppanel { display:none; }
+            #eqWidget .eq-toppanel.active { display:block; }
+            #eqWidget .eq-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+            #eqWidget .eq-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #eqWidget .eq-tab.active { background:rgba(129,140,248,.13); border-color:var(--eq-main); color:var(--eq-main); }
+            #eqWidget .eq-panel { display:none; }
+            #eqWidget .eq-panel.active { display:block; }
+            #eqWidget .eq-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:14px; }
+            #eqWidget .eq-title { font-family:var(--serif); font-size:16px; color:var(--eq-main); font-weight:600; margin-bottom:10px; }
+            #eqWidget .eq-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:8px; }
+            #eqWidget .eq-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #eqWidget .eq-rule { display:block; padding:6px 0; border-bottom:1px solid var(--border); font-size:12.5px; line-height:1.5; color:#C9D1D9; }
+            #eqWidget .eq-rule:last-child { border-bottom:none; }
+            #eqWidget .eq-tip { background:rgba(46,160,67,.08); border-left:3px solid var(--eq-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #eqWidget .eq-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--eq-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #eqWidget .eq-info { background:rgba(121,192,255,.08); border-left:3px solid var(--eq-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #eqWidget .eq-green { color:var(--eq-green); }
+            #eqWidget .eq-red { color:var(--eq-red); }
+            #eqWidget .eq-orange { color:var(--eq-orange); }
+            #eqWidget .eq-blue { color:var(--eq-blue); }
+            #eqWidget .eq-gold { color:var(--eq-gold); }
+            #eqWidget .eq-main-c { color:var(--eq-main); }
+            #eqWidget .eq-purple { color:var(--eq-purple); }
+            #eqWidget .eq-tbl { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #eqWidget .eq-tbl th { background:#0B0F14; color:var(--eq-main); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #eqWidget .eq-tbl td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+            #eqWidget .eq-sb { display:grid; grid-template-columns:auto 1fr 1fr 1fr; gap:4px; margin:12px 0; }
+            #eqWidget .eq-sb-h { font-family:var(--mono); font-size:10px; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); padding:6px; text-align:center; align-self:center; }
+            #eqWidget .eq-sb-cell { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px 8px; text-align:center; font-size:11.5px; color:#C9D1D9; cursor:pointer; font-family:var(--mono); transition:all .12s; }
+            #eqWidget .eq-sb-cell:hover { border-color:var(--eq-main); }
+            #eqWidget .eq-sb-cell.sel { background:rgba(129,140,248,.16); border-color:var(--eq-main); color:#fff; font-weight:600; }
+            #eqWidget .eq-pick-row { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0; }
+            #eqWidget .eq-pick { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:7px 13px; border-radius:6px; font-family:var(--mono); font-size:11px; cursor:pointer; }
+            #eqWidget .eq-pick.active { background:rgba(129,140,248,.13); border-color:var(--eq-main); color:var(--eq-main); }
+            #eqWidget .eq-out { background:#0B0F14; border-left:3px solid var(--eq-main); border-radius:4px; padding:13px 15px; margin-top:12px; font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+          </style>
+
+          <div class="eq-toptabs">
+            <button class="eq-toptab active" onclick="eqTop(event,'eq-roles')">Roles (6.a)</button>
+            <button class="eq-toptab" onclick="eqTop(event,'eq-seg')">Segmentation (6.b)</button>
+            <button class="eq-toptab" onclick="eqTop(event,'eq-ic')">Income &amp; Costs (6.c&ndash;e)</button>
+            <button class="eq-toptab" onclick="eqTop(event,'eq-bm')">Benchmark (6.f)</button>
+            <button class="eq-toptab" onclick="eqTop(event,'eq-cheat')">Cheat Sheet</button>
+            <button class="eq-toptab" onclick="eqTop(event,'eq-quiz')">Quiz &amp; Traps</button>
+          </div>
+
+          <!-- ════════ ROLES 6.a ════════ -->
+          <div id="eq-roles" class="eq-toppanel active">
+            <div class="eq-card">
+              <div class="eq-title">LOS 6.a — Four roles of equities in the overall portfolio</div>
+              <div class="eq-body">Equity securities play several beneficial roles. Each role is a separate driver — keep them distinct under exam pressure.</div>
+              <table class="eq-tbl">
+                <tr><th>Role</th><th>Driver / mechanism</th><th>Detail to remember</th></tr>
+                <tr><td><b class="eq-main-c">Capital appreciation</b></td><td>Growth in cash flows, revenues, and/or earnings</td><td>The <b>main driver of long-term equity returns</b>. Over the last 50 years, equities &gt; bonds &amp; bills on average. Equities outperform in strong growth, underperform in weak growth.</td></tr>
+                <tr><td><b class="eq-green">Dividend income</b></td><td>Excess cash flows distributed instead of reinvested</td><td>Recent annual yields ~<b>1%&ndash;3%</b>. Dividend yield is <b>more stable</b> than price-change return. Not guaranteed to increase or continue.</td></tr>
+                <tr><td><b class="eq-blue">Diversification</b></td><td>Less-than-perfect (&lt; +1.0) correlation with other asset classes</td><td>Portfolio &sigma; &lt; weighted sum of individual &sigma;. <b>Benefit shrinks in a crisis</b> (see trap below).</td></tr>
+                <tr><td><b class="eq-orange">Inflation hedge</b></td><td>Firms that pass input-cost increases to customers; commodity producers</td><td>Record is <b>mixed</b>: positive equity/inflation correlation usually, but <b>negative in hyperinflation</b>; equity = leading indicator, inflation = lagging &rarr; less-than-perfect correlation.</td></tr>
+              </table>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">Diversification breaks down in a crisis — the two reasons</div>
+              <div class="eq-trap"><b>Quiz 6.1 Q1 lives here.</b> Risk reduction from diversification is <b>not constant</b>. In a financial crisis:
+              <br>1. <b class="eq-red">Correlations rise</b> toward +1.0 &rarr; the cross-asset offset that lowers portfolio &sigma; shrinks &rarr; less diversification exactly when needed.
+              <br>2. <b class="eq-red">Asset-class &sigma; rise</b> &rarr; even at fixed correlation, higher component volatility feeds through to higher portfolio &sigma; &rarr; further reduces the expected risk reduction.</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">Client investment considerations (IPS)</div>
+              <span class="eq-rule"><b class="eq-main-c">High risk tolerance</b> &rarr; prefer <b>growth-oriented</b> companies</span>
+              <span class="eq-rule"><b class="eq-blue">Low risk tolerance</b> &rarr; prefer <b>stable, well-established dividend payers</b></span>
+              <span class="eq-rule"><b>Constraints</b> may include ESG considerations and religious beliefs</span>
+              <div class="eq-body" style="margin-top:10px;">Two screening tools for ESG/values constraints:</div>
+              <table class="eq-tbl">
+                <tr><th>Approach</th><th>What it does</th><th>Example</th></tr>
+                <tr><td><b class="eq-red">Negative</b> (exclusionary) screening</td><td>Excludes companies/sectors that fail client standards</td><td>Exclude oil &amp; gas investments</td></tr>
+                <tr><td><b class="eq-green">Positive</b> (best-in-class) screening</td><td>Seeks/overweights companies ranking most favorably</td><td>Overweight firms with strong governance</td></tr>
+              </table>
+              <div class="eq-info"><b>ESG approaches beyond screening:</b> <b>ESG integration</b> (now the dominant strategy — analyze valuation, expected returns, risk, build sustainable portfolio); <b>thematic investing</b> (screen on a theme, e.g. climate change); <b>impact investing</b> (active engagement / direct investment for explicit social-environmental impact alongside return).</div>
+            </div>
+          </div>
+
+          <!-- ════════ SEGMENTATION 6.b ════════ -->
+          <div id="eq-seg" class="eq-toppanel">
+            <div class="eq-tabs">
+              <button class="eq-tab active" onclick="eqTab(event,'eqs-style')">Size &amp; Style</button>
+              <button class="eq-tab" onclick="eqTab(event,'eqs-geo')">Geography</button>
+              <button class="eq-tab" onclick="eqTab(event,'eqs-econ')">Economic Activity</button>
+              <button class="eq-tab" onclick="eqTab(event,'eqs-idx')">Indexes</button>
+            </div>
+
+            <div id="eqs-style" class="eq-panel active">
+              <div class="eq-card">
+                <div class="eq-title">Size &amp; Style — the 3&times;3 style box (Figure 6.1)</div>
+                <div class="eq-body"><b>Size</b> = market capitalization (large / mid / small-cap). <b>Style</b> = value / blend (a.k.a. core) / growth, determined by metrics: <b>P/E, P/B, dividend yield, earnings &amp;/or book-value growth</b>. Tap a cell:</div>
+                <div class="eq-sb">
+                  <div class="eq-sb-h"></div><div class="eq-sb-h">Value</div><div class="eq-sb-h">Blend</div><div class="eq-sb-h">Growth</div>
+                  <div class="eq-sb-h">Large</div>
+                  <div class="eq-sb-cell" onclick="eqSB(this,'Large-cap value','Big, cheap on P/E &amp; P/B, often mature dividend payers.')">LC value</div>
+                  <div class="eq-sb-cell" onclick="eqSB(this,'Large-cap blend','Big firms, mix of value &amp; growth traits (core).')">LC blend</div>
+                  <div class="eq-sb-cell" onclick="eqSB(this,'Large-cap growth','Big firms with high earnings/BV growth, high multiples.')">LC growth</div>
+                  <div class="eq-sb-h">Medium</div>
+                  <div class="eq-sb-cell" onclick="eqSB(this,'Mid-cap value','Mid-size, value-tilted.')">MC value</div>
+                  <div class="eq-sb-cell" onclick="eqSB(this,'Mid-cap blend','Mid-size, core blend.')">MC blend</div>
+                  <div class="eq-sb-cell" onclick="eqSB(this,'Mid-cap growth','Mid-size, growth-tilted.')">MC growth</div>
+                  <div class="eq-sb-h">Small</div>
+                  <div class="eq-sb-cell" onclick="eqSB(this,'Small-cap value','Small, value-tilted.')">SC value</div>
+                  <div class="eq-sb-cell" onclick="eqSB(this,'Small-cap blend','Small, core blend.')">SC blend</div>
+                  <div class="eq-sb-cell" onclick="eqSB(this,'Small-cap growth','Small, growth-tilted &mdash; e.g. small tech chasing growth opportunities.')">SC growth</div>
+                </div>
+                <div id="eqs-sb-out" class="eq-out">Tap any cell to see the box. A style box <b>ranks/scores</b> companies; managers can scatterplot holdings across the nine boxes (and add finer classes like micro-cap growth).</div>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Advantages &amp; the disadvantage of size/style</div>
+                <span class="eq-rule"><b class="eq-green">+</b> Better address client risk/return considerations</span>
+                <span class="eq-rule"><b class="eq-green">+</b> Greater diversification across sectors/industries</span>
+                <span class="eq-rule"><b class="eq-green">+</b> Construct relevant benchmarks for size/style-specific funds</span>
+                <span class="eq-rule"><b class="eq-green">+</b> Analyze how company characteristics change over time (e.g. small-cap growth &rarr; matures to mid/large &amp; blend)</span>
+                <div class="eq-trap" style="margin-top:10px;"><b>The twist:</b> that last advantage <b>is also the disadvantage</b> — categories are <b class="eq-red">not stable over time</b>. Examiners love "which is both an advantage and a drawback?" → style drift.</div>
+              </div>
+            </div>
+
+            <div id="eqs-geo" class="eq-panel">
+              <div class="eq-card">
+                <div class="eq-title">Geography — by stage of economic development</div>
+                <table class="eq-tbl">
+                  <tr><th>Stage</th><th>Examples</th></tr>
+                  <tr><td><b class="eq-green">Developed</b></td><td>United States, United Kingdom, Germany, Australia, Japan</td></tr>
+                  <tr><td><b class="eq-orange">Emerging</b></td><td>Brazil, Russia, India, China, South Africa</td></tr>
+                  <tr><td><b class="eq-red">Frontier</b></td><td>Iceland, Estonia, Nigeria, Jordan, Vietnam</td></tr>
+                </table>
+                <span class="eq-rule"><b class="eq-green">Advantage:</b> investors with heavy domestic exposure learn to diversify across international markets</span>
+                <span class="eq-rule"><b class="eq-red">Disadvantage 1:</b> international equities introduce <b>currency risk</b></span>
+                <span class="eq-rule"><b class="eq-red">Disadvantage 2:</b> <b>overestimation of diversification benefit</b> — foreign large-caps may already be internationally diversified and even earn much of their income in the investor's own country</span>
+              </div>
+            </div>
+
+            <div id="eqs-econ" class="eq-panel">
+              <div class="eq-card">
+                <div class="eq-title">Economic Activity — sector/industry grouping</div>
+                <div class="eq-body">Two ways to group companies into sectors/industries:</div>
+                <div class="eq-pick-row">
+                  <button class="eq-pick active" onclick="eqEcon(this,'market')">Market-oriented</button>
+                  <button class="eq-pick" onclick="eqEcon(this,'prod')">Production-oriented</button>
+                </div>
+                <div id="eqs-econ-out" class="eq-out"></div>
+                <div class="eq-body" style="margin-top:12px;">Four primary classification structures:</div>
+                <table class="eq-tbl">
+                  <tr><th>Structure</th><th>Approach</th></tr>
+                  <tr><td><b>GICS</b> — Global Industry Classification Standard</td><td><b class="eq-blue">Market-oriented</b></td></tr>
+                  <tr><td><b>ICB</b> — Industry Classification Benchmark</td><td><b class="eq-orange">Production-oriented</b></td></tr>
+                  <tr><td><b>TRBC</b> — Thomson Reuters Business Classification</td><td><b class="eq-orange">Production-oriented</b></td></tr>
+                  <tr><td><b>RGS</b> — Russell Global Sectors</td><td><b class="eq-orange">Production-oriented</b></td></tr>
+                </table>
+                <div class="eq-info"><b>Professor's note (top-level naming):</b> GICS, TRBC, RGS call the top level <b>sectors</b> then subdivide into <b>industries</b>. <b>ICB is the odd one</b> — starts with <b>industries</b>, then subdivides into <b>sectors</b>.</div>
+                <div class="eq-body" style="margin-top:10px;">GICS hierarchy (Figure 6.2, Consumer Staples) — tap to drill:</div>
+                <div class="eq-pick-row">
+                  <button class="eq-pick active" onclick="eqGics(this,0)">Sector</button>
+                  <button class="eq-pick" onclick="eqGics(this,1)">Industry group</button>
+                  <button class="eq-pick" onclick="eqGics(this,2)">Industry</button>
+                  <button class="eq-pick" onclick="eqGics(this,3)">Subindustry</button>
+                </div>
+                <div id="eqs-gics-out" class="eq-out"></div>
+                <span class="eq-rule" style="margin-top:10px;"><b class="eq-green">+ Advantage:</b> analyze/compare &amp; build performance benchmarks by sector/industry; diversification enhanced across sectors/industries</span>
+                <span class="eq-rule"><b class="eq-red">&minus; Disadvantage:</b> some firms (esp. larger ones) have operations <b>not easily assigned to one sector/industry</b></span>
+              </div>
+            </div>
+
+            <div id="eqs-idx" class="eq-panel">
+              <div class="eq-card">
+                <div class="eq-title">Equity indexes &amp; benchmarks</div>
+                <div class="eq-body">Indexes combine <b>size/style + geography</b>, and can be subdivided by <b>economic activity</b> (sector/industry) or by client considerations (e.g. ESG).</div>
+                <table class="eq-tbl">
+                  <tr><th>Index</th><th>Built from</th></tr>
+                  <tr><td>MSCI Europe Large Cap Value</td><td>size/style + geography</td></tr>
+                  <tr><td>MSCI China Small Cap</td><td>size/style + geography</td></tr>
+                  <tr><td>MSCI World Energy</td><td>economic activity (sector)</td></tr>
+                  <tr><td>S&amp;P Global Natural Resources</td><td>economic activity (sector)</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ CHEAT SHEET ════════ -->
+          <!-- ════════ INCOME & COSTS 6.c-6.e ════════ -->
+          <div id="eq-ic" class="eq-toppanel">
+            <div class="eq-tabs">
+              <button class="eq-tab active" onclick="eqTab(event,'eqic-income')">Income (6.c)</button>
+              <button class="eq-tab" onclick="eqTab(event,'eqic-costs')">Costs (6.c)</button>
+              <button class="eq-tab" onclick="eqTab(event,'eqic-eng')">Engagement (6.d)</button>
+              <button class="eq-tab" onclick="eqTab(event,'eqic-ap')">Active/Passive (6.e)</button>
+            </div>
+
+            <div id="eqic-income" class="eq-panel active">
+              <div class="eq-card">
+                <div class="eq-title">LOS 6.c — Ways to earn current income from an equity portfolio</div>
+                <table class="eq-tbl">
+                  <tr><th>Source</th><th>Mechanism</th><th>Detail / trap</th></tr>
+                  <tr><td><b class="eq-green">Dividend income</b></td><td>Most obvious &amp; often largest</td><td>May be taxed (income and/or withholding). <b class="eq-orange">Growth-focused investors are LESS likely to seek dividend income.</b></td></tr>
+                  <tr><td><b>Optional stock dividend</b></td><td>Investor chooses cash OR new shares</td><td>The "option" has value &mdash; can even be sold to another investor.</td></tr>
+                  <tr><td><b>Special dividend</b></td><td>One-time cash payment</td><td>As opposed to the regular periodic dividend.</td></tr>
+                  <tr><td><b class="eq-blue">Securities lending</b></td><td>Lend out shares (often for short-sellers)</td><td>Lender earns a <b>fee</b> + can reinvest cash collateral. See dedicated card.</td></tr>
+                  <tr><td><b>Writing options</b></td><td>Sell options to earn premiums</td><td>Covered call / cash-covered put. See card.</td></tr>
+                  <tr><td><b>Dividend capture</b></td><td>Buy before ex-date, hold through, then sell</td><td>Profitable if price falls by <b>less</b> than the dividend. See card.</td></tr>
+                </table>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Securities (stock) lending — the details</div>
+                <span class="eq-rule"><b>Short sale</b> = sale of a security <b>not owned</b>; seller borrows it to deliver to the buyer</span>
+                <span class="eq-rule">Lender is <b>paid a fee</b> and may receive cash/collateral on which it earns a return; gets the security <b>back</b> at a future date</span>
+                <span class="eq-rule">Fee ~<b class="eq-main-c">0.2%&ndash;0.5%</b> annually in developed markets; much higher for in-demand stocks called <b>specials</b></span>
+                <span class="eq-rule">Common in <b>index funds, large institutional portfolios (pensions), endowments</b></span>
+                <div class="eq-trap"><b>Issues it introduces:</b> short selling drives the price <b>down</b> (bad for the lender who still owns it) &mdash; more of a concern for an <b class="eq-red">active</b> manager expecting outperformance than a passive index manager. Lender must watch <b>borrower quality</b> (return ability). Borrower must <b>compensate the lender for dividends</b> during the loan. Lender generally <b>loses the right to vote</b> the shares during the loan. Reinvesting collateral carries market/credit/operational risk + admin costs.</div>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Option-writing &amp; dividend capture</div>
+                <table class="eq-tbl">
+                  <tr><th>Strategy</th><th>What you do</th><th>Risk / payoff</th></tr>
+                  <tr><td><b>Covered call</b></td><td>Write a call on a stock you <b>own</b></td><td>Earn premium; <b class="eq-red">lose the upside</b> above the strike.</td></tr>
+                  <tr><td><b>Cash-covered put</b> (cash-secured put)</td><td>Sell a put + set aside cash to buy the stock if exercised</td><td>Earn premium; buyer exercises only if the stock <b>declines</b> &mdash; you get assigned at a loss-ish level.</td></tr>
+                  <tr><td><b>Dividend capture</b></td><td>Buy just before ex-date, hold through ex-date, then sell</td><td>Profit if price drops by <b>less</b> than the dividend. Theory: price should drop by the full dividend, but supply/demand &amp; taxes make it differ.</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="eqic-costs" class="eq-panel">
+              <div class="eq-card">
+                <div class="eq-title">LOS 6.c — Fees &amp; costs of an equity portfolio</div>
+                <table class="eq-tbl">
+                  <tr><th>Cost</th><th>What it covers</th></tr>
+                  <tr><td><b class="eq-main-c">Management fees</b> (ad valorem)</td><td>Compensate manager + research/analysis, hardware/software, compliance, trade processing. % of AUM, charged at intervals (e.g. annually). <b>Higher for active</b> (more analysis + turnover). Negotiable.</td></tr>
+                  <tr><td><b>Performance / incentive fees</b></td><td>When the portfolio beats a stated objective; common for hedge/alternative funds. Often <b>10%&ndash;20%</b> of appreciation above the threshold.</td></tr>
+                  <tr><td><b>Administration fees</b></td><td>Risk/return measurement, voting; if external: custody, depository, registration fees.</td></tr>
+                  <tr><td><b>Marketing &amp; distribution fees</b></td><td>Sales/client-service teams, advertising, conferences, brochures, platform fees, intermediary commissions.</td></tr>
+                  <tr><td><b>Trading costs</b></td><td>Explicit + implicit (see below).</td></tr>
+                  <tr><td><b>Investment strategy costs</b></td><td>Implicit cost of the chosen strategy (incl. predatory trading on index funds).</td></tr>
+                </table>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Incentive fees — two protections to remember</div>
+                <span class="eq-rule"><b class="eq-orange">One-sided:</b> manager shares in outperformance but is <b>NOT penalized</b> for underperformance</span>
+                <span class="eq-rule"><b class="eq-green">High-water mark:</b> stops paying twice for the same performance &mdash; after a peak then a decline, incentive fee only on <b>future</b> appreciation above the previous compensated level</span>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Trading costs — explicit vs implicit</div>
+                <table class="eq-tbl">
+                  <tr><th>Explicit</th><th>Implicit</th></tr>
+                  <tr><td>Broker commissions, stock-exchange fees, taxes</td><td>Bid-ask spread, price impact, <b>delay/slippage</b> costs from not completing a trade (illiquidity)</td></tr>
+                </table>
+                <div class="eq-info"><b>Liquidity demand by strategy:</b> <b class="eq-orange">Momentum</b> demands liquidity (buy rising / sell falling) &rarr; <b>high</b> market-impact cost. <b class="eq-green">Contrarian</b> supplies liquidity (buy falling / sell rising) &rarr; <b>low</b> market-impact cost. <b class="eq-blue">Passive index replication</b> falls in the <b>middle</b>.</div>
+                <div class="eq-trap"><b>Predatory trading:</b> even passive index funds face hidden costs &mdash; predatory traders buy (sell) shares about to be <b>added (removed)</b> from an index, creating price-impact cost for the fund and profit for the predator.</div>
+              </div>
+            </div>
+
+            <div id="eqic-eng" class="eq-panel">
+              <div class="eq-card">
+                <div class="eq-title">LOS 6.d — Shareholder engagement</div>
+                <div class="eq-body"><b>Engagement</b> = investors/managers interacting with companies to favorably impact the stock price and improve corporate governance (via calls and voting at general assemblies). Topics discussed:</div>
+                <span class="eq-rule"><b>Corporate strategy</b> &mdash; objectives, constraints, growth, resources, culture, sustainability, stakeholder balance</span>
+                <span class="eq-rule"><b>Capital allocation</b> &mdash; new-project selection, M&amp;A, capex, leverage, dividends, equity financing</span>
+                <span class="eq-rule"><b>Corporate governance</b> &mdash; audit/risk committees, regulatory &amp; political risk management</span>
+                <span class="eq-rule"><b>Compensation structures</b> &mdash; top-management remuneration &amp; alignment</span>
+                <span class="eq-rule"><b>Board composition</b> &mdash; experience, competence, diversity, succession planning</span>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Benefits — incl. the free-rider point (Quiz 6.2 Q2)</div>
+                <span class="eq-rule"><b>Active</b> managers engage more (want to influence &amp; improve performance); <b>passive</b> focus on minimizing the cost</span>
+                <span class="eq-rule"><b>Larger investors</b> absorb the cost more easily (spread over more assets)</span>
+                <div class="eq-tip"><b>Free riders:</b> successful engagement raises the stock price &mdash; that benefit reaches <b>ALL shareholders</b>, including those who never engaged. This is exactly how engagement benefits investors not actively involved.</div>
+                <span class="eq-rule">Can address <b>nonfinancial</b> concerns (ESG), though benefits are harder to quantify</span>
+                <span class="eq-rule">Affects other <b>stakeholders</b> (employees, customers, creditors, regulators); can be influenced by academic research / media</span>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Costs &amp; limitations (Quiz 6.2 Q3 menu)</div>
+                <span class="eq-rule"><b class="eq-red">Not free</b> &mdash; requires time &amp; resources</span>
+                <span class="eq-rule"><b class="eq-red">Short-termism</b> &mdash; may push near-term cash flow / price at the expense of long-term goals</span>
+                <span class="eq-rule"><b class="eq-red">Insider-trading risk</b> &mdash; may acquire material nonpublic information</span>
+                <span class="eq-rule"><b class="eq-red">Conflicts of interest</b> &mdash; e.g. an engaged PM backs management because management invests in the PM's fund</span>
+                <div class="eq-info"><b>Manager's role:</b> may assign specific employees, consult outside experts on voting/governance; some countries set legal requirements + written documentation. <b>Activist investing</b> goes further: propose shareholder resolutions, media campaigns, seek board seats, launch <b>proxy fights</b> (persuade other shareholders to back their proposals).</div>
+              </div>
+            </div>
+
+            <div id="eqic-ap" class="eq-panel">
+              <div class="eq-card">
+                <div class="eq-title">LOS 6.e — Active vs passive rationale</div>
+                <div class="eq-body"><b>Passive</b> = replicate an index/benchmark. <b>Active</b> = outperform the benchmark &amp; add value (riskier &mdash; can also underperform). The line blurs (e.g. closely tracking with limited deviations).</div>
+                <div class="eq-body"><b>Rationales for shifting to ACTIVE:</b></div>
+                <span class="eq-rule"><b class="eq-green">Confidence</b> the manager has expert knowledge/skill to add value</span>
+                <span class="eq-rule"><b class="eq-green">Mandates</b> (e.g. ESG) requiring screening &amp; active techniques</span>
+                <span class="eq-rule"><b class="eq-green">Client preferences</b> &amp; enough assets to cover active costs &mdash; <b>growth</b> styles often suit active; <b>value</b> may be more passive</span>
+                <div class="eq-info"><b>Active management caveats:</b> manage investor expectations (unreasonable &rarr; dissatisfied); strategies that get <b>too popular</b> attract capital &rarr; harder to add value; need an appropriate <b>broad, liquid benchmark</b> &mdash; narrow/limited benchmarks give little room to deviate &rarr; support <b>passive</b>.</div>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Two extra risks of active management (Quiz 6.2 Q5)</div>
+                <span class="eq-rule"><b class="eq-red">Key person risk</b> &mdash; individuals essential to the fund's success may leave the firm</span>
+                <span class="eq-rule"><b class="eq-red">Higher portfolio turnover</b> &rarr; higher <b>tax burden</b>; tax-limiting techniques are themselves costly, risky, and need tax expertise (varies by country)</span>
+                <div class="eq-trap"><b>Beyond these two:</b> active results are <b>less certain</b> and <b>costs are higher</b> (the given facts) &mdash; Q5 asks for the <b>additional</b> risks, so name key-person and turnover/tax, not cost again.</div>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Passive-vs-active decision (Quiz 6.2 Q4 logic)</div>
+                <table class="eq-tbl">
+                  <tr><th>Client concern</th><th>Points toward</th></tr>
+                  <tr><td>Low fees</td><td><b class="eq-blue">Passive</b> (active is costlier)</td></tr>
+                  <tr><td>Narrow, limited large-cap benchmark</td><td><b class="eq-blue">Passive</b> (little room to deviate)</td></tr>
+                  <tr><td>Wants substantial value-add vs benchmark</td><td><b class="eq-green">Active</b> (only active seeks to outperform)</td></tr>
+                  <tr><td>Numerous ESG restrictions</td><td><b class="eq-green">Active</b> (mandates need screening / active techniques)</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- ════════ BENCHMARK 6.f ════════ -->
+          <div id="eq-bm" class="eq-toppanel">
+            <div class="eq-tabs">
+              <button class="eq-tab active" onclick="eqTab(event,'eqbm-req')">Requirements</button>
+              <button class="eq-tab" onclick="eqTab(event,'eqbm-weight')">Weighting</button>
+              <button class="eq-tab" onclick="eqTab(event,'eqbm-hhi')">HHI Calculator</button>
+              <button class="eq-tab" onclick="eqTab(event,'eqbm-maint')">Rebalance / Reconstitute</button>
+            </div>
+
+            <div id="eqbm-req" class="eq-panel active">
+              <div class="eq-card">
+                <div class="eq-title">LOS 6.f — Three required characteristics of a benchmark index</div>
+                <table class="eq-tbl">
+                  <tr><th>Must be...</th><th>Meaning</th></tr>
+                  <tr><td><b class="eq-main-c">Rules-based</b></td><td>Inclusion/exclusion rules, weighting scheme, and rebalancing frequency are <b>consistent, objective, predictable</b> &mdash; so investors can replicate performance.</td></tr>
+                  <tr><td><b class="eq-green">Transparent</b></td><td>The underlying rules are <b>public, clearly stated, understandable</b> to investors.</td></tr>
+                  <tr><td><b class="eq-blue">Investable</b></td><td>Investors can actually <b>replicate the return &amp; risk</b> of the index.</td></tr>
+                </table>
+                <div class="eq-trap"><b>Quiz 6.3 Q1 trap:</b> the answer is <b>Investable</b>. "Selective" and "Flexible" are NOT requirements &mdash; "selective" is lifted from the <b>index-construction</b> discussion (exhaustive vs selective inclusion), a different concept entirely. Memorize the trio: <b>rules-based, transparent, investable.</b></div>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Two considerations when choosing a benchmark</div>
+                <span class="eq-rule"><b class="eq-main-c">1. Determine desired market &amp; risk exposures</b></span>
+                <span class="eq-rule"><b class="eq-main-c">2. Identify the methods used to construct &amp; maintain the index</b></span>
+                <div class="eq-body" style="margin-top:10px;"><b>Market exposure choices:</b></div>
+                <span class="eq-rule">Broad market vs focused exposure to certain <b>sectors</b></span>
+                <span class="eq-rule"><b>Domestic</b> vs <b>international</b> exposure</span>
+                <span class="eq-rule">Among <b>developed / emerging / frontier</b> markets</span>
+                <div class="eq-info"><b>Risk-factor exposure</b> = expected sensitivity of portfolio returns to risk factors: <b>market risk (beta), firm size, style (growth vs value), prior returns (momentum)</b>, plus liquidity, volatility, and firm "quality."</div>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Index construction — inclusion method</div>
+                <table class="eq-tbl">
+                  <tr><th>Method</th><th>Definition</th><th>Example</th></tr>
+                  <tr><td><b class="eq-green">Exhaustive</b></td><td>Every stock in a defined universe</td><td>CRSP U.S. Total Market Index</td></tr>
+                  <tr><td><b class="eq-orange">Selective</b></td><td>A subset of stocks within a universe</td><td>S&amp;P 500, Dow Jones Industrial Average (DJIA)</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="eqbm-weight" class="eq-panel">
+              <div class="eq-card">
+                <div class="eq-title">Four index-weighting methods</div>
+                <table class="eq-tbl">
+                  <tr><th>Method</th><th>How weighted</th><th>Notes</th></tr>
+                  <tr><td><b class="eq-main-c">Market-cap</b></td><td>Each stock by its total cap as % of all stocks' cap</td><td>CAPM market portfolio; S&amp;P 500. In practice uses <b>free-float</b> shares (excludes closely-held). Rebalance when firms issue/repurchase significant shares.</td></tr>
+                  <tr><td><b class="eq-orange">Price-weighted</b></td><td>Each stock by its price</td><td>Higher-priced stocks get larger weight; <b>DJIA</b>. Adjusted for <b>stock splits</b> (complicates calculation).</td></tr>
+                  <tr><td><b class="eq-green">Equal-weighted</b></td><td>Equal $ in each stock</td><td>Reduces concentration risk &amp; sector exposure; <b>factor-indifferent</b> (randomizes mispricing); <b>small-cap bias</b> &rarr; returns more volatile; needs frequent rebalancing.</td></tr>
+                  <tr><td><b class="eq-blue">Fundamental</b></td><td>By share of a fundamental factor (sales, income, dividends)</td><td>e.g. a firm paying 3% of all dividends gets 3% weight in a dividend-weighted index.</td></tr>
+                </table>
+                <div class="eq-info"><b>Equal-weight edge:</b> can produce marginally <b>better returns before transaction costs</b> when prices oscillate around intrinsic values (rebalancing sells winners / buys losers).</div>
+                <div class="eq-trap"><b>Rebalancing triggers differ by scheme:</b> equal-weight drifts as soon as <b>prices</b> move; price-weight changes on <b>splits &amp; stock dividends</b>; market-cap changes on significant <b>share issuance/repurchase</b>.</div>
+              </div>
+            </div>
+
+            <div id="eqbm-hhi" class="eq-panel">
+              <div class="eq-card">
+                <div class="eq-title">Stock concentration — HHI &amp; effective number of stocks</div>
+                <div class="eq-fl">HHI = &#931; w&#7522;&#178;   (sum of squared portfolio weights)
+effective number of stocks = 1 / HHI
+HHI range: 1/n (equally weighted)  &#8594;  1 (single stock)
+As HHI &#8593;, concentration risk &#8593;.</div>
+                <div class="eq-body" style="margin-top:10px;">Enter weights (comma-separated, as decimals or %) to get HHI + effective N:</div>
+                <div class="eq-hd-row">
+                  <span class="eq-hd-label">Weights</span>
+                  <input id="eqbm-w" class="eq-hd-input" style="width:200px;text-align:left;" value="0.4, 0.3, 0.2, 0.1">
+                </div>
+                <button class="eq-pick active" style="margin-top:8px;" onclick="eqHHI()">Compute</button>
+                <div id="eqbm-hhi-out" class="eq-out"></div>
+                <div class="eq-info"><b>Benchmarks:</b> equal-weighted 500 stocks &rarr; HHI = 1/500 = 0.002 &rarr; effective N = 500. A market-cap index of 500 stocks might have HHI = 0.01 &rarr; effective N = <b>100</b> &mdash; the 100 &lt; 500 shows the disproportionate effect of the largest-cap names.</div>
+              </div>
+            </div>
+
+            <div id="eqbm-maint" class="eq-panel">
+              <div class="eq-card">
+                <div class="eq-title">Rebalancing vs Reconstitution</div>
+                <table class="eq-tbl">
+                  <tr><th></th><th>Rebalancing</th><th>Reconstitution</th></tr>
+                  <tr><td>What</td><td>Adjust portfolio <b>weights</b> as index weightings change</td><td><b>Remove &amp; replace</b> stocks that no longer fit the index's market exposure</td></tr>
+                  <tr><td>Trigger</td><td>Price moves (equal-wt), splits/dividends (price-wt), share issuance/repurchase (cap-wt)</td><td>e.g. a small-cap whose cap grows into mid-cap is dropped from a small-cap index</td></tr>
+                  <tr><td>Effect</td><td>Incurs trading (and possibly tax) costs &rarr; <b>decreases returns</b>; done periodically (often quarterly)</td><td>Incurs trading costs &rarr; also <b>reduces returns</b></td></tr>
+                </table>
+              </div>
+              <div class="eq-card">
+                <div class="eq-title">Buffering vs Packeting — cutting migration costs</div>
+                <table class="eq-tbl">
+                  <tr><th>Practice</th><th>Mechanism</th></tr>
+                  <tr><td><b class="eq-main-c">Buffering</b></td><td>Set a <b>threshold (buffer zone)</b> for the change in cap rank before a stock migrates between indexes. <i>Example:</i> large-cap = top 200, mid-cap = next 300. A mid-cap firm rising into the top 200 is <b>NOT</b> moved until its rank passes the buffer &mdash; e.g. reaches rank 150 or higher at the next reconstitution.</td></tr>
+                  <tr><td><b class="eq-green">Packeting</b></td><td>Move the position in <b>halves</b>. When a mid-cap rises to qualify as large-cap, <b>half</b> the position moves to the large-cap index at reconstitution. If it still qualifies at the <b>next</b> reconstitution, the <b>remainder</b> moves over.</td></tr>
+                </table>
+                <div class="eq-tip"><b>Memory hook:</b> <b>Buffering = delay the move</b> (wait for a rank threshold). <b>Packeting = split the move</b> (half now, half later). Both cut the trading costs of reconstitution.</div>
+              </div>
+            </div>
+          </div>
+
+
+          <div id="eq-cheat" class="eq-toppanel">
+            <div class="eq-card">
+              <div class="eq-title">1 — Four roles</div>
+              <div class="eq-fl">Capital appreciation  - MAIN long-term return driver (>bonds/bills 50y)
+Dividend income       - 1-3% yield; MORE STABLE than price return
+Diversification       - corr < +1.0; breaks down in crisis
+Inflation hedge       - MIXED record; negative in hyperinflation</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">2 — Diversification fails in crisis (2 reasons)</div>
+              <div class="eq-fl">1. Correlations RISE toward +1.0  -> offset shrinks
+2. Asset-class sigma RISE          -> portfolio sigma up
+Both reduce the expected risk reduction.</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">3 — Three segmentation approaches</div>
+              <div class="eq-fl">SIZE & STYLE     3x3 box; metrics P/E, P/B, div yield, growth
+                 twist: categories NOT stable (adv = disadv)
+GEOGRAPHY        developed / emerging / frontier
+                 disadv: currency risk + overstated diversification
+ECONOMIC ACTIVITY sector/industry; GICS/ICB/TRBC/RGS</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">4 — Classification structures</div>
+              <div class="eq-fl">GICS  = market-oriented   (sector -> industry)
+ICB   = production-orient (INDUSTRY -> sector)  <- odd one
+TRBC  = production-orient (sector -> industry)
+RGS   = production-orient (sector -> industry)
+GICS hierarchy: Sector > Industry group > Industry > Subindustry</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">5 — ESG screens &amp; approaches</div>
+              <div class="eq-fl">Negative/exclusionary  - exclude failing firms (e.g. oil&gas)
+Positive/best-in-class - overweight top rankers (e.g. governance)
+ESG integration (dominant) | thematic | impact investing
+Client: high risk tol -> growth; low -> stable dividend payers</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">6 &mdash; Income sources (6.c)</div>
+              <div class="eq-fl">Dividends (growth investors seek LESS) | optional stock div | special div
+Securities lending  - fee 0.2-0.5%; "specials" higher; lose VOTE; borrower pays divs
+Write options       - covered call (lose upside) | cash-covered put
+Dividend capture    - buy pre-ex, sell after; profit if drop < dividend</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">7 &mdash; Costs &amp; fees (6.c)</div>
+              <div class="eq-fl">Mgmt fee (ad valorem, %AUM) - HIGHER for active (analysis+turnover)
+Performance/incentive 10-20% - ONE-SIDED; high-water mark stops double pay
+Trading: explicit (commission/exch/tax) | implicit (spread/impact/slippage)
+Momentum DEMANDS liq (high impact) | Contrarian SUPPLIES (low) | index middle
+Predatory trading hits index funds on add/remove</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">8 &mdash; Engagement (6.d)</div>
+              <div class="eq-fl">Topics: strategy | capital allocation | governance | comp | board
+Benefit: FREE RIDERS gain too (price rises for all holders)
+Active engage more; passive minimize cost; large investors absorb cost
+Limits: time/cost | short-termism | insider risk | conflicts of interest
+Activist: resolutions, media, board seats, PROXY FIGHT</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">9 &mdash; Active vs passive (6.e)</div>
+              <div class="eq-fl">Active rationale: skill confidence | ESG mandates | client pref (growth=active)
+Caveats: manage expectations | too-popular strategy | need broad liquid benchmark
+  (narrow benchmark -> passive)
+Extra active risks: KEY PERSON | higher turnover -> TAX burden</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">10 &mdash; Benchmark &amp; indexing (6.f)</div>
+              <div class="eq-fl">Benchmark MUST be: rules-based | transparent | INVESTABLE
+  (NOT "selective"/"flexible" - selective = index construction)
+Weighting: market-cap (free-float) | price (DJIA, splits) |
+           equal (small-cap bias, factor-indifferent) | fundamental
+HHI = Sum w_i^2 ; effective N = 1/HHI ; HHI up = concentration up
+Rebalance = adjust WEIGHTS | Reconstitute = swap STOCKS
+Buffering = delay move (rank threshold) | Packeting = split move (half now/half later)
+Inclusion: exhaustive (CRSP) vs selective (S&P500, DJIA)</div>
+            </div>
+          </div>
+
+          <!-- ════════ QUIZ & TRAPS ════════ -->
+          <div id="eq-quiz" class="eq-toppanel">
+            <div class="eq-card">
+              <div class="eq-title">Module Quiz 6.1</div>
+              <table class="eq-tbl">
+                <tr><th>Q</th><th>Command</th><th>Full-credit answer</th></tr>
+                <tr><td><b>1</b></td><td><b>Discuss</b> two reasons a crisis affects diversification's risk reduction</td><td><b>2 labeled chains.</b> (1) Correlations rise toward +1.0 &rarr; cross-asset offset shrinks &rarr; less risk reduction. (2) Asset-class standard deviations rise &rarr; at fixed correlation, portfolio &sigma; still climbs &rarr; further erodes the benefit.</td></tr>
+                <tr><td><b>2</b></td><td><b>Describe</b> two advantages of economic-activity segmentation</td><td>(1) Analyze/compare &amp; build <b>performance benchmarks</b> by sector/industry. (2) <b>Diversification enhanced</b> across sectors/industries. <span class="eq-red">Do NOT borrow size/style advantages</span> (client matching, style-drift tracking) — wrong segmentation.</td></tr>
+              </table>
+              <div class="eq-trap"><b>Command-verb reflex:</b> both stems say "<b>two</b>". Two labeled slots each. "Discuss/Describe" = a chain, not a one-word label — name the reason AND its mechanism.</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">Module Quiz 6.2</div>
+              <table class="eq-tbl">
+                <tr><th>Q</th><th>Command</th><th>Full-credit answer</th></tr>
+                <tr><td><b>1</b></td><td><b>Explain</b> why active &gt; passive on fees/costs</td><td>Active needs more <b>investment analysis</b> and higher <b>portfolio turnover</b> &rarr; higher management fees (ad valorem) + higher trading costs; may also carry <b>performance/incentive</b> fees.</td></tr>
+                <tr><td><b>2</b></td><td><b>Explain</b> how engagement benefits non-involved investors</td><td><b>Free-rider effect:</b> successful engagement lifts the stock price, and that gain reaches <b>all</b> shareholders &mdash; including those who never engaged or bore the cost.</td></tr>
+                <tr><td><b>3</b></td><td><b>Identify</b> two disadvantages of engagement</td><td>Any two: costs time/resources &bull; short-termism vs long-term goals &bull; insider-trading risk (material nonpublic info) &bull; conflicts of interest. <span class="eq-red">Identify = name two, no essay needed.</span></td></tr>
+                <tr><td><b>4</b></td><td><b>Explain</b> 2 passive + 2 active reasons (4 slots)</td><td><b>Passive:</b> (1) low-fee concern &rarr; passive cheaper; (2) narrow limited large-cap benchmark &rarr; little room to deviate. <b>Active:</b> (1) wants substantial value-add &rarr; only active outperforms; (2) numerous ESG restrictions &rarr; mandates need screening/active techniques.</td></tr>
+                <tr><td><b>5</b></td><td><b>Identify &amp; describe</b> two ADDITIONAL active risks</td><td>(1) <b>Key person risk</b> &mdash; essential individuals leaving the firm. (2) <b>Higher turnover &rarr; tax burden</b> &mdash; tax-limiting techniques are themselves costly/risky. <span class="eq-red">Not cost/uncertainty &mdash; those were given.</span></td></tr>
+              </table>
+              <div class="eq-trap"><b>Q4 is the big one:</b> "two reasons each" = <b>four</b> labeled slots. Match each client fact to a side: low fees &amp; narrow benchmark &rarr; passive; value-add &amp; ESG &rarr; active.</div>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">Module Quiz 6.3</div>
+              <table class="eq-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b></td><td><b class="eq-green">B &mdash; Investable</b></td><td>The three required benchmark traits are <b>rules-based, transparent, investable</b>. <span class="eq-red">"Selective"</span> is a distractor from the index-<b>construction</b> topic (exhaustive vs selective inclusion); <span class="eq-red">"Flexible"</span> isn't a requirement at all.</td></tr>
+              </table>
+            </div>
+            <div class="eq-card">
+              <div class="eq-title">High-probability traps</div>
+              <span class="eq-rule"><b class="eq-red">Style drift:</b> "which advantage is also a disadvantage?" &rarr; categories not stable over time</span>
+              <span class="eq-rule"><b class="eq-red">ICB inversion:</b> ICB goes industry&rarr;sector; the other three go sector&rarr;industry</span>
+              <span class="eq-rule"><b class="eq-red">Market vs production:</b> only <b>GICS</b> is market-oriented; ICB/TRBC/RGS are production-oriented</span>
+              <span class="eq-rule"><b class="eq-red">Geography diversification:</b> the benefit is <b>overestimated</b> — foreign large-caps may already be global / earn income in your home country</span>
+              <span class="eq-rule"><b class="eq-red">Growth investors &amp; income:</b> growth-oriented investors are <b>less likely</b> to seek dividend income</span>
+              <span class="eq-rule"><b class="eq-red">Dividend stability:</b> dividend <b>yield</b> is more stable than the price-change component of return</span>
+              <span class="eq-rule"><b class="eq-red">Benchmark traits:</b> rules-based / transparent / investable &mdash; NOT "selective" (that's index construction)</span>
+              <span class="eq-rule"><b class="eq-red">Buffering vs packeting:</b> buffering DELAYS the move (rank threshold); packeting SPLITS it (half now, half later)</span>
+              <span class="eq-rule"><b class="eq-red">Rebalance vs reconstitute:</b> rebalance = adjust weights; reconstitute = swap stocks in/out</span>
+            </div>
+          </div>
+
+          <script>
+            function eqTop(ev,id){
+              var w=document.getElementById('eqWidget');
+              w.querySelectorAll('.eq-toppanel').forEach(function(p){p.classList.remove('active')});
+              w.querySelectorAll('.eq-toptabs > .eq-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function eqTab(ev,id){
+              var p=ev.currentTarget.closest('.eq-toppanel');
+              p.querySelectorAll(':scope > .eq-panel').forEach(function(x){x.classList.remove('active')});
+              p.querySelectorAll(':scope > .eq-tabs > .eq-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function eqSB(cell,name,desc){
+              var w=document.getElementById('eqWidget');
+              w.querySelectorAll('.eq-sb-cell').forEach(function(c){c.classList.remove('sel')});
+              cell.classList.add('sel');
+              document.getElementById('eqs-sb-out').innerHTML='<b class="eq-main-c">'+name+'</b> &mdash; '+desc;
+            }
+            function eqEcon(btn,kind){
+              var w=document.getElementById('eqWidget');
+              btn.parentNode.querySelectorAll('.eq-pick').forEach(function(b){b.classList.remove('active')});
+              btn.classList.add('active');
+              var t;
+              if(kind==='market') t='<b class="eq-blue">Market-oriented</b> &mdash; segments by <b>markets served</b>, how products are used by consumers, and how cash flows are generated. Used by <b>GICS</b>. May classify a coal company in <b>energy</b>.';
+              else t='<b class="eq-orange">Production-oriented</b> &mdash; segments by <b>products manufactured</b> and inputs required in production. Used by <b>ICB, TRBC, RGS</b>. May classify the same coal company in <b>basic materials</b>.';
+              document.getElementById('eqs-econ-out').innerHTML=t;
+            }
+            function eqGics(btn,lvl){
+              var w=document.getElementById('eqWidget');
+              btn.parentNode.querySelectorAll('.eq-pick').forEach(function(b){b.classList.remove('active')});
+              btn.classList.add('active');
+              var rows=[['Sector','Consumer Staples'],['Industry group','Food, beverage, and tobacco'],['Industry','Beverages'],['Subindustry','Soft drinks']];
+              var out='';
+              for(var i=0;i<=lvl;i++){ out+=(i>0?'<br>':'')+'<span style="opacity:'+(i===lvl?1:.5)+'">'+(i? '&nbsp;'.repeat(i*4):'')+'<b class="eq-main-c">'+rows[i][0]+':</b> '+rows[i][1]+'</span>'; }
+              document.getElementById('eqs-gics-out').innerHTML=out;
+            }
+            function eqHHI(){
+              var raw=(document.getElementById('eqbm-w')||{value:''}).value;
+              var parts=raw.split(',').map(function(x){return parseFloat(x.trim());}).filter(function(x){return !isNaN(x);});
+              if(!parts.length){ document.getElementById('eqbm-hhi-out').innerHTML='<span class="eq-red">Enter at least one weight.</span>'; return; }
+              var sum=parts.reduce(function(a,b){return a+b;},0);
+              // normalize if entered as percentages (sum ~100) or arbitrary
+              var w=parts.map(function(x){return x/sum;});
+              var hhi=w.reduce(function(a,b){return a+b*b;},0);
+              var eff=1/hhi;
+              var minHHI=1/parts.length;
+              var note = hhi<=minHHI*1.0001 ? 'This equals 1/n &mdash; the portfolio is <b>equally weighted</b> (lowest possible concentration).' : 'Above the 1/n floor of '+minHHI.toFixed(4)+' &mdash; some concentration present.';
+              document.getElementById('eqbm-hhi-out').innerHTML=
+                '<b>n</b> = '+parts.length+' stocks &nbsp;|&nbsp; weights summed to '+sum.toFixed(4)+(Math.abs(sum-1)>0.01?' (normalized to 1)':'')+
+                '<br><b>HHI</b> = &#931; w&#7522;&#178; = <b class="eq-main-c">'+hhi.toFixed(4)+'</b>'+
+                '<br><b>Effective number of stocks</b> = 1/HHI = <b class="eq-green">'+eff.toFixed(2)+'</b>'+
+                '<br><span style="color:var(--muted);">'+note+'</span>';
+            }
+            function eqInit(){
+              setTimeout(function(){eqEcon(document.querySelector('#eqs-econ .eq-pick.active')||{parentNode:{querySelectorAll:function(){return[]}},classList:{add:function(){}}},'market');},30);
+              setTimeout(function(){var b=document.querySelector('#eqs-gics-out'); if(b) eqGics({parentNode:{querySelectorAll:function(){return[]}},classList:{add:function(){}}},0);},30);
+              setTimeout(function(){if(document.getElementById('eqbm-hhi-out')) eqHHI();},30);
+            }
+          </script>
+        </div>
+
         <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
           <style>
             #sfWidget { --sf-main:#A78BFA; --sf-gold:#D4A017; --sf-green:#3DD68C; --sf-red:#FF7B72; --sf-orange:#F0A04B; --sf-blue:#79C0FF; --sf-purple:#BC8CFF; }
@@ -20627,7 +21227,7 @@ const DEFAULT_DECK = {
     { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Currency Management"] },
     { name:"Portfolio Construction", subtopics:["Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
-    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution"] },
+    { name:"PM Pathway",         subtopics:["Overview of Equity Portfolio Management","Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
     { name:"Command Words",      subtopics:["Templates","Thin vs Full"] },
   ],
@@ -20827,6 +21427,87 @@ const DEFAULT_DECK = {
     {id:"cm31",topic:"Derivatives",subtopic:"Currency Management",type:"command",
      q:"Essay ritual for currency questions — the 3 pre-answer checks",
      a:"[rl]1. Write [hl]base = ?[/hl] for every quote before reading choices[/rl][rl]2. Write the [hl]position sign[/hl] (long/short the base) — signs decide cross-hedge vs direct, put vs call[/rl][rl]3. [hl]Count the command verbs[/hl] — 'Explain two risks', 'Identify AND describe' = separate labeled blocks, answer ALL of them[/rl]\nThen L1 answer / L2 mechanism / L3 vignette number."},
+    {id:"eq1",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Four roles of equities in the overall portfolio",
+     a:"[rl][hl]Capital appreciation[/hl] — MAIN long-term return driver (growth in CF/revenue/earnings); equities > bonds & bills over 50y[/rl][rl][hl]Dividend income[/hl] — ~1–3% yield; yield is MORE STABLE than the price-change return[/rl][rl][hl]Diversification[/hl] — corr < +1.0 lowers portfolio σ; benefit shrinks in a crisis[/rl][rl][hl]Inflation hedge[/hl] — MIXED record; negative in hyperinflation[/rl]"},
+    {id:"eq2",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"command",
+     q:"Two reasons an economic crisis reduces diversification's risk reduction",
+     a:"[rl]1. [hl]Correlations rise[/hl] toward +1.0 → cross-asset offset shrinks → less risk reduction exactly when needed[/rl][rl]2. [hl]Asset-class σ rise[/hl] → at fixed correlation, portfolio σ still climbs → further erodes the benefit[/rl]\nQuiz 6.1 Q1. 'Discuss two' = two labeled cause→effect chains."},
+    {id:"eq3",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Three equity segmentation approaches (LOS 6.b)",
+     a:"[rl][hl]Size & style[/hl] — 3×3 box; metrics: P/E, P/B, dividend yield, earnings/BV growth[/rl][rl][hl]Geography[/hl] — developed / emerging / frontier[/rl][rl][hl]Economic activity[/hl] — sector/industry (GICS, ICB, TRBC, RGS)[/rl]"},
+    {id:"eq4",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Style box — what are the two axes and what metrics set the style?",
+     a:"[fl]Axes: SIZE (large/mid/small-cap) × STYLE (value / blend(core) / growth)[/fl]\nStyle set by [hl]P/E, P/B, dividend yield, earnings &/or book-value growth[/hl].\n9 boxes; managers scatterplot holdings, can add finer classes (micro-cap growth)."},
+    {id:"eq5",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Size/style segmentation — the advantage that is ALSO the disadvantage",
+     a:"Advantage: [hl]analyze how company characteristics change over time[/hl] (small-cap growth matures → mid/large, growth → blend).\n[bad]Same feature is the drawback: categories are NOT stable over time (style drift).[/bad]\nClassic 'which is both?' trap."},
+    {id:"eq6",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Geographic segmentation — two disadvantages",
+     a:"[rl]1. International equities introduce [hl]currency risk[/hl][/rl][rl]2. [hl]Diversification benefit overestimated[/hl] — foreign large-caps may already be internationally diversified and even earn much income in the investor's home country[/rl]\nAdvantage: domestic-heavy investors learn to diversify abroad."},
+    {id:"eq7",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Economic activity: market-oriented vs production-oriented classification",
+     a:"[hl]Market-oriented[/hl] = by markets served / consumer use / cash-flow generation → used by [hl]GICS[/hl].\n[hl]Production-oriented[/hl] = by products manufactured & inputs → [hl]ICB, TRBC, RGS[/hl].\nSame coal company: market → energy; production → basic materials."},
+    {id:"eq8",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Four classification structures — and which one is the odd one out",
+     a:"[rl]GICS — Global Industry Classification Standard (market-oriented)[/rl][rl]ICB — Industry Classification Benchmark[/rl][rl]TRBC — Thomson Reuters Business Classification[/rl][rl]RGS — Russell Global Sectors[/rl]\nGICS/TRBC/RGS: sector→industry. [hl]ICB is the odd one: industry→sector.[/hl] Only GICS is market-oriented."},
+    {id:"eq9",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"command",
+     q:"Two advantages of economic-activity segmentation (Quiz 6.1 Q2)",
+     a:"[rl]1. Analyze/compare & build [hl]performance benchmarks[/hl] by sector/industry[/rl][rl]2. [hl]Diversification enhanced[/hl] across sectors/industries[/rl]\n[bad]Don't borrow size/style advantages (client matching, style-drift tracking) — wrong segmentation type.[/bad]\nDisadvantage: large firms not easily assigned to one sector."},
+    {id:"eq10",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"ESG: two screening types + client risk-tolerance mapping",
+     a:"[rl][hl]Negative/exclusionary[/hl] — exclude failing firms (e.g. oil & gas)[/rl][rl][hl]Positive/best-in-class[/hl] — overweight top rankers (e.g. strong governance)[/rl]\nIPS: high risk tolerance → [hl]growth-oriented[/hl]; low → [hl]stable dividend payers[/hl]. Growth investors are LESS likely to seek dividend income.\nESG integration is now the dominant approach; also thematic & impact investing."},
+    {id:"eq11",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Ways to earn current income from an equity portfolio (6.c)",
+     a:"[rl][hl]Dividends[/hl] — most obvious/largest; growth investors seek LESS; may be taxed[/rl][rl][hl]Optional stock dividend[/hl] (cash or shares; option has sellable value) & [hl]special dividend[/hl] (one-time)[/rl][rl][hl]Securities lending[/hl] — fee + reinvest collateral[/rl][rl][hl]Writing options[/hl] — covered call / cash-covered put[/rl][rl][hl]Dividend capture[/hl][/rl]"},
+    {id:"eq12",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Securities lending — fee range, who does it, and the four issues",
+     a:"Short sale = sell a security NOT owned → borrow to deliver. Lender [hl]paid a fee[/hl] (~[hl]0.2–0.5%[/hl] developed; 'specials' higher) + reinvests collateral; gets security back later.\n[rl]Issue: short selling pushes price DOWN (hurts active lender > passive)[/rl][rl]Watch borrower quality[/rl][rl]Borrower must compensate lender for DIVIDENDS during loan[/rl][rl]Lender loses the VOTE during loan[/rl]"},
+    {id:"eq13",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Covered call vs cash-covered put vs dividend capture",
+     a:"[hl]Covered call[/hl] — write call on stock you OWN; earn premium, [bad]lose upside above strike[/bad].\n[hl]Cash-covered put[/hl] — sell put + reserve cash; buyer exercises only if stock declines.\n[hl]Dividend capture[/hl] — buy pre-ex-date, hold through, sell; profitable if price drops by [hl]LESS than the dividend[/hl] (theory says drop = full dividend, but supply/demand & taxes differ)."},
+    {id:"eq14",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Equity portfolio fees & costs — the six buckets (6.c)",
+     a:"[rl][hl]Management fees[/hl] (ad valorem, %AUM) — HIGHER for active[/rl][rl][hl]Performance/incentive[/hl] (10–20%, hedge/alt funds)[/rl][rl][hl]Administration[/hl] (custody, depository, registration)[/rl][rl][hl]Marketing & distribution[/hl][/rl][rl][hl]Trading costs[/hl] (explicit + implicit)[/rl][rl][hl]Investment strategy costs[/hl][/rl]"},
+    {id:"eq15",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Incentive fees — the two investor protections",
+     a:"[hl]One-sided[/hl]: manager shares in outperformance but is [bad]NOT penalized for underperformance[/bad].\n[hl]High-water mark[/hl]: prevents paying twice for the same performance — after a peak then decline, incentive fee applies only to FUTURE appreciation above the previously-compensated level.\nTypical incentive fee 10–20% of appreciation above threshold."},
+    {id:"eq16",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Trading costs: explicit vs implicit + liquidity by strategy",
+     a:"[hl]Explicit[/hl] = broker commissions, exchange fees, taxes.\n[hl]Implicit[/hl] = bid-ask spread, price impact, delay/[hl]slippage[/hl] (illiquidity).\n[rl]Momentum DEMANDS liquidity (buy rising/sell falling) → HIGH impact[/rl][rl]Contrarian SUPPLIES liquidity → LOW impact[/rl][rl]Passive index replication = MIDDLE[/rl]\nPredatory trading: traders front-run index add/remove → cost to fund, profit to them."},
+    {id:"eq17",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Shareholder engagement — topics discussed & the free-rider benefit (6.d)",
+     a:"Topics: [hl]corporate strategy, capital allocation, governance, compensation, board composition[/hl] (via calls + voting at general assemblies).\n[hl]Free riders[/hl]: successful engagement raises the price → benefit reaches ALL shareholders, even those who never engaged. This is how it benefits non-involved investors.\nActive engage more; passive minimize cost; large investors absorb cost more easily."},
+    {id:"eq18",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"command",
+     q:"Disadvantages/limitations of shareholder engagement",
+     a:"[rl][hl]Not free[/hl] — time & resources[/rl][rl][hl]Short-termism[/hl] — near-term price/CF at expense of long-term goals[/rl][rl][hl]Insider-trading risk[/hl] — may acquire material nonpublic info[/rl][rl][hl]Conflicts of interest[/hl] — e.g. PM backs management because management invests in the PM's fund[/rl]\nActivist investing goes further: resolutions, media campaigns, board seats, PROXY FIGHTS."},
+    {id:"eq19",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Rationales for shifting to ACTIVE management (6.e) + caveats",
+     a:"[rl][hl]Confidence[/hl] manager has skill to add value[/rl][rl][hl]Mandates[/hl] (e.g. ESG) needing screening/active techniques[/rl][rl][hl]Client preferences[/hl] + enough assets to cover costs — growth=active, value=more passive[/rl]\nCaveats: manage expectations; too-popular strategies lose edge; need a [hl]broad, liquid benchmark[/hl] (narrow/limited → supports passive)."},
+    {id:"eq20",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"command",
+     q:"Two ADDITIONAL risks of active management (beyond higher cost/uncertainty)",
+     a:"[rl][hl]Key person risk[/hl] — individuals essential to the fund's success leaving the firm[/rl][rl][hl]Higher portfolio turnover → tax burden[/hl]; tax-limiting techniques are themselves costly, risky, and need tax expertise (varies by country)[/rl]\n[bad]Don't answer 'higher cost' or 'less certain results' — those are the GIVEN facts, not the additional risks.[/bad]"},
+    {id:"eq21",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Three required characteristics of a benchmark index (6.f)",
+     a:"[rl][hl]Rules-based[/hl] — inclusion/exclusion, weighting, rebalancing are consistent, objective, predictable[/rl][rl][hl]Transparent[/hl] — rules public, clearly stated, understandable[/rl][rl][hl]Investable[/hl] — investors can replicate the return & risk[/rl]\n[bad]Traps: 'selective' (that's index construction) and 'flexible' are NOT requirements.[/bad]"},
+    {id:"eq22",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Two considerations when choosing a benchmark + the risk factors",
+     a:"[rl]1. Determine desired [hl]market & risk exposures[/hl] (broad vs sector; domestic vs intl; developed/emerging/frontier)[/rl][rl]2. Identify methods to [hl]construct & maintain[/hl] the index[/rl]\nRisk factors: [hl]market risk (beta), firm size, style (growth/value), momentum[/hl], + liquidity, volatility, quality."},
+    {id:"eq23",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Four index-weighting methods",
+     a:"[rl][hl]Market-cap[/hl] — by cap %; free-float in practice; S&P 500; rebalance on share issue/repurchase[/rl][rl][hl]Price-weighted[/hl] — by price; DJIA; adjust for splits[/rl][rl][hl]Equal-weighted[/hl] — equal $; small-cap bias, factor-indifferent, more volatile, frequent rebalancing[/rl][rl][hl]Fundamental[/hl] — by sales/income/dividends share[/rl]"},
+    {id:"eq24",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"formula",
+     q:"HHI and effective number of stocks",
+     a:"[fl]HHI = \u03a3 w\u1d62\u00b2   (sum of squared weights)\neffective number of stocks = 1 / HHI[/fl]\nRange: [hl]1/n[/hl] (equally weighted) \u2192 [hl]1[/hl] (single stock). As HHI \u2191, concentration risk \u2191.\nEx: cap-weighted 500-stock index, HHI 0.01 \u2192 effective N = 100 (< 500 shows large-cap dominance)."},
+    {id:"eq25",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Equal-weighting — benefits and drawbacks",
+     a:"[rl]+ Reduces [hl]concentration risk[/hl] & sector exposure vs cap-weight[/rl][rl]+ [hl]Factor-indifferent[/hl] — randomizes factor mispricing[/rl][rl]+ Marginally better returns [hl]before transaction costs[/hl] when prices oscillate around intrinsic value[/rl][rl]\u2212 [hl]Small-cap bias[/hl] \u2192 returns more volatile[/rl][rl]\u2212 Needs frequent rebalancing (weights drift as soon as prices move)[/rl]"},
+    {id:"eq26",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Rebalancing vs reconstitution",
+     a:"[hl]Rebalancing[/hl] = adjust portfolio WEIGHTS as index weightings change. Triggers: prices (equal-wt), splits/dividends (price-wt), share issue/repurchase (cap-wt). Often quarterly.\n[hl]Reconstitution[/hl] = REMOVE & REPLACE stocks no longer fitting the index (e.g. small-cap grown into mid-cap).\nBoth incur trading costs \u2192 reduce returns."},
+    {id:"eq27",topic:"PM Pathway",subtopic:"Overview of Equity Portfolio Management",type:"framework",
+     q:"Buffering vs packeting (cutting migration costs)",
+     a:"[hl]Buffering = DELAY the move[/hl]: set a rank threshold (buffer zone) before a stock migrates. Ex: large=top 200, mid=next 300; a mid-cap rising into top 200 isn't moved until rank passes the buffer (e.g. reaches 150).\n[hl]Packeting = SPLIT the move[/hl]: move HALF the position at reconstitution; if it still qualifies next reconstitution, move the remainder.\nBoth reduce reconstitution trading costs."},
   ]
 };
 
@@ -21624,7 +22305,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -21647,6 +22328,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'osWidget' && typeof osInit === 'function') setTimeout(osInit, 50);
     if (widgetId === 'sfWidget' && typeof sfInit === 'function') setTimeout(sfInit, 50);
     if (widgetId === 'cmWidget' && typeof cmInit === 'function') setTimeout(cmInit, 50);
+    if (widgetId === 'eqWidget' && typeof eqInit === 'function') setTimeout(eqInit, 50);
   }
 }
 
@@ -21665,6 +22347,7 @@ function openNote(key, topic, subtopic) {
     'PM Pathway||Active Equity Investing: Strategies': 'awWidget',
     'PM Pathway||Active Equity Investing: Portfolio Construction': 'pcwWidget',
     'PM Pathway||Trade Strategy and Execution': 'tswWidget',
+    'PM Pathway||Overview of Equity Portfolio Management': 'eqWidget',
     'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
     'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
     'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
@@ -21676,7 +22359,7 @@ function openNote(key, topic, subtopic) {
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
