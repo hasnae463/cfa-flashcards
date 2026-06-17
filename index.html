@@ -168,6 +168,9 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
 .cli-btn { font-family:var(--mono); font-size:9px; background:none; border:1px solid var(--border); color:var(--muted); padding:4px 9px; border-radius:3px; cursor:pointer; transition:all .12s; }
 .cli-btn:hover { border-color:var(--text); color:var(--text); }
 .cli-btn.del:hover { border-color:var(--red); color:var(--red); }
+.tree-del { font-family:var(--mono); font-size:13px; line-height:1; color:var(--muted); opacity:0; padding:0 3px; border-radius:3px; cursor:pointer; transition:opacity .12s,color .12s; }
+.tree-topic-btn:hover .tree-del, .subtopic-btn:hover .tree-del, .tree-topic-btn.selected .tree-del, .subtopic-btn.selected .tree-del { opacity:1; }
+.tree-del:hover { color:var(--red); }
 
 /* ── MODAL ── */
 .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.7); z-index:300; display:none; align-items:center; justify-content:center; padding:16px; }
@@ -22815,7 +22818,7 @@ function buildTree(){
 
     const btn=document.createElement('button');
     btn.className='tree-topic-btn'+(isOpen?' open':'')+(mTopic===t.name&&mSubtopic==='All'?' selected':'');
-    btn.innerHTML=`<span>${t.name}</span><span style='display:flex;gap:8px;align-items:center'><span class='count'>${topicCount}</span><span class='arrow'>▶</span></span>`;
+    btn.innerHTML=`<span>${t.name}</span><span style='display:flex;gap:8px;align-items:center'><span class='count'>${topicCount}</span><span class='tree-del' title='Delete topic' onclick='event.stopPropagation();deleteTopic(${JSON.stringify(t.name)})'>×</span><span class='arrow'>▶</span></span>`;
     btn.onclick=()=>{
       mTopic=t.name; mSubtopic='All';
       if(btn.classList.contains('open')){ btn.classList.remove('open'); subs.classList.remove('open'); }
@@ -22830,7 +22833,7 @@ function buildTree(){
       const sc=deck.cards.filter(c=>c.topic===t.name&&c.subtopic===s).length;
       const sb=document.createElement('button');
       sb.className='subtopic-btn'+(mTopic===t.name&&mSubtopic===s?' selected':'');
-      sb.innerHTML=`<span>${s}</span><span class='count'>${sc}</span>`;
+      sb.innerHTML=`<span>${s}</span><span style='display:flex;gap:8px;align-items:center'><span class='count'>${sc}</span><span class='tree-del' title='Delete subtopic' onclick='event.stopPropagation();deleteSubtopic(${JSON.stringify(t.name)},${JSON.stringify(s)})'>×</span></span>`;
       sb.onclick=(e)=>{ e.stopPropagation(); mTopic=t.name; mSubtopic=s; buildTree(); renderCardList(); };
       subs.appendChild(sb);
     });
@@ -22868,6 +22871,42 @@ function addSubtopic(topicName){
   saveDeck(); inp.value='';
   mSubtopic=name;
   buildTree(); renderCardList();
+}
+
+function deleteTopic(topicName){
+  const t=deck.topics.find(t=>t.name===topicName);
+  if(!t) return;
+  const n=deck.cards.filter(c=>c.topic===topicName).length;
+  const msg = n>0
+    ? `Delete topic "${topicName}" and ALL ${n} card${n===1?'':'s'} in it (across every subtopic)? This cannot be undone.`
+    : `Delete empty topic "${topicName}"?`;
+  if(!confirm(msg)) return;
+  // remove cards + their marks
+  deck.cards.filter(c=>c.topic===topicName).forEach(c=>{ delete marks[c.id]; });
+  deck.cards=deck.cards.filter(c=>c.topic!==topicName);
+  deck.topics=deck.topics.filter(x=>x.name!==topicName);
+  if(mTopic===topicName){ mTopic='All'; mSubtopic='All'; }
+  saveDeck(); saveMarks();
+  buildTree(); renderCardList(); updateStats();
+  buildStudyFilters(); applyFilters();
+}
+
+function deleteSubtopic(topicName, subName){
+  const t=deck.topics.find(t=>t.name===topicName);
+  if(!t) return;
+  const n=deck.cards.filter(c=>c.topic===topicName&&c.subtopic===subName).length;
+  const msg = n>0
+    ? `Delete subtopic "${subName}" and its ${n} card${n===1?'':'s'}? This cannot be undone.`
+    : `Delete empty subtopic "${subName}"?`;
+  if(!confirm(msg)) return;
+  // remove cards in this subtopic + their marks
+  deck.cards.filter(c=>c.topic===topicName&&c.subtopic===subName).forEach(c=>{ delete marks[c.id]; });
+  deck.cards=deck.cards.filter(c=>!(c.topic===topicName&&c.subtopic===subName));
+  t.subtopics=t.subtopics.filter(s=>s!==subName);
+  if(mTopic===topicName&&mSubtopic===subName){ mSubtopic='All'; }
+  saveDeck(); saveMarks();
+  buildTree(); renderCardList(); updateStats();
+  buildStudyFilters(); applyFilters();
 }
 
 // ══════════════════════════════════════════════════
