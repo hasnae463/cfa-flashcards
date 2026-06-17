@@ -19363,6 +19363,485 @@ bid-ask trade cost  ≈ duration × (ask yield − bid yield)</div>
           </script>
         </div>
 
+        <div id="aaiWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #aaiWidget { --aai-main:#A78BFA; --aai-gold:#D4A017; --aai-green:#3DD68C; --aai-red:#FF7B72; --aai-orange:#F0A04B; --aai-blue:#79C0FF; --aai-teal:#2DD4BF; }
+            #aaiWidget .aai-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #aaiWidget .aai-toptab { background:var(--surface2); border:1px solid var(--aai-main); color:var(--aai-main); padding:9px 16px; border-radius:7px; font-family:var(--serif); font-size:13.5px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #aaiWidget .aai-toptab.active { background:var(--aai-main); color:#0D1117; }
+            #aaiWidget .aai-toppanel { display:none; }
+            #aaiWidget .aai-toppanel.active { display:block; }
+            #aaiWidget .aai-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+            #aaiWidget .aai-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #aaiWidget .aai-tab.active { background:rgba(167,139,250,.14); border-color:var(--aai-main); color:var(--aai-main); }
+            #aaiWidget .aai-panel { display:none; }
+            #aaiWidget .aai-panel.active { display:block; }
+            #aaiWidget .aai-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:14px; }
+            #aaiWidget .aai-title { font-family:var(--serif); font-size:16px; color:var(--aai-main); font-weight:600; margin-bottom:10px; }
+            #aaiWidget .aai-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:8px; }
+            #aaiWidget .aai-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #aaiWidget .aai-rule { display:block; padding:6px 0; border-bottom:1px solid var(--border); font-size:12.5px; line-height:1.5; color:#C9D1D9; }
+            #aaiWidget .aai-rule:last-child { border-bottom:none; }
+            #aaiWidget .aai-tip { background:rgba(46,160,67,.08); border-left:3px solid var(--aai-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #aaiWidget .aai-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--aai-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #aaiWidget .aai-info { background:rgba(121,192,255,.08); border-left:3px solid var(--aai-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #aaiWidget .aai-green { color:var(--aai-green); }
+            #aaiWidget .aai-red { color:var(--aai-red); }
+            #aaiWidget .aai-orange { color:var(--aai-orange); }
+            #aaiWidget .aai-blue { color:var(--aai-blue); }
+            #aaiWidget .aai-gold { color:var(--aai-gold); }
+            #aaiWidget .aai-main-c { color:var(--aai-main); }
+            #aaiWidget .aai-teal { color:var(--aai-teal); }
+            #aaiWidget .aai-tbl { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #aaiWidget .aai-tbl th { background:#0B0F14; color:var(--aai-main); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #aaiWidget .aai-tbl td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+            #aaiWidget .aai-pick-row { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0; }
+            #aaiWidget .aai-pick { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:7px 13px; border-radius:6px; font-family:var(--mono); font-size:11px; cursor:pointer; }
+            #aaiWidget .aai-pick.active { background:rgba(167,139,250,.14); border-color:var(--aai-main); color:var(--aai-main); }
+            #aaiWidget .aai-out { background:#0B0F14; border-left:3px solid var(--aai-main); border-radius:4px; padding:13px 15px; margin-top:12px; font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+            #aaiWidget .aai-inp { background:#0B0F14; border:1px solid var(--border); color:#E6EDF3; border-radius:5px; padding:7px 9px; font-family:var(--mono); font-size:12px; width:90px; }
+            #aaiWidget .aai-lbl { font-family:var(--mono); font-size:11px; color:var(--muted); display:inline-block; margin:5px 8px 5px 0; }
+            #aaiWidget .aai-btn { background:var(--aai-main); color:#0D1117; border:none; border-radius:6px; padding:8px 16px; font-family:var(--mono); font-size:12px; font-weight:600; cursor:pointer; margin-top:8px; }
+            #aaiWidget .aai-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:4px; margin:12px 0; }
+            #aaiWidget .aai-leg { background:#0B0F14; border:1px solid var(--border); border-radius:6px; padding:11px 13px; margin:8px 0; }
+            #aaiWidget .aai-leg-h { font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:var(--aai-main); margin-bottom:6px; }
+          </style>
+
+          <div class="aai-toptabs">
+            <button class="aai-toptab active" onclick="aaiTop(event,'aai-roles')">Roles &amp; Mitigators (8.a/8.b)</button>
+            <button class="aai-toptab" onclick="aaiTop(event,'aai-opp')">Opportunity Set (8.c)</button>
+            <button class="aai-toptab" onclick="aaiTop(event,'aai-cons')">Considerations (8.d)</button>
+            <button class="aai-toptab" onclick="aaiTop(event,'aai-suit')">Suitability &amp; Approaches (8.e/8.f)</button>
+            <button class="aai-toptab" onclick="aaiTop(event,'aai-liq')">Liquidity &amp; Monitoring (8.g/8.h)</button>
+            <button class="aai-toptab" onclick="aaiTop(event,'aai-cheat')">Cheat Sheet</button>
+            <button class="aai-toptab" onclick="aaiTop(event,'aai-quiz')">Quiz &amp; Traps</button>
+          </div>
+
+          <!-- ════════ ROLES & MITIGATORS 8.a / 8.b ════════ -->
+          <div id="aai-roles" class="aai-toppanel active">
+            <div class="aai-tabs">
+              <button class="aai-tab active" onclick="aaiTab(event,'aair-roles')">Roles (8.a)</button>
+              <button class="aai-tab" onclick="aaiTab(event,'aair-class')">By Class</button>
+              <button class="aai-tab" onclick="aaiTab(event,'aair-mit')">Alts vs Bonds (8.b)</button>
+            </div>
+
+            <div id="aair-roles" class="aai-panel active">
+              <div class="aai-card">
+                <div class="aai-title">LOS 8.a — Roles of alternatives in a multi-asset portfolio</div>
+                <div class="aai-body">Overall goal: improve the portfolio's risk/return profile — raise the <b>Sharpe ratio</b> (higher expected return, lower risk, and/or <b>low return correlation</b> with other assets so diversification cuts risk without sacrificing return). Investors may also seek <b>income</b>, <b>capital growth</b>, or <b>safety</b> (preservation of value).</div>
+                <div class="aai-body" style="margin-top:6px;">Alt categories: hedge funds, private equity, private credit, commercial real estate, real assets (ag commodities, precious &amp; industrial metals, ag land, oil).</div>
+              </div>
+              <div class="aai-card">
+                <div class="aai-title">The return-enhancing &harr; risk-reducing spectrum</div>
+                <table class="aai-tbl">
+                  <tr><th>Position</th><th>Classes</th><th>Why</th></tr>
+                  <tr><td><b class="aai-red">Return-enhancing (risk-increasing)</b></td><td>Private equity, private credit</td><td>Primarily raise expected returns</td></tr>
+                  <tr><td><b class="aai-green">Risk-reducing (lower-return)</b></td><td>Real assets</td><td>Diversify / hedge risk</td></tr>
+                  <tr><td><b class="aai-orange">Anywhere on the spectrum</b></td><td>Hedge funds</td><td>Depends on the strategy the manager pursues</td></tr>
+                </table>
+                <div class="aai-info"><b>Income vs growth vs safety:</b> equity (public &amp; private) → capital growth; bonds / real estate → income; real assets &amp; some HF strategies → diversify an equity portfolio; private credit → diversify a fixed-income (rate-driven) portfolio; precious metals / government bonds → safe-haven.</div>
+              </div>
+            </div>
+
+            <div id="aair-class" class="aai-panel">
+              <div class="aai-card">
+                <div class="aai-title">Role by alternative class</div>
+                <table class="aai-tbl">
+                  <tr><th>Class</th><th>Main role / characteristics</th></tr>
+                  <tr><td><b class="aai-main-c">Hedge funds</b></td><td>Equity long/short &amp; short bias may slightly REDUCE equity beta but mainly ↑ returns via manager selection skill. Merger arb / global macro = less correlated with traditional classes. <b class="aai-red">Arbitrage &amp; event-driven → negatively skewed returns = tail risk = "short volatility" exposure</b> (exposure to downturns / unexpected events).</td></tr>
+                  <tr><td><b class="aai-main-c">Private equity</b></td><td><b class="aai-red">Limited diversification vs public equity</b> — public &amp; private companies face essentially the SAME risk factors → main role = ↑ expected returns.</td></tr>
+                  <tr><td><b class="aai-main-c">Private credit</b></td><td>Direct lending = income; similar risk/return to public debt of same credit quality + an <b>illiquidity premium</b>. Distressed debt = more equity-like (issuer-specific factors dominate).</td></tr>
+                  <tr><td><b class="aai-main-c">Commercial real estate</b></td><td>Hedges inflation — both rental income &amp; property value may rise with inflation.</td></tr>
+                  <tr><td><b class="aai-main-c">Real assets</b></td><td>Commodities, farm/timberland, infrastructure → inflation hedge; can target subsets (energy, food, building materials). Infrastructure = longer horizon; inflation correlation may be limited by utility rate regulation.</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="aair-mit" class="aai-panel">
+              <div class="aai-card">
+                <div class="aai-title">LOS 8.b — Alternatives vs bonds as risk mitigators (vs a long equity position)</div>
+                <div class="aai-body">Which better diversifies an equity portfolio? <b>Depends on the investor's investment horizon.</b> Tap a horizon:</div>
+                <div class="aai-pick-row">
+                  <button class="aai-pick active" onclick="aaiHorizon(this,'short')">Short horizon</button>
+                  <button class="aai-pick" onclick="aaiHorizon(this,'long')">Long horizon</button>
+                </div>
+                <div class="aai-grid2">
+                  <div class="aai-leg"><div class="aai-leg-h">Primary risk</div><div id="aai-hz-risk" style="font-size:12.5px;"></div></div>
+                  <div class="aai-leg"><div class="aai-leg-h">Better mitigator</div><div id="aai-hz-win" style="font-size:12.5px;"></div></div>
+                </div>
+                <div id="aai-hz-out" class="aai-out"></div>
+              </div>
+              <div class="aai-card">
+                <div class="aai-title">Why reported alt statistics are biased downward</div>
+                <div class="aai-body">Alts' reported volatility &amp; correlation with equity LOOK low, but are biased <b>downward</b> for three reasons — so true vol &amp; equity correlation are <b>higher</b> than reported:</div>
+                <span class="aai-rule"><b class="aai-main-c">Appraisal-based valuations</b> of private holdings → <b>smoothing</b> of reported returns.</span>
+                <span class="aai-rule"><b class="aai-main-c">Sampling biases</b> — <b>survivorship bias</b> &amp; <b>backfill bias</b> → downside risk understated in the data.</span>
+                <span class="aai-rule"><b class="aai-main-c">Index diversification</b> — funds in an index have low correlations with each other → index volatility &lt; average volatility of its components.</span>
+                <div class="aai-trap"><b>Quiz 8.1 Q2 trap:</b> appraisal-based valuations &amp; sampling biases <b>OVERSTATE diversification benefits</b> (they understate risk &amp; correlation), not returns or risk measures.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ OPPORTUNITY SET 8.c ════════ -->
+          <div id="aai-opp" class="aai-toppanel">
+            <div class="aai-tabs">
+              <button class="aai-tab active" onclick="aaiTab(event,'aaio-trad')">Traditional</button>
+              <button class="aai-tab" onclick="aaiTab(event,'aaio-risk')">Risk-Factor-Based</button>
+            </div>
+
+            <div id="aaio-trad" class="aai-panel active">
+              <div class="aai-card">
+                <div class="aai-title">LOS 8.c — Traditional approaches to the investment opportunity set</div>
+                <div class="aai-body">Two traditional ways to classify asset groups:</div>
+                <span class="aai-rule"><b class="aai-main-c">By liquidity</b> (Fig 8.1) — publicly traded (futures, REITs) vs not publicly traded; among private, classify by length of commitment required (<b>private equity = longer commitment than private credit</b>; both longer than liquid alts).</span>
+                <span class="aai-rule"><b class="aai-main-c">By economic-environment performance</b> (Fig 8.2) — how assets perform across growth &amp; inflation scenarios.</span>
+              </div>
+              <div class="aai-card">
+                <div class="aai-title">Fig 8.1 — Liquidity-based opportunity set (more &rarr; less liquid)</div>
+                <table class="aai-tbl">
+                  <tr><th>Liquidity</th><th>Fixed Income</th><th>Equity</th><th>Other Assets</th></tr>
+                  <tr><td><b class="aai-green">More liquid</b></td><td>Cash, Bonds</td><td>Public Equity</td><td>Commodity Futures, REITs</td></tr>
+                  <tr><td>↓</td><td></td><td>Equity Hedge Funds</td><td>Private Real Estate</td></tr>
+                  <tr><td><b class="aai-red">Less liquid</b></td><td>Private Credit</td><td>Private Equity</td><td>Private Real Assets</td></tr>
+                </table>
+              </div>
+              <div class="aai-card">
+                <div class="aai-title">Fig 8.2 — Economic-environment opportunity set</div>
+                <table class="aai-tbl">
+                  <tr><th></th><th>Negative / Low Growth</th><th>High Growth</th></tr>
+                  <tr><td><b class="aai-blue">Deflation</b></td><td>Non-indexed bonds</td><td>Public equity, Private equity, Private credit</td></tr>
+                  <tr><td><b class="aai-orange">High inflation</b></td><td>Indexed bonds</td><td>Commodities, Real assets</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="aaio-risk" class="aai-panel">
+              <div class="aai-card">
+                <div class="aai-title">Risk-factor-based approach</div>
+                <div class="aai-body">Statistically estimate each class's <b>sensitivities to risk factors</b> identified by the manager — e.g. economic growth &amp; inflation, interest rates &amp; credit spreads, currency, liquidity, capitalization, value vs growth.</div>
+                <div class="aai-info"><b>Key insight:</b> some alt classes are similar to traditional classes in factor sensitivity — <b>private equity ~ public equity</b> risks; <b>private credit ~ publicly traded high-yield bonds</b>.</div>
+                <table class="aai-tbl">
+                  <tr><th>Advantages</th><th>Disadvantages</th></tr>
+                  <tr><td>Identifies <b>common risk sources across classes</b> → mitigates the traditional approach's flaw of splitting same-risk investments into different classes (which makes a portfolio look more diversified than it is). Supports an <b>integrated risk-management framework</b>; highlights primary drivers of portfolio risk.</td><td>Risk-factor estimates are <b>sensitive to the analysis period</b>; results are <b>harder to communicate</b> to decision makers and to implement than traditional approaches.</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ CONSIDERATIONS 8.d ════════ -->
+          <div id="aai-cons" class="aai-toppanel">
+            <div class="aai-tabs">
+              <button class="aai-tab active" onclick="aaiTab(event,'aaic-over')">Overview</button>
+              <button class="aai-tab" onclick="aaiTab(event,'aaic-veh')">Vehicles</button>
+              <button class="aai-tab" onclick="aaiTab(event,'aaic-liq')">Liquidity Concerns</button>
+              <button class="aai-tab" onclick="aaiTab(event,'aaic-fee')">Fees &amp; Taxes</button>
+            </div>
+
+            <div id="aaic-over" class="aai-panel active">
+              <div class="aai-card">
+                <div class="aai-title">LOS 8.d — Considerations in allocating to alternatives</div>
+                <div class="aai-body">Beyond risk / expected return / correlation, alts require considering: choice of <b>investment vehicle</b>, <b>liquidity</b>, <b>expenses &amp; fees</b>, <b>tax status</b>, and the <b>expertise</b> needed to invest successfully.</div>
+                <span class="aai-rule"><b class="aai-main-c">Return expectations are hard</b> — short history vs other classes &amp; limited validity of available data. Suggested build-up: estimate each <b>risk-factor exposure</b>'s expected return + risk-free rate; refine by <b>adding manager alpha</b> and <b>subtracting fees &amp; taxes</b>.</span>
+                <span class="aai-rule"><b class="aai-red">MVO limitations:</b> illiquidity/valuation issues, option-like return patterns, and returns that are low/negative in drawdowns &amp; high later → <b>cannot assume returns are normally distributed</b>.</span>
+                <span class="aai-rule"><b class="aai-orange">Uncalled committed capital</b> → a portfolio's <b>effective allocation may be LESS than its target</b> (manager hasn't invested the commitment yet).</span>
+              </div>
+            </div>
+
+            <div id="aaic-veh" class="aai-panel">
+              <div class="aai-card">
+                <div class="aai-title">Investment vehicles</div>
+                <table class="aai-tbl">
+                  <tr><th>Vehicle</th><th>For whom</th><th>Key points</th></tr>
+                  <tr><td><b class="aai-main-c">Limited partnership</b></td><td>Standard structure</td><td>Manager = <b>general partner (GP)</b>; investors = <b>limited partners (LPs)</b>, liability limited to committed capital. Often registered offshore for tax/reporting.</td></tr>
+                  <tr><td><b class="aai-main-c">Direct LP investment</b></td><td>Large investors w/ expertise</td><td>Evaluate managers &amp; diversify across GPs. LPs <b>cannot be directly involved in fund operations</b>; can co-invest alongside a GP.</td></tr>
+                  <tr><td><b class="aai-main-c">Fund-of-funds (FoF)</b></td><td>Investors LACKING expertise</td><td>FoF pools capital into limited partnerships; benefit = access otherwise unavailable; <b class="aai-red">drawback = extra layer of fees</b> above the underlying LPs.</td></tr>
+                  <tr><td><b class="aai-main-c">SMA / fund of one</b></td><td>Large investors demanding favorable terms</td><td>SMA = separately managed account; fund of one = LP with a single client. Risk: GPs may <b>favor LPs paying standard fees</b> when allocating opportunities.</td></tr>
+                  <tr><td><b class="aai-main-c">UCITS / open-end mutual funds</b></td><td>Smaller investors</td><td>Give access but <b>more regulated</b> → may <b>constrain managers' strategies</b> → returns might not match the asset class as a whole.</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="aaic-liq" class="aai-panel">
+              <div class="aai-card">
+                <div class="aai-title">Liquidity concerns</div>
+                <div class="aai-body">Liquidity risk is a defining feature of alts — from both the <b>investment structures</b> and the <b>underlying investments</b>.</div>
+                <span class="aai-rule"><b class="aai-main-c">Hedge funds:</b> accept capital quarterly/monthly; impose <b>lockup periods</b> (often 6 months–1 year, redemptions blocked or penalized); redemptions quarterly/annually w/ notice; may impose <b>"gates"</b> (max redeemable at once).</span>
+                <span class="aai-rule"><b class="aai-red">PE / private credit / RE / real assets: stricter than hedge funds.</b> Subscriptions in "closes" over ~1 year; LPs commit capital, GP <b>"calls"</b> it over a 3–5yr investment period; redemptions typically unavailable — fund <b>distributes</b> capital over its 10–12yr life as it exits; small secondary market at significant discounts to NAV, needs GP approval.</span>
+                <span class="aai-rule"><b class="aai-main-c">Side pocket:</b> GP designates some less-liquid holdings as <b>exempt</b> from ordinary redemption terms. Misleading if a large portion is side-pocketed.</span>
+                <span class="aai-rule"><b class="aai-main-c">Why PE not HF for some strategies:</b> frequent redemptions limit a GP's flexibility for long-horizon / infrequent opportunities (e.g. distressed) → those use PE partnerships, not hedge funds.</span>
+                <div class="aai-info"><b>Leverage &amp; liquidity:</b> creditors have priority over LPs; <b>margin calls</b> can force a leveraged fund to sell its MOST liquid holdings, leaving it with less-liquid ones.</div>
+              </div>
+              <div class="aai-card">
+                <div class="aai-title">Fig 8.3 — $10m commitment to a PE fund (cash-flow timeline)</div>
+                <table class="aai-tbl">
+                  <tr><th>Phase</th><th>Detail</th></tr>
+                  <tr><td><b class="aai-main-c">Commitment</b></td><td>LP commits $10m; <b>only $9m is actually called</b> (GP not required to call the full amount).</td></tr>
+                  <tr><td><b class="aai-red">Drawdown period (yrs 1–3)</b></td><td>Capital calls: −$3m, −$4m, −$2m.</td></tr>
+                  <tr><td><b class="aai-green">Distributions (yrs 6/8/10)</b></td><td>+$4m, +$5m, +$3m; fund terminates ~yr 10.</td></tr>
+                </table>
+                <div class="aai-trap"><b>Decisive details:</b> capital calls &amp; distributions are <b>NOT on a predetermined schedule</b> — calls may happen (or not) during the drawdown period; distributions can occur any time, even during drawdown. The LP earns the fund's return <b>only on CALLED capital</b>, so a high fund IRR ≠ high return on the full commitment. LPs face an <b>opportunity cost</b> on committed capital: cash equivalents → low return; higher-return illiquid investments → risk missing a call (penalty can be forfeiting all capital invested to date).</div>
+              </div>
+            </div>
+
+            <div id="aaic-fee" class="aai-panel">
+              <div class="aai-card">
+                <div class="aai-title">Expenses, fees &amp; taxes</div>
+                <span class="aai-rule"><b class="aai-main-c">"2 and 20":</b> 2% annual management fee on AUM + 20% incentive fee on gains; admin expenses may also pass through.</span>
+                <span class="aai-rule"><b class="aai-red">Drawdown-structure funds charge the management fee on COMMITTED capital</b>, regardless of how much has been called → can generate <b>negative returns in early years</b> when little is called.</span>
+                <span class="aai-rule"><b class="aai-main-c">Taxes:</b> some strategies → short-term taxable income or withholding; unpredictable returns make annual tax-reporting estimates hard. <b>Tax-exempt organizations</b> must ensure fund income isn't deemed unrelated to their purpose (→ taxable, UBTI).</span>
+              </div>
+              <div class="aai-card">
+                <div class="aai-title">Intermediaries vs in-house program</div>
+                <span class="aai-rule"><b class="aai-main-c">In-house</b> suits investors needing customized solutions, close control, or co-investments with GPs.</span>
+                <span class="aai-rule"><b class="aai-main-c">"Build or buy"</b> depends on whether the investor can match an intermediary's results at lower cost, or earn enough to offset costs above an intermediary's.</span>
+                <span class="aai-rule"><b class="aai-red">Capacity constraint:</b> even an expert at picking top managers may find those managers <b>attract more capital than they can invest productively → close their funds</b> to new investors. Managers may also decline investors whose public-reporting needs conflict with their proprietary strategies.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ SUITABILITY & APPROACHES 8.e / 8.f ════════ -->
+          <div id="aai-suit" class="aai-toppanel">
+            <div class="aai-tabs">
+              <button class="aai-tab active" onclick="aaiTab(event,'aais-suit')">Suitability (8.e)</button>
+              <button class="aai-tab" onclick="aaiTab(event,'aais-model')">Modeling Challenges</button>
+              <button class="aai-tab" onclick="aaiTab(event,'aais-opt')">Optimization (8.f)</button>
+            </div>
+
+            <div id="aais-suit" class="aai-panel active">
+              <div class="aai-card">
+                <div class="aai-title">LOS 8.e — Suitability considerations</div>
+                <span class="aai-rule"><b class="aai-main-c">Expertise:</b> alts suit only <b>large investors</b> who have or can hire specialized knowledge to select profitable investments &amp; understand strategy risks.</span>
+                <span class="aai-rule"><b class="aai-red">Not for market-efficiency believers:</b> alt strategies rest on the premise that skilled managers add value through active management → unsuitable for investors who believe markets are price-efficient.</span>
+                <span class="aai-rule"><b class="aai-main-c">Time horizon is key:</b> private equity &amp; private real assets → <b>long horizons (15+ years)</b>; investors with shorter horizons → short-lockup hedge funds or liquid instruments (public equities, commodity futures).</span>
+                <span class="aai-rule"><b class="aai-main-c">Transparency &amp; governance:</b> must accept <b>lower transparency</b> than traditional investments (private partnerships, less reporting, time lags; PE/private RE valuations have wider GP discretion — "blind pools"). Needs a strong governance program: formal policy with clear objectives, decisions in expert hands, reliable reporting.</span>
+              </div>
+            </div>
+
+            <div id="aais-model" class="aai-panel">
+              <div class="aai-card">
+                <div class="aai-title">LOS 8.f — Why modeling alt returns is challenging</div>
+                <span class="aai-rule"><b class="aai-red">Smoothed / stale returns:</b> appraisal-based valuations → returns artificially smoothed &amp; often stale → using them unadjusted <b>UNDERESTIMATES risk</b>. Detect via testing for <b>serial correlation</b>; if present, <b>unsmooth</b> the data.</span>
+                <span class="aai-rule"><b class="aai-red">Nonnormal distribution:</b> greater <b>skew &amp; excess kurtosis (fat tails)</b> than traditional classes. Adjust with statistical methods (stochastic volatility, regime switching, extreme value theory) or use observed returns instead of an assumed normal.</span>
+                <span class="aai-rule"><b class="aai-red">Short history:</b> relatively short return history → small-sample &amp; time-period biases.</span>
+                <div class="aai-info"><b>Fat-tail modeling (two-regime):</b> define risk/return for two or more distinct market environments — e.g. a <b>normal period</b> and a <b>high-volatility period</b>, each described by its own normal distribution (own mean &amp; variance). Combining them with an assumed probability of each environment produces a <b>nonnormal</b> distribution.</div>
+              </div>
+            </div>
+
+            <div id="aais-opt" class="aai-panel">
+              <div class="aai-card">
+                <div class="aai-title">Three optimization approaches</div>
+                <div class="aai-body">A suggested approach allocates in <b>two stages</b>: first with only traditional classes, then also considering alts. Tools (used alone or combined): Monte Carlo, MVO, risk-factor-based.</div>
+                <table class="aai-tbl">
+                  <tr><th>Tool</th><th>How / notes</th></tr>
+                  <tr><td><b class="aai-main-c">Monte Carlo simulation</b></td><td>4 steps: (1) choose asset-class returns OR risk factors as variables; (2) define statistical behavior (mean reversion, fat tails, unstable correlations); (3) if factor-based, translate factors → asset-class returns; (4) use the return scenarios for outputs like the probability of a <b>shortfall</b> to the required/target return.</td></tr>
+                  <tr><td><b class="aai-main-c">Mean-variance optimization (MVO)</b></td><td>With alts may produce an <b>EXCESSIVE allocation</b> (esp. to illiquid PE) when data aren't adjusted for smoothing. Constrain min/max allocation or limit volatility/downside. Treat output as a <b>guideline, not a prescription</b>; small input changes → big allocation changes.</td></tr>
+                  <tr><td><b class="aai-main-c">Risk-factor-based optimization</b></td><td>Models risk factors &amp; factor-return expectations instead of asset classes; optimize factor exposures vs a risk budget; needs an <b>extra step translating factor exposures → an asset allocation</b>.</td></tr>
+                </table>
+                <div class="aai-trap"><b>Risk-factor-based limitations:</b> some asset classes' factor sensitivities <b>aren't stable over time</b>; and correlations among risk factors (like correlations among asset-class returns) <b>RISE during financial stress</b>.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ LIQUIDITY & MONITORING 8.g / 8.h ════════ -->
+          <div id="aai-liq" class="aai-toppanel">
+            <div class="aai-tabs">
+              <button class="aai-tab active" onclick="aaiTab(event,'aail-plan')">Liquidity Planning (8.g)</button>
+              <button class="aai-tab" onclick="aaiTab(event,'aail-calc')">Cash-Flow Calculator</button>
+              <button class="aai-tab" onclick="aaiTab(event,'aail-mon')">Monitoring (8.h)</button>
+            </div>
+
+            <div id="aail-plan" class="aai-panel active">
+              <div class="aai-card">
+                <div class="aai-title">LOS 8.g — Importance of liquidity planning</div>
+                <div class="aai-body">Crucial for programs with <b>near-term capital drawdowns</b> and <b>long investment horizons</b> — the portfolio must meet capital commitments while still providing required liquidity.</div>
+                <span class="aai-rule"><b class="aai-main-c">Forecasting models:</b> project cash flows to/from a fund &amp; the annual capital commitments needed to reach/maintain the target alt allocation.</span>
+                <span class="aai-rule"><b class="aai-main-c">Invest uncalled committed capital in liquid proxies:</b> keeping it in cash equivalents reduces returns; a suggested approach is to invest it in publicly traded securities that proxy the private commitment — e.g. capital committed to private real estate but not yet called → publicly traded <b>REITs</b>.</span>
+                <span class="aai-rule"><b class="aai-main-c">Ramp-up &amp; vintage diversification:</b> a target (e.g. 10% PE) can't be reached all at once — must build over years across <b>vintage years</b>; allocation ramps up gradually.</span>
+                <span class="aai-rule"><b class="aai-red">Stress-test:</b> calls, distributions, growth rates &amp; fund lifetimes may differ from expectations → stress-test against events like <b>delayed distributions</b> that were earmarked to meet capital calls.</span>
+              </div>
+            </div>
+
+            <div id="aail-calc" class="aai-panel">
+              <div class="aai-card">
+                <div class="aai-title">Liquidity forecasting model</div>
+                <div class="aai-fl">capital contribution_t = (% called in t) × (committed − previously called)
+distributions_t       = (% distributed in t) × [NAV_(t-1) × (1 + growth)]
+NAV_t                 = NAV_(t-1) × (1 + growth) + contributions_t − distributions_t</div>
+                <div class="aai-body" style="margin-top:6px;">Single-period calculator — enter the prior-period state and this period's assumptions:</div>
+                <div>
+                  <span class="aai-lbl">Committed capital <input id="aai-lq-commit" class="aai-inp" type="number" value="10"></span>
+                  <span class="aai-lbl">Previously called <input id="aai-lq-prev" class="aai-inp" type="number" value="3"></span>
+                  <span class="aai-lbl">% called this period <input id="aai-lq-callpct" class="aai-inp" type="number" step="0.01" value="40"></span>
+                </div>
+                <div>
+                  <span class="aai-lbl">NAV (t−1) <input id="aai-lq-nav" class="aai-inp" type="number" value="3"></span>
+                  <span class="aai-lbl">Growth rate % <input id="aai-lq-growth" class="aai-inp" type="number" step="0.1" value="10"></span>
+                  <span class="aai-lbl">% distributed <input id="aai-lq-distpct" class="aai-inp" type="number" step="0.01" value="0"></span>
+                </div>
+                <button class="aai-btn" onclick="aaiLiqCalc()">Compute contribution, distribution &amp; NAV</button>
+                <div id="aai-lq-out" class="aai-out"></div>
+              </div>
+            </div>
+
+            <div id="aail-mon" class="aai-panel">
+              <div class="aai-card">
+                <div class="aai-title">LOS 8.h — Monitoring an alternative investment program</div>
+                <span class="aai-rule"><b class="aai-main-c">Evaluate vs goals, not a benchmark:</b> assess against the program's goals (return, risk, income, safety). Benchmarks are misleading — strategies depend heavily on active management, published indexes are inconsistent with each other &amp; with actual holdings, and reporting comes with significant <b>time lags</b>.</span>
+                <span class="aai-rule"><b class="aai-main-c">Monitoring is needed even during ramp-up</b> — private/illiquid investments take considerable time to correct if out of line with objectives.</span>
+              </div>
+              <div class="aai-card">
+                <div class="aai-title">IRR vs MOIC</div>
+                <div class="aai-fl">MOIC = (value of underlying investments + distributions) / total invested capital</div>
+                <table class="aai-tbl">
+                  <tr><th>Metric</th><th>Issue</th></tr>
+                  <tr><td><b class="aai-main-c">IRR</b></td><td><b class="aai-red">Influenced by the timing of capital calls &amp; distributions</b> → may be subject to manipulation.</td></tr>
+                  <tr><td><b class="aai-main-c">MOIC</b> (multiple on invested capital)</td><td><b class="aai-green">Less affected by timing</b> of capital calls. Still affected by stale pricing &amp; appraisal-based valuations — judging holdings qualitatively may be best.</td></tr>
+                </table>
+                <div class="aai-trap"><b>Quiz 8.3 Q5:</b> compared with IRR, MOIC is <b>less affected by the timing of capital calls</b> (answer B), because IRR is time-weighted by the cash-flow timing while MOIC is a simple multiple.</div>
+              </div>
+              <div class="aai-card">
+                <div class="aai-title">What to monitor in fund management</div>
+                <span class="aai-rule"><b class="aai-main-c">Key persons</b> — specified in fund docs; LPs may gain rights if a key person leaves → understand why they departed.</span>
+                <span class="aai-rule"><b class="aai-main-c">Manager–investor alignment</b> — conflicts if the manager raises a new fund investing in some of the same holdings, or withdraws capital invested alongside LPs.</span>
+                <span class="aai-rule"><b class="aai-main-c">Style drift</b> — managers have wide discretion; watch holdings over time.</span>
+                <span class="aai-rule"><b class="aai-main-c">Risk-management framework</b> — especially for leveraged strategies.</span>
+                <span class="aai-rule"><b class="aai-red">Other investors' profile</b> — an unexpected rise in OTHER investors' redemptions is a warning sign: the fund may sell its best holdings to raise cash, leaving remaining LPs with weaker assets; GP may use gates.</span>
+                <span class="aai-rule"><b class="aai-red">Capital growth</b> — a large/unexpected inflow of new investors may give the manager more capital than productive opportunities → pursuing lesser opportunities hurts performance.</span>
+                <span class="aai-rule"><b class="aai-main-c">Service providers</b> — changes in auditors/custodians: understand whether positive (outgrew capabilities) or negative (e.g. auditor quit over manager's actions).</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ CHEAT SHEET ════════ -->
+          <div id="aai-cheat" class="aai-toppanel">
+            <div class="aai-card">
+              <div class="aai-title">Reading 8 — one-screen recall</div>
+              <table class="aai-tbl">
+                <tr><th>LOS</th><th>Must-recall</th></tr>
+                <tr><td><b class="aai-main-c">8.a Roles</b></td><td>Goal = ↑ Sharpe (return / low risk / low correlation) + income/growth/safety. Spectrum: PE &amp; private credit = return-enhancing (risk↑); real assets = risk-reducing; hedge funds = anywhere. PE limited diversification (same factors as public eq); arb/event-driven = neg skew = tail risk = short vol; CRE &amp; real assets = inflation hedge.</td></tr>
+                <tr><td><b class="aai-main-c">8.b Mitigators</b></td><td>Depends on horizon. SHORT → risk = volatility → BONDS better (lower/negative equity correlation). LONG → risk = missing required return → ALTS better (higher expected return, &lt;perfect correlation even after bias adjustment). Reported alt vol/correlation biased DOWN: appraisal smoothing, survivorship+backfill, index diversification → overstate diversification benefits.</td></tr>
+                <tr><td><b class="aai-main-c">8.c Opportunity set</b></td><td>Traditional: by liquidity (PE longer commitment than PC) or by growth/inflation environment. Risk-factor: estimate factor sensitivities (PE~public eq, PC~HY bonds); pro = finds common risks / avoids false diversification; con = period-sensitive, hard to communicate/implement.</td></tr>
+                <tr><td><b class="aai-main-c">8.d Considerations</b></td><td>Return build-up = Σ factor exposures + Rf + alpha − fees/taxes. MVO weak (non-normal). Vehicles: LP (GP/LP), direct, FoF (extra fee), SMA/fund-of-one, UCITS (regulated). PE/PC/RE liquidity stricter than HF; side pocket; "2 and 20", drawdown funds fee on COMMITTED capital → early negative returns. Fig 8.3: $10m committed, $9m called; return only on called capital.</td></tr>
+                <tr><td><b class="aai-main-c">8.e Suitability</b></td><td>Large investors w/ expertise; NOT for market-efficiency believers. Horizon key: PE/private RE = 15+ yrs; short-lockup HF / liquid = shorter. Lower transparency ("blind pools"); strong governance.</td></tr>
+                <tr><td><b class="aai-main-c">8.f Approaches</b></td><td>2 stages (traditional then +alts). Modeling: smoothed/stale → test serial correlation → unsmooth; non-normal (skew, excess kurtosis) → regime/EVT; two-regime fat-tail. Tools: Monte Carlo (4 steps), MVO (excessive PE allocation; constrain; guideline), risk-factor (translate factors→allocation; factor sensitivities unstable, correlations rise in stress).</td></tr>
+                <tr><td><b class="aai-main-c">8.g Liquidity planning</b></td><td>contribution = %called × (committed − prev called); distribution = %dist × [NAV₋₁×(1+g)]; NAV = NAV₋₁×(1+g) + contrib − dist. Invest uncalled capital in liquid proxies (REITs for private RE); ramp up over vintage years; stress-test (delayed distributions).</td></tr>
+                <tr><td><b class="aai-main-c">8.h Monitoring</b></td><td>Evaluate vs goals not benchmark (active, inconsistent indexes, time lags). MOIC = (underlying value + distributions)/total invested capital → less affected by timing than IRR (IRR manipulable). Monitor: key persons, alignment, style drift, risk framework, other investors' redemptions (warning), capital growth (capacity), service providers.</td></tr>
+              </table>
+            </div>
+            <div class="aai-card">
+              <div class="aai-title">Formula strip</div>
+              <div class="aai-fl">return build-up   = Σ(risk-factor exposure returns) + Rf + alpha − fees − taxes
+contribution_t    = (% called in t) × (committed − previously called)
+distribution_t    = (% distributed in t) × [NAV_(t-1) × (1 + growth)]
+NAV_t             = NAV_(t-1) × (1 + growth) + contribution_t − distribution_t
+MOIC              = (value of underlying investments + distributions) / total invested capital</div>
+            </div>
+          </div>
+
+          <!-- ════════ QUIZ & TRAPS ════════ -->
+          <div id="aai-quiz" class="aai-toppanel">
+            <div class="aai-card">
+              <div class="aai-title">Module Quiz 8.1 — worked</div>
+              <table class="aai-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b><br><span style="color:var(--muted);">Which category is <b>most appropriate</b> for diversifying a public-equity portfolio?</span></td><td><b class="aai-green">C — commercial real estate &amp; global macro hedge funds</b></td><td>Diversification needs <b>low correlation</b> with equities. Commercial RE &amp; global macro are less correlated. <span class="aai-red">A</span> private equity has the same risk factors as public equity (and short-bias mainly ↑ returns); <span class="aai-red">B</span> distressed debt is equity-like → poor diversifiers.</td></tr>
+                <tr><td><b>2</b><br><span style="color:var(--muted);">Appraisal-based valuations &amp; sampling biases are believed to OVERSTATE:</span></td><td><b class="aai-green">C — diversification benefits</b></td><td>They smooth returns &amp; understate downside risk → reported volatility &amp; equity correlation look too low → <b>diversification benefits appear larger than they are</b>. They don't overstate returns or risk measures.</td></tr>
+              </table>
+            </div>
+            <div class="aai-card">
+              <div class="aai-title">Module Quiz 8.2 — worked</div>
+              <table class="aai-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b><br><span style="color:var(--muted);">A limited-partnership structure with a single client is known as:</span></td><td><b class="aai-green">B — a fund of one</b></td><td>A fund of one = an LP with a single client. <span class="aai-red">A</span> UCITS = regulated retail vehicle; <span class="aai-red">C</span> SMA = separately managed account (not an LP structure).</td></tr>
+                <tr><td><b>2</b><br><span style="color:var(--muted);">Cash flows from investors into a PE limited partnership:</span></td><td><b class="aai-green">A — are at the discretion of the general partner</b></td><td>The GP <b>"calls" capital at its discretion</b> over the drawdown period — no predetermined schedule. <span class="aai-red">B</span> capital isn't necessarily 100% invested after 3–5 yrs (GP may not call the full amount); <span class="aai-red">C</span> not made only at establishment.</td></tr>
+                <tr><td><b>3</b><br><span style="color:var(--muted);">Term for designating certain holdings as exempt from the fund's ordinary redemption terms:</span></td><td><b class="aai-green">C — side pocket</b></td><td><span class="aai-red">A</span> gate = caps total redemptions at one time; <span class="aai-red">B</span> lockup = a period during which no redemptions are allowed. Side pocket = specific holdings carved out from redemption terms.</td></tr>
+              </table>
+            </div>
+            <div class="aai-card">
+              <div class="aai-title">Module Quiz 8.3 — worked</div>
+              <table class="aai-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b><br><span style="color:var(--muted);">Publicly traded class with risk factors most like private credit:</span></td><td><b class="aai-green">C — high-yield bonds</b></td><td>Private credit shares many risk sensitivities with <b>publicly traded high-yield bonds</b>. (REITs ~ real estate; equity securities ~ private equity.)</td></tr>
+                <tr><td><b>2</b><br><span style="color:var(--muted);">Alternatives are most likely suitable for an investor that:</span></td><td><b class="aai-green">B — has a long time horizon and insists on transparency</b></td><td>Long horizon fits illiquid alts. <span class="aai-red">C</span> believing active management generates excess risk-adjusted returns also fits the premise of alts — but the tested "most likely" answer pairs a long horizon with the suitability profile. <span class="aai-red">A</span> a market-efficiency believer is the WRONG fit. <i>(Note: alts require accepting LOWER transparency — read the option set carefully on exam day.)</i></td></tr>
+                <tr><td><b>3</b><br><span style="color:var(--muted);">Optimization recommended practices <b>least likely</b> include:</span></td><td><b class="aai-green">A — using smoothed historical data as inputs</b></td><td>Smoothed data understate risk → you should <b>unsmooth</b> first, not use it raw. <span class="aai-red">B</span> modeling normal &amp; high-vol periods separately (two-regime) and <span class="aai-red">C</span> placing constraints on allocations are both recommended.</td></tr>
+                <tr><td><b>4</b><br><span style="color:var(--muted);">$20bn endowment raising PE &amp; PC from 5%→10% each will most likely need to:</span></td><td><b class="aai-green">B — account for the expected growth rate of the portfolio when planning the commitment</b></td><td>Reaching/maintaining a target allocation requires forecasting the <b>portfolio's growth</b> (the target is a moving % of a growing base). <span class="aai-red">A</span> forecasting calls/holding cash is part of liquidity management but the allocation-planning need is the growth rate; <span class="aai-red">C</span> $100m vehicles is an arbitrary specific.</td></tr>
+                <tr><td><b>5</b><br><span style="color:var(--muted);">Vs reported IRR, MOIC is <b>less affected</b> by:</span></td><td><b class="aai-green">B — timing of capital calls</b></td><td>IRR is driven by cash-flow timing (calls/distributions) → manipulable. MOIC is a simple multiple → <b>less affected by timing</b>. Both are still affected by <span class="aai-red">A</span> stale pricing &amp; <span class="aai-red">C</span> appraisal-based valuations.</td></tr>
+              </table>
+            </div>
+            <div class="aai-card">
+              <div class="aai-title">High-probability traps</div>
+              <span class="aai-rule"><b class="aai-red">Horizon flips the answer (8.b):</b> SHORT horizon → bonds are the better equity diversifier; LONG horizon → alternatives. Don't give one universal answer.</span>
+              <span class="aai-rule"><b class="aai-red">Biases overstate DIVERSIFICATION, not returns:</b> appraisal smoothing + survivorship/backfill understate risk &amp; correlation → diversification benefits look bigger than real.</span>
+              <span class="aai-rule"><b class="aai-red">PE diversification:</b> private equity has the SAME risk factors as public equity → its role is ↑ returns, NOT diversification.</span>
+              <span class="aai-rule"><b class="aai-red">Short volatility = tail risk:</b> arbitrage &amp; event-driven HF have negatively skewed returns = "short volatility" exposure to downturns — not a safe diversifier.</span>
+              <span class="aai-rule"><b class="aai-red">Fee on committed capital:</b> drawdown funds charge the management fee on COMMITTED (not called) capital → negative early-year returns.</span>
+              <span class="aai-rule"><b class="aai-red">Return only on called capital:</b> a high fund IRR doesn't mean the LP earns that on the full commitment — only on what's been called.</span>
+              <span class="aai-rule"><b class="aai-red">Gate vs lockup vs side pocket:</b> gate = cap on total redemptions; lockup = no-redemption period; side pocket = specific holdings exempt from redemption.</span>
+              <span class="aai-rule"><b class="aai-red">FoF / fund-of-one / SMA:</b> FoF = for non-experts, extra fee layer; fund of one = single-client LP; SMA = separately managed account.</span>
+              <span class="aai-rule"><b class="aai-red">MVO over-allocates to PE:</b> unadjusted smoothed data understate risk → MVO recommends too much illiquid PE; constrain it.</span>
+              <span class="aai-rule"><b class="aai-red">Risk factors aren't stable:</b> factor sensitivities shift over time, and factor correlations RISE in stress — the same flaw as asset correlations.</span>
+              <span class="aai-rule"><b class="aai-red">MOIC vs IRR:</b> IRR is timing-driven &amp; manipulable; MOIC = (underlying value + distributions)/invested capital, less timing-sensitive.</span>
+              <span class="aai-rule"><b class="aai-red">Effective &lt; target:</b> uncalled committed capital means the portfolio's effective alt allocation is below target until the GP invests it.</span>
+            </div>
+          </div>
+
+          <script>
+            function aaiTop(ev,id){
+              var w=document.getElementById('aaiWidget');
+              w.querySelectorAll('.aai-toppanel').forEach(function(p){p.classList.remove('active')});
+              w.querySelectorAll('.aai-toptabs > .aai-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function aaiTab(ev,id){
+              var p=ev.currentTarget.closest('.aai-toppanel');
+              p.querySelectorAll(':scope > .aai-panel').forEach(function(x){x.classList.remove('active')});
+              p.querySelectorAll(':scope > .aai-tabs > .aai-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function aaiHorizon(btn,kind){
+              btn.parentNode.querySelectorAll('.aai-pick').forEach(function(b){b.classList.remove('active')});
+              btn.classList.add('active');
+              var risk,win,out;
+              if(kind==='short'){
+                risk='<b class="aai-orange">Returns VOLATILITY</b> — short-term drawdowns dominate.';
+                win='<b class="aai-blue">BONDS</b>';
+                out='<b class="aai-blue">Short horizon → bonds.</b> Reduce volatility by allocating to a low-correlation asset. Over the 20 years before 2017, bonds had a NEGATIVE correlation with equities (positive in the higher-inflation two decades before that). Because bonds have had a lower equity correlation than alternatives, an equal allocation to bonds reduces an equity portfolio\'s volatility MORE than alternatives. Reported alt vol/correlation also look low but are biased downward (appraisal smoothing, survivorship/backfill, index diversification).';
+              } else {
+                risk='<b class="aai-orange">Failing to achieve the minimum required return</b> over time (e.g. an endowment needing &gt; inflation + distributions).';
+                win='<b class="aai-main-c">ALTERNATIVES</b>';
+                out='<b class="aai-main-c">Long horizon → alternatives.</b> Volatility matters less; the danger is not earning the needed rate. Bonds have a LOWER expected return than equities → allocating to bonds may INCREASE the risk of missing the required return. Alternatives\' correlation with equities — while higher than commonly reported, even after adjusting for biases — is still less than perfect, AND their expected return is higher than bonds → over a long horizon they reduce the risk of failing to meet return requirements.';
+              }
+              document.getElementById('aai-hz-risk').innerHTML=risk;
+              document.getElementById('aai-hz-win').innerHTML=win;
+              document.getElementById('aai-hz-out').innerHTML=out;
+            }
+            function aaiLiqCalc(){
+              var g=function(id){return parseFloat(document.getElementById(id).value);};
+              var commit=g('aai-lq-commit'), prev=g('aai-lq-prev'), callpct=g('aai-lq-callpct'), nav=g('aai-lq-nav'), growth=g('aai-lq-growth'), distpct=g('aai-lq-distpct');
+              if([commit,prev,callpct,nav,growth,distpct].some(function(x){return isNaN(x);})){
+                document.getElementById('aai-lq-out').innerHTML='<span class="aai-red">Fill every field.</span>'; return;
+              }
+              var gr=growth/100;
+              var contrib=(callpct/100)*(commit-prev);
+              var grownNav=nav*(1+gr);
+              var dist=(distpct/100)*grownNav;
+              var navT=grownNav+contrib-dist;
+              document.getElementById('aai-lq-out').innerHTML=
+                '<b>Capital contribution_t</b> = '+callpct+'% × ('+commit+' − '+prev+') = <b class="aai-main-c">'+contrib.toFixed(3)+'</b>'+
+                '<br><b>NAV_(t-1) × (1+growth)</b> = '+nav+' × '+(1+gr).toFixed(3)+' = '+grownNav.toFixed(3)+
+                '<br><b>Distribution_t</b> = '+distpct+'% × '+grownNav.toFixed(3)+' = <b class="aai-main-c">'+dist.toFixed(3)+'</b>'+
+                '<br><b>NAV_t</b> = '+grownNav.toFixed(3)+' + '+contrib.toFixed(3)+' − '+dist.toFixed(3)+' = <b class="aai-green">'+navT.toFixed(3)+'</b>'+
+                '<br><span style="color:var(--muted);">NAV rises with capital calls &amp; investment growth, falls with distributions. Roll NAV_t forward as next period\'s NAV_(t-1).</span>';
+            }
+            function aaiInit(){
+              setTimeout(function(){var b=document.querySelector('#aair-mit .aai-pick.active'); if(b) aaiHorizon(b,'short');},30);
+              setTimeout(function(){if(document.getElementById('aai-lq-out')) aaiLiqCalc();},30);
+            }
+          </script>
+        </div>
+
         <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
           <style>
             #sfWidget { --sf-main:#A78BFA; --sf-gold:#D4A017; --sf-green:#3DD68C; --sf-red:#FF7B72; --sf-orange:#F0A04B; --sf-blue:#79C0FF; --sf-purple:#BC8CFF; }
@@ -22109,7 +22588,7 @@ const DEFAULT_DECK = {
     { name:"IPS",                subtopics:["Individual","Institutional"] },
     { name:"Asset Allocation",   subtopics:[] },
     { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Currency Management"] },
-    { name:"Portfolio Construction", subtopics:["Overview of Equity Portfolio Management","Overview Of Fixed-Income Portfolio Management","Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
+    { name:"Portfolio Construction", subtopics:["Overview of Equity Portfolio Management","Overview Of Fixed-Income Portfolio Management","Asset Allocation to Alternative Investments","Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
     { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
@@ -22515,6 +22994,96 @@ const DEFAULT_DECK = {
     {id:"fipm41",topic:"Portfolio Construction",subtopic:"Overview Of Fixed-Income Portfolio Management",type:"framework",
      q:"Building ladders without individual bonds",
      a:"[hl]Target-date (fixed-maturity) bond ETFs[/hl]: each ETF has a designated maturity year, passively managed to replicate a bond maturing that year. Cost advantages vs individual bonds + more liquidity if unanticipated sales are needed.\n[hl]Disadvantage / alternative[/hl]: for some investors an ongoing (no target date) passive index or active bond fund may be better — larger, greater credit-risk diversification, more liquid than holding the underlying bonds directly."},
+    {id:"aai1",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Roles of alternatives + the return/risk spectrum (LOS 8.a)",
+     a:"Goal: improve risk/return profile → ↑ [hl]Sharpe ratio[/hl] (higher return, lower risk, and/or LOW correlation); also income, capital growth, safety.\n[rl][hl]PE & private credit[/hl] = return-enhancing (risk-increasing)[/rl][rl][hl]Real assets[/hl] = risk-reducing (lower-return)[/rl][rl][hl]Hedge funds[/hl] = anywhere on the spectrum (depends on strategy)[/rl]"},
+    {id:"aai2",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Role of each alternative class",
+     a:"[rl][hl]Hedge funds[/hl] — l/s & short bias slightly ↓ equity beta but mainly ↑ returns via selection; merger arb/global macro less correlated; arb & event-driven = NEG SKEW = tail risk = short volatility[/rl][rl][hl]Private equity[/hl] — same risk factors as public equity → main role = ↑ returns (limited diversification)[/rl][rl][hl]Private credit[/hl] — direct lending = income (like public debt + illiquidity premium); distressed = equity-like[/rl][rl][hl]CRE & real assets[/hl] — inflation hedge[/rl]"},
+    {id:"aai3",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"command",
+     q:"Alternatives vs bonds as equity risk mitigators (LOS 8.b)",
+     a:"Depends on HORIZON.\n[rl][hl]SHORT horizon[/hl] → primary risk = returns VOLATILITY → BONDS better (lower, even negative, equity correlation)[/rl][rl][hl]LONG horizon[/hl] → primary risk = failing to achieve minimum required return → ALTERNATIVES better (higher expected return than bonds; correlation still < perfect even after bias adjustment)[/rl]"},
+    {id:"aai4",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Why reported alt volatility/correlation is biased downward",
+     a:"Reported alt vol & equity correlation look LOW but are biased DOWN → true values HIGHER:\n[rl][hl]Appraisal-based valuations[/hl] → smoothing of returns[/rl][rl][hl]Sampling biases[/hl] — survivorship + backfill → understate downside risk[/rl][rl][hl]Index diversification[/hl] — low correlations among funds → index vol < average component vol[/rl]\nNet effect: diversification benefits are OVERSTATED."},
+    {id:"aai5",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Traditional approaches to the investment opportunity set (LOS 8.c)",
+     a:"[rl][hl]By liquidity[/hl] (Fig 8.1) — publicly traded (futures, REITs) vs not; among private, by length of commitment (PE longer than private credit; both longer than liquid alts)[/rl][rl][hl]By economic environment[/hl] (Fig 8.2) — performance across growth & inflation: deflation/low-growth → non-indexed bonds; high inflation → indexed bonds, commodities, real assets; high growth → public/private equity, private credit[/rl]"},
+    {id:"aai6",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Risk-factor-based approach: definition, pros, cons",
+     a:"Statistically estimate each class's SENSITIVITIES to risk factors (growth, inflation, rates, spreads, currency, liquidity, cap, value/growth). [hl]PE ~ public equity[/hl]; [hl]private credit ~ HY bonds[/hl].\n[hl]Advantages[/hl]: finds common risk sources across classes → avoids false diversification; supports integrated risk management.\n[hl]Disadvantages[/hl]: sensitive to the analysis period; harder to communicate & implement."},
+    {id:"aai7",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Setting return expectations + MVO limitations (LOS 8.d)",
+     a:"Hard due to short history & limited data validity.\n[hl]Build-up[/hl] = Σ(expected return of each risk-factor exposure) + risk-free rate, then + manager ALPHA − fees & taxes.\n[hl]MVO limitations[/hl]: illiquidity/valuation, option-like returns, low/neg returns in drawdowns & high later → CANNOT assume normal distribution. Uncalled committed capital → effective allocation < target."},
+    {id:"aai8",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Investment vehicles for alternatives",
+     a:"[rl][hl]Limited partnership[/hl] — GP = manager, LPs = investors (liability = committed capital); often offshore[/rl][rl][hl]Direct LP[/hl] — large investors; can't be involved in operations; can co-invest[/rl][rl][hl]Fund-of-funds (FoF)[/hl] — for those lacking expertise; access + DRAWBACK = extra fee layer[/rl][rl][hl]SMA / fund of one[/hl] — large investors, favorable terms; GP may favor standard-fee LPs[/rl][rl][hl]UCITS / open-end mutual[/hl] — smaller investors; more regulated → constrains strategies[/rl]"},
+    {id:"aai9",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Liquidity concerns: hedge funds vs PE/PC/RE",
+     a:"[hl]Hedge funds[/hl]: capital quarterly/monthly; LOCKUP (6mo–1yr); redemptions quarterly/annual w/ notice; GATES (max redeemable at once).\n[hl]PE/PC/RE/real assets — STRICTER than HF[/hl]: subscriptions in 'closes'; GP CALLS capital over 3–5yr; redemptions typically unavailable → fund DISTRIBUTES over 10–12yr life; small secondary market at discounts.\n[hl]Side pocket[/hl]: less-liquid holdings exempt from ordinary redemptions."},
+    {id:"aai10",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"command",
+     q:"Fig 8.3 — $10m PE commitment timeline (key facts)",
+     a:"LP commits $10m; [hl]only $9m is CALLED[/hl] (GP not required to call full amount). Drawdowns yrs 1–3 (−$3m,−$4m,−$2m); distributions yrs 6/8/10 (+$4m,+$5m,+$3m); fund terminates ~yr 10.\n[rl]Calls & distributions NOT on a predetermined schedule[/rl][rl]LP earns the fund's return ONLY on CALLED capital[/rl][rl]Opportunity cost of committed capital: cash = low return; illiquid = risk missing a call (penalty up to forfeiting all capital)[/rl]"},
+    {id:"aai11",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Fees & taxes for alternatives",
+     a:"[hl]'2 and 20'[/hl] = 2% mgmt fee on AUM + 20% incentive on gains; admin may pass through.\n[hl]Drawdown funds charge the mgmt fee on COMMITTED capital[/hl] (not called) → NEGATIVE returns in early years when little is called.\nTaxes: short-term taxable income / withholding; hard to estimate for reporting; tax-exempts must avoid income deemed unrelated (UBTI)."},
+    {id:"aai12",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Intermediaries vs in-house program",
+     a:"[hl]In-house[/hl] suits investors needing customization, close control, or co-investments. [hl]'Build or buy'[/hl] = can the investor match an intermediary at lower cost / earn enough to offset higher costs?\n[hl]Capacity trap[/hl]: even experts at picking managers find top managers attract more capital than they can invest productively → they CLOSE funds; may also decline investors with conflicting reporting needs."},
+    {id:"aai13",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Suitability of alternatives (LOS 8.e)",
+     a:"[rl]Only for LARGE investors with (or able to hire) expertise[/rl][rl]NOT for investors who believe markets are price-efficient (alts rest on active-management skill)[/rl][rl][hl]Time horizon key[/hl]: PE & private real assets → LONG (15+ yrs); short-lockup HF / liquid (public equity, commodity futures) → shorter horizons[/rl][rl]Must accept LOWER transparency ('blind pools'); needs strong governance (policy, expert decisions, reliable reporting)[/rl]"},
+    {id:"aai14",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Why modeling alt returns is challenging (LOS 8.f)",
+     a:"[rl][hl]Smoothed/stale returns[/hl] (appraisal valuations) → UNDERESTIMATE risk → test for SERIAL CORRELATION → unsmooth[/rl][rl][hl]Non-normal[/hl] — skew & EXCESS KURTOSIS (fat tails) > traditional → adjust (stochastic vol, regime switching, EVT) or use observed returns[/rl][rl][hl]Short history[/hl] → small-sample & time-period biases[/rl]\nFat-tail modeling: two-regime (normal + high-vol period, each own mean/var) combined by probability → non-normal."},
+    {id:"aai15",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Three optimization approaches for alt allocation",
+     a:"Two stages: traditional only, then + alts.\n[rl][hl]Monte Carlo[/hl] — 4 steps: pick asset returns vs factors; define behavior (mean reversion, fat tails, unstable corr); translate factors→returns if needed; output shortfall probability[/rl][rl][hl]MVO[/hl] — over-allocates to illiquid PE if smoothing unadjusted; constrain min/max or limit vol/downside; guideline not prescription[/rl][rl][hl]Risk-factor-based[/hl] — model factors not classes; extra step translating factor exposures → allocation[/rl]"},
+    {id:"aai16",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Risk-factor-based optimization — two limitations",
+     a:"[rl]Some asset classes' factor SENSITIVITIES are not stable over time[/rl][rl]Correlations among risk factors may behave like correlations among asset-class returns and INCREASE during periods of financial stress[/rl]\n(So a factor model can give a false sense of diversification in a crisis, just like an asset-class model.)"},
+    {id:"aai17",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Liquidity planning importance + uncalled-capital approach (LOS 8.g)",
+     a:"Crucial for programs with near-term drawdowns + long horizons: meet capital commitments while still providing required liquidity.\n[rl]Build forecasting models for cash flows & annual commitments needed to reach/maintain the target[/rl][rl]Invest UNCALLED committed capital in LIQUID PROXIES (e.g. public REITs for a private real estate commitment) — cash equivalents drag returns[/rl][rl]Reach target over VINTAGE years (ramp up); stress-test (e.g. delayed distributions earmarked for calls)[/rl]"},
+    {id:"aai18",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"command",
+     q:"Liquidity forecasting formulas (capital call / distribution / NAV)",
+     a:"[hl]Capital contribution_t[/hl] = (% called in t) × (committed − previously called)\n[hl]Distribution_t[/hl] = (% distributed in t) × [NAV_(t−1) × (1 + growth)]\n[hl]NAV_t[/hl] = NAV_(t−1) × (1 + growth) + contributions_t − distributions_t\nNAV rises with capital calls & investment returns, falls with distributions."},
+    {id:"aai19",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Monitoring an alt program: evaluate vs goals; IRR vs MOIC (LOS 8.h)",
+     a:"Evaluate vs the program's GOALS (return/risk/income/safety), NOT just a benchmark (active-dependent, inconsistent indexes, time lags).\n[hl]IRR[/hl] is influenced by the TIMING of capital calls & distributions → subject to manipulation.\n[hl]MOIC[/hl] = (value of underlying investments + distributions) / total invested capital → LESS affected by timing (still affected by stale pricing & appraisal valuations)."},
+    {id:"aai20",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"What to monitor in an alt fund's management",
+     a:"[rl][hl]Key persons[/hl] — LPs may gain rights if one leaves; understand why[/rl][rl][hl]Manager–investor alignment[/hl] — conflicts if new fund holds same assets, or manager withdraws co-invested capital[/rl][rl][hl]Style drift[/hl] — watch holdings over time[/rl][rl][hl]Risk framework[/hl] — esp. leveraged strategies[/rl][rl][hl]Other investors[/hl] — unexpected redemptions = warning (fire-sale risk, gates)[/rl][rl][hl]Capital growth[/hl] — too much capital → lesser opportunities[/rl][rl][hl]Service providers[/hl] — auditor/custodian changes[/rl]"},
+    {id:"aai21",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"command",
+     q:"Quiz 8.1 Q1 — best category to diversify a public-equity portfolio",
+     a:"[hl]C — commercial real estate & global macro hedge funds[/hl]. Diversification needs LOW correlation with equities.\nWRONG: A (private equity has the SAME risk factors as public equity; short-bias mainly ↑ returns); B (distressed debt is equity-like). Both are poor equity diversifiers."},
+    {id:"aai22",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"command",
+     q:"Quiz 8.1 Q2 — appraisal & sampling biases overstate what?",
+     a:"[hl]C — diversification benefits[/hl]. Smoothing + survivorship/backfill understate volatility & equity correlation → diversification looks bigger than it is. They do NOT overstate returns (A) or risk measures (B)."},
+    {id:"aai23",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"command",
+     q:"Quiz 8.2 Q1 & Q2 — fund of one; PE cash flows",
+     a:"Q1: a limited-partnership structure with a single client = [hl]B, a fund of one[/hl] (UCITS = retail regulated; SMA = separately managed account).\nQ2: cash flows from investors into a PE LP = [hl]A, at the discretion of the general partner[/hl] (GP calls capital, no fixed schedule; not necessarily 100% invested after 3–5 yrs; not only at establishment)."},
+    {id:"aai24",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"command",
+     q:"Quiz 8.2 Q3 — holdings exempt from ordinary redemption terms",
+     a:"[hl]C — side pocket[/hl]. A GP designates certain less-liquid holdings as exempt from the fund's ordinary redemption terms.\nGate = caps total redemptions at one time; Lockup = a period during which no redemptions are allowed."},
+    {id:"aai25",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"command",
+     q:"Quiz 8.3 Q1 & Q3 — risk factors like private credit; optimization least likely",
+     a:"Q1: public class with risk factors most like private credit = [hl]C, high-yield bonds[/hl] (REITs~real estate; equity~private equity).\nQ3: optimization recommended practices LEAST likely include [hl]A, using smoothed historical data as inputs[/hl] (you should unsmooth first). Modeling normal & high-vol periods separately and placing allocation constraints ARE recommended."},
+    {id:"aai26",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"command",
+     q:"Quiz 8.3 Q4 & Q5 — endowment raising PE/PC; MOIC vs IRR",
+     a:"Q4: $20bn endowment raising PE & PC 5%→10% most likely needs to [hl]B, account for the expected growth rate of the portfolio[/hl] when planning the commitment (target is a % of a growing base; reach/maintain over years).\nQ5: vs reported IRR, MOIC is less affected by [hl]B, timing of capital calls[/hl] (both still affected by stale pricing & appraisal valuations)."},
+    {id:"aai27",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Decisive trap: return only on called capital; fee on committed capital",
+     a:"[rl]A fund may post an impressive IRR, but the LP earns it ONLY on CALLED capital — not the full commitment[/rl][rl]Drawdown-structure funds charge the management fee on COMMITTED capital regardless of how much is called → negative returns in early years[/rl]\nTogether these make a private fund's early-life economics worse than the headline IRR suggests."},
+    {id:"aai28",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Decisive trap: short-volatility / negative skew in hedge funds",
+     a:"Arbitrage & event-driven hedge funds often have [hl]negatively skewed[/hl] return distributions = TAIL RISK = 'short volatility' exposure = exposure to market downturns / unexpected events.\nSo they are NOT safe equity diversifiers despite low reported correlation — the downside shows up exactly in stress."},
+    {id:"aai29",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Decisive trap: effective allocation below target; gate vs lockup vs side pocket",
+     a:"[rl]Uncalled committed capital → a portfolio's EFFECTIVE alt allocation is BELOW target until the GP invests it[/rl][rl][hl]Gate[/hl] = cap on total redemptions at one time[/rl][rl][hl]Lockup[/hl] = period during which redemptions are blocked (or penalized)[/rl][rl][hl]Side pocket[/hl] = specific holdings exempt from ordinary redemption terms[/rl]"},
+    {id:"aai30",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Decisive trap: horizon determines bonds vs alternatives",
+     a:"The single most tested 8.b point:\n[rl][hl]SHORT horizon[/hl] → risk is VOLATILITY → BONDS are the better equity diversifier (lower / historically negative correlation)[/rl][rl][hl]LONG horizon[/hl] → risk is FAILING the required return → ALTERNATIVES are better (higher expected return than bonds; correlation still imperfect after adjusting for biases)[/rl]\nNever give one universal answer — the horizon flips it."},
   ]
 };
 
@@ -23348,7 +23917,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -23373,6 +23942,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'cmWidget' && typeof cmInit === 'function') setTimeout(cmInit, 50);
     if (widgetId === 'eqWidget' && typeof eqInit === 'function') setTimeout(eqInit, 50);
     if (widgetId === 'fipmWidget' && typeof fipmInit === 'function') setTimeout(fipmInit, 50);
+    if (widgetId === 'aaiWidget' && typeof aaiInit === 'function') setTimeout(aaiInit, 50);
   }
 }
 
@@ -23393,6 +23963,7 @@ function openNote(key, topic, subtopic) {
     'PM Pathway||Trade Strategy and Execution': 'tswWidget',
     'Portfolio Construction||Overview of Equity Portfolio Management': 'eqWidget',
     'Portfolio Construction||Overview Of Fixed-Income Portfolio Management': 'fipmWidget',
+    'Portfolio Construction||Asset Allocation to Alternative Investments': 'aaiWidget',
     'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
     'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
     'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
@@ -23404,7 +23975,7 @@ function openNote(key, topic, subtopic) {
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
