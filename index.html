@@ -20047,8 +20047,13 @@ MOIC              = (value of underlying investments + distributions) / total in
         <div id="pwmWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
           <style>
             #pwmWidget { --pwm-main:#E0A82E; --pwm-gold:#D4A017; --pwm-green:#3DD68C; --pwm-red:#FF7B72; --pwm-orange:#F0A04B; --pwm-blue:#79C0FF; --pwm-teal:#2DD4BF; }
+            #pwmWidget .pwm-modtabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
+            #pwmWidget .pwm-modtab { background:var(--surface2); border:1px solid var(--pwm-main); color:var(--pwm-main); padding:10px 18px; border-radius:8px; font-family:var(--serif); font-size:14px; font-weight:700; cursor:pointer; letter-spacing:.02em; }
+            #pwmWidget .pwm-modtab.active { background:var(--pwm-main); color:#0D1117; }
+            #pwmWidget .pwm-modpanel { display:none; }
+            #pwmWidget .pwm-modpanel.active { display:block; }
             #pwmWidget .pwm-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
-            #pwmWidget .pwm-toptab { background:var(--surface2); border:1px solid var(--pwm-main); color:var(--pwm-main); padding:9px 16px; border-radius:7px; font-family:var(--serif); font-size:13.5px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #pwmWidget .pwm-toptab { background:var(--surface2); border:1px solid rgba(224,168,46,.5); color:var(--pwm-main); padding:7px 13px; border-radius:6px; font-family:var(--serif); font-size:12.5px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
             #pwmWidget .pwm-toptab.active { background:var(--pwm-main); color:#0D1117; }
             #pwmWidget .pwm-toppanel { display:none; }
             #pwmWidget .pwm-toppanel.active { display:block; }
@@ -20089,26 +20094,24 @@ MOIC              = (value of underlying investments + distributions) / total in
             #pwmWidget .pwm-out { background:#0B0F14; border-left:3px solid var(--pwm-main); border-radius:4px; padding:13px 15px; margin-top:12px; font-size:12.5px; line-height:1.6; color:#C9D1D9; }
           </style>
 
-          <div class="pwm-toptabs">
-            <button class="pwm-toptab active" onclick="pwmTop(event,'pwm-types')">Wealth Types (9.a)</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-global')">Global Creation &amp; Regions</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-gini')">Inequality &amp; Gini</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-clients')">Clients &amp; Family Offices</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz')">Quiz 9.1</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-lc')">Life-Cycle &amp; HC (9.b)</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz2')">Quiz 9.2</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-ic')">Individual Considerations (9.c)</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-dubois')">DuBois Essay</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz3')">Quiz 9.3</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-tax')">Taxation &amp; Inflation (9.d)</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-taxcalc')">Tax-Drag Calc</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz4')">Quiz 9.4</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-ips')">IPS Structure (9.e)</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-ipsex')">IPS Examples</button>
-            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz5')">Quiz 9.5</button>
+          <div class="pwm-modtabs">
+            <button class="pwm-modtab active" onclick="pwmMod(event,'pwmm-91')">9.1 Wealth Across the World</button>
+            <button class="pwm-modtab" onclick="pwmMod(event,'pwmm-92')">9.2 Life-Cycle &amp; Human Capital</button>
+            <button class="pwm-modtab" onclick="pwmMod(event,'pwmm-93')">9.3 Individual Considerations</button>
+            <button class="pwm-modtab" onclick="pwmMod(event,'pwmm-94')">9.4 Taxation &amp; Inflation</button>
+            <button class="pwm-modtab" onclick="pwmMod(event,'pwmm-95')">9.5 Investors &amp; IPS</button>
           </div>
 
-          <!-- ════════ WEALTH TYPES 9.a ════════ -->
+          <!-- ════════ MODULE 9.1 Wealth Across the World ════════ -->
+          <div id="pwmm-91" class="pwm-modpanel active">
+            <div class="pwm-toptabs">
+              <button class="pwm-toptab active" onclick="pwmTop(event,'pwm-types')">Wealth Types</button>
+              <button class="pwm-toptab" onclick="pwmTop(event,'pwm-global')">Global Creation &amp; Regions</button>
+              <button class="pwm-toptab" onclick="pwmTop(event,'pwm-gini')">Inequality &amp; Gini</button>
+              <button class="pwm-toptab" onclick="pwmTop(event,'pwm-clients')">Clients &amp; Family Offices</button>
+              <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz')">Quiz 9.1</button>
+            </div>
+
           <div id="pwm-types" class="pwm-toppanel active">
             <div class="pwm-card">
               <div class="pwm-title">LOS 9.a — Key wealth definitions (Fig 9.1)</div>
@@ -20136,6 +20139,7 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ GLOBAL CREATION & REGIONS ════════ -->
+
           <div id="pwm-global" class="pwm-toppanel">
             <div class="pwm-tabs">
               <button class="pwm-tab active" onclick="pwmTab(event,'pwmg-create')">Creation vs Transfer</button>
@@ -20177,6 +20181,7 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ INEQUALITY & GINI ════════ -->
+
           <div id="pwm-gini" class="pwm-toppanel">
             <div class="pwm-tabs">
               <button class="pwm-tab active" onclick="pwmTab(event,'pwmi-dist')">Distribution Facts</button>
@@ -20227,6 +20232,7 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ CLIENTS & FAMILY OFFICES ════════ -->
+
           <div id="pwm-clients" class="pwm-toppanel">
             <div class="pwm-card">
               <div class="pwm-title">Profiling &amp; serving clients</div>
@@ -20247,6 +20253,7 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ QUIZ 9.1 ════════ -->
+
           <div id="pwm-quiz" class="pwm-toppanel">
             <div class="pwm-card">
               <div class="pwm-title">Module Quiz 9.1 — worked</div>
@@ -20275,7 +20282,17 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ LIFE-CYCLE & HUMAN CAPITAL 9.b ════════ -->
-          <div id="pwm-lc" class="pwm-toppanel">
+
+          </div>
+
+          <!-- ════════ MODULE 9.2 Life-Cycle & Human Capital ════════ -->
+          <div id="pwmm-92" class="pwm-modpanel">
+            <div class="pwm-toptabs">
+              <button class="pwm-toptab active" onclick="pwmTop(event,'pwm-lc')">Life-Cycle &amp; HC</button>
+              <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz2')">Quiz 9.2</button>
+            </div>
+
+          <div id="pwm-lc" class="pwm-toppanel active">
             <div class="pwm-tabs">
               <button class="pwm-tab active" onclick="pwmTab(event,'pwml-stages')">7 Life Stages</button>
               <button class="pwm-tab" onclick="pwmTab(event,'pwml-hc')">Human Capital</button>
@@ -20355,6 +20372,7 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ QUIZ 9.2 ════════ -->
+
           <div id="pwm-quiz2" class="pwm-toppanel">
             <div class="pwm-card">
               <div class="pwm-title">Module Quiz 9.2 — worked</div>
@@ -20378,7 +20396,18 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ INDIVIDUAL CONSIDERATIONS 9.c ════════ -->
-          <div id="pwm-ic" class="pwm-toppanel">
+
+          </div>
+
+          <!-- ════════ MODULE 9.3 Individual Considerations ════════ -->
+          <div id="pwmm-93" class="pwm-modpanel">
+            <div class="pwm-toptabs">
+              <button class="pwm-toptab active" onclick="pwmTop(event,'pwm-ic')">Individual Considerations</button>
+              <button class="pwm-toptab" onclick="pwmTop(event,'pwm-dubois')">DuBois Essay</button>
+              <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz3')">Quiz 9.3</button>
+            </div>
+
+          <div id="pwm-ic" class="pwm-toppanel active">
             <div class="pwm-tabs">
               <button class="pwm-tab active" onclick="pwmTab(event,'pwmic-ret')">Returns</button>
               <button class="pwm-tab" onclick="pwmTab(event,'pwmic-risk')">Risks</button>
@@ -20461,6 +20490,7 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ DUBOIS WORKED ESSAY ════════ -->
+
           <div id="pwm-dubois" class="pwm-toppanel">
             <div class="pwm-card">
               <div class="pwm-title">Worked essay — Bonnie DuBois</div>
@@ -20483,6 +20513,7 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ QUIZ 9.3 ════════ -->
+
           <div id="pwm-quiz3" class="pwm-toppanel">
             <div class="pwm-card">
               <div class="pwm-title">Module Quiz 9.3 — worked</div>
@@ -20506,7 +20537,18 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ TAXATION & INFLATION 9.d ════════ -->
-          <div id="pwm-tax" class="pwm-toppanel">
+
+          </div>
+
+          <!-- ════════ MODULE 9.4 Taxation & Inflation ════════ -->
+          <div id="pwmm-94" class="pwm-modpanel">
+            <div class="pwm-toptabs">
+              <button class="pwm-toptab active" onclick="pwmTop(event,'pwm-tax')">Taxation &amp; Inflation</button>
+              <button class="pwm-toptab" onclick="pwmTop(event,'pwm-taxcalc')">Tax-Drag Calc</button>
+              <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz4')">Quiz 9.4</button>
+            </div>
+
+          <div id="pwm-tax" class="pwm-toppanel active">
             <div class="pwm-tabs">
               <button class="pwm-tab active" onclick="pwmTab(event,'pwmtax-types')">Tax Types</button>
               <button class="pwm-tab" onclick="pwmTab(event,'pwmtax-prog')">Progressive</button>
@@ -20619,6 +20661,7 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ TAX-DRAG CALCULATOR ════════ -->
+
           <div id="pwm-taxcalc" class="pwm-toppanel">
             <div class="pwm-card">
               <div class="pwm-title">Interactive tax-drag calculator</div>
@@ -20648,6 +20691,7 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ QUIZ 9.4 ════════ -->
+
           <div id="pwm-quiz4" class="pwm-toppanel">
             <div class="pwm-card">
               <div class="pwm-title">Module Quiz 9.4 — worked (7 Qs)</div>
@@ -20675,7 +20719,18 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ IPS STRUCTURE 9.e ════════ -->
-          <div id="pwm-ips" class="pwm-toppanel">
+
+          </div>
+
+          <!-- ════════ MODULE 9.5 Investors & IPS ════════ -->
+          <div id="pwmm-95" class="pwm-modpanel">
+            <div class="pwm-toptabs">
+              <button class="pwm-toptab active" onclick="pwmTop(event,'pwm-ips')">IPS Structure</button>
+              <button class="pwm-toptab" onclick="pwmTop(event,'pwm-ipsex')">IPS Examples</button>
+              <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz5')">Quiz 9.5</button>
+            </div>
+
+          <div id="pwm-ips" class="pwm-toppanel active">
             <div class="pwm-tabs">
               <button class="pwm-tab active" onclick="pwmTab(event,'pwmips-over')">6 Sections</button>
               <button class="pwm-tab" onclick="pwmTab(event,'pwmips-obj')">Objectives</button>
@@ -20788,6 +20843,7 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ IPS WORKED EXAMPLES ════════ -->
+
           <div id="pwm-ipsex" class="pwm-toppanel">
             <div class="pwm-card">
               <div class="pwm-title">Elam — preparing investment objectives</div>
@@ -20815,6 +20871,7 @@ MOIC              = (value of underlying investments + distributions) / total in
           </div>
 
           <!-- ════════ QUIZ 9.5 ════════ -->
+
           <div id="pwm-quiz5" class="pwm-toppanel">
             <div class="pwm-card">
               <div class="pwm-title">Module Quiz 9.5 — worked (5 Qs)</div>
@@ -20840,11 +20897,20 @@ MOIC              = (value of underlying investments + distributions) / total in
             </div>
           </div>
 
+          </div>
+
           <script>
-            function pwmTop(ev,id){
+            function pwmMod(ev,id){
               var w=document.getElementById('pwmWidget');
-              w.querySelectorAll('.pwm-toppanel').forEach(function(p){p.classList.remove('active')});
-              w.querySelectorAll('.pwm-toptabs > .pwm-toptab').forEach(function(b){b.classList.remove('active')});
+              w.querySelectorAll('.pwm-modpanel').forEach(function(p){p.classList.remove('active')});
+              w.querySelectorAll('.pwm-modtabs > .pwm-modtab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function pwmTop(ev,id){
+              var mp=ev.currentTarget.closest('.pwm-modpanel');
+              mp.querySelectorAll(':scope > .pwm-toppanel').forEach(function(p){p.classList.remove('active')});
+              mp.querySelectorAll(':scope > .pwm-toptabs > .pwm-toptab').forEach(function(b){b.classList.remove('active')});
               document.getElementById(id).classList.add('active');
               ev.currentTarget.classList.add('active');
             }
