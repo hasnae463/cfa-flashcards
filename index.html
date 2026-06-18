@@ -20044,6 +20044,860 @@ MOIC              = (value of underlying investments + distributions) / total in
           </script>
         </div>
 
+        <div id="pwmWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #pwmWidget { --pwm-main:#E0A82E; --pwm-gold:#D4A017; --pwm-green:#3DD68C; --pwm-red:#FF7B72; --pwm-orange:#F0A04B; --pwm-blue:#79C0FF; --pwm-teal:#2DD4BF; }
+            #pwmWidget .pwm-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #pwmWidget .pwm-toptab { background:var(--surface2); border:1px solid var(--pwm-main); color:var(--pwm-main); padding:9px 16px; border-radius:7px; font-family:var(--serif); font-size:13.5px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #pwmWidget .pwm-toptab.active { background:var(--pwm-main); color:#0D1117; }
+            #pwmWidget .pwm-toppanel { display:none; }
+            #pwmWidget .pwm-toppanel.active { display:block; }
+            #pwmWidget .pwm-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+            #pwmWidget .pwm-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #pwmWidget .pwm-tab.active { background:rgba(224,168,46,.14); border-color:var(--pwm-main); color:var(--pwm-main); }
+            #pwmWidget .pwm-panel { display:none; }
+            #pwmWidget .pwm-panel.active { display:block; }
+            #pwmWidget .pwm-card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:16px 18px; margin-bottom:14px; }
+            #pwmWidget .pwm-title { font-family:var(--serif); font-size:16px; color:var(--pwm-main); font-weight:600; margin-bottom:10px; }
+            #pwmWidget .pwm-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:8px; }
+            #pwmWidget .pwm-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #pwmWidget .pwm-rule { display:block; padding:6px 0; border-bottom:1px solid var(--border); font-size:12.5px; line-height:1.5; color:#C9D1D9; }
+            #pwmWidget .pwm-rule:last-child { border-bottom:none; }
+            #pwmWidget .pwm-tip { background:rgba(46,160,67,.08); border-left:3px solid var(--pwm-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #pwmWidget .pwm-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--pwm-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #pwmWidget .pwm-info { background:rgba(121,192,255,.08); border-left:3px solid var(--pwm-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #pwmWidget .pwm-green { color:var(--pwm-green); }
+            #pwmWidget .pwm-red { color:var(--pwm-red); }
+            #pwmWidget .pwm-calc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:12px 0; }
+            #pwmWidget .pwm-cl { display:flex; flex-direction:column; font-size:11px; color:var(--muted); font-family:var(--mono); gap:4px; }
+            #pwmWidget .pwm-ci { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:7px 9px; color:#C9D1D9; font-family:var(--mono); font-size:13px; }
+            #pwmWidget .pwm-calc-modes { display:flex; gap:6px; flex-wrap:wrap; margin:6px 0 10px; }
+            #pwmWidget .pwm-mode-btn { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; cursor:pointer; }
+            #pwmWidget .pwm-mode-btn.active { background:rgba(224,168,46,.13); border-color:var(--pwm-main); color:var(--pwm-main); }
+            #pwmWidget .pwm-calc-go { background:var(--pwm-main); color:#0D1117; border:none; padding:9px 22px; border-radius:7px; font-family:var(--serif); font-weight:600; font-size:13px; cursor:pointer; }
+            #pwmWidget .pwm-calc-out { background:#0B0F14; border-radius:6px; padding:13px 15px; margin-top:12px; font-family:var(--mono); font-size:12.5px; line-height:1.8; color:#C9D1D9; white-space:pre-wrap; }
+            #pwmWidget .pwm-orange { color:var(--pwm-orange); }
+            #pwmWidget .pwm-blue { color:var(--pwm-blue); }
+            #pwmWidget .pwm-gold { color:var(--pwm-gold); }
+            #pwmWidget .pwm-main-c { color:var(--pwm-main); }
+            #pwmWidget .pwm-tbl { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #pwmWidget .pwm-tbl th { background:#0B0F14; color:var(--pwm-main); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #pwmWidget .pwm-tbl td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+            #pwmWidget .pwm-pick-row { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0; }
+            #pwmWidget .pwm-pick { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:7px 13px; border-radius:6px; font-family:var(--mono); font-size:11px; cursor:pointer; }
+            #pwmWidget .pwm-pick.active { background:rgba(224,168,46,.14); border-color:var(--pwm-main); color:var(--pwm-main); }
+            #pwmWidget .pwm-out { background:#0B0F14; border-left:3px solid var(--pwm-main); border-radius:4px; padding:13px 15px; margin-top:12px; font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+          </style>
+
+          <div class="pwm-toptabs">
+            <button class="pwm-toptab active" onclick="pwmTop(event,'pwm-types')">Wealth Types (9.a)</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-global')">Global Creation &amp; Regions</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-gini')">Inequality &amp; Gini</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-clients')">Clients &amp; Family Offices</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz')">Quiz 9.1</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-lc')">Life-Cycle &amp; HC (9.b)</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz2')">Quiz 9.2</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-ic')">Individual Considerations (9.c)</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-dubois')">DuBois Essay</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz3')">Quiz 9.3</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-tax')">Taxation &amp; Inflation (9.d)</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-taxcalc')">Tax-Drag Calc</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz4')">Quiz 9.4</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-ips')">IPS Structure (9.e)</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-ipsex')">IPS Examples</button>
+            <button class="pwm-toptab" onclick="pwmTop(event,'pwm-quiz5')">Quiz 9.5</button>
+          </div>
+
+          <!-- ════════ WEALTH TYPES 9.a ════════ -->
+          <div id="pwm-types" class="pwm-toppanel active">
+            <div class="pwm-card">
+              <div class="pwm-title">LOS 9.a — Key wealth definitions (Fig 9.1)</div>
+              <table class="pwm-tbl">
+                <tr><th>Type</th><th>Definition</th><th>Decisive detail</th></tr>
+                <tr><td><b class="pwm-main-c">Aggregate wealth</b></td><td>Total value of ALL assets (personal property, financial, real, productive, rights).</td><td><b class="pwm-red">Asset-only — BEFORE subtracting liabilities.</b></td></tr>
+                <tr><td><b class="pwm-main-c">Net worth</b></td><td>Assets − liabilities, using <b>easily measurable</b> values (listed securities, real estate, debts).</td><td><b class="pwm-red">EXCLUDES complex intangibles (e.g. copyrights).</b></td></tr>
+                <tr><td><b class="pwm-main-c">Financial wealth</b></td><td>All financial assets (mutual funds, stocks, bonds, HF holdings) + accrued <b>pension rights</b> (earned by past work).</td><td><b class="pwm-red">EXCLUDES stakes in family businesses → those are PRODUCTIVE assets.</b></td></tr>
+                <tr><td><b class="pwm-main-c">Real wealth</b></td><td>Tangible assets — real estate &amp; commodities.</td><td>Excludes personal property &amp; financial assets; <b>primary residence</b> often the biggest element.</td></tr>
+                <tr><td><b class="pwm-main-c">Personal property</b></td><td>Cars, clothes, furniture.</td><td>Not expected to appreciate; may be worth more to the <b>holder</b> than fair market value.</td></tr>
+                <tr><td><b class="pwm-main-c">Productive wealth</b></td><td>Assets generating wealth via production/business.</td><td><b class="pwm-main-c">Direct shareholding in a family business</b> lives here, NOT financial wealth.</td></tr>
+                <tr><td><b class="pwm-main-c">Liquid wealth</b></td><td>Easily converted to cash (publicly traded securities).</td><td>A subset of the assets above.</td></tr>
+                <tr><td><b class="pwm-main-c">Investable wealth</b></td><td>Financial &amp; other assets readily available for investment; usually a subset of financial wealth.</td><td><b class="pwm-green">The MAIN FOCUS of private wealth management.</b></td></tr>
+                <tr><td><b class="pwm-main-c">Economic net worth</b></td><td>Net worth expanded: + pension benefits &amp; human capital as ASSETS; + PV of future consumption &amp; bequests as LIABILITIES.</td><td><b class="pwm-blue">Human capital = PV of an individual's future earnings.</b></td></tr>
+              </table>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">The classification traps</div>
+              <span class="pwm-rule"><b class="pwm-red">Family business stake</b> → PRODUCTIVE wealth, not financial wealth (financial wealth excludes it).</span>
+              <span class="pwm-rule"><b class="pwm-red">Aggregate wealth</b> is BEFORE liabilities (asset-only); <b>net worth</b> is after.</span>
+              <span class="pwm-rule"><b class="pwm-red">Pension rights</b> (accrued/vested) → counted in <b>financial wealth</b>; full pension <i>benefits</i> + human capital appear only in <b>economic net worth</b>.</span>
+              <span class="pwm-rule"><b class="pwm-red">Copyrights &amp; complex intangibles</b> → excluded from net worth (hard to measure).</span>
+              <span class="pwm-rule"><b class="pwm-green">Investable wealth</b> is what PWM actually manages — a subset of financial wealth.</span>
+            </div>
+          </div>
+
+          <!-- ════════ GLOBAL CREATION & REGIONS ════════ -->
+          <div id="pwm-global" class="pwm-toppanel">
+            <div class="pwm-tabs">
+              <button class="pwm-tab active" onclick="pwmTab(event,'pwmg-create')">Creation vs Transfer</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmg-region')">By Region</button>
+            </div>
+            <div id="pwmg-create" class="pwm-panel active">
+              <div class="pwm-card">
+                <div class="pwm-title">Global wealth creation since WWII</div>
+                <div class="pwm-body">Tech breakthroughs + international trade → global wealth (GDP per capita) rose. Drivers:</div>
+                <span class="pwm-rule">Market-oriented policies &amp; international competition (e.g. <b>fall of the Berlin Wall, 1989</b>).</span>
+                <span class="pwm-rule">Shift to free-market capitalism / privatization of state-owned industries (telecoms, airlines).</span>
+                <span class="pwm-rule">Reduced regulatory barriers + better access to funding (incl. commodities &amp; real estate).</span>
+                <span class="pwm-rule">Increased global communication &amp; connectivity.</span>
+                <span class="pwm-rule"><b class="pwm-main-c">Rise in entrepreneurship since the 1980s</b> → job creation &amp; innovation.</span>
+                <span class="pwm-rule">Asset price appreciation, esp. US &amp; developed markets.</span>
+                <div class="pwm-info"><b>Stat:</b> global stock-market cap &amp; global GDP both grew ~<b>7%/yr 1970–2021</b>, with high positive correlation.</div>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">Creation ≠ transfer — the key distinction</div>
+                <div class="pwm-trap"><b>Gambling wins &amp; inheritances do NOT increase a country's net wealth</b> — they merely <b>transfer wealth within the country</b>. Significant for the individual, but no new wealth created nationally.</div>
+                <div class="pwm-tip"><b>True wealth CREATION:</b> entrepreneurship &amp; asset price appreciation are the primary sources in most economies. (Sudden fame creates new earning capacity / human capital → creation, unlike a lottery win which is a transfer.)</div>
+              </div>
+            </div>
+            <div id="pwmg-region" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Local factors by region</div>
+                <table class="pwm-tbl">
+                  <tr><th>Region</th><th>Wealth drivers &amp; character</th></tr>
+                  <tr><td><b class="pwm-main-c">North America</b></td><td>Main driver = <b>business formation &amp; entrepreneurship</b>; productivity gains + rising financial-asset values. Uneven distribution → professionals/executives with equity, entrepreneurs who built &amp; sold businesses. (NA + Europe ≈ <b>57% of global wealth</b>.)</td></tr>
+                  <tr><td><b class="pwm-main-c">Europe</b></td><td>Similar to NA but <b>more wealth in privately held family businesses &amp; inherited real estate</b>. Eastern Europe (post-Soviet) → foreign-investment inflow; resource-rich ex-communist states → wealth to <b class="pwm-red">oligarchs</b>.</td></tr>
+                  <tr><td><b class="pwm-main-c">Asia-Pacific</b></td><td>Shifted agrarian → manufacturing &amp; services. Japan = skilled, export-focused manufacturing. Heavy investment in <b>education/training</b> + entrepreneurship + inward investment.</td></tr>
+                  <tr><td><b class="pwm-main-c">Latin America</b></td><td>Modernization but <b>persistent inequality</b>; growth &amp; political stability elusive. Argentina hyperinflation: ARS ~parity 2012 → <b>175/USD by 2022</b>.</td></tr>
+                  <tr><td><b class="pwm-main-c">Middle East</b></td><td>Petroleum-export wealth, <b>concentrated in inheriting families</b>. Saudi ~40% of GDP from oil → diversifying away to reduce oil-price swings.</td></tr>
+                  <tr><td><b class="pwm-main-c">Africa</b></td><td>Rising via <b>commodities + inward FDI</b>; high inequality, wealth concentrated among ruling elite/executives/professionals.</td></tr>
+                </table>
+                <div class="pwm-trap"><b>Quiz 9.1 Q3 trap:</b> "oligarchs from natural resources" belongs to <b>Eastern Europe</b>, NOT Asia-Pacific. A stem putting oligarchs in Asia-Pacific is the <i>least accurate</i> statement.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ INEQUALITY & GINI ════════ -->
+          <div id="pwm-gini" class="pwm-toppanel">
+            <div class="pwm-tabs">
+              <button class="pwm-tab active" onclick="pwmTab(event,'pwmi-dist')">Distribution Facts</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmi-gini')">Gini &amp; Lorenz</button>
+            </div>
+            <div id="pwmi-dist" class="pwm-panel active">
+              <div class="pwm-card">
+                <div class="pwm-title">Distribution &amp; inequality (Credit Suisse 2022)</div>
+                <span class="pwm-rule"><b class="pwm-main-c">53%</b> of global adults had wealth <b>&lt; USD 10,000</b>; <b class="pwm-main-c">1%</b> had <b>&gt; USD 1 million</b>.</span>
+                <span class="pwm-rule">Median global wealth <b>USD 8,360</b> vs mean <b>USD 87,489</b>.</span>
+                <span class="pwm-rule"><b class="pwm-red">Positive skew:</b> a small number of extremely wealthy pull the MEAN up → <b>mean &gt; median</b>; the median is far more representative of the typical person.</span>
+                <span class="pwm-rule">Bottom 50% of adults controlled <b>&lt; 1%</b> of global wealth.</span>
+                <span class="pwm-rule">Richest decile (top 10%) controlled <b>82%</b> of global wealth.</span>
+                <div class="pwm-info"><b>Hyperinflation effect (Q5):</b> currency <b>weakens</b> AND nominal GDP per capita <b>rises in local-currency terms</b> (inflation inflates the nominal figure) — even as real living standards fall.</div>
+              </div>
+            </div>
+            <div id="pwmi-gini" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Gini coefficient — the scale</div>
+                <table class="pwm-tbl">
+                  <tr><th>Gini = 0</th><th>Between 0 and 1</th><th>Gini = 1</th></tr>
+                  <tr><td>Perfectly uniform wealth distribution; each 10% of population controls 10% of wealth; all equally wealthy.</td><td>As the coefficient rises, inequality / concentration rises; higher Gini → higher skew (lower deciles control less, top deciles control more).</td><td>Maximum inequality; wealth concentrated in very few individuals.</td></tr>
+                  <tr><td><b class="pwm-green">Mean wealth = median wealth</b></td><td>Mean begins to exceed median as skew grows.</td><td><b class="pwm-red">Mean significantly EXCEEDS median</b></td></tr>
+                </table>
+                <div class="pwm-info"><b>Lorenz curve:</b> the cumulative wealth-distribution curve. The Gini coefficient = the area between the Lorenz curve and the perfect-equality (45°) line, scaled. <b>No requirement to calculate Gini</b> — but know the curve interpretation.</div>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">Mean vs median — the Q7 reflex</div>
+                <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;margin:4px 0;">
+                  <!-- axes -->
+                  <line x1="60" y1="210" x2="660" y2="210" stroke="var(--border)" stroke-width="1.5"/>
+                  <line x1="60" y1="30" x2="60" y2="210" stroke="var(--border)" stroke-width="1.5"/>
+                  <text x="360" y="240" fill="var(--muted)" font-family="var(--mono)" font-size="11" text-anchor="middle">Cumulative % of households</text>
+                  <text x="30" y="120" fill="var(--muted)" font-family="var(--mono)" font-size="11" text-anchor="middle" transform="rotate(-90 30 120)">Cumulative % of wealth</text>
+                  <!-- equality line (Gini 0) -->
+                  <line x1="60" y1="210" x2="660" y2="30" stroke="var(--pwm-green)" stroke-width="2"/>
+                  <text x="470" y="70" fill="var(--pwm-green)" font-family="var(--mono)" font-size="10">equality line (Gini = 0)</text>
+                  <!-- low inequality Lorenz (0.27) dashed -->
+                  <path d="M60,210 Q260,205 420,160 T660,30" fill="none" stroke="var(--pwm-blue)" stroke-width="2" stroke-dasharray="5,4"/>
+                  <text x="300" y="195" fill="var(--pwm-blue)" font-family="var(--mono)" font-size="10">low inequality (0.27)</text>
+                  <!-- high inequality Lorenz (0.69) solid -->
+                  <path d="M60,210 Q360,209 520,185 T660,30" fill="none" stroke="var(--pwm-red)" stroke-width="2"/>
+                  <text x="430" y="205" fill="var(--pwm-red)" font-family="var(--mono)" font-size="10">high inequality (0.69)</text>
+                </svg>
+                <div class="pwm-tip"><b>Q7 reflex:</b> any Gini &gt; 0 means inequality → positive skew → <b>mean &gt; median</b>. So a country with Gini 0.5 has mean wealth GREATER than median wealth. (Only at Gini = 0 are they equal.) The bigger the Gini, the bigger the gap between the Lorenz curve and the equality line.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ CLIENTS & FAMILY OFFICES ════════ -->
+          <div id="pwm-clients" class="pwm-toppanel">
+            <div class="pwm-card">
+              <div class="pwm-title">Profiling &amp; serving clients</div>
+              <span class="pwm-rule"><b class="pwm-main-c">HNW &amp; UHNW</b> sit at the top of the distribution. <b>No precise cutoff</b> — complexity of affairs rises with wealth. Manager must address legal, tax &amp; family factors, not just financial.</span>
+              <span class="pwm-rule"><b class="pwm-main-c">UHNW</b> = wealth in tens of millions USD; subsets = <b>centimillionaires</b> (&gt; USD 100m) &amp; <b>billionaires</b>.</span>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">Family offices</div>
+              <div class="pwm-body">Private firms providing a suite of services (investment, tax, estate planning, philanthropy) tailored to a UHNW family.</div>
+              <div class="pwm-tip"><b>Primary objective of a family office:</b> <b class="pwm-green">preserve &amp; grow wealth across generations</b>, while managing the family's unique opportunities &amp; challenges (multiple tax/legal jurisdictions). Supporting professionals provide succession planning &amp; accountancy.</div>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">Tax havens &amp; political risk</div>
+              <span class="pwm-rule"><b class="pwm-main-c">Tax havens:</b> differing tax regimes may tempt HNW clients to relocate to a more favorable one.</span>
+              <span class="pwm-rule"><b class="pwm-orange">Balance:</b> against the ethical view that the wealthy should contribute to society via taxes.</span>
+              <span class="pwm-rule"><b class="pwm-red">Political risk:</b> an international move must weigh the risk of changes in regulations, legal frameworks, and deterioration of the rule of law if a country becomes unstable.</span>
+            </div>
+          </div>
+
+          <!-- ════════ QUIZ 9.1 ════════ -->
+          <div id="pwm-quiz" class="pwm-toppanel">
+            <div class="pwm-card">
+              <div class="pwm-title">Module Quiz 9.1 — worked</div>
+              <table class="pwm-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b><br><span style="color:var(--muted);">Most accurate re: wealth measures</span></td><td><b class="pwm-green">B — a savings account &amp; a tax-advantaged investment account are both investable assets</b></td><td>Both are readily available for investment → investable wealth. <span class="pwm-red">A</span> vested DB pension benefits ARE part of (economic) wealth / financial wealth via pension rights; <span class="pwm-red">C</span> shares in a family business are <b>productive</b>, not financial, assets.</td></tr>
+                <tr><td><b>2</b><br><span style="color:var(--muted);">Most likely DECREASES long-term growth/wealth</span></td><td><b class="pwm-green">A — state ownership of major industries</b></td><td>State ownership reduces competition/efficiency → lowers long-run growth. <span class="pwm-red">B</span> inward FDI &amp; <span class="pwm-red">C</span> international competition both INCREASE growth.</td></tr>
+                <tr><td><b>3</b><br><span style="color:var(--muted);">LEAST accurate regional trend</span></td><td><b class="pwm-green">B — Asia-Pacific wealth concentrated with oligarchs from natural resources</b></td><td>Oligarchs-from-resources describes <b>Eastern Europe</b>, not Asia-Pacific → least accurate. <span class="pwm-red">A</span> (Europe = more family business) &amp; <span class="pwm-red">C</span> (Latin America = rise + instability/inequality) are accurate.</td></tr>
+                <tr><td><b>4</b><br><span style="color:var(--muted);">Most likely CREATION of new wealth</span></td><td><b class="pwm-green">C — sudden fame</b></td><td>Fame creates new earning capacity (human capital) → new wealth. <span class="pwm-red">A</span> lottery &amp; <span class="pwm-red">B</span> inheritance are <b>transfers</b>, not creation.</td></tr>
+                <tr><td><b>5</b><br><span style="color:var(--muted);">Hyperinflation → expect to see</span></td><td><b class="pwm-green">A — weakening currency + increase in nominal GDP per capita (local terms)</b></td><td>Currency devalues; nominal local GDP rises because inflation inflates the nominal figure (real living standards still fall).</td></tr>
+                <tr><td><b>6</b><br><span style="color:var(--muted);">Gini 0.5 → 0.6 most likely cause</span></td><td><b class="pwm-green">A — severe economic contraction</b></td><td>Inequality RISES in recession/economic stress. <span class="pwm-red">B</span> higher taxes on the wealthy &amp; <span class="pwm-red">C</span> social-safety-net spending both REDUCE inequality (lower Gini).</td></tr>
+                <tr><td><b>7</b><br><span style="color:var(--muted);">Gini 0.5 → mean wealth is…</span></td><td><b class="pwm-green">C — greater than the median wealth</b></td><td>Gini &gt; 0 → positive skew → mean &gt; median. Only at Gini = 0 does mean = median.</td></tr>
+              </table>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">High-probability traps (9.1)</div>
+              <span class="pwm-rule"><b class="pwm-red">Family business → productive wealth</b>, never financial wealth.</span>
+              <span class="pwm-rule"><b class="pwm-red">Aggregate = pre-liabilities; net worth = post.</b></span>
+              <span class="pwm-rule"><b class="pwm-red">Transfer vs creation:</b> lottery &amp; inheritance = transfer (no new national wealth); entrepreneurship, asset appreciation, sudden fame = creation.</span>
+              <span class="pwm-rule"><b class="pwm-red">Oligarchs-from-resources = Eastern Europe</b>, not Asia-Pacific.</span>
+              <span class="pwm-rule"><b class="pwm-red">Gini &gt; 0 → mean &gt; median</b> (positive skew); Gini = 0 → mean = median.</span>
+              <span class="pwm-rule"><b class="pwm-red">Inequality RISES in recessions</b> &amp; falls with progressive taxes / safety nets.</span>
+              <span class="pwm-rule"><b class="pwm-red">Family office primary objective</b> = preserve &amp; grow wealth across generations.</span>
+              <span class="pwm-rule"><b class="pwm-red">State ownership</b> lowers long-run growth; FDI &amp; competition raise it.</span>
+            </div>
+          </div>
+
+          <!-- ════════ LIFE-CYCLE & HUMAN CAPITAL 9.b ════════ -->
+          <div id="pwm-lc" class="pwm-toppanel">
+            <div class="pwm-tabs">
+              <button class="pwm-tab active" onclick="pwmTab(event,'pwml-stages')">7 Life Stages</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwml-hc')">Human Capital</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwml-bs')">Economic Balance Sheet</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwml-div')">Diversification</button>
+            </div>
+
+            <div id="pwml-stages" class="pwm-panel active">
+              <div class="pwm-card">
+                <div class="pwm-title">LOS 9.b — The seven financial stages of life</div>
+                <table class="pwm-tbl">
+                  <tr><th>#</th><th>Stage</th><th>Character</th></tr>
+                  <tr><td>1</td><td><b class="pwm-main-c">Education</b></td><td>Before workforce; financially dependent on parents; little financial capital (FC).</td></tr>
+                  <tr><td>2</td><td><b class="pwm-main-c">Early career</b></td><td>Enters workforce, often starts a family; begins to save AND takes on debt (house).</td></tr>
+                  <tr><td>3</td><td><b class="pwm-main-c">Career development</b> (~35–50)</td><td>Income growth but rising responsibility &amp; outgoings → <b class="pwm-red">limits ability to save</b>.</td></tr>
+                  <tr><td>4</td><td><b class="pwm-main-c">Peak accumulation</b></td><td><b>Maximum earnings.</b> Retirement planning &amp; minimizing taxes a key focus.</td></tr>
+                  <tr><td>5</td><td><b class="pwm-main-c">Preretirement</b></td><td>Few years before retirement; may adjust lifestyle expectations to match wealth.</td></tr>
+                  <tr><td>6</td><td><b class="pwm-main-c">Early retirement</b></td><td>Most active retirement period; keep taking <b>some risk</b> for asset growth.</td></tr>
+                  <tr><td>7</td><td><b class="pwm-main-c">Late retirement</b></td><td>Complex (unknown duration); <b class="pwm-red">longevity risk</b> = outliving financial assets; health care a concern.</td></tr>
+                </table>
+                <div class="pwm-info"><b>Big picture:</b> wealth &amp; its asset composition change over a lifetime. Focusing only on financial assets overlooks a huge part of overall worth — <b>human capital</b>.</div>
+              </div>
+            </div>
+
+            <div id="pwml-hc" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Human capital (HC)</div>
+                <div class="pwm-body"><b class="pwm-main-c">HC = PV of an individual's expected future employment income.</b> An implied asset — conceptually simple, but impossible to value precisely (uncertain future employment trajectory).</div>
+                <div class="pwm-fl">HC = PV of future employment income, weighted by the probability of survival each year</div>
+                <div class="pwm-body" style="margin-top:6px;">Key inputs to estimate HC:</div>
+                <span class="pwm-rule"><b class="pwm-main-c">Future employment income</b> — current income × assumed growth rate × years of employment remaining.</span>
+                <span class="pwm-rule"><b class="pwm-main-c">Probability of survival</b> each future year — from actuarial tables (good for populations in aggregate, may not reflect an individual's risk).</span>
+                <span class="pwm-rule"><b class="pwm-main-c">Nominal risk-free rate</b> — the basis for discounting.</span>
+                <span class="pwm-rule"><b class="pwm-main-c">Risk premium</b> — added to the nominal RFR for uncertainty / volatility in the income stream. Higher-volatility professions discounted more heavily.</span>
+                <div class="pwm-trap"><b>Q1 trap:</b> the discount rate uses the <b>NOMINAL</b> risk-free rate + risk premium — NOT the real risk-free rate. A stem saying "real risk-free rate" is the inaccurate one.</div>
+                <div class="pwm-info"><b>Example:</b> an investment banker's earnings (volatile) are discounted MORE heavily (higher risk premium) than a government worker's (stable). A government teacher → both a lower risk premium AND a lower assumed income-growth rate than a banker.</div>
+              </div>
+            </div>
+
+            <div id="pwml-bs" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Holistic (economic) balance sheet</div>
+                <div class="pwm-body">Extend net worth into a balance sheet, then EXTEND it: <b class="pwm-green">assets += HC</b> (and pension benefits); <b class="pwm-red">liabilities += PV of future consumption &amp; bequest goals</b>. (Bold-italic items below = NOT on a traditional balance sheet.)</div>
+                <table class="pwm-tbl">
+                  <tr><th>Assets ($000s)</th><th></th><th>Liabilities ($000s)</th><th></th></tr>
+                  <tr><td>Financial — current assets</td><td>500</td><td>Short-term debt</td><td>175</td></tr>
+                  <tr><td>Financial — investment assets</td><td>1,500</td><td>Home mortgage</td><td>500</td></tr>
+                  <tr><td>Nonmarketable — home</td><td>750</td><td><b class="pwm-orange">PV of future consumption</b></td><td><b class="pwm-orange">3,500</b></td></tr>
+                  <tr><td>Nonmarketable — DC plan balance</td><td>1,450</td><td><b class="pwm-orange">Planned bequests</b></td><td><b class="pwm-orange">1,000</b></td></tr>
+                  <tr><td><b class="pwm-blue">Private pension</b></td><td>40</td><td></td><td></td></tr>
+                  <tr><td><b class="pwm-blue">Government pension</b></td><td>450</td><td></td><td></td></tr>
+                  <tr><td><b class="pwm-green">Human — future labor income (HC)</b></td><td><b class="pwm-green">250</b></td><td></td><td></td></tr>
+                  <tr><td><b>Total assets</b></td><td><b>4,940</b></td><td><b>Total liabilities</b></td><td><b>5,175</b></td></tr>
+                </table>
+                <div class="pwm-trap"><b>The lesson:</b> traditional view = assets 4,200 vs explicit debts 675 → looks healthy. Holistic view = <b class="pwm-red">negative net worth −235</b> → consumption &amp; bequest plans may be unrealistic. Caveats: economic items are harder to value; the negative could be estimation error, or there may be missing assets (e.g. expected inheritance). If truly negative → ultimate spending plans must change. <b>Low HC (vs pension) → individual is near retirement.</b></div>
+                <div class="pwm-info"><b>Life-cycle pattern:</b> HC dominates when YOUNG → declines as work life shortens; FC rises as you save/invest. Early life: real estate/tangibles may dominate. Early retirement: pension benefits dominant for many. <b>Total wealth (HC + FC) and FC both peak near retirement, then draw down.</b></div>
+              </div>
+            </div>
+
+            <div id="pwml-div" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Entrepreneurship vs human capital</div>
+                <div class="pwm-body">An <b class="pwm-main-c">entrepreneur</b> gives up stable employment income for higher but more volatile business cash flows. Unlike HC (which diminishes toward retirement), entrepreneurial value <b class="pwm-green">can be turned into financial wealth on liquidation</b> of the business → adds to total wealth and offsets the decline in HC.</div>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">Diversifying human-capital risk</div>
+                <div class="pwm-body">HC is risky — tied to the individual's success in their role (or the entrepreneur's business). Use pension &amp; financial assets to <b>diversify</b> this exposure:</div>
+                <table class="pwm-tbl">
+                  <tr><th>Investor</th><th>HC character</th><th>Financial portfolio implication</th></tr>
+                  <tr><td><b class="pwm-main-c">Government employee</b></td><td>Stable salary (low-risk HC)</td><td><b class="pwm-green">Can afford MORE risk → more equities</b> → greater growth opportunities.</td></tr>
+                  <tr><td><b class="pwm-main-c">Entrepreneur</b></td><td>Volatile, sector-exposed income (high-risk HC)</td><td><b class="pwm-red">Strong fixed-income allocation</b>; ideally exposure to industries NOT correlated with their business. Trade-off: more bonds → lower returns → pressure on meeting financial goals.</td></tr>
+                </table>
+                <div class="pwm-trap"><b>Q3 reflex:</b> compared to an entrepreneur, a government employee should allocate <b>MORE</b> of their financial assets to equities (stable HC lets them carry more portfolio risk).</div>
+                <div class="pwm-info"><b>Pensions carry risk too:</b> private pensions can fail; government pensions may not deliver promised benefits. Less concern for the very wealthy, more for those relying heavily on pensions.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ QUIZ 9.2 ════════ -->
+          <div id="pwm-quiz2" class="pwm-toppanel">
+            <div class="pwm-card">
+              <div class="pwm-title">Module Quiz 9.2 — worked</div>
+              <table class="pwm-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b><br><span style="color:var(--muted);">LEAST accurate re: HC calculation inputs</span></td><td><b class="pwm-green">A — "discount rate is the REAL risk-free rate + risk premium"</b></td><td>The discount basis is the <b>NOMINAL</b> risk-free rate (+ risk premium), not the real rate → A is inaccurate. <span class="pwm-red">B</span> survival probability changes each year as the person ages (true); <span class="pwm-red">C</span> a govt teacher has lower risk premium AND lower income growth than a banker (true).</td></tr>
+                <tr><td><b>2</b><br><span style="color:var(--muted);">LEAST likely a LIABILITY on a holistic balance sheet</span></td><td><b class="pwm-green">A — human capital</b></td><td>HC is an <b>ASSET</b>, not a liability. <span class="pwm-red">B</span> planned bequests &amp; <span class="pwm-red">C</span> PV of future consumption are the extended liabilities.</td></tr>
+                <tr><td><b>3</b><br><span style="color:var(--muted);">Vs an entrepreneur, a government employee should allocate…</span></td><td><b class="pwm-green">B — MORE of their financial assets to equities</b></td><td>Stable salary = low-risk HC → can carry more portfolio risk → more equities. The entrepreneur (volatile HC) needs more fixed income, uncorrelated with their business.</td></tr>
+              </table>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">High-probability traps (9.2)</div>
+              <span class="pwm-rule"><b class="pwm-red">HC discount rate = NOMINAL risk-free rate + risk premium</b> (not real).</span>
+              <span class="pwm-rule"><b class="pwm-red">HC is an ASSET</b>; the extended LIABILITIES are PV of future consumption &amp; planned bequests.</span>
+              <span class="pwm-rule"><b class="pwm-red">Stable HC (govt) → more equities; volatile HC (entrepreneur) → more bonds</b>, uncorrelated with the business.</span>
+              <span class="pwm-rule"><b class="pwm-red">Volatile professions discounted more heavily</b> (higher risk premium) → lower HC.</span>
+              <span class="pwm-rule"><b class="pwm-red">Total wealth (HC+FC) &amp; FC peak near retirement</b>, then draw down; HC dominates when young.</span>
+              <span class="pwm-rule"><b class="pwm-red">Entrepreneurship</b> can be liquidated into financial wealth → offsets HC decline (HC cannot).</span>
+              <span class="pwm-rule"><b class="pwm-red">Longevity risk</b> = outliving assets (late retirement, stage 7).</span>
+            </div>
+          </div>
+
+          <!-- ════════ INDIVIDUAL CONSIDERATIONS 9.c ════════ -->
+          <div id="pwm-ic" class="pwm-toppanel">
+            <div class="pwm-tabs">
+              <button class="pwm-tab active" onclick="pwmTab(event,'pwmic-ret')">Returns</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmic-risk')">Risks</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmic-orient')">Risk Orientation</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmic-goals')">Objectives &amp; Goals</button>
+            </div>
+
+            <div id="pwmic-ret" class="pwm-panel active">
+              <div class="pwm-card">
+                <div class="pwm-title">Returns — think REAL (inflation-adjusted)</div>
+                <div class="pwm-body">Inflation erodes purchasing power AND compounds over time. So objectives target returns that <b class="pwm-green">outpace inflation</b>, not just nominal returns. Crucial distinction: <b class="pwm-main-c">outpacing inflation</b> (beating it over time) vs <b class="pwm-main-c">hedging against inflation</b> (moving with it short-term).</div>
+                <table class="pwm-tbl">
+                  <tr><th>Asset class</th><th>Outpace? / Hedge?</th><th>Caveat</th></tr>
+                  <tr><td><b class="pwm-main-c">Equities</b></td><td><b class="pwm-green">Outpace</b> inflation over the LONG term</td><td>Short-term <b class="pwm-red">volatile</b>; may NOT outpace rising / persistent inflation. <b class="pwm-red">Not a reliable short-term hedge.</b></td></tr>
+                  <tr><td><b class="pwm-main-c">Commodities</b> (oil, gold)</td><td><b class="pwm-green">Short-term hedge</b> — outperform in inflationary periods (may even drive inflation)</td><td>Do NOT always outpace <b class="pwm-red">persistent</b> inflation; prices quite volatile.</td></tr>
+                  <tr><td><b class="pwm-main-c">Inflation-linked bonds</b></td><td><b class="pwm-green">Keep pace</b> — protect purchasing power long run</td><td>Often <b class="pwm-red">low real returns</b>; NOT short-run; most fixed-income bonds are NOT inflation-linked.</td></tr>
+                  <tr><td><b class="pwm-main-c">Real estate</b></td><td><b class="pwm-green">Hedge</b> — prices rise with price level, rents pegged to inflation indexes</td><td>Can <b class="pwm-red">stagnate / drop</b> during inflationary economic uncertainty.</td></tr>
+                </table>
+                <div class="pwm-trap"><b>Q1 reflex:</b> inflation-linked bonds protect purchasing power in the LONG run but NOT the short run (most accurate). Equities are NOT a reliable short-term hedge (kills the "both" trap). Fixed income generally — most bonds aren't inflation-linked, but a blanket "suffers short AND long run" ignores that ILBs don't suffer long-run.</div>
+              </div>
+            </div>
+
+            <div id="pwmic-risk" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Risks individuals face</div>
+                <table class="pwm-tbl">
+                  <tr><th>Risk</th><th>Meaning</th></tr>
+                  <tr><td><b class="pwm-main-c">Return volatility</b></td><td>Fluctuations in value and returns from an investment.</td></tr>
+                  <tr><td><b class="pwm-main-c">Drawdown risk</b></td><td>Asset declining in value — measured as the difference between the investment's <b>peak value and lowest point</b> during a period. <b class="pwm-red">NOT a realized loss unless the investor is forced to liquidate at the low point.</b></td></tr>
+                  <tr><td><b class="pwm-main-c">Not achieving objectives</b></td><td>Due to market conditions OR the investor not allocating enough capital to meet the objectives.</td></tr>
+                </table>
+                <div class="pwm-info"><b>Mitigant:</b> return volatility &amp; drawdown risk can both be reduced through <b class="pwm-green">diversification across asset classes</b>.</div>
+                <div class="pwm-trap"><b>Trap:</b> drawdown is a peak-to-trough <b>paper</b> move — it only becomes a realized loss if you're forced to sell at the bottom.</div>
+              </div>
+            </div>
+
+            <div id="pwmic-orient" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Risk orientation — three lenses</div>
+                <table class="pwm-tbl">
+                  <tr><th>Concept</th><th>Definition</th></tr>
+                  <tr><td><b class="pwm-main-c">Risk tolerance</b></td><td><b>Willingness AND ability</b> to take risk. Opposite = risk aversion.</td></tr>
+                  <tr><td><b class="pwm-main-c">Risk capacity</b></td><td>The <b>ABILITY</b> to take financial risk — based on wealth, income, investment horizon, liquidity requirements, importance of goals. Higher capacity → portfolio can sustain losses without jeopardizing goals. (Objective — comes from data.)</td></tr>
+                  <tr><td><b class="pwm-main-c">Risk perception</b></td><td><b>Subjective</b> measure of investment risk; varies client-to-client; the manager can <b>influence</b> it.</td></tr>
+                </table>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">Ability to bear risk is DECREASED by:</div>
+                <span class="pwm-rule"><b class="pwm-red">Shorter</b> time horizon</span>
+                <span class="pwm-rule"><b class="pwm-red">Large critical goals</b> relative to portfolio size</span>
+                <span class="pwm-rule">Goals that are <b class="pwm-red">important or cannot be deferred</b></span>
+                <span class="pwm-rule"><b class="pwm-red">High liquidity needs</b></span>
+                <span class="pwm-rule">Portfolio is the <b class="pwm-red">sole source of support</b> / inability to tolerate losses in value</span>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">Assessing risk: questionnaires + conversations</div>
+                <div class="pwm-body">Managers use <b>questionnaires</b> AND <b>conversations</b>. A questionnaire surfaces the client's attitude toward gain/loss → an indication of <b class="pwm-main-c">risk perception</b>. Conversations add context hard to get from a form (past successes/failures, perception, financial background) AND let the manager <b>educate</b> the client about risk.</div>
+                <div class="pwm-info"><b>Per-goal tolerance:</b> with multiple goals, set risk tolerance for EACH — typically <b>low risk tolerance for important goals, higher for low-priority goals</b>.</div>
+                <div class="pwm-trap"><b>Q2 reflex:</b> a risk questionnaire is most useful for understanding <b>risk perception</b> (subjective attitude). Capacity is objective — it comes from wealth/income/horizon data, not the attitude questions.</div>
+              </div>
+            </div>
+
+            <div id="pwmic-goals" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Objectives &amp; constraints — planned vs unplanned goals</div>
+                <table class="pwm-tbl">
+                  <tr><th></th><th><b class="pwm-green">Planned goals</b></th><th><b class="pwm-red">Unplanned goals</b></th></tr>
+                  <tr><td>Definition</td><td>Reasonably estimated within a specified time horizon</td><td>Unexpected expenditures; harder due to uncertainty in <b>amount and/or timing</b></td></tr>
+                  <tr><td>Examples</td><td>Retirement lifestyle · specific purchases (residence) · education of dependents · family events (weddings) · charitable giving · wealth transfer (lifetime or at death)</td><td>Property repairs · unexpected medical costs not covered by insurance</td></tr>
+                </table>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">PWM's role in formulating goals</div>
+                <span class="pwm-rule"><b class="pwm-main-c">Quantifying</b> — help the client make goals specific &amp; realistic (e.g. how much to fund a comfortable retirement).</span>
+                <span class="pwm-rule"><b class="pwm-main-c">Prioritizing</b> — reconcile competing goals; identify which are higher priority. <b class="pwm-red">Higher priority does NOT necessarily mean earlier in the time horizon.</b></span>
+                <span class="pwm-rule"><b class="pwm-main-c">Changing</b> — reevaluate &amp; modify goals (and strategy) after a change in the client's circumstances.</span>
+                <div class="pwm-trap"><b>The classic trap:</b> timing should NOT be the primary basis for priority. A goal being nearest in time doesn't make it the most important — the manager helps determine TRUE importance, and if competing goals conflict, the client should reevaluate priorities.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ DUBOIS WORKED ESSAY ════════ -->
+          <div id="pwm-dubois" class="pwm-toppanel">
+            <div class="pwm-card">
+              <div class="pwm-title">Worked essay — Bonnie DuBois</div>
+              <div class="pwm-body">Bonnie DuBois, 60, retired (35-yr fashion career), <b>$2M diversified portfolio</b>, paid-off house. Needs <b>$60k/yr inflation-adjusted</b> for retirement lifestyle; has comprehensive health insurance but fears <b>long-term care</b>. Wants to support son Barry's family <b>$30k/yr for 5 years</b> (states this is most important "because of its proximity timewise"). Wishes to buy a <b>vacation property in 5 years</b> (unsure how to fund). At death, estate <b>gifted to a local museum</b>.</div>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">Q1 — Identify planned &amp; unplanned goals</div>
+              <table class="pwm-tbl">
+                <tr><th><b class="pwm-green">Planned</b></th><th><b class="pwm-red">Unplanned</b></th></tr>
+                <tr><td>1. Fund retirement lifestyle<br>2. Support son's family for 5 years<br>3. Purchase vacation property<br>4. Gift estate to museum at death</td><td>• Long-term care costs if health deteriorates<br>• Property repairs (house + vacation property, if purchased)</td></tr>
+              </table>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">Q2 — Quantifying &amp; prioritizing (Discuss)</div>
+              <span class="pwm-rule"><b class="pwm-green">Already quantified:</b> retirement funding goal &amp; the support of her son's family.</span>
+              <span class="pwm-rule"><b class="pwm-orange">Still to quantify:</b> the vacation-property purchase (and decide how to fund it) &amp; the museum gift at death.</span>
+              <div class="pwm-trap"><b>The key mark — priority:</b> DuBois says supporting her son is her top priority <i>because of its timing proximity</i>. But <b class="pwm-red">timing should NOT be the primary reason for priority.</b> Her manager must help her determine which goals are genuinely most important. If supporting her son competes with the vacation property and the museum bequest, she should <b>reevaluate her priorities</b>.</div>
+              <div class="pwm-info"><b>Command-word note:</b> "Identify" = list/label (the goals, sorted planned vs unplanned). "Discuss" = label + mechanism — say what's quantified, what isn't, AND make the timing-vs-importance point explicitly. Leaving out the timing correction loses the decisive mark.</div>
+            </div>
+          </div>
+
+          <!-- ════════ QUIZ 9.3 ════════ -->
+          <div id="pwm-quiz3" class="pwm-toppanel">
+            <div class="pwm-card">
+              <div class="pwm-title">Module Quiz 9.3 — worked</div>
+              <table class="pwm-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b><br><span style="color:var(--muted);">MOST accurate re: inflation protection</span></td><td><b class="pwm-green">C — inflation-linked bonds protect purchasing power in the long run but not the short run</b></td><td><span class="pwm-red">A</span> "fixed income suffers short AND long run" is wrong — inflation-LINKED bonds don't suffer long-run. <span class="pwm-red">B</span> equities are NOT a reliable short-term inflation hedge (volatile), so "both" fails.</td></tr>
+                <tr><td><b>2</b><br><span style="color:var(--muted);">A risk questionnaire is MOST useful to understand a client's risk…</span></td><td><b class="pwm-green">B — perception only</b></td><td>Questionnaires surface the client's subjective attitude → <b>risk perception</b>. <span class="pwm-red">Capacity</span> is objective (wealth, income, horizon, liquidity) — derived from data, not attitude questions → A &amp; C wrong.</td></tr>
+              </table>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">High-probability traps (9.3)</div>
+              <span class="pwm-rule"><b class="pwm-red">Outpacing inflation ≠ hedging inflation</b> — equities outpace (long term) but aren't a short-term hedge.</span>
+              <span class="pwm-rule"><b class="pwm-red">ILBs</b> protect purchasing power long-run (low real returns), NOT short-run; most bonds aren't inflation-linked.</span>
+              <span class="pwm-rule"><b class="pwm-red">Drawdown</b> = peak-to-trough; NOT a realized loss unless forced to liquidate at the low.</span>
+              <span class="pwm-rule"><b class="pwm-red">Risk tolerance</b> = willingness + ability; <b class="pwm-red">risk capacity</b> = ability only (objective); <b class="pwm-red">risk perception</b> = subjective.</span>
+              <span class="pwm-rule"><b class="pwm-red">Questionnaire → perception</b>; conversations add context + educate.</span>
+              <span class="pwm-rule"><b class="pwm-red">Ability decreased by:</b> short horizon, large critical goals vs portfolio, non-deferrable goals, high liquidity needs, portfolio = sole support.</span>
+              <span class="pwm-rule"><b class="pwm-red">Higher priority ≠ earlier in time.</b> Timing is NOT the basis for priority.</span>
+              <span class="pwm-rule"><b class="pwm-red">Unplanned goals</b> (property repairs, uninsured medical) are harder — uncertain amount &amp; timing.</span>
+            </div>
+          </div>
+
+          <!-- ════════ TAXATION & INFLATION 9.d ════════ -->
+          <div id="pwm-tax" class="pwm-toppanel">
+            <div class="pwm-tabs">
+              <button class="pwm-tab active" onclick="pwmTab(event,'pwmtax-types')">Tax Types</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmtax-prog')">Progressive</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmtax-drag')">Tax Drag</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmtax-defer')">Deferral &amp; Basis</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmtax-infl')">Inflation</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmtax-comb')">Combined</button>
+            </div>
+
+            <div id="pwmtax-types" class="pwm-panel active">
+              <div class="pwm-card">
+                <div class="pwm-title">Taxation of investment returns</div>
+                <div class="pwm-body">Investment income is taxed separately from employment income — generally the same OR <b class="pwm-green">more favorably</b>. It sits <b>on top of</b> employment income in a progressive system.</div>
+                <table class="pwm-tbl">
+                  <tr><th>Income type</th><th>Treatment</th></tr>
+                  <tr><td><b class="pwm-main-c">Interest</b></td><td>Taxed in the year received; some jurisdictions exclude or apply favorable rates.</td></tr>
+                  <tr><td><b class="pwm-main-c">Dividends</b></td><td>Taxed in year received; often favorable — the company already paid tax on its profits.</td></tr>
+                  <tr><td><b class="pwm-main-c">Capital gains</b></td><td>Levied on <b class="pwm-red">REALIZED</b> gains (must sell/transfer to trigger). Rate varies by asset/holding period; <b class="pwm-green">longer-term gains taxed favorably</b> — encourages long-term investment &amp; saving.</td></tr>
+                  <tr><td><b class="pwm-main-c">Wealth taxes</b></td><td>Annual tax on wealth; unusual — excluded from this module's calcs.</td></tr>
+                </table>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">Accrual vs deferral</div>
+                <span class="pwm-rule"><b class="pwm-main-c">Accrual tax</b> — income taxed on an annual basis. <b class="pwm-red">Dividends &amp; interest</b> are usually accrual.</span>
+                <span class="pwm-rule"><b class="pwm-main-c">Deferred / deferral basis</b> — tax due is postponed. <b class="pwm-green">Capital gains</b> are usually deferral (taxed only when realized).</span>
+                <div class="pwm-info">"Deferred" here has NO link to the accounting concept of deferred tax.</div>
+              </div>
+            </div>
+
+            <div id="pwmtax-prog" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Progressive tax — band shortcut</div>
+                <div class="pwm-body">Each slice of income is taxed at that band's rate. Use the cumulative "tax on Column 1" figure to jump to the start of the top band, then add the marginal rate on the excess.</div>
+                <div class="pwm-fl">Tax = cumulative tax to band start + marginal rate × (income − band start)</div>
+                <div class="pwm-body" style="margin-top:8px;"><b>Worked (Baghurst, EUR 600,000):</b></div>
+                <span class="pwm-rule">Tax = EUR 185,000 + 100,000 × 50% = <b class="pwm-green">EUR 235,000</b></span>
+                <span class="pwm-rule"><b class="pwm-main-c">Average tax rate</b> = 235,000 / 600,000 = <b class="pwm-green">39.17%</b></span>
+                <span class="pwm-rule"><b class="pwm-main-c">Marginal tax rate</b> = <b class="pwm-green">50%</b> (the top band)</span>
+                <div class="pwm-trap"><b>Reflex:</b> in a progressive system the <b>average rate is always LESS than the marginal rate</b> (lower bands drag the average down).</div>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">Favorable-treatment example (Case 2)</div>
+                <div class="pwm-body">Emp 450k + interest (60k − 25k exempt = 35k) → 485k progressive; dividends 100k @ favorable 20%.</div>
+                <span class="pwm-rule">Progressive on 485k: 25,000 + 385,000 × 40% = 179,000</span>
+                <span class="pwm-rule">Dividends: 100,000 × 20% = 20,000</span>
+                <span class="pwm-rule">Total = <b class="pwm-green">199,000</b> → avg = 199,000 / 610,000 = <b class="pwm-green">32.62%</b> (vs 39.34% with no favorable treatment)</span>
+              </div>
+            </div>
+
+            <div id="pwmtax-drag" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Tax drag — annual / accrual tax</div>
+                <div class="pwm-body"><b class="pwm-main-c">Tax drag</b> = the negative effect of taxes on an investment's net return = (FV no-tax − FV after-tax) / (FV no-tax − initial).</div>
+                <div class="pwm-fl">FV per unit (annual tax) = [1 + R(1 − t)]^T</div>
+                <div class="pwm-body" style="margin-top:8px;"><b>Worked (50k, R 8%, t 25%):</b></div>
+                <span class="pwm-rule">20y: FV_at = 50,000 × [1 + 0.08(1−0.25)]²⁰ = 160,357; no-tax = 233,048 → drag = 72,691 / (233,048 − 50,000) = <b class="pwm-green">39.7%</b></span>
+                <span class="pwm-rule">30y: drag = <b class="pwm-green">47.7%</b></span>
+                <div class="pwm-trap"><b>Key results (annual/accrual tax):</b> tax drag is <b class="pwm-red">HIGHER than the tax rate</b> (compounding of the loss); it <b class="pwm-red">increases with higher returns</b> and <b class="pwm-red">with longer time periods</b>. Long-horizon fixed income (annually taxed) suffers most.</div>
+              </div>
+            </div>
+
+            <div id="pwmtax-defer" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Tax deferral — capital gains</div>
+                <div class="pwm-body">Cap gains taxed only when realized → annual gains compound tax-free until the end → <b class="pwm-green">lower tax drag</b>.</div>
+                <div class="pwm-fl">FV = (1+R)^T − [(1+R)^T − 1] × t_cg  =  (1+R)^T(1 − t_cg) + t_cg</div>
+                <span class="pwm-rule"><b>Worked (50k, 8%, 25%, 20y, all CG):</b> FV = 187,286 → drag = 45,762 / 183,048 = <b class="pwm-green">25.0%</b></span>
+                <div class="pwm-trap"><b>The headline result:</b> if ALL return is taxed once at the end (deferred CG), <b class="pwm-red">tax drag = the tax rate exactly</b>. No compounding penalty.</div>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">Impact of basis (cost basis)</div>
+                <div class="pwm-body"><b class="pwm-main-c">Basis / cost basis / tax basis</b> = the starting value for the CG calculation. A <b>low</b> basis = a stored-up untaxed liability (the embedded gain gets taxed on sale).</div>
+                <div class="pwm-fl">B = cost basis / current value · FV = (1+R)^T(1 − t_cg) + B × t_cg</div>
+                <span class="pwm-rule"><b>Worked (current 50k, basis 20k, B=0.4, 8%, 25%, 20y):</b> FV = 179,786 → drag = 53,262 / 183,048 = <b class="pwm-green">29.1%</b></span>
+                <div class="pwm-info">Logic-first (safer than the rote formula): FV = 50,000 × 1.08²⁰ − (50,000 × 1.08²⁰ − 20,000) × 25%. The extra drag above 25% comes from taxing the 30k embedded gain on top of future gains.</div>
+              </div>
+            </div>
+
+            <div id="pwmtax-infl" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Impact of inflation</div>
+                <div class="pwm-body">An investment grows in <b>nominal</b> terms, but inflation erodes the real purchasing power of the final value. Consider the <b class="pwm-green">real after-tax value</b> to decide based on actual purchasing power.</div>
+                <div class="pwm-trap"><b>Why inflation + tax compound:</b> taxes are levied on <b class="pwm-red">NOMINAL</b> price appreciation, not real. So even if a price rise just keeps pace with inflation, it's <b>still taxed as a gain</b> → inflation exacerbates the eroding impact of tax on long-term gains. Particularly detrimental to <b class="pwm-red">fixed income</b>.</div>
+                <div class="pwm-fl">Real after-tax FV = nominal after-tax FV / (1 + i)^T</div>
+                <span class="pwm-rule"><b>Worked:</b> 179,786 / (1.03)²⁰ = <b class="pwm-green">EUR 99,543</b> (still a real gain on 50k, but far below the nominal 179,786).</span>
+                <div class="pwm-info">Adjusting for i% over T years: divide by (1+i)^T <b>OR</b> multiply by (1−i)^T — both accepted in the curriculum; the discounting version is used here.</div>
+              </div>
+            </div>
+
+            <div id="pwmtax-comb" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">Combined income + capital gains</div>
+                <div class="pwm-body">When a return has both income (accrual, t) and price appreciation (CG, deferred, t_cg), use the gain-ratio logic rather than memorizing the "nasty" formula:</div>
+                <span class="pwm-rule"><b>1.</b> After-tax growth rate = R_income(1 − t) + R_capital → this is the first-term factor (1 + that)^T.</span>
+                <span class="pwm-rule"><b>2.</b> Capital-gains ratio = R_capital / [R_income(1−t) + R_capital] → the fraction of growth that's a taxable gain.</span>
+                <span class="pwm-rule"><b>3.</b> Net factor = factor − (ratio × growth × t_cg), where growth = factor − 1.</span>
+                <div class="pwm-body" style="margin-top:8px;"><b>Comprehensive (200k, 15y, 20%/20%):</b></div>
+                <table class="pwm-tbl">
+                  <tr><th></th><th>Case 1: div 3% / app 6%</th><th>Case 2: div 6% / app 3%</th></tr>
+                  <tr><td>After-tax rate</td><td>6% + 3%(1−0.2) = 8.4%</td><td>3% + 6%(1−0.2) = 7.8%</td></tr>
+                  <tr><td>CG ratio</td><td>6 / 8.4 = 71.4%</td><td>3 / 7.8 = 38.5%</td></tr>
+                  <tr><td>Factor (1+r)¹⁵</td><td>3.353</td><td>3.085</td></tr>
+                  <tr><td>Net factor</td><td>3.353 − 0.336 = 3.017</td><td>3.085 − 0.160 = 2.925</td></tr>
+                  <tr><td>After-tax FV</td><td><b class="pwm-green">EUR 603,379</b></td><td><b class="pwm-green">EUR 584,958</b></td></tr>
+                  <tr><td>Tax drag (no-tax 3.642)</td><td>23.7%</td><td><b class="pwm-red">27.2%</b></td></tr>
+                </table>
+                <div class="pwm-trap"><b>The lesson:</b> Case 2 has a <b>higher tax drag</b> even though total return is the same — because more of the return is INCOME (accrual-taxed) rather than deferred capital gains.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ TAX-DRAG CALCULATOR ════════ -->
+          <div id="pwm-taxcalc" class="pwm-toppanel">
+            <div class="pwm-card">
+              <div class="pwm-title">Interactive tax-drag calculator</div>
+              <div class="pwm-body">Enter the inputs and pick a regime. Computes after-tax FV, no-tax FV, and tax drag — plus the optional real (inflation-adjusted) value.</div>
+              <div class="pwm-calc-grid">
+                <label class="pwm-cl">Initial value<input id="pwm-tc-init" type="number" value="50000" class="pwm-ci"></label>
+                <label class="pwm-cl">Annual return R (%)<input id="pwm-tc-r" type="number" value="8" class="pwm-ci"></label>
+                <label class="pwm-cl">Years T<input id="pwm-tc-t" type="number" value="20" class="pwm-ci"></label>
+                <label class="pwm-cl">Tax rate (%)<input id="pwm-tc-tax" type="number" value="25" class="pwm-ci"></label>
+                <label class="pwm-cl">Cost basis (deferral only)<input id="pwm-tc-basis" type="number" value="50000" class="pwm-ci"></label>
+                <label class="pwm-cl">Inflation i (%) — optional<input id="pwm-tc-infl" type="number" value="0" class="pwm-ci"></label>
+              </div>
+              <div class="pwm-calc-modes">
+                <button class="pwm-mode-btn active" id="pwm-md-accrual" onclick="pwmTaxMode('accrual')">Annual / accrual</button>
+                <button class="pwm-mode-btn" id="pwm-md-defer" onclick="pwmTaxMode('defer')">Deferred capital gains</button>
+              </div>
+              <button class="pwm-calc-go" onclick="pwmTaxCalc()">Calculate</button>
+              <div id="pwm-tc-out" class="pwm-calc-out">Enter inputs and press Calculate.</div>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">Formulas used</div>
+              <span class="pwm-rule"><b class="pwm-main-c">Annual/accrual:</b> FV = init × [1 + R(1 − t)]^T → drag &gt; tax rate</span>
+              <span class="pwm-rule"><b class="pwm-main-c">Deferred CG:</b> FV = init × (1+R)^T − (init × (1+R)^T − basis) × t → drag = tax rate when basis = init</span>
+              <span class="pwm-rule"><b class="pwm-main-c">No-tax:</b> FV = init × (1+R)^T · <b class="pwm-main-c">Drag</b> = (no-tax − after-tax) / (no-tax − init)</span>
+              <span class="pwm-rule"><b class="pwm-main-c">Real value:</b> after-tax FV / (1 + i)^T</span>
+            </div>
+          </div>
+
+          <!-- ════════ QUIZ 9.4 ════════ -->
+          <div id="pwm-quiz4" class="pwm-toppanel">
+            <div class="pwm-card">
+              <div class="pwm-title">Module Quiz 9.4 — worked (7 Qs)</div>
+              <table class="pwm-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b><br><span style="color:var(--muted);">avg tax rate, all income equal, total 275k</span></td><td><b class="pwm-green">A — ≈25%</b></td><td>275k progressive: 59,500 + (275k−250k)×40% = 69,500 → 69,500/275,000 = 25.3% ≈ 25%.</td></tr>
+                <tr><td><b>2</b><br><span style="color:var(--muted);">div exempt, CG @20% all levels — total tax</span></td><td><b class="pwm-green">B — EUR 49,500</b></td><td>Emp 150k progressive = 14,500 + (150k−100k)×30% = 29,500; CG 100k×20% = 20,000; div exempt → 49,500.</td></tr>
+                <tr><td><b>3</b><br><span style="color:var(--muted);">progressive, high band: avg vs marginal</span></td><td><b class="pwm-green">A — less than the marginal rate</b></td><td>Lower bands taxed at lower rates pull the average below the top (marginal) rate.</td></tr>
+                <tr><td><b>4</b><br><span style="color:var(--muted);">accrual tax → tax drag…</span></td><td><b class="pwm-green">A — higher than the applied tax rate</b></td><td>Annual taxation compounds the loss each year, so drag exceeds the headline rate. (It INCREASES with higher returns and LONGER periods — so B &amp; C are backwards.)</td></tr>
+                <tr><td><b>5</b><br><span style="color:var(--muted);">mkt 80k, basis 20k, 7%, CG 30%, 10y</span></td><td><b class="pwm-green">B — ≈ GBP 116,000</b></td><td>FV = 80,000×1.07¹⁰ − (80,000×1.07¹⁰ − 20,000)×30% = 116,160.</td></tr>
+                <tr><td><b>6</b><br><span style="color:var(--muted);">LEAST accurate re: inflation on after-tax returns</span></td><td><b class="pwm-green">B — "same gap → same impact"</b></td><td>False: impact depends on the LEVELS, the holding period, and that tax hits nominal gains — not just the nominal-vs-inflation gap. A (inflation erodes gains more than income) &amp; C (tax-advantaged accounts don't protect purchasing power) are accurate.</td></tr>
+                <tr><td><b>7</b><br><span style="color:var(--muted);">500k, inc 3% accrual, app 5%, both 25%, CG end 20y — drag</span></td><td><b class="pwm-green">A — ≈ 30.9%</b></td><td>After-tax rate = 5% + 3%(1−0.25) = 7.25%; factor 1.0725²⁰ = 4.05; CG ratio = 5/7.25 = 69%; net ≈ 3.53; no-tax 1.08²⁰ = 4.66 → drag ≈ 30.9%.</td></tr>
+              </table>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">High-probability traps (9.4)</div>
+              <span class="pwm-rule"><b class="pwm-red">Average rate &lt; marginal rate</b> under any progressive system.</span>
+              <span class="pwm-rule"><b class="pwm-red">Accrual tax drag &gt; tax rate</b>; increases with higher returns &amp; longer horizons.</span>
+              <span class="pwm-rule"><b class="pwm-red">Deferred-CG drag = tax rate</b> (when basis = current value); the lowest-drag regime.</span>
+              <span class="pwm-rule"><b class="pwm-red">Low cost basis</b> raises drag — the embedded gain is a stored-up tax liability.</span>
+              <span class="pwm-rule"><b class="pwm-red">Tax hits NOMINAL gains</b> → inflation exacerbates tax erosion; worst for fixed income.</span>
+              <span class="pwm-rule"><b class="pwm-red">More income (vs deferred CG) → higher tax drag</b> at the same total return.</span>
+              <span class="pwm-rule"><b class="pwm-red">Capital gains are taxed only when REALIZED.</b></span>
+            </div>
+          </div>
+
+          <!-- ════════ IPS STRUCTURE 9.e ════════ -->
+          <div id="pwm-ips" class="pwm-toppanel">
+            <div class="pwm-tabs">
+              <button class="pwm-tab active" onclick="pwmTab(event,'pwmips-over')">6 Sections</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmips-obj')">Objectives</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmips-param')">Parameters</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmips-mgmt')">Allocation &amp; Mgmt</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmips-duty')">Duties &amp; Appendix</button>
+              <button class="pwm-tab" onclick="pwmTab(event,'pwmips-where')">Where Does It Go?</button>
+            </div>
+
+            <div id="pwmips-over" class="pwm-panel active">
+              <div class="pwm-card">
+                <div class="pwm-title">What the IPS does</div>
+                <div class="pwm-body">The <b class="pwm-main-c">Investment Policy Statement</b> documents a private client's investment objectives, risk tolerance, time horizon, liquidity preferences, and other preferences/constraints. The manager uses it to construct the portfolio given prevailing capital-market conditions.</div>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">The six IPS sections (private client)</div>
+                <table class="pwm-tbl">
+                  <tr><th>#</th><th>Section</th><th>Holds</th></tr>
+                  <tr><td>1</td><td><b class="pwm-main-c">Client Background &amp; Objectives</b></td><td>Background (personal/financial/tax), outside assets, external cash flows; planned/unplanned goals; quantify, reconcile, prioritize (primary/secondary).</td></tr>
+                  <tr><td>2</td><td><b class="pwm-main-c">Key Investment Parameters</b></td><td>Risk tolerance, time horizon, asset-class preferences, liquidity preferences, other preferences, constraints.</td></tr>
+                  <tr><td>3</td><td><b class="pwm-main-c">Portfolio Asset Allocation</b></td><td>Strategic AA (targets) vs tactical AA (ranges).</td></tr>
+                  <tr><td>4</td><td><b class="pwm-main-c">Portfolio Mgmt &amp; Implementation</b></td><td>Discretionary authority, rebalancing approach, tactical changes, implementation vehicles.</td></tr>
+                  <tr><td>5</td><td><b class="pwm-main-c">Duties &amp; Responsibilities</b></td><td>Of the private wealth manager (formulate/review, construct, monitor, report, vote proxies).</td></tr>
+                  <tr><td>6</td><td><b class="pwm-main-c">IPS Appendix</b></td><td>Frequently-changing items: modeled portfolio performance, capital market expectations.</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="pwmips-obj" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">1 · Client background &amp; investment objectives</div>
+                <span class="pwm-rule">Background from <b class="pwm-main-c">personal, financial &amp; tax</b> information; identify ALL portfolio components + assets held outside (e.g. with another manager) + external cash flows (e.g. DB pension).</span>
+                <span class="pwm-rule">Goals can be planned/unplanned, <b class="pwm-main-c">ongoing or one-off</b>.</span>
+                <span class="pwm-rule">Manager works to <b class="pwm-green">quantify</b> objectives, <b class="pwm-green">reconcile competing</b> ones, and <b class="pwm-green">prioritize</b> into <b>primary &amp; secondary</b>.</span>
+                <span class="pwm-rule">Use <b class="pwm-main-c">capital sufficiency (capital needs) analysis</b> to test feasibility and, where needed, revise objectives to be realistic.</span>
+                <div class="pwm-trap"><b>Exam note:</b> investment OBJECTIVES are prepared <b>separately</b> from risk tolerance — risk tolerance lives under Investment Parameters (section 2), not here.</div>
+              </div>
+            </div>
+
+            <div id="pwmips-param" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">2 · Key investment parameters</div>
+                <table class="pwm-tbl">
+                  <tr><th>Parameter</th><th>Detail</th></tr>
+                  <tr><td><b class="pwm-main-c">Risk tolerance</b></td><td>Willingness + ability. <b class="pwm-red">Low for important goals, higher for low-priority</b>; near-term goals → lower tolerance. Assess via questionnaires + conversations.</td></tr>
+                  <tr><td><b class="pwm-main-c">Time horizon</b></td><td>Described as a <b class="pwm-green">range</b> (e.g. &gt;15y long, &lt;10y short) — not a specific length. Multiple objectives → a different horizon each.</td></tr>
+                  <tr><td><b class="pwm-main-c">Asset-class preferences</b></td><td>Acceptable (or unsuitable) classes + their risk-return characteristics.</td></tr>
+                  <tr><td><b class="pwm-main-c">Liquidity preferences</b></td><td>Needs not stated in background (e.g. cash reserve); preferences that restrict certain classes (e.g. dividend preference precludes small-growth stocks).</td></tr>
+                  <tr><td><b class="pwm-main-c">Other preferences</b></td><td>Concentrated single-stock position (past employment/inheritance); ethical investing.</td></tr>
+                  <tr><td><b class="pwm-main-c">Constraints</b></td><td>Restrict the manager's choices (e.g. ESG / ethical investing).</td></tr>
+                </table>
+                <div class="pwm-trap"><b>Exam note:</b> in THIS reading, risk tolerance / time horizon / liquidity / other preferences / constraints are <b>investment parameters</b>; <b class="pwm-red">taxes are part of the client's financial background</b>, not a parameter here.</div>
+              </div>
+            </div>
+
+            <div id="pwmips-mgmt" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">3 · Portfolio asset allocation</div>
+                <span class="pwm-rule"><b class="pwm-main-c">Strategic AA</b> — long-term TARGET allocation per class; rebalanced periodically to maintain the target.</span>
+                <span class="pwm-rule"><b class="pwm-main-c">Tactical AA</b> — active strategy; normally specifies a <b class="pwm-green">range</b> per class rather than a single target.</span>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">4 · Portfolio management &amp; implementation</div>
+                <table class="pwm-tbl">
+                  <tr><th>Item</th><th>Detail</th></tr>
+                  <tr><td><b class="pwm-main-c">Discretionary authority</b></td><td>Manager acts without prior client approval. <b>Full</b> vs <b>limited</b> (e.g. only rebalance to agreed ranges). <b class="pwm-red">Nondiscretionary</b> = can recommend but NOT act without approval.</td></tr>
+                  <tr><td><b class="pwm-main-c">Rebalancing</b></td><td><b>Time-based</b> (quarterly/semiannual/annual — ignores deviations) vs <b>threshold-based</b> (rebalance once weights deviate by a set amount).</td></tr>
+                  <tr><td><b class="pwm-main-c">Tactical changes</b></td><td>IPS states if manager may do tactical AA + acceptable weight ranges + how far beyond bounds.</td></tr>
+                  <tr><td><b class="pwm-main-c">Implementation</b></td><td>Acceptable vehicles (in-house/external managers, ETFs, mutual funds) + due-diligence process.</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="pwmips-duty" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">5 · Duties &amp; responsibilities of the manager</div>
+                <span class="pwm-rule">Formulating &amp; reviewing the IPS (incl. review frequency)</span>
+                <span class="pwm-rule">Recommending/selecting investments &amp; constructing the asset allocation</span>
+                <span class="pwm-rule">Monitoring &amp; rebalancing the portfolio; monitoring implementation costs</span>
+                <span class="pwm-rule">Monitoring third-party service providers</span>
+                <span class="pwm-rule">Reporting portfolio performance; reporting taxes &amp; financial statements</span>
+                <span class="pwm-rule">Voting proxies</span>
+              </div>
+              <div class="pwm-card">
+                <div class="pwm-title">6 · IPS Appendix (frequently-changing items)</div>
+                <span class="pwm-rule"><b class="pwm-main-c">Modeled portfolio performance</b> — range of possible outcomes over different horizons + a distribution of returns at specific percentiles.</span>
+                <span class="pwm-rule"><b class="pwm-main-c">Capital market expectations</b> — expected return, risk &amp; correlations of the asset classes available.</span>
+                <div class="pwm-trap"><b>Reflex:</b> capital market expectations &amp; modeled portfolio behavior belong in the <b>Appendix</b> — NOT the portfolio-management section. Rebalancing methodology belongs in <b>Portfolio Management</b>.</div>
+              </div>
+            </div>
+
+            <div id="pwmips-where" class="pwm-panel">
+              <div class="pwm-card">
+                <div class="pwm-title">"Which section?" — the exam's favourite trap</div>
+                <table class="pwm-tbl">
+                  <tr><th>Item</th><th>Section</th></tr>
+                  <tr><td>A specific funding goal / purchase / bequest</td><td><b class="pwm-green">Objectives</b></td></tr>
+                  <tr><td>Risk tolerance, time horizon</td><td><b class="pwm-main-c">Parameters</b></td></tr>
+                  <tr><td>Cash reserve / need to sell quickly</td><td><b class="pwm-main-c">Parameters → Liquidity preferences</b></td></tr>
+                  <tr><td>Acceptable / unsuitable asset classes</td><td><b class="pwm-main-c">Parameters → Asset-class preferences</b></td></tr>
+                  <tr><td>ESG / ethical restriction</td><td><b class="pwm-main-c">Parameters → Constraints</b></td></tr>
+                  <tr><td>Concentrated single stock</td><td><b class="pwm-main-c">Parameters → Other preferences</b></td></tr>
+                  <tr><td>Strategic vs tactical targets/ranges</td><td><b class="pwm-blue">Asset Allocation</b></td></tr>
+                  <tr><td>Discretion · rebalancing method · vehicles</td><td><b class="pwm-blue">Portfolio Management</b></td></tr>
+                  <tr><td>Modeled performance · capital market expectations</td><td><b class="pwm-orange">Appendix</b></td></tr>
+                  <tr><td>Taxes</td><td><b class="pwm-red">Financial background (NOT a parameter)</b></td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ IPS WORKED EXAMPLES ════════ -->
+          <div id="pwm-ipsex" class="pwm-toppanel">
+            <div class="pwm-card">
+              <div class="pwm-title">Elam — preparing investment objectives</div>
+              <div class="pwm-body">William Elam, 30, inherited $750k; factory worker $50k, wife Elizabeth teacher $38k, 3 kids; DB pension (not vested), her 403(b); $20k credit-card debt. Stated: salaries/expenses grow only with inflation; don't improve lifestyle — grow the portfolio for college + retirement in 30y; set up a trust for the kids.</div>
+              <span class="pwm-rule"><b class="pwm-green">Purpose:</b> pay children's college, fund the couple's retirement, set up a trust for children.</span>
+              <span class="pwm-rule"><b class="pwm-orange">Cash flows:</b> salaries cover living costs (inflation-adjusted) → portfolio distributions begin when college starts in ~10y (pay off the credit card immediately).</span>
+              <span class="pwm-rule"><b class="pwm-main-c">Manager's job:</b> help quantify &amp; prioritize the competing objectives; use capital sufficiency analysis to test feasibility &amp; revise if unsupported.</span>
+              <div class="pwm-info"><b>Time horizons (multiple):</b> college &gt;10y · trust for children after college likely &gt;20y · retirement &gt;30y. Expressed as ranges/"exceeding", not exact figures.</div>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">DuBois — revising an existing IPS</div>
+              <div class="pwm-body">DuBois, 65, retired 5y; son no longer needs support (both got promotions); modest lifestyle unchanged; equities should be <b>domestic only</b>; portfolio $2M; horizon &gt;15y; withdraw $75k/yr inflation-adjusted (highest priority); cash reserve up to $25k; bequest $1.2M each to son &amp; museum ($2.4M total) at death.</div>
+              <table class="pwm-tbl">
+                <tr><th>IPS section</th><th>Change</th></tr>
+                <tr><td><b class="pwm-main-c">Objectives</b></td><td><b class="pwm-green">Primary is now retirement lifestyle</b> (son support removed); add bequest $1.2M each to son &amp; museum; distribute $75k/yr inflation-adjusted; quantify museum gift over time.</td></tr>
+                <tr><td><b class="pwm-main-c">Risk tolerance</b></td><td><b class="pwm-red">No change</b> — still able/willing to accept short-/medium-term volatility.</td></tr>
+                <tr><td><b class="pwm-main-c">Time horizon</b></td><td><b class="pwm-red">No change</b> — still reasonable to exceed 15 years.</td></tr>
+                <tr><td><b class="pwm-main-c">Asset-class preferences</b></td><td>Equities = <b class="pwm-green">domestic only</b>; manager advises on the return &amp; diversification cost; <b class="pwm-orange">MVO must incorporate the no-foreign-equities constraint</b>.</td></tr>
+                <tr><td><b class="pwm-main-c">Liquidity preferences</b></td><td>Cash reserve raised <b class="pwm-green">$10k → $25k</b>.</td></tr>
+                <tr><td><b class="pwm-main-c">Other preferences</b></td><td><b class="pwm-red">No change</b> (keeps Chic Apparel — not a concentration risk, actively traded).</td></tr>
+                <tr><td><b class="pwm-main-c">Constraints</b></td><td>Equities domestic-only; note Chic Apparel has significant <b class="pwm-red">embedded capital gains</b>.</td></tr>
+              </table>
+              <div class="pwm-trap"><b>The teaching points:</b> (1) a circumstance change reorders <b>priorities</b> (retirement becomes primary). (2) A domestic-only equity preference is an <b>asset-class preference + constraint</b> and must flow into the <b>MVO</b>. (3) Portfolio management / responsibilities / review sections need <b>no change</b> — only objectives &amp; parameters.</div>
+            </div>
+          </div>
+
+          <!-- ════════ QUIZ 9.5 ════════ -->
+          <div id="pwm-quiz5" class="pwm-toppanel">
+            <div class="pwm-card">
+              <div class="pwm-title">Module Quiz 9.5 — worked (5 Qs)</div>
+              <table class="pwm-tbl">
+                <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>1</b><br><span style="color:var(--muted);">most likely in the INVESTMENT OBJECTIVES section</span></td><td><b class="pwm-green">B — the $2M vacation-apartment purchase in 2 years</b></td><td>A specific funding goal is an objective. <span class="pwm-red">A</span> low risk tolerance &amp; <span class="pwm-red">C</span> asset-class preference are <b>parameters</b>, not objectives.</td></tr>
+                <tr><td><b>2</b><br><span style="color:var(--muted);">most likely a CONSTRAINT</span></td><td><b class="pwm-green">A — ESG investing</b></td><td>ESG/ethical preferences restrict the manager's choices → a constraint. <span class="pwm-red">B</span> time horizon &amp; <span class="pwm-red">C</span> liquidity preferences are other parameters.</td></tr>
+                <tr><td><b>3</b><br><span style="color:var(--muted);">most likely in PORTFOLIO MANAGEMENT</span></td><td><b class="pwm-green">C — portfolio rebalancing methodology</b></td><td>Rebalancing sits in Portfolio Management &amp; Implementation. <span class="pwm-red">A</span> capital market expectations &amp; <span class="pwm-red">B</span> modeled portfolio behavior belong in the <b>Appendix</b>.</td></tr>
+                <tr><td><b>4</b><br><span style="color:var(--muted);">cash reserve / need to sell quickly → which section</span></td><td><b class="pwm-green">A — liquidity preferences section</b></td><td>A need to sell the portfolio relatively quickly is a liquidity matter → liquidity preferences (a parameter). Not "other preferences" or asset allocation.</td></tr>
+                <tr><td><b>5</b><br><span style="color:var(--muted);">Collins's time-horizon description</span></td><td><b class="pwm-green">C — multiple horizons EXCEEDING 3y / 20y / 35y</b></td><td>Horizons are expressed as <b>ranges / "exceeding"</b>, not exact lengths (kills B's specific 3/20/35) and not a single horizon (kills A). College &gt;3y, retirement &gt;20y, gifting &gt;35y.</td></tr>
+              </table>
+            </div>
+            <div class="pwm-card">
+              <div class="pwm-title">High-probability traps (9.5)</div>
+              <span class="pwm-rule"><b class="pwm-red">Objectives = goals;</b> risk tolerance / liquidity / asset-class are <b>parameters</b> — don't put them in objectives.</span>
+              <span class="pwm-rule"><b class="pwm-red">ESG / ethical = constraint;</b> single-stock concentration = "other preferences".</span>
+              <span class="pwm-rule"><b class="pwm-red">Capital market expectations &amp; modeled performance → Appendix;</b> rebalancing/discretion/vehicles → Portfolio Management.</span>
+              <span class="pwm-rule"><b class="pwm-red">Need to sell quickly = liquidity</b> (a parameter), goes in liquidity preferences.</span>
+              <span class="pwm-rule"><b class="pwm-red">Time horizons are RANGES,</b> not specific lengths; multiple objectives → one horizon each.</span>
+              <span class="pwm-rule"><b class="pwm-red">Strategic AA = targets; tactical AA = ranges.</b></span>
+              <span class="pwm-rule"><b class="pwm-red">Nondiscretionary</b> = recommend but can't act without client approval.</span>
+              <span class="pwm-rule"><b class="pwm-red">Taxes = financial background,</b> NOT an investment parameter (this reading).</span>
+            </div>
+          </div>
+
+          <script>
+            function pwmTop(ev,id){
+              var w=document.getElementById('pwmWidget');
+              w.querySelectorAll('.pwm-toppanel').forEach(function(p){p.classList.remove('active')});
+              w.querySelectorAll('.pwm-toptabs > .pwm-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function pwmTab(ev,id){
+              var p=ev.currentTarget.closest('.pwm-toppanel');
+              p.querySelectorAll(':scope > .pwm-panel').forEach(function(x){x.classList.remove('active')});
+              p.querySelectorAll(':scope > .pwm-tabs > .pwm-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function pwmInit(){ /* reserved for future interactive elements */ }
+            var pwmTaxRegime='accrual';
+            function pwmTaxMode(m){
+              pwmTaxRegime=m;
+              document.getElementById('pwm-md-accrual').classList.toggle('active', m==='accrual');
+              document.getElementById('pwm-md-defer').classList.toggle('active', m==='defer');
+            }
+            function pwmTaxCalc(){
+              var init=parseFloat(document.getElementById('pwm-tc-init').value);
+              var R=parseFloat(document.getElementById('pwm-tc-r').value)/100;
+              var T=parseFloat(document.getElementById('pwm-tc-t').value);
+              var tax=parseFloat(document.getElementById('pwm-tc-tax').value)/100;
+              var basis=parseFloat(document.getElementById('pwm-tc-basis').value);
+              var infl=parseFloat(document.getElementById('pwm-tc-infl').value)/100;
+              var out=document.getElementById('pwm-tc-out');
+              if([init,R,T,tax].some(function(x){return isNaN(x);})){ out.textContent='Please fill initial, R, T and tax rate.'; return; }
+              var noTax=init*Math.pow(1+R,T);
+              var afterTax, label;
+              if(pwmTaxRegime==='accrual'){
+                afterTax=init*Math.pow(1+R*(1-tax),T);
+                label='Annual / accrual tax';
+              } else {
+                var b=isNaN(basis)?init:basis;
+                var grown=init*Math.pow(1+R,T);
+                afterTax=grown-(grown-b)*tax;
+                label='Deferred capital gains (basis '+b.toLocaleString()+')';
+              }
+              var drag=(noTax-afterTax)/(noTax-init);
+              var s='Regime: '+label+'\n';
+              s+='No-tax FV     = '+Math.round(noTax).toLocaleString()+'\n';
+              s+='After-tax FV  = '+Math.round(afterTax).toLocaleString()+'\n';
+              s+='Tax consumed  = '+Math.round(noTax-afterTax).toLocaleString()+'\n';
+              s+='TAX DRAG      = '+(drag*100).toFixed(1)+'%';
+              s+=(pwmTaxRegime==='accrual' ? '  (> tax rate '+(tax*100).toFixed(0)+'% — compounding)' : (basis===init?'  (= tax rate '+(tax*100).toFixed(0)+'%)':'  (> tax rate due to low basis)'));
+              if(!isNaN(infl) && infl>0){
+                var real=afterTax/Math.pow(1+infl,T);
+                s+='\nReal after-tax FV = '+Math.round(real).toLocaleString()+'  (÷ (1+'+(infl*100).toFixed(0)+'%)^'+T+')';
+              }
+              out.textContent=s;
+            }
+          </script>
+        </div>
+
         <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
           <style>
             #sfWidget { --sf-main:#A78BFA; --sf-gold:#D4A017; --sf-green:#3DD68C; --sf-red:#FF7B72; --sf-orange:#F0A04B; --sf-blue:#79C0FF; --sf-purple:#BC8CFF; }
@@ -22791,6 +23645,7 @@ const DEFAULT_DECK = {
     { name:"Asset Allocation",   subtopics:[] },
     { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Currency Management"] },
     { name:"Portfolio Construction", subtopics:["Overview of Equity Portfolio Management","Overview Of Fixed-Income Portfolio Management","Asset Allocation to Alternative Investments","Active Mgmt","Factor Models","Rebalancing","Portfolio Risk"] },
+    { name:"Private Wealth Management", subtopics:["An Overview of Private Wealth Management"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
     { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
@@ -23298,6 +24153,141 @@ const DEFAULT_DECK = {
     {id:"aai34",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"command",
      q:"Content fixes from my errors: FOF vs UCITS, REIT/HF tax, NAV ordering, secondaries",
      a:"[rl][hl]FOF[/hl] = co-invest when TOO SMALL to access directly + no in-house team needed[/rl][rl][hl]UCITS[/hl] = rejected when liquidity already met (don't pay its premium) + regulatory drag[/rl][rl][hl]REIT tax[/hl] = depreciation offsets income; [hl]reject HF[/hl] on TAX INEFFICIENCY (tax-exempt co-investors → manager tax-insensitive), not transparency[/rl][rl][hl]Secondaries[/hl] = seasoned → less J-curve → <10yr life[/rl][rl][hl]NAV[/hl] = grow first, then distribution% × GROWN NAV: 25×1.11=27.75; ×18%=4.995; NAV=27.75−4.995=22.755[/rl]"},
+    {id:"pwm1",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Wealth definitions: aggregate vs net worth vs economic net worth (LOS 9.a)",
+     a:"[rl][hl]Aggregate wealth[/hl] = total of ALL assets — asset-only, BEFORE subtracting liabilities[/rl][rl][hl]Net worth[/hl] = assets − liabilities using easily-measured values; EXCLUDES complex intangibles (copyrights)[/rl][rl][hl]Economic net worth[/hl] = net worth + pension benefits & HUMAN CAPITAL as assets, − PV of future consumption & bequests as liabilities[/rl]\nHuman capital = PV of an individual's future earnings."},
+    {id:"pwm2",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Financial vs real vs productive vs investable wealth",
+     a:"[rl][hl]Financial wealth[/hl] = financial assets (funds, stocks, bonds, HF) + accrued pension rights; EXCLUDES family-business stakes[/rl][rl][hl]Real wealth[/hl] = tangible (real estate, commodities); primary residence often biggest[/rl][rl][hl]Productive wealth[/hl] = assets generating wealth via business — e.g. DIRECT SHAREHOLDING IN A FAMILY BUSINESS[/rl][rl][hl]Investable wealth[/hl] = assets readily available for investment; the MAIN FOCUS of private wealth management[/rl]"},
+    {id:"pwm3",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"Classification trap: where does a family business stake go?",
+     a:"A direct stake in a family business = [hl]PRODUCTIVE wealth[/hl], NOT financial wealth (financial wealth explicitly excludes it).\nOther traps: aggregate = pre-liabilities, net worth = post; pension RIGHTS sit in financial wealth, full pension benefits + human capital only in economic net worth; copyrights/intangibles excluded from net worth."},
+    {id:"pwm4",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Global wealth creation drivers since WWII",
+     a:"[rl]Market-oriented policies & competition (fall of Berlin Wall 1989)[/rl][rl]Free-market capitalism / privatization (telecoms, airlines)[/rl][rl]Reduced regulatory barriers + funding access[/rl][rl]Global communication & connectivity[/rl][rl]Rise in entrepreneurship since the 1980s[/rl][rl]Asset price appreciation (esp. US/developed)[/rl]\nStat: global stock-market cap & global GDP both grew ~7%/yr 1970–2021, high positive correlation."},
+    {id:"pwm5",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"Wealth CREATION vs TRANSFER",
+     a:"[rl][hl]TRANSFER[/hl] (no new national wealth): gambling/lottery wins, inheritances — significant for the individual but just move wealth within the country[/rl][rl][hl]CREATION[/hl]: entrepreneurship & asset price appreciation (primary sources); sudden fame creates new earning capacity (human capital)[/rl]\nExam reflex: 'which represents creation of NEW wealth?' → not lottery, not inheritance."},
+    {id:"pwm6",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Wealth drivers by region",
+     a:"[rl][hl]North America[/hl] — business formation & entrepreneurship; equity-rich execs & founders (NA+Europe ≈ 57% of global wealth)[/rl][rl][hl]Europe[/hl] — more privately held family business & inherited real estate; ex-Soviet resource states → OLIGARCHS[/rl][rl][hl]Asia-Pacific[/hl] — agrarian→manufacturing/services; education investment; Japan exports[/rl][rl][hl]Latin America[/hl] — persistent inequality; Argentina hyperinflation[/rl][rl][hl]Middle East[/hl] — oil wealth in inheriting families; Saudi diversifying[/rl][rl][hl]Africa[/hl] — commodities + FDI; high inequality[/rl]"},
+    {id:"pwm7",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"Region trap: oligarchs from natural resources",
+     a:"Wealth concentrated with [hl]oligarchs from natural resources = EASTERN EUROPE[/hl] (formerly communist, resource-rich states post-Soviet).\nNOT Asia-Pacific. A stem assigning resource-oligarchs to Asia-Pacific is the LEAST accurate statement (Quiz 9.1 Q3)."},
+    {id:"pwm8",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Distribution facts: mean vs median (positive skew)",
+     a:"Credit Suisse 2022: 53% of adults < $10k; 1% > $1m; median $8,360 vs mean $87,489; bottom 50% controlled <1%; top decile controlled 82%.\n[hl]Positive skew → a few ultra-wealthy pull the MEAN up → mean > median[/hl]; the median better represents the typical person."},
+    {id:"pwm9",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Gini coefficient & Lorenz curve",
+     a:"[rl][hl]Gini = 0[/hl] → perfectly uniform; each 10% controls 10%; MEAN = MEDIAN[/rl][rl][hl]0 < Gini < 1[/hl] → rising inequality/concentration; higher skew[/rl][rl][hl]Gini = 1[/hl] → max inequality, wealth in very few; MEAN ≫ MEDIAN[/rl]\nLorenz curve = cumulative wealth-distribution curve; Gini = area between it and the 45° equality line. No requirement to calculate Gini."},
+    {id:"pwm10",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"Gini → mean vs median reflex (Q7)",
+     a:"Any [hl]Gini > 0 → positive skew → mean > median[/hl]. Only at Gini = 0 are mean and median equal.\nSo a country with Gini 0.5 has mean wealth GREATER than median wealth. The larger the Gini, the wider the mean–median gap."},
+    {id:"pwm11",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"What moves the Gini? (Q6) + hyperinflation (Q5)",
+     a:"[rl][hl]Gini RISES[/hl] with recession/economic stress (2007–09, COVID); developing countries worse (income variability + fewer safety nets)[/rl][rl][hl]Gini FALLS[/hl] with progressive taxes on the wealthy & social safety nets[/rl][rl][hl]Hyperinflation[/hl] → currency WEAKENS + nominal GDP per capita RISES in local terms (inflation inflates nominal; real standards fall)[/rl]"},
+    {id:"pwm12",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"HNW / UHNW & family offices",
+     a:"[rl]HNW & UHNW: no precise cutoff; complexity rises with wealth; manage legal/tax/family factors not just financial[/rl][rl]UHNW = tens of millions USD; subsets = centimillionaires (>$100m) & billionaires[/rl][rl][hl]Family office[/hl] = private firm (investment, tax, estate, philanthropy); PRIMARY OBJECTIVE = preserve & grow wealth across generations[/rl]"},
+    {id:"pwm13",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Tax havens & political risk",
+     a:"[rl]Differing tax regimes tempt HNW clients to relocate to a tax haven[/rl][rl]Balance against the ethical view that the wealthy should contribute via taxes[/rl][rl][hl]Political risk[/hl] = risk of changes in regulations, legal frameworks, and deterioration of rule of law if a country becomes unstable — must weigh before any international move[/rl]"},
+    {id:"pwm14",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"What lowers vs raises long-term growth (Q2)",
+     a:"[rl][hl]LOWERS[/hl] long-run growth: state ownership of major industries (reduces competition/efficiency)[/rl][rl][hl]RAISES[/hl] growth: inward foreign direct investment; increased international competition/trade; entrepreneurship; privatization[/rl]\nQ2 reflex: 'decreases long-term growth' → state ownership."},
+    {id:"pwm15",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"The seven financial stages of life (LOS 9.b)",
+     a:"[rl]1 [hl]Education[/hl] — dependent on parents, little FC[/rl][rl]2 [hl]Early career[/hl] — workforce, family, save + take on debt[/rl][rl]3 [hl]Career development[/hl] (~35–50) — income up but outgoings up → limits saving[/rl][rl]4 [hl]Peak accumulation[/hl] — max earnings; retirement planning + tax min[/rl][rl]5 [hl]Preretirement[/hl] — adjust lifestyle to match wealth[/rl][rl]6 [hl]Early retirement[/hl] — most active; keep SOME risk for growth[/rl][rl]7 [hl]Late retirement[/hl] — unknown duration; LONGEVITY RISK; health care[/rl]"},
+    {id:"pwm16",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"formula",
+     q:"Human capital definition & inputs",
+     a:"[hl]HC = PV of expected future employment income, weighted by probability of survival each year.[/hl]\nInputs:\n[rl]Future income = current income × growth rate × years remaining[/rl][rl]Survival probability each year (actuarial tables — population-level)[/rl][rl]NOMINAL risk-free rate for discounting[/rl][rl]Risk premium added to RFR for income-stream volatility[/rl]\nImpossible to value precisely."},
+    {id:"pwm17",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"HC trap: which discount rate? (Q1)",
+     a:"Discount rate = [hl]NOMINAL risk-free rate + risk premium[/hl] — NOT the real risk-free rate.\nHigher-volatility professions are discounted MORE heavily (higher risk premium) → lower HC. E.g. investment banker discounted more than a government worker; a govt teacher has both a lower risk premium AND a lower assumed income-growth rate than a banker."},
+    {id:"pwm18",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Holistic (economic) balance sheet",
+     a:"Net worth extended: [hl]ASSETS += human capital[/hl] (+ pension benefits); [hl]LIABILITIES += PV of future consumption & planned bequests[/hl].\nWorked: traditional assets 4,200 vs debts 675 (looks fine) → holistic NET WORTH −235 → consumption/bequest plans may be unrealistic (or estimation error, or missing assets like expected inheritance). Low HC vs pension → near retirement."},
+    {id:"pwm19",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"Holistic balance sheet trap: asset vs liability (Q2)",
+     a:"[rl][hl]ASSETS[/hl] (extended): human capital, pension benefits[/rl][rl][hl]LIABILITIES[/hl] (extended): PV of future consumption, planned bequests[/rl]\nQ2 reflex: 'least likely a liability' → HUMAN CAPITAL (it's an asset)."},
+    {id:"pwm20",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Life-cycle composition: HC vs FC over time",
+     a:"[rl]HC dominates when YOUNG → declines as work life shortens[/rl][rl]FC rises as the individual saves & invests[/rl][rl]Early life: real estate / tangibles may dominate[/rl][rl]Early retirement: pension benefits dominant for many[/rl][rl][hl]Total wealth (HC + FC) AND FC both peak near retirement, then draw down[/hl][/rl]"},
+    {id:"pwm21",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Entrepreneurship vs HC; diversifying HC risk",
+     a:"[rl][hl]Entrepreneurship[/hl] — gives up stable income for volatile cash flows; UNLIKE HC, can be LIQUIDATED into financial wealth → offsets HC decline[/rl][rl][hl]Govt employee[/hl] (stable HC) → afford MORE risk → more EQUITIES[/rl][rl][hl]Entrepreneur[/hl] (volatile, sector-exposed HC) → strong FIXED INCOME, uncorrelated with their business (trade-off: lower returns)[/rl]\nPensions also risky: private may fail, govt may underdeliver."},
+    {id:"pwm22",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"Govt employee vs entrepreneur equity allocation (Q3)",
+     a:"Compared to an entrepreneur, a government employee should allocate [hl]MORE of their financial assets to equities[/hl].\nReason: stable salary = low-risk human capital → can carry more portfolio risk. The entrepreneur's volatile HC demands more fixed income, uncorrelated with their business sector."},
+    {id:"pwm23",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Returns: outpacing vs hedging inflation (by asset class)",
+     a:"Target REAL (inflation-adjusted) returns — inflation erodes purchasing power & compounds. [hl]Outpace[/hl] (beat over time) vs [hl]hedge[/hl] (move with it short-term):\n[rl][hl]Equities[/hl] — outpace LONG term; volatile short term, NOT a reliable short-term hedge[/rl][rl][hl]Commodities[/hl] (oil/gold) — short-term HEDGE; don't always beat persistent inflation; volatile[/rl][rl][hl]Inflation-linked bonds[/hl] — keep pace long run, low real returns; most bonds NOT linked[/rl][rl][hl]Real estate[/hl] — hedge (rents pegged to indexes); can stagnate/drop in uncertainty[/rl]"},
+    {id:"pwm24",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"Inflation protection: which statement is most accurate? (Q1)",
+     a:"[hl]Inflation-linked bonds protect purchasing power in the LONG run but NOT the short run.[/hl]\nWrong options: 'fixed income suffers short AND long run' — ILBs don't suffer long-run; 'equities provide a short-term inflation hedge' — equities are volatile short term, NOT a reliable hedge."},
+    {id:"pwm25",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Three individual risks; mitigant",
+     a:"[rl][hl]Return volatility[/hl] — fluctuations in value/returns[/rl][rl][hl]Drawdown risk[/hl] — difference between PEAK value and LOWEST point in a period; NOT a realized loss unless forced to liquidate at the low[/rl][rl][hl]Not achieving objectives[/hl] — market conditions OR under-allocating capital[/rl]\nMitigant: volatility & drawdown reduced by [hl]diversification across asset classes[/hl]."},
+    {id:"pwm26",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"Drawdown trap",
+     a:"Drawdown = [hl]peak-to-trough[/hl] decline during a period. It is a PAPER move — [hl]NOT a realized loss[/hl] unless the investor is forced to liquidate at the low point."},
+    {id:"pwm27",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Risk orientation: tolerance vs capacity vs perception",
+     a:"[rl][hl]Risk tolerance[/hl] = willingness AND ability (opposite = risk aversion)[/rl][rl][hl]Risk capacity[/hl] = ABILITY only — wealth, income, horizon, liquidity, importance of goals (objective)[/rl][rl][hl]Risk perception[/hl] = SUBJECTIVE measure; varies by client; manager can influence[/rl]"},
+    {id:"pwm28",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Ability to bear risk is DECREASED by",
+     a:"[rl]Shorter time horizon[/rl][rl]Large critical goals relative to portfolio size[/rl][rl]Goals important / cannot be deferred[/rl][rl]High liquidity needs[/rl][rl]Portfolio is sole source of support / can't tolerate losses[/rl]"},
+    {id:"pwm29",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"Risk questionnaire most useful for? (Q2)",
+     a:"A questionnaire is most useful for understanding [hl]risk perception[/hl] (subjective attitude toward gain/loss).\n[hl]Capacity is objective[/hl] — derived from wealth, income, horizon, liquidity data, NOT the attitude questions. Conversations add context (past experiences, background) and let the manager educate the client."},
+    {id:"pwm30",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Planned vs unplanned goals; PWM's role",
+     a:"[rl][hl]Planned[/hl] — reasonably estimated within a horizon: retirement, residence purchase, dependents' education, family events, charity, wealth transfer[/rl][rl][hl]Unplanned[/hl] — unexpected; uncertain amount AND timing: property repairs, uninsured medical[/rl]\nPWM role: [hl]quantify[/hl] (specific/realistic) · [hl]prioritize[/hl] (higher priority ≠ earlier in time) · [hl]change[/hl] (reevaluate after circumstances shift)"},
+    {id:"pwm31",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"DuBois essay — priority & timing trap",
+     a:"Planned: retirement lifestyle, support son 5yrs, vacation property, museum gift at death. Unplanned: long-term care, property repairs.\nQuantified: retirement + son support. To quantify: vacation purchase (+ funding) + museum gift.\n[hl]KEY: timing should NOT be the primary basis for priority.[/hl] Son-support being nearest in time doesn't make it most important — the manager helps determine TRUE importance; if goals compete, she should reevaluate priorities."},
+    {id:"pwm32",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Taxation of investment returns; accrual vs deferral",
+     a:"Investment income taxed separately from employment — same or MORE favorably; sits on top of employment income.\n[rl][hl]Interest[/hl] — year received; some excluded/favorable[/rl][rl][hl]Dividends[/hl] — year received; often favorable (co. already taxed)[/rl][rl][hl]Capital gains[/hl] — on REALIZED gains; longer-term favored[/rl][rl][hl]Wealth taxes[/hl] — annual, unusual[/rl]\n[hl]Accrual[/hl] = annual (dividends, interest). [hl]Deferral[/hl] = postponed (capital gains)."},
+    {id:"pwm33",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"formula",
+     q:"Progressive tax: band shortcut; avg vs marginal",
+     a:"Tax = [hl]cumulative tax to band start + marginal rate × (income − band start)[/hl].\nBaghurst 600k: 185,000 + 100,000×50% = 235,000 → avg = 235k/600k = [hl]39.17%[/hl]; marginal = [hl]50%[/hl].\n[hl]Average rate is ALWAYS less than the marginal rate[/hl] in a progressive system."},
+    {id:"pwm34",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"formula",
+     q:"Tax drag — annual/accrual tax",
+     a:"[hl]FV = init × [1 + R(1 − t)]^T[/hl]\nTax drag = (FV_notax − FV_aftertax) / (FV_notax − init).\nWorked 50k/8%/25%: 20y drag = 39.7%, 30y = 47.7%.\nKey: under annual tax, drag is [hl]> the tax rate[/hl]; [hl]increases with higher returns[/hl] and [hl]longer horizons[/hl]."},
+    {id:"pwm35",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"formula",
+     q:"Tax deferral (capital gains) — drag = tax rate",
+     a:"[hl]FV = (1+R)^T(1 − t_cg) + t_cg[/hl]   (= (1+R)^T − [(1+R)^T −1]×t_cg)\nWorked 50k/8%/25%/20y all-CG: FV = 187,286 → drag = [hl]25.0% = the tax rate exactly[/hl].\nIf ALL return is taxed once at the end, there's no compounding penalty → drag equals the rate. Lowest-drag regime."},
+    {id:"pwm36",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"formula",
+     q:"Impact of cost basis on capital gains",
+     a:"Basis/cost basis/tax basis = starting value for the CG calc. Low basis = stored-up untaxed liability.\nB = cost basis / current value · [hl]FV = (1+R)^T(1 − t_cg) + B × t_cg[/hl]\nLogic: FV = current×(1+R)^T − (current×(1+R)^T − basis)×t.\nWorked (current 50k, basis 20k, B=0.4): FV = 179,786 → drag = [hl]29.1%[/hl] (>25% because the 30k embedded gain is taxed too)."},
+    {id:"pwm37",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"Why inflation worsens the tax bite",
+     a:"Taxes are levied on [hl]NOMINAL[/hl] price appreciation, not real. So even a price rise that merely keeps pace with inflation is [hl]taxed as a gain[/hl] → inflation exacerbates tax erosion of long-term gains. Worst for fixed income.\nReal after-tax FV = nominal after-tax FV / (1+i)^T. Worked: 179,786 / 1.03²⁰ = [hl]99,543[/hl]."},
+    {id:"pwm38",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Combined income + capital gains (gain-ratio method)",
+     a:"[rl]1. After-tax rate = R_inc(1−t) + R_cap → factor (1+rate)^T[/rl][rl]2. CG ratio = R_cap / [R_inc(1−t) + R_cap][/rl][rl]3. Net factor = factor − (ratio × growth × t_cg)[/rl]\nComp 200k/15y: Case1 (div3/app6) → 8.4%, ratio 71.4%, FV 603,379, drag 23.7%. Case2 (div6/app3) → 7.8%, ratio 38.5%, FV 584,958, drag 27.2%.\n[hl]More income (accrual) → higher tax drag[/hl] at the same total return."},
+    {id:"pwm39",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"Tax drag — the four exam reflexes",
+     a:"[rl][hl]Annual/accrual drag > tax rate[/hl]; rises with higher R and longer T[/rl][rl][hl]Deferred-CG drag = tax rate[/hl] (basis = value); lowest drag[/rl][rl][hl]Low basis raises drag[/hl] (embedded gain taxed)[/rl][rl][hl]Tax on nominal gains → inflation worsens it[/hl][/rl]\nQuiz: accrual drag is higher than applied rate (NOT lower for higher returns, NOT higher for shorter periods)."},
+    {id:"pwm40",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"The six sections of a private-client IPS",
+     a:"[rl]1 [hl]Client Background & Objectives[/hl] — background, outside assets, cash flows; quantify/reconcile/prioritize (primary & secondary)[/rl][rl]2 [hl]Key Investment Parameters[/hl] — risk tolerance, time horizon, asset-class & liquidity & other preferences, constraints[/rl][rl]3 [hl]Portfolio Asset Allocation[/hl] — strategic (targets) vs tactical (ranges)[/rl][rl]4 [hl]Portfolio Mgmt & Implementation[/hl] — discretion, rebalancing, tactical changes, vehicles[/rl][rl]5 [hl]Duties & Responsibilities[/hl] of the manager[/rl][rl]6 [hl]Appendix[/hl] — modeled performance, capital market expectations[/rl]"},
+    {id:"pwm41",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"IPS 'which section?' — the placement trap",
+     a:"[rl]Specific funding goal/purchase/bequest → [hl]Objectives[/hl][/rl][rl]Risk tolerance, time horizon → [hl]Parameters[/hl][/rl][rl]Cash reserve / sell quickly → [hl]Liquidity preferences[/hl] (parameter)[/rl][rl]Acceptable/unsuitable classes → [hl]Asset-class preferences[/hl][/rl][rl]ESG/ethical → [hl]Constraints[/hl][/rl][rl]Concentrated single stock → [hl]Other preferences[/hl][/rl][rl]Discretion/rebalancing/vehicles → [hl]Portfolio Mgmt[/hl][/rl][rl]Capital market expectations, modeled performance → [hl]Appendix[/hl][/rl][rl]Taxes → [hl]Financial background[/hl] (NOT a parameter)[/rl]"},
+    {id:"pwm42",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Investment parameters: the six items",
+     a:"[rl][hl]Risk tolerance[/hl] — willingness+ability; low for important goals, higher for low-priority; near-term → lower[/rl][rl][hl]Time horizon[/hl] — a RANGE (>15y long, <10y short); one per objective[/rl][rl][hl]Asset-class preferences[/hl] — acceptable/unsuitable classes[/rl][rl][hl]Liquidity preferences[/hl] — cash reserve, class restrictions[/rl][rl][hl]Other preferences[/hl] — single-stock concentration, ethical[/rl][rl][hl]Constraints[/hl] — restrict manager choices (ESG)[/rl]"},
+    {id:"pwm43",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"framework",
+     q:"Strategic vs tactical AA; discretion; rebalancing",
+     a:"[rl][hl]Strategic AA[/hl] = long-term TARGET per class, rebalanced to maintain[/rl][rl][hl]Tactical AA[/hl] = active; a RANGE per class[/rl][rl][hl]Discretionary[/hl] — act without approval (full/limited); [hl]nondiscretionary[/hl] = recommend but can't act without client approval[/rl][rl][hl]Time-based rebalancing[/hl] — quarterly/annual, ignores deviation; [hl]threshold-based[/hl] — when weights deviate by a set amount[/rl]"},
+    {id:"pwm44",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"IPS Appendix vs Portfolio Management",
+     a:"[hl]Appendix[/hl] (frequently-changing): modeled portfolio performance (outcome ranges + return distribution at percentiles), capital market expectations (expected return/risk/correlations).\n[hl]Portfolio Management[/hl]: discretionary authority, rebalancing methodology, tactical changes, implementation vehicles.\nQuiz reflex: rebalancing method → Portfolio Mgmt; capital market expectations & modeled behavior → Appendix."},
+    {id:"pwm45",topic:"Private Wealth Management",subtopic:"An Overview of Private Wealth Management",type:"command",
+     q:"DuBois IPS revision — what changes when circumstances change",
+     a:"Son no longer needs support → [hl]retirement lifestyle becomes the PRIMARY objective[/hl]; add $1.2M bequest each to son & museum; distribute $75k/yr inflation-adjusted.\n[hl]Domestic-equities-only[/hl] = asset-class preference + constraint → must feed into the MVO. Cash reserve $10k→$25k.\nNo change to: risk tolerance, time horizon (>15y), other preferences (keeps Chic Apparel), portfolio mgmt/responsibilities/review."},
   ]
 };
 
@@ -24131,7 +25121,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -24157,6 +25147,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'eqWidget' && typeof eqInit === 'function') setTimeout(eqInit, 50);
     if (widgetId === 'fipmWidget' && typeof fipmInit === 'function') setTimeout(fipmInit, 50);
     if (widgetId === 'aaiWidget' && typeof aaiInit === 'function') setTimeout(aaiInit, 50);
+    if (widgetId === 'pwmWidget' && typeof pwmInit === 'function') setTimeout(pwmInit, 50);
   }
 }
 
@@ -24178,6 +25169,7 @@ function openNote(key, topic, subtopic) {
     'Portfolio Construction||Overview of Equity Portfolio Management': 'eqWidget',
     'Portfolio Construction||Overview Of Fixed-Income Portfolio Management': 'fipmWidget',
     'Portfolio Construction||Asset Allocation to Alternative Investments': 'aaiWidget',
+    'Private Wealth Management||An Overview of Private Wealth Management': 'pwmWidget',
     'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
     'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
     'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
@@ -24189,7 +25181,7 @@ function openNote(key, topic, subtopic) {
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
