@@ -19560,6 +19560,32 @@ bid-ask trade cost  ≈ duration × (ask yield − bid yield)</div>
                   <tr><td>↓</td><td></td><td>Equity Hedge Funds</td><td>Private Real Estate</td></tr>
                   <tr><td><b class="aai-red">Less liquid</b></td><td>Private Credit</td><td>Private Equity</td><td>Private Real Assets</td></tr>
                 </table>
+                <div class="aai-body" style="margin-top:10px;"><b class="aai-main-c">Liquidity spectrum</b> — where each class sits (most → least liquid):</div>
+                <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;margin:6px 0;">
+                  <defs>
+                    <linearGradient id="aaiLiqGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stop-color="var(--aai-green)" stop-opacity="0.55"/>
+                      <stop offset="100%" stop-color="var(--aai-red)" stop-opacity="0.55"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- vertical spectrum bar -->
+                  <rect x="40" y="20" width="16" height="260" rx="8" fill="url(#aaiLiqGrad)"/>
+                  <polygon points="48,284 42,272 54,272" fill="var(--aai-red)"/>
+                  <text x="70" y="28" fill="var(--aai-green)" font-family="var(--mono)" font-size="12" font-weight="600">MOST LIQUID</text>
+                  <text x="70" y="295" fill="var(--aai-red)" font-family="var(--mono)" font-size="12" font-weight="600">LEAST LIQUID</text>
+                  <!-- rungs: y, label, dot color (green→red as we descend) -->
+                  <g font-family="var(--mono)" font-size="12.5" fill="#C9D1D9">
+                    <circle cx="48" cy="50"  r="5" fill="#3DD68C"/><text x="70" y="55">Cash &amp; Bonds</text>
+                    <circle cx="48" cy="82"  r="5" fill="#5CD17A"/><text x="70" y="87">Public Equity</text>
+                    <circle cx="48" cy="114" r="5" fill="#86C66A"/><text x="70" y="119">Commodity Futures &amp; REITs <tspan fill="var(--muted)" font-size="10">(publicly traded → liquid)</tspan></text>
+                    <circle cx="48" cy="146" r="5" fill="#B0BB5A"/><text x="70" y="151">Equity Hedge Funds <tspan fill="var(--muted)" font-size="10">(lockups, gates, quarterly redemptions)</tspan></text>
+                    <circle cx="48" cy="178" r="5" fill="#D9A24B"/><text x="70" y="183">Private Real Estate</text>
+                    <circle cx="48" cy="210" r="5" fill="#E88B52"/><text x="70" y="215">Private Credit</text>
+                    <circle cx="48" cy="242" r="5" fill="#F47B5E"/><text x="70" y="247">Private Equity <tspan fill="var(--muted)" font-size="10">(longer commitment than private credit)</tspan></text>
+                    <circle cx="48" cy="274" r="5" fill="#FF7B72"/><text x="70" y="279">Private Real Assets <tspan fill="var(--muted)" font-size="10">(infrastructure, etc.)</tspan></text>
+                  </g>
+                </svg>
+                <div class="aai-info"><b>Decisive ordering:</b> publicly traded alts (commodity futures, REITs) are <b class="aai-green">liquid</b>; hedge funds sit in the middle (lockups/gates but periodic redemptions); the private sleeve is <b class="aai-red">illiquid</b>, with <b>private equity requiring a longer commitment than private credit</b>, and private real assets the least liquid. PE/PC/RE/RA liquidity terms are stricter than hedge funds (capital calls + multi-year distributions, no ordinary redemptions).</div>
               </div>
               <div class="aai-card">
                 <div class="aai-title">Fig 8.2 — Economic-environment opportunity set</div>
@@ -19576,10 +19602,14 @@ bid-ask trade cost  ≈ duration × (ask yield − bid yield)</div>
                 <div class="aai-title">Risk-factor-based approach</div>
                 <div class="aai-body">Statistically estimate each class's <b>sensitivities to risk factors</b> identified by the manager — e.g. economic growth &amp; inflation, interest rates &amp; credit spreads, currency, liquidity, capitalization, value vs growth.</div>
                 <div class="aai-info"><b>Key insight:</b> some alt classes are similar to traditional classes in factor sensitivity — <b>private equity ~ public equity</b> risks; <b>private credit ~ publicly traded high-yield bonds</b>.</div>
+                <div class="aai-title" style="margin-top:14px;">Traditional vs risk-factor-based — full comparison</div>
                 <table class="aai-tbl">
-                  <tr><th>Advantages</th><th>Disadvantages</th></tr>
-                  <tr><td>Identifies <b>common risk sources across classes</b> → mitigates the traditional approach's flaw of splitting same-risk investments into different classes (which makes a portfolio look more diversified than it is). Supports an <b>integrated risk-management framework</b>; highlights primary drivers of portfolio risk.</td><td>Risk-factor estimates are <b>sensitive to the analysis period</b>; results are <b>harder to communicate</b> to decision makers and to implement than traditional approaches.</td></tr>
+                  <tr><th></th><th>Traditional approach</th><th>Risk-factor-based approach</th></tr>
+                  <tr><td><b class="aai-main-c">What it does</b></td><td>Classifies assets by liquidity or by performance across economic regimes (growth/inflation).</td><td>Statistically estimates each asset's sensitivities to underlying risk factors.</td></tr>
+                  <tr><td><b class="aai-green">Advantages</b></td><td>More <b>intuitive</b>; easier to <b>communicate &amp; implement</b>; better handles practical concerns like <b>liquidity</b> and <b>manager selection</b>.</td><td>Identifies <b>common risk sources across classes</b> → avoids false diversification; supports an <b>integrated risk-management framework</b>; highlights the primary drivers of portfolio risk.</td></tr>
+                  <tr><td><b class="aai-red">Disadvantages</b></td><td>Can split same-risk investments into different classes → <b>OVERESTIMATES diversification</b> (portfolio looks more diversified than it is).</td><td>Estimates are <b>sensitive to the analysis period (look-back)</b>; results are <b>harder to communicate &amp; implement</b>.</td></tr>
                 </table>
+                <div class="aai-trap"><b>Which limitation belongs to which approach?</b> This is the classic swap trap. <b class="aai-red">Difficult to communicate</b> and <b class="aai-red">sensitive to the historical look-back period</b> are <b>risk-based</b> limitations. <b class="aai-orange">Overestimates diversification</b> is the <b>traditional</b> limitation. And the traditional approach's <b>strength</b> — handling liquidity &amp; manager selection — is exactly what the risk-based approach struggles with (risk factors don't map cleanly onto "can I exit?" or "is this manager good?").</div>
               </div>
             </div>
           </div>
@@ -19809,7 +19839,7 @@ NAV_t                 = NAV_(t-1) × (1 + growth) + contributions_t − distribu
                 <tr><th>LOS</th><th>Must-recall</th></tr>
                 <tr><td><b class="aai-main-c">8.a Roles</b></td><td>Goal = ↑ Sharpe (return / low risk / low correlation) + income/growth/safety. Spectrum: PE &amp; private credit = return-enhancing (risk↑); real assets = risk-reducing; hedge funds = anywhere. PE limited diversification (same factors as public eq); arb/event-driven = neg skew = tail risk = short vol; CRE &amp; real assets = inflation hedge.</td></tr>
                 <tr><td><b class="aai-main-c">8.b Mitigators</b></td><td>Depends on horizon. SHORT → risk = volatility → BONDS better (lower/negative equity correlation). LONG → risk = missing required return → ALTS better (higher expected return, &lt;perfect correlation even after bias adjustment). Reported alt vol/correlation biased DOWN: appraisal smoothing, survivorship+backfill, index diversification → overstate diversification benefits.</td></tr>
-                <tr><td><b class="aai-main-c">8.c Opportunity set</b></td><td>Traditional: by liquidity (PE longer commitment than PC) or by growth/inflation environment. Risk-factor: estimate factor sensitivities (PE~public eq, PC~HY bonds); pro = finds common risks / avoids false diversification; con = period-sensitive, hard to communicate/implement.</td></tr>
+                <tr><td><b class="aai-main-c">8.c Opportunity set</b></td><td>Traditional: by liquidity (PE longer commitment than PC) or by growth/inflation environment; PRO = intuitive, easy to communicate/implement, handles liquidity & manager selection; CON = overestimates diversification (splits same-risk assets). Risk-factor: estimate factor sensitivities (PE~public eq, PC~HY bonds); PRO = finds common risks / avoids false diversification / integrated risk view; CON = period (look-back)-sensitive, hard to communicate/implement.</td></tr>
                 <tr><td><b class="aai-main-c">8.d Considerations</b></td><td>Return build-up = Σ factor exposures + Rf + alpha − fees/taxes. MVO weak (non-normal). Vehicles: LP (GP/LP), direct, FoF (extra fee), SMA/fund-of-one, UCITS (regulated). PE/PC/RE liquidity stricter than HF; side pocket; "2 and 20", drawdown funds fee on COMMITTED capital → early negative returns. Fig 8.3: $10m committed, $9m called; return only on called capital.</td></tr>
                 <tr><td><b class="aai-main-c">8.e Suitability</b></td><td>Large investors w/ expertise; NOT for market-efficiency believers. Horizon key: PE/private RE = 15+ yrs; short-lockup HF / liquid = shorter. Lower transparency ("blind pools"); strong governance.</td></tr>
                 <tr><td><b class="aai-main-c">8.f Approaches</b></td><td>2 stages (traditional then +alts). Modeling: smoothed/stale → test serial correlation → unsmooth; non-normal (skew, excess kurtosis) → regime/EVT; two-regime fat-tail. Tools: Monte Carlo (4 steps), MVO (excessive PE allocation; constrain; guideline), risk-factor (translate factors→allocation; factor sensitivities unstable, correlations rise in stress).</td></tr>
@@ -23192,6 +23222,9 @@ const DEFAULT_DECK = {
     {id:"aai30",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
      q:"Decisive trap: horizon determines bonds vs alternatives",
      a:"The single most tested 8.b point:\n[rl][hl]SHORT horizon[/hl] → risk is VOLATILITY → BONDS are the better equity diversifier (lower / historically negative correlation)[/rl][rl][hl]LONG horizon[/hl] → risk is FAILING the required return → ALTERNATIVES are better (higher expected return than bonds; correlation still imperfect after adjusting for biases)[/rl]\nNever give one universal answer — the horizon flips it."},
+    {id:"aai31",topic:"Portfolio Construction",subtopic:"Asset Allocation to Alternative Investments",type:"framework",
+     q:"Traditional vs risk-factor-based: both sides + which limitation is whose",
+     a:"[hl]Traditional[/hl] — PRO: intuitive, easy to communicate & implement, handles LIQUIDITY & MANAGER SELECTION well. CON: splits same-risk assets into different classes → OVERESTIMATES diversification.\n[hl]Risk-factor-based[/hl] — PRO: finds common risk sources across classes (avoids false diversification), integrated risk view. CON: sensitive to the LOOK-BACK period; harder to communicate & implement.\n[rl]Swap-trap: 'difficult to communicate' & 'sensitive to look-back period' = RISK-BASED limitations[/rl][rl]'overestimates diversification' = TRADITIONAL limitation[/rl]"},
   ]
 };
 
