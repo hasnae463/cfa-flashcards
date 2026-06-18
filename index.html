@@ -19423,6 +19423,7 @@ bid-ask trade cost  ≈ duration × (ask yield − bid yield)</div>
               <button class="aai-tab active" onclick="aaiTab(event,'aair-roles')">Roles (8.a)</button>
               <button class="aai-tab" onclick="aaiTab(event,'aair-class')">By Class</button>
               <button class="aai-tab" onclick="aaiTab(event,'aair-mit')">Alts vs Bonds (8.b)</button>
+              <button class="aai-tab" onclick="aaiTab(event,'aair-pick')">Pick the Alt</button>
             </div>
 
             <div id="aair-roles" class="aai-panel active">
@@ -19439,6 +19440,30 @@ bid-ask trade cost  ≈ duration × (ask yield − bid yield)</div>
                   <tr><td><b class="aai-green">Risk-reducing (lower-return)</b></td><td>Real assets</td><td>Diversify / hedge risk</td></tr>
                   <tr><td><b class="aai-orange">Anywhere on the spectrum</b></td><td>Hedge funds</td><td>Depends on the strategy the manager pursues</td></tr>
                 </table>
+                <svg viewBox="0 0 700 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;margin:6px 0;">
+                  <defs>
+                    <linearGradient id="aaiSpecGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="var(--aai-green)" stop-opacity="0.55"/>
+                      <stop offset="100%" stop-color="var(--aai-red)" stop-opacity="0.55"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="40" y="58" width="620" height="20" rx="10" fill="url(#aaiSpecGrad)"/>
+                  <text x="40" y="46" fill="var(--aai-green)" font-family="var(--mono)" font-size="12" font-weight="600">Risk-reducing</text>
+                  <text x="660" y="46" fill="var(--aai-red)" font-family="var(--mono)" font-size="12" font-weight="600" text-anchor="end">Return-enhancing</text>
+                  <text x="40" y="98" fill="var(--muted)" font-family="var(--mono)" font-size="10">lower return</text>
+                  <text x="660" y="98" fill="var(--muted)" font-family="var(--mono)" font-size="10" text-anchor="end">higher return / risk</text>
+                  <!-- real assets marker (left) -->
+                  <circle cx="95" cy="68" r="7" fill="var(--aai-green)"/>
+                  <text x="95" y="125" fill="#C9D1D9" font-family="var(--mono)" font-size="11" text-anchor="middle">Real assets</text>
+                  <!-- hedge funds span (middle, with arrows) -->
+                  <line x1="230" y1="68" x2="470" y2="68" stroke="var(--aai-orange)" stroke-width="2.5" stroke-dasharray="5,4"/>
+                  <polygon points="230,68 240,63 240,73" fill="var(--aai-orange)"/>
+                  <polygon points="470,68 460,63 460,73" fill="var(--aai-orange)"/>
+                  <text x="350" y="125" fill="var(--aai-orange)" font-family="var(--mono)" font-size="11" text-anchor="middle" font-weight="600">Hedge funds (anywhere)</text>
+                  <!-- PE / PC marker (right) -->
+                  <circle cx="600" cy="68" r="7" fill="var(--aai-red)"/>
+                  <text x="600" y="125" fill="#C9D1D9" font-family="var(--mono)" font-size="11" text-anchor="middle">PE &amp; private credit</text>
+                </svg>
                 <div class="aai-info"><b>Income vs growth vs safety:</b> equity (public &amp; private) → capital growth; bonds / real estate → income; real assets &amp; some HF strategies → diversify an equity portfolio; private credit → diversify a fixed-income (rate-driven) portfolio; precious metals / government bonds → safe-haven.</div>
               </div>
             </div>
@@ -19478,6 +19503,37 @@ bid-ask trade cost  ≈ duration × (ask yield − bid yield)</div>
                 <span class="aai-rule"><b class="aai-main-c">Sampling biases</b> — <b>survivorship bias</b> &amp; <b>backfill bias</b> → downside risk understated in the data.</span>
                 <span class="aai-rule"><b class="aai-main-c">Index diversification</b> — funds in an index have low correlations with each other → index volatility &lt; average volatility of its components.</span>
                 <div class="aai-trap"><b>Quiz 8.1 Q2 trap:</b> appraisal-based valuations &amp; sampling biases <b>OVERSTATE diversification benefits</b> (they understate risk &amp; correlation), not returns or risk measures.</div>
+              </div>
+            </div>
+
+            <div id="aair-pick" class="aai-panel">
+              <div class="aai-card">
+                <div class="aai-title">Objective &rarr; which alternative? (the exam's favorite question)</div>
+                <div class="aai-body">Vignettes repeatedly ask: given a stated objective, pick the <b>single best</b> alternative. The decisive detail is <b>which objective the stem emphasizes</b> &mdash; it flips the answer. Set the two inputs:</div>
+                <div class="aai-body" style="margin-top:4px;"><b class="aai-main-c">1. Primary objective</b></div>
+                <div class="aai-pick-row">
+                  <button class="aai-pick active" onclick="aaiPickObj(this,'shortfall')">Meet a required return / funding target</button>
+                  <button class="aai-pick" onclick="aaiPickObj(this,'diversify')">Diversify against equity risk</button>
+                  <button class="aai-pick" onclick="aaiPickObj(this,'volatility')">Reduce short-term volatility</button>
+                  <button class="aai-pick" onclick="aaiPickObj(this,'inflation')">Hedge inflation</button>
+                </div>
+                <div class="aai-body" style="margin-top:8px;"><b class="aai-main-c">2. Time horizon</b></div>
+                <div class="aai-pick-row">
+                  <button class="aai-pick active" onclick="aaiPickHz(this,'long')">Long (15+ yrs)</button>
+                  <button class="aai-pick" onclick="aaiPickHz(this,'short')">Short</button>
+                </div>
+                <div id="aai-pick-out" class="aai-out"></div>
+              </div>
+              <div class="aai-card">
+                <div class="aai-title">The decision logic, decomposed</div>
+                <table class="aai-tbl">
+                  <tr><th>If the stem emphasizes&hellip;</th><th>Decisive criterion</th><th>Best alt</th><th>Why the others lose</th></tr>
+                  <tr><td><b class="aai-main-c">Required return / funding shortfall</b> (long horizon)</td><td>Highest <b>expected return</b></td><td><b class="aai-green">Private equity</b></td><td>Bonds = low return (raises shortfall risk, esp. if yields low); HF = lower return than PE</td></tr>
+                  <tr><td><b class="aai-main-c">Diversification vs equity risk</b></td><td>Lowest <b>correlation</b> with equities</td><td><b class="aai-green">Absolute-return / market-neutral / global-macro HF</b></td><td>PE = same risk factors as public equity (high corr); real estate diversifies less than an uncorrelated HF</td></tr>
+                  <tr><td><b class="aai-main-c">Reduce short-term volatility</b> (short horizon)</td><td>Lowest volatility &amp; correlation</td><td><b class="aai-green">Bonds</b></td><td>Bonds had lower (even negative) equity correlation than alts; alts' reported low vol is biased downward</td></tr>
+                  <tr><td><b class="aai-main-c">Hedge inflation</b></td><td>Inflation pass-through</td><td><b class="aai-green">Real assets / commercial real estate</b></td><td>Rental income &amp; property/commodity values rise with inflation; PE &amp; bonds don't hedge inflation directly</td></tr>
+                </table>
+                <div class="aai-trap"><b>The flip that catches people:</b> private equity and an absolute-return hedge fund are <b>opposite</b> answers. PE wins when the goal is <b>return</b> (it has the same equity factors, so it's a poor diversifier but a strong return source). The HF wins when the goal is <b>diversification</b> (uncorrelated, but lower expected return). Read whether the stem stresses "achieve the target return / funding status" vs "highest diversification against equity risk."</div>
               </div>
             </div>
           </div>
@@ -19579,6 +19635,39 @@ bid-ask trade cost  ≈ duration × (ask yield − bid yield)</div>
                   <tr><td><b class="aai-red">Drawdown period (yrs 1–3)</b></td><td>Capital calls: −$3m, −$4m, −$2m.</td></tr>
                   <tr><td><b class="aai-green">Distributions (yrs 6/8/10)</b></td><td>+$4m, +$5m, +$3m; fund terminates ~yr 10.</td></tr>
                 </table>
+                <svg viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;margin:6px 0;">
+                  <!-- zero axis -->
+                  <line x1="40" y1="110" x2="675" y2="110" stroke="var(--border)" stroke-width="1.5"/>
+                  <text x="36" y="114" fill="var(--muted)" font-family="var(--mono)" font-size="9" text-anchor="end">0</text>
+                  <!-- year axis labels -->
+                  <text x="350" y="225" fill="var(--muted)" font-family="var(--mono)" font-size="10" text-anchor="middle">Year</text>
+                  <!-- drawdown bars (negative, below axis) -->
+                  <rect x="108" y="110" width="24" height="27" fill="var(--aai-red)" opacity="0.75"/>
+                  <text x="120" y="150" fill="var(--aai-red)" font-family="var(--mono)" font-size="9" text-anchor="middle">-3</text>
+                  <rect x="168" y="110" width="24" height="36" fill="var(--aai-red)" opacity="0.75"/>
+                  <text x="180" y="159" fill="var(--aai-red)" font-family="var(--mono)" font-size="9" text-anchor="middle">-4</text>
+                  <rect x="228" y="110" width="24" height="18" fill="var(--aai-red)" opacity="0.75"/>
+                  <text x="240" y="141" fill="var(--aai-red)" font-family="var(--mono)" font-size="9" text-anchor="middle">-2</text>
+                  <!-- distribution bars (positive, above axis) -->
+                  <rect x="408" y="74" width="24" height="36" fill="var(--aai-green)" opacity="0.75"/>
+                  <text x="420" y="70" fill="var(--aai-green)" font-family="var(--mono)" font-size="9" text-anchor="middle">+4</text>
+                  <rect x="528" y="65" width="24" height="45" fill="var(--aai-green)" opacity="0.75"/>
+                  <text x="540" y="61" fill="var(--aai-green)" font-family="var(--mono)" font-size="9" text-anchor="middle">+5</text>
+                  <rect x="648" y="83" width="24" height="27" fill="var(--aai-green)" opacity="0.75"/>
+                  <text x="660" y="79" fill="var(--aai-green)" font-family="var(--mono)" font-size="9" text-anchor="middle">+3</text>
+                  <!-- year ticks -->
+                  <g fill="var(--muted)" font-family="var(--mono)" font-size="9" text-anchor="middle">
+                    <text x="60" y="208">0</text><text x="120" y="208">1</text><text x="180" y="208">2</text><text x="240" y="208">3</text><text x="300" y="208">4</text><text x="360" y="208">5</text><text x="420" y="208">6</text><text x="480" y="208">7</text><text x="540" y="208">8</text><text x="600" y="208">9</text><text x="660" y="208">10</text>
+                  </g>
+                  <!-- cumulative net-cash J-curve -->
+                  <polyline points="60,110 120,137 180,173 240,191 300,191 360,191 420,155 480,155 540,110 600,110 660,83" fill="none" stroke="var(--aai-main)" stroke-width="2.5"/>
+                  <circle cx="240" cy="191" r="3.5" fill="var(--aai-main)"/>
+                  <text x="240" y="184" fill="var(--aai-main)" font-family="var(--mono)" font-size="9" text-anchor="middle">trough -9</text>
+                  <circle cx="660" cy="83" r="3.5" fill="var(--aai-main)"/>
+                  <text x="640" y="78" fill="var(--aai-main)" font-family="var(--mono)" font-size="9" text-anchor="end">net +3</text>
+                  <text x="50" y="30" fill="var(--aai-main)" font-family="var(--mono)" font-size="10" font-weight="600">— cumulative net cash flow (the "J-curve")</text>
+                </svg>
+                <div class="aai-info"><b>Reading the J-curve:</b> early <b class="aai-red">capital calls</b> drive cumulative cash flow negative (trough −$9m of the $9m called), then later <b class="aai-green">distributions</b> pull it back up to a net +$3m by termination. The shape — down early, up later — is why drawdown funds show negative returns in early years and why LP return is earned only on called capital.</div>
                 <div class="aai-trap"><b>Decisive details:</b> capital calls &amp; distributions are <b>NOT on a predetermined schedule</b> — calls may happen (or not) during the drawdown period; distributions can occur any time, even during drawdown. The LP earns the fund's return <b>only on CALLED capital</b>, so a high fund IRR ≠ high return on the full commitment. LPs face an <b>opportunity cost</b> on committed capital: cash equivalents → low return; higher-return illiquid investments → risk missing a call (penalty can be forfeiting all capital invested to date).</div>
               </div>
             </div>
@@ -19835,8 +19924,27 @@ MOIC              = (value of underlying investments + distributions) / total in
                 '<br><b>NAV_t</b> = '+grownNav.toFixed(3)+' + '+contrib.toFixed(3)+' − '+dist.toFixed(3)+' = <b class="aai-green">'+navT.toFixed(3)+'</b>'+
                 '<br><span style="color:var(--muted);">NAV rises with capital calls &amp; investment growth, falls with distributions. Roll NAV_t forward as next period\'s NAV_(t-1).</span>';
             }
+            var aaiPickState={obj:'shortfall',hz:'long'};
+            function aaiPickObj(btn,v){ btn.parentNode.querySelectorAll('.aai-pick').forEach(function(b){b.classList.remove('active')}); btn.classList.add('active'); aaiPickState.obj=v; aaiPickRender(); }
+            function aaiPickHz(btn,v){ btn.parentNode.querySelectorAll('.aai-pick').forEach(function(b){b.classList.remove('active')}); btn.classList.add('active'); aaiPickState.hz=v; aaiPickRender(); }
+            function aaiPickRender(){
+              var o=aaiPickState.obj, hz=aaiPickState.hz, rec, why, note='';
+              if(o==='shortfall'){
+                rec='Private equity'; why='The objective is to achieve a required return / funding target. The decisive criterion is the HIGHEST EXPECTED RETURN. Private equity has the highest expected return of the alternatives; its high correlation with public equity doesn\'t matter here because the risk being managed is return shortfall, not volatility.';
+                if(hz==='short') note='With a SHORT horizon, illiquid private equity is usually unsuitable regardless — short-lockup liquid vehicles fit better. The return logic points to PE, but the horizon argues against it. Watch for stems that pair a return goal with a short horizon as a deliberate conflict.';
+              } else if(o==='diversify'){
+                rec='Absolute-return hedge fund'; why='The objective is diversification AGAINST equity risk. The decisive criterion is the LOWEST CORRELATION with equities. An absolute-return / market-neutral / global-macro hedge fund is built to be uncorrelated with equity direction. Private equity is the WRONG answer here (same risk factors as public equity); real estate diversifies less than an uncorrelated HF.';
+              } else if(o==='volatility'){
+                rec='Bonds'; why='The objective is reducing short-term volatility. The decisive criterion is LOW volatility AND low equity correlation. Bonds have had a lower (even negative) correlation with equities than alternatives, so an equal allocation reduces equity-portfolio volatility more. Remember alts\' reported low vol/correlation is biased downward (smoothing, survivorship/backfill).';
+              } else {
+                rec='Real assets / commercial real estate'; why='The objective is hedging inflation. The decisive criterion is INFLATION PASS-THROUGH. Real assets (commodities, farm/timberland, infrastructure) and commercial real estate (rental income + property value rise with inflation) hedge inflation directly; bonds and private equity do not.';
+              }
+              var hzLine = hz==='long' ? '<b class="aai-main-c">Long horizon:</b> volatility matters less; the danger is missing the required return — favors higher-return / illiquid alts.' : '<b class="aai-main-c">Short horizon:</b> volatility &amp; liquidity dominate — favors bonds or short-lockup / liquid vehicles.';
+              document.getElementById('aai-pick-out').innerHTML='<b>Recommended: <span class="aai-green">'+rec+'</span></b><br>'+why+(note?'<br><br><span class="aai-red"><b>Conflict flag:</b> '+note+'</span>':'')+'<br><br>'+hzLine;
+            }
             function aaiInit(){
               setTimeout(function(){var b=document.querySelector('#aair-mit .aai-pick.active'); if(b) aaiHorizon(b,'short');},30);
+              setTimeout(function(){if(document.getElementById('aai-pick-out')) aaiPickRender();},30);
               setTimeout(function(){if(document.getElementById('aai-lq-out')) aaiLiqCalc();},30);
             }
           </script>
