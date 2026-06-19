@@ -21146,6 +21146,1198 @@ Average tax rate = 188,250 / 695,000 = 27.09%</div>
           </script>
         </div>
 
+        <div id="iiWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #iiWidget { --ii-main:#38BDF8; --ii-green:#3FB950; --ii-red:#FF7B72; --ii-blue:#79C0FF; --ii-orange:#E0A82E; }
+            #iiWidget .ii-h { font-family:var(--serif); font-size:21px; color:var(--ii-main); font-weight:700; margin:0 0 4px; letter-spacing:.01em; }
+            #iiWidget .ii-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:16px; letter-spacing:.04em; }
+            #iiWidget .ii-modtabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
+            #iiWidget .ii-modtab { background:var(--surface2); border:1px solid var(--ii-main); color:var(--ii-main); padding:10px 18px; border-radius:8px; font-family:var(--serif); font-size:14px; font-weight:700; cursor:pointer; letter-spacing:.02em; }
+            #iiWidget .ii-modtab.active { background:var(--ii-main); color:#0D1117; }
+            #iiWidget .ii-modpanel { display:none; }
+            #iiWidget .ii-modpanel.active { display:block; }
+            #iiWidget .ii-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #iiWidget .ii-toptab { background:var(--surface2); border:1px solid rgba(56,189,248,.5); color:var(--ii-main); padding:7px 13px; border-radius:6px; font-family:var(--serif); font-size:12.5px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #iiWidget .ii-toptab.active { background:var(--ii-main); color:#0D1117; }
+            #iiWidget .ii-toppanel { display:none; }
+            #iiWidget .ii-toppanel.active { display:block; }
+            #iiWidget .ii-tabs { display:flex; gap:4px; flex-wrap:wrap; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:10px; }
+            #iiWidget .ii-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #iiWidget .ii-tab.active { background:rgba(56,189,248,.14); border-color:var(--ii-main); color:var(--ii-main); }
+            #iiWidget .ii-panel { display:none; }
+            #iiWidget .ii-panel.active { display:block; }
+            #iiWidget .ii-card { background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:16px 18px; margin-bottom:14px; }
+            #iiWidget .ii-title { font-family:var(--serif); font-size:15.5px; color:var(--ii-main); font-weight:600; margin-bottom:9px; }
+            #iiWidget .ii-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:6px; }
+            #iiWidget .ii-rule { display:block; font-size:12.5px; line-height:1.5; color:#C9D1D9; padding:7px 0 7px 14px; border-left:2px solid var(--border); margin:7px 0; }
+            #iiWidget .ii-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #iiWidget .ii-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--ii-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #iiWidget .ii-info { background:rgba(121,192,255,.08); border-left:3px solid var(--ii-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #iiWidget .ii-green { color:var(--ii-green); }
+            #iiWidget .ii-red { color:var(--ii-red); }
+            #iiWidget .ii-main-c { color:var(--ii-main); }
+            #iiWidget .ii-blue { color:var(--ii-blue); }
+            #iiWidget .ii-orange { color:var(--ii-orange); }
+            #iiWidget .ii-tbl { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #iiWidget .ii-tbl th { background:#0B0F14; color:var(--ii-main); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #iiWidget .ii-tbl td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+          </style>
+
+          <div class="ii-h">Portfolio Management for Institutional Investors</div>
+          <div class="ii-sub">READING 10 · Portfolio Construction</div>
+
+          <div class="ii-modtabs">
+            <button class="ii-modtab active" onclick="iiMod(event,'iim-101')">10.1 Overview</button>
+            <button class="ii-modtab" onclick="iiMod(event,'iim-102')">10.2 Pension Funds</button>
+            <button class="ii-modtab" onclick="iiMod(event,'iim-103')">10.3 SWFs</button>
+            <button class="ii-modtab" onclick="iiMod(event,'iim-104')">10.4 Endow &amp; Found</button>
+            <button class="ii-modtab" onclick="iiMod(event,'iim-105')">10.5 Banks &amp; Insurers</button>
+            <button class="ii-modtab" onclick="iiMod(event,'iim-106')">10.6 Balance Sheet Mgmt</button>
+          </div>
+
+          <!-- ════════ MODULE 10.1 Overview ════════ -->
+          <div id="iim-101" class="ii-modpanel active">
+            <div class="ii-toptabs">
+              <button class="ii-toptab active" onclick="iiTop(event,'ii-common')">Common Characteristics (10.a)</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii-ips')">IPS &amp; Models (10.b)</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii-quiz1')">Quiz 10.1</button>
+            </div>
+
+            <!-- COMMON CHARACTERISTICS -->
+            <div id="ii-common" class="ii-toppanel active">
+              <div class="ii-card">
+                <div class="ii-title">Scope &amp; exam focus</div>
+                <div class="ii-body">Institutional investor types covered: <b class="ii-main-c">DB &amp; DC pension plans, sovereign wealth funds (SWFs), university endowments, private foundations, banks, insurance companies.</b> The exam gives a case study and asks you to prepare/evaluate parts of an IPS — focus on what each institution is trying to achieve and which risk considerations &amp; constraints apply.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">LOS 10.a — Five characteristics: institutional vs individual investors</div>
+                <table class="ii-tbl">
+                  <tr><th>#</th><th>Characteristic</th><th>What it means</th></tr>
+                  <tr><td>1</td><td><b class="ii-main-c">Scale (size)</b></td><td>Institutions tend to be larger. The largest may be <b>too big</b> for low-capacity investments (small-cap equity, VC). Large institutions can directly access &amp; manage in-house high-minimum classes (PE, real estate). <b class="ii-red">Smaller</b> institutions struggle to diversify &amp; hire talent → outsource to external managers/consultants.</td></tr>
+                  <tr><td>2</td><td><b class="ii-main-c">Long-term horizon</b></td><td>Generally longer than individuals, because they're driven by the need to meet specific liabilities that are relatively low.</td></tr>
+                  <tr><td>3</td><td><b class="ii-main-c">Regulatory framework</b></td><td>Different legal/regulatory/accounting/tax rules vs individuals; differs by national jurisdiction. Tightened since the 2007–2009 GFC to lower leverage, increase centralized clearing, improve reporting transparency.</td></tr>
+                  <tr><td>4</td><td><b class="ii-main-c">Governance framework</b></td><td>Formal: <b>board of directors + investment committee</b> (often a board subcommittee). Board sets long-term strategic AA; board/IC establishes IPS &amp; monitors performance; IC oversees policy. Strategy run by an investment office under a <b>CIO</b>; in-house or outsourced.</td></tr>
+                  <tr><td>5</td><td><b class="ii-main-c">Principal-agent issues</b></td><td>Conflict when the asset owner (principal) appoints an agent whose interests aren't aligned. Internal (IC/staff) &amp; external (outsourced managers). Classic external example: <b class="ii-red">high management fee paid regardless of performance.</b></td></tr>
+                </table>
+                <div class="ii-trap"><b>Quiz reflex:</b> scale tends to <b class="ii-green">WIDEN</b> an institution's investable universe (access to PE, RE, in-house) — a claim that scale <b class="ii-red">narrows</b> the universe is false (only the very largest are excluded from tiny low-capacity assets).</div>
+              </div>
+            </div>
+
+            <!-- IPS & MODELS -->
+            <div id="ii-ips" class="ii-toppanel">
+              <div class="ii-tabs">
+                <button class="ii-tab active" onclick="iiTab(event,'iiips-ips')">IPS Contents</button>
+                <button class="ii-tab" onclick="iiTab(event,'iiips-models')">4 AA Models</button>
+              </div>
+              <div id="iiips-ips" class="ii-panel active">
+                <div class="ii-card">
+                  <div class="ii-title">LOS 10.b — The institutional IPS should include</div>
+                  <span class="ii-rule">The institution's <b class="ii-main-c">mission &amp; investment objectives</b> (return and risk tolerance).</span>
+                  <span class="ii-rule">Discussion of the <b class="ii-main-c">investment horizon &amp; liabilities</b> to be paid.</span>
+                  <span class="ii-rule"><b class="ii-main-c">External constraints</b> affecting asset allocation: legal, regulatory, tax, accounting.</span>
+                  <span class="ii-rule">An <b class="ii-main-c">asset allocation policy</b> (portfolio weights) with ranges &amp; asset-class benchmarks.</span>
+                  <span class="ii-rule">A <b class="ii-main-c">rebalancing policy</b>.</span>
+                  <span class="ii-rule"><b class="ii-main-c">Reporting requirements</b>.</span>
+                  <div class="ii-info">Review the IPS <b>annually</b>; revise when there are material changes in investor circumstances and/or the market environment.</div>
+                </div>
+              </div>
+              <div id="iiips-models" class="ii-panel">
+                <div class="ii-card">
+                  <div class="ii-title">Four general asset-allocation models (Figure 10.1)</div>
+                  <table class="ii-tbl">
+                    <tr><th>Model</th><th>Asset allocation</th><th>Advantages</th><th>Disadvantages</th></tr>
+                    <tr><td><b class="ii-main-c">Norway (SWF)</b></td><td><b class="ii-green">Passive</b>; public equities &amp; bonds (trad. <b>60/40</b> base case); little/no alternatives; tight tracking-error limits</td><td>Low costs/fees; easy for board to comprehend</td><td><b class="ii-red">No opportunity for outperformance</b></td></tr>
+                    <tr><td><b class="ii-main-c">Yale endowment</b></td><td>High allocation to <b class="ii-green">alternatives</b>; significant <b>active</b> mgmt; <b class="ii-orange">EXTERNALLY</b> managed</td><td>Potential for outperformance</td><td>Hard for small institutions lacking alts expertise; capacity issues for large managers; high fees/costs</td></tr>
+                    <tr><td><b class="ii-main-c">Canada Pension Plan</b></td><td>High allocation to <b class="ii-green">alternatives</b>; significant <b>active</b> mgmt; <b class="ii-orange">INTERNALLY</b> managed; reference portfolio of passive public assets as benchmark</td><td>Outperformance potential + builds internal capabilities</td><td>Potentially expensive &amp; difficult to manage</td></tr>
+                    <tr><td><b class="ii-main-c">Liability-driven (LDI)</b></td><td>Focus on maximizing <b class="ii-green">expected surplus</b> (assets − liabilities) &amp; managing surplus volatility</td><td>Explicitly recognizes liabilities in the investment process</td><td>Certain liability risks (e.g. longevity) hard to hedge</td></tr>
+                  </table>
+                  <div class="ii-trap"><b>The discriminator that's always tested:</b> Yale vs Canada are nearly identical (high alts, active) — the difference is <b class="ii-orange">Yale = EXTERNAL managers, Canada = INTERNAL management</b>. Norway = passive/no alts. LDI = surplus focus (assets − liabilities).</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- QUIZ 10.1 -->
+            <div id="ii-quiz1" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Module Quiz 10.1 — worked</div>
+                <table class="ii-tbl">
+                  <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                  <tr><td><b>1</b><br><span style="color:var(--muted);">How many statements correct? (EPW)</span></td><td><b class="ii-green">A — only one</b></td><td><b class="ii-red">S1 wrong:</b> a larger scale tends to WIDEN the investable universe (access to PE/RE/in-house), not narrow it. <b class="ii-green">S2 correct:</b> institutional governance is more formal than an individual's. → one correct.</td></tr>
+                  <tr><td><b>2</b><br><span style="color:var(--muted);">SJT Foundation: alts + outsource external + active outperformance</span></td><td><b class="ii-green">B — Yale endowment model</b></td><td>High alts + active + <b class="ii-orange">EXTERNAL</b> managers = Yale. Canada would be INTERNAL management; Norway is passive with no alternatives.</td></tr>
+                </table>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">High-probability traps (10.1)</div>
+                <span class="ii-rule"><b class="ii-red">Scale WIDENS the universe</b> for institutions (only the very largest lose access to tiny low-capacity assets).</span>
+                <span class="ii-rule"><b class="ii-red">Yale = external, Canada = internal</b> — same high-alts/active profile otherwise.</span>
+                <span class="ii-rule"><b class="ii-red">Norway = passive 60/40</b>, no alts, no outperformance chance.</span>
+                <span class="ii-rule"><b class="ii-red">LDI = maximize surplus</b> (assets − liabilities) &amp; manage surplus volatility.</span>
+                <span class="ii-rule"><b class="ii-red">Classic principal-agent example</b> = high fee paid regardless of performance.</span>
+                <span class="ii-rule"><b class="ii-red">Institutions: longer horizon</b>, driven by specific liabilities; review IPS annually.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 10.2 Pension Funds ════════ -->
+          <div id="iim-102" class="ii-modpanel">
+            <div class="ii-toptabs">
+              <button class="ii-toptab active" onclick="iiTop(event,'ii102-intro')">Intro &amp; LOS</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii102-dbdc')">DB vs DC</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii102-db')">DB Plan</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii102-dc')">DC Plan</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii102-aa')">AA &amp; Quiz 10.2</button>
+            </div>
+
+            <!-- INTRO & LOS -->
+            <div id="ii102-intro" class="ii-toppanel active">
+              <div class="ii-card">
+                <div class="ii-title">Reading LOS (apply across all institution types)</div>
+                <span class="ii-rule"><b class="ii-main-c">10.c</b> — stakeholders, investment time horizons, liquidity needs of different institutional types.</span>
+                <span class="ii-rule"><b class="ii-main-c">10.d</b> — focus of legal/regulatory/tax constraints by type.</span>
+                <span class="ii-rule"><b class="ii-main-c">10.f</b> — evaluate the IPS of an institutional investor.</span>
+                <span class="ii-rule"><b class="ii-main-c">10.g</b> — evaluate the investment portfolio of a private DB plan, SWF, university endowment, private foundation.</span>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">General outline used for each institution type</div>
+                <div class="ii-fl">main features / mission
+stakeholders (parties impacted by success / failure)
+key elements of the IPS, in order:
+   1. liabilities &amp; investment horizon
+   2. liquidity needs
+   3. external constraints
+   4. investment objectives
+   5. asset allocation</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Pension funds — main features / mission</div>
+                <div class="ii-body">Pension funds save &amp; invest to provide retirement income for beneficiaries. The entity that sets up the plan = <b class="ii-main-c">plan sponsor</b> (usually an <b>employer</b>). Two major types:</div>
+                <span class="ii-rule"><b class="ii-main-c">DB (defined benefit)</b> — sponsor defines the <i>benefit</i> paid to beneficiaries at retirement.</span>
+                <span class="ii-rule"><b class="ii-main-c">DC (defined contribution)</b> — <i>contributions</i> to assets today are defined; <b>no guarantee</b> of ultimate benefits.</span>
+                <div class="ii-info"><b>Move DB → DC</b> over recent decades: sponsors prefer lower financial risk + DC is <b>portable</b> (moves with beneficiary on job change). <b>Hybrid</b> (e.g. cash balance): sponsor defines contributions which are then pooled; sponsor faces some investment risk, as in DB.</div>
+              </div>
+            </div>
+
+            <!-- DB vs DC -->
+            <div id="ii102-dbdc" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Figure 10.2 — DB vs DC</div>
+                <table class="ii-tbl">
+                  <tr><th>Feature</th><th>Defined Benefit</th><th>Defined Contribution</th></tr>
+                  <tr><td><b class="ii-main-c">Benefit payments</b></td><td>Contractually defined (usually dependent on final salary); creates a measurable <b class="ii-orange">liability</b> for the sponsor</td><td>Depends on investment performance; once promised contributions met, <b class="ii-green">no liability</b> for sponsor</td></tr>
+                  <tr><td><b class="ii-main-c">Contributions</b></td><td>Primarily by <b>employer</b> (employee may also)</td><td>Primarily by <b>employee</b> (employer may also)</td></tr>
+                  <tr><td><b class="ii-main-c">Investment decision-making</b></td><td>Pension fund (sponsor + investment staff)</td><td>Sponsor provides suite of funds; <b>employee</b> decides level of investment &amp; asset allocation</td></tr>
+                  <tr><td><b class="ii-main-c">Investment risk</b></td><td>Faced by <b class="ii-red">sponsor</b></td><td>Faced by <b class="ii-red">beneficiary</b></td></tr>
+                  <tr><td><b class="ii-main-c">Mortality / longevity risk</b></td><td>Pooled at fund level (long-lived funded by early-dying); risk of general life-expectancy increase faced by <b>sponsor</b></td><td><b>Employee</b> faces longevity risk of outliving own savings</td></tr>
+                </table>
+                <div class="ii-trap"><b>Spine of the table:</b> in DB the <b class="ii-red">sponsor</b> bears benefit/investment/longevity risk; in DC the <b class="ii-red">beneficiary</b> bears it. Contributions flip employer↔employee.</div>
+              </div>
+            </div>
+
+            <!-- DB PLAN -->
+            <div id="ii102-db" class="ii-toppanel">
+              <div class="ii-tabs">
+                <button class="ii-tab active" onclick="iiTab(event,'iidb-stake')">Stakeholders</button>
+                <button class="ii-tab" onclick="iiTab(event,'iidb-liab')">Liabilities &amp; Horizon</button>
+                <button class="ii-tab" onclick="iiTab(event,'iidb-risk')">Risk (Fig 10.4)</button>
+                <button class="ii-tab" onclick="iiTab(event,'iidb-essay')">Viewpoint Essay</button>
+                <button class="ii-tab" onclick="iiTab(event,'iidb-liq')">Liquidity / External / Objectives</button>
+              </div>
+              <div id="iidb-stake" class="ii-panel active">
+                <div class="ii-card">
+                  <div class="ii-title">DB stakeholders</div>
+                  <span class="ii-rule"><b class="ii-main-c">Plan sponsors (employers)</b> — must contribute; poor performance → extra contributions to an <b class="ii-red">underfunded</b> plan (assets &lt; liabilities).</span>
+                  <span class="ii-rule"><b class="ii-main-c">Plan beneficiaries (employees &amp; retirees)</b> — face ultimate risk the employer defaults on contributions.</span>
+                  <span class="ii-rule"><b class="ii-main-c">Investment staff / investment committee / board</b> — directly impacted by success or failure.</span>
+                  <span class="ii-rule"><b class="ii-main-c">Governments</b> — provide tax incentives; taxpayers bear costs for those who under-save.</span>
+                  <span class="ii-rule"><b class="ii-main-c">Shareholders of the corporate employer</b> — underfunded plan = balance-sheet liability + lower income → higher financial risk → ↑ share-price volatility.</span>
+                </div>
+              </div>
+              <div id="iidb-liab" class="ii-panel">
+                <div class="ii-card">
+                  <div class="ii-title">Liabilities &amp; investment horizon</div>
+                  <div class="ii-body">DB liabilities = <b class="ii-main-c">PV of future benefits promised</b> to participants. Employees qualify only after <b class="ii-main-c">vesting conditions</b> (typically a minimum number of years of service).</div>
+                  <div class="ii-fl">funded ratio = fair value of plan assets / PV of DB obligations</div>
+                </div>
+                <div class="ii-card">
+                  <div class="ii-title">Figure 10.3 — DB liability factors (impact of an INCREASE in the factor)</div>
+                  <table class="ii-tbl">
+                    <tr><th>Factor ↑</th><th>Liability</th><th>Why</th></tr>
+                    <tr><td>Service / tenure (years worked)</td><td class="ii-red">Increases</td><td>Benefits linked to years of service</td></tr>
+                    <tr><td>Salary</td><td class="ii-red">Increases</td><td>Benefits linked to final salary</td></tr>
+                    <tr><td>Longevity</td><td class="ii-red">Increases</td><td>Benefits paid every year alive in retirement</td></tr>
+                    <tr><td>Employee turnover</td><td class="ii-green">Lowers</td><td>Fewer employees reach the vesting requirement</td></tr>
+                    <tr><td>Additional / matching contributions</td><td class="ii-red">Increases</td><td>Usually increases benefits promised</td></tr>
+                    <tr><td>Expected investment return</td><td class="ii-green">Potentially lowers</td><td>May raise the discount rate used → lowers liability</td></tr>
+                    <tr><td>Discount rate</td><td class="ii-green">Lowers</td><td>Higher discount rate → lower PV of benefits</td></tr>
+                  </table>
+                  <div class="ii-info"><b>Active vs retired lives:</b> active = still employed, earning benefits; retired = receiving payments. Higher proportion of <b>retired lives → shorter horizon → lowers risk tolerance.</b> <b>Frozen</b> plans (closed to new participants) have shorter horizons (no new active lives).</div>
+                </div>
+              </div>
+              <div id="iidb-risk" class="ii-panel">
+                <div class="ii-card">
+                  <div class="ii-title">LOS 10.e — Figure 10.4: DB risk considerations (drivers of risk tolerance)</div>
+                  <table class="ii-tbl">
+                    <tr><th>Consideration</th><th>Effect</th><th>Rationale</th></tr>
+                    <tr><td>Plan funded status</td><td class="ii-green">Higher → ↑ tolerance</td><td>Plan can absorb short-term losses</td></tr>
+                    <tr><td>Sponsor financial status</td><td class="ii-green">Stronger → ↑ tolerance</td><td>Lower debt / higher profitability → capacity to contribute on losses</td></tr>
+                    <tr><td>Size of plan vs sponsor</td><td class="ii-green">Smaller plan → ↑ tolerance</td><td>Sponsor can tolerate volatility in contributions if assets underperform</td></tr>
+                    <tr><td>Common risk exposures</td><td class="ii-green">Lower correlation → ↑ tolerance</td><td>Low corr of sponsor results &amp; pension-asset returns → sponsor likely profitable &amp; able to contribute when plan underperforms</td></tr>
+                    <tr><td>Provision for early retirement / lump-sum distributions</td><td class="ii-red">→ lower tolerance</td><td>Shorter horizon → less time to recover from short-term losses</td></tr>
+                    <tr><td>Workforce characteristics</td><td class="ii-green">Younger / more active lives → ↑ tolerance</td><td>Greater duration of liabilities → time to recover from short-term losses</td></tr>
+                  </table>
+                  <div class="ii-info"><b>Prof note (ability vs willingness):</b> higher funded status = greater <i>ability</i> to take risk, but <i>willingness</i> may stay low — e.g. a plan in surplus where the sponsor wants to stay in surplus to minimize contributions → minimize surplus volatility via <b>LDI</b>. Read the case. Figure 10.4 factors are a recent source of constructed-response IPS questions.</div>
+                </div>
+              </div>
+              <div id="iidb-essay" class="ii-panel">
+                <div class="ii-card">
+                  <div class="ii-title">Example — Viewpoint Research Corp (DB plan)</div>
+                  <div class="ii-body">UK market-research firm. <b>All</b> participants still working or in alternative employment (<b class="ii-main-c">zero retired lives</b>); plan in a <b class="ii-red">small deficit</b>; <b class="ii-main-c">no</b> early-retirement / lump-sum options; rapid earnings growth, ROE above industry, debt-to-assets <b class="ii-red">50% above</b> competitors. <i>Discuss two factors that increase and two that decrease the plan's ability to take risk.</i></div>
+                  <table class="ii-tbl">
+                    <tr><th>↑ Ability to take risk</th><th>↓ Ability to take risk</th></tr>
+                    <tr><td><b>1.</b> Zero retired lives → long-duration liabilities → time to recover from short-term underperformance.</td><td><b>1.</b> Higher debt than industry → lowers sponsor's ability to top up contributions if performance is poor → lowers tolerance.</td></tr>
+                    <tr><td><b>2.</b> No early-retirement / lump-sum options → longer &amp; more predictable liabilities → time to recover from short-term falls in funded status.</td><td><b>2.</b> Plan in deficit → further underperformance could significantly hurt ability to meet future liabilities.</td></tr>
+                  </table>
+                  <div class="ii-trap"><b>Prof-note trap:</b> do NOT cite high ROE / profitability as an increase. It's stated for the <b>last year only</b>, during <b>high leverage</b> — so it may just reflect leverage, with no guarantee it persists. The two case-specific answers above are better.</div>
+                </div>
+              </div>
+              <div id="iidb-liq" class="ii-panel">
+                <div class="ii-card">
+                  <div class="ii-title">Liquidity needs (DB)</div>
+                  <div class="ii-body">Function of benefits paid to retired lives <b>and</b> sponsor contributions. Higher when:</div>
+                  <span class="ii-rule">Higher proportion of <b>retired lives</b> (frozen &gt; nonfrozen — benefits exceed contributions).</span>
+                  <span class="ii-rule"><b>Older</b> workforce (shorter time to pay benefits).</span>
+                  <span class="ii-rule"><b>Higher funded status</b> (lower sponsor contributions → more paid from existing plan assets).</span>
+                  <span class="ii-rule">Participants able to <b>switch / withdraw</b> (triggers payments).</span>
+                  <div class="ii-info"><b class="ii-green">Lower liquidity needs → can invest more in risky asset classes.</b></div>
+                </div>
+                <div class="ii-card">
+                  <div class="ii-title">External constraints (DB)</div>
+                  <span class="ii-rule"><b class="ii-main-c">Regulation</b> (varies by country): extensive fee/cost reporting; increased personal liability for trustees. Europe = <b>IORP II</b> (governance, risk mgmt, disclosure). US = <b>ERISA 1974</b> (regulates investing/funding/payouts; created the <b>PBGC</b> protecting beneficiaries of terminated plans); <b>Pension Protection Act 2006</b> set minimum DB funding ratios; later revision lets corporations discount liabilities at a <b>25-yr average high-grade bond yield</b> (lowers liabilities, but can push more risk-taking to maintain funded status).</span>
+                  <span class="ii-rule"><b class="ii-main-c">Tax</b>: funds often tax-favored; taxable funds consider tax (lower LT cap-gains → lower-turnover strategies; high tax on derivative returns may preclude derivatives; watch double-taxation treaties &amp; domestic credits for foreign withholding).</span>
+                  <span class="ii-rule"><b class="ii-main-c">Accounting</b>: US corporate DB → GAAP <b>ASC 715</b> (funded status on balance sheet). US public plans → <b>GASB</b> (assets at market value; liabilities via a <b>blended</b> rate — expected return on assets for the funded portion, tax-exempt muni yield for the unfunded portion).</span>
+                  <div class="ii-info"><b>Prof note:</b> exam is portfolio-management-focused and led by the case — a significant external constraint will be referenced in the case.</div>
+                </div>
+                <div class="ii-card">
+                  <div class="ii-title">Investment objectives (DB)</div>
+                  <span class="ii-rule"><b class="ii-main-c">Primary</b> — achieve a target return over a specified long-term horizon while assuming risk consistent with meeting contractual liabilities.</span>
+                  <span class="ii-rule"><b class="ii-main-c">Secondary</b> — minimize (in PV terms) the cash contributions the sponsor must provide.</span>
+                  <div class="ii-body">Target return should reflect that plan assets must grow in line with liability growth (≈ the discount rate applied to liabilities). If in deficit, the split between investment-return growth and extra contributions is driven by the plan's ability to take risk and the sponsor's ability to contribute.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- DC PLAN -->
+            <div id="ii102-dc" class="ii-toppanel">
+              <div class="ii-tabs">
+                <button class="ii-tab active" onclick="iiTab(event,'iidc-stake')">Stakeholders</button>
+                <button class="ii-tab" onclick="iiTab(event,'iidc-liab')">Liabilities / Horizon / Liquidity</button>
+                <button class="ii-tab" onclick="iiTab(event,'iidc-ext')">External / Objectives</button>
+              </div>
+              <div id="iidc-stake" class="ii-panel active">
+                <div class="ii-card">
+                  <div class="ii-title">DC stakeholders</div>
+                  <span class="ii-rule"><b class="ii-main-c">Plan sponsors (employers)</b> — do <b>not</b> face investment or longevity risk, but retain fiduciary responsibilities: contributing, overseeing investments, offering suitable options.</span>
+                  <span class="ii-rule"><b class="ii-main-c">Plan beneficiaries (employees &amp; retirees)</b> — face <b>investment risk</b> (contributions + returns not meeting needs) <b>and longevity risk</b> of outliving savings.</span>
+                  <span class="ii-rule"><b class="ii-main-c">The board</b> — communicate with participants at their sophistication level; may select a <b>default option</b> when participants are <b class="ii-orange">disengaged</b> (make no explicit choice).</span>
+                  <span class="ii-rule"><b class="ii-main-c">Governments</b> — tax incentives; taxpayer welfare cost for under-savers.</span>
+                </div>
+              </div>
+              <div id="iidc-liab" class="ii-panel">
+                <div class="ii-card">
+                  <div class="ii-title">Liabilities &amp; investment horizon (DC)</div>
+                  <div class="ii-body">DC sponsor's only liability = required <b>contributions</b>; <b class="ii-green">no liability for future benefits</b> (unlike DB). Via pooling / scale, DC can access alternatives not usually available to retail. Sponsor bears the <b>liquidity risk</b> of any event causing participants to exit.</div>
+                  <div class="ii-body">Individual horizon is linked to <b>age</b> — older participants → shorter horizon (retiring &amp; drawing sooner). Many DC plans offer a default <b class="ii-main-c">life-cycle / target-date option</b>:</div>
+                  <span class="ii-rule"><b class="ii-main-c">Participant-switching option</b> — automatically switches members to a more conservative allocation as they age.</span>
+                  <span class="ii-rule"><b class="ii-main-c">Participant / cohort option</b> — pools the participant with others of similar retirement date; the fund is managed more conservatively as that date approaches.</span>
+                </div>
+                <div class="ii-card">
+                  <div class="ii-title">Liquidity needs (DC)</div>
+                  <div class="ii-body">Primary drivers = <b>age of the workforce</b> + ability of participants to <b>switch / withdraw</b>. If these are high, liquidity needs are high (as in DB).</div>
+                </div>
+              </div>
+              <div id="iidc-ext" class="ii-panel">
+                <div class="ii-card">
+                  <div class="ii-title">External constraints (DC)</div>
+                  <span class="ii-rule"><b class="ii-main-c">Regulation</b>: regulators recognize many DC participants have low investment understanding → sponsors must educate participants on default options for the disengaged. Australia &amp; US require the plan to offer a <b>diversified default option</b>. This does not absolve trustees of their fiduciary duty to run the plan in beneficiaries' best interests.</span>
+                  <span class="ii-rule"><b class="ii-main-c">Tax</b>: US DC (<b>401(k)</b>) is <b class="ii-orange">tax deferred</b> — pretax contributions, untaxed earnings; benefits taxed as ordinary income; withdrawals before age <b>59½</b> incur an extra <b>10%</b> tax. Similar deferral in the UK (first 25% of benefits tax-free).</span>
+                  <span class="ii-rule"><b>ERISA</b> (US) and <b>IORP II</b> (Europe) are relevant to <b>both</b> DB and DC.</span>
+                </div>
+                <div class="ii-card">
+                  <div class="ii-title">Investment objectives (DC)</div>
+                  <span class="ii-rule"><b class="ii-main-c">Main</b> — prudently grow assets to meet retirement spending needs; onus on the sponsor to provide cost-efficient default options for the disengaged.</span>
+                  <span class="ii-rule"><b class="ii-main-c">Secondary</b> (if active funds offered) — outperform the passive default's strategic asset allocation.</span>
+                  <span class="ii-rule">Where participants can voluntarily switch between competing DC providers, <b>outperforming other DC plans</b> may be an objective.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- AA & QUIZ 10.2 -->
+            <div id="ii102-aa" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Asset allocation by DB &amp; DC (aggregate data)</div>
+                <span class="ii-rule">Asset allocation <b class="ii-main-c">varies by region</b> — driven by differences in external constraints, risk appetite, and stakeholder preferences.</span>
+                <span class="ii-rule">Past decade: <b class="ii-main-c">rotation from equities into alternatives &amp; fixed income</b> to lower volatility of funded ratios. Within equities, some <b>home bias</b> to domestic markets.</span>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Module Quiz 10.2 — worked</div>
+                <table class="ii-tbl">
+                  <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                  <tr><td><b>1</b><br><span style="color:var(--muted);">↑ which factor most likely DECREASES DB liabilities?</span></td><td><b class="ii-green">C — employee turnover</b></td><td>Higher turnover → fewer employees reach vesting → lowers liability. <b class="ii-red">A life expectancy</b> &amp; <b class="ii-red">B years of service</b> both INCREASE liability.</td></tr>
+                  <tr><td><b>2</b><br><span style="color:var(--muted);">which change most likely INCREASES DB risk tolerance?</span></td><td><b class="ii-green">C — ↑ allocation to low-correlation assets</b></td><td>Low correlation of pension assets with sponsor operating results → sponsor likely profitable &amp; able to contribute when plan underperforms → ↑ tolerance. <b class="ii-red">A older workforce</b> = shorter horizon (lower); <b class="ii-red">B overfunded→underfunded</b> = lower funded status (lower).</td></tr>
+                </table>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">High-probability traps (10.2)</div>
+                <span class="ii-rule"><b class="ii-red">DB = sponsor bears risk; DC = beneficiary bears risk.</b></span>
+                <span class="ii-rule"><b class="ii-red">Higher discount rate / turnover / expected return → LOWER liability;</b> service, salary, longevity, contributions → higher.</span>
+                <span class="ii-rule"><b class="ii-red">More retired lives → shorter horizon → lower risk tolerance AND higher liquidity needs.</b></span>
+                <span class="ii-rule"><b class="ii-red">Low correlation</b> (sponsor results vs pension assets) → HIGHER risk tolerance.</span>
+                <span class="ii-rule"><b class="ii-red">Ability ≠ willingness</b> — surplus plan may still choose low risk (LDI) to protect surplus.</span>
+                <span class="ii-rule"><b class="ii-red">401(k) = tax deferred</b>, 10% penalty before 59½; ERISA &amp; IORP II apply to both DB &amp; DC.</span>
+                <span class="ii-rule"><b class="ii-red">funded ratio = plan assets / PV of DB obligations.</b></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 10.3 Sovereign Wealth Funds ════════ -->
+          <div id="iim-103" class="ii-modpanel">
+            <div class="ii-toptabs">
+              <button class="ii-toptab active" onclick="iiTop(event,'ii103-types')">Types &amp; Mission</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii103-stake')">Stakeholders</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii103-liab')">Liab / Horizon / Liquidity</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii103-obj')">External &amp; Objectives</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii103-aa')">AA &amp; Quiz 10.3</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii103-matrix')">Master Matrix</button>
+            </div>
+
+            <!-- TYPES & MISSION -->
+            <div id="ii103-types" class="ii-toppanel active">
+              <div class="ii-card">
+                <div class="ii-title">SWFs — main features / mission</div>
+                <div class="ii-body">SWFs = investment funds owned by a <b class="ii-main-c">government</b>. The IMF defines <b>five</b> categories, each with a different mission:</div>
+                <table class="ii-tbl">
+                  <tr><th>#</th><th>Type</th><th>Mission</th></tr>
+                  <tr><td>1</td><td><b class="ii-main-c">Budget stabilization</b></td><td>Set up when revenues are heavily linked to a <b>natural resource / cyclical industry</b> — insulate (protect) the government budget from commodity-price volatility &amp; economic cycles.</td></tr>
+                  <tr><td>2</td><td><b class="ii-main-c">Development</b></td><td>Prioritize national <b>socioeconomic projects</b> — usually infrastructure or supporting key industries.</td></tr>
+                  <tr><td>3</td><td><b class="ii-main-c">Savings</b></td><td>Invest revenues from <b>nonrenewable assets</b> for the benefit of <b>future generations</b>.</td></tr>
+                  <tr><td>4</td><td><b class="ii-main-c">Reserve</b></td><td>Earn returns on <b>excess foreign reserves</b> held by central banks. FX reserves are low-yielding vs the bonds CBs issue to fund them → reduce this <b class="ii-red">negative cost of carry</b> by boosting returns.</td></tr>
+                  <tr><td>5</td><td><b class="ii-main-c">Pension reserve</b></td><td>Save &amp; invest to meet <b>future pension liabilities</b> of governments.</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- STAKEHOLDERS -->
+            <div id="ii103-stake" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">SWF stakeholders</div>
+                <span class="ii-rule"><b class="ii-main-c">Current &amp; future citizens</b> — benefit directly (payments) or indirectly (lower taxation / increased domestic investment).</span>
+                <span class="ii-rule"><b class="ii-main-c">Investment offices</b> — invest SWF assets directly in-house or appoint external managers.</span>
+                <span class="ii-rule"><b class="ii-main-c">The board</b> — fiduciary duty to the ultimate beneficiaries of the fund.</span>
+                <span class="ii-rule"><b class="ii-main-c">Governments</b> — may rely on SWF returns to balance budget deficits.</span>
+              </div>
+            </div>
+
+            <!-- LIAB / HORIZON / LIQUIDITY -->
+            <div id="ii103-liab" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Figure 10.5 — SWF liabilities &amp; time horizons</div>
+                <div class="ii-body">SWF liabilities are linked to mission and are generally <b class="ii-orange">less well defined</b> than other institutions.</div>
+                <table class="ii-tbl">
+                  <tr><th>Type</th><th>Liabilities &amp; horizon</th></tr>
+                  <tr><td><b class="ii-main-c">Budget stabilization</b></td><td>Uncertain liabilities linked to commodity prices / cyclical industries; <b class="ii-red">short-term</b> horizon (budget support needed short-term)</td></tr>
+                  <tr><td><b class="ii-main-c">Development</b></td><td>Liabilities linked to socioeconomic investments made by the fund; some long-term (infrastructure), some medium-term (medical research)</td></tr>
+                  <tr><td><b class="ii-main-c">Savings</b></td><td>Linked to future generations → <b class="ii-green">long term</b></td></tr>
+                  <tr><td><b class="ii-main-c">Reserve</b></td><td>Technically the yield promised on bonds issued by governments/central banks, but funds target higher returns; horizons <b class="ii-green">very long</b>, typically <b>no near-term liabilities</b></td></tr>
+                  <tr><td><b class="ii-main-c">Pension reserve</b></td><td>Linked to future pension payments → <b class="ii-green">long term</b>; may have an <b>accumulation stage</b> (contributions) &amp; a <b>decumulation phase</b> (benefits drawn) — horizon depends on when these occur</td></tr>
+                </table>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Liquidity needs (ranked)</div>
+                <span class="ii-rule"><b class="ii-main-c">Budget stabilization</b> — <b class="ii-red">HIGHEST</b>; low-risk assets, to meet short-term deficits from negative economic/commodity events.</span>
+                <span class="ii-rule"><b class="ii-main-c">Reserve</b> — lower than stabilization but <b>higher than savings</b>; liquid fixed-income, sellable if reserves change dramatically.</span>
+                <span class="ii-rule"><b class="ii-main-c">Development</b> — <b class="ii-green">low</b> (infrastructure &amp; R&amp;D are long-term).</span>
+                <span class="ii-rule"><b class="ii-main-c">Savings</b> — <b class="ii-green">LOWEST</b> (accumulate for future generations); rise as resources deplete &amp; government withdraws.</span>
+                <span class="ii-rule"><b class="ii-main-c">Pension reserve</b> — <b>varies</b>: lower in accumulation, higher in decumulation.</span>
+              </div>
+            </div>
+
+            <!-- EXTERNAL & OBJECTIVES -->
+            <div id="ii103-obj" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">External constraints (SWF)</div>
+                <span class="ii-rule"><b class="ii-main-c">Legal / regulatory</b> — SWFs established by laws giving mission &amp; structure (clear governance rules, especially for development funds with a specific socioeconomic mission). To avoid political influence: governance, independence, transparency, accountability are crucial → the <b class="ii-main-c">Santiago Principles</b> (best-practice framework by the <b>International Forum of SWFs / IFSWF</b>) cover these plus ethics, risk mgmt, compliance monitoring.</span>
+                <span class="ii-rule"><b class="ii-main-c">Tax</b> — SWFs generally <b class="ii-orange">tax exempt</b>; this may void the ability to claim withholding-tax credits available to taxable investors. Watch double-taxation treaties when investing internationally; avoid being seen as using status to dodge foreign-jurisdiction taxes.</span>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Figure 10.6 — SWF investment objectives</div>
+                <table class="ii-tbl">
+                  <tr><th>Type</th><th>Investment objectives</th></tr>
+                  <tr><td><b class="ii-main-c">Budget stabilization</b></td><td>Capital preservation; returns above inflation with low probability of losses; <b class="ii-red">should avoid assets correlated with the source of government revenues</b></td></tr>
+                  <tr><td><b class="ii-main-c">Development</b></td><td>Support economic development &amp; long-run growth; implicit objective = real return &gt; real domestic GDP / productivity growth</td></tr>
+                  <tr><td><b class="ii-main-c">Savings</b></td><td>Maintain purchasing power of assets over time while making ongoing spending on government budgetary needs</td></tr>
+                  <tr><td><b class="ii-main-c">Reserve</b></td><td>Earn a return in excess of the yield the government/central bank pays on bonds it has issued</td></tr>
+                  <tr><td><b class="ii-main-c">Pension reserve</b></td><td>Earn returns to meet future <b>unfunded</b> pension &amp; social-care payments promised by the government</td></tr>
+                </table>
+                <div class="ii-info"><b>Prof note:</b> savings funds share very similar objectives to <b>endowments &amp; foundations</b> (next module).</div>
+              </div>
+            </div>
+
+            <!-- AA & QUIZ -->
+            <div id="ii103-aa" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Asset allocation by SWF type</div>
+                <span class="ii-rule"><b class="ii-main-c">Budget stabilization</b> — mostly <b class="ii-orange">fixed income &amp; cash</b> (defensive nature).</span>
+                <span class="ii-rule"><b class="ii-main-c">Development</b> — driven by socioeconomic mission (e.g. local infrastructure).</span>
+                <span class="ii-rule"><b class="ii-main-c">Savings</b> — long horizon → relatively high <b class="ii-green">equities &amp; alternatives</b>.</span>
+                <span class="ii-rule"><b class="ii-main-c">Reserve</b> — similar to savings but <b>lower</b> alternatives allocation (higher potential liquidity needs).</span>
+                <span class="ii-rule"><b class="ii-main-c">Pension reserve</b> — <b class="ii-green">high</b> equities &amp; alternatives (long horizon, low liquidity needs in accumulation phase).</span>
+                <div class="ii-info">Savings &amp; pension reserve funds typically follow the <b>endowment model</b>; some adopt the <b>Canadian model</b>. Theme: <b class="ii-main-c">fewer constraints → broader mandate &amp; longer horizons → higher allocation to alternatives</b> than most institutions.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Module Quiz 10.3 — worked</div>
+                <table class="ii-tbl">
+                  <tr><th>Q</th><th>Answer</th><th>Why</th></tr>
+                  <tr><td><b>1</b><br><span style="color:var(--muted);">SAA 10% eq / 60% FI / 30% cash → which SWF?</span></td><td><b class="ii-green">C — budget stabilization</b></td><td>Very defensive (90% FI + cash) = capital preservation, highest liquidity. <b class="ii-red">A savings</b> &amp; would be high equity/alts; <b class="ii-red">B development</b> is mission/infrastructure-driven.</td></tr>
+                  <tr><td><b>2</b><br><span style="color:var(--muted);">BoC buys USD to boost FX reserves — reserve funds, most accurate?</span></td><td><b class="ii-green">A — excess FX reserves invested in riskier, higher-yielding assets</b></td><td>Reserve funds offset the <b>negative cost of carry</b> (low-yield FX vs higher-yield issued bonds) by investing in higher-yielding assets. <b class="ii-red">B</b> wrong — buying USD injects domestic currency (not deflationary); <b class="ii-red">C</b> wrong — issuing bonds while holding low-yield FX = <b>negative</b> carry, not positive.</td></tr>
+                </table>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">High-probability traps (10.3)</div>
+                <span class="ii-rule"><b class="ii-red">Budget stabilization = short-term, highest liquidity, defensive FI+cash</b>, avoid assets correlated with govt revenue source.</span>
+                <span class="ii-rule"><b class="ii-red">Savings = lowest liquidity, longest horizon, high equity/alts</b> (endowment model).</span>
+                <span class="ii-rule"><b class="ii-red">Reserve = negative cost of carry</b>; beat the yield on bonds the govt/CB issued; liquid FI, lower alts than savings.</span>
+                <span class="ii-rule"><b class="ii-red">Pension reserve = accumulation (low liq) vs decumulation (high liq)</b>; meet unfunded pension/social-care.</span>
+                <span class="ii-rule"><b class="ii-red">Santiago Principles / IFSWF</b> = governance best-practice; SWFs generally tax exempt (may lose withholding credits).</span>
+              </div>
+            </div>
+
+            <!-- MASTER MATRIX -->
+            <div id="ii103-matrix" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">SWF master matrix — five types × five dimensions</div>
+                <table class="ii-tbl">
+                  <tr><th>Type</th><th>Horizon</th><th>Liquidity</th><th>Objective</th><th>Asset allocation</th></tr>
+                  <tr><td><b class="ii-main-c">Budget stabilization</b></td><td class="ii-red">Short</td><td class="ii-red">Highest</td><td>Capital preservation; &gt; inflation, low loss prob; avoid revenue-correlated assets</td><td>Mostly FI &amp; cash (defensive)</td></tr>
+                  <tr><td><b class="ii-main-c">Development</b></td><td>Medium–long (mission)</td><td class="ii-green">Low</td><td>Economic development; real return &gt; real GDP growth</td><td>Mission-driven (local infrastructure)</td></tr>
+                  <tr><td><b class="ii-main-c">Savings</b></td><td class="ii-green">Long</td><td class="ii-green">Lowest</td><td>Maintain purchasing power + ongoing budget spending</td><td>High equities &amp; alts (endowment model)</td></tr>
+                  <tr><td><b class="ii-main-c">Reserve</b></td><td class="ii-green">Very long (no near-term)</td><td>Med (&gt; savings)</td><td>Beat yield on bonds govt/CB issued</td><td>Liquid FI; lower alts than savings</td></tr>
+                  <tr><td><b class="ii-main-c">Pension reserve</b></td><td class="ii-green">Long</td><td>Varies (accum low / decum high)</td><td>Meet unfunded pension &amp; social-care</td><td>High equities &amp; alts</td></tr>
+                </table>
+                <div class="ii-info">Memory hook: <b class="ii-main-c">Stabilization</b> is the defensive outlier (short/high-liq/FI); <b class="ii-main-c">Savings &amp; Pension reserve</b> are the aggressive long-horizon pair (low-liq/equity+alts); <b class="ii-main-c">Reserve</b> sits between (long but more liquid FI); <b class="ii-main-c">Development</b> follows the mission.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 10.4 University Endowments & Private Foundations ════════ -->
+          <div id="iim-104" class="ii-modpanel">
+            <div class="ii-toptabs">
+              <button class="ii-toptab active" onclick="iiTop(event,'ii104-feat')">Endow · Features</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii104-spend')">Spending Policy</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii104-liab')">Endow · Liab/Liq/Constraints</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii104-aa')">Endow AA &amp; Capital U</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii104-found')">Private Foundations</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii104-matrix')">Endow vs Found Matrix</button>
+            </div>
+
+            <!-- ENDOWMENTS FEATURES & MISSION -->
+            <div id="ii104-feat" class="ii-toppanel active">
+              <div class="ii-card">
+                <div class="ii-title">University endowments — features &amp; mission</div>
+                <div class="ii-body">Funds set up by <b class="ii-main-c">gifts &amp; donations</b>, invested to earn returns that provide <b>ongoing support to the university's operating budget</b>.</div>
+                <div class="ii-rule">Main objective = balance the needs of the university <b class="ii-main-c">today</b> against its needs <b class="ii-main-c">in the future</b> &#8594; <b class="ii-green">intergenerational equity</b>.</div>
+                <div class="ii-info">Scale anchor: <b class="ii-main-c">Harvard</b> &#8776; <b>$30B</b> (2016) — one of the largest endowments.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Stakeholders</div>
+                <table class="ii-tbl">
+                  <tr><th>Stakeholder</th><th>Interest</th></tr>
+                  <tr><td><b class="ii-main-c">Current + future students</b></td><td>Ongoing support of university operations &amp; intergenerational fairness</td></tr>
+                  <tr><td><b class="ii-main-c">Alumni / donors</b></td><td>Contribute gifts &amp; donations; often sit on the board / IC (esp. those who are investment professionals)</td></tr>
+                  <tr><td><b class="ii-main-c">University employees</b></td><td>Livelihoods depend on the university</td></tr>
+                </table>
+                <div class="ii-info">Endowment boards often have <b class="ii-main-c">professional investment experience</b> via alumni — a key contrast vs foundations (see Matrix tab).</div>
+              </div>
+            </div>
+
+            <!-- SPENDING POLICY -->
+            <div id="ii104-spend" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Spending policy — the endowment's "liability"</div>
+                <div class="ii-body">Liabilities = <b>future payouts promised</b> to the university, set in an official <b class="ii-main-c">spending policy</b>. Goal: ensure intergenerational equity <b>while smoothing payouts</b> to insulate the university from market volatility.</div>
+                <div class="ii-fl">spending(t+1) = w &#215; [ spending(t) &#215; (1 + inflation) ]
+            + (1 &#8722; w) &#215; ( spending rate &#215; average AUM )
+
+w = weight on the PRIOR year's spending amount</div>
+                <div class="ii-info">Smoothing logic: the <b class="ii-main-c">first term</b> anchors to last year's payout (predictable); the <b class="ii-main-c">second term</b> ties to current asset levels. <b>w</b> dials between certainty and market-responsiveness.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Three spending rules — by value of w</div>
+                <table class="ii-tbl">
+                  <tr><th>Rule</th><th>w</th><th>Mechanics</th><th>Trade-off</th></tr>
+                  <tr><td><b class="ii-main-c">Constant growth</b></td><td><b>w = 1</b></td><td>Fixed REAL payout, grown by <b class="ii-main-c">HEPI</b> (Higher Education Price Index). Often has <b>caps &amp; floors</b> = max/min % of AUM over 1 or 3 yrs.</td><td><b class="ii-green">+</b> Most certainty for the university<br><b class="ii-red">&#8722;</b> % of endowment paid out <b>fluctuates with endowment value</b></td></tr>
+                  <tr><td><b class="ii-main-c">Market value</b></td><td><b>w = 0</b></td><td>Payout = spending rate (<b>4&#8211;6%</b>) &#215; <b>3-to-5-yr moving avg</b> of asset values.</td><td><b class="ii-red">Procyclical</b> — spending fluctuates in line with the moving average of assets</td></tr>
+                  <tr><td><b class="ii-main-c">Hybrid</b></td><td><b>0 &lt; w &lt; 1</b></td><td>Weighted average of the previous two rules.</td><td>Blends certainty &amp; market-responsiveness</td></tr>
+                </table>
+                <div class="ii-trap"><b>w-direction trap:</b> w = 1 is the <b>constant-growth</b> rule (all weight on prior spending &#8594; smooth/certain); w = 0 is the <b class="ii-red">market-value</b> rule (all weight on current AUM &#8594; procyclical). Don't invert them. Also: constant-growth grows by <b class="ii-main-c">HEPI</b>, NOT CPI.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Other liability-related factors</div>
+                <table class="ii-tbl">
+                  <tr><th>Factor</th><th>Effect on risk tolerance</th></tr>
+                  <tr><td><b class="ii-main-c">Fundraising from donors</b></td><td>Gifts flow IN &#8594; <b>net</b> spending rate &#8776; <b class="ii-green">2&#8211;4%</b> of assets (below the 4&#8211;6% spending rate applied) &#8594; supports higher risk tolerance</td></tr>
+                  <tr><td><b class="ii-main-c">Reliance of university on the spending</b></td><td>Bigger share of the operating budget funded by the endowment &#8594; <b class="ii-red">LOWER</b> risk tolerance</td></tr>
+                  <tr><td><b class="ii-main-c">Capability to issue debt</b></td><td>Access to debt markets &#8594; <b class="ii-green">HIGHER</b> risk tolerance (can borrow to meet spending in poor-performance years)</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- ENDOW LIAB / LIQ / CONSTRAINTS -->
+            <div id="ii104-liab" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Liabilities &amp; investment horizon</div>
+                <div class="ii-rule">Intergenerational equity + <b>unlimited life</b> of the university &#8594; <b class="ii-green">PERPETUAL</b> investment horizon.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Liquidity needs</div>
+                <div class="ii-body">Annual spending <b>net of gifts &amp; donations</b> is very low (&#8776; <b class="ii-green">2&#8211;4%</b> of assets).</div>
+                <div class="ii-rule">Low liquidity needs + perpetual horizon &#8594; <b class="ii-green">HIGH risk tolerance</b> &#8594; can absorb relatively high short-term volatility in pursuit of longer-term returns.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">External constraints — legal / regulatory / tax</div>
+                <table class="ii-tbl">
+                  <tr><th>Constraint</th><th>Detail</th></tr>
+                  <tr><td><b class="ii-main-c">Total-return basis</b></td><td>Laws require investing on a total-return basis (income <b>+ capital gains</b>, not income only) + diversification per <b>MPT</b></td></tr>
+                  <tr><td><b class="ii-main-c">Fiduciary duty of care</b></td><td>Investment committees / boards &amp; staff oversee investments with a duty of care</td></tr>
+                  <tr><td><b class="ii-main-c">US — UPMIFA</b></td><td>Uniform Prudent Management of Institutional Funds Act: allows flexibility in spending + <b>enforces adoption of MPT</b></td></tr>
+                  <tr><td><b class="ii-main-c">UK — Trustee Act 2000</b></td><td>Similar role; relevant because UK endowments are often structured as <b>trusts</b></td></tr>
+                  <tr><td><b class="ii-main-c">Tax</b></td><td><b class="ii-green">Tax-exempt</b> on investment returns; universities not taxed on payouts; donors can <b>deduct gifts</b> from taxable income</td></tr>
+                </table>
+                <div class="ii-info">UPMIFA &amp; the Trustee Act <b>also apply to private foundations</b> (next module tab).</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Investment objectives</div>
+                <div class="ii-rule"><b class="ii-main-c">Primary:</b> preserve purchasing power in perpetuity (grow with inflation) + earn returns adequate to fund spending &#8594; typical target = <b class="ii-green">real return &#8776; 5%</b> (after HEPI, measured over 3-to-5 yrs).</div>
+                <div class="ii-rule"><b class="ii-main-c">Volatility limit:</b> typically <b>10&#8211;15%</b>.</div>
+                <div class="ii-rule"><b class="ii-main-c">Secondary:</b> outperform a passive benchmark. <b class="ii-main-c">Tertiary:</b> outperform a peer group of similar endowments.</div>
+                <div class="ii-trap"><b>Peer-group objective risk:</b> chasing a peer benchmark can <b class="ii-red">dislocate decisions from the core mission</b> (funding unique liabilities) and cause <b class="ii-red">herding</b> by managers into similar investments.</div>
+                <div class="ii-info"><b>Real assets:</b> endowments need to beat inflation &#8594; significant allocation to real assets. <b>GFC 2007&#8211;09 lesson:</b> analyze <b class="ii-main-c">liquidity risk</b> via detailed cash-flow modeling; some use a <b class="ii-main-c">liquidity risk band</b> = upper bound on illiquid exposure (incl. <b>uncalled commitments</b> in alt funds).</div>
+              </div>
+            </div>
+
+            <!-- ENDOW AA + CAPITAL U CALCULATOR -->
+            <div id="ii104-aa" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Asset allocation by university endowments</div>
+                <div class="ii-rule"><b class="ii-main-c">Large US endowments</b> &#8594; the <b class="ii-green">endowment (Yale) model</b>: majority (<b>&gt;50%</b>) to <b>alternatives</b> — share has risen over the past two decades.</div>
+                <div class="ii-rule"><b class="ii-main-c">Smaller US endowments</b> &#8594; less to alternatives, more to <b>domestic equities &amp; fixed income</b>; <b class="ii-red">home bias</b> &#8594; US equities overweighted vs non-US.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Calculator — Capital University endowment</div>
+                <div class="ii-body">4% spending on 5-yr avg assets; vol limit 15%. CPI inflation 1%/yr; HEPI = CPI + 100bp. Defaults = textbook. Edit the allocations to test.</div>
+                <div class="ii-fl">Required nominal return = spending rate 4% + HEPI inflation 2%  =  6%
+Current AA: 30% US eq / 70% FI    New AA: 25 FI / 35 US eq / 20 Intl / 10 RE / 10 PE</div>
+                <div class="ii-hd-rowlbl" style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;">
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Spending rate %
+                    <input id="ii-cu-sp" type="number" value="4" step="0.5" oninput="iiCuCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">CPI %
+                    <input id="ii-cu-cpi" type="number" value="1" step="0.5" oninput="iiCuCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">HEPI premium bp
+                    <input id="ii-cu-prem" type="number" value="100" step="25" oninput="iiCuCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                </div>
+                <table class="ii-tbl">
+                  <tr><th>Asset class</th><th>Exp return %</th><th>Current %</th><th>New (SAA) %</th></tr>
+                  <tr><td>Fixed income</td><td>3</td><td>70</td><td>25</td></tr>
+                  <tr><td>US equities</td><td>6</td><td>30</td><td>35</td></tr>
+                  <tr><td>International equities</td><td>7</td><td>0</td><td>20</td></tr>
+                  <tr><td>Real estate</td><td>8</td><td>0</td><td>10</td></tr>
+                  <tr><td>Private equity</td><td>10</td><td>0</td><td>10</td></tr>
+                </table>
+                <div class="ii-fl" id="ii-cu-out"></div>
+                <div class="ii-trap"><b>Why accept the new SAA (return alone):</b> current AA earns 0.3&#215;6 + 0.7&#215;3 = <b class="ii-red">3.9%</b> &#8594; <b>fails</b> the 6% nominal required. New AA earns 0.25&#215;3 + 0.35&#215;6 + 0.20&#215;7 + 0.10&#215;8 + 0.10&#215;10 = <b class="ii-green">6.05%</b> &#8594; <b>meets</b> 6%.</div>
+                <div class="ii-info"><b>Factor that could make the new SAA inappropriate:</b> the investment office is <b>small with no alternatives experience</b> &#8594; lacks skills/contacts for due diligence on PE &amp; real assets. Also the new mix must still be checked against the <b class="ii-main-c">15% volatility</b> limit — return-adequacy alone isn't sufficient.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Quiz 10.4 — Q1</div>
+                <div class="ii-body">Endowment: spending policy 5% of 3-yr rolling assets; CPI 3%/yr; HEPI 2.5%/yr. Investment objective = achieve a total real rate of return of at least:</div>
+                <div class="ii-body">A. 5.0% &nbsp; B. 7.5% &nbsp; C. 8.0%</div>
+                <button class="ii-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ii-q104a');e.style.display=e.style.display==='none'?'block':'none';">Reveal answer</button>
+                <div id="ii-q104a" style="display:none;">
+                  <div class="ii-rule"><b class="ii-green">B &#8212; 7.5%.</b> To preserve purchasing power AND fund spending, the endowment must earn its spending rate <b>plus</b> its own cost inflation (HEPI): 5% + 2.5% = <b>7.5%</b>.</div>
+                  <div class="ii-trap"><b>Trap C (8.0%):</b> uses <b class="ii-red">CPI 3%</b> instead of HEPI. An endowment maintains real value against its OWN index (HEPI), not general CPI. <b>Trap A (5.0%):</b> spending only — ignores maintaining purchasing power.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PRIVATE FOUNDATIONS -->
+            <div id="ii104-found" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Private foundations — features &amp; mission</div>
+                <div class="ii-body">Nonprofit institutions set up to make <b class="ii-main-c">grants</b> to specified <b>charitable causes</b>. This reading focuses on <b>private</b> foundations (individual donors + families, e.g. the <b>Gates Foundation</b>).</div>
+                <table class="ii-tbl">
+                  <tr><th>Other foundation types</th><th>Set up by / for</th></tr>
+                  <tr><td><b class="ii-main-c">Community</b></td><td>For the good of the local community</td></tr>
+                  <tr><td><b class="ii-main-c">Operating</b></td><td>To fund a specific not-for-profit business</td></tr>
+                  <tr><td><b class="ii-main-c">Corporate</b></td><td>From the profits of an existing company</td></tr>
+                </table>
+                <div class="ii-rule"><b class="ii-green">Objective</b> = maintain purchasing power in perpetuity + earn returns sufficient to support <b>grant-making</b> &#8594; <b>same as a university endowment's objective</b>.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Stakeholders &amp; the board-experience trap</div>
+                <div class="ii-body">Stakeholders: <b class="ii-main-c">founding family</b>, donors, grant recipients, wider community. <b>Government</b> = stakeholder (favorable tax treatment). Intergenerational tensions (current vs future recipients), as with endowments.</div>
+                <div class="ii-trap"><b>Key endowment-vs-foundation difference:</b> foundation board members are <b class="ii-red">LESS likely</b> to have professional investment experience than endowment-board alumni &#8594; <b>less rigorous oversight / greater delegation to staff</b> &#8594; may hurt decision quality in sophisticated markets (alternatives).</div>
+                <div class="ii-info"><b>Mission-related investing</b> (a.k.a. <b class="ii-main-c">impact investing</b>): investing in projects that promote the foundation's mission. Challenge = maintaining a <b>sufficient return</b> to meet long-term objectives.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Liabilities &amp; investment horizon</div>
+                <div class="ii-rule">Typically <b class="ii-green">perpetual</b> horizon. Trend toward <b class="ii-main-c">limited-life</b> foundations — mandated to spend down assets within a set time frame of the founder's death &#8594; <b class="ii-red">shortens</b> the horizon.</div>
+                <div class="ii-rule"><b class="ii-main-c">US tax law payout:</b> must pay out a <b class="ii-red">minimum 5% of assets</b> (12-month trailing) + investment expenses.</div>
+                <div class="ii-rule"><b class="ii-main-c">Flow-through:</b> must spend any donations <b>in the year received</b>.</div>
+                <div class="ii-info"><b>Reliance:</b> unlike universities (which have other revenue), foundations rely <b class="ii-red">almost exclusively</b> on the portfolio to meet budgets. Higher liquidity requirement + heavy reliance &#8594; <b class="ii-red">LOWER risk tolerance than university endowments</b>.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Liquidity needs &amp; external constraints</div>
+                <div class="ii-body"><b class="ii-main-c">Liquidity needs</b> — keep sufficient liquidity for: near-term spending (5%), <b>capital calls</b> from PE/limited-partnership funds, and <b>margin calls</b> on derivatives.</div>
+                <table class="ii-tbl">
+                  <tr><th>Constraint</th><th>Detail</th></tr>
+                  <tr><td><b class="ii-main-c">Same laws as endowments</b></td><td>UPMIFA (US) / Trustee Act (UK): total-return basis, diversification, duty of care from board &amp; staff</td></tr>
+                  <tr><td><b class="ii-main-c">Tax-exempt</b></td><td>Similar status to endowments — <b>but conditional on meeting the spending rule</b></td></tr>
+                  <tr><td><b class="ii-red">30% tax</b></td><td>On <b>undistributed income</b> if the foundation FAILS the minimum-spending requirement</td></tr>
+                  <tr><td><b class="ii-red">2% tax</b></td><td>On <b>net investment income</b> (most US foundations)</td></tr>
+                </table>
+                <div class="ii-trap"><b>Penalty traps:</b> 30% = on UNDISTRIBUTED income (failure to meet the 5% payout). 2% = on NET INVESTMENT income (general). Don't swap the two rates or bases.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Investment objectives &amp; AA</div>
+                <div class="ii-rule"><b class="ii-main-c">Objective:</b> real return over CPI &#8805; spending rate (<b>min 5%</b>) + investment expenses; expected volatility <b>10&#8211;15%</b> over 3-to-5 yrs. Secondary: beat a policy benchmark on a <b>tracking-error budget</b>.</div>
+                <div class="ii-rule"><b class="ii-main-c">AA:</b> lower risk tolerance than endowments (higher liquidity + heavy reliance) &#8212; <b>but overall risk tolerance remains high</b> (beat-inflation objective + long horizon).</div>
+                <div class="ii-rule"><b class="ii-main-c">Larger US foundations</b> &#8594; &#8776; <b>half</b> to alternatives. <b class="ii-main-c">Smaller foundations</b> &#8594; more to domestic equities &amp; fixed income.</div>
+              </div>
+            </div>
+
+            <!-- ENDOW vs FOUNDATION MATRIX -->
+            <div id="ii104-matrix" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">University endowment vs private foundation — master matrix</div>
+                <table class="ii-tbl">
+                  <tr><th>Dimension</th><th>University endowment</th><th>Private foundation</th></tr>
+                  <tr><td><b class="ii-main-c">Mission</b></td><td>Support university operating budget; intergenerational equity</td><td>Grant-making to charitable causes; intergenerational equity</td></tr>
+                  <tr><td><b class="ii-main-c">Objective</b></td><td colspan="2" style="text-align:center;">Maintain purchasing power in perpetuity + returns sufficient to fund spending <b class="ii-green">(same)</b></td></tr>
+                  <tr><td><b class="ii-main-c">Horizon</b></td><td>Perpetual</td><td>Perpetual (trend to <b>limited-life</b> &#8594; shorter)</td></tr>
+                  <tr><td><b class="ii-main-c">Min payout</b></td><td>No legal min; spending rate 4&#8211;6% (HEPI rules)</td><td><b class="ii-red">Legal min 5%</b> of assets + expenses; <b>flow-through</b> on donations</td></tr>
+                  <tr><td><b class="ii-main-c">Net spending</b></td><td><b class="ii-green">2&#8211;4%</b> (gifts offset)</td><td>&#8776; 5%+ (relied on almost exclusively)</td></tr>
+                  <tr><td><b class="ii-main-c">Other revenue</b></td><td>Yes (tuition, research, etc.)</td><td><b class="ii-red">No</b> — portfolio is the main funding source</td></tr>
+                  <tr><td><b class="ii-main-c">Liquidity needs</b></td><td>Low</td><td><b class="ii-red">Higher</b> (spending + capital calls + margin calls)</td></tr>
+                  <tr><td><b class="ii-main-c">Risk tolerance</b></td><td>High</td><td><b class="ii-red">Lower than endowment</b> (but still high overall)</td></tr>
+                  <tr><td><b class="ii-main-c">Board expertise</b></td><td>Often investment-pro alumni</td><td><b class="ii-red">Less</b> investment experience &#8594; more delegation to staff</td></tr>
+                  <tr><td><b class="ii-main-c">Tax</b></td><td>Tax-exempt; donors deduct gifts</td><td>Tax-exempt IF meets payout; <b class="ii-red">30%</b> on undistributed, <b class="ii-red">2%</b> on net inv. income</td></tr>
+                  <tr><td><b class="ii-main-c">Vol limit</b></td><td colspan="2" style="text-align:center;">&#8776; 10&#8211;15% over 3-to-5 yrs <b class="ii-green">(same)</b></td></tr>
+                  <tr><td><b class="ii-main-c">AA</b></td><td>Large &#8594; endowment model &gt;50% alts; small &#8594; more domestic eq/FI</td><td>Large &#8594; &#8776; half alts; small &#8594; more domestic eq/FI</td></tr>
+                </table>
+                <div class="ii-info">Memory hook: foundation = endowment's objective + <b class="ii-red">stricter payout (5% legal)</b> + <b class="ii-red">no backup revenue</b> + <b class="ii-red">weaker board</b> &#8594; net effect = <b>lower risk tolerance</b> &amp; <b>higher liquidity needs</b>, despite the same long-horizon, beat-inflation mandate.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 10.5 Banks & Insurers ════════ -->
+          <div id="iim-105" class="ii-modpanel">
+            <div class="ii-toptabs">
+              <button class="ii-toptab active" onclick="iiTop(event,'ii105-bfeat')">Banks · Features</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii105-bliab')">Banks · Liab/Liq</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii105-bcon')">Banks · Constraints</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii105-ifeat')">Insurers · Features</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii105-iliab')">Insurers · Liab/Liq</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii105-icon')">Insurers · Constraints</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii105-matrix')">Bank vs Insurer Matrix</button>
+            </div>
+
+            <!-- INTRO + BANKS FEATURES -->
+            <div id="ii105-bfeat" class="ii-toppanel active">
+              <div class="ii-card">
+                <div class="ii-title">Banks &amp; insurers — what makes them different</div>
+                <div class="ii-rule">Both are <b class="ii-main-c">financial intermediaries run for profit</b> &#8212; unlike the other institutions in this reading.</div>
+                <div class="ii-info"><b>Scope reminder:</b> we advise on the institution's <b class="ii-main-c">investment portfolio</b>, NOT its core business of being a bank/insurer &#8212; though the two are <b>interlinked</b>.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Banks — main features / mission</div>
+                <div class="ii-rule">Primary function = earn profits by <b class="ii-main-c">taking deposits from savers</b> + <b class="ii-main-c">making loans to borrowers</b>.</div>
+                <div class="ii-body">Other functions: safeguarding assets; executing securities &amp; derivatives transactions; investing in securities; advising.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Banks — stakeholders &amp; the balance sheet</div>
+                <table class="ii-tbl">
+                  <tr><th>Stakeholder</th><th>Role</th></tr>
+                  <tr><td><b class="ii-main-c">Shareholders</b> (external)</td><td>Most large intl banks publicly listed &#8594; want <b>profit maximization</b></td></tr>
+                  <tr><td><b class="ii-main-c">Depositors</b> (external)</td><td>Expect protection of assets; make up <b class="ii-red">most of the bank's LIABILITIES</b></td></tr>
+                  <tr><td><b class="ii-main-c">Borrowers</b> (external)</td><td>Retail (home purchase) + commercial (fund operations); their loans = <b class="ii-green">most of the bank's ASSETS</b></td></tr>
+                  <tr><td>Creditors, rating agencies, regulators, communities</td><td>Other external stakeholders</td></tr>
+                  <tr><td>Employees, managers, directors</td><td>Internal stakeholders</td></tr>
+                </table>
+                <div class="ii-trap"><b>Balance-sheet anchor:</b> deposits = <b class="ii-red">liabilities</b>; loans = <b class="ii-green">assets</b>. This is the heart of the bank's asset/liability mismatch.</div>
+              </div>
+            </div>
+
+            <!-- BANKS LIAB / LIQ -->
+            <div id="ii105-bliab" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Liabilities &amp; investment horizon</div>
+                <table class="ii-tbl">
+                  <tr><th>Liability</th><th>Nature</th></tr>
+                  <tr><td><b class="ii-main-c">Demand deposits</b></td><td>Withdraw <b>without notice</b> &#8594; deemed <b class="ii-red">short-term in duration</b></td></tr>
+                  <tr><td><b class="ii-main-c">Time / term deposits</b></td><td>Require <b>advance notice</b> before withdrawal</td></tr>
+                  <tr><td>Other</td><td>Short-term wholesale funding; long-term debt; trading/securities payables; repo finance payables</td></tr>
+                </table>
+                <div class="ii-rule"><b class="ii-main-c">Assets:</b> mostly longer-term <b>illiquid mortgage &amp; commercial loans</b>.</div>
+                <div class="ii-rule"><b class="ii-main-c">Horizon logic:</b> driven by the <b>difference between</b> long-term illiquid assets and short-term liquid liabilities. Bank is a <b class="ii-green">perpetual</b> org, but the <b>investment-portfolio</b> instruments are very short &#8594; manage shareholder-capital volatility on a <b class="ii-main-c">medium- to short-term basis</b>.</div>
+                <div class="ii-trap"><b>Perpetual-but-short trap:</b> the bank itself is perpetual, yet its <b>investment portfolio</b> is run short-term. Don't say the portfolio horizon is long just because the institution is perpetual.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Liquidity needs &amp; post-GFC ratios</div>
+                <div class="ii-body">Deposits = short-duration liabilities + possible need to raise liquidity in adverse conditions &#8594; <b class="ii-main-c">liquidity management is a key focus</b>.</div>
+                <table class="ii-tbl">
+                  <tr><th>Ratio</th><th>What it requires</th></tr>
+                  <tr><td><b class="ii-main-c">LCR</b> (liquidity coverage ratio)</td><td>Sufficient <b>liquid assets</b> to cover near-term expected cash outflows</td></tr>
+                  <tr><td><b class="ii-main-c">NSFR</b> (net stable funding ratio)</td><td>Adequate capital from <b>stable sources</b></td></tr>
+                </table>
+                <div class="ii-rule">Effect: bank investment portfolios are <b class="ii-green">more liquid</b> + rely <b>less</b> on wholesale interbank funding.</div>
+                <div class="ii-info"><b class="ii-main-c">Retail vs commercial:</b> commercial-lending banks use <b>wholesale funding</b> more; retail banks use more <b>deposits</b> (cheaper, more stable) &#8594; <b class="ii-green">retail banks have a BETTER liquidity position than commercial banks</b>.</div>
+              </div>
+            </div>
+
+            <!-- BANKS CONSTRAINTS -->
+            <div id="ii105-bcon" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">External constraints — regulators</div>
+                <div class="ii-rule">Systemic-failure risk to critical functions (payments, credit) &#8594; regulators intensely focus on <b class="ii-main-c">capital adequacy, liquidity, leverage</b>.</div>
+                <div class="ii-rule">Goal: banks adequately capitalized to <b class="ii-green">absorb losses themselves</b> &#8212; not customers, creditors, or taxpayers. Via diversification, <b>asset quality-based reserves</b>, stable funding, LCR/NSFR.</div>
+                <div class="ii-info"><b>Quality-based reserves (Prof note):</b> riskier assets &#8594; higher risk-weighted assets &#8594; <b class="ii-red">higher required reserves</b>. e.g. switching IG bonds &#8594; HY bonds raises required reserves.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">SIFIs — systemically important financial institutions</div>
+                <div class="ii-body">Economies of scale + diversification benefits push banks to grow &#8594; largest = <b class="ii-main-c">SIFIs</b>. Post-GFC, SIFI rules:</div>
+                <table class="ii-tbl">
+                  <tr><th>Rule</th><th>Detail</th></tr>
+                  <tr><td><b class="ii-main-c">&#8593; Capital required</b></td><td>More capital to absorb losses on assets</td></tr>
+                  <tr><td><b class="ii-main-c">Limit dividends &amp; buybacks</b></td><td>These payouts <b class="ii-red">effectively INCREASE leverage</b> &#8594; limiting them retains capital</td></tr>
+                  <tr><td><b class="ii-main-c">Restrict subordinated-debt / preferred claims</b></td><td>Limit their ability to claim in bankruptcy &#8594; forces them to <b>bear more risk</b></td></tr>
+                  <tr><td><b class="ii-main-c">Restrict derivatives</b></td><td>Plus prop trading + off-balance-sheet liabilities &amp; guarantees</td></tr>
+                </table>
+                <div class="ii-trap"><b>Leverage-direction trap:</b> dividends/buybacks <b class="ii-red">INCREASE</b> leverage (cash out, equity shrinks). Regulators LIMIT them to <b>reduce</b> leverage. Don't invert.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Three accounting systems (banks &amp; insurers)</div>
+                <table class="ii-tbl">
+                  <tr><th>System</th><th>Used for</th><th>Income volatility</th></tr>
+                  <tr><td><b class="ii-main-c">Standard financial reporting</b> (GAAP/IFRS)</td><td>Communicate results to <b>shareholders</b>; accruals process</td><td><b class="ii-green">Smoothest</b></td></tr>
+                  <tr><td><b class="ii-main-c">Statutory accounting</b></td><td>Used by <b>regulators</b>; more <b>conservative</b> (removes intangibles, accelerates expenses, recognizes reserves vs large losses/guarantees)</td><td>Middle</td></tr>
+                  <tr><td><b class="ii-main-c">True economic accounting</b></td><td><b>Market value</b> for all assets &amp; liabilities</td><td><b class="ii-red">Most volatile</b></td></tr>
+                </table>
+                <div class="ii-trap"><b>Volatility ranking trap:</b> Standard = smoothest (accruals); True economic = most volatile (mark-to-market). Statutory sits between (conservative, not smoothest).</div>
+                <div class="ii-rule">Banks are <b class="ii-red">fully taxable</b> &#8594; must consider <b>after-tax</b> returns.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Investment objectives &amp; ALMCo</div>
+                <div class="ii-rule"><b class="ii-green">Primary objective:</b> manage liquidity + reduce <b class="ii-main-c">risk mismatches</b> between the bank's <b class="ii-main-c">NONINVESTMENT</b> assets &amp; liabilities.</div>
+                <div class="ii-body"><b class="ii-main-c">ALMCo</b> (asset-liability management committee) oversees: sets the <b>IPS</b>, monitors performance, sets risk limits (market / credit / liquidity / solvency), with authority to <b>require changes on both sides of the B/S</b>. Then sets policy benchmarks, monitors, reports to management &amp; board.</div>
+                <div class="ii-trap"><b>"Noninvestment" trap:</b> the goal is to offset mismatches vs the bank's CORE-business (noninvestment) assets &amp; liabilities &#8212; the investment portfolio is a tool, not the thing being matched to itself.</div>
+              </div>
+            </div>
+
+            <!-- INSURERS FEATURES -->
+            <div id="ii105-ifeat" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Insurers — two broad categories</div>
+                <table class="ii-tbl">
+                  <tr><th>Type</th><th>Writes</th></tr>
+                  <tr><td><b class="ii-main-c">Life insurers</b></td><td>Whole/term life (<b>fixed payments</b>); <b>variable life</b> (payouts linked to policyholder-chosen funds); annuities; health; <b>universal life</b> (flexible premiums &amp; benefit payouts)</td></tr>
+                  <tr><td><b class="ii-main-c">P&amp;C insurers</b></td><td>Property &amp; liability; surety; commercial property/liability; home ownership; marine; legal liabilities</td></tr>
+                </table>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Stakeholders — listed vs mutual</div>
+                <table class="ii-tbl">
+                  <tr><th>Structure</th><th>Owner / interest</th></tr>
+                  <tr><td><b class="ii-main-c">Publicly listed</b></td><td><b>Shareholders</b> &#8594; long-term maximization of capital value WHILE honoring policyholder obligations</td></tr>
+                  <tr><td><b class="ii-main-c">Mutual</b></td><td>Owned by <b>policyholders</b>; profits retained as a <b>surplus</b> vs potential losses, or distributed via dividends / premium reductions</td></tr>
+                </table>
+                <div class="ii-body">Other external: derivatives counterparties, creditors, regulators, rating agencies. Internal: employees, management, board.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">General account vs separate account — who bears the risk</div>
+                <table class="ii-tbl">
+                  <tr><th>Account</th><th>Funds</th><th>Who bears investment risk</th></tr>
+                  <tr><td><b class="ii-main-c">General account</b></td><td>Traditional life (incl. <b>universal life</b>) + <b>fixed</b> annuity</td><td><b class="ii-red">INSURER</b></td></tr>
+                  <tr><td><b class="ii-main-c">Separate account</b></td><td><b>Variable</b> life + <b>variable</b> annuities (invested per policyholder choices)</td><td><b class="ii-green">POLICYHOLDER</b></td></tr>
+                </table>
+                <div class="ii-trap"><b>Risk-bearer trap:</b> general account &#8594; insurer bears risk (fixed/traditional). Separate account &#8594; policyholder bears risk (variable). "Variable" = variable for the <b>policyholder</b>, who carries the market outcome.</div>
+              </div>
+            </div>
+
+            <!-- INSURERS LIAB / LIQ -->
+            <div id="ii105-iliab" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Liabilities &amp; investment horizon — life vs P&amp;C</div>
+                <table class="ii-tbl">
+                  <tr><th></th><th>Life insurers</th><th>P&amp;C insurers</th></tr>
+                  <tr><td><b class="ii-main-c">Duration</b></td><td><b class="ii-green">Long</b> (varies by product line)</td><td><b class="ii-red">Shorter</b></td></tr>
+                  <tr><td><b class="ii-main-c">Certainty</b></td><td>More predictable</td><td><b class="ii-red">Higher uncertainty</b> &#8212; claims tied to unlikely, unpredictable, high-payout events (e.g. natural disasters)</td></tr>
+                  <tr><td><b class="ii-main-c">Historic horizon</b></td><td><b>20&#8211;40 years</b></td><td>Short</td></tr>
+                </table>
+                <div class="ii-rule">Like banks: the institution has a <b class="ii-green">perpetual</b> time horizon, but the <b>nature &amp; timing of policy claims</b> strongly affect the investment horizon.</div>
+                <div class="ii-info"><b class="ii-main-c">Underwriting cycle</b> (key for both): competition-driven swings in profitability over the business cycle. Intense competition &amp; low underwriting profit &#8594; insurers bear <b>less underwriting risk</b> &#8594; may <b class="ii-red">increase appetite for investment risk</b> (all else equal).</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Liquidity needs</div>
+                <div class="ii-rule">Manage <b class="ii-main-c">internal</b> liquidity (cash from operations &amp; investing) + <b class="ii-main-c">external</b> liquidity (ability to borrow in debt markets).</div>
+                <div class="ii-trap"><b>Interest rates &amp; lapses:</b> <b class="ii-red">&#8593; interest rates &#8594; &#8593; lapses/surrenders</b>. Policyholders holding low-yielding contracts surrender (cash in) to reinvest at higher yields &#8594; <b>increases the life insurer's net cash outflows</b>.</div>
+                <div class="ii-rule"><b class="ii-main-c">P&amp;C:</b> significant cash-flow uncertainty &#8594; portfolios need ample liquidity of <b>high-grade short-term fixed income</b>.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">General account split — reserve vs surplus portfolio</div>
+                <table class="ii-tbl">
+                  <tr><th>Portfolio</th><th>Purpose</th><th>Management</th></tr>
+                  <tr><td><b class="ii-main-c">Reserve portfolio</b></td><td>Capable of <b>meeting policy liabilities</b> (regulation requires it)</td><td><b class="ii-green">Conservative</b></td></tr>
+                  <tr><td><b class="ii-main-c">Surplus portfolio</b></td><td>Generate <b>higher returns</b></td><td>Assume <b class="ii-red">liquidity risk</b> + allocate to <b>alternatives</b></td></tr>
+                </table>
+                <div class="ii-trap"><b>Reserve vs surplus trap:</b> reserve = conservative (must meet liabilities); surplus = aggressive (return-seeking, alts, liquidity risk). Don't swap which one takes the risk.</div>
+              </div>
+            </div>
+
+            <!-- INSURERS CONSTRAINTS & OBJECTIVES -->
+            <div id="ii105-icon" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">External constraints</div>
+                <div class="ii-rule">Like banks: crucial intermediary roles &#8594; can be large enough to be classed as <b class="ii-main-c">SIFIs</b>; regulators ensure sufficient capital to absorb business &amp; investment losses.</div>
+                <table class="ii-tbl">
+                  <tr><th>Region</th><th>Regulator / framework</th></tr>
+                  <tr><td><b class="ii-main-c">United States</b></td><td><b>NAIC</b> (National Association of Insurance Commissioners) &#8212; association of state regulators setting accounting &amp; reporting policies</td></tr>
+                  <tr><td><b class="ii-main-c">Europe</b></td><td><b>Solvency II</b> &#8212; framework standardizing regulation across member states</td></tr>
+                </table>
+                <div class="ii-rule">Same <b>3 accounting systems</b> as banks (standard / statutory / true economic). Insurers are <b class="ii-red">fully taxable</b> &#8594; after-tax returns.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Investment objectives</div>
+                <div class="ii-rule"><b class="ii-green">Primary (like banks):</b> manage liquidity + reduce <b class="ii-main-c">risk mismatches</b> between the institution's assets &amp; liabilities. Must consider general business conditions + expected external economic conditions.</div>
+                <div class="ii-rule"><b class="ii-main-c">Oversight:</b> a <b>board committee</b> responsible for all investment policies &amp; procedures; reports to regulators &amp; external stakeholders. (Banks &#8594; ALMCo; insurers &#8594; board committee.)</div>
+              </div>
+            </div>
+
+            <!-- BANK vs INSURER MATRIX -->
+            <div id="ii105-matrix" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Bank vs insurer — master matrix</div>
+                <table class="ii-tbl">
+                  <tr><th>Dimension</th><th>Bank</th><th>Insurer</th></tr>
+                  <tr><td><b class="ii-main-c">Nature</b></td><td colspan="2" style="text-align:center;">Financial intermediary <b class="ii-green">run for profit</b> (both)</td></tr>
+                  <tr><td><b class="ii-main-c">Core liabilities</b></td><td>Deposits (demand + time/term)</td><td>Policy claims (life: long; P&amp;C: short/uncertain)</td></tr>
+                  <tr><td><b class="ii-main-c">Core assets</b></td><td>Loans (mortgage + commercial)</td><td>Investment portfolio backing reserves</td></tr>
+                  <tr><td><b class="ii-main-c">Institution horizon</b></td><td>Perpetual (portfolio run short-medium)</td><td>Perpetual (claims drive portfolio horizon)</td></tr>
+                  <tr><td><b class="ii-main-c">Liability duration</b></td><td>Short (deposits)</td><td>Life 20&#8211;40 yr; P&amp;C short</td></tr>
+                  <tr><td><b class="ii-main-c">Key cycle/risk</b></td><td>Liquidity runs; LCR/NSFR</td><td><b>Underwriting cycle</b>; &#8593;IR &#8594; &#8593;lapses</td></tr>
+                  <tr><td><b class="ii-main-c">Primary objective</b></td><td colspan="2" style="text-align:center;">Manage liquidity + reduce <b>risk mismatches</b> btwn assets &amp; liabilities <b class="ii-green">(same)</b></td></tr>
+                  <tr><td><b class="ii-main-c">Oversight body</b></td><td><b>ALMCo</b></td><td><b>Board committee</b></td></tr>
+                  <tr><td><b class="ii-main-c">US regulator</b></td><td>Banking regulators (capital/liquidity/leverage)</td><td><b>NAIC</b></td></tr>
+                  <tr><td><b class="ii-main-c">EU framework</b></td><td>Basel-style capital rules</td><td><b>Solvency II</b></td></tr>
+                  <tr><td><b class="ii-main-c">SIFI</b></td><td colspan="2" style="text-align:center;">Both can be SIFIs &#8594; &#8593;capital, payout limits, derivative restrictions <b class="ii-green">(same)</b></td></tr>
+                  <tr><td><b class="ii-main-c">Accounting</b></td><td colspan="2" style="text-align:center;">Standard (smoothest) / statutory (conservative) / true economic (most volatile) <b class="ii-green">(same)</b></td></tr>
+                  <tr><td><b class="ii-main-c">Tax</b></td><td colspan="2" style="text-align:center;"><b class="ii-red">Fully taxable</b> &#8594; after-tax returns (both)</td></tr>
+                </table>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Isolated traps — drill these</div>
+                <table class="ii-tbl">
+                  <tr><th>Concept</th><th>Correct direction</th></tr>
+                  <tr><td>Demand vs time deposit</td><td>Demand = <b>no notice</b>, short-term; time/term = <b>advance notice</b></td></tr>
+                  <tr><td>Retail vs commercial liquidity</td><td>Retail = <b class="ii-green">better</b> (cheap stable deposits); commercial uses wholesale funding more</td></tr>
+                  <tr><td>Dividends/buybacks &amp; leverage</td><td>Payouts <b class="ii-red">INCREASE</b> leverage &#8594; regulators limit them</td></tr>
+                  <tr><td>Accounting income volatility</td><td>Standard smoothest &lt; statutory &lt; true economic <b class="ii-red">most volatile</b></td></tr>
+                  <tr><td>General vs separate account</td><td>General &#8594; <b class="ii-red">insurer</b> bears risk; separate &#8594; <b class="ii-green">policyholder</b> bears risk</td></tr>
+                  <tr><td>Life vs P&amp;C duration</td><td>Life <b>long</b> (20&#8211;40 yr); P&amp;C <b>short + uncertain</b></td></tr>
+                  <tr><td>Reserve vs surplus portfolio</td><td>Reserve = <b class="ii-green">conservative</b>; surplus = <b class="ii-red">return-seeking + alts</b></td></tr>
+                  <tr><td>Interest rates &amp; lapses</td><td><b class="ii-red">&#8593;IR &#8594; &#8593;lapses</b> &#8594; &#8593; insurer cash outflows</td></tr>
+                  <tr><td>Primary objective</td><td>Manage liquidity + reduce mismatch vs <b>noninvestment</b> (core) assets/liabilities</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 10.6 Balance Sheet Management & Investment ════════ -->
+          <div id="iim-106" class="ii-modpanel">
+            <div class="ii-toptabs">
+              <button class="ii-toptab active" onclick="iiTop(event,'ii106-eq')">Equity Sensitivity %&#916;E</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii106-dur')">Equity Duration D&#8338;</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii106-vol')">Equity Volatility &#963;&#8338;</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii106-strat')">Vol Strategies (Fig 10.7)</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii106-aa')">AA Banks/Insurers (SJT)</button>
+              <button class="ii-toptab" onclick="iiTop(event,'ii106-quiz')">Quiz 10.5/10.6</button>
+            </div>
+
+            <!-- EQUITY SENSITIVITY %dE -->
+            <div id="ii106-eq" class="ii-toppanel active">
+              <div class="ii-card">
+                <div class="ii-title">Overall objective &amp; the %&#916;E equation (LOS 10.h)</div>
+                <div class="ii-rule">For both banks &amp; insurers: <b class="ii-main-c">maximize the market value of equity capital</b>, with high assurance that depositor/creditor/policyholder claims can be met.</div>
+                <div class="ii-fl">%&#916;E = %&#916;A &#215; M  &#8722;  %&#916;L &#215; (M &#8722; 1)
+
+M = leverage multiplier = A / E
+%&#916;A, %&#916;L = % change in value of assets, liabilities</div>
+                <div class="ii-info"><b>Intuition:</b> term 1 = asset returns <b>magnified by leverage M</b>; term 2 has a <b class="ii-red">negative sign</b> &#8212; rising liabilities cut equity. <b>M&#8722;1</b> = size of liabilities vs equity. e.g. M=4 &#8594; $4 assets per $1 equity &#8594; $3 liabilities (M&#8722;1=3).</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Calculator — %&#916;E, D&#8338; and &#963;&#8338;</div>
+                <div class="ii-body">One panel drives all three balance-sheet equations. Defaults below = the %&#916;E textbook example (E/A 5%, liabilities +1.5%, assets flat).</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;">
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Equity/Assets %
+                    <input id="ii-bs-ea" type="number" value="5" step="0.5" oninput="iiBsCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                </div>
+                <div class="ii-fl" id="ii-bs-mout"></div>
+                <div class="ii-rule" style="margin-top:10px;"><b class="ii-main-c">% change inputs (for %&#916;E):</b></div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin:6px 0;">
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">%&#916;A
+                    <input id="ii-bs-da" type="number" value="0" step="0.5" oninput="iiBsCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">%&#916;L
+                    <input id="ii-bs-dl" type="number" value="1.5" step="0.5" oninput="iiBsCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                </div>
+                <div class="ii-fl" id="ii-bs-eout"></div>
+                <div class="ii-rule" style="margin-top:10px;"><b class="ii-main-c">Duration inputs (for D&#8338;):</b></div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin:6px 0;">
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">D&#8336; (assets)
+                    <input id="ii-bs-dura" type="number" value="3" step="0.5" oninput="iiBsCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">D&#8343; (liab)
+                    <input id="ii-bs-durl" type="number" value="2" step="0.5" oninput="iiBsCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">&#916;i/&#916;y
+                    <input id="ii-bs-diy" type="number" value="0.70" step="0.05" oninput="iiBsCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">yield &#916; (bp, for impact)
+                    <input id="ii-bs-bp" type="number" value="-25" step="5" oninput="iiBsCalc()" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                </div>
+                <div class="ii-fl" id="ii-bs-dout"></div>
+                <div class="ii-rule" style="margin-top:10px;"><b class="ii-main-c">Volatility inputs (for &#963;&#8338;):</b></div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin:6px 0;">
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">&#963;&#8336; %
+                    <input id="ii-bs-sa" type="number" value="7" step="0.5" oninput="iiBsCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">&#963;&#8343; %
+                    <input id="ii-bs-sl" type="number" value="4" step="0.5" oninput="iiBsCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">&#961;&#8336;&#8343;
+                    <input id="ii-bs-rho" type="number" value="0.3" step="0.1" oninput="iiBsCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                </div>
+                <div class="ii-fl" id="ii-bs-vout"></div>
+                <div class="ii-info">To reproduce the textbook checks: <b>%&#916;E</b> &#8594; E/A 5, %&#916;A 0, %&#916;L 1.5 = &#8722;28.5%. <b>D&#8338;</b> &#8594; E/A 12.5, D&#8336; 3, D&#8343; 2, &#916;i/&#916;y 0.70 = 14.2. <b>&#963;&#8338;</b> &#8594; E/A 12.5, &#963;&#8336; 7, &#963;&#8343; 4, &#961; 0.3 = 54.6%.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Worked example — %&#916;E</div>
+                <div class="ii-rule">Bank E/A = 5% &#8594; M = 1/0.05 = <b class="ii-main-c">20</b>. Liabilities +1.5%, assets stable.</div>
+                <div class="ii-fl">%&#916;E = (0% &#215; 20) &#8722; (1.5% &#215; 19) = &#8722;28.5%</div>
+                <div class="ii-trap"><b>M&#8722;1 trap:</b> liabilities are weighted by <b>M&#8722;1</b>, NOT M. With M=20, the liability term uses 19. Using 20 here would overstate the hit.</div>
+              </div>
+            </div>
+
+            <!-- EQUITY DURATION -->
+            <div id="ii106-dur" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Modified duration of equity capital</div>
+                <div class="ii-body">Sensitivity of the institution's equity capital to a unit change in the asset reference yield y:</div>
+                <div class="ii-fl">D&#8338; = D&#8336; &#215; M  &#8722;  D&#8343; &#215; (M &#8722; 1) &#215; (&#916;i / &#916;y)
+
+D&#8338;/D&#8336;/D&#8343; = modified duration of equity / assets / liabilities
+&#916;i/&#916;y = est. change in LIABILITY yield i per unit change in ASSET yield y</div>
+                <div class="ii-info">Same M and M&#8722;1 roles as %&#916;E. The only extra term is <b class="ii-main-c">&#916;i/&#916;y</b> &#8212; how the liability yield moves relative to the asset yield. Modified duration = % value change per 1% yield change.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">WellLife Holdings — worked example</div>
+                <div class="ii-rule">E/A = 12.5% &#8594; M = 1/0.125 = <b class="ii-main-c">8</b>. D&#8336; = 3, D&#8343; = 2, &#916;i/&#916;y = 0.70.</div>
+                <div class="ii-fl">D&#8338; = (3 &#215; 8) &#8722; (2 &#215; 7 &#215; 0.70) = 24 &#8722; 9.8 = 14.2</div>
+                <div class="ii-rule"><b class="ii-main-c">25bp FALL</b> in asset yield: D&#8338;=14.2 &#8594; &#916;equity &#8776; +0.25 &#215; 14.2 = <b class="ii-green">+3.55%</b>.</div>
+                <div class="ii-rule"><b class="ii-main-c">Raise E/A to 10%</b> &#8594; M = 10: D&#8338; = (3 &#215; 10) &#8722; (2 &#215; 9 &#215; 0.70) = 30 &#8722; 12.6 = <b>17.4</b>.</div>
+                <div class="ii-trap"><b>Leverage &amp; equity duration:</b> LOWERING E/A from 12.5% to 10% RAISES leverage (M: 8 &#8594; 10), which RAISES D&#8338; (14.2 &#8594; 17.4). Higher leverage magnifies equity duration. Track the direction of <b>M</b>, not E/A &#8212; a smaller equity ratio means more leverage.</div>
+              </div>
+            </div>
+
+            <!-- EQUITY VOLATILITY -->
+            <div id="ii106-vol" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Volatility of equity capital (&#963;&#8338;)</div>
+                <div class="ii-body">Expected SD of % changes in the market value of equity:</div>
+                <div class="ii-fl">&#963;&#8338;&#178; = M&#178;&#963;&#8336;&#178; + (M&#8722;1)&#178;&#963;&#8343;&#178; &#8722; 2(M)(M&#8722;1)&#963;&#8336;&#963;&#8343;&#961;&#8336;&#8343;
+
+&#963;&#8336;/&#963;&#8343; = SD of % change in assets / liabilities
+&#961;&#8336;&#8343; = correlation of % value changes in assets &amp; liabilities</div>
+                <div class="ii-info"><b>It's the two-asset variance formula</b> you've used all over the CFA curriculum &#8212; a portfolio with weight <b class="ii-main-c">M</b> on assets and weight <b class="ii-main-c">&#8722;(M&#8722;1)</b> on liabilities. The minus-sign cross term comes from that negative liability weight.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">WellLife Holdings — worked example</div>
+                <div class="ii-rule">E/A = 12.5% &#8594; M = 8. &#963;&#8336; = 7%, &#963;&#8343; = 4%, &#961;&#8336;&#8343; = 0.3.</div>
+                <div class="ii-fl">&#963;&#8338;&#178; = (8&#178; &#215; 0.07&#178;) + (7&#178; &#215; 0.04&#178;) &#8722; (2 &#215; 8 &#215; 7 &#215; 0.07 &#215; 0.04 &#215; 0.3)
+   = 0.298
+&#963;&#8338; = &#8730;0.298 = 0.546 = 54.6%</div>
+                <div class="ii-rule"><b class="ii-main-c">New regs:</b> raise E/A to 20% &#8594; M = 5; lower &#963;&#8336; to 5%.</div>
+                <div class="ii-fl">&#963;&#8338;&#178; = (5&#178; &#215; 0.05&#178;) + (4&#178; &#215; 0.04&#178;) &#8722; (2 &#215; 5 &#215; 4 &#215; 0.05 &#215; 0.04 &#215; 0.3)
+   = 0.0641
+&#963;&#8338; = &#8730;0.0641 = 0.253 = 25.3%</div>
+                <div class="ii-trap"><b>Two levers cut &#963;&#8338; here:</b> (1) lower leverage (M 8&#8594;5) and (2) lower asset volatility (&#963;&#8336; 7&#8594;5%). Both reduce equity-capital volatility 54.6% &#8594; 25.3%. Don't forget to square M and (M&#8722;1), and keep the cross term NEGATIVE.</div>
+              </div>
+            </div>
+
+            <!-- VOL STRATEGIES FIG 10.7 -->
+            <div id="ii106-strat" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Figure 10.7 — strategies for changing &#963;&#8338;</div>
+                <table class="ii-tbl">
+                  <tr><th>Strategy</th><th>Impact on factor</th><th>&#963;&#8338;</th><th>Why</th></tr>
+                  <tr><td>Hold diversified FI</td><td>Lowers &#963;&#8336;</td><td class="ii-green">Falls</td><td>Diversified FI has lower SD than riskier classes</td></tr>
+                  <tr><td>Hold high-quality FI</td><td>Lowers &#963;&#8336;</td><td class="ii-green">Falls</td><td>Lower chance of significant loss in asset value</td></tr>
+                  <tr><td>Match A/L durations + borrower/claimant options</td><td>Increases &#961;&#8336;&#8343;</td><td class="ii-green">Falls</td><td>Regulators penalize high A/L mismatch</td></tr>
+                  <tr><td><b class="ii-red">Hold common stock</b></td><td>Increases &#963;&#8336;; lowers &#961;&#8336;&#8343;</td><td class="ii-red">Rises</td><td>Most regulators require ~100% reserves vs common stock</td></tr>
+                  <tr><td>Derivatives transparency &amp; collateralization</td><td>Lowers &#963;&#8336; &amp; &#963;&#8343;; increases &#961;&#8336;&#8343;</td><td class="ii-green">Falls</td><td>More protection vs counterparty default &#8594; fewer unexpected losses</td></tr>
+                  <tr><td>Hold more liquid portfolio investments</td><td>Lowers &#963;&#8336;</td><td class="ii-green">Falls</td><td>&#8212;</td></tr>
+                  <tr><td>Surrender penalties (insurance)</td><td>Lowers &#963;&#8343;</td><td class="ii-green">Falls</td><td>Cushion losses when policyholders cash in after rates rise</td></tr>
+                  <tr><td>Prepayment penalties on debt</td><td>Increases &#961;&#8336;&#8343;</td><td class="ii-green">Falls</td><td>Prepays happen in LOW-rate env; penalties offset rising liabilities in FALLING-rate env</td></tr>
+                  <tr><td><b class="ii-red">Catastrophic insurance risk</b></td><td>Increases &#963;&#8343;</td><td class="ii-red">Rises</td><td>Large unpredictable losses &#8594; regulators demand higher reserves, liquid assets, robust reinsurance</td></tr>
+                  <tr><td>Predictability of underwriting losses</td><td>Decreases &#963;&#8343;</td><td class="ii-green">Falls</td><td>Total insurance liabilities less uncertain</td></tr>
+                  <tr><td>Diversifying insurance business</td><td>Decreases &#963;&#8343;</td><td class="ii-green">Falls</td><td>Total insurance liabilities less uncertain</td></tr>
+                  <tr><td>Variable annuities</td><td>Increases &#961;&#8336;&#8343;</td><td class="ii-green">Falls</td><td>Asset gains/losses passed through to policyholders</td></tr>
+                </table>
+                <div class="ii-trap"><b>Only TWO strategies RAISE &#963;&#8338;:</b> holding <b class="ii-red">common stock</b> (&#8593;&#963;&#8336;, &#8595;&#961;) and <b class="ii-red">catastrophic insurance risk</b> (&#8593;&#963;&#8343;). Everything else lowers &#963;&#8338;. Memory: anything that lowers &#963;&#8336;/&#963;&#8343; or raises &#961;&#8336;&#8343; (better A/L matching) cuts equity volatility.</div>
+                <div class="ii-info"><b>Direction map:</b> &#8595;&#963;&#8336; &#8594; falls &#183; &#8595;&#963;&#8343; &#8594; falls &#183; &#8593;&#961;&#8336;&#8343; &#8594; falls (assets &amp; liabilities move together = natural hedge) &#183; &#8593;&#963;&#8336; or &#8593;&#963;&#8343; &#8594; rises &#183; &#8595;&#961;&#8336;&#8343; &#8594; rises.</div>
+              </div>
+            </div>
+
+            <!-- AA FOR BANKS/INSURERS -- SJT CASE -->
+            <div id="ii106-aa" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Asset allocation for banks &amp; insurers</div>
+                <div class="ii-rule">Optimize the <b class="ii-main-c">investment portfolio</b> + the business liabilities <b>simultaneously</b>, within external economic conditions + regulatory reserve requirements; stay conscious of the drivers of shareholder-equity volatility &amp; optimal leverage.</div>
+                <div class="ii-info"><b>Exam focus (Prof note):</b> usually a basic grasp of <b class="ii-main-c">duration, credit risk, liquidity</b> of fixed income &#8212; and the impact of changing these on <b>earnings, volatility of shareholder capital, and regulatory reserves</b>.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">SJT Bank case — switching to safer investments</div>
+                <div class="ii-body"><b>ALMCo findings:</b> (1) corporate spreads below historical norms, expected to <b>widen</b>; (2) loan-book liquidity expected to fall, depositor withdrawals larger &amp; less predictable. <b>Plan:</b> switch HY corporate <b>floating-rate</b> &#8594; IG government <b>fixed-rate</b>; enter a plain-vanilla <b class="ii-main-c">pay-fixed / receive-floating</b> swap.</div>
+                <table class="ii-tbl">
+                  <tr><th>Q</th><th>Answer</th></tr>
+                  <tr><td><b class="ii-main-c">1. Addresses findings?</b></td><td>Widening spreads &#8594; HY corporate prices fall more than IG govt &#8594; switch <b>lowers exposure to widening credit spreads</b>. IG govvies more liquid than HY &#8594; <b>improves portfolio liquidity</b>, offsetting the business-liquidity deterioration.</td></tr>
+                  <tr><td><b class="ii-main-c">2. Regulatory risk-based capital?</b></td><td><b class="ii-green">Falls.</b> IG govt = lower credit risk &#8594; lower risk weighting than HY &#8594; lower risk-weighted assets &#8594; regulator requires <b>less equity capital</b>.</td></tr>
+                  <tr><td><b class="ii-main-c">3. A/L duration mismatch?</b></td><td>Floating&#8594;fixed <b>raises asset duration</b>. Pay-fixed/receive-floating swap = <b class="ii-main-c">synthetic liability</b> that <b>raises liability duration</b> (fixed leg paid has higher duration than floating leg received). If tailored, the two offset &#8594; <b class="ii-green">mismatch unchanged</b>.</td></tr>
+                  <tr><td><b class="ii-main-c">4. Earnings &amp; volatility?</b></td><td>Govvies yield less (no credit spread) &#8594; <b class="ii-red">earnings fall</b>. More-liquid IG govt has lower volatility &#8594; <b class="ii-green">lower volatility of shareholder equity</b>.</td></tr>
+                </table>
+                <div class="ii-trap"><b>Swap-duration trap:</b> pay-fixed/receive-floating ADDS duration on the LIABILITY side (you owe the high-duration fixed leg). It offsets the asset-duration rise from floating&#8594;fixed. Don't treat the swap as adding asset duration.</div>
+              </div>
+            </div>
+
+            <!-- QUIZ 10.5/10.6 -->
+            <div id="ii106-quiz" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Quiz 10.5/10.6 — Q1</div>
+                <div class="ii-body">Capital requirements for banks &amp; insurance companies are typically set with reference to:</div>
+                <div class="ii-body">A. statutory reporting &nbsp; B. true economic reporting &nbsp; C. standard financial reporting</div>
+                <button class="ii-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ii-q1051');e.style.display=e.style.display==='none'?'block':'none';">Reveal answer</button>
+                <div id="ii-q1051" style="display:none;">
+                  <div class="ii-rule"><b class="ii-green">A &#8212; statutory reporting.</b> Regulators set capital requirements using <b>statutory accounting</b> (conservative adjustments). Standard financial reporting (GAAP/IFRS) is for shareholders; true economic uses market value.</div>
+                </div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Quiz 10.5/10.6 — Q2 (SAJ excerpt)</div>
+                <div class="ii-body">SAJ splits its <b>general account</b> into a reserve portfolio (provide liquidity to pay claims) and a surplus portfolio (stated objective: "hedge interest rate mismatches between the reserve portfolio and the liabilities"). The excerpt is best described as:</div>
+                <div class="ii-body">A. correct &nbsp; B. incorrect &#8212; it's the SEPARATE account that splits, not the general &nbsp; C. incorrect re the surplus-portfolio objective</div>
+                <button class="ii-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ii-q1052');e.style.display=e.style.display==='none'?'block':'none';">Reveal answer</button>
+                <div id="ii-q1052" style="display:none;">
+                  <div class="ii-rule"><b class="ii-green">C.</b> The <b>general</b> account IS the one split into reserve + surplus (so B is wrong). Reserve = conservative liquidity for claims (correct). But the <b class="ii-red">surplus portfolio</b> objective is wrong: it should be run to take <b>higher risk for higher returns</b> to grow surplus over the long term &#8212; not merely to hedge IR mismatches.</div>
+                </div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Quiz 10.5/10.6 — Q3 (&#963;&#8338; calc)</div>
+                <div class="ii-body">Bank equity-capital ratio 20%. &#963;&#8336; = 7%, &#963;&#8343; = 5%, &#961;&#8336;&#8343; = 0.5. Volatility of shareholder capital is closest to:</div>
+                <div class="ii-body">A. 9.3% &nbsp; B. 16.3% &nbsp; C. 30.4%</div>
+                <button class="ii-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ii-q1053');e.style.display=e.style.display==='none'?'block':'none';">Reveal answer</button>
+                <div id="ii-q1053" style="display:none;">
+                  <div class="ii-rule"><b class="ii-green">C &#8212; 30.4%.</b> E/A 20% &#8594; M = 1/0.2 = 5.</div>
+                  <div class="ii-fl">&#963;&#8338;&#178; = (5&#178; &#215; 0.07&#178;) + (4&#178; &#215; 0.05&#178;) &#8722; (2 &#215; 5 &#215; 4 &#215; 0.07 &#215; 0.05 &#215; 0.5)
+   = 0.1225 + 0.04 &#8722; 0.07 = 0.0925
+&#963;&#8338; = &#8730;0.0925 = 0.304 = 30.4%</div>
+                  <div class="ii-trap"><b>Trap:</b> must apply weights <b>M</b> (=5) on assets and <b>M&#8722;1</b> (=4) on liabilities, square them, and SUBTRACT the covariance term. Forgetting leverage or flipping the sign gives the distractors.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            function iiMod(ev,id){
+              var w=document.getElementById('iiWidget');
+              w.querySelectorAll('.ii-modpanel').forEach(function(p){p.classList.remove('active')});
+              w.querySelectorAll('.ii-modtabs > .ii-modtab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function iiTop(ev,id){
+              var mp=ev.currentTarget.closest('.ii-modpanel');
+              mp.querySelectorAll(':scope > .ii-toppanel').forEach(function(p){p.classList.remove('active')});
+              mp.querySelectorAll(':scope > .ii-toptabs > .ii-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function iiTab(ev,id){
+              var p=ev.currentTarget.closest('.ii-toppanel');
+              p.querySelectorAll(':scope > .ii-panel').forEach(function(x){x.classList.remove('active')});
+              p.querySelectorAll(':scope > .ii-tabs > .ii-tab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function iiInit(){ try{ if(typeof iiCuCalc==="function") iiCuCalc(); if(typeof iiBsCalc==="function") iiBsCalc(); }catch(e){} }
+
+            function iiBsCalc(){
+              function g(id){var el=document.getElementById(id);return el?parseFloat(el.value):NaN;}
+              function set(id,txt){var el=document.getElementById(id);if(el)el.textContent=txt;}
+              function r(x,n){var p=Math.pow(10,n);return (Math.round(x*p)/p).toFixed(n);}
+              var ea=g('ii-bs-ea');
+              if(isNaN(ea)||ea===0){set('ii-bs-mout','Enter a non-zero Equity/Assets %.');return;}
+              var M=1/(ea/100);
+              set('ii-bs-mout','Leverage M = 1 / '+(ea/100)+' = '+r(M,2)+'x   (M-1 = '+r(M-1,2)+')');
+
+              // %dE
+              var dA=g('ii-bs-da'), dL=g('ii-bs-dl');
+              if(!isNaN(dA)&&!isNaN(dL)){
+                var dE=(dA*M)-(dL*(M-1));
+                set('ii-bs-eout','%\u0394E = (%\u0394A \u00d7 M) \u2212 (%\u0394L \u00d7 (M\u22121))\n     = ('+dA+' \u00d7 '+r(M,2)+') \u2212 ('+dL+' \u00d7 '+r(M-1,2)+') = '+r(dE,2)+'%');
+              }
+              // Duration
+              var Da=g('ii-bs-dura'), Dl=g('ii-bs-durl'), diy=g('ii-bs-diy'), bp=g('ii-bs-bp');
+              if(!isNaN(Da)&&!isNaN(Dl)&&!isNaN(diy)){
+                var DE=(Da*M)-(Dl*(M-1)*diy);
+                var txt='D_E = (D_A \u00d7 M) \u2212 (D_L \u00d7 (M\u22121) \u00d7 \u0394i/\u0394y)\n    = ('+Da+' \u00d7 '+r(M,2)+') \u2212 ('+Dl+' \u00d7 '+r(M-1,2)+' \u00d7 '+diy+') = '+r(DE,2);
+                if(!isNaN(bp)){
+                  var impact=-(bp/100)*DE; // yield change bp; price moves opposite to yield
+                  txt+='\nYield move '+bp+'bp \u2192 \u0394equity \u2248 \u2212('+bp+'/100) \u00d7 '+r(DE,2)+' = '+r(impact,2)+'%';
+                }
+                set('ii-bs-dout',txt);
+              }
+              // Volatility
+              var sa=g('ii-bs-sa'), sl=g('ii-bs-sl'), rho=g('ii-bs-rho');
+              if(!isNaN(sa)&&!isNaN(sl)&&!isNaN(rho)){
+                var a=sa/100, l=sl/100;
+                var varE=(M*M*a*a)+((M-1)*(M-1)*l*l)-(2*M*(M-1)*a*l*rho);
+                var sdE=varE>=0?Math.sqrt(varE):NaN;
+                set('ii-bs-vout','\u03c3_E\u00b2 = M\u00b2\u03c3_A\u00b2 + (M\u22121)\u00b2\u03c3_L\u00b2 \u2212 2M(M\u22121)\u03c3_A\u03c3_L\u03c1\n     = ('+r(M,2)+'\u00b2\u00d7'+a+'\u00b2) + ('+r(M-1,2)+'\u00b2\u00d7'+l+'\u00b2) \u2212 (2\u00d7'+r(M,2)+'\u00d7'+r(M-1,2)+'\u00d7'+a+'\u00d7'+l+'\u00d7'+rho+')\n     = '+r(varE,4)+'\n\u03c3_E = \u221a'+r(varE,4)+' = '+r(sdE,3)+' = '+r(sdE*100,1)+'%');
+              }
+            }
+
+
+            function iiCuCalc(){
+              var sp=parseFloat(document.getElementById('ii-cu-sp').value)||0;
+              var cpi=parseFloat(document.getElementById('ii-cu-cpi').value)||0;
+              var prem=parseFloat(document.getElementById('ii-cu-prem').value)||0;
+              var hepi=cpi+prem/100;
+              var req=sp+hepi;
+              var cur=0.30*6+0.70*3;
+              var neu=0.25*3+0.35*6+0.20*7+0.10*8+0.10*10;
+              var out=document.getElementById('ii-cu-out');
+              if(!out)return;
+              function v(x){return (Math.round(x*100)/100).toFixed(2);}
+              out.textContent =
+                "Required nominal return = spending "+v(sp)+"% + HEPI "+v(hepi)+"% = "+v(req)+"%\n"+
+                "Current AA return = 0.30*6 + 0.70*3 = "+v(cur)+"%  -> "+(cur>=req?"MEETS":"FAILS")+"\n"+
+                "New SAA return    = 0.25*3 + 0.35*6 + 0.20*7 + 0.10*8 + 0.10*10 = "+v(neu)+"%  -> "+(neu>=req?"MEETS":"FAILS");
+            }
+
+          </script>
+        </div>
+
         <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
           <style>
             #sfWidget { --sf-main:#A78BFA; --sf-gold:#D4A017; --sf-green:#3DD68C; --sf-red:#FF7B72; --sf-orange:#F0A04B; --sf-blue:#79C0FF; --sf-purple:#BC8CFF; }
@@ -23892,7 +25084,7 @@ const DEFAULT_DECK = {
     { name:"IPS",                subtopics:["Individual","Institutional"] },
     { name:"Asset Allocation",   subtopics:[] },
     { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Currency Management"] },
-    { name:"Portfolio Construction", subtopics:["Overview of Equity Portfolio Management","Overview Of Fixed-Income Portfolio Management","Asset Allocation to Alternative Investments","Active Mgmt","Factor Models","Rebalancing","Portfolio Risk","An Overview of Private Wealth Management"] },
+    { name:"Portfolio Construction", subtopics:["Overview of Equity Portfolio Management","Overview Of Fixed-Income Portfolio Management","Asset Allocation to Alternative Investments","Active Mgmt","Factor Models","Rebalancing","Portfolio Risk","An Overview of Private Wealth Management","Portfolio Management for Institutional Investors"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
     { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
@@ -24535,6 +25727,168 @@ const DEFAULT_DECK = {
     {id:"pwm45",topic:"Portfolio Construction",subtopic:"An Overview of Private Wealth Management",type:"command",
      q:"DuBois IPS revision — what changes when circumstances change",
      a:"Son no longer needs support → [hl]retirement lifestyle becomes the PRIMARY objective[/hl]; add $1.2M bequest each to son & museum; distribute $75k/yr inflation-adjusted.\n[hl]Domestic-equities-only[/hl] = asset-class preference + constraint → must feed into the MVO. Cash reserve $10k→$25k.\nNo change to: risk tolerance, time horizon (>15y), other preferences (keeps Chic Apparel), portfolio mgmt/responsibilities/review."},
+    {id:"ii1",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Five characteristics: institutional vs individual investors (10.a)",
+     a:"[rl]1 [hl]Scale[/hl] — larger; can access PE/RE/in-house (WIDENS universe); largest too big for small-cap/VC; smaller ones outsource[/rl][rl]2 [hl]Long-term horizon[/hl] — driven by specific liabilities[/rl][rl]3 [hl]Regulatory framework[/hl] — different rules by jurisdiction; tightened post-2007-09 GFC[/rl][rl]4 [hl]Governance framework[/hl] — formal: board + investment committee + CIO[/rl][rl]5 [hl]Principal-agent issues[/hl] — internal (IC/staff) & external (managers); classic = high fee regardless of performance[/rl]"},
+    {id:"ii2",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Scale trap: does institutional size narrow or widen the universe?",
+     a:"[hl]WIDENS[/hl] — large institutions can directly access high-minimum classes (private equity, real estate) and manage in-house.\nOnly the VERY largest lose access to tiny low-capacity assets (small-cap equity, venture capital). A blanket claim that scale NARROWS the universe is false."},
+    {id:"ii3",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Institutional IPS contents (10.b)",
+     a:"[rl]Mission & investment objectives (return + risk tolerance)[/rl][rl]Investment horizon & liabilities to be paid[/rl][rl]External constraints (legal, regulatory, tax, accounting)[/rl][rl]Asset allocation policy (weights) with ranges & benchmarks[/rl][rl]Rebalancing policy[/rl][rl]Reporting requirements[/rl]\nReview [hl]annually[/hl]; revise on material changes in circumstances/market."},
+    {id:"ii4",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Four asset-allocation models (Figure 10.1)",
+     a:"[rl][hl]Norway (SWF)[/hl] — PASSIVE, public eq/bonds 60/40, no alts, tight tracking error; low cost; no outperformance chance[/rl][rl][hl]Yale endowment[/hl] — high alts, active, EXTERNALLY managed; outperformance potential; high fees, hard for small/large[/rl][rl][hl]Canada Pension Plan[/hl] — high alts, active, INTERNALLY managed, reference portfolio benchmark; builds internal capability; expensive/hard to manage[/rl][rl][hl]Liability-driven (LDI)[/hl] — maximize SURPLUS (assets − liabilities) & manage surplus volatility; recognizes liabilities; longevity hard to hedge[/rl]"},
+    {id:"ii5",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Yale vs Canada vs Norway — the discriminator",
+     a:"Yale & Canada both = high alternatives + significant active management. The difference:\n[rl][hl]Yale[/hl] = EXTERNALLY managed[/rl][rl][hl]Canada[/hl] = INTERNALLY managed (reference portfolio benchmark)[/rl][rl][hl]Norway[/hl] = PASSIVE, 60/40, no alts → no outperformance opportunity[/rl]\nObjectives: alts + active + outsource to external → Yale. alts + active + in-house → Canada."},
+    {id:"ii6",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"DB vs DC — who bears what (Fig 10.2)",
+     a:"[rl][hl]Benefit[/hl]: DB contractual (final-salary linked), creates sponsor LIABILITY | DC depends on performance, NO sponsor liability once contributions met[/rl][rl][hl]Contributions[/hl]: DB mainly employer | DC mainly employee[/rl][rl][hl]Decisions[/hl]: DB fund/sponsor staff | DC employee picks from suite[/rl][rl][hl]Investment risk[/hl]: DB sponsor | DC beneficiary[/rl][rl][hl]Longevity[/hl]: DB pooled (sponsor bears general increase) | DC employee outliving savings[/rl]\nDB→DC shift: sponsors want lower risk + DC portable."},
+    {id:"ii7",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"formula",
+     q:"DB funded ratio",
+     a:"[hl]funded ratio = fair value of plan assets / PV of DB obligations[/hl]\nDB liabilities = PV of future benefits promised. Employees qualify only after [hl]vesting[/hl] (minimum years of service).\nUnderfunded: assets < liabilities → sponsor must make extra contributions."},
+    {id:"ii8",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"DB liability factors — increase in factor (Fig 10.3)",
+     a:"[rl][hl]INCREASES[/hl] liability: service/tenure, salary, longevity, additional/matching contributions[/rl][rl][hl]LOWERS[/hl] liability: employee turnover (fewer reach vesting), expected investment return (raises discount rate), discount rate (higher rate → lower PV)[/rl]\nRetired lives ↑ → shorter horizon → lower risk tolerance. Frozen plan = shorter horizon."},
+    {id:"ii9",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"DB risk-tolerance drivers (Fig 10.4)",
+     a:"[rl][hl]↑ tolerance[/hl]: higher funded status; stronger sponsor (low debt/high profit); smaller plan vs sponsor; LOW correlation of sponsor results & pension assets; younger/more active-lives workforce[/rl][rl][hl]↓ tolerance[/hl]: early-retirement/lump-sum provisions (shorter horizon)[/rl]\nAbility ≠ willingness: surplus plan may still pick low risk (LDI) to protect surplus."},
+    {id:"ii10",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"DB ability-to-take-risk essay: Viewpoint reflex",
+     a:"[rl][hl]↑[/hl] zero retired lives → long-duration liabilities → time to recover[/rl][rl][hl]↑[/hl] no early-retirement/lump-sum → longer, more predictable liabilities[/rl][rl][hl]↓[/hl] high debt vs industry → sponsor can't top up contributions if performance poor[/rl][rl][hl]↓[/hl] plan in deficit → underperformance threatens meeting liabilities[/rl]\nTRAP: don't cite high ROE — it's one year, during high leverage, may just be leverage."},
+    {id:"ii11",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"DB liquidity needs — higher when?",
+     a:"[rl]Higher proportion of retired lives (frozen > nonfrozen)[/rl][rl]Older workforce (shorter time to pay)[/rl][rl]Higher funded status (lower sponsor contributions → paid from assets)[/rl][rl]Participants can switch/withdraw (triggers payments)[/rl]\n[hl]Lower liquidity needs → can invest more in risky assets.[/hl]"},
+    {id:"ii12",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"DB external constraints — reg / tax / accounting",
+     a:"[rl][hl]Reg[/hl]: Europe IORP II (governance/risk/disclosure); US ERISA 1974 → created PBGC (protects terminated-plan beneficiaries); Pension Protection Act 2006 minimum funding ratios; 25-yr avg high-grade bond yield to discount[/rl][rl][hl]Tax[/hl]: often favored; lower LT cap-gains → lower turnover; double-tax treaties[/rl][rl][hl]Accounting[/hl]: US corporate → GAAP ASC 715 (funded status on B/S); US public → GASB (assets at market; liabilities blended rate)[/rl]"},
+    {id:"ii13",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"DC plan — liabilities, horizon, life-cycle options",
+     a:"Sponsor liability = required contributions only; [hl]NO liability for future benefits[/hl]. Sponsor bears liquidity risk of participant exit.\nHorizon linked to age (older = shorter). Default life-cycle/target-date options:\n[rl][hl]Participant-switching[/hl]: auto-shift member to conservative allocation as they age[/rl][rl][hl]Participant/cohort[/hl]: pool similar-retirement-date members; manage more conservatively near the date[/rl]"},
+    {id:"ii14",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"DC external constraints & tax (401k)",
+     a:"Regulators: many participants low understanding → educate + offer DIVERSIFIED default option (disengaged participants). Doesn't remove trustee fiduciary duty.\n[hl]US 401(k) = tax deferred[/hl]: pretax contributions, untaxed earnings, benefits taxed as ordinary income, [hl]+10% penalty before age 59½[/hl]. UK: first 25% of benefits tax-free.\nERISA & IORP II apply to BOTH DB and DC."},
+    {id:"ii15",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Five SWF types (IMF) & missions",
+     a:"[rl][hl]Budget stabilization[/hl] — revenues linked to natural resource/cyclical industry; insulate budget from commodity/cycle volatility[/rl][rl][hl]Development[/hl] — national socioeconomic projects (infrastructure, key industries)[/rl][rl][hl]Savings[/hl] — invest nonrenewable-asset revenues for future generations[/rl][rl][hl]Reserve[/hl] — returns on excess FX reserves; offset negative cost of carry[/rl][rl][hl]Pension reserve[/hl] — meet future govt pension liabilities[/rl]"},
+    {id:"ii16",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"SWF master matrix — horizon / liquidity / AA",
+     a:"[rl][hl]Stabilization[/hl]: SHORT horizon | HIGHEST liquidity | defensive FI+cash[/rl][rl][hl]Development[/hl]: med-long (mission) | LOW liq | mission-driven (infrastructure)[/rl][rl][hl]Savings[/hl]: LONG | LOWEST liq | high equity+alts (endowment model)[/rl][rl][hl]Reserve[/hl]: very long, no near-term | med liq (>savings) | liquid FI, lower alts[/rl][rl][hl]Pension reserve[/hl]: long | varies (accum low/decum high) | high equity+alts[/rl]"},
+    {id:"ii17",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"SWF reserve fund — negative cost of carry",
+     a:"FX reserves held by central banks are [hl]low-yielding[/hl] vs the yield on bonds the CB ISSUES to fund them → [hl]negative cost of carry[/hl].\nReserve funds invest excess reserves in [hl]riskier, higher-yielding assets[/hl] to offset this / boost returns.\nObjective: earn a return in EXCESS of the yield the govt/CB pays on bonds it issued."},
+    {id:"ii18",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"SWF objectives & external constraints",
+     a:"[rl]Stabilization: capital preservation, >inflation low-loss; [hl]avoid assets correlated with govt revenue source[/hl][/rl][rl]Development: real return > real GDP/productivity growth[/rl][rl]Savings: maintain purchasing power + ongoing budget spending[/rl][rl]Reserve: beat yield on issued bonds | Pension reserve: meet unfunded pension/social-care[/rl]\n[hl]Santiago Principles[/hl] (IFSWF) = governance best-practice. SWFs generally [hl]tax exempt[/hl] (may lose withholding credits)."},
+    {id:"ii19",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"University endowment — mission & stakeholders (10.4)",
+     a:"Funds from [hl]gifts & donations[/hl], invested to support the university's operating budget.\nMain objective = balance the university's needs TODAY vs IN THE FUTURE \u2192 [hl]intergenerational equity[/hl].\nStakeholders: current+future students; alumni/donors (often on board/IC); university employees. Harvard \u2248 $30B (2016).\n[hl]Endowment boards often have investment-pro alumni[/hl] \u2014 contrast vs weaker foundation boards."},
+    {id:"ii20",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"formula",
+     q:"Endowment spending policy formula",
+     a:"spending(t+1) = [hl]w \u00d7 [spending(t) \u00d7 (1+inflation)][/hl] + [hl](1\u2212w) \u00d7 (spending rate \u00d7 avg AUM)[/hl]\nw = weight on PRIOR year's spending.\nFirst term anchors to last year (smooth/certain); second term ties to current assets. Goal: ensure intergenerational equity while [hl]smoothing payouts[/hl] to insulate from market volatility."},
+    {id:"ii21",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Three endowment spending rules (by w)",
+     a:"[rl][hl]Constant growth (w=1)[/hl] \u2014 fixed REAL payout grown by [hl]HEPI[/hl]; most certainty; % of endowment paid fluctuates with value; often has [hl]caps & floors[/hl] (max/min % of AUM over 1 or 3 yrs)[/rl][rl][hl]Market value (w=0)[/hl] \u2014 spending rate (4\u20136%) \u00d7 3-to-5-yr moving avg of assets; [hl]PROCYCLICAL[/hl][/rl][rl][hl]Hybrid (0<w<1)[/hl] \u2014 weighted avg of the two[/rl]\nTrap: w=1 = constant growth (smooth); w=0 = market value (procyclical). Grows by HEPI, not CPI."},
+    {id:"ii22",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Endowment other liability factors \u2192 risk tolerance",
+     a:"[rl][hl]Fundraising from donors[/hl]: gifts in \u2192 NET spending \u2248 [hl]2\u20134%[/hl] (below the 4\u20136% applied) \u2192 supports higher risk tolerance[/rl][rl][hl]Reliance of university on spending[/hl]: bigger share of operating budget \u2192 [hl]LOWER[/hl] risk tolerance[/rl][rl][hl]Capability to issue debt[/hl]: debt access \u2192 [hl]HIGHER[/hl] risk tolerance (borrow to meet spending in bad years)[/rl]"},
+    {id:"ii23",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Endowment horizon, liquidity & external constraints",
+     a:"Horizon = [hl]PERPETUAL[/hl] (intergenerational equity + unlimited university life).\nLiquidity = very low (net spending 2\u20134%) \u2192 [hl]HIGH risk tolerance[/hl], absorbs short-term volatility.\nConstraints: [hl]total-return basis[/hl] + MPT diversification; fiduciary duty of care; US [hl]UPMIFA[/hl] (flexibility + enforces MPT), UK [hl]Trustee Act 2000[/hl] (endowments = trusts).\nTax: [hl]tax-exempt[/hl] on returns; payouts untaxed; donors deduct gifts."},
+    {id:"ii24",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Endowment investment objectives & herding trap",
+     a:"Primary: preserve purchasing power in perpetuity + fund spending \u2192 target [hl]real return \u2248 5%[/hl] (after HEPI, 3-to-5-yr); vol limit [hl]10\u201315%[/hl].\nSecondary: beat passive benchmark. Tertiary: beat peer group.\n[hl]Peer-group risk[/hl]: dislocates decisions from the mission + causes [hl]herding[/hl] into similar investments.\nGFC lesson: model [hl]liquidity risk[/hl]; some use a [hl]liquidity risk band[/hl] (upper bound on illiquid + uncalled commitments)."},
+    {id:"ii25",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Capital University \u2014 required return & AA accept/reject",
+     a:"Required nominal = spending [hl]4%[/hl] + HEPI [hl]2%[/hl] (CPI 1% + 100bp) = [hl]6%[/hl]; vol \u2264 15%.\nCurrent AA (30% US eq @6, 70% FI @3) = 0.3\u00d76 + 0.7\u00d73 = [hl]3.9%[/hl] \u2192 FAILS.\nNew SAA (25 FI@3, 35 US@6, 20 Intl@7, 10 RE@8, 10 PE@10) = [hl]6.05%[/hl] \u2192 MEETS.\nAccept on return alone. Inappropriate factor: [hl]small office, no alts experience[/hl] for PE/real-asset due diligence; also must still pass the 15% vol limit."},
+    {id:"ii26",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Endowment real-return target trap (HEPI vs CPI)",
+     a:"Total real rate target = spending rate + [hl]HEPI[/hl] (its OWN cost inflation), NOT CPI.\nExample: spending 5%, CPI 3%, HEPI 2.5% \u2192 target = 5% + 2.5% = [hl]7.5%[/hl].\n[hl]Trap[/hl]: 5%+CPI 3% = 8% is WRONG (uses general CPI). 5% alone ignores preserving purchasing power.\nReflex: an endowment maintains real value against HEPI."},
+    {id:"ii27",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Endowment vs foundation \u2014 AA (endowment model)",
+     a:"[rl]Large US ENDOWMENTS \u2192 [hl]endowment (Yale) model[/hl]: majority (>50%) to alternatives (rising 2 decades)[/rl][rl]Large US FOUNDATIONS \u2192 \u2248 [hl]half[/hl] to alternatives[/rl][rl]SMALLER (both) \u2192 less alts, more domestic equities & FI; [hl]home bias[/hl] \u2192 US equities overweighted[/rl]"},
+    {id:"ii28",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Private foundation \u2014 mission, types & stakeholders",
+     a:"Nonprofit making [hl]grants[/hl] to charitable causes. Focus = PRIVATE (individual/family, e.g. [hl]Gates[/hl]). Others: community, operating, corporate.\nObjective = maintain purchasing power + fund grant-making \u2192 [hl]same as an endowment[/hl].\nStakeholders: founding family, donors, recipients, community, govt (tax).\n[hl]Board trap[/hl]: foundation boards LESS investment-experienced than endowment alumni \u2192 less oversight / more delegation \u2192 weaker decisions in alts.\n[hl]Mission-related (impact) investing[/hl] \u2014 challenge = keeping returns sufficient."},
+    {id:"ii29",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Private foundation \u2014 horizon, payout, liquidity, tax",
+     a:"Horizon = perpetual; trend to [hl]limited-life[/hl] (spend down by founder's death \u2192 shorter).\nUS payout: [hl]minimum 5% of assets[/hl] (12-mo trailing) + expenses; [hl]flow-through[/hl] = spend donations in year received.\nReliance: [hl]almost exclusively[/hl] on portfolio (no other revenue) \u2192 LOWER risk tolerance than endowments.\nLiquidity for: spending + [hl]capital calls[/hl] (PE/LP) + [hl]margin calls[/hl] (derivatives).\nTax: exempt IF meets payout; [hl]30%[/hl] on UNDISTRIBUTED income (failure); [hl]2%[/hl] on NET investment income."},
+    {id:"ii30",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Endowment vs foundation \u2014 the discriminators",
+     a:"Same: objective (purchasing power + fund spending), perpetual horizon, vol 10\u201315%.\nFoundation differs: [hl]legal 5% min payout[/hl] + flow-through; [hl]no backup revenue[/hl] (relied on exclusively); [hl]higher liquidity[/hl] (capital+margin calls); [hl]weaker board[/hl]; conditional tax (30%/2%).\nNet \u2192 foundation has [hl]LOWER risk tolerance & higher liquidity needs[/hl] than an endowment, despite the same long-horizon beat-inflation mandate."},
+    {id:"ii31",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Banks & insurers \u2014 what sets them apart (10.5)",
+     a:"Both = [hl]financial intermediaries run FOR PROFIT[/hl] (unlike other institutions in the reading).\nWe advise on the [hl]investment portfolio[/hl], NOT the core banking/insurance business \u2014 but the two are interlinked.\nBank primary function = [hl]take deposits from savers + make loans to borrowers[/hl]. Other: safeguard assets, securities/derivatives transactions, invest in securities, advise."},
+    {id:"ii32",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Bank balance sheet \u2014 deposits vs loans",
+     a:"[hl]Deposits = most of LIABILITIES[/hl]; [hl]loans (mortgage + commercial) = most of ASSETS[/hl].\nDepositors expect asset protection. Retail borrowers finance homes; commercial borrowers fund operations.\nShareholders (most large banks listed) = key external, want profit max. Other external: creditors, rating agencies, regulators, communities. Internal: employees/managers/directors."},
+    {id:"ii33",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Bank deposits & investment horizon",
+     a:"[rl][hl]Demand deposits[/hl] \u2014 withdraw WITHOUT notice \u2192 short-term in duration[/rl][rl][hl]Time/term deposits[/hl] \u2014 require ADVANCE notice[/rl]\nOther liabilities: short-term wholesale funding, long-term debt, trading/securities payables, repo finance payables.\nAssets = illiquid long-term mortgage & commercial loans.\nHorizon = driven by the [hl]difference between[/hl] long illiquid assets & short liquid liabilities. Bank is perpetual, but its [hl]investment portfolio is run short-to-medium term[/hl]."},
+    {id:"ii34",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Bank liquidity \u2014 LCR, NSFR, retail vs commercial",
+     a:"Deposits = short-duration + may need liquidity in stress \u2192 liquidity management is key.\n[rl][hl]LCR[/hl] = liquid assets to cover near-term cash outflows[/rl][rl][hl]NSFR[/hl] = adequate capital from STABLE sources[/rl]\nEffect: portfolios more liquid, less wholesale interbank reliance.\n[hl]Retail banks have BETTER liquidity than commercial[/hl] \u2014 retail uses cheap, stable deposits; commercial uses wholesale funding more."},
+    {id:"ii35",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Bank external constraints & SIFI rules",
+     a:"Systemic-failure risk \u2192 regulators focus on [hl]capital adequacy, liquidity, leverage[/hl]; banks must absorb losses themselves (not customers/creditors/taxpayers) via diversification, [hl]quality-based reserves[/hl], stable funding, LCR/NSFR.\nQuality-based: riskier assets (IG\u2192HY) \u2192 higher RWA \u2192 [hl]higher required reserves[/hl].\nSIFI rules: \u2191capital; [hl]limit dividends/buybacks (payouts INCREASE leverage)[/hl]; restrict subordinated-debt/preferred claims (bear more risk); restrict derivatives/prop trading/off-B/S."},
+    {id:"ii36",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"SIFI dividend/buyback trap \u2014 leverage direction",
+     a:"Dividends & share buybacks [hl]effectively INCREASE leverage[/hl] (cash leaves, equity cushion shrinks).\nSo regulators [hl]LIMIT[/hl] them on SIFIs to retain capital and [hl]reduce[/hl] leverage.\nTrap: don't say limiting payouts increases leverage \u2014 it's the opposite."},
+    {id:"ii37",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Three accounting systems (banks & insurers)",
+     a:"[rl][hl]Standard financial reporting[/hl] (GAAP/IFRS) \u2014 to shareholders; accruals \u2192 [hl]SMOOTHEST[/hl] income[/rl][rl][hl]Statutory[/hl] \u2014 used by regulators; CONSERVATIVE (remove intangibles, accelerate expenses, recognize reserves vs losses/guarantees)[/rl][rl][hl]True economic[/hl] \u2014 market value all assets & liabilities \u2192 [hl]MOST VOLATILE[/hl] income[/rl]\nBoth banks & insurers are [hl]fully taxable[/hl] \u2192 after-tax returns."},
+    {id:"ii38",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Bank investment objective & ALMCo",
+     a:"Primary = manage liquidity + reduce [hl]risk mismatches[/hl] between the bank's [hl]NONINVESTMENT[/hl] (core-business) assets & liabilities.\n[hl]ALMCo[/hl] (asset-liability management committee): sets IPS, monitors performance, sets risk limits (market/credit/liquidity/solvency), can require changes on BOTH B/S sides; sets benchmarks, reports to mgmt & board.\nTrap: matched against noninvestment assets/liabilities \u2014 the portfolio is the tool."},
+    {id:"ii39",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Insurer types & general vs separate account",
+     a:"[rl][hl]Life[/hl]: whole/term (fixed payments), variable life (payouts linked to chosen funds), annuities, health, universal life (flexible premiums/payouts)[/rl][rl][hl]P&C[/hl]: property/liability, surety, commercial, home, marine, legal[/rl]\nListed \u2192 shareholders (max capital + honor policyholders); mutual \u2192 owned by policyholders (surplus or dividends/premium cuts).\n[hl]General account[/hl] (trad life incl. universal + FIXED annuity) \u2192 [hl]INSURER bears risk[/hl]. [hl]Separate account[/hl] (VARIABLE life & annuities) \u2192 [hl]POLICYHOLDER bears risk[/hl]."},
+    {id:"ii40",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Insurer liabilities/horizon \u2014 life vs P&C + underwriting cycle",
+     a:"[rl][hl]Life[/hl]: LONG-duration liabilities \u2192 historic horizons [hl]20\u201340 years[/hl][/rl][rl][hl]P&C[/hl]: SHORTER duration + [hl]higher uncertainty[/hl] (unlikely, unpredictable, high-payout events e.g. natural disasters)[/rl]\nLike banks: institution perpetual, but [hl]nature & timing of claims drive the investment horizon[/hl].\n[hl]Underwriting cycle[/hl]: intense competition / low underwriting profit \u2192 bear less underwriting risk \u2192 may [hl]increase appetite for investment risk[/hl]."},
+    {id:"ii41",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Insurer liquidity, lapses & reserve/surplus portfolios",
+     a:"Manage [hl]internal[/hl] liquidity (cash from ops & investing) + [hl]external[/hl] liquidity (borrow in debt markets).\n[hl]\u2191Interest rates \u2192 \u2191lapses/surrenders[/hl]: holders of low-yield contracts cash in to reinvest higher \u2192 \u2191 insurer net cash outflows. P&C \u2192 ample high-grade short-term FI.\nGeneral account split: [hl]reserve portfolio[/hl] = CONSERVATIVE (meet liabilities); [hl]surplus portfolio[/hl] = higher returns (liquidity risk + alternatives)."},
+    {id:"ii42",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Insurer constraints & objectives + bank-vs-insurer recap",
+     a:"Can be [hl]SIFIs[/hl]. US = [hl]NAIC[/hl] (state regulators, accounting/reporting); Europe = [hl]Solvency II[/hl]. Same 3 accounting systems; [hl]fully taxable[/hl].\nPrimary objective (like banks) = manage liquidity + reduce risk mismatch vs assets/liabilities; consider business + external economic conditions.\nOversight: [hl]board committee[/hl] (banks use ALMCo) \u2014 reports to regulators & external stakeholders."},
+    {id:"ii43",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"formula",
+     q:"%\u0394E \u2014 sensitivity of equity value (10.h)",
+     a:"Overall objective (banks & insurers) = [hl]maximize market value of equity capital[/hl] with high assurance claims can be met.\n[hl]%\u0394E = %\u0394A\u00d7M \u2212 %\u0394L\u00d7(M\u22121)[/hl]\nM = leverage multiplier = A/E. Term 1 = asset returns magnified by leverage; term 2 NEGATIVE (\u2191liabilities cut equity); M\u22121 = liabilities relative to equity.\nExample: E/A 5% \u2192 M=20; %\u0394A 0, %\u0394L +1.5% \u2192 (0\u00d720) \u2212 (1.5\u00d719) = [hl]\u221228.5%[/hl]."},
+    {id:"ii44",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"M vs M\u22121 trap (balance-sheet equations)",
+     a:"Assets weighted by [hl]M[/hl]; liabilities weighted by [hl]M\u22121[/hl] (the liabilities-to-equity size).\nM = A/E. If E/A = 5% \u2192 M = 1/0.05 = 20, so M\u22121 = 19.\nApplies to ALL three equations (%\u0394E, D_E, \u03c3_E). Using M instead of M\u22121 on the liability side overstates the liability effect."},
+    {id:"ii45",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"formula",
+     q:"Modified duration of equity capital D_E",
+     a:"[hl]D_E = D_A\u00d7M \u2212 D_L\u00d7(M\u22121)\u00d7(\u0394i/\u0394y)[/hl]\nD_A/D_L = mod duration of assets/liabilities; \u0394i/\u0394y = est. change in LIABILITY yield i per unit change in ASSET yield y.\nWellLife: E/A 12.5% \u2192 M=8; D_A 3, D_L 2, \u0394i/\u0394y 0.70 \u2192 (3\u00d78)\u2212(2\u00d77\u00d70.70) = 24\u22129.8 = [hl]14.2[/hl].\n25bp FALL in asset yield \u2192 +0.25\u00d714.2 = [hl]+3.55%[/hl] equity."},
+    {id:"ii46",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Leverage & equity duration direction",
+     a:"Higher leverage (M) \u2192 [hl]higher D_E[/hl] (leverage magnifies equity duration).\nWellLife: E/A 12.5% (M=8) \u2192 D_E 14.2. Lower E/A to 10% (M=10, MORE leverage) \u2192 (3\u00d710)\u2212(2\u00d79\u00d70.70) = 30\u221212.6 = [hl]17.4[/hl].\nTrap: a SMALLER equity ratio = MORE leverage. Track M, not E/A."},
+    {id:"ii47",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"formula",
+     q:"Volatility of equity capital \u03c3_E",
+     a:"[hl]\u03c3_E\u00b2 = M\u00b2\u03c3_A\u00b2 + (M\u22121)\u00b2\u03c3_L\u00b2 \u2212 2M(M\u22121)\u03c3_A\u03c3_L\u03c1_AL[/hl]\nIt's the [hl]two-asset variance formula[/hl]: weight M on assets, weight \u2212(M\u22121) on liabilities (the minus drives the negative cross term).\nWellLife: M=8, \u03c3_A 7%, \u03c3_L 4%, \u03c1 0.3 \u2192 (64\u00d70.07\u00b2)+(49\u00d70.04\u00b2)\u2212(2\u00d78\u00d77\u00d70.07\u00d70.04\u00d70.3) = 0.298 \u2192 \u221a = [hl]54.6%[/hl]."},
+    {id:"ii48",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"\u03c3_E example \u2014 two levers cut volatility",
+     a:"New regs: E/A 12.5\u219220% (M 8\u21925) AND \u03c3_A 7\u21925% \u2192 \u03c3_E\u00b2 = (25\u00d70.05\u00b2)+(16\u00d70.04\u00b2)\u2212(2\u00d75\u00d74\u00d70.05\u00d70.04\u00d70.3) = 0.0641 \u2192 \u221a = [hl]25.3%[/hl] (down from 54.6%).\nTwo levers: [hl]lower leverage[/hl] (M down) + [hl]lower asset vol[/hl] (\u03c3_A down). Always square M and (M\u22121), keep the cross term NEGATIVE."},
+    {id:"ii49",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"framework",
+     q:"Fig 10.7 \u2014 strategies that LOWER \u03c3_E",
+     a:"Anything that [hl]lowers \u03c3_A, lowers \u03c3_L, or raises \u03c1_AL[/hl] cuts \u03c3_E:\n[rl]Diversified FI / high-quality FI / more liquid investments \u2192 \u2193\u03c3_A[/rl][rl]Match A/L durations & borrower/claimant options \u2192 \u2191\u03c1_AL (regulators penalize mismatch)[/rl][rl]Derivatives transparency & collateralization \u2192 \u2193\u03c3_A,\u2193\u03c3_L,\u2191\u03c1[/rl][rl]Surrender penalties \u2192 \u2193\u03c3_L (cushion cash-ins after rates rise)[/rl][rl]Prepayment penalties \u2192 \u2191\u03c1_AL (offset rising liabilities in falling-rate env)[/rl][rl]Predictability / diversifying insurance \u2192 \u2193\u03c3_L[/rl][rl]Variable annuities \u2192 \u2191\u03c1_AL (gains/losses passed to policyholders)[/rl]"},
+    {id:"ii50",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Fig 10.7 \u2014 the only two strategies that RAISE \u03c3_E",
+     a:"[rl][hl]Hold common stock[/hl] \u2192 \u2191\u03c3_A and \u2193\u03c1_AL \u2192 \u03c3_E RISES (regulators require ~100% reserves vs common stock)[/rl][rl][hl]Catastrophic insurance risk[/hl] \u2192 \u2191\u03c3_L \u2192 \u03c3_E RISES (large unpredictable losses \u2192 higher reserves, liquid assets, robust reinsurance)[/rl]\nEverything else in Fig 10.7 lowers \u03c3_E."},
+    {id:"ii51",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"SJT Bank \u2014 switch HY floating \u2192 IG govt fixed + swap",
+     a:"[rl]1. Addresses findings: \u2193 exposure to [hl]widening credit spreads[/hl] (HY falls more than IG); IG govvies more liquid \u2192 [hl]improves portfolio liquidity[/hl][/rl][rl]2. Regulatory capital [hl]FALLS[/hl] (IG = lower risk weight \u2192 lower RWA \u2192 less equity)[/rl][rl]3. Duration: floating\u2192fixed RAISES asset duration; [hl]pay-fixed/receive-floating swap = synthetic liability raising liability duration[/hl] \u2192 if tailored, offset \u2192 mismatch UNCHANGED[/rl][rl]4. Earnings [hl]FALL[/hl] (govt yield < credit-spread yield); volatility of equity [hl]LOWER[/hl] (more liquid IG)[/rl]"},
+    {id:"ii52",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Pay-fixed/receive-floating swap \u2014 duration effect",
+     a:"A [hl]pay-fixed/receive-floating[/hl] swap creates a [hl]synthetic LIABILITY[/hl] that RAISES liability duration: the fixed leg you PAY has higher duration than the floating leg you RECEIVE.\nUse case (SJT): offsets the asset-duration INCREASE from switching floating-rate \u2192 fixed-rate assets, keeping the A/L mismatch unchanged.\nTrap: the swap does NOT add asset duration \u2014 it adds liability duration."},
+    {id:"ii53",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Quiz 10.5/10.6 \u2014 capital requirements & SAJ excerpt",
+     a:"[rl]Q1: capital requirements set with reference to \u2192 [hl]statutory reporting[/hl] (regulators; conservative). Not GAAP/IFRS (shareholders) or true economic (market value)[/rl][rl]Q2 (SAJ): GENERAL account splits into reserve + surplus (so 'separate account' answer is wrong). Reserve = conservative liquidity (correct). [hl]Surplus objective is WRONG[/hl] \u2192 should take higher risk for higher returns to grow surplus, not just hedge IR mismatches \u2192 answer C[/rl]"},
+    {id:"ii54",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
+     q:"Quiz 10.5/10.6 Q3 \u2014 \u03c3_E calculation",
+     a:"E/A 20% \u2192 M = 1/0.2 = 5. \u03c3_A 7%, \u03c3_L 5%, \u03c1 0.5.\n\u03c3_E\u00b2 = (5\u00b2\u00d70.07\u00b2) + (4\u00b2\u00d70.05\u00b2) \u2212 (2\u00d75\u00d74\u00d70.07\u00d70.05\u00d70.5)\n   = 0.1225 + 0.04 \u2212 0.07 = 0.0925\n\u03c3_E = \u221a0.0925 = [hl]30.4%[/hl] (answer C).\nTrap: apply M=5 and M\u22121=4 weights, square them, SUBTRACT the covariance term."},
   ]
 };
 
@@ -25368,7 +26722,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -25395,6 +26749,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'fipmWidget' && typeof fipmInit === 'function') setTimeout(fipmInit, 50);
     if (widgetId === 'aaiWidget' && typeof aaiInit === 'function') setTimeout(aaiInit, 50);
     if (widgetId === 'pwmWidget' && typeof pwmInit === 'function') setTimeout(pwmInit, 50);
+    if (widgetId === 'iiWidget' && typeof iiInit === 'function') setTimeout(iiInit, 50);
   }
 }
 
@@ -25417,6 +26772,7 @@ function openNote(key, topic, subtopic) {
     'Portfolio Construction||Overview Of Fixed-Income Portfolio Management': 'fipmWidget',
     'Portfolio Construction||Asset Allocation to Alternative Investments': 'aaiWidget',
     'Portfolio Construction||An Overview of Private Wealth Management': 'pwmWidget',
+    'Portfolio Construction||Portfolio Management for Institutional Investors': 'iiWidget',
     'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
     'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
     'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
@@ -25428,7 +26784,7 @@ function openNote(key, topic, subtopic) {
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
