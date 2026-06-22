@@ -22497,6 +22497,689 @@ Portfolio = 5.70%  <  6%   -> NOT appropriate</div>
           </script>
         </div>
 
+        <div id="tcWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #tcWidget { --tc-main:#FBBF24; --tc-green:#3FB950; --tc-red:#FF7B72; --tc-blue:#79C0FF; --tc-orange:#E0A82E; }
+            #tcWidget .tc-h { font-family:var(--serif); font-size:21px; color:var(--tc-main); font-weight:700; margin:0 0 4px; letter-spacing:.01em; }
+            #tcWidget .tc-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:16px; letter-spacing:.04em; }
+            #tcWidget .tc-modtabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
+            #tcWidget .tc-modtab { background:var(--surface2); border:1px solid var(--tc-main); color:var(--tc-main); padding:10px 18px; border-radius:8px; font-family:var(--serif); font-size:14px; font-weight:700; cursor:pointer; letter-spacing:.02em; }
+            #tcWidget .tc-modtab.active { background:var(--tc-main); color:#0D1117; }
+            #tcWidget .tc-modpanel { display:none; }
+            #tcWidget .tc-modpanel.active { display:block; }
+            #tcWidget .tc-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #tcWidget .tc-toptab { background:var(--surface2); border:1px solid rgba(251,191,36,.5); color:var(--tc-main); padding:7px 13px; border-radius:6px; font-family:var(--serif); font-size:12.5px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #tcWidget .tc-toptab.active { background:var(--tc-main); color:#0D1117; }
+            #tcWidget .tc-toppanel { display:none; }
+            #tcWidget .tc-toppanel.active { display:block; }
+            #tcWidget .tc-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #tcWidget .tc-tab.active { background:rgba(251,191,36,.14); border-color:var(--tc-main); color:var(--tc-main); }
+            #tcWidget .tc-card { background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:16px 18px; margin-bottom:14px; }
+            #tcWidget .tc-title { font-family:var(--serif); font-size:15.5px; color:var(--tc-main); font-weight:600; margin-bottom:9px; }
+            #tcWidget .tc-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:6px; }
+            #tcWidget .tc-rule { display:block; font-size:12.5px; line-height:1.5; color:#C9D1D9; padding:7px 0 7px 14px; border-left:2px solid var(--border); margin:7px 0; }
+            #tcWidget .tc-fl { background:#0B0F14; border-radius:5px; padding:12px 14px; font-family:var(--mono); font-size:11.5px; line-height:1.7; color:#C9D1D9; white-space:pre-wrap; margin:10px 0; }
+            #tcWidget .tc-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--tc-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #tcWidget .tc-info { background:rgba(121,192,255,.08); border-left:3px solid var(--tc-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #tcWidget .tc-green { color:var(--tc-green); }
+            #tcWidget .tc-red { color:var(--tc-red); }
+            #tcWidget .tc-main-c { color:var(--tc-main); }
+            #tcWidget .tc-blue { color:var(--tc-blue); }
+            #tcWidget .tc-orange { color:var(--tc-orange); }
+            #tcWidget .tc-tbl { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #tcWidget .tc-tbl th { background:#0B0F14; color:var(--tc-main); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #tcWidget .tc-tbl td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+          </style>
+
+          <div class="tc-h">Trading Costs and Electronic Markets</div>
+          <div class="tc-sub">READING 11 · Portfolio Construction</div>
+
+          <div class="tc-modtabs">
+            <button class="tc-modtab active" onclick="tcMod(event,'tcm-111')">11.1 Trading Costs</button>
+            <button class="tc-modtab" onclick="tcMod(event,'tcm-112')">11.2 Electronic Trading</button>
+            <button class="tc-modtab" onclick="tcMod(event,'tcm-113')">11.3 Characteristics</button>
+            <button class="tc-modtab" onclick="tcMod(event,'tcm-114')">11.4 Risks</button>
+            <button class="tc-modtab" onclick="tcMod(event,'tcm-quiz')">Quiz</button>
+          </div>
+
+          <!-- ════════ MODULE 11.1 Trading Costs ════════ -->
+          <div id="tcm-111" class="tc-modpanel active">
+            <div class="tc-toptabs">
+              <button class="tc-toptab active" onclick="tcTop(event,'tc111-cost')">Explicit / Implicit</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc111-dealer')">Dealer Quotes &amp; Book</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc111-eff')">Effective Spread</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc111-vwap')">VWAP</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc111-is')">Implementation Shortfall</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc111-calc')">Calculators</button>
+            </div>
+
+            <!-- EXPLICIT / IMPLICIT -->
+            <div id="tc111-cost" class="tc-toppanel active">
+              <div class="tc-card">
+                <div class="tc-title">Execution costs (LOS 11.a)</div>
+                <table class="tc-tbl">
+                  <tr><th>Type</th><th>Visibility</th><th>Examples</th></tr>
+                  <tr><td><b class="tc-main-c">Explicit</b></td><td><b class="tc-green">Observable &amp; transparent</b> ("get a receipt")</td><td>Brokerage, taxes, fees. Large buy-side: trading staff (fixed). Small traders: variable commissions.</td></tr>
+                  <tr><td><b class="tc-main-c">Implicit</b></td><td><b class="tc-red">Not readily discernible</b>, estimated vs a benchmark</td><td>Bid-ask spread, market/price impact, delay (slippage), opportunity cost</td></tr>
+                </table>
+                <div class="tc-info">Implicit costs are the focus of this reading. They're measured as the result of a trade <b>relative to a reference point (benchmark)</b>.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">The four implicit costs</div>
+                <table class="tc-tbl">
+                  <tr><th>Cost</th><th>What it is</th><th>Driver</th></tr>
+                  <tr><td><b class="tc-main-c">Bid-ask spread</b></td><td>Highest potential cost for a <b>small</b> trade</td><td>Market orders fill fast at posted bid/ask; patient traders trade between bid/ask but risk non-fill. Large trades walk down the book &#8594; higher cost.</td></tr>
+                  <tr><td><b class="tc-main-c">Market / price impact</b></td><td>Cost of <b>demanding liquidity</b> (market-moving trades)</td><td>Large buy &#8594; raise price to attract sellers; large sell &#8594; lower price to attract buyers. Breaking up reduces impact but raises delay/opportunity cost.</td></tr>
+                  <tr><td><b class="tc-main-c">Delay cost (slippage)</b></td><td>Adverse price move during the <b>lag</b> in executing a large trade</td><td>Breaking up a buy risks price rising over time; later batches fill at higher price.</td></tr>
+                  <tr><td><b class="tc-main-c">Opportunity cost</b></td><td>From <b>unfilled / failed</b> orders</td><td>Underpriced security rises; if higher price forces cancel of the unfilled part &#8594; lost profits.</td></tr>
+                </table>
+                <div class="tc-trap"><b>The core tradeoff:</b> market impact <b>vs</b> (delay + opportunity). Trade fast &#8594; high market impact. Wait patiently for a good price &#8594; the market may move out of your trading range (delay + opportunity cost). Most implicit-cost components compare <b>actual execution price vs the price when the order was triggered</b>; opportunity cost instead looks at the cost of <b>lost (unfilled) trades</b>.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Liquidity: demanding vs providing</div>
+                <table class="tc-tbl">
+                  <tr><th>Order type</th><th>Liquidity</th><th>Behavior</th></tr>
+                  <tr><td><b class="tc-main-c">Market order</b></td><td><b class="tc-red">Demands</b> liquidity</td><td>Accepts a posted bid/ask. Large ones "walk down" the limit order book, exhausting quantity at each level.</td></tr>
+                  <tr><td><b class="tc-main-c">Limit order</b></td><td><b class="tc-green">Provides</b> liquidity</td><td>Offers to trade at a posted price; risk of non-execution.</td></tr>
+                </table>
+                <div class="tc-info">Example: a buy order for 150,000 shares may hit several limit orders (at posted ask prices) until the cumulative quantity reaches 150,000.</div>
+              </div>
+            </div>
+
+            <!-- DEALER QUOTES & BOOK -->
+            <div id="tc111-dealer" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Dealer quotes &amp; the limit order book (LOS 11.b)</div>
+                <table class="tc-tbl">
+                  <tr><th>Term</th><th>Definition</th></tr>
+                  <tr><td><b class="tc-main-c">Bid / inside bid</b></td><td>Highest-posted bid price</td></tr>
+                  <tr><td><b class="tc-main-c">Best ask / inside ask</b></td><td>Lowest ask price</td></tr>
+                  <tr><td><b class="tc-main-c">Inside spread</b></td><td>Best ask &#8722; best bid</td></tr>
+                  <tr><td><b class="tc-main-c">Midquote</b></td><td>Average of the bid &amp; ask quoted by a <b>single dealer</b></td></tr>
+                  <tr><td><b class="tc-main-c">Limit order book</b></td><td>Posted bids &amp; offers with quantities, sorted best &#8594; worst</td></tr>
+                </table>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Worked example — Figure 11.1 (XYZ order book)</div>
+                <table class="tc-tbl">
+                  <tr><th>Bids</th><th>Price / Size</th><th>Asks</th><th>Price / Size</th></tr>
+                  <tr><td>P (9:31)</td><td>32.25 / 3,000</td><td>R (9:31)</td><td>32.29 / 2,000</td></tr>
+                  <tr><td>Q (9:41)</td><td>32.24 / 2,500</td><td>P (9:31)</td><td>32.31 / 3,000</td></tr>
+                  <tr><td>R (9:45)</td><td>32.23 / 3,500</td><td>Q (9:41)</td><td>32.35 / 3,500</td></tr>
+                </table>
+                <div class="tc-rule">Market buy of <b>3,000</b> at 9:31: 2,000 @ 32.29 (inside ask, R) + 1,000 @ 32.31 (next, P) &#8594; the larger order had to split, costing <b class="tc-red">$0.02 more</b> per share on the second part (price impact moving down the book).</div>
+                <div class="tc-info"><b>Standing limit order</b> = trader posts her own quote &#8594; provides liquidity &amp; trades at posted prices, but risks failure to complete. In a <b>nonexchange market</b> (no clearinghouse guarantee), a trader may choose a dealer other than the best price &#8212; <b>creditworthiness/relationships</b> matter in counterparty choice.</div>
+                <div class="tc-trap"><b>Quote-revision note:</b> Dealer P may revise his quote higher once he sees the trade, so the 32.29 inside ask can disappear. To avoid missing the 32.31, a trader may execute the entire order with Dealer P.</div>
+              </div>
+            </div>
+
+            <!-- EFFECTIVE SPREAD -->
+            <div id="tc111-eff" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Effective spread (LOS 11.b)</div>
+                <div class="tc-body">Uses the <b class="tc-main-c">midquote</b> as the benchmark.</div>
+                <div class="tc-fl">Effective spread transaction cost = (side) &#215; (transaction price &#8722; midquote)
+        side = +1 for BUY, &#8722;1 for SELL
+
+effective spread = 2 &#215; (effective spread transaction cost)</div>
+                <div class="tc-rule">At the posted bid/ask &#8594; effective spread = quoted spread. At a <b>better</b> price &#8594; <b class="tc-green">price improvement</b>, effective spread &lt; quoted spread.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Worked example — Spreads (Figure 11.1)</div>
+                <table class="tc-tbl">
+                  <tr><th>Quantity</th><th>Calc</th><th>Result</th></tr>
+                  <tr><td>Spread quoted by Dealer Q</td><td>32.35 &#8722; 32.24</td><td><b class="tc-main-c">$0.11</b></td></tr>
+                  <tr><td>Inside spread</td><td>32.29 (best ask) &#8722; 32.25 (best bid)</td><td><b class="tc-main-c">$0.04</b></td></tr>
+                  <tr><td>Midquote Dealer R</td><td>(32.23 + 32.29) / 2</td><td><b class="tc-main-c">$32.26</b></td></tr>
+                  <tr><td>Midquote Dealer P</td><td>(32.25 + 32.31) / 2</td><td><b class="tc-main-c">$32.28</b></td></tr>
+                  <tr><td>Quoted spread Dealer P</td><td>32.31 &#8722; 32.25</td><td><b class="tc-main-c">$0.06</b></td></tr>
+                  <tr><td>Effective spread (buy @ 32.29, P)</td><td>2 &#215; (+1) &#215; (32.29 &#8722; 32.28)</td><td><b class="tc-green">$0.02</b></td></tr>
+                </table>
+                <div class="tc-info">Effective spread $0.02 &lt; quoted spread $0.06 &#8594; there was <b class="tc-green">price improvement</b> on that trade.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Limitations of effective spread</div>
+                <table class="tc-tbl">
+                  <tr><th>Misses</th><th>Why</th></tr>
+                  <tr><td><b class="tc-red">Price impact</b> of split large orders</td><td>Poor indicator of trade performance when a large order is split into smaller orders</td></tr>
+                  <tr><td><b class="tc-red">Slippage / delay</b></td><td>Doesn't account for the unfilled portion, or delay from not routing to the best market; delay measured for the part unfilled by end of day</td></tr>
+                  <tr><td><b class="tc-red">Opportunity cost</b></td><td>Doesn't capture lost profit when an unfilled part is abandoned after an adverse price move (e.g. analyst values stock $12.55, price runs past it, order abandoned)</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- VWAP -->
+            <div id="tc111-vwap" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Volume-weighted average price (VWAP / interval VWAP)</div>
+                <div class="tc-body">The weighted-average price at which all trades executed during the interval between the order being placed and executed. Easy to interpret &#8212; evaluates the trade's price vs other trades in the same period.</div>
+                <div class="tc-fl">VWAP transaction cost = trade size &#215; (side) &#215; (trade VWAP &#8722; benchmark VWAP)
+        side = +1 for BUY, &#8722;1 for SELL</div>
+                <div class="tc-rule">Compare the <b class="tc-main-c">trade VWAP</b> to the <b class="tc-main-c">benchmark VWAP</b> (all market trades in the interval). If the entire order executed at one price, its VWAP = that price.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Worked example — VWAP (BNC)</div>
+                <table class="tc-tbl">
+                  <tr><th>Market trades in interval</th><th>Subject trade (buy 300)</th></tr>
+                  <tr><td>10:00 &#8212; 100 @ 12.11</td><td>100 @ 12.11</td></tr>
+                  <tr><td>11:00 &#8212; 300 @ 12.00</td><td>200 @ 12.00</td></tr>
+                  <tr><td>11:30 &#8212; 600 @ 11.75</td><td>&#8212;</td></tr>
+                </table>
+                <div class="tc-fl">Benchmark VWAP = (100/1000)&#215;12.11 + (300/1000)&#215;12.00 + (600/1000)&#215;11.75
+              = $11.86   (total volume 1,000)
+
+Trade VWAP     = (100/300)&#215;12.11 + (200/300)&#215;12.00 = $12.04
+
+VWAP txn cost  = 300 &#215; (+1) &#215; (12.04 &#8722; 11.86) = $54</div>
+                <div class="tc-info">Positive cost ($54) &#8594; the buy executed <b>above</b> the benchmark = unfavorable. A negative number would mean the trade beat the benchmark.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Limitations of VWAP transaction cost</div>
+                <table class="tc-tbl">
+                  <tr><th>Limitation</th><th>Why</th></tr>
+                  <tr><td><b class="tc-red">Useless when the trade is a big part of volume</b></td><td>Benchmark VWAP &amp; trade VWAP converge &#8594; measured cost skewed toward <b>zero</b></td></tr>
+                  <tr><td><b class="tc-red">Doesn't capture price impact</b></td><td>A lone large buy at an above-normal price makes benchmark = trade VWAP &#8594; cost = 0, even though the price was bad</td></tr>
+                </table>
+                <div class="tc-trap"><b>Bias-to-zero &#8594; popularity:</b> the skew toward zero may explain why managers like VWAP &#8212; it highlights a low transaction cost. VWAP is appropriate to evaluate execution only when the trade is a <b class="tc-green">SMALL part of overall trading volume</b>.</div>
+              </div>
+            </div>
+
+            <!-- IMPLEMENTATION SHORTFALL -->
+            <div id="tc111-is" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Implementation shortfall (LOS 11.c)</div>
+                <div class="tc-rule">Measures transaction cost as the difference between the value of the <b class="tc-main-c">actual portfolio</b> and the value of a hypothetical <b class="tc-main-c">paper portfolio</b>.</div>
+                <div class="tc-body">In the paper portfolio, the trade is <b>fully executed at no cost</b>, at the prevailing price when the order was placed &#8212; the <b class="tc-main-c">decision price = arrival price = strike price</b>, generally the <b>midquote at order placement</b>.</div>
+                <div class="tc-info"><b class="tc-green">Captures all three implicit costs</b> &#8212; price impact, slippage, and opportunity cost &#8212; so it fixes VWAP's shortfalls. Tradeoff: the computation is <b>more complex</b>.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Benchmark comparison — at a glance</div>
+                <table class="tc-tbl">
+                  <tr><th>Benchmark</th><th>Reference</th><th>Captures</th></tr>
+                  <tr><td><b class="tc-main-c">Effective spread</b></td><td>Midquote at execution</td><td>Spread / price improvement only</td></tr>
+                  <tr><td><b class="tc-main-c">VWAP</b></td><td>Interval VWAP of market trades</td><td>Relative price vs interval; <b class="tc-red">misses price impact</b>, biased to zero</td></tr>
+                  <tr><td><b class="tc-main-c">Implementation shortfall</b></td><td>Paper portfolio at arrival/decision price</td><td><b class="tc-green">All three implicit costs</b> (impact + slippage + opportunity)</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- CALCULATORS -->
+            <div id="tc111-calc" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Effective spread calculator</div>
+                <div class="tc-body">Enter the trade. Effective spread transaction cost = side &#215; (price &#8722; midquote); effective spread = 2 &#215; that.</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;">
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Side
+                    <select id="tc-es-side" onchange="tcEsCalc()" style="background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"><option value="1">Buy (+1)</option><option value="-1">Sell (&#8722;1)</option></select></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Transaction price
+                    <input id="tc-es-px" type="number" value="32.29" step="0.01" oninput="tcEsCalc()" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Best bid
+                    <input id="tc-es-bid" type="number" value="32.25" step="0.01" oninput="tcEsCalc()" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Best ask
+                    <input id="tc-es-ask" type="number" value="32.31" step="0.01" oninput="tcEsCalc()" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"></label>
+                </div>
+                <div class="tc-fl" id="tc-es-out"></div>
+                <div class="tc-info">Textbook check: buy @ 32.29 with P's quotes (bid 32.25, ask 32.31) &#8594; midquote 32.28, effective spread $0.02 &lt; quoted $0.06 = price improvement.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">VWAP transaction cost calculator</div>
+                <div class="tc-body">Enter up to 3 market trades (interval) and up to 3 fills for the subject trade. Leave a row's shares at 0 to skip it.</div>
+                <div class="tc-rule"><b class="tc-main-c">Market trades (benchmark):</b></div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0;">
+                  <input id="tc-vw-mq1" type="number" value="100" oninput="tcVwCalc()" placeholder="sh" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">@<input id="tc-vw-mp1" type="number" value="12.11" step="0.01" oninput="tcVwCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">
+                  <input id="tc-vw-mq2" type="number" value="300" oninput="tcVwCalc()" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">@<input id="tc-vw-mp2" type="number" value="12.00" step="0.01" oninput="tcVwCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">
+                  <input id="tc-vw-mq3" type="number" value="600" oninput="tcVwCalc()" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">@<input id="tc-vw-mp3" type="number" value="11.75" step="0.01" oninput="tcVwCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">
+                </div>
+                <div class="tc-rule"><b class="tc-main-c">Subject-trade fills:</b></div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0;">
+                  <input id="tc-vw-tq1" type="number" value="100" oninput="tcVwCalc()" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">@<input id="tc-vw-tp1" type="number" value="12.11" step="0.01" oninput="tcVwCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">
+                  <input id="tc-vw-tq2" type="number" value="200" oninput="tcVwCalc()" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">@<input id="tc-vw-tp2" type="number" value="12.00" step="0.01" oninput="tcVwCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">
+                  <input id="tc-vw-tq3" type="number" value="0" oninput="tcVwCalc()" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">@<input id="tc-vw-tp3" type="number" value="0" step="0.01" oninput="tcVwCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;">
+                </div>
+                <div style="margin:6px 0;">
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Side
+                    <select id="tc-vw-side" onchange="tcVwCalc()" style="background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:6px;"><option value="1">Buy (+1)</option><option value="-1">Sell (&#8722;1)</option></select></label>
+                </div>
+                <div class="tc-fl" id="tc-vw-out"></div>
+                <div class="tc-info">Textbook check (BNC): benchmark VWAP $11.86, trade VWAP $12.04, cost $54. Quiz ABC: benchmark $44.70, trade $44.68, cost &#8722;$30 (uses rounded VWAPs).</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 11.2 Electronic Trading ════════ -->
+          <div id="tcm-112" class="tc-modpanel">
+            <div class="tc-toptabs">
+              <button class="tc-toptab active" onclick="tcTop(event,'tc112-drivers')">5 Drivers</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc112-traders')">Trader Benefits &amp; Bonds</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc112-frag')">Market Fragmentation</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc112-traders2')">Electronic Traders</button>
+            </div>
+
+            <div id="tc112-drivers" class="tc-toppanel active">
+              <div class="tc-card">
+                <div class="tc-title">Factors driving electronic trading systems (LOS 11.d)</div>
+                <table class="tc-tbl">
+                  <tr><th>#</th><th>Driver</th><th>Detail</th></tr>
+                  <tr><td>1</td><td><b class="tc-main-c">Cost</b></td><td>Cheaper to operate than manual counterparts</td></tr>
+                  <tr><td>2</td><td><b class="tc-main-c">Accuracy</b></td><td>Perform exactly as programmed &#8594; precisely enforce the exchange's order precedence &amp; pricing rules</td></tr>
+                  <tr><td>3</td><td><b class="tc-main-c">Audit trails</b></td><td>Generate &amp; maintain records &#8594; investigators can examine the precise chain of events</td></tr>
+                  <tr><td>4</td><td><b class="tc-main-c">Fraud prevention</b></td><td>Keep hidden orders hidden; don't leak information inadvertently or fraudulently</td></tr>
+                  <tr><td>5</td><td><b class="tc-main-c">Continuous market</b></td><td>No breaks; operate continuously; unaffected by severe weather or events that hinder human traders</td></tr>
+                </table>
+                <div class="tc-info">Mnemonic: <b class="tc-main-c">CAAFC</b> &#8212; Cost, Accuracy, Audit trails, Fraud prevention, Continuous market.</div>
+              </div>
+            </div>
+
+            <div id="tc112-traders" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">From the trader's perspective</div>
+                <div class="tc-rule">Electronic systems can: quickly process <b>vast amounts of data</b>; exhibit <b class="tc-green">perfect discipline</b> (do exactly what programmed, no behavioral bias); maintain <b>perfect records</b>.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Bond markets remain OTC</div>
+                <div class="tc-rule">While electronic systems greatly benefit stock traders, <b class="tc-main-c">bond market trades remain largely over the counter</b>. Many competing electronic bond exchanges exist, but they're used <b>primarily by dealers</b>.</div>
+                <div class="tc-info">Significant cost savings would result for public investors if they were given access to these systems by their brokers.</div>
+              </div>
+            </div>
+
+            <div id="tc112-frag" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Market fragmentation (LOS 11.e)</div>
+                <div class="tc-rule">Occurs when a security trades in <b class="tc-main-c">multiple markets</b> &#8594; significant liquidity differences between these electronic markets.</div>
+                <div class="tc-body">Example: a security may have several posted bids but few offers on one exchange, with the opposite on another. Fragmentation can lead to significant <b class="tc-main-c">price and liquidity differences between markets</b>.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Algorithms that overcome fragmentation</div>
+                <table class="tc-tbl">
+                  <tr><th>Algorithm</th><th>What it does</th></tr>
+                  <tr><td><b class="tc-main-c">Liquidity aggregation</b></td><td>Creates a <b>"super book"</b> displaying liquidity across all markets</td></tr>
+                  <tr><td><b class="tc-main-c">Smart order routing (SOR)</b></td><td>Sends orders to the markets with the <b>best prices and sizes</b></td></tr>
+                </table>
+                <div class="tc-info">Automated strategies for large orders seek out liquidity across all markets to minimize price impact &#8212; i.e. liquidity-seeking algos exist <b class="tc-main-c">in response to market fragmentation</b>.</div>
+              </div>
+            </div>
+
+            <div id="tc112-traders2" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Who uses electronic trading (LOS 11.f)</div>
+                <table class="tc-tbl">
+                  <tr><th>User group</th><th>Includes</th></tr>
+                  <tr><td><b class="tc-main-c">Proprietary traders</b></td><td>Dealers, arbitrageurs, front runners (profit-seeking)</td></tr>
+                  <tr><td><b class="tc-main-c">Buy-side traders</b></td><td>Investment &amp; risk managers</td></tr>
+                  <tr><td><b class="tc-main-c">Brokers</b></td><td>That serve the above</td></tr>
+                </table>
+                <div class="tc-rule">Proprietary electronic traders include <b class="tc-main-c">high-frequency traders</b> (quick round-trips thousands of times/day) and <b class="tc-main-c">low-latency traders</b> (rely on speed receiving news &amp; trading on it).</div>
+                <div class="tc-info"><b class="tc-main-c">Latency</b> = the time lapse between an event occurring and the execution of a trade based on that event.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">News traders vs dealers &#8212; contrast</div>
+                <table class="tc-tbl">
+                  <tr><th></th><th>Electronic news traders</th><th>Electronic dealers</th></tr>
+                  <tr><td><b class="tc-main-c">What they do</b></td><td>Analyze high-speed news feeds; submit <b>market orders</b> (not limit) on the analysis</td><td>Post bid/offer to profit from the <b>spread</b>; profit depends on trading frequency</td></tr>
+                  <tr><td><b class="tc-main-c">Edge</b></td><td>AI/NLP to trade against <b class="tc-main-c">stale orders</b> (posted limits not reflecting the news)</td><td>Low inventory; quickly adjust positions; manage adverse-price risk by taking the opposite side fast</td></tr>
+                  <tr><td><b class="tc-main-c">News behavior</b></td><td>Profit from acting on news first</td><td><b class="tc-main-c">Suspend quotes</b> when news is released</td></tr>
+                </table>
+                <div class="tc-trap"><b>Dealer quote-suspension tradeoff:</b> suspending quotes on news &#8594; lost trading opportunities when the news turns out <b>immaterial</b>, BUT it <b class="tc-green">protects the dealer from providing liquidity to news traders when the news is material</b> (i.e. from being picked off on stale quotes). Low round-trip costs let news traders profit even if right only a fraction of the time.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 11.3 Characteristics & Uses ════════ -->
+          <div id="tcm-113" class="tc-modpanel">
+            <div class="tc-toptabs">
+              <button class="tc-toptab active" onclick="tcTop(event,'tc113-speed')">The Need for Speed</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc113-latency')">Latency Phases</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc113-adv')">Advanced Orders/Algos</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc113-impact')">Impact &amp; Arbitrage</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc113-arb')">Arb Calculator</button>
+            </div>
+            <div id="tc113-speed" class="tc-toppanel active">
+              <div class="tc-card">
+                <div class="tc-title">Characteristics &amp; uses &#8212; the need for speed (LOS 11.g)</div>
+                <div class="tc-rule">Beyond lower trading costs, electronic systems give <b class="tc-main-c">low-latency traders</b> a competitive edge by <b class="tc-main-c">jumping the order queue</b>.</div>
+                <table class="tc-tbl">
+                  <tr><th>Queue-jump in...</th><th>What it means</th></tr>
+                  <tr><td><b class="tc-main-c">Order taking</b></td><td>Executing against a <b>standing sell order</b> when positive market news is revealed</td></tr>
+                  <tr><td><b class="tc-main-c">Market making</b></td><td>Taking <b>precedence</b> when providing liquidity</td></tr>
+                  <tr><td><b class="tc-main-c">Order canceling</b></td><td>Canceling when they no longer want to fill (e.g. trades at other exchanges make a posted quote ill-advised)</td></tr>
+                </table>
+                <div class="tc-info">Bottom line: electronic traders must be <b class="tc-green">faster than their competitors</b> to capitalize on market opportunities.</div>
+              </div>
+            </div>
+
+            <div id="tc113-latency" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Low-latency: 3 phases of a trade (LOS 11.g)</div>
+                <table class="tc-tbl">
+                  <tr><th>#</th><th>Time gap</th><th>Latency type</th></tr>
+                  <tr><td>1</td><td><b>Publication</b> of actionable news &#8594; receipt by the trader</td><td><b class="tc-main-c">Communication</b></td></tr>
+                  <tr><td>2</td><td><b>Receipt</b> of news &#8594; deciding the appropriate action (order)</td><td><b class="tc-blue">Computation</b></td></tr>
+                  <tr><td>3</td><td><b>Order determination</b> &#8594; communicating the order to the exchange</td><td><b class="tc-main-c">Communication</b></td></tr>
+                </table>
+                <div class="tc-trap"><b>Mapping trap:</b> phases <b>1 &amp; 3</b> = communication speed; phase <b>2</b> = computation speed. Co-location / fiber-optic = communication; CPUs / OS / assembler = computation.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Communication speed</div>
+                <div class="tc-rule">Minimize <b>distance traveled</b>. Invest in latest/fastest comms tech; site servers as close to the exchange as possible &#8594; <b class="tc-main-c">co-location</b> (servers inside the exchange, if offered).</div>
+                <div class="tc-info">Fairness: the exchange <b>cannot selectively offer co-location to only a few traders</b>.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Computation speed</div>
+                <table class="tc-tbl">
+                  <tr><th>Layer</th><th>Techniques</th></tr>
+                  <tr><td><b class="tc-main-c">Hardware</b></td><td>Overclock fastest processors (souped-up cooling); fast memory vs hard disks (avoid disk-seeking time); multiple specialized processors</td></tr>
+                  <tr><td><b class="tc-main-c">Software</b></td><td>Low-overhead simple/no-frills OS; key functions in <b>assembler</b> (high-level C++ compilers not specialized &#8594; slower)</td></tr>
+                  <tr><td><b class="tc-main-c">Dynamic code</b></td><td>If code updates with market conditions &#8594; use faster-to-write languages (Python) where deployment speed &gt; processing speed</td></tr>
+                  <tr><td><b class="tc-main-c">Pre-computation</b></td><td>Pre-run scenario analysis so the optimal action per scenario is predetermined &#8594; no delay once a scenario is observed</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="tc113-adv" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Advanced orders, tactics &amp; algorithms (LOS 11.h)</div>
+                <table class="tc-tbl">
+                  <tr><th>Tool</th><th>What it is</th></tr>
+                  <tr><td><b class="tc-main-c">Advanced order types</b></td><td>Limit orders with a <b>dynamic limit price that varies with a benchmark</b>. E.g. pegged limit buy 1,000 at one tick below the lowest ask &#8594; as asks change, order is auto-canceled &amp; replaced with a revised bid</td></tr>
+                  <tr><td><b class="tc-main-c">Trading tactics</b></td><td>Plans submitting <b>multiple orders</b> (e.g. across multiple exchanges) to uncover <b>hidden</b> opportunities (hidden bids/asks), <b>discretionary orders</b> (limit &#177; a discretion amount), <b>IOC</b> orders; used at <b class="tc-main-c">dark pools</b> (venues hiding liquidity, select clientele). Reduce footprint via randomness in order size &amp; time-to-cancel; often <b>midspread orders</b> (pegged to bid-ask midpoint)</td></tr>
+                  <tr><td><b class="tc-main-c">Algorithms (algos)</b></td><td>Programmed strategies using multiple orders, sequencing &amp; tactics. E.g. a <b>VWAP algo</b> splits an order proportional to expected volume &#8594; reduces price impact. Good algos minimize total cost by using limit orders (offer liquidity) <b>and</b> market orders (minimize delay/opportunity cost)</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="tc113-impact" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Impact of electronic trading &#8212; strategies</div>
+                <table class="tc-tbl">
+                  <tr><th>#</th><th>Strategy</th><th>Detail</th></tr>
+                  <tr><td>1</td><td><b class="tc-main-c">Hidden orders</b></td><td>Limit orders hidden from all but the receiving exchange; remove the valuable option exposed standing orders give others. Electronic markets better suited (lower inadvertent exposure). Detected by <b>pinging</b> with small IOC orders &#8594; reveals existence (NOT size or side)</td></tr>
+                  <tr><td>2</td><td><b class="tc-main-c">Leapfrog</b></td><td>Beating the best bid/ask. With <b>large quoted spreads</b>, a dealer posts a better price (lower ask / higher bid) &#8594; <b>narrows the inside spread</b>; frustrates others who must re-quote to keep precedence</td></tr>
+                  <tr><td>3</td><td><b class="tc-main-c">Flickering quotes</b></td><td>Exposed limit orders submitted &amp; canceled almost immediately &#8594; deny others the option a standing order provides. To trade against one, submit a <b>hidden limit order</b> in anticipation of its return</td></tr>
+                  <tr><td>5</td><td><b class="tc-main-c">Machine learning</b></td><td>Data mining / statistical models that evolve on new data; rely on empirical data to fine-tune algos. <b class="tc-red">Ineffective in extraordinary times</b> (volatility spikes, past not a useful guide) &#8594; many traders shut down trading in high-risk periods</td></tr>
+                </table>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">4. Electronic arbitrage &#8212; three types</div>
+                <table class="tc-tbl">
+                  <tr><th>Type</th><th>Mechanism</th><th>Risk</th></tr>
+                  <tr><td><b class="tc-main-c">A. Take liquidity both sides</b></td><td>Simultaneous <b>market</b> buy &amp; sell across markets to exploit mispricing of the same security (at posted ask/bid). Low latency critical so both legs fill at target</td><td><b class="tc-green">Lowest</b> &#8212; market orders fill fast</td></tr>
+                  <tr><td><b class="tc-main-c">B. Offer liquidity one side</b></td><td>e.g. $100 bid / $105 offered in X &amp; Y; place a bid at $95 in X; if it fills, immediately sell to the $100 bid in Y &#8594; $5 profit</td><td>Moderate &#8212; the offered leg may not fill</td></tr>
+                  <tr><td><b class="tc-main-c">C. Offer liquidity both sides</b></td><td>Post limit orders inferior to best bid/offer in different markets to lower costs further</td><td><b class="tc-red">Highest</b> &#8212; if one leg fills &amp; the other doesn't &#8594; exposed to adverse price movement</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="tc113-arb" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Electronic arbitrage calculator</div>
+                <div class="tc-body">Two markets, each with a best bid/ask and sizes. Take-liquidity-both-sides: buy at the lowest ask, sell at the highest bid; profit/share = best bid &#8722; best ask (only if &gt; 0). Total = profit/share &#215; the binding size.</div>
+                <table class="tc-tbl">
+                  <tr><th>Market</th><th>Best bid</th><th>Bid size</th><th>Best ask</th><th>Ask size</th></tr>
+                  <tr><td>1</td>
+                    <td><input id="tc-arb-b1" type="number" value="10.06" step="0.01" oninput="tcArbCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;"></td>
+                    <td><input id="tc-arb-bs1" type="number" value="20000" oninput="tcArbCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;"></td>
+                    <td><input id="tc-arb-a1" type="number" value="10.12" step="0.01" oninput="tcArbCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;"></td>
+                    <td><input id="tc-arb-as1" type="number" value="18000" oninput="tcArbCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;"></td></tr>
+                  <tr><td>2</td>
+                    <td><input id="tc-arb-b2" type="number" value="10.02" step="0.01" oninput="tcArbCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;"></td>
+                    <td><input id="tc-arb-bs2" type="number" value="15000" oninput="tcArbCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;"></td>
+                    <td><input id="tc-arb-a2" type="number" value="10.05" step="0.01" oninput="tcArbCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;"></td>
+                    <td><input id="tc-arb-as2" type="number" value="11000" oninput="tcArbCalc()" style="width:80px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;"></td></tr>
+                </table>
+                <div class="tc-fl" id="tc-arb-out"></div>
+                <div class="tc-info">Default = Stock ZZ example: buy @ 10.05 (Bravo), sell @ 10.06 (Alpha) &#8594; $0.01/share, $110 on 11,000. Quiz Philly/LA (16.13/16.14 sz 50k/48k; 16.09/16.11 sz 90k/100k) &#8594; $0.02 &#215; 50,000 = $1,000.</div>
+                <div class="tc-trap"><b>Size trap:</b> the binding quantity is the <b>smaller</b> of (the bid size you sell into) and (the ask size you buy from). For Philly/LA that's min(50,000 bid, 100,000 ask) = 50,000 &#8594; $1,000 (NOT $2,000 from using 100,000).</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════ MODULE 11.4 Risks & Surveillance ════════ -->
+          <div id="tcm-114" class="tc-modpanel">
+            <div class="tc-toptabs">
+              <button class="tc-toptab active" onclick="tcTop(event,'tc114-risks')">Risks (11.i)</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tc114-abuse')">Abuses &amp; Surveillance (11.j)</button>
+            </div>
+
+            <div id="tc114-risks" class="tc-toppanel active">
+              <div class="tc-card">
+                <div class="tc-title">Risks of electronic trading (LOS 11.i)</div>
+                <table class="tc-tbl">
+                  <tr><th>Risk</th><th>Detail</th></tr>
+                  <tr><td><b class="tc-main-c">HFT arms race</b></td><td>Fastest participants win &#8594; HFTs deploy the latest/most expensive state-of-the-art tech. Arms race <b>offsets some cost benefits</b>, acts as an <b>entry barrier</b>, playing field not level for smaller traders</td></tr>
+                  <tr><td><b class="tc-main-c">Systemic risk</b></td><td>Cost of bad trades borne by parties <b>other than</b> the responsible one &#8594; less incentive to mitigate. Programming errors can cause market chaos with many casualties before being caught</td></tr>
+                </table>
+                <div class="tc-info"><b>HFT arms-race fix:</b> introduce <b class="tc-main-c">delays in trading at random intervals</b> (cannot be forecast by HFT algos) &#8594; mitigates the speed advantage.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Common trading errors (under systemic risk)</div>
+                <table class="tc-tbl">
+                  <tr><th>Error</th><th>Detail</th></tr>
+                  <tr><td><b class="tc-main-c">Runaway algorithms</b></td><td>Series of unintended orders. <b>Flash crash of May 2010</b>: an algo sold mini S&amp;P 500 futures with orders proportional to trading volume (NOT a limit order) &#8594; more trading begat more volume &#8594; volatility spiral</td></tr>
+                  <tr><td><b class="tc-main-c">Fat finger errors</b></td><td>Input errors; if large enough &#8594; dramatic volatility in an electronic market where human checks/balances are missing</td></tr>
+                  <tr><td><b class="tc-main-c">Overlarge orders</b></td><td>Market orders demanding liquidity <b>significantly higher than what's available</b> in the market they're sent to (the flash crash's large S&amp;P 500 mini sell led to ripple effects)</td></tr>
+                  <tr><td><b class="tc-main-c">Malevolent orders</b></td><td>Created to <b>specifically manipulate the market</b>: e.g. aggrieved employees programming rogue trades, or <b>denial-of-service attacks</b> on competitors via excessive quote submission</td></tr>
+                </table>
+                <div class="tc-trap"><b>Systemic-risk mitigation:</b> ensure software is adequately <b>backtested</b>, strictly controlled, and supervised before deployment; brokers must <b>scrutinize order appropriateness</b>; markets should have <b>limits / circuit breakers</b> that trigger when volatility spikes.</div>
+              </div>
+            </div>
+
+            <div id="tc114-abuse" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Abusive practices surveillance may detect (LOS 11.j)</div>
+                <div class="tc-rule"><b>Real-time surveillance</b> monitors electronic markets to detect abuses &amp; potential crises as they unfold (faster response). Leans on the electronic <b class="tc-main-c">audit trail</b> to reconstruct the chain of events.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Front running</div>
+                <div class="tc-rule">Low-latency trading <b>ahead of known large trades</b>. A front runner learning a large buy is being worked in pieces takes the best asks, then resells to the unsuspecting buyer at higher prices.</div>
+                <div class="tc-trap"><b>Legality nuance:</b> illegal only if the information was obtained <b>improperly</b>. Often it's just inferred from market data &#8212; algos break large orders into pieces, and front runners use <b>machine learning to sniff them out</b>.</div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Market manipulation &#8212; produces false price/volume data</div>
+                <div class="tc-rule">Manipulators deceive others into acting on misleading info, to the manipulator's advantage. Illegal in most jurisdictions, but enforcement is <b>lax</b> (hard to separate manipulative from genuine trades). Subtypes:</div>
+                <table class="tc-tbl">
+                  <tr><th>Tactic</th><th>Mechanism</th></tr>
+                  <tr><td><b class="tc-main-c">Trading for market impact</b></td><td>Trades designed to move the price (up/down), sometimes at large cost, to influence others' <b>perception of value</b></td></tr>
+                  <tr><td><b class="tc-main-c">Rumormongering</b></td><td>Disseminate <b>fake info</b> to affect the target's value assessment. Generally illegal; but biased reporting (highlighting one side) is <b class="tc-green">not</b></td></tr>
+                  <tr><td><b class="tc-main-c">Wash trading</b></td><td>Trading between <b>commonly controlled accounts</b> to create a false impression of liquidity &#8594; false sense of security about liquidity</td></tr>
+                  <tr><td><b class="tc-main-c">Spoofing / layering</b></td><td>Fake limit orders posted to create fake optimism/pessimism. E.g. post a <b>hidden</b> limit buy (low price) + <b>exposed</b> sell orders to convince others to sell low &#8594; fills the hidden buy</td></tr>
+                  <tr><td><b class="tc-main-c">Bluffing</b></td><td>Prey on <b>momentum traders</b> (buy rising / sell falling). E.g. <b>pump and dump</b> (buy to raise price, sell back higher to momentum traders); sell-side analog = <b>short and distort</b></td></tr>
+                  <tr><td><b class="tc-main-c">Gunning the market</b></td><td>Force others into bad trades: e.g. <b>rapid short selling collapses</b> a security &#8594; triggers <b>stop-loss orders</b> the manipulator fills, repurchasing at a lower price</td></tr>
+                  <tr><td><b class="tc-main-c">Squeezing &amp; cornering</b></td><td>Control resources needed to settle contracts, then withdraw &#8594; defaults; re-extend at higher price. <b>Short squeeze</b>: control lendable shares, lend to shorts, abruptly recall &#8594; shorts cover higher. <b>Cornering</b> (commodities): long futures + buy up spot supply, demand physical delivery the counterparty can't supply</td></tr>
+                </table>
+                <div class="tc-trap"><b>Easy-to-confuse pair:</b> <b>Layering is risky</b> &#8212; the exposed sell orders the spoofer intended to cancel may actually get filled. <b>Bluffing</b> targets momentum traders; analysts avoid falling for it by having a sound valuation basis (<b>Standard V(A) Diligence &amp; Reasonable Basis</b>).</div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- ════════ QUIZ ════════ -->
+          <div id="tcm-quiz" class="tc-modpanel">
+            <div class="tc-toptabs">
+              <button class="tc-toptab active" onclick="tcTop(event,'tcq-111')">Quiz 11.1</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tcq-112')">Quiz 11.2</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tcq-113')">Quiz 11.3</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tcq-114')">Quiz Arb</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tcq-concept')">Concept Qs</button>
+            </div>
+
+            <div id="tcq-111" class="tc-toppanel active">
+              <div class="tc-card">
+                <div class="tc-title">Sima Inc. order book (Q1&#8211;Q2)</div>
+                <table class="tc-tbl">
+                  <tr><th>Bids</th><th>Price / Size</th><th>Offers</th><th>Price / Size</th></tr>
+                  <tr><td>Alpha (9:31)</td><td>17.65 / 3,000</td><td>Alpha (9:31)</td><td>17.69 / 2,000</td></tr>
+                  <tr><td>Bravo (9:41)</td><td>17.63 / 2,500</td><td>Bravo (9:31)</td><td>17.71 / 3,000</td></tr>
+                  <tr><td>Charlie (9:45)</td><td>17.62 / 3,500</td><td>Charlie (9:41)</td><td>17.75 / 3,500</td></tr>
+                </table>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q1');e.style.display=e.style.display==='none'?'block':'none';">Q1: buy 4,000 in two lots &#8212; price impact of the 2nd lot? (A $0.01 / B $0.02 / C $0.04)</button>
+                <div id="tc-q1" style="display:none;"><div class="tc-rule"><b class="tc-green">B &#8212; $0.02.</b> First lot 2,000 @ 17.69 (best ask, Alpha). Second lot 2,000 @ 17.71 (next, Bravo). Price impact = 17.71 &#8722; 17.69 = $0.02.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q2');e.style.display=e.style.display==='none'?'block':'none';">Q2: inside spread? (A $0.02 / B $0.03 / C $0.04)</button>
+                <div id="tc-q2" style="display:none;"><div class="tc-rule"><b class="tc-green">C &#8212; $0.04.</b> Best ask 17.69 &#8722; best bid 17.65 = $0.04.</div></div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">ABC trade data (Q3&#8211;Q5)</div>
+                <table class="tc-tbl">
+                  <tr><th>Market trades (interval)</th><th>Subject buy (1,500)</th></tr>
+                  <tr><td>10:00 &#8212; 1,000 @ 44.55</td><td>1,000 @ 44.65</td></tr>
+                  <tr><td>11:00 &#8212; 3,000 @ 44.65</td><td>500 @ 44.75</td></tr>
+                  <tr><td>11:30 &#8212; 6,000 @ 44.75</td><td>&#8212;</td></tr>
+                </table>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q3');e.style.display=e.style.display==='none'?'block':'none';">Q3: benchmark VWAP? (A $44.58 / B $44.62 / C $44.70)</button>
+                <div id="tc-q3" style="display:none;"><div class="tc-rule"><b class="tc-green">C &#8212; $44.70.</b> (1000/10000)&#215;44.55 + (3000/10000)&#215;44.65 + (6000/10000)&#215;44.75 = $44.70.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q4');e.style.display=e.style.display==='none'?'block':'none';">Q4: trade VWAP? (A $44.58 / B $44.68 / C $44.70)</button>
+                <div id="tc-q4" style="display:none;"><div class="tc-rule"><b class="tc-green">B &#8212; $44.68.</b> (1000/1500)&#215;44.65 + (500/1500)&#215;44.75 = $44.683 &#8776; $44.68.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q5');e.style.display=e.style.display==='none'?'block':'none';">Q5: VWAP transaction cost? (A &#8722;$30 / B $25 / C &#8722;$150)</button>
+                <div id="tc-q5" style="display:none;"><div class="tc-rule"><b class="tc-green">A &#8212; &#8722;$30.</b> 1,500 &#215; (+1) &#215; (44.68 &#8722; 44.70) = &#8722;$30.</div><div class="tc-trap"><b>Two traps:</b> (1) use the <b>rounded</b> trade/benchmark VWAPs (44.68, 44.70), not full precision; (2) a buy executing <b>below</b> the benchmark gives a <b class="tc-green">negative</b> cost = favorable (you beat the benchmark).</div></div>
+              </div>
+            </div>
+
+
+            <div id="tcq-112" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Module Quiz 11.2 (Q1&#8211;Q4)</div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q21');e.style.display=e.style.display==='none'?'block':'none';">Q1: LEAST likely a factor driving electronic trading systems? (A operating cost / B prevention of fraud / C market fragmentation)</button>
+                <div id="tc-q21" style="display:none;"><div class="tc-rule"><b class="tc-green">C &#8212; market fragmentation.</b> The drivers are cost, accuracy, audit trails, fraud prevention, and continuous market (CAAFC). Fragmentation is a market <b>condition</b> that algorithms respond to &#8212; not a driver of system development.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q22');e.style.display=e.style.display==='none'?'block':'none';">Q2: LEAST accurate about electronic markets? (A facilitated bond trading for retail / B benefited stock traders / C function during severe weather)</button>
+                <div id="tc-q22" style="display:none;"><div class="tc-rule"><b class="tc-green">A &#8212; least accurate.</b> Electronic trading mostly benefited <b>stock</b> traders; <b class="tc-main-c">bond trades remain largely OTC</b> and electronic bond exchanges are used primarily by <b>dealers</b>, not retail. B and C are both true.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q23');e.style.display=e.style.display==='none'?'block':'none';">Q3: automated liquidity-seeking strategies most likely respond to? (A market fragmentation / B reduction in brokerage costs / C even liquidity across markets)</button>
+                <div id="tc-q23" style="display:none;"><div class="tc-rule"><b class="tc-green">A &#8212; market fragmentation.</b> SOR and liquidity-aggregation algos exist to overcome fragmentation (uneven liquidity across markets). C is the opposite of the problem; B is unrelated.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q24');e.style.display=e.style.display==='none'?'block':'none';">Q4: AI used to sniff out large trades worked in small parts &#8594; labeled as electronic: (A front runners / B arbitrageurs / C dealers)</button>
+                <div id="tc-q24" style="display:none;"><div class="tc-rule"><b class="tc-green">A &#8212; front runners.</b> They detect a large order being worked in pieces and trade ahead of it. Arbitrageurs exploit price differences; dealers profit from the spread.</div></div>
+              </div>
+            </div>
+
+
+            <div id="tcq-113" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Module Quiz 11.3 (Q1&#8211;Q3)</div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q31');e.style.display=e.style.display==='none'?'block':'none';">Q1: lower latency via COMPUTATION speed? (A co-location / B simple no-frills OS / C high-speed fiber optic)</button>
+                <div id="tc-q31" style="display:none;"><div class="tc-rule"><b class="tc-green">B &#8212; simple, no-frills operating systems.</b> Computation speed = the decision/processing phase (hardware, OS, assembler). Co-location (A) and fiber optics (C) reduce <b>communication</b> speed (distance traveled), not computation.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q32');e.style.display=e.style.display==='none'?'block':'none';">Q2: limit orders with dynamic prices are labeled? (A discretionary / B IOC / C advanced orders)</button>
+                <div id="tc-q32" style="display:none;"><div class="tc-rule"><b class="tc-green">C &#8212; advanced orders.</b> These are limit orders with a dynamic limit price that varies with a benchmark (e.g. pegged orders). Discretionary = limit &#177; a discretion amount; IOC = immediate-or-cancel.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q33');e.style.display=e.style.display==='none'?'block':'none';">Q3: leapfrog most likely during? (A market fragmentation / B large inside spread / C flickering quotes)</button>
+                <div id="tc-q33" style="display:none;"><div class="tc-rule"><b class="tc-green">B &#8212; a large inside spread.</b> Leapfrog = beating the best bid/ask; it occurs in the presence of <b>large quoted spreads</b>, where a dealer can post a better price and narrow the inside spread.</div></div>
+              </div>
+            </div>
+
+            <div id="tcq-114" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Module Quiz (arbitrage) Q4&#8211;Q5</div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q44');e.style.display=e.style.display==='none'?'block':'none';">Q4: highly RISK-AVERSE trader profiting from cross-market mispricing? (A take liquidity both sides / B offer liquidity one side / C offer liquidity both sides)</button>
+                <div id="tc-q44" style="display:none;"><div class="tc-rule"><b class="tc-green">A &#8212; take liquidity on both sides.</b> Simultaneous market buy &amp; sell fill fast and lock in the profit &#8594; lowest risk. Offering liquidity (B/C) risks one leg not filling &#8594; adverse-price exposure; offering on BOTH sides is the riskiest.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q45');e.style.display=e.style.display==='none'?'block':'none';">Q5: Philly-1 (bid 16.13 sz 50k / ask 16.14 sz 48k); LA-9 (bid 16.09 sz 90k / ask 16.11 sz 100k). Take-liquidity arb profit? (A $1,000 / B $2,000 / C $4,000)</button>
+                <div id="tc-q45" style="display:none;"><div class="tc-rule"><b class="tc-green">A &#8212; $1,000.</b> Buy at the lowest ask (LA $16.11), sell at the highest bid (Philly $16.13) &#8594; $0.02/share. Binding size = min(Philly bid 50,000 ; LA ask 100,000) = <b>50,000</b> &#8594; 0.02 &#215; 50,000 = $1,000.</div><div class="tc-trap">Trap: using the 100,000 ask size gives $2,000 (B). The sell leg is capped by the 50,000 available at the $16.13 bid, so 50,000 is binding.</div></div>
+              </div>
+            </div>
+
+            <div id="tcq-concept" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Module Quiz 11.4 &#8212; Storm &amp; Kotak (Q1&#8211;Q3)</div>
+                <div class="tc-rule"><b>Storm I:</b> ensure only authorized personnel can input orders. <b>Storm II:</b> algorithm updates must be signed off by supervisory personnel.<br><b>Kotak I:</b> more concerned about traders conducting denial-of-service attacks on competitors via excessive quote submission. <b>Kotak II:</b> rapid short selling may collapse a security's market, triggering stop-loss orders.</div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q41');e.style.display=e.style.display==='none'?'block':'none';">Q1: Storm's checks-and-balances statements? (A both correct / B neither correct / C only one correct)</button>
+                <div id="tc-q41" style="display:none;"><div class="tc-rule"><b class="tc-green">A &#8212; both correct.</b> Restricting order input to authorized personnel (I) and requiring supervisory sign-off on algo updates (II) are both valid systemic-risk checks and balances.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q42');e.style.display=e.style.display==='none'?'block':'none';">Q2: Kotak statement I describes? (A bluffing / B gunning the market / C malevolent orders)</button>
+                <div id="tc-q42" style="display:none;"><div class="tc-rule"><b class="tc-green">C &#8212; malevolent orders.</b> Denial-of-service attacks on competitors via excessive quote submission = malevolent (rogue/aggressive) orders &#8212; a trading-error/risk category, not a manipulation tactic.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q43');e.style.display=e.style.display==='none'?'block':'none';">Q3: Kotak statement II describes? (A bluffing / B gunning the market / C malevolent orders)</button>
+                <div id="tc-q43" style="display:none;"><div class="tc-rule"><b class="tc-green">B &#8212; gunning the market.</b> Rapid short selling to collapse a security and trigger stop-loss orders (then repurchasing cheaply) = gunning the market.</div><div class="tc-trap"><b>Q2 vs Q3 trap:</b> both sound "aggressive." DoS-via-excessive-quotes = <b>malevolent orders</b> (an error/risk); short-selling-to-trip-stop-losses = <b>gunning the market</b> (a manipulation subtype).</div></div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Carry-over concept checks</div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q6');e.style.display=e.style.display==='none'?'block':'none';">When is VWAP appropriate to evaluate execution? (A capture impact of large trade / B small part of volume / C significant part of volume)</button>
+                <div id="tc-q6" style="display:none;"><div class="tc-rule"><b class="tc-green">B &#8212; the trade is a SMALL part of overall trading volume.</b> When the trade is a big part of volume, benchmark and trade VWAP converge &#8594; cost skewed to zero, so VWAP is a poor measure.</div></div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-q7');e.style.display=e.style.display==='none'?'block':'none';">Which measure captures price impact + slippage + opportunity cost? (A VWAP / B bid-offer spread / C implementation shortfall)</button>
+                <div id="tc-q7" style="display:none;"><div class="tc-rule"><b class="tc-green">C &#8212; implementation shortfall.</b> It captures all three implicit costs by comparing the actual portfolio to a paper portfolio executed at the arrival/decision price.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            function tcMod(ev,id){
+              var w=document.getElementById('tcWidget');
+              w.querySelectorAll('.tc-modpanel').forEach(function(p){p.classList.remove('active')});
+              w.querySelectorAll('.tc-modtabs > .tc-modtab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function tcTop(ev,id){
+              var mp=ev.currentTarget.closest('.tc-modpanel');
+              mp.querySelectorAll(':scope > .tc-toppanel').forEach(function(p){p.classList.remove('active')});
+              mp.querySelectorAll(':scope > .tc-toptabs > .tc-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function tcInit(){ try{ if(typeof tcEsCalc==="function") tcEsCalc(); if(typeof tcVwCalc==="function") tcVwCalc(); if(typeof tcArbCalc==="function") tcArbCalc(); }catch(e){} }
+
+            function tcEsCalc(){
+              function g(id){var el=document.getElementById(id);return el?parseFloat(el.value):NaN;}
+              function r(x,n){var p=Math.pow(10,n);return (Math.round(x*p)/p).toFixed(n);}
+              var side=parseFloat(document.getElementById('tc-es-side').value);
+              var px=g('tc-es-px'), bid=g('tc-es-bid'), ask=g('tc-es-ask');
+              var out=document.getElementById('tc-es-out'); if(!out)return;
+              if(isNaN(px)||isNaN(bid)||isNaN(ask)){out.textContent='Enter price, bid, ask.';return;}
+              var mid=(bid+ask)/2;
+              var estc=side*(px-mid);
+              var es=2*estc;
+              var quoted=ask-bid;
+              var msg="Midquote = ("+bid+" + "+ask+") / 2 = "+r(mid,3)+"\n"+
+                      "Eff. spread txn cost = side("+side+") * ("+px+" - "+r(mid,3)+") = "+r(estc,4)+"\n"+
+                      "Effective spread = 2 * "+r(estc,4)+" = "+r(es,4)+"\n"+
+                      "Quoted spread = "+ask+" - "+bid+" = "+r(quoted,4)+"\n";
+              if(es<quoted) msg+="-> Effective < quoted => PRICE IMPROVEMENT";
+              else if(Math.abs(es-quoted)<1e-9) msg+="-> Effective = quoted (traded at posted bid/ask)";
+              else msg+="-> Effective > quoted";
+              out.textContent=msg;
+            }
+
+            function tcVwCalc(){
+              function g(id){var el=document.getElementById(id);return el?parseFloat(el.value):0;}
+              function r(x,n){var p=Math.pow(10,n);return (Math.round(x*p)/p).toFixed(n);}
+              var side=parseFloat(document.getElementById('tc-vw-side').value);
+              // benchmark
+              var mq=[g('tc-vw-mq1'),g('tc-vw-mq2'),g('tc-vw-mq3')];
+              var mp=[g('tc-vw-mp1'),g('tc-vw-mp2'),g('tc-vw-mp3')];
+              var mtot=0,msum=0;
+              for(var i=0;i<3;i++){ if(mq[i]>0){ mtot+=mq[i]; msum+=mq[i]*mp[i]; } }
+              // trade
+              var tq=[g('tc-vw-tq1'),g('tc-vw-tq2'),g('tc-vw-tq3')];
+              var tp=[g('tc-vw-tp1'),g('tc-vw-tp2'),g('tc-vw-tp3')];
+              var ttot=0,tsum=0;
+              for(var j=0;j<3;j++){ if(tq[j]>0){ ttot+=tq[j]; tsum+=tq[j]*tp[j]; } }
+              var out=document.getElementById('tc-vw-out'); if(!out)return;
+              if(mtot<=0||ttot<=0){out.textContent='Enter at least one market trade and one fill.';return;}
+              var bench=msum/mtot, tv=tsum/ttot;
+              // book convention: round VWAPs to 2dp before cost
+              var benchR=Math.round(bench*100)/100, tvR=Math.round(tv*100)/100;
+              var cost=ttot*side*(tvR-benchR);
+              out.textContent=
+                "Benchmark VWAP = "+r(bench,4)+"  (rounded "+r(benchR,2)+")\n"+
+                "Trade VWAP     = "+r(tv,4)+"  (rounded "+r(tvR,2)+")\n"+
+                "VWAP txn cost  = "+ttot+" * side("+side+") * ("+r(tvR,2)+" - "+r(benchR,2)+") = "+r(cost,2)+"\n"+
+                (cost<0?"-> negative = FAVORABLE (beat benchmark)":(cost>0?"-> positive = unfavorable (worse than benchmark)":"-> zero"));
+            }
+            function tcArbCalc(){
+              function g(id){var el=document.getElementById(id);return el?parseFloat(el.value):NaN;}
+              function r(x,n){var p=Math.pow(10,n);return (Math.round(x*p)/p).toFixed(n);}
+              var b1=g('tc-arb-b1'),bs1=g('tc-arb-bs1'),a1=g('tc-arb-a1'),as1=g('tc-arb-as1');
+              var b2=g('tc-arb-b2'),bs2=g('tc-arb-bs2'),a2=g('tc-arb-a2'),as2=g('tc-arb-as2');
+              var out=document.getElementById('tc-arb-out'); if(!out)return;
+              if([b1,a1,b2,a2].some(isNaN)){out.textContent='Enter both markets.';return;}
+              var bestBid=Math.max(b1,b2), bestBidSz=(b1>=b2?bs1:bs2);
+              var bestAsk=Math.min(a1,a2), bestAskSz=(a1<=a2?as1:as2);
+              var perShare=bestBid-bestAsk;
+              if(perShare<=0){out.textContent="Best bid "+r(bestBid,2)+" <= best ask "+r(bestAsk,2)+" -> no arbitrage.";return;}
+              var size=Math.min(bestBidSz,bestAskSz);
+              var total=perShare*size;
+              out.textContent=
+                "Buy at lowest ask = "+r(bestAsk,2)+"  (sell into highest bid = "+r(bestBid,2)+")\n"+
+                "Profit/share = "+r(bestBid,2)+" - "+r(bestAsk,2)+" = "+r(perShare,4)+"\n"+
+                "Binding size = min(bid "+bestBidSz+", ask "+bestAskSz+") = "+size+"\n"+
+                "Total arbitrage profit = "+r(perShare,4)+" * "+size+" = $"+r(total,2);
+            }
+          </script>
+        </div>
+
         <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
           <style>
             #sfWidget { --sf-main:#A78BFA; --sf-gold:#D4A017; --sf-green:#3DD68C; --sf-red:#FF7B72; --sf-orange:#F0A04B; --sf-blue:#79C0FF; --sf-purple:#BC8CFF; }
@@ -25243,7 +25926,7 @@ const DEFAULT_DECK = {
     { name:"IPS",                subtopics:["Individual","Institutional"] },
     { name:"Asset Allocation",   subtopics:[] },
     { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Currency Management"] },
-    { name:"Portfolio Construction", subtopics:["Overview of Equity Portfolio Management","Overview Of Fixed-Income Portfolio Management","Asset Allocation to Alternative Investments","Active Mgmt","Factor Models","Rebalancing","Portfolio Risk","An Overview of Private Wealth Management","Portfolio Management for Institutional Investors"] },
+    { name:"Portfolio Construction", subtopics:["Overview of Equity Portfolio Management","Overview Of Fixed-Income Portfolio Management","Asset Allocation to Alternative Investments","Active Mgmt","Factor Models","Rebalancing","Portfolio Risk","An Overview of Private Wealth Management","Portfolio Management for Institutional Investors","Trading Costs and Electronic Markets"] },
     { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
     { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
@@ -26048,6 +26731,96 @@ const DEFAULT_DECK = {
     {id:"ii54",topic:"Portfolio Construction",subtopic:"Portfolio Management for Institutional Investors",type:"command",
      q:"Quiz 10.5/10.6 Q3 \u2014 \u03c3_E calculation",
      a:"E/A 20% \u2192 M = 1/0.2 = 5. \u03c3_A 7%, \u03c3_L 5%, \u03c1 0.5.\n\u03c3_E\u00b2 = (5\u00b2\u00d70.07\u00b2) + (4\u00b2\u00d70.05\u00b2) \u2212 (2\u00d75\u00d74\u00d70.07\u00d70.05\u00d70.5)\n   = 0.1225 + 0.04 \u2212 0.07 = 0.0925\n\u03c3_E = \u221a0.0925 = [hl]30.4%[/hl] (answer C).\nTrap: apply M=5 and M\u22121=4 weights, square them, SUBTRACT the covariance term."},
+    {id:"tc1",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Execution costs \u2014 explicit vs implicit (11.a)",
+     a:"[rl][hl]Explicit[/hl]: observable & transparent ('get a receipt') \u2014 brokerage, taxes, fees. Large buy-side: fixed trading staff; small traders: variable commissions[/rl][rl][hl]Implicit[/hl]: NOT readily discernible; estimated vs a benchmark \u2014 bid-ask spread, market/price impact, delay (slippage), opportunity cost[/rl]\nImplicit costs are the focus of the reading; measured as trade result relative to a reference point."},
+    {id:"tc2",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"The four implicit costs",
+     a:"[rl][hl]Bid-ask spread[/hl]: highest potential cost for a SMALL trade[/rl][rl][hl]Market/price impact[/hl]: cost of demanding liquidity; big buy raises price, big sell lowers it[/rl][rl][hl]Delay (slippage)[/hl]: adverse price move during the LAG in executing a large trade[/rl][rl][hl]Opportunity cost[/hl]: lost profit from unfilled/failed orders[/rl]\nTradeoff: [hl]market impact vs (delay + opportunity)[/hl] \u2014 trade fast = impact; wait = market moves out of range."},
+    {id:"tc3",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Liquidity demanding vs providing; dealer quote terms (11.b)",
+     a:"[hl]Market order[/hl] = DEMANDS liquidity (accepts posted price; large ones walk down the book). [hl]Limit order[/hl] = PROVIDES liquidity (risk of non-execution).\nTerms: bid/inside bid = highest bid; best/inside ask = lowest ask; [hl]inside spread = best ask \u2212 best bid[/hl]; [hl]midquote = avg of a single dealer's bid & ask[/hl]; limit order book sorted best\u2192worst."},
+    {id:"tc4",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"formula",
+     q:"Effective spread (11.b)",
+     a:"Benchmark = the [hl]midquote[/hl].\n[hl]Eff. spread txn cost = (side) \u00d7 (transaction price \u2212 midquote)[/hl]; side +1 buy, \u22121 sell.\n[hl]Effective spread = 2 \u00d7 (eff. spread txn cost)[/hl].\nAt posted bid/ask \u2192 effective = quoted. Better price \u2192 [hl]price improvement[/hl], effective < quoted.\nExample: buy @ 32.29, midquote 32.28 \u2192 eff spread = 2\u00d7(+1)\u00d7(0.01) = $0.02 < quoted $0.06."},
+    {id:"tc5",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Limitations of effective spread",
+     a:"Misses: [hl]price impact[/hl] of split large orders (poor for large orders broken up); [hl]slippage/delay[/hl] (unfilled portion, or order not routed to best market \u2014 delay measured for the part unfilled by day-end); [hl]opportunity cost[/hl] (abandoned orders after adverse price move).\nIn short: it only captures the spread/price-improvement piece for the filled trade."},
+    {id:"tc6",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"formula",
+     q:"VWAP transaction cost (11.b)",
+     a:"[hl]VWAP txn cost = trade size \u00d7 (side) \u00d7 (trade VWAP \u2212 benchmark VWAP)[/hl]; side +1 buy, \u22121 sell.\nBenchmark VWAP = vol-weighted price of ALL market trades in the interval; trade VWAP = vol-weighted price of the subject fills.\nExample (BNC): benchmark $11.86, trade $12.04 \u2192 300\u00d7(+1)\u00d7(0.18) = [hl]$54[/hl] (positive = unfavorable, bought above benchmark)."},
+    {id:"tc7",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Limitations of VWAP \u2014 the bias to zero",
+     a:"[rl]Useless if the trade is a [hl]BIG part of volume[/hl] \u2192 benchmark & trade VWAP converge \u2192 cost skewed to ZERO[/rl][rl]Doesn't capture [hl]price impact[/hl] \u2014 a lone large buy makes benchmark = trade VWAP \u2192 cost 0 even at a bad price[/rl]\nBias-to-zero \u2192 popular with managers wanting to show low costs. VWAP is appropriate only when the trade is a [hl]SMALL part of overall volume[/hl]."},
+    {id:"tc8",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Implementation shortfall (11.c)",
+     a:"Transaction cost = value of the [hl]actual portfolio[/hl] \u2212 value of a hypothetical [hl]paper portfolio[/hl].\nPaper portfolio: trade fully executed at NO cost at the prevailing price when the order was placed = [hl]decision = arrival = strike price[/hl] (generally the midquote at placement).\nCaptures [hl]ALL THREE implicit costs[/hl] (impact + slippage + opportunity) \u2014 fixes VWAP. Cost: more complex to compute."},
+    {id:"tc9",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Benchmark comparison \u2014 what each captures",
+     a:"[rl][hl]Effective spread[/hl] \u2192 midquote at execution; spread / price improvement only[/rl][rl][hl]VWAP[/hl] \u2192 interval VWAP; relative price, MISSES price impact, biased to zero[/rl][rl][hl]Implementation shortfall[/hl] \u2192 paper portfolio at arrival price; ALL THREE implicit costs[/rl]\nExam reflex: 'which measure captures price impact + slippage + opportunity cost?' \u2192 implementation shortfall."},
+    {id:"tc10",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Factors driving electronic trading systems (11.d)",
+     a:"[hl]CAAFC[/hl]:\n[rl][hl]Cost[/hl] \u2014 cheaper than manual[/rl][rl][hl]Accuracy[/hl] \u2014 perform exactly as programmed; enforce order precedence & pricing rules[/rl][rl][hl]Audit trails[/hl] \u2014 records for investigators[/rl][rl][hl]Fraud prevention[/hl] \u2014 hidden orders stay hidden, no info leakage[/rl][rl][hl]Continuous market[/hl] \u2014 no breaks, unaffected by weather[/rl]\nTrader benefits: process vast data, perfect discipline (no behavioral bias), perfect records."},
+    {id:"tc11",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Electronic trading & bond markets",
+     a:"Despite the efficiencies for STOCK traders, [hl]bond market trades remain largely OTC[/hl] (over the counter).\nMany competing electronic bond exchanges exist, but they're used [hl]primarily by dealers[/hl].\nSignificant cost savings would result for public investors if their brokers gave them access to these systems."},
+    {id:"tc12",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Quiz traps \u2014 VWAP cost & order-book impact",
+     a:"[rl]Price impact of the Nth lot = price of that lot \u2212 price of the previous lot (walking down the book), e.g. 17.71 \u2212 17.69 = $0.02[/rl][rl]Inside spread = best ask \u2212 best bid (e.g. 17.69 \u2212 17.65 = $0.04)[/rl][rl]VWAP cost: use the [hl]ROUNDED[/hl] trade/benchmark VWAPs; a buy executing BELOW the benchmark gives a [hl]negative[/hl] cost = favorable (e.g. 1,500\u00d7(44.68\u221244.70) = \u2212$30)[/rl][rl]VWAP appropriate only when trade = SMALL part of volume[/rl]"},
+    {id:"tc13",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Market fragmentation (11.e)",
+     a:"Occurs when a security trades in [hl]multiple markets[/hl] \u2192 significant liquidity differences between electronic markets (e.g. many bids/few offers on one exchange, opposite on another) \u2192 can cause [hl]price & liquidity differences between markets[/hl].\nOvercome by: [hl]liquidity aggregation[/hl] algos (build a 'super book' across markets) and [hl]smart order routing (SOR)[/hl] (send orders to markets with best prices/sizes).\nReflex: liquidity-seeking algos exist IN RESPONSE TO fragmentation."},
+    {id:"tc14",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Types of electronic traders (11.f) + latency",
+     a:"Users: [hl]proprietary[/hl] (dealers, arbitrageurs, front runners), [hl]buy-side[/hl] (investment & risk managers), and brokers.\nProprietary include [hl]high-frequency traders[/hl] (quick round-trips thousands/day) and [hl]low-latency traders[/hl] (rely on speed receiving news & trading on it).\n[hl]Latency[/hl] = time lapse between an event occurring and execution of a trade based on that event."},
+    {id:"tc15",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Electronic news traders vs electronic dealers",
+     a:"[rl][hl]News traders[/hl]: analyze high-speed news feeds, submit [hl]MARKET orders[/hl] (not limit); AI/NLP to trade against [hl]stale orders[/hl] (posted limits not reflecting the news). Low round-trip costs \u2192 profit even if right only a fraction of the time[/rl][rl][hl]Dealers[/hl]: post bid/offer to profit from the [hl]spread[/hl]; low inventory; [hl]SUSPEND quotes on news[/hl] \u2192 lost trades if news immaterial, BUT protects them from feeding liquidity to news traders when news is material (avoid being picked off on stale quotes)[/rl]"},
+    {id:"tc16",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Front runner identification (11.f trap)",
+     a:"A trader using [hl]AI to sniff out large trades being worked in small parts[/hl], then trading ahead of them = [hl]front runner[/hl].\nContrast: arbitrageurs exploit price differences across markets; dealers profit from the bid-ask spread; news traders act on news feeds.\nFront running = detecting and trading ahead of a large pending order."},
+    {id:"tc17",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"The need for speed \u2014 jumping the order queue (11.g)",
+     a:"Electronic systems give low-latency traders an edge by [hl]jumping the order queue[/hl]:\n[rl][hl]Order taking[/hl] \u2014 execute against a standing sell order when positive news breaks[/rl][rl][hl]Market making[/hl] \u2014 take precedence when providing liquidity[/rl][rl][hl]Order canceling[/hl] \u2014 cancel when they no longer want to fill (e.g. trades elsewhere make a posted quote ill-advised)[/rl]\nElectronic traders must be [hl]faster than competitors[/hl] to capitalize on opportunities."},
+    {id:"tc18",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Quiz 11.2 traps \u2014 drivers, bonds, fragmentation",
+     a:"[rl]Q1: market fragmentation is NOT a driver of electronic systems (drivers = CAAFC) \u2192 it's the LEAST likely[/rl][rl]Q2: 'electronic facilitated bond trading for retail' is FALSE \u2014 electronic benefited STOCK traders; bonds remain OTC, exchanges used by dealers[/rl][rl]Q3: liquidity-seeking algos respond to [hl]market fragmentation[/hl] (not even liquidity, not brokerage costs)[/rl][rl]Q4: AI sniffing out large orders in small parts = [hl]front runners[/hl][/rl]"},
+    {id:"tc19",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Low-latency: 3 phases & speed mapping (11.g)",
+     a:"Phases of a trade where latency arises:\n[rl]1. News publication \u2192 receipt by trader = [hl]communication[/hl][/rl][rl]2. Receipt \u2192 deciding the action/order = [hl]computation[/hl][/rl][rl]3. Order determination \u2192 communicating to exchange = [hl]communication[/hl][/rl]\nTrap: phases 1 & 3 = communication speed; phase 2 = computation speed.\nComm speed \u2192 minimize distance \u2192 [hl]co-location[/hl] (servers in the exchange; can't be offered selectively). Computation \u2192 fast CPUs/cooling, fast memory vs disk, [hl]assembler[/hl] over C++, pre-run scenarios."},
+    {id:"tc20",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Advanced orders vs tactics vs algorithms (11.h)",
+     a:"[rl][hl]Advanced order types[/hl]: limit orders with a DYNAMIC limit price varying with a benchmark (e.g. pegged limit one tick below lowest ask; auto-cancel & replace as asks move)[/rl][rl][hl]Trading tactics[/hl]: submit MULTIPLE orders to uncover hidden bids/asks, discretionary orders (limit \u00b1 discretion), IOC; used at [hl]dark pools[/hl]; reduce footprint via randomness; often [hl]midspread orders[/hl] (pegged to bid-ask midpoint)[/rl][rl][hl]Algorithms[/hl]: programmed strategies w/ multiple orders + sequencing + tactics (e.g. VWAP algo splits proportional to volume); use limit AND market orders to minimize total cost[/rl]"},
+    {id:"tc21",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Impact of electronic trading: hidden / leapfrog / flickering / ML",
+     a:"[rl][hl]Hidden orders[/hl]: limit orders hidden from all but the exchange; remove the option exposed standing orders give others; detected by [hl]pinging[/hl] with small IOC (reveals existence, NOT size/side)[/rl][rl][hl]Leapfrog[/hl]: beat the best bid/ask when spreads are large \u2192 [hl]narrows the inside spread[/hl]; forces others to re-quote for precedence[/rl][rl][hl]Flickering quotes[/hl]: exposed limits submitted & canceled almost instantly; to trade against, submit a hidden limit in anticipation of its return[/rl][rl][hl]Machine learning[/hl]: data mining; INEFFECTIVE in extraordinary high-volatility times \u2192 traders shut down[/rl]"},
+    {id:"tc22",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Electronic arbitrage \u2014 three types & risk ranking",
+     a:"[rl][hl]A. Take liquidity both sides[/hl]: simultaneous MARKET buy & sell across markets on the same security; low latency critical \u2192 [hl]LOWEST risk[/hl] (fills fast)[/rl][rl][hl]B. Offer liquidity one side[/hl]: e.g. bid $95 in X; if it fills, sell to the $100 bid in Y \u2192 $5 profit; moderate risk (offered leg may not fill)[/rl][rl][hl]C. Offer liquidity both sides[/hl]: post limits inferior to best bid/offer in different markets; [hl]HIGHEST risk[/hl] \u2014 if one leg fills & the other doesn't \u2192 adverse-price exposure[/rl]\nRisk-averse arbitrageur \u2192 choose A."},
+    {id:"tc23",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"formula",
+     q:"Take-liquidity arbitrage profit & the SIZE trap",
+     a:"Profit/share = [hl]highest bid \u2212 lowest ask[/hl] (only if positive). Buy at the lowest ask, sell at the highest bid.\nTotal = profit/share \u00d7 [hl]binding size[/hl] = min(bid size you sell into, ask size you buy from).\nStock ZZ: buy 10.05 (Bravo), sell 10.06 (Alpha) \u2192 $0.01 \u00d7 11,000 = [hl]$110[/hl].\nPhilly/LA: buy 16.11 (LA), sell 16.13 (Philly) \u2192 $0.02 \u00d7 min(50k bid, 100k ask)=50k = [hl]$1,000[/hl] (NOT $2,000 \u2014 the 50k bid is binding)."},
+    {id:"tc24",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Risks of electronic trading (11.i)",
+     a:"[rl][hl]HFT arms race[/hl]: fastest win \u2192 deploy latest/priciest tech; offsets cost benefits, acts as an ENTRY BARRIER, not level for small traders. Fix: [hl]random-interval trading delays[/hl] (can't be forecast by HFT algos)[/rl][rl][hl]Systemic risk[/hl]: cost of bad trades borne by OTHERS \u2192 weak incentive to mitigate; programming errors \u2192 market chaos[/rl]\nMitigation: backtest & control software pre-deployment; brokers scrutinize order appropriateness; markets set limits/circuit breakers on volatility spikes."},
+    {id:"tc25",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Common trading errors (systemic risk)",
+     a:"[rl][hl]Runaway algorithms[/hl]: unintended order series. [hl]Flash crash May 2010[/hl] \u2014 algo sold mini S&P 500 futures proportional to VOLUME (not a limit order) \u2192 more trades begat more volume \u2192 volatility spiral[/rl][rl][hl]Fat finger errors[/hl]: input errors \u2192 dramatic volatility where human checks are missing[/rl][rl][hl]Overlarge orders[/hl]: deplete available liquidity[/rl][rl][hl]Malevolent orders[/hl]: aggressive/abusive submissions[/rl]"},
+    {id:"tc26",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Abuses regulators detect via surveillance (11.j)",
+     a:"Real-time surveillance (leveraging the electronic [hl]audit trail[/hl]) detects:\n[rl][hl]Front running[/hl]: trading ahead of a large order; illegal if info obtained improperly[/rl][rl][hl]Market manipulation[/hl]: trades/quotes meant to mislead others into acting so the manipulator profits[/rl][rl][hl]Trading on material non-public info[/hl][/rl][rl][hl]Rumormongering[/hl]: false info to move prices[/rl]\nSurveillance must distinguish genuine orders from manipulative ones."},
+    {id:"tc27",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Front running (11.j) \u2014 and its legality nuance",
+     a:"[hl]Low-latency trading ahead of known large trades[/hl]. A front runner learning a large buy is being worked in pieces takes the best asks, then resells to the unsuspecting buyer at higher prices.\n[hl]Illegal only if the info was obtained improperly[/hl] \u2014 often it's just inferred from market data. Algos break large orders into pieces; front runners use [hl]machine learning to sniff them out[/hl]."},
+    {id:"tc28",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Market manipulation subtypes (11.j) \u2014 part 1",
+     a:"Manipulation = produce false price/volume data to deceive others (illegal, but enforcement LAX \u2014 hard to separate from genuine trades).\n[rl][hl]Trading for market impact[/hl]: trades to move price up/down (sometimes at large cost) to influence perception of value[/rl][rl][hl]Rumormongering[/hl]: spread FAKE info; generally illegal \u2014 but biased reporting (one-sided) is NOT[/rl][rl][hl]Wash trading[/hl]: trades between COMMONLY CONTROLLED accounts \u2192 false impression of liquidity[/rl][rl][hl]Spoofing/layering[/hl]: fake limit orders for fake optimism/pessimism; post hidden buy (low) + exposed sells to push others to sell low. [hl]Layering is risky[/hl] \u2014 the exposed sells may actually fill[/rl]"},
+    {id:"tc29",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"framework",
+     q:"Market manipulation subtypes (11.j) \u2014 part 2",
+     a:"[rl][hl]Bluffing[/hl]: prey on MOMENTUM traders (buy rising/sell falling). [hl]Pump and dump[/hl] = buy to raise price, sell back higher; sell-side analog = [hl]short and distort[/hl]. Analysts avoid it via sound valuation \u2014 Standard V(A) Diligence & Reasonable Basis[/rl][rl][hl]Gunning the market[/hl]: force others into bad trades \u2014 rapid short selling collapses the market, triggers STOP-LOSS orders the manipulator fills, repurchasing cheaply[/rl][rl][hl]Squeezing & cornering[/hl]: control resources to settle contracts then withdraw \u2192 defaults. Short squeeze: control lendable shares, lend to shorts, recall abruptly. Cornering (commodities): long futures + buy spot supply, demand undeliverable physical[/rl]"},
+    {id:"tc30",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
+     q:"Quiz 11.4 trap \u2014 malevolent orders vs gunning the market",
+     a:"Both sound 'aggressive' \u2014 distinguish by mechanism:\n[rl][hl]Malevolent orders[/hl] (error/risk category): created to specifically manipulate; e.g. rogue trades by aggrieved employees, or [hl]denial-of-service attacks on competitors via excessive quote submission[/hl][/rl][rl][hl]Gunning the market[/hl] (manipulation subtype): [hl]rapid short selling collapses a security[/hl] \u2192 triggers stop-loss orders the manipulator fills cheaply[/rl]\nStorm checks-and-balances (authorized-only input + supervisory sign-off on algo updates) = both valid."},
   ]
 };
 
@@ -26881,7 +27654,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -26909,6 +27682,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'aaiWidget' && typeof aaiInit === 'function') setTimeout(aaiInit, 50);
     if (widgetId === 'pwmWidget' && typeof pwmInit === 'function') setTimeout(pwmInit, 50);
     if (widgetId === 'iiWidget' && typeof iiInit === 'function') setTimeout(iiInit, 50);
+    if (widgetId === 'tcWidget' && typeof tcInit === 'function') setTimeout(tcInit, 50);
   }
 }
 
@@ -26932,6 +27706,7 @@ function openNote(key, topic, subtopic) {
     'Portfolio Construction||Asset Allocation to Alternative Investments': 'aaiWidget',
     'Portfolio Construction||An Overview of Private Wealth Management': 'pwmWidget',
     'Portfolio Construction||Portfolio Management for Institutional Investors': 'iiWidget',
+    'Portfolio Construction||Trading Costs and Electronic Markets': 'tcWidget',
     'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
     'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
     'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
@@ -26943,7 +27718,7 @@ function openNote(key, topic, subtopic) {
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
