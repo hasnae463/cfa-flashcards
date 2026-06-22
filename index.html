@@ -23255,6 +23255,1083 @@ VWAP txn cost  = 300 &#215; (+1) &#215; (12.04 &#8722; 11.86) = $54</div>
           </script>
         </div>
 
+        <div id="ppeWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #ppeWidget { --ppe-main:#2DD4BF; --ppe-green:#3FB950; --ppe-red:#FF7B72; --ppe-blue:#79C0FF; --ppe-amber:#E0A82E; }
+            #ppeWidget .ppe-h { font-family:var(--serif); font-size:21px; color:var(--ppe-main); font-weight:700; margin:0 0 4px; letter-spacing:.01em; }
+            #ppeWidget .ppe-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:16px; letter-spacing:.04em; }
+            #ppeWidget .ppe-modtabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
+            #ppeWidget .ppe-modtab { background:var(--surface2); border:1px solid var(--ppe-main); color:var(--ppe-main); padding:10px 18px; border-radius:8px; font-family:var(--serif); font-size:14px; font-weight:700; cursor:pointer; letter-spacing:.02em; }
+            #ppeWidget .ppe-modtab.active { background:var(--ppe-main); color:#0D1117; }
+            #ppeWidget .ppe-modpanel { display:none; }
+            #ppeWidget .ppe-modpanel.active { display:block; }
+            #ppeWidget .ppe-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #ppeWidget .ppe-toptab { background:var(--surface2); border:1px solid rgba(45,212,191,.5); color:var(--ppe-main); padding:7px 13px; border-radius:6px; font-family:var(--serif); font-size:12.5px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #ppeWidget .ppe-toptab.active { background:var(--ppe-main); color:#0D1117; }
+            #ppeWidget .ppe-toppanel { display:none; }
+            #ppeWidget .ppe-toppanel.active { display:block; }
+            #ppeWidget .ppe-tab { background:var(--surface); border:1px solid var(--border); color:var(--muted); padding:6px 12px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; }
+            #ppeWidget .ppe-tab.active { background:rgba(45,212,191,.14); border-color:var(--ppe-main); color:var(--ppe-main); }
+            #ppeWidget .ppe-card { background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:16px 18px; margin-bottom:14px; }
+            #ppeWidget .ppe-title { font-family:var(--serif); font-size:15.5px; color:var(--ppe-main); font-weight:600; margin-bottom:9px; }
+            #ppeWidget .ppe-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:6px; }
+            #ppeWidget .ppe-rule { display:block; font-size:12.5px; line-height:1.5; color:#C9D1D9; padding:7px 0 7px 14px; border-left:2px solid var(--border); margin:7px 0; }
+            #ppeWidget .ppe-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--ppe-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #ppeWidget .ppe-info { background:rgba(121,192,255,.08); border-left:3px solid var(--ppe-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #ppeWidget .ppe-green { color:var(--ppe-green); }
+            #ppeWidget .ppe-red { color:var(--ppe-red); }
+            #ppeWidget .ppe-main-c { color:var(--ppe-main); }
+            #ppeWidget .ppe-blue { color:var(--ppe-blue); }
+            #ppeWidget .ppe-tbl { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #ppeWidget .ppe-tbl th { background:#0B0F14; color:var(--ppe-main); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #ppeWidget .ppe-tbl td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+          </style>
+
+          <div class="ppe-h">Portfolio Performance Evaluation</div>
+          <div class="ppe-sub">READING 13 · Performance Measurement</div>
+
+          <div class="ppe-modtabs">
+            <button class="ppe-modtab active" onclick="ppeMod(event,'ppem-131')">13.1 Performance Evaluation</button>
+            <button class="ppe-modtab" onclick="ppeMod(event,'ppem-132')">13.2 Return Attribution</button>
+            <button class="ppe-modtab" onclick="ppeMod(event,'ppem-133')">Risk Attribution</button>
+            <button class="ppe-modtab" onclick="ppeMod(event,'ppem-134')">13.3 Benchmarking</button>
+            <button class="ppe-modtab" onclick="ppeMod(event,'ppem-135')">13.4 Appraisal</button>
+          </div>
+
+          <!-- ════════ MODULE 13.1 ════════ -->
+          <div id="ppem-131" class="ppe-modpanel active">
+            <div class="ppe-toptabs">
+              <button class="ppe-toptab active" onclick="ppeTop(event,'ppe131-comp')">3 Components</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe131-eff')">Effective Attribution</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe131-rr')">Return vs Risk &middot; Macro/Micro</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe131-meth')">Three Methods</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe131-quiz')">Quiz 13.1</button>
+            </div>
+
+            <!-- 3 COMPONENTS -->
+            <div id="ppe131-comp" class="ppe-toppanel active">
+              <div class="ppe-card">
+                <div class="ppe-title">Two perspectives (framing)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Perspective</th><th>Captures</th></tr>
+                  <tr><td><b class="ppe-main-c">Fund sponsor</b></td><td><b>ALL</b> value added or lost across the fund</td></tr>
+                  <tr><td><b class="ppe-main-c">Manager</b></td><td>Only what <b>that manager</b> did to add/lose value</td></tr>
+                </table>
+                <div class="ppe-info">Setup: a large investor (pension, endowment, foundation) hires several managers. Evaluation deconstructs returns to quantify which decisions added or subtracted value.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Three interrelated components (LOS 13.a)</div>
+                <div class="ppe-body">Each builds on the previous:</div>
+                <table class="ppe-tbl">
+                  <tr><th>Component</th><th>Role</th><th>Question</th></tr>
+                  <tr><td><b class="ppe-main-c">Performance measurement</b></td><td><b>Foundation phase</b> &#8212; calculates <b>both return AND risk</b> over specified periods. First determine: compared to a <b>benchmark</b> (relative) or a pre-specified <b>target return %</b> (absolute)?</td><td><b>WHAT</b> performance?</td></tr>
+                  <tr><td><b class="ppe-main-c">Performance attribution</b></td><td>Determines the <b>key drivers</b> of performance; expands on risk/return and explains <b>how</b> the return was achieved given the risk taken. Explains <b>relative AND absolute</b> returns</td><td><b>HOW</b> achieved?</td></tr>
+                  <tr><td><b class="ppe-main-c">Performance appraisal</b></td><td>Determines whether performance was driven by <b>investment decisions, the overall market, or chance</b>; combines measurement + attribution into a judgment on <b>quality</b></td><td><b>SKILL or LUCK</b>?</td></tr>
+                </table>
+                <div class="ppe-trap"><b>Appraisal = the "chance/luck" component.</b> If performance is attributed to <b>luck</b>, we cannot expect similar returns in the future. Don't confuse with attribution (the "how/drivers" component).</div>
+              </div>
+            </div>
+
+            <!-- EFFECTIVE ATTRIBUTION -->
+            <div id="ppe131-eff" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Attributes of an effective attribution process (LOS 13.b)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Must include</th></tr>
+                  <tr><td>A reflection of <b class="ppe-main-c">100%</b> of the portfolio's return or risk exposure</td></tr>
+                  <tr><td>The portfolio manager's <b class="ppe-main-c">current decision-making process</b></td></tr>
+                  <tr><td>The <b class="ppe-main-c">active investment decisions</b> taken by the PM</td></tr>
+                  <tr><td>A <b class="ppe-main-c">full explanation</b> of the portfolio's excess return and risk</td></tr>
+                </table>
+                <div class="ppe-trap"><b>Two non-negotiables:</b> account for <b>100% of risk and return</b> AND represent the PM's <b>CURRENT</b> process. If the investment process recently changed, the attribution <b>must be updated</b> to reflect it. An attribution that doesn't capture total risk/return is misleading and unreliable.</div>
+              </div>
+            </div>
+
+            <!-- RETURN VS RISK + MACRO/MICRO -->
+            <div id="ppe131-rr" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Return attribution vs risk attribution (LOS 13.c)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Type</th><th>Analyzes impact of active decisions on...</th></tr>
+                  <tr><td><b class="ppe-main-c">Return attribution</b></td><td>The fund's investment <b>returns</b></td></tr>
+                  <tr><td><b class="ppe-main-c">Risk attribution</b></td><td>Portfolio <b>risk</b> (the parallel of return attribution)</td></tr>
+                </table>
+                <div class="ppe-rule">Risk is generally compared to the appropriate <b>benchmark</b> (relative-based), but can be <b>absolute</b> (independent of a benchmark).</div>
+                <div class="ppe-trap"><b>Matching trap:</b> a <b>relative-based</b> risk attribution is NOT appropriate for a manager with a predetermined <b>absolute target return</b> goal. And a widely-quoted passive index (e.g. S&amp;P 500) <b>may or may not</b> be an appropriate benchmark.</div>
+                <div class="ppe-info">Why it matters more now: after a long bull market, attribution helps PMs justify performance &amp; fees in negative-return periods. Bonus: a <b>quality-control</b> check &#8212; did the manager do what they said?</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Macro vs micro attribution</div>
+                <table class="ppe-tbl">
+                  <tr><th>Level</th><th>Analyzes</th><th>Detail</th></tr>
+                  <tr><td><b class="ppe-main-c">Micro attribution</b></td><td>The <b>portfolio manager's</b> level</td><td>Verifies the PM did what they said; explains the drivers of the portfolio's return</td></tr>
+                  <tr><td><b class="ppe-main-c">Macro attribution</b></td><td>The <b>fund sponsor's</b> level</td><td>Common in institutional investing; quantifies sponsors' decisions to deviate from the <b>strategic asset allocation</b> and the <b>timing</b> of those decisions</td></tr>
+                </table>
+                <div class="ppe-trap"><b>Mnemonic:</b> mi<b>C</b>ro &#8594; manager; ma<b>C</b>ro &#8594; sponsor (deviations from SAA + timing). Both possible because attribution is flexible across fund-sponsor and PM levels.</div>
+              </div>
+            </div>
+
+            <!-- THREE METHODS -->
+            <div id="ppe131-meth" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Three attribution methods (LOS 13.d)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Method</th><th>What it does</th></tr>
+                  <tr><td><b class="ppe-main-c">Returns-based</b></td><td>Regresses total portfolio returns against major <b>risk factors</b> (systematic, size, value) to identify the manager's active bets &amp; their impact on active return</td></tr>
+                  <tr><td><b class="ppe-main-c">Holdings-based</b></td><td>Uses <b>beginning-of-period holdings</b> to assess active sector/stock-selection bets &amp; their contribution to active return. Does NOT adjust for changes during the period</td></tr>
+                  <tr><td><b class="ppe-main-c">Transactions-based</b></td><td>Improves on holdings-based by including the impact of <b>any trades executed</b> during the period</td></tr>
+                </table>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Figure 13.1 &#8212; advantages &amp; disadvantages</div>
+                <table class="ppe-tbl">
+                  <tr><th>Method</th><th>Advantages</th><th>Disadvantages</th></tr>
+                  <tr><td><b class="ppe-main-c">Returns-based</b></td><td>Easy to implement; no holdings data needed (useful for private funds, e.g. hedge funds)</td><td><b class="ppe-red">Least accurate</b> (ignores underlying holdings); returns data can be <b>manipulated</b></td></tr>
+                  <tr><td><b class="ppe-main-c">Holdings-based</b></td><td>More accurate than returns-based (considers holdings)</td><td>Needs holdings data; <b>trading-effect mismatch</b> &#8594; not appropriate for high-turnover active funds with long evaluation periods</td></tr>
+                  <tr><td><b class="ppe-main-c">Transactions-based</b></td><td><b class="ppe-green">Most accurate</b></td><td><b class="ppe-red">Highest</b> data requirements; <b class="ppe-red">highest</b> complexity</td></tr>
+                </table>
+                <div class="ppe-trap"><b>"Timing"/"trading" effect:</b> holdings-based uses beginning-of-period holdings only, so for a <b>high-turnover</b> manager the output may not reconcile to overall portfolio returns. This mismatch is the timing/trading effect &#8212; <b>reduced by using shorter evaluation periods</b>.</div>
+                <div class="ppe-info">Method choice is driven by: data nature/availability, the manager's investment process, and the analyst's need for accuracy. Accuracy ranking: <b class="ppe-red">returns</b> &lt; holdings &lt; <b class="ppe-green">transactions</b>.</div>
+              </div>
+            </div>
+
+            <!-- QUIZ 13.1 -->
+            <div id="ppe131-quiz" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Module Quiz 13.1</div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q1');e.style.display=e.style.display==='none'?'block':'none';">Q1: which component determines whether performance was primarily by CHANCE? (A appraisal / B attribution / C measurement)</button>
+                <div id="ppe-q1" style="display:none;"><div class="ppe-rule"><b class="ppe-green">A &#8212; performance appraisal.</b> Appraisal determines whether performance came from investment decisions, the overall market, or <b>chance</b> (skill vs luck). Attribution explains the <b>drivers</b>; measurement calculates return &amp; risk.</div></div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q2');e.style.display=e.style.display==='none'?'block':'none';">Q2: which attribution method is the MOST reliable? (A returns based / B holdings based / C transactions based)</button>
+                <div id="ppe-q2" style="display:none;"><div class="ppe-rule"><b class="ppe-green">C &#8212; transactions based.</b> It's the most accurate because it includes trades executed during the period (at the cost of highest data needs/complexity). Returns-based is least accurate; holdings-based is in between.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 13.2 RETURN ATTRIBUTION ════════ -->
+          <div id="ppem-132" class="ppe-modpanel">
+            <div class="ppe-toptabs">
+              <button class="ppe-toptab active" onclick="ppeTop(event,'ppe132-ag')">Arithmetic vs Geometric</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe132-bhb')">BHB Model</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe132-bf')">Brinson-Fachler</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe132-mm')">Macro vs Micro</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe132-fac')">Factor / Carhart</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe132-fi')">Fixed-Income</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe132-bhbcalc')">BHB/BF Calc</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe132-quiz')">Quiz 13.2</button>
+            </div>
+
+            <!-- ARITHMETIC vs GEOMETRIC -->
+            <div id="ppe132-ag" class="ppe-toppanel active">
+              <div class="ppe-card">
+                <div class="ppe-title">Arithmetic vs geometric attribution (LOS 13.e)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Approach</th><th>Active return</th><th>Problem / property</th></tr>
+                  <tr><td><b class="ppe-main-c">Arithmetic</b></td><td>R &#8722; B (single period)</td><td>Single-period arithmetic active returns <b>do NOT compound</b> to the multi-period active return without a "smoothing" adjustment</td></tr>
+                  <tr><td><b class="ppe-main-c">Geometric</b></td><td>G = (1+R)/(1+B) &#8722; 1</td><td>Defines the <b>periodic excess return as a RATIO</b>; single-period geometric returns <b>DO compound</b> across periods</td></tr>
+                </table>
+                <div class="ppe-fl" id="ppe-fl-ag">Two-period example (R = 5%,5% ; B = 3%,3%):
+  R(2-period) = 1.05&#178; &#8722; 1 = 10.25%
+  B(2-period) = 1.03&#178; &#8722; 1 = 6.09%
+  ARITHMETIC 2-period active = 10.25% &#8722; 6.09% = 4.16%
+     ...but each period's 2% does NOT give 4.16% (1.02&#178;&#8722;1 = 4.04%)
+  GEOMETRIC 2-period active = 1.1025 / 1.0609 &#8722; 1 = 3.92%
+     each period 1.05/1.03&#8722;1 = 1.94%, and 1.0194&#178;&#8722;1 = 3.92% &#10003; compounds</div>
+                <div class="ppe-info"><b>Prof's note:</b> all attribution models in this reading are <b>arithmetic</b> (the vast majority of practitioners use arithmetic attribution).</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Arithmetic vs geometric calculator</div>
+                <div class="ppe-body">Two single-period returns for portfolio and benchmark (in %).</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;">
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">R&#8321;<input id="ppe-ag-r1" type="number" value="5" step="0.1" oninput="ppeAgCalc()" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">R&#8322;<input id="ppe-ag-r2" type="number" value="5" step="0.1" oninput="ppeAgCalc()" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">B&#8321;<input id="ppe-ag-b1" type="number" value="3" step="0.1" oninput="ppeAgCalc()" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">B&#8322;<input id="ppe-ag-b2" type="number" value="3" step="0.1" oninput="ppeAgCalc()" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                </div>
+                <div class="ppe-fl" id="ppe-ag-out"></div>
+              </div>
+            </div>
+
+            <!-- BHB MODEL -->
+            <div id="ppe132-bhb" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Brinson-Hood-Beebower (BHB) method (LOS 13.h)</div>
+                <div class="ppe-body">The Brinson model has two variants: <b class="ppe-main-c">BHB</b> and <b class="ppe-main-c">Brinson-Fachler (BF)</b>. BHB breaks total active return into <b>three</b> components:</div>
+                <div class="ppe-fl">R = &#931; w&#7522;R&#7522;   (portfolio)        B = &#931; W&#7522;B&#7522;   (benchmark)
+w&#7522;,R&#7522; = PORTFOLIO weight/return in segment i
+W&#7522;,B&#7522; = BENCHMARK weight/return in segment i
+
+Allocation  A&#7522; = (w&#7522; &#8722; W&#7522;) &#215; B&#7522;          [active weight &#215; passive segment return]
+Selection   S&#7522; = W&#7522; &#215; (R&#7522; &#8722; B&#7522;)          [passive weight &#215; active segment return]
+Interaction I&#7522; = (w&#7522; &#8722; W&#7522;) &#215; (R&#7522; &#8722; B&#7522;)</div>
+                <div class="ppe-trap"><b>Memory hook:</b> Allocation uses the <b>active weight &#215; benchmark return</b>; Selection uses the <b>benchmark weight &#215; active return</b>; Interaction multiplies <b>both actives together</b>. (BHB allocation uses B&#7522; directly &#8212; not B&#7522;&#8722;B; that's the BF tweak.)</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Worked example (Fig 13.2)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Style</th><th>w (fund)</th><th>R (fund)</th><th>W (bm)</th><th>B (bm)</th></tr>
+                  <tr><td>Growth</td><td>75%</td><td>13%</td><td>60%</td><td>10%</td></tr>
+                  <tr><td>Value</td><td>25%</td><td>19%</td><td>40%</td><td>20%</td></tr>
+                </table>
+                <div class="ppe-fl">R = .75&#215;13 + .25&#215;19 = 14.5%   B = .60&#215;10 + .40&#215;20 = 14.0%   active = 0.5%
+
+Allocation: growth (.75&#8722;.60)&#215;10 = +1.5% ; value (.25&#8722;.40)&#215;20 = &#8722;3.0% ; total &#8722;1.5%
+Selection : growth .60&#215;(13&#8722;10) = +1.8% ; value .40&#215;(19&#8722;20) = &#8722;0.4% ; total +1.4%
+Interaction: growth (.75&#8722;.60)&#215;(13&#8722;10)=+0.45% ; value (.25&#8722;.40)&#215;(19&#8722;20)=+0.15% ; total +0.60%
+Total value added = &#8722;1.5% + 1.4% + 0.6% = 0.5% &#10003;</div>
+                <div class="ppe-info"><b>Interpretation:</b> negative total allocation &#8594; overweighting growth/underweighting value was wrong in a period where value beat growth. Positive growth selection &#8594; manager's growth picks beat the growth benchmark.</div>
+                <div class="ppe-trap"><b>Why interaction exists:</b> allocation <b>purely</b> measures over/underweighting (ignores selection); selection <b>purely</b> measures picking (ignores weighting). The interaction captures their <b>compounding</b> &#8212; e.g. overweighting a style where your manager also outperformed.</div>
+              </div>
+            </div>
+
+            <!-- BRINSON-FACHLER -->
+            <div id="ppe132-bf" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Brinson-Fachler (BF) method</div>
+                <div class="ppe-rule">BF fixes a drawback of BHB: under BHB the <b>sign of the allocation effect doesn't automatically tell you whether the over/underweight was correct</b>.</div>
+                <div class="ppe-fl">BHB allocation:  A&#7522; = (w&#7522; &#8722; W&#7522;) &#215; B&#7522;
+BF  allocation:  A&#7522; = (w&#7522; &#8722; W&#7522;) &#215; (B&#7522; &#8722; B)      &#8592; segment return RELATIVE to overall benchmark
+
+Selection &amp; Interaction are calculated EXACTLY THE SAME in both models.</div>
+                <div class="ppe-trap"><b>The whole point:</b> overweighting growth (B&#7522;=10%) was a <b>bad</b> call because the overall benchmark returned 14%. BHB gives +1.5% (misleadingly positive). BF gives (.75&#8722;.60)&#215;(10&#8722;14) = <b class="ppe-red">&#8722;0.6%</b> &#8212; correctly negative, because you overweighted a segment that <b>underperformed the overall benchmark</b>.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">BF worked example (same data, B = 14%)</div>
+                <div class="ppe-fl">growth allocation = (.75&#8722;.60)&#215;(10&#8722;14) = &#8722;0.60%
+value  allocation = (.25&#8722;.40)&#215;(20&#8722;14) = &#8722;0.90%
+total  allocation = &#8722;0.60% &#8722; 0.90% = &#8722;1.50%   (same total as BHB)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Style</th><th>Allocation</th><th>Selection</th><th>Interaction</th></tr>
+                  <tr><td>Growth</td><td>&#8722;0.60%</td><td>1.80%</td><td>0.45%</td></tr>
+                  <tr><td>Value</td><td>&#8722;0.90%</td><td>&#8722;0.40%</td><td>0.15%</td></tr>
+                  <tr><td><b>Total</b></td><td><b>&#8722;1.50%</b></td><td><b>1.40%</b></td><td><b>0.60%</b></td></tr>
+                </table>
+                <div class="ppe-info">The <b>only</b> difference between BF and BHB output is the individual growth/value <b>allocation</b> effects. Totals are identical. <b>BF is the more popular model in practice.</b></div>
+              </div>
+            </div>
+
+            <!-- MACRO vs MICRO -->
+            <div id="ppe132-mm" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Macro vs micro attribution (in the Brinson context)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Level</th><th>Who</th><th>What it attributes</th></tr>
+                  <tr><td><b class="ppe-main-c">Macro attribution</b></td><td><b>Fund sponsor</b> = investment committee (sets strategic AA, oversees staff) + internal investment staff (tactical deviations, selects external managers)</td><td>Value added by the sponsor's decision to over/underweight different <b>styles of manager</b> vs benchmark, and the sponsor's skill in <b>selecting good managers</b> within those styles</td></tr>
+                  <tr><td><b class="ppe-main-c">Micro attribution</b></td><td>Individual <b>portfolio managers</b> (internal or external)</td><td>Their decisions to over/underweight <b>segments</b> (substyle / sector / geography) of their own portfolio to generate active return</td></tr>
+                </table>
+                <div class="ppe-info">The earlier BHB/BF growth-vs-value example was a <b>macro</b> attribution. Expanding the same example to size bets (large-cap vs small-cap) within each style is a <b>micro</b> attribution.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Micro attribution example &#8212; size bets (Fig 13.3, BF model, B = 14%)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Segment</th><th>w</th><th>R</th><th>W</th><th>B</th></tr>
+                  <tr><td>Large-cap growth</td><td>50%</td><td>15%</td><td>30%</td><td>8%</td></tr>
+                  <tr><td>Small-cap growth</td><td>25%</td><td>9%</td><td>30%</td><td>12%</td></tr>
+                  <tr><td>Large-cap value</td><td>25%</td><td>19%</td><td>40%</td><td>20%</td></tr>
+                </table>
+                <div class="ppe-fl">GROWTH (BF alloc = (w&#8722;W)(B&#7522;&#8722;B); sel = W(R&#8722;B&#7522;); int = (w&#8722;W)(R&#8722;B&#7522;)):
+  alloc:  LC (.50&#8722;.30)(8&#8722;14)=&#8722;1.20% ; SC (.25&#8722;.30)(12&#8722;14)=+0.10% ; total &#8722;1.10%
+  select: LC .30(15&#8722;8)=+2.10% ; SC .30(9&#8722;12)=&#8722;0.90% ; total +1.20%
+  inter : LC (.50&#8722;.30)(15&#8722;8)=+1.40% ; SC (.25&#8722;.30)(9&#8722;12)=+0.15% ; total +1.55%
+VALUE (large-cap value only):
+  alloc (.25&#8722;.40)(20&#8722;14)=&#8722;0.90% ; sel .40(19&#8722;20)=&#8722;0.40% ; inter (.25&#8722;.40)(19&#8722;20)=+0.15%</div>
+                <div class="ppe-fl">MICRO TOTALS:  allocation &#8722;2.00% | selection +0.80% | interaction +1.70% | sum = 0.50% &#10003;</div>
+                <div class="ppe-trap"><b>Key takeaways (exam-tested):</b>
+&bull; Growth alloc &#8722;1.10%: manager <b>overweighted large-cap growth (50% vs 30%) when LC growth (8%) underperformed the overall benchmark (14%)</b> &#8594; bad allocation.
+&bull; Growth selection +1.20%: good large-cap picks (+2.10%) outweighed poor small-cap picks (&#8722;0.90%).
+&bull; Micro per-segment effects <b>differ</b> from the macro numbers, but aggregate to the <b>same 0.5%</b> active return.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Two micro shortcuts &amp; single-stock note</div>
+                <div class="ppe-rule"><b>Shortcut (selection + interaction together):</b> later attributions lump selection + interaction and compute it with <b>actual portfolio weights</b>: w&#7522; &#215; (R&#7522; &#8722; B&#7522;). E.g. LC growth: 0.50&#215;(15&#8722;8) = <b>3.50%</b> = 2.10% (selection) + 1.40% (interaction). (Selection alone uses benchmark weight W&#7522;.)</div>
+                <div class="ppe-trap"><b>Single-stock micro attribution:</b> when run on one stock, the <b>allocation effect actually represents the selection effect</b> (allocating to one security IS a stock-selection decision), and the <b>selection effect represents the market-timing / transaction costs</b> of the manager for that security.</div>
+                <div class="ppe-info">Micro attribution can run on style, sector, OR geography &#8212; and a manager's allocation/selection effects <b>differ depending on the segmentation</b>. A manager could show negative aggregate selection by sector but positive by geography. The data show how the manager actually constructs the portfolio: if along geography, positive geo-selection &#8594; good stock picker; if the process is sector-based, negative sector-selection &#8594; poor stock picker.</div>
+              </div>
+            </div>
+
+            <!-- FACTOR / CARHART -->
+            <div id="ppe132-fac" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Factor-based return attribution &#8212; the Carhart model</div>
+                <div class="ppe-rule">A <b>fundamental factor model</b> tests a portfolio's sensitivity to additional factors. The <b>Carhart model</b> calculates the excess return from active management via four factors; it lets practitioners remove the effects of <b>known market factors</b> to isolate excess returns from active decisions not explained by those factors.</div>
+                <div class="ppe-fl">R&#7706; &#8722; R&#7723; = a&#7706; + b&#7706;&#8321;&#183;RMRF + b&#7706;&#8322;&#183;SMB + b&#7706;&#8323;&#183;HML + b&#7706;&#8324;&#183;WML + E&#7706;
+
+a&#7706;   = alpha (return above expected for the portfolio's systematic-risk level)
+RMRF = market index: value-weighted equity index return above the 1-month T-bill
+SMB  = small minus big (SIZE): avg return of 3 small-cap minus 3 large-cap portfolios
+HML  = high minus low (VALUE): avg of 2 high book/price minus 2 low book/price portfolios
+WML  = winners minus losers (MOMENTUM): past year's winners minus losers
+E&#7706;   = error term (part of return unexplained by the model)</div>
+                <div class="ppe-trap"><b>Four factors:</b> (1) market <b>RMRF</b>, (2) size <b>SMB</b>, (3) value <b>HML</b> = book-to-price, (4) momentum <b>WML</b>. Don't confuse HML (value, book/price) with SMB (size).</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Sample Carhart attribution (Fig 13.5)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Factor</th><th>Port (1)</th><th>Bench (2)</th><th>Diff (3)</th><th>Factor ret (4)</th><th>Contrib (3)&#215;(4)</th><th>% of total</th></tr>
+                  <tr><td>RMRF</td><td>0.98</td><td>1.00</td><td>&#8722;0.02</td><td>4.62%</td><td>&#8722;0.09%</td><td>&#8722;5.59%</td></tr>
+                  <tr><td>SMB</td><td>&#8722;1.10</td><td>&#8722;1.00</td><td>&#8722;0.10</td><td>&#8722;2.06%</td><td>0.21%</td><td>12.46%</td></tr>
+                  <tr><td>HML</td><td>0.30</td><td>0.00</td><td>0.30</td><td>4.30%</td><td>1.29%</td><td>78.01%</td></tr>
+                  <tr><td>WML</td><td>0.09</td><td>0.05</td><td>0.04</td><td>8.75%</td><td>0.35%</td><td>21.17%</td></tr>
+                  <tr><td colspan="5"><b>Factor tilts return</b></td><td><b>1.75%</b></td><td>106.05%</td></tr>
+                  <tr><td colspan="5">+ Security selection</td><td>&#8722;0.10%</td><td>&#8722;6.05%</td></tr>
+                  <tr><td colspan="5"><b>Active return</b></td><td><b>1.65%</b></td><td>100%</td></tr>
+                </table>
+                <div class="ppe-fl">Contribution to active return = factor sensitivity DIFFERENCE (col 3) &#215; factor return (col 4)
+Factor tilts return = &#931; contributions = 1.75%
+Active return = factor tilts (1.75%) + security selection (&#8722;0.10%) = 1.65%</div>
+                <div class="ppe-info"><b>Interpreting:</b> benchmark RMRF sensitivity = 1.00 &#8594; diversified index; benchmark SMB = &#8722;1.00 &#8594; large-cap tilt; benchmark HML = 0, WML = 0 &#8594; large-cap blend (no value/growth tilt), no momentum. Portfolio HML diff +0.30 &#8594; a <b>value tilt</b> that contributed +1.29% (over 78% of active return). Security selection (stock picking) detracted slightly (&#8722;0.10%). <b>Due diligence:</b> if the prospectus says growth but the model shows a value tilt, investigate.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Carhart contribution calculator</div>
+                <div class="ppe-body">Enter the sensitivity difference (port &#8722; bench) and the factor return (%) for each factor.</div>
+                <table class="ppe-tbl" id="ppe-fac-tbl">
+                  <tr><th>Factor</th><th>Diff</th><th>Factor return %</th></tr>
+                  <tr><td>RMRF</td><td><input id="ppe-fac-d0" type="number" value="-0.02" step="0.01" oninput="ppeFacCalc()" style="width:72px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td><td><input id="ppe-fac-f0" type="number" value="4.62" step="0.01" oninput="ppeFacCalc()" style="width:72px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td></tr>
+                  <tr><td>SMB</td><td><input id="ppe-fac-d1" type="number" value="-0.10" step="0.01" oninput="ppeFacCalc()" style="width:72px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td><td><input id="ppe-fac-f1" type="number" value="-2.06" step="0.01" oninput="ppeFacCalc()" style="width:72px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td></tr>
+                  <tr><td>HML</td><td><input id="ppe-fac-d2" type="number" value="0.30" step="0.01" oninput="ppeFacCalc()" style="width:72px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td><td><input id="ppe-fac-f2" type="number" value="4.30" step="0.01" oninput="ppeFacCalc()" style="width:72px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td></tr>
+                  <tr><td>WML</td><td><input id="ppe-fac-d3" type="number" value="0.04" step="0.01" oninput="ppeFacCalc()" style="width:72px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td><td><input id="ppe-fac-f3" type="number" value="8.75" step="0.01" oninput="ppeFacCalc()" style="width:72px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td></tr>
+                  <tr><td>Security selection %</td><td colspan="2"><input id="ppe-fac-sec" type="number" value="-0.10" step="0.01" oninput="ppeFacCalc()" style="width:72px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td></tr>
+                </table>
+                <div class="ppe-fl" id="ppe-fac-out"></div>
+              </div>
+            </div>
+
+            <!-- FIXED-INCOME -->
+            <div id="ppe132-fi" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Fixed-income attribution &#8212; three methods (LOS 13.f)</div>
+                <div class="ppe-trap"><b>Prof's note:</b> candidates are <b>NOT responsible for fixed-income attribution calculations</b> &#8212; only for <b>interpreting</b> the results.</div>
+                <table class="ppe-tbl">
+                  <tr><th>Method</th><th>What / sources</th><th>Data &amp; complexity</th><th>Used by</th></tr>
+                  <tr><td><b class="ppe-main-c">Exposure decomposition (duration-based)</b></td><td>Partitions portfolio &amp; benchmark by weight into <b>duration buckets</b> (short/mid/long) &#215; <b>sectors</b> (gov/corp); decomposes active return per bucket &amp; sector</td><td><b class="ppe-green">Lowest</b> data, simplest, clearly understandable</td><td><b>Marketing &amp; client reporting</b></td></tr>
+                  <tr><td><b class="ppe-main-c">Yield curve decomposition (duration-based)</b></td><td>Decomposes total return into: <b>yield/income, roll, shift, shape, spread, residual</b></td><td>More data &amp; operational complexity than exposure</td><td><b>Analysts &amp; PMs</b> (not marketing)</td></tr>
+                  <tr><td><b class="ppe-main-c">Yield curve decomposition (full repricing)</b></td><td><b>Most comprehensive/precise</b>: reprices each bond using individual <b>spot rates</b> for each cash flow; broadest instrument range</td><td><b class="ppe-red">Highest</b> &#8212; most complex, <b>LEAST easily understood</b></td><td>Analysts/PMs; least likely for client output</td></tr>
+                </table>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Active bets &amp; the six yield-curve sources</div>
+                <div class="ppe-body">Major active bets a fixed-income manager can take:</div>
+                <table class="ppe-tbl">
+                  <tr><th>Bet</th><th>Example</th></tr>
+                  <tr><td><b>Duration</b></td><td>Expects curve to shift <b>down</b> &#8594; <b>increase</b> portfolio duration vs benchmark</td></tr>
+                  <tr><td><b>Curve shape</b></td><td>Position for a change in <b>slope/curvature</b> (e.g. a steepening)</td></tr>
+                  <tr><td><b>Sector selection</b></td><td>Believes corporate spreads will <b>narrow</b> &#8594; increase corporate-sector exposure</td></tr>
+                  <tr><td><b>Bond selection</b></td><td>Overweight individual bonds expected to outperform</td></tr>
+                </table>
+                <div class="ppe-fl">Six sources (yield-curve decomposition):
+  Yield/income &#8211; coupon income earned
+  Roll         &#8211; time passing, bond "rolling down" a stable yield curve
+  Shift        &#8211; parallel shift, via duration &amp; convexity
+  Shape        &#8211; change in slope or curvature
+  Spread       &#8211; change in spread (sector or specific security)
+  Residual     &#8211; unexplained (estimation error in duration/convexity)</div>
+                <div class="ppe-info">Yield, roll, and shift were the individual-bond total-return components from the fixed-income section. <b>Interpretation example:</b> a manager overweight in high-coupon, high-yield corporates expects a <b>positive yield contribution</b> (high coupon) and a <b>positive spread contribution</b> (expected spread narrowing). If holdings default or spreads <b>widen</b>, these turn <b>negative</b> &#8594; value lost vs benchmark.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Interpreting the exposure-decomposition example (Fig 13.8)</div>
+                <div class="ppe-fl">Portfolio total return 2.42% vs benchmark 2.56% &#8594; active = &#8722;0.14%
+Portfolio duration 4.84 vs benchmark 3.85 (overweight medium bucket 60% vs 44%)
+Overweight corporates 65% vs benchmark 45% (expected spread narrowing)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Effect</th><th>Value</th><th>Interpretation</th></tr>
+                  <tr><td>Duration effect</td><td>+0.33%</td><td>Higher-duration position paid off &#8594; <b>yield curve did indeed FALL</b> (manager correct to extend duration)</td></tr>
+                  <tr><td>Curve (shape) effect</td><td>&#8722;0.39% (&#8776;39 bps)</td><td>Lost from curve shape: overweight high-duration assets while <b>medium yields rose &amp; short yields fell</b> &#8594; a <b>STEEPENING</b> of the curve</td></tr>
+                  <tr><td>Sector allocation</td><td>&#8722;0.08% (&#8776;8 bps)</td><td>Lost from overweighting corporates &#8594; contrary to expectations, <b>corporate spreads WIDENED</b> (lower benchmark corporate returns confirm)</td></tr>
+                  <tr><td>Bond selection</td><td>0.00%</td><td>Manager did <b>not</b> engage in active bond selection</td></tr>
+                </table>
+                <div class="ppe-trap"><b>Read the signs:</b> +duration &amp; curve fell = correct duration call; but &#8722;curve(shape) with overweight long + medium yields up/short down = a steepening that hurt; &#8722;sector = spreads widened against the manager. The duration-based exposure method is favored for <b>client reporting</b> (simple, low data).</div>
+              </div>
+            </div>
+
+            <!-- BHB/BF CALCULATOR -->
+            <div id="ppe132-bhbcalc" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">BHB / BF two-segment calculator</div>
+                <div class="ppe-body">Enter weights (decimals, e.g. 0.75) and returns (%). Computes both BHB and BF allocation, plus selection &amp; interaction (identical in both).</div>
+                <table class="ppe-tbl">
+                  <tr><th>Segment</th><th>w (port)</th><th>R (port %)</th><th>W (bench)</th><th>B (bench %)</th></tr>
+                  <tr><td>1</td>
+                    <td><input id="ppe-bhb-w1" type="number" value="0.75" step="0.01" oninput="ppeBhbCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td>
+                    <td><input id="ppe-bhb-r1" type="number" value="13" step="0.1" oninput="ppeBhbCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td>
+                    <td><input id="ppe-bhb-bw1" type="number" value="0.60" step="0.01" oninput="ppeBhbCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td>
+                    <td><input id="ppe-bhb-b1" type="number" value="10" step="0.1" oninput="ppeBhbCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td></tr>
+                  <tr><td>2</td>
+                    <td><input id="ppe-bhb-w2" type="number" value="0.25" step="0.01" oninput="ppeBhbCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td>
+                    <td><input id="ppe-bhb-r2" type="number" value="19" step="0.1" oninput="ppeBhbCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td>
+                    <td><input id="ppe-bhb-bw2" type="number" value="0.40" step="0.01" oninput="ppeBhbCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td>
+                    <td><input id="ppe-bhb-b2" type="number" value="20" step="0.1" oninput="ppeBhbCalc()" style="width:70px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:3px 5px;"></td></tr>
+                </table>
+                <div class="ppe-fl" id="ppe-bhb-out"></div>
+              </div>
+            </div>
+
+            <!-- QUIZ 13.2 -->
+            <div id="ppe132-quiz" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Module Quiz 13.2 &#8212; Q1 (Hiatus, BF model, overall B = 2.32%)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Sector</th><th>Port wt</th><th>Bench wt</th><th>Port ret</th><th>Sector bench ret</th></tr>
+                  <tr><td>Energy</td><td>8.38%</td><td>7.72%</td><td>3.55%</td><td>3.32%</td></tr>
+                  <tr><td>Financial</td><td>15.48%</td><td>13.42%</td><td>1.66%</td><td>1.10%</td></tr>
+                  <tr><td>Technology</td><td>17.89%</td><td>22.01%</td><td>3.21%</td><td>3.18%</td></tr>
+                </table>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q2a');e.style.display=e.style.display==='none'?'block':'none';">(i) Energy allocation effect (BF)</button>
+                <div id="ppe-q2a" style="display:none;"><div class="ppe-fl">A&#7522; = (w&#7522;&#8722;W&#7522;)&#215;(B&#7522;&#8722;B) = (0.0838&#8722;0.0772)&#215;(3.32&#8722;2.32) = <b>+0.0066%</b>
+&#8594; small positive: overweighting energy (sector benchmark 3.32% &gt; overall 2.32%) was a good call.</div></div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q2b');e.style.display=e.style.display==='none'?'block':'none';">(ii) Financial selection effect</button>
+                <div id="ppe-q2b" style="display:none;"><div class="ppe-fl">S&#7522; = W&#7522;&#215;(R&#7522;&#8722;B&#7522;) = 0.1342&#215;(1.66&#8722;1.10) = <b>+0.0752%</b>
+&#8594; positive: manager's financial picks (1.66%) beat the financial sector benchmark (1.10%).</div></div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q2c');e.style.display=e.style.display==='none'?'block':'none';">(iii) Technology interaction effect</button>
+                <div id="ppe-q2c" style="display:none;"><div class="ppe-fl">I&#7522; = (w&#7522;&#8722;W&#7522;)&#215;(R&#7522;&#8722;B&#7522;) = (0.1789&#8722;0.2201)&#215;(3.21&#8722;3.18) = <b>&#8722;0.0012%</b>
+&#8594; tiny negative: underweighted tech (&#8722;active weight) while selection was slightly positive.</div></div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Quiz 13.2 &#8212; Q2&#8211;Q4 (Matson / Sigma, overall benchmark return = 0.86%)</div>
+                <div class="ppe-info">Full Matson data table and Q2&#8211;Q4 are in <b>Module 13.3 &#8594; Quiz 13.3</b> (they accompany the risk-attribution section). Quick answers below.</div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q2d');e.style.display=e.style.display==='none'?'block':'none';">Q2 allocation ability (capital goods / financial)?</button>
+                <div id="ppe-q2d" style="display:none;"><div class="ppe-fl"><b class="ppe-green">C &#8212; both.</b> Capital goods (.08&#8722;.09)&#215;(&#8722;5&#8722;0.86)=+0.0586 (good: underweighted an underperformer). Financial (.20&#8722;.18)&#215;(4.00&#8722;0.86)=+0.0628 (good: overweighted an outperformer).</div></div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q2e');e.style.display=e.style.display==='none'?'block':'none';">Q3 selection ability (consumer durables / technology)?</button>
+                <div id="ppe-q2e" style="display:none;"><div class="ppe-fl"><b class="ppe-green">B &#8212; only technology.</b> Cons durables .35&#215;(2&#8722;3)=&#8722;0.35 (bad). Technology .16&#215;(2.60&#8722;(&#8722;2.00))=+0.736 (good).</div></div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q2f');e.style.display=e.style.display==='none'?'block':'none';">Q4 positive interaction (agricultural / utilities)?</button>
+                <div id="ppe-q2f" style="display:none;"><div class="ppe-fl"><b class="ppe-green">B &#8212; both.</b> Agricultural (.04&#8722;.06)&#215;(&#8722;2&#8722;(&#8722;1))=+0.02 (positive). Utilities (.12&#8722;.10)&#215;(4&#8722;(&#8722;2))=+0.12 (positive).</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 13.3 RISK ATTRIBUTION ════════ -->
+          <div id="ppem-133" class="ppe-modpanel">
+            <div class="ppe-toptabs">
+              <button class="ppe-toptab active" onclick="ppeTop(event,'ppe133-matrix')">Risk Attribution Matrix</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe133-quiz')">Quiz 13.3 (Matson)</button>
+            </div>
+
+            <!-- RISK ATTRIBUTION MATRIX -->
+            <div id="ppe133-matrix" class="ppe-toppanel active">
+              <div class="ppe-card">
+                <div class="ppe-title">Selecting a risk attribution approach (LOS 13.g)</div>
+                <div class="ppe-rule">Choosing the right risk metric needs an in-depth understanding of the manager's <b>investment process</b> &#8212; whether it's <b>top-down or bottom-up</b> &#8212; and a defined appropriate benchmark. Looking only at returns is insufficient; risk attribution identifies the <b>sources of risk</b> the manager took to produce the fund's returns.</div>
+                <div class="ppe-trap"><b>Risk attribution must be combined with return attribution</b> to fully understand the manager's active investment decisions. Return attribution alone tells you the "how" of returns; risk attribution tells you the "how" of risk.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Figure 13.9 &#8212; investment process &#215; attribution type</div>
+                <div class="ppe-body">The correct approach sits at the intersection of the process (row) and the attribution type (column).</div>
+                <table class="ppe-tbl">
+                  <tr><th>Investment process</th><th>RELATIVE (tracking risk)</th><th>ABSOLUTE (total risk)</th></tr>
+                  <tr><td><b class="ppe-main-c">Bottom-up</b></td><td>Security's <b>marginal contribution to tracking risk</b> (tracking error)</td><td>Security's <b>marginal contribution to total risk</b></td></tr>
+                  <tr><td><b class="ppe-main-c">Top-down</b></td><td>Attribute <b>tracking error to allocation &amp; selection</b></td><td rowspan="2">Factor's <b>marginal contribution to total risk and specific risk</b></td></tr>
+                  <tr><td><b class="ppe-main-c">Factor-based</b></td><td>Factor's <b>marginal contribution to tracking error and active specific risk</b></td></tr>
+                </table>
+                <div class="ppe-info"><b>Columns:</b> RELATIVE attribution uses <b>tracking risk / tracking error</b> (objective: returns generated from active management vs the tracking risk assumed). ABSOLUTE attribution uses <b>total risk</b>, quantifying general risk (market, size, style exposures) + specific risk (stock picking); a common absolute risk measure is <b>standard deviation</b>.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Bottom-up vs top-down (the two relative rows)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Process</th><th>How relative risk is attributed</th></tr>
+                  <tr><td><b class="ppe-main-c">Bottom-up</b></td><td>Each security has a <b>marginal contribution to tracking risk</b>, multiplied by its <b>active weight</b> to get its contribution to tracking risk</td></tr>
+                  <tr><td><b class="ppe-main-c">Top-down</b></td><td>More <b>macro</b>: attributes active return to <b>allocation</b>, then attributes tracking error to <b>allocation &amp; selection</b></td></tr>
+                </table>
+                <div class="ppe-fl">ABSOLUTE / bottom-up example:
+  &bull; each security's marginal contribution to total risk = change in portfolio std dev
+    from a small increase in that holding
+  &bull; sum the marginal contributions and divide by total portfolio risk
+    &#8594; overall risk contribution due to selection decisions</div>
+              </div>
+            </div>
+
+            <!-- QUIZ 13.3 MATSON -->
+            <div id="ppe133-quiz" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Quiz 13.2 Q2&#8211;Q4 &#8212; Frank Matson (micro attribution, BF model)</div>
+                <div class="ppe-body">Sigma's consultants McDaniel &amp; Peterson run a micro performance attribution on manager Frank Matson (large-cap value). Overall benchmark return = portfolio+cash benchmark = <b>0.86%</b>.</div>
+                <table class="ppe-tbl">
+                  <tr><th>Sector</th><th>Port wt</th><th>Bench wt</th><th>Port ret</th><th>Bench ret</th></tr>
+                  <tr><td>Agricultural</td><td>4.00%</td><td>6.00%</td><td>&#8722;2.00%</td><td>&#8722;1.00%</td></tr>
+                  <tr><td>Capital goods</td><td>8.00%</td><td>9.00%</td><td>&#8722;4.00%</td><td>&#8722;5.00%</td></tr>
+                  <tr><td>Consumer durables</td><td>32.00%</td><td>35.00%</td><td>2.00%</td><td>3.00%</td></tr>
+                  <tr><td>Energy</td><td>6.00%</td><td>6.00%</td><td>8.00%</td><td>2.00%</td></tr>
+                  <tr><td>Financial</td><td>20.00%</td><td>18.00%</td><td>6.40%</td><td>4.00%</td></tr>
+                  <tr><td>Technology</td><td>16.00%</td><td>16.00%</td><td>2.60%</td><td>&#8722;2.00%</td></tr>
+                  <tr><td>Utilities</td><td>12.00%</td><td>10.00%</td><td>4.00%</td><td>&#8722;2.00%</td></tr>
+                  <tr><td>Cash</td><td>2.00%</td><td>0.00%</td><td>0.20%</td><td>&#8212;</td></tr>
+                  <tr><td><b>Port+cash return</b></td><td colspan="2"><b>2.90%</b></td><td colspan="2"><b>benchmark 0.86%</b></td></tr>
+                </table>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Q2 &#8212; allocation ability (capital goods / financial)?</div>
+                <div class="ppe-body">Allocation (BF) = (w&#8722;W)&#215;(B&#7522;&#8722;B), B = 0.86%. Positive = good allocation.</div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q3a');e.style.display=e.style.display==='none'?'block':'none';">Reveal answer</button>
+                <div id="ppe-q3a" style="display:none;"><div class="ppe-fl"><b class="ppe-green">C &#8212; yes, both.</b>
+Capital goods: (0.08&#8722;0.09)&#215;(&#8722;5&#8722;0.86) = +0.0586  &#8594; GOOD (underweighted a sector that underperformed)
+Financial:     (0.20&#8722;0.18)&#215;(4.00&#8722;0.86) = +0.0628  &#8594; GOOD (overweighted a sector that outperformed)</div></div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Q3 &#8212; selection ability (consumer durables / technology)?</div>
+                <div class="ppe-body">Selection = W&#215;(R&#7522;&#8722;B&#7522;). Positive = good selection.</div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q3b');e.style.display=e.style.display==='none'?'block':'none';">Reveal answer</button>
+                <div id="ppe-q3b" style="display:none;"><div class="ppe-fl"><b class="ppe-green">B &#8212; yes, but only in technology.</b>
+Consumer durables: 0.35&#215;(2.00&#8722;3.00) = &#8722;0.35  &#8594; BAD (picks lagged the sector benchmark)
+Technology:        0.16&#215;(2.60&#8722;(&#8722;2.00)) = +0.736 &#8594; GOOD (picks beat the sector benchmark)</div></div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Q4 &#8212; positive interaction (agricultural / utilities)?</div>
+                <div class="ppe-body">Interaction = (w&#8722;W)&#215;(R&#7522;&#8722;B&#7522;). Positive = good combined effect.</div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q3c');e.style.display=e.style.display==='none'?'block':'none';">Reveal answer</button>
+                <div id="ppe-q3c" style="display:none;"><div class="ppe-fl"><b class="ppe-green">B &#8212; yes, in both.</b>
+Agricultural: (0.04&#8722;0.06)&#215;(&#8722;2.00&#8722;(&#8722;1.00)) = +0.02  &#8594; POSITIVE (underweighted &amp; picks lagged: two negatives)
+Utilities:    (0.12&#8722;0.10)&#215;(4.00&#8722;(&#8722;2.00))   = +0.12  &#8594; POSITIVE (overweighted &amp; picks beat benchmark)</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE: BENCHMARKING INVESTMENTS & MANAGERS (textbook 13.3) ════════ -->
+          <div id="ppem-134" class="ppe-modpanel">
+            <div class="ppe-toptabs">
+              <button class="ppe-toptab active" onclick="ppeTop(event,'ppe134-liab')">Liability-Based</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe134-asset')">7 Asset-Based Types</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe134-quality')">Quality &middot; P=M+S+A</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe134-alt')">Alt Investments</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe134-misspec')">Misspecification</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe134-quiz')">Quiz 13.3</button>
+            </div>
+
+            <!-- LIABILITY-BASED -->
+            <div id="ppe134-liab" class="ppe-toppanel active">
+              <div class="ppe-card">
+                <div class="ppe-title">Liability-based benchmarks (LOS 13.i)</div>
+                <div class="ppe-rule">Common in institutional investing when a firm has a <b>specific future liability</b> (e.g. a defined-benefit plan). It focuses on the <b>cash flows needed to satisfy the liability</b>, and frequently <b>limits the investment choices</b> available to the manager (e.g. equity &amp; fixed income only).</div>
+                <div class="ppe-info">Frequently used assets within a liability-based benchmark: <b>nominal bonds, inflation-adjusted bonds, and high-quality stocks</b>.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Plan features that shape the liability &#8594; asset choice</div>
+                <table class="ppe-tbl">
+                  <tr><th>Feature</th></tr>
+                  <tr><td>Years until the average worker retires</td></tr>
+                  <tr><td>How many workers have <b>already retired</b> and are drawing cash</td></tr>
+                  <tr><td>Impact of <b>inflation</b> on the liabilities</td></tr>
+                  <tr><td>Correlation between the company's <b>operating profit (EBIT)</b> and plan assets</td></tr>
+                  <tr><td>Whether the plan is <b>frozen</b> or has a <b>terminal life</b></td></tr>
+                  <tr><td>Actuarial assumptions: <b>life expectancy &amp; required discount rate</b></td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- 7 ASSET-BASED TYPES -->
+            <div id="ppe134-asset" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Seven asset-based benchmark types (LOS 13.j)</div>
+                <table class="ppe-tbl">
+                  <tr><th>#</th><th>Type</th><th>Advantages</th><th>Disadvantages</th></tr>
+                  <tr><td>1</td><td><b class="ppe-main-c">Absolute</b> (return objective exceeding a minimum target, e.g. MAR in the Sortino ratio)</td><td>Simple, straightforward</td><td><b class="ppe-red">Not an investable benchmark</b></td></tr>
+                  <tr><td>2</td><td><b class="ppe-main-c">Broad market index</b> (e.g. S&amp;P 500 for US stocks)</td><td>Well recognized, easy to understand, widely available; unambiguous, investable, measurable, may be specified in advance; appropriate <b>if it reflects the manager's current process</b></td><td>Manager's style may <b>deviate</b> from the index (S&amp;P 500 wrong for a small-cap growth manager)</td></tr>
+                  <tr><td>3</td><td><b class="ppe-main-c">Style index</b> (LC growth, LC value, SC growth, SC value)</td><td>Widely available/understood/accepted; appropriate if it reflects the manager's style &amp; is investable</td><td>May contain weights in securities/sectors larger than prudent; <b>differing style definitions</b> produce very different returns</td></tr>
+                  <tr><td>4</td><td><b class="ppe-main-c">Factor model</b> (R&#7706; = a&#7706; + b&#8321;F&#8321; + ... + b&#7716;F&#7716; + &#949;); CAPM is a one-factor version</td><td>Useful in performance evaluation; gives insight into <b>style</b> via factor exposures</td><td>Not intuitive to all; data/modeling not always available &amp; <b>expensive</b>; <b>ambiguous</b> (different models &#8594; different outputs &#8594; misspecification)</td></tr>
+                  <tr><td>5</td><td><b class="ppe-main-c">Returns-based</b> (regress account returns on style-index returns &#8594; allocation algorithm)</td><td>Easy/intuitive; meets validity criteria; useful when <b>only account returns</b> are available</td><td>Style indexes may not reflect actual holdings; needs <b>enough monthly returns</b> for a reliable pattern; <b>won't work if the manager changes style</b></td></tr>
+                  <tr><td>6</td><td><b class="ppe-main-c">Manager universes</b> (the <b>median manager</b>/fund from a peer universe)</td><td>Measurable</td><td><b class="ppe-red">Survivorship bias</b>; relies on accurate compilation; <b>can't be specified in advance &#8594; not investable &#8594; not an acceptable benchmark</b></td></tr>
+                  <tr><td>7</td><td><b class="ppe-main-c">Custom security-based</b> (designed to reflect the manager's security allocations &amp; process)</td><td>Meets <b>all</b> validity criteria; continual monitoring; lets sponsors allocate risk across teams</td><td>Expensive to construct/maintain; manager <b>lack of transparency</b> (e.g. hedge funds) can make it impossible</td></tr>
+                </table>
+                <div class="ppe-trap"><b>Three "not investable" traps:</b> Absolute (#1, no holdings), Manager universes (#6, can't specify in advance + survivorship bias). The custom security-based benchmark (#7) is the gold standard &#8212; meets all validity criteria.</div>
+              </div>
+            </div>
+
+            <!-- QUALITY + P=M+S+A -->
+            <div id="ppe134-quality" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Tests of benchmark quality (LOS 13.k) &#8212; the 7 properties</div>
+                <div class="ppe-body">A valid benchmark aligns the benchmark's style &amp; risk with the manager's and gives an appropriate objective:</div>
+                <table class="ppe-tbl">
+                  <tr><th>Property</th><th>Meaning</th></tr>
+                  <tr><td><b class="ppe-main-c">Specified in advance</b></td><td>Known to manager &amp; sponsor at the <b>start</b> of the evaluation period</td></tr>
+                  <tr><td><b class="ppe-main-c">Appropriate</b></td><td>Consistent with the manager's approach &amp; style</td></tr>
+                  <tr><td><b class="ppe-main-c">Measurable</b></td><td>Value &amp; return determinable on a reasonably frequent basis</td></tr>
+                  <tr><td><b class="ppe-main-c">Unambiguous</b></td><td>Clearly defined identities &amp; weights of securities</td></tr>
+                  <tr><td><b class="ppe-main-c">Reflective</b> of current opinions</td><td>Manager has current knowledge/expertise of the securities in it</td></tr>
+                  <tr><td><b class="ppe-main-c">Accountable</b></td><td>Manager accepts applicability &amp; agrees differences are due only to active management</td></tr>
+                  <tr><td><b class="ppe-main-c">Investable</b></td><td>Possible to replicate the benchmark and forgo active management</td></tr>
+                </table>
+                <div class="ppe-info"><b>Mnemonic: SAMURAI</b> &#8212; Specified in advance, Appropriate, Measurable, Unambiguous, Reflective, Accountable, Investable.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Decomposing portfolio return: P = M + S + A</div>
+                <div class="ppe-fl">P = M + S + A
+P = manager's portfolio return
+M = return on the MARKET index
+S = B &#8722; M = excess return to STYLE (style index B minus market M); can be + or &#8722;
+A = P &#8722; B = ACTIVE return (portfolio minus STYLE benchmark)</div>
+                <div class="ppe-rule">Had the manager taken a passive position in a broad market index, M would be the benchmark and S=0. Because the manager specializes in a style, we add (B&gt;M, S&gt;0) or subtract (B&lt;M, S&lt;0) the style-vs-market difference. A (active) is attributed to active management.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Example &#8212; test of benchmark quality</div>
+                <div class="ppe-fl">LC growth portfolio fell 11% (P = &#8722;11%)
+LC growth index fell 12%  (B = &#8722;12%)
+Broad equity index fell 10% (M = &#8722;10%)
+
+S = B &#8722; M = &#8722;12% &#8722; (&#8722;10%) = &#8722;2%  &#8594; growth STYLE out of favor (underperformed market)
+A = P &#8722; B = &#8722;11% &#8722; (&#8722;12%) = +1%  &#8594; manager BEAT the style benchmark</div>
+                <div class="ppe-trap"><b>Client concern (that a skillful manager should beat the broad market) is NOT valid.</b> The manager performed well <b>for a growth-style manager</b> (active +1%); the underperformance vs the broad market is the <b>style</b> being out of favor (&#8722;2%), not poor active management.</div>
+              </div>
+            </div>
+
+            <!-- ALT INVESTMENTS -->
+            <div id="ppe134-alt" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Benchmarking alternative investments (LOS 13.m)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Asset</th><th>Benchmark problems</th></tr>
+                  <tr><td><b class="ppe-main-c">Hedge funds</b></td><td>3 candidate benchmarks all flawed: (1) <b>broad market index</b> &#8212; wide range of strategies, leverage/shorts/derivatives, low/no correlation, illiquidity &#8594; inappropriate; (2) <b>risk-free + spread</b> &#8212; only fits arbitrage strategies, but most carry systematic risk &amp; leverage so spread must rise &#8594; unsuitable; (3) <b>peer universe</b> &#8212; backfill &amp; survivorship bias, illiquid assets &#8594; current pricing inexact / appraisal-based &#8594; <b>smoothing</b> &#8594; reduces reported SD, inflates Sharpe, raises HF allocation</td></tr>
+                  <tr><td><b class="ppe-main-c">Real estate</b></td><td>Benchmarks from a sample (not fully representative); high correlation to largest investments; <b>self-reported</b> returns (subjectivity/bias); value-based may bias to expensive properties; appraisal/<b>infrequent pricing &#8594; smoothing &amp; understated volatility</b>; leverage inconsistency; indexes assume no transaction costs/full transparency/normal liquidity. <b>Open-end funds &#8594; TWR</b> (investor controls flows); <b>closed-end funds &#8594; IRR</b> (manager controls flows)</td></tr>
+                  <tr><td><b class="ppe-main-c">Private equity</b></td><td>Metric usually <b>IRR</b> (all cash flows since inception + ending value). Problems: different valuation methods; IRR <b>biased by early gains/losses</b>; all results reported at one point in time though firms are at varying stages</td></tr>
+                  <tr><td><b class="ppe-main-c">Commodities</b></td><td>Benchmarks usually based on <b>futures, not actual assets</b> &#8594; significant differences vs portfolio; differing leverage &amp; exposure weightings reduce comparability</td></tr>
+                  <tr><td><b class="ppe-main-c">Managed derivatives</b></td><td>Strategy-specific (e.g. <b>Mount Lucas Management Index</b>, a momentum strategy) or peer-group based; peer-group versions share HF issues like <b>survivorship bias</b></td></tr>
+                  <tr><td><b class="ppe-main-c">Distressed securities</b></td><td>Illiquidity/lack of marketability &#8594; almost <b>impossible to determine an appropriate benchmark</b>; recovery takes time; <b>stale pricing</b> valuation problems; indexes (e.g. Barclay Distressed Securities Index) span many strategies &amp; value at erratic intervals so stale pricing persists</td></tr>
+                </table>
+                <div class="ppe-trap"><b>The recurring smoothing trap:</b> illiquid/appraisal-priced alternatives (HF, real estate, distressed) produce <b>smoothed</b> returns &#8594; <b>understated standard deviation</b> &#8594; <b>inflated Sharpe ratio</b> &#8594; over-allocation. TWR for open-end (investor flows), IRR for closed-end / PE (manager flows).</div>
+              </div>
+            </div>
+
+            <!-- MISSPECIFICATION -->
+            <div id="ppe134-misspec" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Benchmark misspecification (LOS 13.l)</div>
+                <div class="ppe-rule"><b>"Garbage in, garbage out."</b> Useful performance evaluation (and all three components &#8212; measurement, attribution, appraisal) requires an <b>appropriate fund benchmark</b>. An incorrect benchmark makes performance measurement, attribution, and appraisal <b>invalid</b>, and produces <b>misfit active return</b>.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Misfit vs true active return (Euronext / CAC example)</div>
+                <div class="ppe-fl">Manager invests in large, liquid FRENCH stocks.
+Sponsor (wrongly) benchmarks vs the Euronext 100 (NL/Belgium/Portugal/Luxembourg + France).
+The CAC 40 (large liquid French) is the manager's true NORMAL portfolio.
+
+Portfolio P = 10%   Euronext 100 (investor benchmark) = 12%   CAC 40 (normal) = 9%
+
+Total active   = P &#8722; investor benchmark = 10% &#8722; 12% = &#8722;2%
+TRUE active    = P &#8722; normal portfolio  = 10% &#8722;  9% = +1%
+MISFIT active  = normal &#8722; investor      =  9% &#8722; 12% = &#8722;3%
+Check: true + misfit = +1% + (&#8722;3%) = &#8722;2% = total active &#10003;</div>
+                <div class="ppe-trap"><b>The point:</b> measured vs the wrong (investor) benchmark the manager looks like a &#8722;2% underperformer. Measured vs the correct normal portfolio (CAC 40) the manager actually added <b>+1% true active return</b>. The &#8722;3% misfit comes purely from the <b>misspecified benchmark</b>, not the manager's skill.</div>
+              </div>
+            </div>
+
+            <!-- QUIZ 13.3 (BENCHMARKING) -->
+            <div id="ppe134-quiz" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Module Quiz 13.3 &#8212; Q1 (Rhombus, US small-cap, 2005)</div>
+                <div class="ppe-fl">Portfolio P = 8.9%
+Russell 2000 (style benchmark B) = 9.1%
+Wilshire 5000 (broad market M) = 8.5%</div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q4a');e.style.display=e.style.display==='none'?'block':'none';">Reveal: return due to style &amp; active + assessment</button>
+                <div id="ppe-q4a" style="display:none;"><div class="ppe-fl">Return due to STYLE  S = B &#8722; M = 9.1% &#8722; 8.5% = <b>+0.6%</b>
+Return due to ACTIVE A = P &#8722; B = 8.9% &#8722; 9.1% = <b>&#8722;0.2%</b>
+
+vs BENCHMARK (Russell 2000): underperformed by 0.2% (negative active management)
+vs MARKET (Wilshire 5000): outperformed by 8.9% &#8722; 8.5% = +0.4%
+&#8594; The small-cap STYLE was in favor (+0.6%), which carried the portfolio above the broad market,
+   but the manager's ACTIVE decisions slightly DETRACTED (&#8722;0.2%) vs the proper style benchmark.</div></div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Q2 &#8212; Hexagon PLC (European equities): validity of "beat the median manager"?</div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q4b');e.style.display=e.style.display==='none'?'block':'none';">Reveal answer</button>
+                <div id="ppe-q4b" style="display:none;"><div class="ppe-fl">A median-manager (manager-universe) benchmark is <b>NOT valid</b>. It fails key benchmark-validity tests:
+&bull; <b>Not specified in advance</b> &#8594; the median manager is only known after ranking funds, so it's <b>not investable</b>
+&bull; <b>Survivorship bias</b> &#8594; underperformers leave the universe, biasing the median upward
+&bull; Ambiguous &#8211; constituents/weights not clearly identified ahead of time
+&bull; Relies on accurate compilation by the universe provider
+It IS measurable, but failing "specified in advance / investable / unambiguous" makes it an <b>unacceptable benchmark</b>.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 13.4 PERFORMANCE APPRAISAL ════════ -->
+          <div id="ppem-135" class="ppe-modpanel">
+            <div class="ppe-toptabs">
+              <button class="ppe-toptab active" onclick="ppeTop(event,'ppe135-meas')">7 Measures</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe135-ar')">Appraisal Ratio + Calc</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe135-sortino')">Sortino</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe135-capture')">Capture Ratios + Calc</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe135-draw')">Drawdown</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe135-skill')">Manager Skill (X/Y/Z)</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppe135-quiz')">Quiz 13.4</button>
+            </div>
+
+            <!-- 7 MEASURES -->
+            <div id="ppe135-meas" class="ppe-toppanel active">
+              <div class="ppe-card">
+                <div class="ppe-title">Performance appraisal &#8212; the seven measures (LOS 13.n)</div>
+                <div class="ppe-rule">Appraisal is the <b>final stage</b> of performance evaluation: are results more likely due to <b>skill or luck</b>? Should we hire/fire the manager? Active skill is evident when the manager outperforms an appropriate benchmark on a <b>risk-adjusted basis consistently</b>.</div>
+                <table class="ppe-tbl">
+                  <tr><th>#</th><th>Measure</th><th>Numerator</th><th>Denominator (risk)</th></tr>
+                  <tr><td>1</td><td><b class="ppe-main-c">Sharpe ratio</b></td><td>R&#7705; &#8722; r&#7706; (excess over risk-free)</td><td><b>total risk</b> &#963;&#7705; (std dev)</td></tr>
+                  <tr><td>2</td><td><b class="ppe-main-c">Treynor ratio</b></td><td>R&#7705; &#8722; r&#7706;</td><td><b>systematic risk</b> &#946;&#7705; (beta)</td></tr>
+                  <tr><td>3</td><td><b class="ppe-main-c">Information ratio</b></td><td>E(r&#7706;) &#8722; E(r&#7665;) (vs benchmark)</td><td><b>tracking risk</b> &#963;(r&#7706;&#8722;r&#7665;)</td></tr>
+                  <tr><td>4</td><td><b class="ppe-main-c">Appraisal ratio</b></td><td>&#945; (alpha)</td><td><b>residual risk</b> &#963;&#949; (std error of regression)</td></tr>
+                  <tr><td>5</td><td><b class="ppe-main-c">Sortino ratio</b></td><td>E(r&#7706;) &#8722; r&#7714; (over MAR/target)</td><td><b>downside risk</b> &#963;&#7691; (target semideviation)</td></tr>
+                  <tr><td>6</td><td><b class="ppe-main-c">Capture ratios</b> (up &amp; down)</td><td colspan="2">Relative performance in up vs down markets</td></tr>
+                  <tr><td>7</td><td><b class="ppe-main-c">Drawdown</b> (max DD, duration)</td><td colspan="2">Peak-to-trough loss &amp; recovery time</td></tr>
+                </table>
+                <div class="ppe-info"><b>The first FIVE are risk-adjusted measures.</b> Prof's note: with only a few years of data it's hard to separate luck from skill &#8212; many years of observations are needed to conclude at high confidence the manager truly has superior skill.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Sharpe &middot; Treynor &middot; Information ratio</div>
+                <div class="ppe-fl">Sharpe   S&#7705; = (R&#7705; &#8722; r&#7706;) / &#963;&#7705;       (TOTAL risk)
+Treynor  T&#7705; = (R&#7705; &#8722; r&#7706;) / &#946;&#7705;       (SYSTEMATIC risk)
+Info     IR  = [E(r&#7706;) &#8722; E(r&#7665;)] / &#963;(r&#7706; &#8722; r&#7665;)   (TRACKING risk)</div>
+                <div class="ppe-trap"><b>Sharpe drawback:</b> the denominator (std dev) <b>does not differentiate upside vs downside</b> volatility &#8212; it penalizes ALL volatility, even "good" upside volatility. (Sortino fixes this.)</div>
+                <div class="ppe-trap"><b>Treynor:</b> uses beta &#8594; only <b>systematic risk</b>, so it assumes <b>efficient markets</b> and is only useful for <b>well-diversified</b> portfolios (no unsystematic risk). <b>IR</b>: numerator = mean port minus mean benchmark; denominator = tracking risk (variability of port vs benchmark).</div>
+              </div>
+            </div>
+
+            <!-- APPRAISAL RATIO + CALC -->
+            <div id="ppe135-ar" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Appraisal ratio (AR)</div>
+                <div class="ppe-fl">AR = &#945; / &#963;&#949;
+
+&#945;  = active return (alpha) from a FACTOR-based regression
+&#963;&#949; = residual risk = "standard error of the regression" = volatility of the error term</div>
+                <div class="ppe-rule">A higher AR = more active return <b>per unit of active (residual) risk</b> &#8594; superior active manager. The AR is <b>analogous to the IR</b> (active return per unit of active risk); the only difference is the AR uses a <b>factor-based regression</b> to estimate active return &amp; active risk.</div>
+                <div class="ppe-fl">Deriving &#963;&#949; from CAPM (single-factor): E(R&#7522;) = R&#7706; + &#946;&#7522;[E(R&#7723;) &#8722; R&#7706;]
+&#945; = forecast/actual return &#8722; CAPM fair return
+Total variance splits: &#963;&#7522;&#178; = &#946;&#178;&#963;&#7723;&#178; + &#963;&#949;&#178;
+&#8594; &#963;&#949;&#178; = &#963;&#7522;&#178; &#8722; &#946;&#178;&#963;&#7723;&#178;   (remember to take the &#8730; before using in AR!)</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Worked example (textbook)</div>
+                <div class="ppe-fl">Port ret 8% | Port SD 20% | Port beta 1.2 | Mkt ret 6% | Mkt SD 16% | rf 1%
+
+CAPM fair = 1% + 1.2(6% &#8722; 1%) = 7%
+&#945; = 8% &#8722; 7% = 1%
+&#963;&#949;&#178; = 0.20&#178; &#8722; (1.2&#178; &#215; 0.16&#178;) = 0.003136
+AR = 0.01 / &#8730;0.003136 = 0.01 / 0.056 = 0.18</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Appraisal ratio calculator</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;">
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Port ret %<input id="ppe-ar-rp" type="number" value="8" step="0.1" oninput="ppeArCalc()" style="width:60px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Port SD %<input id="ppe-ar-sdp" type="number" value="20" step="0.1" oninput="ppeArCalc()" style="width:60px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Beta<input id="ppe-ar-beta" type="number" value="1.2" step="0.01" oninput="ppeArCalc()" style="width:60px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Mkt ret %<input id="ppe-ar-rm" type="number" value="6" step="0.1" oninput="ppeArCalc()" style="width:60px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Mkt SD %<input id="ppe-ar-sdm" type="number" value="16" step="0.1" oninput="ppeArCalc()" style="width:60px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">rf %<input id="ppe-ar-rf" type="number" value="1" step="0.1" oninput="ppeArCalc()" style="width:60px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                </div>
+                <div class="ppe-fl" id="ppe-ar-out"></div>
+              </div>
+            </div>
+
+            <!-- SORTINO -->
+            <div id="ppe135-sortino" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Sortino ratio</div>
+                <div class="ppe-fl">SR&#7691; = [E(r&#7706;) &#8722; r&#7714;] / &#963;&#7691;     (ex-ante)      SR&#7691; = (r&#7706; &#8722; r&#7714;) / &#963;&#7691;     (realized)
+
+r&#7714; = target rate of return = minimum acceptable return (MAR)
+&#963;&#7691; = TARGET SEMIDEVIATION = std dev of returns BELOW the target</div>
+                <div class="ppe-rule">Sortino considers only <b>downside</b> risk &#8212; in contrast to Sharpe (all risk, upside AND downside). Positive upside volatility is "good" volatility. In practice clients care more about <b>negative</b>-return volatility, so Sortino can give a more meaningful risk-adjusted view.</div>
+                <div class="ppe-fl">Semideviation: sum the SQUARED distances of returns BELOW the target (ignore returns that beat it), divide by the TOTAL number of observations (incl. those above) &#8594; semivariance; &#8730; &#8594; semistandard deviation.
+
+Example: avg port ret 7%, MAR 3%, semi-SD 5% &#8594; Sortino = (7% &#8722; 3%) / 5% = 0.80</div>
+                <div class="ppe-trap"><b>Sortino &gt; Sharpe</b> (e.g. 0.75 vs 0.63) suggests the manager should earn greater returns relative to the downside-risk threshold (downside risk is lower than total risk). <b>Comparability problem:</b> the <b>MAR is subjective</b> &amp; specific to each investor, so Sortino ratios aren't easily compared across investors. Negatively skewed strategies (higher semideviation) &#8594; lower Sortino; both pos- &amp; neg-skewed lower the Sharpe. Sortino more appropriate for <b>nonnormal/skewed</b> distributions (hedge funds, options).</div>
+              </div>
+            </div>
+
+            <!-- CAPTURE RATIOS + CALC -->
+            <div id="ppe135-capture" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Capture ratios</div>
+                <div class="ppe-rule">Capture ratios measure the manager's <b>relative performance in up vs down markets</b>. Is the portfolio return above or below the benchmark when the benchmark is positive (up) or negative (down)?</div>
+                <div class="ppe-fl">Upside capture   = port return / benchmark return   (in an UP market, benchmark &gt; 0)
+Downside capture = port return / benchmark return   (in a DOWN market, benchmark &lt; 0)
+CAPTURE RATIO    = upside capture / downside capture</div>
+                <table class="ppe-tbl">
+                  <tr><th>Market</th><th>Bench</th><th>Port</th><th>Capture</th><th>Meaning</th></tr>
+                  <tr><td>Up</td><td>4%</td><td>5%</td><td>125%</td><td>outperform in up</td></tr>
+                  <tr><td>Up</td><td>4%</td><td>3%</td><td>75%</td><td>underperform in up</td></tr>
+                  <tr><td>Down</td><td>&#8722;4%</td><td>&#8722;5%</td><td>125%</td><td><b>under</b>perform in down (captured MORE of the loss)</td></tr>
+                  <tr><td>Down</td><td>&#8722;4%</td><td>&#8722;3%</td><td>75%</td><td><b>out</b>perform in down (captured LESS of the loss)</td></tr>
+                </table>
+                <div class="ppe-trap"><b>Interpreting the capture ratio:</b>
+&bull; = 1 &#8594; <b>symmetric</b> return profile
+&bull; &gt; 1 &#8594; <b>positively asymmetric / CONVEX</b> (greater upside capture than downside) &#8212; desirable
+&bull; &lt; 1 &#8594; <b>negatively asymmetric / CONCAVE</b> (greater downside than upside capture)
+Ideally: capture as much of the upside, as little of the downside &#8594; maximize the capture ratio.</div>
+                <div class="ppe-fl">Example: up market mgr 7% / bench 8% &#8594; upside = 87.5%
+         down market mgr &#8722;6% / bench &#8722;10% &#8594; downside = 60%
+         capture ratio = 87.5% / 60% = 1.46 &#8594; positively asymmetric (convex)</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Return profile: convex vs concave</div>
+                <div class="ppe-body">Portfolio return (y) plotted against benchmark return (x). The 45&#176; line is capture ratio = 1 (symmetric). A <b class="ppe-green">convex</b> profile bows up (more upside, less downside); a <b class="ppe-red">concave</b> profile bows down.</div>
+                <svg viewBox="0 0 460 300" style="width:100%;max-width:460px;display:block;margin:8px auto;font-family:var(--mono);">
+                  <!-- axes through origin at center (230,150) -->
+                  <line x1="40" y1="150" x2="420" y2="150" stroke="var(--border)" stroke-width="1"/>
+                  <line x1="230" y1="20" x2="230" y2="280" stroke="var(--border)" stroke-width="1"/>
+                  <!-- 45-degree symmetric line (capture=1) -->
+                  <line x1="60" y1="280" x2="400" y2="20" stroke="var(--ppe-blue)" stroke-width="1.5" stroke-dasharray="5,4"/>
+                  <!-- convex curve (desirable): below-left bows toward 0, above-right steep up -->
+                  <path d="M 60 250 Q 200 200 230 150 Q 270 80 400 35" fill="none" stroke="var(--ppe-green)" stroke-width="2.5"/>
+                  <!-- concave curve: steep down-left, flatter up-right -->
+                  <path d="M 60 265 Q 190 100 230 150 Q 280 195 400 130" fill="none" stroke="var(--ppe-red)" stroke-width="2.5"/>
+                  <!-- origin dot -->
+                  <circle cx="230" cy="150" r="3" fill="var(--ppe-main)"/>
+                  <!-- quadrant labels -->
+                  <text x="330" y="40" fill="var(--ppe-green)" font-size="11">convex &gt;1</text>
+                  <text x="300" y="120" fill="var(--ppe-red)" font-size="11">concave &lt;1</text>
+                  <text x="320" y="95" fill="var(--ppe-blue)" font-size="10">45&#176; (=1)</text>
+                  <!-- axis labels -->
+                  <text x="408" y="143" fill="var(--muted)" font-size="10">bench +</text>
+                  <text x="60" y="143" fill="var(--muted)" font-size="10">bench &#8722;</text>
+                  <text x="236" y="30" fill="var(--muted)" font-size="10">port +</text>
+                  <text x="236" y="278" fill="var(--muted)" font-size="10">port &#8722;</text>
+                  <!-- up/down market region hints -->
+                  <text x="300" y="270" fill="var(--muted)" font-size="9.5">UP market (bench&gt;0): want high upside capture</text>
+                  <text x="50" y="35" fill="var(--muted)" font-size="9.5">DOWN market (bench&lt;0): want low downside capture</text>
+                </svg>
+                <div class="ppe-info">A manager with capture ratio <b class="ppe-green">&gt; 1</b> sits on the convex line: in up markets the portfolio rises more than the benchmark, in down markets it falls less. That's the ideal &#8212; <b>capture the upside, avoid the downside</b>.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Capture ratio calculator</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;">
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Up: mgr %<input id="ppe-cap-um" type="number" value="7" step="0.1" oninput="ppeCapCalc()" style="width:60px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Up: bench %<input id="ppe-cap-ub" type="number" value="8" step="0.1" oninput="ppeCapCalc()" style="width:60px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Down: mgr %<input id="ppe-cap-dm" type="number" value="-6" step="0.1" oninput="ppeCapCalc()" style="width:60px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                  <label style="font-family:var(--mono);font-size:11px;color:#C9D1D9;">Down: bench %<input id="ppe-cap-db" type="number" value="-10" step="0.1" oninput="ppeCapCalc()" style="width:60px;background:#0B0F14;border:1px solid var(--border);color:#C9D1D9;border-radius:4px;padding:4px 6px;margin-left:4px;"></label>
+                </div>
+                <div class="ppe-fl" id="ppe-cap-out"></div>
+              </div>
+            </div>
+
+            <!-- DRAWDOWN -->
+            <div id="ppe135-draw" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Drawdown (max drawdown &amp; drawdown duration)</div>
+                <div class="ppe-rule"><b>Drawdown</b> = the <b>maximum loss</b> if an investor had bought at a <b>peak</b> valuation and sold at a <b>trough</b>. <b>Drawdown duration</b> = total time to <b>fully recover</b>: from when the drawdown commences up to when cumulative drawdown returns to <b>zero</b>.</div>
+                <div class="ppe-fl">Duration = drawdown phase + recovery phase.
+MAXIMUM drawdown occurs at the very END of the drawdown phase / very START of recovery
+&#8212; the point where cumulative drawdown is at its highest (in absolute terms).</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Worked example (12-month stock)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Month</th><th>Monthly ret</th><th>Cumulative drawdown</th><th>Comment</th></tr>
+                  <tr><td>01</td><td>3.14%</td><td>0.00%</td><td></td></tr>
+                  <tr><td>02</td><td>&#8722;2.55%</td><td>&#8722;2.55%</td><td>drawdown phase begins</td></tr>
+                  <tr><td>03</td><td>&#8722;2.71%</td><td>&#8722;5.26%</td><td></td></tr>
+                  <tr><td>04</td><td>&#8722;4.66%</td><td>&#8722;9.92%</td><td></td></tr>
+                  <tr><td>05</td><td>&#8722;4.91%</td><td>&#8722;14.83%</td><td></td></tr>
+                  <tr><td>06</td><td>&#8722;0.73%</td><td><b class="ppe-red">&#8722;15.56%</b></td><td><b>MAX drawdown</b>; recovery begins</td></tr>
+                  <tr><td>07&#8211;11</td><td>+2.18% &#8230; +4.03%</td><td>&#8722;13.38% &#8594; &#8722;0.14%</td><td>recovery phase</td></tr>
+                  <tr><td>12</td><td>4.14%</td><td>0.00%</td><td>drawdown recovered</td></tr>
+                </table>
+                <div class="ppe-fl">Maximum drawdown = &#8722;15.56% (at month 06)
+Drawdown duration &#8776; 11 months (02/20X8 begin &#8594; 12/20X8 full recovery)</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Cumulative drawdown curve</div>
+                <div class="ppe-body">Cumulative drawdown over the 12 months: it falls through the <b>drawdown phase</b>, hits the trough (<b class="ppe-red">max drawdown</b>), then climbs back to zero through the <b>recovery phase</b>.</div>
+                <svg viewBox="0 0 600 260" style="width:100%;max-width:600px;display:block;margin:8px auto;font-family:var(--mono);">
+                  <!-- gridlines + y labels: 0,-5,-10,-15 at y 40,96,153,209 -->
+                  <line x1="50" y1="40" x2="560" y2="40" stroke="var(--border)" stroke-width="1"/>
+                  <line x1="50" y1="96" x2="560" y2="96" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="3,3"/>
+                  <line x1="50" y1="153" x2="560" y2="153" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="3,3"/>
+                  <line x1="50" y1="209" x2="560" y2="209" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="3,3"/>
+                  <text x="44" y="44" fill="var(--muted)" font-size="9" text-anchor="end">0%</text>
+                  <text x="44" y="100" fill="var(--muted)" font-size="9" text-anchor="end">&#8722;5%</text>
+                  <text x="44" y="157" fill="var(--muted)" font-size="9" text-anchor="end">&#8722;10%</text>
+                  <text x="44" y="213" fill="var(--muted)" font-size="9" text-anchor="end">&#8722;15%</text>
+                  <!-- drawdown phase shading 02..06 (x 95..277) -->
+                  <rect x="95" y="40" width="182" height="180" fill="rgba(255,123,114,.06)"/>
+                  <!-- recovery phase shading 06..12 (x 277..550) -->
+                  <rect x="277" y="40" width="273" height="180" fill="rgba(63,185,80,.06)"/>
+                  <!-- the cumulative drawdown polyline -->
+                  <polyline points="50,40 95,68.7 141,99.2 186,151.6 232,206.8 277,215.1 323,190.5 368,155.5 414,128 459,86.9 505,41.6 550,40" fill="none" stroke="var(--ppe-main)" stroke-width="2.5"/>
+                  <!-- trough marker (max drawdown) -->
+                  <circle cx="277" cy="215.1" r="4" fill="var(--ppe-red)"/>
+                  <text x="283" y="232" fill="var(--ppe-red)" font-size="10">max DD &#8722;15.56% (mo 06)</text>
+                  <!-- phase labels -->
+                  <text x="100" y="54" fill="var(--ppe-red)" font-size="9.5">drawdown phase (02&#8594;06)</text>
+                  <text x="360" y="54" fill="var(--ppe-green)" font-size="9.5">recovery phase (06&#8594;12)</text>
+                  <!-- month axis -->
+                  <line x1="50" y1="220" x2="560" y2="220" stroke="var(--border)" stroke-width="1"/>
+                  <text x="50" y="234" fill="var(--muted)" font-size="8.5" text-anchor="middle">01</text>
+                  <text x="95" y="234" fill="var(--muted)" font-size="8.5" text-anchor="middle">02</text>
+                  <text x="186" y="234" fill="var(--muted)" font-size="8.5" text-anchor="middle">04</text>
+                  <text x="277" y="246" fill="var(--muted)" font-size="8.5" text-anchor="middle">06</text>
+                  <text x="368" y="234" fill="var(--muted)" font-size="8.5" text-anchor="middle">08</text>
+                  <text x="459" y="234" fill="var(--muted)" font-size="8.5" text-anchor="middle">10</text>
+                  <text x="550" y="234" fill="var(--muted)" font-size="8.5" text-anchor="middle">12</text>
+                </svg>
+                <div class="ppe-info"><b>Duration</b> spans the whole curve from the start of the drawdown (02) to full recovery at zero (12) &#8776; 11 months. <b>Max drawdown</b> is the single lowest point (the trough at month 06), not the sum of the monthly losses.</div>
+              </div>
+            </div>
+
+            <!-- MANAGER SKILL X/Y/Z -->
+            <div id="ppe135-skill" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Manager skill evaluation (LOS 13.p): attribution + appraisal</div>
+                <div class="ppe-body">Skill is evaluated via <b>attribution</b> (country/stock decisions) AND <b>appraisal</b> (risk-adjusted vs peers).</div>
+                <div class="ppe-fl">ATTRIBUTION (Manager X vs Euronext 100, underperformed by 67 bps):
+&bull; &#8722;12 bps from COUNTRY WEIGHTING (allocation): good call underweighting Netherlands
+  (it lagged by 2.34%), but bad calls elsewhere (underweighted France which beat by 1.50%,
+  overweighted Belgium which lagged by 1.87%) &#8594; net unsuccessful with country weighting
+&bull; &#8722;56 bps from STOCK PICKING (selection): good picks in NL & Belgium (+32 bps) but
+  France lost 81 bps &#8594; net unsuccessful; selection effect &gt; allocation effect</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Appraisal: Managers X / Y / Z vs benchmark (rf = 2%)</div>
+                <table class="ppe-tbl">
+                  <tr><th>Measure</th><th>X</th><th>Y</th><th>Z</th><th>Bench</th></tr>
+                  <tr><td>Return</td><td>9.32%</td><td>11.42%</td><td>8.12%</td><td>9.99%</td></tr>
+                  <tr><td>Std dev</td><td>11.65%</td><td>13.76%</td><td>10.11%</td><td>11.98%</td></tr>
+                  <tr><td>Sharpe</td><td>0.63</td><td>0.68</td><td>0.61</td><td>0.67</td></tr>
+                  <tr><td>Treynor</td><td>0.07</td><td>0.08</td><td>0.06</td><td>0.08</td></tr>
+                  <tr><td>Information ratio</td><td>(0.22)</td><td>0.41</td><td>(0.72)</td><td>&#8212;</td></tr>
+                  <tr><td>Sortino (MAR 4%)</td><td>0.75</td><td>0.78</td><td>0.63</td><td>0.87</td></tr>
+                </table>
+                <div class="ppe-fl">&bull; X's SD slightly below benchmark; lower than Y, higher than Z. Sharpe confirms (rf 2%):
+  X 0.63 &lt; Y 0.68 &amp; Bench 0.67, but &gt; Z 0.61 &#8594; X beat Z, lagged Y &amp; benchmark, risk-adjusted
+&bull; Sharpe conclusions match Treynor &amp; IR. X &amp; Z underperformed benchmark &#8594; <b>negative IRs</b>
+  (X &#8722;0.22, Z &#8722;0.72); Y positive 0.41 &#8594; on systematic-risk basis X lagged Y &amp; benchmark
+&bull; X's Sortino 0.75 &gt; X's Sharpe 0.63 &#8594; should earn greater returns vs the 4% downside threshold</div>
+                <div class="ppe-trap"><b>Conclusion:</b> X failed to show sufficient skill (poor country allocation + poor stock selection vs benchmark). On a risk-adjusted basis X <b>beat Z but fell short of Y and the benchmark</b>. Consider replacing X with a manager who can outperform on allocation, selection, AND risk-adjusted vs peers.</div>
+              </div>
+            </div>
+
+            <!-- QUIZ 13.4 -->
+            <div id="ppe135-quiz" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Module Quiz 13.4</div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q5a');e.style.display=e.style.display==='none'?'block':'none';">Q1: Mort Van Sleet says the Sharpe ratio unfairly disadvantages him because his portfolio's SD is artificially inflated. Explain how true + a solution.</button>
+                <div id="ppe-q5a" style="display:none;"><div class="ppe-fl">It CAN be true: the Sharpe denominator is <b>total standard deviation</b>, which does <b>not distinguish upside from downside</b> volatility. If Mort's portfolio has lots of large <b>positive</b> (upside, "good") returns, those inflate the SD and <b>penalize</b> his Sharpe ratio even though they're desirable.
+<b>Solution: use the Sortino ratio</b> instead &#8212; it replaces total SD with the <b>target semideviation</b> (downside risk only, returns below the MAR), so "good" upside volatility no longer penalizes him.</div></div>
+                <button class="ppe-tab" style="margin:6px 0;" onclick="var e=document.getElementById('ppe-q5b');e.style.display=e.style.display==='none'?'block':'none';">Q2: Up: mgr 4% / bench 3%. Down: mgr &#8722;4% / bench &#8722;8%. Capture ratio? (A 0.25 / B 0.38 / C 2.67)</button>
+                <div id="ppe-q5b" style="display:none;"><div class="ppe-fl"><b class="ppe-green">C &#8212; 2.67.</b>
+Upside capture = 4% / 3% = 1.333
+Downside capture = &#8722;4% / &#8722;8% = 0.50
+Capture ratio = upside / downside = 1.333 / 0.50 = <b>2.67</b>
+&#8594; &gt; 1 = positively asymmetric (convex): captured the upside, avoided much of the downside.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+            function ppeMod(ev,id){
+              var w=document.getElementById('ppeWidget');
+              w.querySelectorAll('.ppe-modpanel').forEach(function(p){p.classList.remove('active')});
+              w.querySelectorAll('.ppe-modtabs > .ppe-modtab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function ppeTop(ev,id){
+              var mp=ev.currentTarget.closest('.ppe-modpanel');
+              mp.querySelectorAll(':scope > .ppe-toppanel').forEach(function(p){p.classList.remove('active')});
+              mp.querySelectorAll(':scope > .ppe-toptabs > .ppe-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+
+            function ppeAgCalc(){
+              try{
+                function v(id){return parseFloat(document.getElementById(id).value)||0;}
+                var r1=v('ppe-ag-r1'),r2=v('ppe-ag-r2'),b1=v('ppe-ag-b1'),b2=v('ppe-ag-b2');
+                function rd(x){return Math.round(x*100)/100;}
+                var R2=( (1+r1/100)*(1+r2/100)-1 )*100;
+                var B2=( (1+b1/100)*(1+b2/100)-1 )*100;
+                var arith=R2-B2;
+                var arithNaive=( (1+ (r1-b1)/100)*(1+ (r2-b2)/100) -1)*100;
+                var G2=( (1+R2/100)/(1+B2/100) -1)*100;
+                var g1=( (1+r1/100)/(1+b1/100) -1)*100;
+                var g2=( (1+r2/100)/(1+b2/100) -1)*100;
+                var gComp=( (1+g1/100)*(1+g2/100) -1)*100;
+                document.getElementById('ppe-ag-out').textContent=
+                  "2-period R = "+rd(R2)+"%   B = "+rd(B2)+"%\n"+
+                  "ARITHMETIC active (R\u2212B) = "+rd(arith)+"%\n"+
+                  "  naive compounding of single-period actives = "+rd(arithNaive)+"%  (\u2260 unless adjusted)\n"+
+                  "GEOMETRIC active (1+R)/(1+B)\u22121 = "+rd(G2)+"%\n"+
+                  "  single-period geometric: P1 "+rd(g1)+"% , P2 "+rd(g2)+"%\n"+
+                  "  compounded = "+rd(gComp)+"%  (matches \u2713 geometric compounds)";
+              }catch(e){}
+            }
+            function ppeFacCalc(){
+              try{
+                function v(id){return parseFloat(document.getElementById(id).value)||0;}
+                function rd(x){return Math.round(x*100)/100;}
+                var names=['RMRF','SMB','HML','WML'];
+                var tilt=0, lines='';
+                for(var i=0;i<4;i++){
+                  var d=v('ppe-fac-d'+i), f=v('ppe-fac-f'+i), c=d*f;
+                  tilt+=c;
+                  lines+=names[i]+": "+d+" \u00d7 "+f+"% = "+rd(c)+"%\n";
+                }
+                var sec=v('ppe-fac-sec');
+                var active=tilt+sec;
+                document.getElementById('ppe-fac-out').textContent=
+                  lines+
+                  "Factor tilts return = "+rd(tilt)+"%\n"+
+                  "+ Security selection = "+rd(sec)+"%\n"+
+                  "ACTIVE RETURN = "+rd(active)+"%";
+              }catch(e){}
+            }
+            function ppeBhbCalc(){
+              try{
+                function v(id){return parseFloat(document.getElementById(id).value)||0;}
+                function rd(x){return Math.round(x*100)/100;}
+                var w1=v('ppe-bhb-w1'),r1=v('ppe-bhb-r1'),bw1=v('ppe-bhb-bw1'),b1=v('ppe-bhb-b1');
+                var w2=v('ppe-bhb-w2'),r2=v('ppe-bhb-r2'),bw2=v('ppe-bhb-bw2'),b2=v('ppe-bhb-b2');
+                var R=w1*r1+w2*r2, B=bw1*b1+bw2*b2;
+                // BHB allocation
+                var bhbA1=(w1-bw1)*b1, bhbA2=(w2-bw2)*b2;
+                // BF allocation
+                var bfA1=(w1-bw1)*(b1-B), bfA2=(w2-bw2)*(b2-B);
+                // selection & interaction (same both)
+                var S1=bw1*(r1-b1), S2=bw2*(r2-b2);
+                var I1=(w1-bw1)*(r1-b1), I2=(w2-bw2)*(r2-b2);
+                document.getElementById('ppe-bhb-out').textContent=
+                  "R = "+rd(R)+"%   B = "+rd(B)+"%   active = "+rd(R-B)+"%\n\n"+
+                  "BHB allocation  (w\u2212W)\u00d7B\u1d62 : seg1 "+rd(bhbA1)+"% , seg2 "+rd(bhbA2)+"% , total "+rd(bhbA1+bhbA2)+"%\n"+
+                  "BF  allocation  (w\u2212W)\u00d7(B\u1d62\u2212B): seg1 "+rd(bfA1)+"% , seg2 "+rd(bfA2)+"% , total "+rd(bfA1+bfA2)+"%\n"+
+                  "Selection  W\u00d7(R\u2212B\u1d62) : seg1 "+rd(S1)+"% , seg2 "+rd(S2)+"% , total "+rd(S1+S2)+"%\n"+
+                  "Interaction (w\u2212W)\u00d7(R\u2212B\u1d62): seg1 "+rd(I1)+"% , seg2 "+rd(I2)+"% , total "+rd(I1+I2)+"%\n\n"+
+                  "Check (BF alloc + sel + int) = "+rd(bfA1+bfA2+S1+S2+I1+I2)+"% = active \u2713";
+              }catch(e){}
+            }
+
+            function ppeArCalc(){
+              try{
+                function v(id){return parseFloat(document.getElementById(id).value)||0;}
+                function rd(x,n){n=(n===undefined)?2:n;var p=Math.pow(10,n);return Math.round(x*p)/p;}
+                var rp=v('ppe-ar-rp'),sdp=v('ppe-ar-sdp')/100,beta=v('ppe-ar-beta'),rm=v('ppe-ar-rm'),sdm=v('ppe-ar-sdm')/100,rf=v('ppe-ar-rf');
+                var capm=rf+beta*(rm-rf);
+                var alpha=rp-capm;
+                var varEps=sdp*sdp - beta*beta*sdm*sdm;
+                var out;
+                if(varEps<=0){ out="\u03c3\u03b5\u00b2 = "+rd(varEps,6)+" \u2264 0 \u2014 check inputs (\u03b2\u00b2\u03c3m\u00b2 exceeds \u03c3p\u00b2)"; }
+                else {
+                  var sdEps=Math.sqrt(varEps);
+                  var AR=(alpha/100)/sdEps;
+                  out="CAPM fair return = "+rf+" + "+beta+"("+rm+" \u2212 "+rf+") = "+rd(capm)+"%\n"+
+                      "\u03b1 (alpha) = "+rp+" \u2212 "+rd(capm)+" = "+rd(alpha)+"%\n"+
+                      "\u03c3\u03b5\u00b2 = "+sdp+"\u00b2 \u2212 ("+beta+"\u00b2 \u00d7 "+sdm+"\u00b2) = "+rd(varEps,6)+"\n"+
+                      "\u03c3\u03b5 = \u221a"+rd(varEps,6)+" = "+rd(sdEps,4)+"\n"+
+                      "AR = "+rd(alpha/100,4)+" / "+rd(sdEps,4)+" = "+rd(AR,4);
+                }
+                document.getElementById('ppe-ar-out').textContent=out;
+              }catch(e){}
+            }
+            function ppeCapCalc(){
+              try{
+                function v(id){return parseFloat(document.getElementById(id).value)||0;}
+                function rd(x,n){n=(n===undefined)?2:n;var p=Math.pow(10,n);return Math.round(x*p)/p;}
+                var um=v('ppe-cap-um'),ub=v('ppe-cap-ub'),dm=v('ppe-cap-dm'),db=v('ppe-cap-db');
+                var up=(ub!==0)?um/ub:0, down=(db!==0)?dm/db:0;
+                var cap=(down!==0)?up/down:0;
+                var shape=cap>1?"positively asymmetric (CONVEX) \u2014 desirable":(cap<1?"negatively asymmetric (CONCAVE)":"symmetric");
+                document.getElementById('ppe-cap-out').textContent=
+                  "Upside capture = "+um+"% / "+ub+"% = "+rd(up*100)+"%  ("+rd(up,4)+")\n"+
+                  "Downside capture = "+dm+"% / "+db+"% = "+rd(down*100)+"%  ("+rd(down,4)+")\n"+
+                  "Capture ratio = upside / downside = "+rd(up,4)+" / "+rd(down,4)+" = "+rd(cap,2)+"\n"+
+                  "\u2192 "+shape;
+              }catch(e){}
+            }
+            function ppeInit(){ try{ ppeAgCalc(); ppeFacCalc(); ppeBhbCalc(); ppeArCalc(); ppeCapCalc(); }catch(e){} }
+          </script>
+        </div>
+
         <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
           <style>
             #sfWidget { --sf-main:#A78BFA; --sf-gold:#D4A017; --sf-green:#3DD68C; --sf-red:#FF7B72; --sf-orange:#F0A04B; --sf-blue:#79C0FF; --sf-purple:#BC8CFF; }
@@ -26002,7 +27079,7 @@ const DEFAULT_DECK = {
     { name:"Asset Allocation",   subtopics:[] },
     { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Currency Management"] },
     { name:"Portfolio Construction", subtopics:["Overview of Equity Portfolio Management","Overview Of Fixed-Income Portfolio Management","Asset Allocation to Alternative Investments","Active Mgmt","Factor Models","Rebalancing","Portfolio Risk","An Overview of Private Wealth Management","Portfolio Management for Institutional Investors","Trading Costs and Electronic Markets"] },
-    { name:"Performance",        subtopics:["BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
+    { name:"Performance",        subtopics:["Portfolio Performance Evaluation","BHB Attribution","Risk-Adjusted Measures","GIPS","Benchmarks"] },
     { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
     { name:"Command Words",      subtopics:["Templates","Thin vs Full"] },
@@ -26896,6 +27973,126 @@ const DEFAULT_DECK = {
     {id:"tc30",topic:"Portfolio Construction",subtopic:"Trading Costs and Electronic Markets",type:"command",
      q:"Quiz 11.4 trap \u2014 malevolent orders vs gunning the market",
      a:"Both sound 'aggressive' \u2014 distinguish by mechanism:\n[rl][hl]Malevolent orders[/hl] (error/risk category): created to specifically manipulate; e.g. rogue trades by aggrieved employees, or [hl]denial-of-service attacks on competitors via excessive quote submission[/hl][/rl][rl][hl]Gunning the market[/hl] (manipulation subtype): [hl]rapid short selling collapses a security[/hl] \u2192 triggers stop-loss orders the manipulator fills cheaply[/rl]\nStorm checks-and-balances (authorized-only input + supervisory sign-off on algo updates) = both valid."},
+    {id:"ppe1",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"framework",
+     q:"Three components of performance evaluation (13.a)",
+     a:"Each builds on the previous:\n[rl][hl]Performance measurement[/hl] = FOUNDATION phase; calculates BOTH return AND risk over specified periods. First decide: vs a [hl]benchmark[/hl] (relative) or a pre-set [hl]target return %[/hl] (absolute). \u2192 WHAT performance?[/rl][rl][hl]Performance attribution[/hl] = the [hl]key drivers[/hl]; explains HOW the return was achieved given risk taken; covers relative AND absolute. \u2192 HOW achieved?[/rl][rl][hl]Performance appraisal[/hl] = decisions vs market vs [hl]CHANCE[/hl]; judgment on QUALITY. \u2192 SKILL or LUCK?[/rl]\nIf performance = luck, can't expect it to repeat."},
+    {id:"ppe2",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Appraisal vs attribution \u2014 the chance/luck trap",
+     a:"[hl]Performance appraisal[/hl] answers SKILL vs LUCK \u2014 was performance from investment decisions, the overall market, or [hl]chance[/hl]?\n[hl]Performance attribution[/hl] answers HOW \u2014 the drivers of the return.\nExam reflex: 'determine whether performance was primarily by chance' \u2192 [hl]appraisal[/hl] (NOT attribution).\nFund sponsor perspective captures ALL value added/lost; manager perspective only what that manager did."},
+    {id:"ppe3",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"framework",
+     q:"Effective attribution process \u2014 attributes (13.b)",
+     a:"Must include:\n[rl]A reflection of [hl]100%[/hl] of the portfolio's return or risk exposure[/rl][rl]The PM's [hl]current decision-making process[/hl][/rl][rl]The [hl]active investment decisions[/hl] taken by the PM[/rl][rl]A [hl]full explanation[/hl] of excess return and risk[/rl]\nTwo non-negotiables: account for 100% of risk & return AND represent the CURRENT process. If the process recently changed \u2192 [hl]update the attribution[/hl]. One that misses total risk/return is misleading & unreliable."},
+    {id:"ppe4",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Return attribution vs risk attribution (13.c)",
+     a:"[rl][hl]Return attribution[/hl]: impact of active decisions on the fund's RETURNS[/rl][rl][hl]Risk attribution[/hl]: impact of active decisions on portfolio RISK (the parallel)[/rl]\nRisk usually vs the benchmark (relative-based) but can be ABSOLUTE (no benchmark).\n[hl]Trap[/hl]: a relative-based risk attribution is NOT appropriate for a manager with a predetermined ABSOLUTE target-return goal. And a widely-quoted index (S&P 500) MAY OR MAY NOT be an appropriate benchmark."},
+    {id:"ppe5",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Macro vs micro attribution",
+     a:"[rl][hl]Micro attribution[/hl] \u2192 PORTFOLIO MANAGER level; verifies the PM did what they said; explains drivers of the portfolio's return[/rl][rl][hl]Macro attribution[/hl] \u2192 FUND SPONSOR level (institutional); quantifies the sponsor's decisions to deviate from the [hl]strategic asset allocation[/hl] and the [hl]timing[/hl] of those decisions[/rl]\nMnemonic: mi[b]C[/b]ro \u2192 manager; ma[b]C[/b]ro \u2192 sponsor (SAA deviations + timing)."},
+    {id:"ppe6",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"framework",
+     q:"Three attribution methods (13.d)",
+     a:"[rl][hl]Returns-based[/hl]: regress total portfolio returns on risk FACTORS (systematic, size, value) to find active bets[/rl][rl][hl]Holdings-based[/hl]: use [hl]beginning-of-period holdings[/hl] to assess sector/stock-selection bets; does NOT adjust for in-period changes[/rl][rl][hl]Transactions-based[/hl]: holdings-based PLUS the impact of any trades executed during the period[/rl]\nAccuracy: returns < holdings < transactions. Choice driven by data availability, the manager's process, and the need for accuracy."},
+    {id:"ppe7",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Attribution methods \u2014 adv/disadv & the timing effect (Fig 13.1)",
+     a:"[rl][hl]Returns-based[/hl]: easy, no holdings data (good for hedge funds); BUT [hl]least accurate[/hl] & returns can be manipulated[/rl][rl][hl]Holdings-based[/hl]: more accurate (uses holdings); BUT needs holdings data & has a [hl]trading-effect mismatch[/hl] \u2192 unsuitable for high-turnover funds with long periods[/rl][rl][hl]Transactions-based[/hl]: [hl]most accurate[/hl]; BUT highest data needs & complexity[/rl]\n[hl]Timing/trading effect[/hl]: holdings-based uses only beginning holdings \u2192 for high turnover it won't reconcile to total returns; [hl]reduce by using shorter evaluation periods[/hl]."},
+    {id:"ppe8",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Quiz 13.1 traps",
+     a:"[rl]'Determines whether performance was primarily by chance' \u2192 [hl]performance appraisal[/hl] (A)[/rl][rl]'Most reliable / most accurate attribution method' \u2192 [hl]transactions based[/hl] (C); returns-based is least accurate[/rl]\nKeep straight: measurement = WHAT (return+risk), attribution = HOW (drivers), appraisal = SKILL vs LUCK."},
+    {id:"ppe9",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Arithmetic vs geometric attribution (13.e)",
+     a:"[rl][hl]Arithmetic[/hl]: active = R \u2212 B each period. Single-period actives [hl]do NOT compound[/hl] to the multi-period active without a smoothing adjustment[/rl][rl][hl]Geometric[/hl]: G = (1+R)/(1+B) \u2212 1 \u2014 a RATIO. Single-period geometric returns [hl]DO compound[/hl][/rl]\nEx (5%,5% vs 3%,3%): arith 2-period = 10.25\u22126.09 = 4.16% (but 2%/period \u2192 1.02\u00b2\u22121 = 4.04%). Geometric = 1.1025/1.0609\u22121 = 3.92% (1.94%/period compounds).\nAll attribution models in this reading are [hl]arithmetic[/hl]."},
+    {id:"ppe10",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"formula",
+     q:"BHB three effects (13.h)",
+     a:"R = \u03a3w\u1d62R\u1d62 (port) ; B = \u03a3W\u1d62B\u1d62 (bench). Lowercase = portfolio, UPPERCASE = benchmark.\n[rl][hl]Allocation A\u1d62 = (w\u1d62 \u2212 W\u1d62) \u00d7 B\u1d62[/hl] \u2014 active weight \u00d7 passive segment return[/rl][rl][hl]Selection S\u1d62 = W\u1d62 \u00d7 (R\u1d62 \u2212 B\u1d62)[/hl] \u2014 passive weight \u00d7 active segment return[/rl][rl][hl]Interaction I\u1d62 = (w\u1d62 \u2212 W\u1d62) \u00d7 (R\u1d62 \u2212 B\u1d62)[/hl] \u2014 both actives[/rl]\nFig 13.2: alloc \u22121.5%, selection +1.4%, interaction +0.6% = 0.5% active."},
+    {id:"ppe11",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Why the interaction effect exists",
+     a:"Allocation [hl]purely[/hl] measures over/underweighting (ignores selection ability). Selection [hl]purely[/hl] measures picking (ignores weighting). Neither captures the [hl]compounding[/hl] when you overweight a segment where your manager ALSO outperformed.\nInteraction = first term of allocation \u00d7 second term of selection. Least intuitive of the three, simply derived from the other two."},
+    {id:"ppe12",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Brinson-Fachler vs BHB \u2014 the allocation fix",
+     a:"BHB problem: the [hl]sign of the allocation effect doesn't show if the over/underweight was correct[/hl].\n[rl]BHB alloc = (w\u1d62 \u2212 W\u1d62) \u00d7 B\u1d62[/rl][rl][hl]BF alloc = (w\u1d62 \u2212 W\u1d62) \u00d7 (B\u1d62 \u2212 B)[/hl] \u2014 segment vs OVERALL benchmark[/rl]\nEx: overweight growth (B\u1d62=10%) when overall B=14%. BHB = +1.5% (misleading). BF = (.75\u2212.60)(10\u221214) = \u22120.6% (correctly negative).\nSelection & interaction IDENTICAL in both; only individual allocations differ. [hl]BF is more popular.[/hl]"},
+    {id:"ppe13",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Macro vs micro attribution (Brinson context)",
+     a:"[rl][hl]Macro[/hl] = FUND SPONSOR (investment committee + internal staff). Value from over/underweighting [hl]styles of manager[/hl] vs benchmark + skill in [hl]selecting good managers[/hl][/rl][rl][hl]Micro[/hl] = individual PORTFOLIO MANAGERS. Over/underweighting [hl]segments[/hl] (substyle/sector/geography) of their own portfolio[/rl]\nMicro per-segment effects DIFFER from macro, but aggregate to the [hl]same total active return[/hl] (0.5% in the worked example)."},
+    {id:"ppe14",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Micro attribution shortcuts + single stock",
+     a:"[rl]Shortcut: selection + interaction combined = [hl]w\u1d62 \u00d7 (R\u1d62 \u2212 B\u1d62)[/hl] using ACTUAL portfolio weights (selection alone uses benchmark weight W\u1d62). Ex LC growth 0.50\u00d7(15\u22128)=3.50% = 2.10%+1.40%[/rl][rl]On a [hl]single stock[/hl]: allocation effect actually represents [hl]selection[/hl] (allocating to one security IS stock selection); selection effect represents [hl]market timing + transaction costs[/hl][/rl]\nMicro can run on style/sector/geography \u2014 effects differ by segmentation."},
+    {id:"ppe15",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"formula",
+     q:"Carhart four-factor model (factor-based attribution)",
+     a:"R\u209a \u2212 R\u1da0 = a\u209a + b\u2081\u00b7RMRF + b\u2082\u00b7SMB + b\u2083\u00b7HML + b\u2084\u00b7WML + E\u209a\n[rl][hl]RMRF[/hl] = market (index above 1-mo T-bill)[/rl][rl][hl]SMB[/hl] = small minus big (SIZE)[/rl][rl][hl]HML[/hl] = high minus low (VALUE = book-to-price)[/rl][rl][hl]WML[/hl] = winners minus losers (MOMENTUM)[/rl]\na\u209a = alpha ; E\u209a = unexplained error. Removes known market-factor effects to isolate active excess return.\nContribution to active return = [hl]sensitivity difference (port\u2212bench) \u00d7 factor return[/hl]."},
+    {id:"ppe16",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Carhart attribution interpretation (Fig 13.5)",
+     a:"Factor tilts return = \u03a3 (diff \u00d7 factor return). Active return = [hl]factor tilts + security selection[/hl].\nEx: tilts 1.75% + security selection \u22120.10% = active 1.65%. HML diff +0.30 \u00d7 4.30% = +1.29% (78% of active) \u2192 a [hl]value tilt[/hl] drove returns.\nReading benchmark sensitivities: RMRF=1 \u2192 diversified; SMB=\u22121 \u2192 large-cap; HML=0, WML=0 \u2192 large-cap blend, no momentum.\n[hl]Due diligence[/hl]: if prospectus says growth but model shows value tilt \u2192 investigate."},
+    {id:"ppe17",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"framework",
+     q:"Fixed-income attribution \u2014 three methods (13.f)",
+     a:"Candidates interpret only, [hl]NOT calculate[/hl].\n[rl][hl]Exposure decomposition (duration-based)[/hl]: duration buckets \u00d7 sectors; LOWEST data, simplest \u2192 [hl]marketing/client reporting[/hl][/rl][rl][hl]Yield curve decomp (duration-based)[/hl]: sources = yield/roll/shift/shape/spread/residual; more data \u2192 [hl]analysts/PMs[/hl][/rl][rl][hl]Yield curve decomp (full repricing)[/hl]: prices each bond via individual [hl]spot rates[/hl]; MOST comprehensive/precise, MOST complex, [hl]LEAST easily understood[/hl][/rl]"},
+    {id:"ppe18",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Fixed-income active bets & six yield-curve sources",
+     a:"Active bets: [rl][hl]Duration[/hl] \u2014 expects curve down \u2192 increase duration[/rl][rl][hl]Curve shape[/hl] \u2014 position for slope/curvature change (steepening)[/rl][rl][hl]Sector[/hl] \u2014 expects corp spreads to narrow \u2192 overweight corporates[/rl][rl][hl]Bond selection[/hl] \u2014 overweight specific bonds[/rl]\nSix sources: [hl]yield/income, roll, shift, shape, spread, residual[/hl]. Roll = bond rolling down a stable curve; shift = parallel (duration/convexity); shape = slope/curvature; residual = unexplained estimation error.\nHigh-coupon high-yield corp overweight \u2192 positive yield + spread contribution UNLESS default / spreads widen \u2192 negative."},
+    {id:"ppe19",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Interpreting fixed-income exposure decomposition (Fig 13.8)",
+     a:"[rl]+duration effect \u2192 higher-duration call paid off \u2192 [hl]yield curve fell[/hl][/rl][rl]\u2212curve(shape) ~39bps: overweight long-duration while [hl]medium yields rose & short fell[/hl] \u2192 a [hl]STEEPENING[/hl][/rl][rl]\u2212sector ~8bps: overweight corporates but [hl]spreads WIDENED[/hl] (contrary to expectation; lower benchmark corp returns confirm)[/rl][rl]bond selection 0% \u2192 no active bond selection[/rl]\nThe duration-based exposure method is preferred for [hl]client reporting[/hl]: simple, low data, clearly understandable."},
+    {id:"ppe20",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"framework",
+     q:"Risk attribution \u2014 selecting the approach (13.g, Fig 13.9)",
+     a:"Risk attribution identifies the [hl]sources of risk[/hl] the manager took; must combine with return attribution to fully evaluate active decisions. Need to know process (top-down vs bottom-up) + benchmark.\nMatrix (process \u00d7 type):\n[rl][hl]Bottom-up / relative[/hl] = security's marginal contribution to [hl]tracking risk[/hl] (\u00d7 active weight)[/rl][rl][hl]Top-down / relative[/hl] = attribute tracking error to [hl]allocation & selection[/hl][/rl][rl][hl]Factor / relative[/hl] = factor's marginal contribution to tracking error & active specific risk[/rl][rl][hl]Absolute[/hl] columns use [hl]total risk[/hl] (std deviation) + specific risk[/rl]\nRelative \u2192 tracking risk; Absolute \u2192 total risk."},
+    {id:"ppe21",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"framework",
+     q:"Liability-based benchmarks (13.i)",
+     a:"Used when a firm has a [hl]specific future liability[/hl] (e.g. defined-benefit plan). Focuses on the [hl]cash flows to satisfy the liability[/hl]; frequently [hl]limits investment choices[/hl] (e.g. equity + FI only).\nTypical assets: [hl]nominal bonds, inflation-adjusted bonds, high-quality stocks[/hl].\nPlan features shaping it: years to retirement, # already retired, inflation impact, EBIT-asset correlation, frozen/terminal life, actuarial assumptions (life expectancy, discount rate)."},
+    {id:"ppe22",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"framework",
+     q:"Seven asset-based benchmark types (13.j)",
+     a:"[rl]1. [hl]Absolute[/hl] \u2014 min target return (MAR/Sortino); simple but [hl]NOT investable[/hl][/rl][rl]2. [hl]Broad market index[/hl] \u2014 recognized/investable; but style may deviate (S&P 500 wrong for small-cap)[/rl][rl]3. [hl]Style index[/hl] \u2014 LC/SC \u00d7 growth/value; differing style definitions \u2192 different returns[/rl][rl]4. [hl]Factor model[/hl] \u2014 CAPM = one-factor; gives style insight but expensive/ambiguous[/rl][rl]5. [hl]Returns-based[/hl] \u2014 regress account on style indexes; needs enough months, fails if style changes[/rl][rl]6. [hl]Manager universes[/hl] \u2014 median manager; survivorship bias, [hl]not specified in advance \u2192 not investable[/hl][/rl][rl]7. [hl]Custom security-based[/hl] \u2014 meets ALL validity criteria; expensive, needs transparency[/rl]"},
+    {id:"ppe23",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Which benchmarks are NOT investable / acceptable?",
+     a:"[rl][hl]Absolute[/hl] (#1) \u2014 a return objective, no holdings to replicate[/rl][rl][hl]Manager universes[/hl] (#6) \u2014 median manager can't be specified in advance + survivorship bias \u2192 not an acceptable benchmark[/rl]\n[hl]Custom security-based[/hl] (#7) is the gold standard \u2014 meets ALL validity criteria, allows continual monitoring & risk allocation across teams (but expensive; impossible if manager lacks transparency, e.g. hedge funds)."},
+    {id:"ppe24",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"framework",
+     q:"Seven properties of a valid benchmark (13.k) \u2014 SAMURAI",
+     a:"[rl][hl]S[/hl]pecified in advance \u2014 known to manager & sponsor at START of period[/rl][rl][hl]A[/hl]ppropriate \u2014 consistent with manager's approach/style[/rl][rl][hl]M[/hl]easurable \u2014 value/return on a reasonably frequent basis[/rl][rl][hl]U[/hl]nambiguous \u2014 clear identities & weights[/rl][rl][hl]R[/hl]eflective of current investment opinions \u2014 manager has current knowledge of the securities[/rl][rl][hl]A[/hl]ccountable \u2014 manager accepts applicability, differences due only to active mgmt[/rl][rl][hl]I[/hl]nvestable \u2014 can replicate it & forgo active management[/rl]\nMnemonic [hl]SAMURAI[/hl]."},
+    {id:"ppe25",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"formula",
+     q:"P = M + S + A decomposition",
+     a:"[hl]P = M + S + A[/hl]\nP = manager's portfolio return ; M = MARKET index return\n[rl][hl]S = B \u2212 M[/hl] = excess return to STYLE (style index minus market); + or \u2212[/rl][rl][hl]A = P \u2212 B[/hl] = ACTIVE return (portfolio minus STYLE benchmark)[/rl]\nPassive in broad index \u2192 M is the benchmark, S=0. Specializing in a style adds (B>M, S>0) or subtracts (B<M, S<0) the style-vs-market gap. A is true active management."},
+    {id:"ppe26",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Benchmark-quality example: growth manager beats style but lags market",
+     a:"P=\u221211% (port), B=\u221212% (LC growth index), M=\u221210% (broad).\n[rl]S = B\u2212M = \u221212\u2212(\u221210) = [hl]\u22122%[/hl] \u2192 growth STYLE out of favor[/rl][rl]A = P\u2212B = \u221211\u2212(\u221212) = [hl]+1%[/hl] \u2192 manager BEAT the style benchmark[/rl]\nClient concern that a skillful manager should beat the broad market is [hl]NOT valid[/hl] \u2014 the manager did well for a growth manager; the broad-market underperformance is the STYLE (\u22122%), not poor active management."},
+    {id:"ppe27",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Benchmark misspecification & misfit active return (13.l)",
+     a:"[hl]Garbage in, garbage out[/hl]: a wrong benchmark invalidates measurement, attribution, AND appraisal \u2192 [hl]misfit active return[/hl].\nEuronext/CAC ex: P=10%, investor bm (Euronext 100)=12%, normal (CAC 40)=9%.\n[rl]Total active = P \u2212 investor = [hl]\u22122%[/hl][/rl][rl]TRUE active = P \u2212 normal = [hl]+1%[/hl][/rl][rl]MISFIT active = normal \u2212 investor = [hl]\u22123%[/hl][/rl]\nCheck: true + misfit = +1 \u2212 3 = \u22122 = total \u2713. Manager added +1% true active; the \u22122% is an artifact of the misspecified benchmark."},
+    {id:"ppe28",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"framework",
+     q:"Benchmarking alternatives \u2014 hedge funds & the smoothing trap (13.m)",
+     a:"3 HF candidate benchmarks all flawed:\n[rl][hl]Broad market index[/hl] \u2014 wide strategy range, leverage/shorts/derivatives, low correlation, illiquidity \u2192 inappropriate[/rl][rl][hl]Risk-free + spread[/hl] \u2014 only fits arbitrage; most HFs carry systematic risk & leverage \u2192 spread must rise \u2192 unsuitable[/rl][rl][hl]Peer universe[/hl] \u2014 backfill + survivorship bias; illiquid \u2192 appraisal pricing \u2192 [hl]SMOOTHING[/hl][/rl]\nSmoothing \u2192 understated SD \u2192 [hl]inflated Sharpe[/hl] \u2192 over-allocation to HFs. Same trap hits real estate & distressed."},
+    {id:"ppe29",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Alt-investment benchmarks: real estate, PE, commodities, distressed, managed derivatives",
+     a:"[rl][hl]Real estate[/hl]: self-reported, appraisal/infrequent pricing \u2192 smoothing & understated vol; [hl]open-end \u2192 TWR (investor flows), closed-end \u2192 IRR (manager flows)[/hl][/rl][rl][hl]Private equity[/hl]: metric usually [hl]IRR[/hl] (all CFs since inception + ending value); biased by early gains/losses; results at one point though firms at varying stages[/rl][rl][hl]Commodities[/hl]: benchmarks based on [hl]futures not actual assets[/hl] \u2192 differences; leverage/weighting gaps[/rl][rl][hl]Distressed[/hl]: illiquid \u2192 nearly [hl]impossible to benchmark[/hl]; stale pricing (Barclay Distressed index spans many strategies)[/rl][rl][hl]Managed derivatives[/hl]: strategy-specific (Mount Lucas Mgmt Index, momentum) or peer-group (survivorship bias)[/rl]"},
+    {id:"ppe30",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Quiz 13.3 \u2014 Rhombus & median-manager traps",
+     a:"[rl][hl]Rhombus[/hl] (P=8.9, Russell2000 B=9.1, Wilshire5000 M=8.5): style S=B\u2212M=+0.6%; active A=P\u2212B=\u22120.2%. Small-cap style was in favor (carried it +0.4% above market) but active management slightly [hl]detracted[/hl] vs the proper style benchmark[/rl][rl][hl]Median-manager benchmark[/hl] (Hexagon): NOT valid \u2014 not specified in advance, [hl]not investable[/hl], survivorship bias, ambiguous. It IS measurable, but fails the key tests \u2192 unacceptable[/rl]"},
+    {id:"ppe31",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"framework",
+     q:"Seven performance appraisal measures (13.n)",
+     a:"Appraisal = final stage: skill vs luck? Active skill = beating an appropriate benchmark [hl]risk-adjusted, consistently[/hl]. First FIVE are risk-adjusted:\n[rl]1. [hl]Sharpe[/hl] = (R\u2212r\u1da0)/\u03c3 \u2014 TOTAL risk[/rl][rl]2. [hl]Treynor[/hl] = (R\u2212r\u1da0)/\u03b2 \u2014 SYSTEMATIC risk[/rl][rl]3. [hl]Information ratio[/hl] = (r\u209a\u2212r_B)/tracking risk[/rl][rl]4. [hl]Appraisal ratio[/hl] = \u03b1/\u03c3\u03b5 \u2014 RESIDUAL risk[/rl][rl]5. [hl]Sortino[/hl] = (r\u209a\u2212MAR)/\u03c3_D \u2014 DOWNSIDE risk[/rl][rl]6. [hl]Capture ratios[/hl] (up/down)[/rl][rl]7. [hl]Drawdown[/hl] (max DD, duration)[/rl]\nFew years of data \u2192 hard to separate luck/skill; need many observations."},
+    {id:"ppe32",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"formula",
+     q:"Sharpe vs Treynor vs Information ratio",
+     a:"[rl][hl]Sharpe S = (R\u2212r\u1da0)/\u03c3[/hl] \u2014 total risk (std dev)[/rl][rl][hl]Treynor T = (R\u2212r\u1da0)/\u03b2[/hl] \u2014 systematic risk only[/rl][rl][hl]IR = [E(r\u209a)\u2212E(r_B)]/\u03c3(r\u209a\u2212r_B)[/hl] \u2014 tracking risk[/rl]\n[hl]Sharpe drawback[/hl]: denominator (SD) doesn't differentiate upside vs downside \u2014 penalizes ALL volatility, even good upside.\n[hl]Treynor[/hl]: beta \u2192 assumes efficient markets, only for WELL-DIVERSIFIED portfolios (no unsystematic risk)."},
+    {id:"ppe33",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"formula",
+     q:"Appraisal ratio + deriving residual risk",
+     a:"[hl]AR = \u03b1 / \u03c3\u03b5[/hl] \u2014 active return per unit of RESIDUAL (active) risk. Higher = superior active manager. Analogous to IR but uses a [hl]factor-based regression[/hl].\n\u03c3\u03b5 = std error of the regression (volatility of the error term).\nFrom CAPM: \u03b1 = actual \u2212 CAPM fair; [hl]\u03c3\u1d62\u00b2 = \u03b2\u00b2\u03c3m\u00b2 + \u03c3\u03b5\u00b2[/hl] \u2192 [hl]\u03c3\u03b5\u00b2 = \u03c3\u1d62\u00b2 \u2212 \u03b2\u00b2\u03c3m\u00b2[/hl] (take \u221a before dividing!).\nEx: fair=1+1.2(6\u22121)=7%; \u03b1=8\u22127=1%; \u03c3\u03b5\u00b2=0.20\u00b2\u22121.2\u00b2\u00d70.16\u00b2=0.003136; AR=0.01/\u221a0.003136=[hl]0.18[/hl]."},
+    {id:"ppe34",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"formula",
+     q:"Sortino ratio + target semideviation",
+     a:"[hl]SR_D = (r\u209a \u2212 r_T) / \u03c3_D[/hl] ; r_T = target/MAR ; \u03c3_D = [hl]target semideviation[/hl] (SD of returns BELOW target).\nOnly [hl]downside[/hl] risk (vs Sharpe = all risk). Semideviation: sum SQUARED distances of returns below target (ignore those above), \u00f7 [hl]TOTAL[/hl] number of obs \u2192 semivariance; \u221a \u2192 semi-SD.\nEx: 7% ret, MAR 3%, semi-SD 5% \u2192 (7\u22123)/5 = 0.80.\n[hl]MAR is subjective[/hl] \u2192 comparability problem across investors. More appropriate for nonnormal/skewed (hedge funds, options)."},
+    {id:"ppe35",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Sortino > Sharpe interpretation",
+     a:"If Sortino > Sharpe (e.g. 0.75 > 0.63), downside risk is LOWER than total risk \u2192 manager should earn greater returns relative to the downside threshold.\n[hl]Why Mort Van Sleet's Sharpe complaint is valid[/hl]: Sharpe's SD penalizes 'good' UPSIDE volatility too. Fix = use [hl]Sortino[/hl] (downside semideviation only), so upside volatility no longer hurts the score."},
+    {id:"ppe36",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"formula",
+     q:"Capture ratios (13.n)",
+     a:"[hl]Upside capture = port ret / benchmark ret[/hl] (UP market, bench>0)\n[hl]Downside capture = port ret / benchmark ret[/hl] (DOWN market, bench<0)\n[hl]Capture ratio = upside capture / downside capture[/hl]\nUp mkt: bench4 port5 \u2192125% (outperform); port3 \u219275% (underperform).\nDown mkt: bench\u22124 port\u22125 \u2192125% (UNDERperform, captured more loss); port\u22123 \u219275% (OUTperform).\nIdeally capture MUCH upside, LITTLE downside \u2192 maximize the capture ratio."},
+    {id:"ppe37",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Capture ratio: convex vs concave",
+     a:"[rl]= 1 \u2192 [hl]symmetric[/hl][/rl][rl]> 1 \u2192 [hl]positively asymmetric / CONVEX[/hl] (greater upside than downside capture) \u2014 desirable[/rl][rl]< 1 \u2192 [hl]negatively asymmetric / CONCAVE[/hl] (greater downside than upside)[/rl]\nEx: up mgr7/bench8 = 87.5% upside; down mgr\u22126/bench\u221210 = 60% downside; capture = 87.5/60 = [hl]1.46[/hl] (convex).\nQuiz: up 4/3=1.333, down \u22124/\u22128=0.50, capture = 1.333/0.50 = [hl]2.67[/hl]."},
+    {id:"ppe38",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Drawdown & drawdown duration (13.n)",
+     a:"[hl]Drawdown[/hl] = max loss buying at a PEAK and selling at a TROUGH. [hl]Drawdown duration[/hl] = time to FULLY recover (cumulative drawdown back to ZERO) = drawdown phase + recovery phase.\n[hl]MAXIMUM drawdown[/hl] occurs at the very END of the drawdown phase / START of recovery \u2014 where cumulative drawdown is highest in absolute terms.\nEx: max DD \u221215.56% (month 06); duration \u224811 months (02\u219212)."},
+    {id:"ppe39",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Manager skill evaluation X/Y/Z (13.p)",
+     a:"Evaluate via [hl]attribution[/hl] (country/stock decisions) + [hl]appraisal[/hl] (risk-adjusted vs peers).\nManager X (rf=2%): underperformed benchmark \u2192 \u221212bps country weighting, \u221256bps stock picking; selection effect > allocation.\nAppraisal: X Sharpe 0.63 < Y 0.68 & Bench 0.67 but > Z 0.61 \u2192 X [hl]beat Z, lagged Y & benchmark[/hl]. X & Z underperformed \u2192 [hl]negative IRs[/hl] (\u22120.22, \u22120.72); Y +0.41. X Sortino 0.75 > Sharpe 0.63.\nConclusion: X insufficient skill \u2192 consider replacing."},
+    {id:"ppe40",topic:"Performance",subtopic:"Portfolio Performance Evaluation",type:"command",
+     q:"Appraisal-measure limitations (13.o) summary",
+     a:"[rl][hl]Sharpe[/hl]: SD penalizes good upside volatility (no up/down distinction)[/rl][rl][hl]Treynor[/hl]: only systematic risk \u2192 assumes efficient markets, needs well-diversified portfolio[/rl][rl][hl]Sortino[/hl]: MAR is subjective \u2192 not comparable across investors[/rl][rl][hl]Appraisal/IR[/hl]: depend on the regression/benchmark; negative if underperforming[/rl][rl]All appraisal: [hl]few years of data \u2192 can't reliably separate skill from luck[/hl]; need many observations for high-confidence conclusions[/rl]"},
   ]
 };
 
@@ -27729,7 +28926,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -27758,6 +28955,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'pwmWidget' && typeof pwmInit === 'function') setTimeout(pwmInit, 50);
     if (widgetId === 'iiWidget' && typeof iiInit === 'function') setTimeout(iiInit, 50);
     if (widgetId === 'tcWidget' && typeof tcInit === 'function') setTimeout(tcInit, 50);
+    if (widgetId === 'ppeWidget' && typeof ppeInit === 'function') setTimeout(ppeInit, 50);
   }
 }
 
@@ -27782,6 +28980,7 @@ function openNote(key, topic, subtopic) {
     'Portfolio Construction||An Overview of Private Wealth Management': 'pwmWidget',
     'Portfolio Construction||Portfolio Management for Institutional Investors': 'iiWidget',
     'Portfolio Construction||Trading Costs and Electronic Markets': 'tcWidget',
+    'Performance||Portfolio Performance Evaluation': 'ppeWidget',
     'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
     'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
     'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
@@ -27793,7 +28992,7 @@ function openNote(key, topic, subtopic) {
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
