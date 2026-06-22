@@ -22539,6 +22539,7 @@ Portfolio = 5.70%  <  6%   -> NOT appropriate</div>
             <button class="tc-modtab" onclick="tcMod(event,'tcm-112')">11.2 Electronic Trading</button>
             <button class="tc-modtab" onclick="tcMod(event,'tcm-113')">11.3 Characteristics</button>
             <button class="tc-modtab" onclick="tcMod(event,'tcm-114')">11.4 Risks</button>
+            <button class="tc-modtab" onclick="tcMod(event,'tcm-err')">⚠ Errors</button>
             <button class="tc-modtab" onclick="tcMod(event,'tcm-quiz')">Quiz</button>
           </div>
 
@@ -22992,6 +22993,80 @@ VWAP txn cost  = 300 &#215; (+1) &#215; (12.04 &#8722; 11.86) = $54</div>
             </div>
           </div>
 
+
+
+
+          <!-- ════════ ⚠ ERRORS (mock review) ════════ -->
+          <div id="tcm-err" class="tc-modpanel">
+            <div class="tc-toptabs">
+              <button class="tc-toptab active" onclick="tcTop(event,'tcerr-pat')">Patterns</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tcerr-mcq')">MCQ Misses</button>
+              <button class="tc-toptab" onclick="tcTop(event,'tcerr-tax')">Trader Taxonomy</button>
+            </div>
+
+            <div id="tcerr-pat" class="tc-toppanel active">
+              <div class="tc-card">
+                <div class="tc-title">Patterns to fix</div>
+                <table class="tc-tbl">
+                  <tr><th>Trap</th><th>Correct frame</th></tr>
+                  <tr><td><b class="tc-main-c">"Market impact" of a sub-trade</b></td><td>Measured <b>trade-on-trade</b>: this trade's exec price &#8722; the <b>previous trade's exec price</b>. NOT vs the arrival midquote. (Arrival-midquote benchmark belongs to <b>implementation shortfall</b>, a different measure.)</td></tr>
+                  <tr><td><b class="tc-main-c">ML model effectiveness</b></td><td>Best in a <b>well-understood / repeated</b> market. <b class="tc-red">Useless-or-worse in high volatility</b> (few precedents) and unsuited to brand-new markets (no data history).</td></tr>
+                  <tr><td><b class="tc-main-c">Leapfrog requires WIDE spreads</b></td><td>Narrow spread &#8594; NOT leapfrog. Wide spreads &#8594; dealers quote better prices and jump ahead.</td></tr>
+                  <tr><td><b class="tc-main-c">Speed-preserving risk fix</b></td><td>Only <b>trade halts</b> keep the "faster than competitors" edge (pause everyone, then resume). <b>Random delays</b> &amp; <b>frequent call markets</b> deliberately neutralize speed.</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <div id="tcerr-mcq" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Market impact, trade-on-trade</div>
+                <div class="tc-rule">5,000-share buy filled in 3 trades: T1 $25.20, T2 $25.22, T3 $25.27. Per-share market impact of <b>Trade 2</b>?</div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-em1');e.style.display=e.style.display==='none'?'block':'none';">Reveal (A $0.02 / B $0.03 / C $0.07)</button>
+                <div id="tc-em1" style="display:none;"><div class="tc-rule"><b class="tc-green">A &#8212; $0.02.</b> Trade 1 executed at $25.20 and moved the price; Trade 2 executed at $25.22 &#8594; impact = 25.22 &#8722; 25.20 = $0.02 per share.</div><div class="tc-trap"><b>Don't use the arrival midquote here.</b> (25.17+25.20)/2 = 25.185 &#8594; 25.22 &#8722; 25.185 = $0.035 &#8776; B is the trap. That midquote method is <b>implementation shortfall</b>, not trade-on-trade price impact. C ($0.07) uses Trade 3's price (25.27 &#8722; 25.20) &#8212; wrong trade.</div></div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">ML model environment</div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-em2');e.style.display=e.style.display==='none'?'block':'none';">Reveal (A testing new markets / B well-understood environment / C high volatility)</button>
+                <div id="tc-em2" style="display:none;"><div class="tc-rule"><b class="tc-green">B &#8212; well-understood market environment.</b> ML thrives on problems that repeat regularly. In high-volatility / uncharted conditions it has few precedents to learn from &#8594; useless or worse; traders often shut down. New markets lack the data history too.</div></div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Systemic-risk mitigation (testing + halts)</div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-em3');e.style.display=e.style.display==='none'?'block':'none';">Reveal (A only testing / B only halts / C both)</button>
+                <div id="tc-em3" style="display:none;"><div class="tc-rule"><b class="tc-green">C &#8212; both.</b> Exhaustive pre-launch testing curbs programming-error risk; mandatory trade halts on large price moves cap runaway spirals. Both reduce systemic risk.</div></div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Pattern-trading classification (BYYP)</div>
+                <div class="tc-rule">Trader spots 500-share trades every 20 min for an hour (repeated across days), infers a large buy worked in pieces, and buys ahead of it.</div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-em4');e.style.display=e.style.display==='none'?'block':'none';">Reveal (A arbitrage / B front running / C quote matching)</button>
+                <div id="tc-em4" style="display:none;"><div class="tc-rule"><b class="tc-green">B &#8212; front running.</b> Order-anticipation: identifying predictable order-submission patterns and trading ahead of a liquidity <b>demander</b>. Not arbitrage (that's cross-market mispricing). Not quote matching (that trades ahead of liquidity <b>suppliers</b>).</div></div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">No-standing-orders strategy (AXZ)</div>
+                <div class="tc-rule">Narrow bid-ask spread, high volatility, strategy uses NO standing orders.</div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-em5');e.style.display=e.style.display==='none'?'block':'none';">Reveal (A flickering quotes / B machine learning / C leapfrogging quotes)</button>
+                <div id="tc-em5" style="display:none;"><div class="tc-rule"><b class="tc-green">A &#8212; flickering quotes.</b> Submit &amp; cancel within ~1 second &#8594; the order never stands. Rules out B (ML fails in high volatility) and C (leapfrog needs <b>wide</b> spreads, this is narrow).</div></div>
+              </div>
+              <div class="tc-card">
+                <div class="tc-title">Speed-preserving structural change (2Fast)</div>
+                <button class="tc-tab" style="margin:6px 0;" onclick="var e=document.getElementById('tc-em6');e.style.display=e.style.display==='none'?'block':'none';">Reveal (A random delays / B trade halts / C frequent call markets)</button>
+                <div id="tc-em6" style="display:none;"><div class="tc-rule"><b class="tc-green">B &#8212; trade halts.</b> All three reduce systemic risk, but only halts preserve the "faster than competitors" edge: trading pauses for everyone and the fast trader is fast again on resumption. Random delays and once-a-second call markets deliberately neutralize speed.</div></div>
+              </div>
+            </div>
+
+            <div id="tcerr-tax" class="tc-toppanel">
+              <div class="tc-card">
+                <div class="tc-title">Electronic-trader taxonomy &#8212; the discriminators</div>
+                <table class="tc-tbl">
+                  <tr><th>Type</th><th>Trades ahead of...</th><th>Key tell</th></tr>
+                  <tr><td><b class="tc-main-c">Front runner</b></td><td>Liquidity <b>demanders</b></td><td>Detects a large order worked in pieces (order-anticipation / predictable patterns) and trades ahead</td></tr>
+                  <tr><td><b class="tc-main-c">Quote matcher</b></td><td>Liquidity <b>suppliers</b> (standing orders)</td><td>Exploits the <b>option value of standing orders</b> &#8212; buys relying on standing buy orders to exit; sells relying on standing sell orders</td></tr>
+                  <tr><td><b class="tc-main-c">Arbitrageur</b></td><td>&#8212; (cross-market)</td><td>Buys undervalued / sells similar overvalued across markets; decision driven by mispricing, not order patterns</td></tr>
+                </table>
+                <div class="tc-trap"><b>Front runner vs quote matcher</b> = which side of liquidity they trade ahead of. <b>Demander &#8594; front runner; supplier &#8594; quote matcher.</b> If the prompt says a trader is "seeking/filling a large order" (demanding liquidity) &#8594; front running.</div>
+                <div class="tc-info"><b>No-standing-order tactics:</b> flickering quotes (submit/cancel &lt;1s) and hidden orders &#8212; used when the trader wants others to see a willingness to trade <b>without</b> leaving a resting order that grants others a free option.</div>
+              </div>
+            </div>
+          </div>
 
 
           <!-- ════════ QUIZ ════════ -->
