@@ -21193,6 +21193,7 @@ Average tax rate = 188,250 / 695,000 = 27.09%</div>
             <button class="ii-modtab" onclick="iiMod(event,'iim-104')">10.4 Endow &amp; Found</button>
             <button class="ii-modtab" onclick="iiMod(event,'iim-105')">10.5 Banks &amp; Insurers</button>
             <button class="ii-modtab" onclick="iiMod(event,'iim-106')">10.6 Balance Sheet Mgmt</button>
+            <button class="ii-modtab" onclick="iiMod(event,'iim-err')">⚠ Errors</button>
           </div>
 
           <!-- ════════ MODULE 10.1 Overview ════════ -->
@@ -22253,6 +22254,164 @@ D&#8338;/D&#8336;/D&#8343; = modified duration of equity / assets / liabilities
 &#963;&#8338; = &#8730;0.0925 = 0.304 = 30.4%</div>
                   <div class="ii-trap"><b>Trap:</b> must apply weights <b>M</b> (=5) on assets and <b>M&#8722;1</b> (=4) on liabilities, square them, and SUBTRACT the covariance term. Forgetting leverage or flipping the sign gives the distractors.</div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE Errors — Reading 10 exam misses ════════ -->
+          <div id="iim-err" class="ii-modpanel">
+            <div class="ii-toptabs">
+              <button class="ii-toptab active" onclick="iiTop(event,'iierr-pat')">Patterns</button>
+              <button class="ii-toptab" onclick="iiTop(event,'iierr-mcq')">MCQ Misses</button>
+              <button class="ii-toptab" onclick="iiTop(event,'iierr-essay')">Essay Misses</button>
+              <button class="ii-toptab" onclick="iiTop(event,'iierr-mastery')">Mastery</button>
+            </div>
+
+            <!-- PATTERNS -->
+            <div id="iierr-pat" class="ii-toppanel active">
+              <div class="ii-card">
+                <div class="ii-title">Pattern 1 — "source of risk / significant risk" questions</div>
+                <div class="ii-rule">When asked which item is <b class="ii-main-c">LEAST likely</b> a source of risk, the answer is usually the option with <b class="ii-green">no actual adverse indicator</b> in the vignette.</div>
+                <div class="ii-trap"><b>Don't manufacture a risk where the facts show stability.</b> If the sponsor is BBB+ / investment-grade, 82 years in business, no signs of decline &#8594; that is NOT the risk. The risks are the options carrying concrete red flags (illiquid+volatile assets vs old workforce; sponsor stock in the plan).</div>
+                <div class="ii-info">Mirror pair: Tucker Q (answer = sponsor financial health is fine) and Pure deferred-comp Q (answer = no sponsor/plan correlation). Both test "pick the non-risk."</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Pattern 2 — sponsor &#215; plan correlation risk</div>
+                <div class="ii-rule">Correlation between the sponsor and plan assets is a real, heavily-tested risk &#8212; <b class="ii-red">but ONLY when the plan assets are tied to the sponsor</b>.</div>
+                <table class="ii-tbl">
+                  <tr><th>Case</th><th>Correlation risk?</th><th>Why</th></tr>
+                  <tr><td><b class="ii-main-c">Tucker</b></td><td><b class="ii-red">YES</b></td><td>~18&#8211;19% of plan assets in Tucker's OWN stock &#8594; sponsor weakens &#8594; assets fall AND contributions rise at the same time</td></tr>
+                  <tr><td><b class="ii-main-c">Pure</b></td><td><b class="ii-green">NO</b></td><td>Sponsor = banking; plan assets = fixed income &#8594; no meaningful link</td></tr>
+                </table>
+                <div class="ii-info">The danger in the Tucker case: poor sponsor health hits the asset value precisely when the sponsor is least able to fund the larger required contribution &#8594; raises insolvency risk.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Pattern 3 — DB required return is liability-driven</div>
+                <div class="ii-rule">A DB plan's required return is about funding the <b class="ii-main-c">change in liability cash flows AND their valuation</b> &#8212; not a generic real-return target.</div>
+                <div class="ii-trap"><b>Two errors to never make:</b> (1) <b class="ii-red">double-counting inflation</b> &#8212; salary growth already embeds inflation, so "inflation + salary growth" counts it twice; (2) ignoring the <b class="ii-red">market discount-rate dimension</b> &#8212; required return must reflect IG long-term bond yields used to value liabilities, and should generally <b>exceed the discount rate</b> on liabilities.</div>
+              </div>
+            </div>
+
+            <!-- MCQ MISSES -->
+            <div id="iierr-mcq" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Q1 &#8212; Investment approaches (Canadian model)</div>
+                <div class="ii-body"><b>Picked A (correct). Answer: B</b> &#8212; she's wrong on the Canadian model.</div>
+                <div class="ii-rule">The return logic is fine (alternatives suit long-horizon / low-liquidity clients), but the Canadian model runs alternatives <b class="ii-main-c">in-house</b> &#8594; needs <b class="ii-red">scale</b> to build/hire that expertise. Clients of USD 20&#8211;100M are too small. Also Chattahoochee is an external manager &#8594; wouldn't recommend an in-house approach. LDI half = correct.</div>
+                <div class="ii-trap"><b>Lesson:</b> a model's return logic can be sound while its <b>operational/scale fit</b> fails. Check whether the institution is big enough to RUN the approach.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Q2 &#8212; Least likely a risk source (Tucker)</div>
+                <div class="ii-body"><b>Answer: B</b> &#8212; the sponsor's financial health.</div>
+                <table class="ii-tbl">
+                  <tr><th>Option</th><th>Risk?</th></tr>
+                  <tr><td>Workforce characteristics</td><td><b class="ii-red">Risk</b> &#8212; many retirees + old long-tenured actives near retirement, vs illiquid (new PE, undeveloped land) + volatile (small-cap growth) assets</td></tr>
+                  <tr><td>Common risk exposure</td><td><b class="ii-red">Risk</b> &#8212; ~18&#8211;19% in Tucker stock (correlation trap)</td></tr>
+                  <tr><td>Sponsor financial health</td><td><b class="ii-green">NOT a risk</b> &#8212; BBB+, 82 yrs, no decline signals</td></tr>
+                </table>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Q3 &#8212; Proposed investment objective (Tucker)</div>
+                <div class="ii-body"><b>Answer: C</b> &#8212; the proposed required return is inappropriate.</div>
+                <div class="ii-rule">Her formula = inflation + salary growth. <b class="ii-red">Double-counts inflation</b> (salary growth already embeds CPI) and has <b class="ii-red">no market-rate component</b> (should reflect IG long-term bond yields; required return should exceed the liability discount rate).</div>
+                <div class="ii-trap"><b>Distractor B</b> (secondary objectives incompatible) is wrong: "avoid underfunding" + "don't raise contributions" are routinely pursued together &#8212; just balanced against each other.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Q4 &#8212; Rising rates &amp; checking clients (Pure)</div>
+                <div class="ii-body"><b>Answer: C</b> &#8212; an increase in residual equity.</div>
+                <div class="ii-rule">Clients are <b class="ii-main-c">rate-insensitive, non-interest-bearing</b> &#8594; deposits stay put at ~zero cost. Pure's <b class="ii-main-c">variable-rate loans reprice UP</b> with rates &#8594; asset yield rises, funding cost flat &#8594; margin widens &#8594; equity (A&#8722;L) rises.</div>
+                <div class="ii-trap"><b>Why not B:</b> variable-rate loans REPRICE &#8212; they don't lose value like fixed-rate would. Sticky zero-cost deposits + floating-rate assets &#8594; rising rates are GOOD for bank equity.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Q5 &#8212; Deferred-comp least significant risk (Pure)</div>
+                <div class="ii-body"><b>Answer: C</b> &#8212; correlation between sponsor's business and plan investments.</div>
+                <div class="ii-rule">Sponsor = banking; plan assets = fixed income &#8594; <b class="ii-green">no meaningful correlation</b>, and Li never flagged one. Plan-design (forfeitures fund contributions; short tenures cap growth) and workforce (withdrawal-on-separation, vesting schedule) ARE relevant considerations.</div>
+                <div class="ii-info">Direct mirror of Q2 &#8212; same "pick the non-risk," same correlation principle, opposite outcome from Tucker because Pure's assets aren't tied to its business.</div>
+              </div>
+            </div>
+
+            <!-- ESSAY MISSES -->
+            <div id="iierr-essay" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">The big one &#8212; IPS investment objectives template</div>
+                <div class="ii-rule">For ANY endowment/foundation "construct/formulate the investment objectives" prompt, open with the <b class="ii-main-c">mission</b>, THEN the quantified return. Don't lead with a tiered list.</div>
+                <div class="ii-fl">MISSION:  provide [X] while maintaining purchasing power
+          of assets IN PERPETUITY.
+
+OBJECTIVE: achieve a TOTAL REAL rate of return of
+          [spending rate]% (after inflation), at a
+          reasonable level of risk.</div>
+                <div class="ii-trap"><b>What costs marks:</b> (1) skipping the mission sentence; (2) omitting "in perpetuity / purchasing power"; (3) over-tiering with benchmark/peer outperformance &#8212; those are <b>approach</b> considerations, NOT IPS investment objectives. (4) If the vignette gives a specific provision (e.g. Melrose "up to 30% of operating budget"), cite it in the mission.</div>
+                <div class="ii-info"><b>Melrose:</b> mission = maintain purchasing power while financing up to 30% of the operating budget in perpetuity; objective = real return of 4% (inflation 2%). <b>Prometheo:</b> mission = provide scholarships, maintain purchasing power in perpetuity; objective = total real return &#8805; 6% (the spending rate).</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">DB plan objective &#8212; anchor to the actuarial rate</div>
+                <div class="ii-rule">When a DB vignette hands you the actuary's required return, the objective MUST cite that number.</div>
+                <div class="ii-info"><b>Burger Shack:</b> not just "maintain 100% funded ratio / align assets with liabilities" &#8212; say "grow assets in line with liabilities, achieved at the <b class="ii-main-c">7% annual return that matches the actuaries' rate</b>."</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Return-adequacy test &#8212; return vs (spending + inflation)</div>
+                <div class="ii-rule">Build the hurdle by ADDING inflation to the spending rate, then compare to the portfolio return. Don't subtract inflation from the return and compare to spending alone.</div>
+                <div class="ii-fl">Required nominal return = spending rate + inflation
+Melrose: 4% + 2% = 6% hurdle
+Portfolio = 5.70%  <  6%   -> NOT appropriate</div>
+                <div class="ii-trap"><b>Why the wording matters:</b> "5.7% &#8722; 2% = 3.7% vs spending 4%" compares a REAL return to a NOMINAL spending rate &#8212; a mismatch a grader can ding. State it as <b class="ii-main-c">return vs (spending + inflation)</b>.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Endowment-model disadvantage &#8212; lead with ACCESS, not just cost</div>
+                <div class="ii-rule">"Higher fees/costs" scores, but the discriminating disadvantage is <b class="ii-main-c">manager access</b>.</div>
+                <table class="ii-tbl">
+                  <tr><th>Size</th><th>Access problem</th></tr>
+                  <tr><td><b class="ii-main-c">Small institution</b></td><td>Can't reach top-tier hedge fund / PE managers</td></tr>
+                  <tr><td><b class="ii-main-c">Very large institution</b></td><td>Suffers from its own large footprint</td></tr>
+                </table>
+                <div class="ii-info">You already used this correctly on the Prometheo REJECT answer &#8212; deploy the same access logic on adv/disadv prompts. Advantage is always: high potential for value-added / above-market returns.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Four-model drawbacks &#8212; tighten each</div>
+                <table class="ii-tbl">
+                  <tr><th>Model</th><th>Sharp drawback</th></tr>
+                  <tr><td><b class="ii-main-c">Norway</b></td><td>No alpha / no outperformance opportunity</td></tr>
+                  <tr><td><b class="ii-main-c">Endowment</b></td><td>Cost + manager access (small can't reach top managers; very large footprint)</td></tr>
+                  <tr><td><b class="ii-main-c">Canada</b></td><td>Needs internal teams / large scale to run alternatives in-house</td></tr>
+                  <tr><td><b class="ii-main-c">LDI</b></td><td>Low return / growth potential &#8212; not for a perpetual-horizon, equity-tilted fund</td></tr>
+                </table>
+                <div class="ii-trap"><b>Avoid vague phrasing</b> like "difficult to manage" or "some liabilities hard to manage" &#8212; name the specific mechanism (scale, access, alpha, growth potential).</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">Recommendation REJECT answers &#8212; frame the magnitude first</div>
+                <div class="ii-rule">Open with: this is a <b class="ii-main-c">significant departure from current practice entailing much higher risk</b> &#8212; THEN give your access/expertise reasons.</div>
+                <div class="ii-info"><b>Prometheo:</b> (1) departure + higher risk; (2) four-person staff lacks alternatives expertise/access; (3) small AUM &#8594; unlikely access to top HF/PE managers. Your two reasons were right &#8212; the magnitude framing is a free half-mark.</div>
+              </div>
+              <div class="ii-card">
+                <div class="ii-title">DB risk tolerance &#8212; pick the HIGHEST-signal reasons</div>
+                <div class="ii-rule">When a vignette lists many drivers and asks for two, lead with <b class="ii-main-c">sponsor/asset correlation</b> and <b class="ii-main-c">sponsor financial health</b> &#8212; these are first-pick.</div>
+                <table class="ii-tbl">
+                  <tr><th>Antiliaro driver</th><th>Signal</th></tr>
+                  <tr><td><b class="ii-main-c">High correlation</b> sponsor results &#215; pension assets</td><td><b class="ii-red">Marquee</b> &#8212; company struggles &#8594; assets fall AND can't fund contributions</td></tr>
+                  <tr><td><b class="ii-main-c">Deteriorating sponsor</b> (losing sales, flat earnings, rising debt)</td><td><b class="ii-red">Top</b> &#8212; constrains contribution ability</td></tr>
+                  <tr><td>Underfunded + aggressive 6% discount rate</td><td>Valid</td></tr>
+                  <tr><td>Older workforce / many retirees</td><td>Valid &#8212; liquidity need</td></tr>
+                </table>
+                <div class="ii-trap"><b>Same correlation principle as the Tucker MCQ.</b> Whenever a vignette explicitly states sponsor&#215;asset correlation, that's a flashing signal &#8594; pick it. All five Antiliaro drivers point to <b>below-average</b> risk tolerance.</div>
+              </div>
+            </div>
+
+            <!-- MASTERY -->
+            <div id="iierr-mastery" class="ii-toppanel">
+              <div class="ii-card">
+                <div class="ii-title">Mastery &#8212; ready for re-test</div>
+                <div class="ii-body">Quick self-check prompts built from the misses above. Reveal only after answering aloud.</div>
+                <button class="ii-tab" style="margin:6px 0;" onclick="var e=document.getElementById('iierr-m1');e.style.display=e.style.display==='none'?'block':'none';">When is the Canadian model a poor recommendation?</button>
+                <div id="iierr-m1" style="display:none;"><div class="ii-rule">When the institution lacks the <b class="ii-main-c">scale</b> to manage alternatives in-house, or when the adviser is an external manager (the model pushes assets in-house). Return logic alone isn't enough &#8212; check operational fit.</div></div>
+                <button class="ii-tab" style="margin:6px 0;" onclick="var e=document.getElementById('iierr-m2');e.style.display=e.style.display==='none'?'block':'none';">When does sponsor&#215;plan correlation actually create risk?</button>
+                <div id="iierr-m2" style="display:none;"><div class="ii-rule">Only when plan assets are <b class="ii-main-c">tied to the sponsor</b> (e.g. holding sponsor stock). Then a sponsor downturn cuts assets exactly when larger contributions are needed. Banking sponsor + FI plan assets = no risk.</div></div>
+                <button class="ii-tab" style="margin:6px 0;" onclick="var e=document.getElementById('iierr-m3');e.style.display=e.style.display==='none'?'block':'none';">Two errors in a DB required-return formula?</button>
+                <div id="iierr-m3" style="display:none;"><div class="ii-rule">(1) Double-counting inflation (salary growth already includes it); (2) omitting the market discount-rate dimension (IG long-term bond yields; required return should exceed the liability discount rate).</div></div>
+                <button class="ii-tab" style="margin:6px 0;" onclick="var e=document.getElementById('iierr-m4');e.style.display=e.style.display==='none'?'block':'none';">Rising rates + sticky zero-cost deposits + floating-rate loans &#8594; effect on bank equity?</button>
+                <div id="iierr-m4" style="display:none;"><div class="ii-rule">Equity RISES. Loan yields reprice up, deposit cost stays ~zero &#8594; margin widens &#8594; residual equity increases. Floating-rate assets reprice (don't lose value like fixed-rate).</div></div>
+                <button class="ii-tab" style="margin:6px 0;" onclick="var e=document.getElementById('iierr-m5');e.style.display=e.style.display==='none'?'block':'none';">"Least likely a source of risk" &#8212; default heuristic?</button>
+                <div id="iierr-m5" style="display:none;"><div class="ii-rule">Pick the option with <b class="ii-main-c">no adverse indicator</b> in the vignette. Don't invent a risk where the facts show stability (healthy sponsor, uncorrelated assets).</div></div>
               </div>
             </div>
           </div>
