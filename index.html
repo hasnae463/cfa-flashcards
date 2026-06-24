@@ -23278,6 +23278,8 @@ VWAP txn cost  = 300 &#215; (+1) &#215; (12.04 &#8722; 11.86) = $54</div>
             #ppeWidget .ppe-rule { display:block; font-size:12.5px; line-height:1.5; color:#C9D1D9; padding:7px 0 7px 14px; border-left:2px solid var(--border); margin:7px 0; }
             #ppeWidget .ppe-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--ppe-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
             #ppeWidget .ppe-info { background:rgba(121,192,255,.08); border-left:3px solid var(--ppe-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #ppeWidget .ppe-fl { display:block; white-space:pre-wrap; font-family:var(--mono); font-size:12px; line-height:1.6; color:#C9D1D9; background:#0B0F14; border:1px solid var(--border); border-radius:6px; padding:11px 13px; margin:10px 0; overflow-x:auto; tab-size:2; }
+            #ppeWidget .ppe-fl b { color:var(--ppe-main); font-weight:600; }
             #ppeWidget .ppe-green { color:var(--ppe-green); }
             #ppeWidget .ppe-red { color:var(--ppe-red); }
             #ppeWidget .ppe-main-c { color:var(--ppe-main); }
@@ -23296,6 +23298,7 @@ VWAP txn cost  = 300 &#215; (+1) &#215; (12.04 &#8722; 11.86) = $54</div>
             <button class="ppe-modtab" onclick="ppeMod(event,'ppem-133')">Risk Attribution</button>
             <button class="ppe-modtab" onclick="ppeMod(event,'ppem-134')">13.3 Benchmarking</button>
             <button class="ppe-modtab" onclick="ppeMod(event,'ppem-135')">13.4 Appraisal</button>
+            <button class="ppe-modtab" onclick="ppeMod(event,'ppem-err')">&#9888; Errors</button>
           </div>
 
           <!-- ════════ MODULE 13.1 ════════ -->
@@ -24205,6 +24208,124 @@ Upside capture = 4% / 3% = 1.333
 Downside capture = &#8722;4% / &#8722;8% = 0.50
 Capture ratio = upside / downside = 1.333 / 0.50 = <b>2.67</b>
 &#8594; &gt; 1 = positively asymmetric (convex): captured the upside, avoided much of the downside.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ ⚠ ERRORS MODULE ════════ -->
+          <div id="ppem-err" class="ppe-modpanel">
+            <div class="ppe-toptabs">
+              <button class="ppe-toptab active" onclick="ppeTop(event,'ppeerr-pat')">Patterns</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppeerr-mcq')">MCQ Misses</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppeerr-essay')">Essay Misses</button>
+              <button class="ppe-toptab" onclick="ppeTop(event,'ppeerr-mastery')">Mastery</button>
+            </div>
+
+            <!-- PATTERNS -->
+            <div id="ppeerr-pat" class="ppe-toppanel active">
+              <div class="ppe-card">
+                <div class="ppe-title">Pattern 1 &#8212; "Where/when does RISK enter evaluation?"</div>
+                <div class="ppe-rule">Risk is NOT confined to performance appraisal. It enters across the process: <b class="ppe-main-c">measurement</b> (calculates return AND risk), <b class="ppe-main-c">attribution</b> (risk attribution is the parallel of return attribution), and <b class="ppe-main-c">appraisal</b> (risk-adjusted measures).</div>
+                <div class="ppe-trap"><b>Trap:</b> "risk is considered only within performance appraisal" is FALSE. Risk attribution identifies the sources of risk the manager took &#8212; that's the attribution stage, not appraisal.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Pattern 2 &#8212; "Attribution explains HOW; APPRAISAL judges QUALITY"</div>
+                <div class="ppe-rule">Keep the three components in their lanes: measurement = <b>WHAT</b> (return+risk); attribution = <b>HOW</b> (break return/risk into explanatory components); appraisal = <b>quality / skill vs luck</b>.</div>
+                <div class="ppe-trap"><b>Trap:</b> "performance attribution draws conclusions about the QUALITY of the manager's decisions" is wrong &#8212; that's <b class="ppe-red">appraisal</b>. Attribution explains how performance was achieved; effective attribution accounts for 100% of return/risk, reflects the decision process, quantifies the manager's active decisions, and fully explains excess return/risk.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Pattern 3 &#8212; pick the ratio by the RISK in the mandate</div>
+                <table class="ppe-tbl">
+                  <tr><th>Mandate / objective wording</th><th>Use</th><th>Why</th></tr>
+                  <tr><td>"return above a TARGET / MAR (e.g. rf + 1.5%)", "preserve capital", nonsymmetrical returns</td><td><b class="ppe-main-c">Sortino</b></td><td>penalizes returns below the <b>specific target</b> (downside semideviation)</td></tr>
+                  <tr><td>excess over the <b>risk-free</b> rate, well-diversified, systematic risk</td><td><b class="ppe-main-c">Treynor</b></td><td>penalizes returns below <b>rf</b>; uses beta &#8212; won't measure a target-above-rf goal</td></tr>
+                  <tr><td>performance <b>vs a benchmark</b></td><td><b class="ppe-main-c">Information ratio</b></td><td>active return / tracking risk &#8212; relative to benchmark, not an absolute target</td></tr>
+                </table>
+                <div class="ppe-trap"><b>Trap:</b> a "short-term return 1.5% above the risk-free rate" is a <b>target return</b> &#8594; Sortino. Don't grab Treynor (that's a below-rf penalty) or IR (that's vs-benchmark).</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Pattern 4 &#8212; Brinson: separate the ALLOCATION decision from the NET contribution</div>
+                <div class="ppe-rule">A sector can have a <b>positive net contribution</b> (allocation + selection + interaction) while the <b>allocation decision itself was bad</b>. Judge the over/underweight on the <b class="ppe-main-c">allocation effect alone</b>, not the net.</div>
+                <div class="ppe-trap"><b>Trap (McNeil Statement 3):</b> Consumer Goods net = &#8722;0.15% (alloc) + 0.56% (sel+int) = +0.41%. The +0.41 is real, but it came from <b>SELECTION</b>; the underweight (alloc &#8722;0.15%) was <b class="ppe-red">not</b> beneficial. "Beneficial underweight given the +0.41 net" misattributes selection skill to the allocation call.</div>
+                <div class="ppe-info">Also (Statement 1): the excess return's biggest driver was <b>Technology</b> sel+int 1.58%, not Financial 0.66% &#8594; "almost entirely financial" is false. (Statement 2 was true: underweighting Health Care, alloc &#8722;0.16%, was not beneficial.)</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Pattern 5 &#8212; BF allocation sign: compare segment benchmark to the OVERALL benchmark</div>
+                <div class="ppe-rule">BF allocation A&#7522; = (w&#7522; &#8722; W&#7522;)(B&#7522; &#8722; B). A weighting decision is <b class="ppe-green">good (positive)</b> when you <b>overweight a segment that beat the total benchmark</b> OR <b>underweight a segment that lagged the total benchmark</b>.</div>
+                <div class="ppe-trap"><b>Two-negatives rule:</b> underweight (w&#8722;W &lt; 0) &#215; lagging segment (B&#7522;&#8722;B &lt; 0) = <b class="ppe-green">positive</b> allocation. That's why underweighting Developed Asia (12.85% &lt; 22.67% total) was the only good call.</div>
+              </div>
+            </div>
+
+            <!-- MCQ MISSES -->
+            <div id="ppeerr-mcq" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Q1 (AQI/Richard) &#8212; holdings-based residual term</div>
+                <div class="ppe-body"><b>Answer: A (correct).</b> Richard's statement is right on both counts.</div>
+                <div class="ppe-rule">The residual between portfolio and benchmark performance in <b class="ppe-main-c">holdings-based attribution</b> (1) <b>cannot be explained by a manager action</b>, and (2) <b>can result from transactions occurring more frequently than the holdings are measured</b> &#8212; the timing/trading effect.</div>
+                <div class="ppe-info">Context trap from the same vignette: Richard also said "risk is considered only within performance appraisal" &#8212; that part is FALSE (see Pattern 1). But this question only asked about the holdings-based residual.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Q2 (McNeil) &#8212; appraisal measure for the client mandate</div>
+                <div class="ppe-body"><b>Answer: A &#8212; Sortino ratio.</b></div>
+                <div class="ppe-rule">Mandate: moderate-high risk tolerance, short-term return <b>1.5% above the risk-free rate</b>. A target above rf &#8594; <b class="ppe-main-c">Sortino</b> (penalizes returns below that specific target).</div>
+                <div class="ppe-trap"><b>B (Treynor) wrong:</b> penalizes returns below <b>rf</b> only &#8594; can't measure a target-above-rf goal. <b>C (IR) wrong:</b> evaluates return relative to a <b>benchmark</b>, not an absolute target.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Q3 (Rao) &#8212; least accurate reason Sortino &gt; Sharpe</div>
+                <div class="ppe-body"><b>Answer: C (Reason 3 is least accurate).</b></div>
+                <div class="ppe-rule">Reason 3 claimed Sortino's target return is "based on <b>market conditions</b>." Wrong &#8212; Sortino uses an <b class="ppe-red">investor-specific MAR</b> (individual preferences), which is exactly why it has a comparability problem across investors.</div>
+                <div class="ppe-info">Reasons 1 &amp; 2 ARE accurate: Sortino suits a <b>capital-preservation</b> goal (penalizes below-MAR), and it handles <b>nonsymmetrical</b> distributions better (Sharpe assumes symmetry).</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Q4 (Bragg) &#8212; which responses on effective attribution are correct</div>
+                <div class="ppe-body"><b>Answer: B &#8212; only Response 2.</b></div>
+                <div class="ppe-rule">Response 2 (attribution explains <b>how</b> performance was achieved by breaking return/risk into components) is correct. Response 1 (attribution "draws conclusions about the <b>quality</b> of decisions") describes <b class="ppe-red">appraisal</b>, not attribution.</div>
+                <div class="ppe-info">Effective attribution must: account for 100% of return/risk, reflect the decision-making process, quantify the manager's active decisions, and fully explain excess return/risk.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">Q5 (Tolmach) &#8212; which region's over/underweight helped at the fund level (BF)</div>
+                <div class="ppe-body"><b>Answer: C &#8212; Developed Asia and Australasia.</b></div>
+                <div class="ppe-fl">BF allocation = (w&#7522; &#8722; W&#7522;)(B&#7522; &#8722; B),  total benchmark B = 22.67%
+North America        = (10.84% &#8722; 7.67%)(16.47% &#8722; 22.67%) = &#8722;0.20%
+Greater Europe       = (38.92% &#8722; 42.35%)(25.43% &#8722; 22.67%) = &#8722;0.09%
+Developed Asia/Aus.  = (29.86% &#8722; 31.16%)(12.85% &#8722; 22.67%) = +0.13%</div>
+                <div class="ppe-rule">Only Developed Asia/Australasia is <b class="ppe-green">positive</b>: the manager <b>underweighted</b> it (29.86% &lt; 31.16%) and its benchmark <b>lagged the total</b> (12.85% &lt; 22.67%) &#8594; underweighting a loser is a good call.</div>
+              </div>
+            </div>
+
+            <!-- ESSAY MISSES -->
+            <div id="ppeerr-essay" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">E1 (HCSF) &#8212; "Demonstrate which sectors contributed negatively" <span class="ppe-red">[left blank]</span></div>
+                <div class="ppe-rule">Answer: <b class="ppe-main-c">Automotive</b> and <b class="ppe-main-c">Machinery</b>. The command word is <b>demonstrate</b> &#8594; state each sector + the weighting decision + the relative return, in words. No full BHB calc required.</div>
+                <table class="ppe-tbl">
+                  <tr><th>Sector</th><th>Weight decision</th><th>Holdings vs benchmark</th><th>Why it hurt</th></tr>
+                  <tr><td><b class="ppe-main-c">Automotive</b></td><td><b class="ppe-red">OVERweight</b> +20% (30% vs 10%)</td><td>UNDERperformed by 1.25% (7.85% vs 9.10%)</td><td>overweighted a sector whose holdings lagged</td></tr>
+                  <tr><td><b class="ppe-main-c">Machinery</b></td><td><b class="ppe-red">UNDERweight</b> (20% vs 35%)</td><td>OUTperformed by 2.00% (7.65% vs 5.65%)</td><td>underweighted a sector whose holdings beat the bench</td></tr>
+                </table>
+                <div class="ppe-trap"><b>The decision-vs-net trap (same as Pattern 4):</b> the book grades the <b>manager's decision</b>, not the arithmetic net. By net BHB contribution Automotive is actually <b>positive</b> (+1.45%) because the +20% overweight on a 9.10% benchmark sector earns a big allocation term; what the book flags is that the <b class="ppe-red">selection/decision</b> was bad &#8212; you overweighted a sector your holdings couldn't beat, and underweighted one they did beat. Answer at the level the verb asks for.</div>
+                <div class="ppe-info">Note: the book prose says machinery was underweighted "by 10%," but Exhibit 1 gives 20% vs 35% = <b>15%</b>. Treat as a book typo; the direction (underweight) is what matters.</div>
+              </div>
+              <div class="ppe-card">
+                <div class="ppe-title">E2 (Clark) &#8212; which attribution statement is correct + why the other two fail</div>
+                <div class="ppe-body"><b>You got the answer right (Statement 1) but the EXPLANATIONS for 2 &amp; 3 were off.</b></div>
+                <div class="ppe-rule"><b class="ppe-green">Statement 1 correct:</b> transactions-based attribution uses holdings AND the transactions (buys/sells) during the period, includes transaction costs &#8594; <b>most accurate</b> but <b>most difficult / time-consuming</b>.</div>
+                <table class="ppe-tbl">
+                  <tr><th>Method</th><th>Uses</th><th>Accuracy</th><th>Note</th></tr>
+                  <tr><td><b class="ppe-main-c">Returns-based</b></td><td>total portfolio returns ONLY</td><td><b class="ppe-red">least accurate</b>, most manipulable</td><td>easiest to implement; use when holdings data is unavailable at needed frequency/detail</td></tr>
+                  <tr><td><b class="ppe-main-c">Holdings-based</b></td><td>beginning-of-period holdings</td><td>improves with <b>shorter</b> intervals</td><td>over long periods misses intra-period trades = the <b>trading effect</b> (residual)</td></tr>
+                  <tr><td><b class="ppe-main-c">Transactions-based</b></td><td>holdings + transactions + costs</td><td><b class="ppe-green">most accurate</b></td><td>hardest / most time-consuming</td></tr>
+                </table>
+                <div class="ppe-trap"><b>Your Statement 2 error:</b> you wrote "returns-based uses IRR and is subject to manipulation." The IRR part is wrong &#8212; returns-based uses <b>total portfolio returns</b>. Its weakness is that it <b class="ppe-red">ignores the underlying holdings</b>, making it the <b>least accurate</b> and <b>most</b> vulnerable to manipulation (Statement 2 claimed it was the <b>most reliable / least vulnerable</b> &#8212; the opposite).</div>
+                <div class="ppe-trap"><b>Your Statement 3 error (right idea, imprecise):</b> Statement 3 fails because holdings-based does NOT eliminate the trading effect and is NOT accurate for longer periods. It works for <b>shorter</b> intervals; over <b>longer</b> periods it fails to capture intra-period transactions, and that ignored residual IS the trading effect. So holdings-based <b class="ppe-red">includes/suffers</b> the trading effect &#8212; it doesn't eliminate it.</div>
+              </div>
+            </div>
+
+            <!-- MASTERY -->
+            <div id="ppeerr-mastery" class="ppe-toppanel">
+              <div class="ppe-card">
+                <div class="ppe-title">Mastery checklist</div>
+                <div class="ppe-info">Once a pattern is no longer being missed, it moves here as a confirmed mastery point.</div>
               </div>
             </div>
           </div>
