@@ -24453,6 +24453,973 @@ Developed Asia/Aus.  = (29.86% &#8722; 31.16%)(12.85% &#8722; 22.67%) = +0.13%</
           </script>
         </div>
 
+        <div id="imsWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #imsWidget { --ims-main:#F472B6; --ims-green:#3FB950; --ims-red:#FF7B72; --ims-blue:#79C0FF; --ims-amber:#E0A82E; }
+            #imsWidget .ims-h { font-family:var(--serif); font-size:21px; color:var(--ims-main); font-weight:700; margin:0 0 4px; letter-spacing:.01em; }
+            #imsWidget .ims-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:16px; letter-spacing:.04em; }
+            #imsWidget .ims-modtabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
+            #imsWidget .ims-modtab { background:var(--surface2); border:1px solid var(--ims-main); color:var(--ims-main); padding:10px 18px; border-radius:8px; font-family:var(--serif); font-size:14px; font-weight:700; cursor:pointer; letter-spacing:.02em; }
+            #imsWidget .ims-modtab.active { background:var(--ims-main); color:#0D1117; }
+            #imsWidget .ims-modpanel { display:none; }
+            #imsWidget .ims-modpanel.active { display:block; }
+            #imsWidget .ims-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #imsWidget .ims-toptab { background:var(--surface2); border:1px solid rgba(244,114,182,.5); color:var(--ims-main); padding:7px 13px; border-radius:6px; font-family:var(--serif); font-size:12.5px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #imsWidget .ims-toptab.active { background:var(--ims-main); color:#0D1117; }
+            #imsWidget .ims-toppanel { display:none; }
+            #imsWidget .ims-toppanel.active { display:block; }
+            #imsWidget .ims-card { background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:16px 18px; margin-bottom:14px; }
+            #imsWidget .ims-title { font-family:var(--serif); font-size:15.5px; color:var(--ims-main); font-weight:600; margin-bottom:9px; }
+            #imsWidget .ims-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:6px; }
+            #imsWidget .ims-rule { display:block; font-size:12.5px; line-height:1.5; color:#C9D1D9; padding:7px 0 7px 14px; border-left:2px solid var(--border); margin:7px 0; }
+            #imsWidget .ims-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--ims-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #imsWidget .ims-info { background:rgba(121,192,255,.08); border-left:3px solid var(--ims-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #imsWidget .ims-green-box { background:rgba(63,185,80,.08); border-left:3px solid var(--ims-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #imsWidget .ims-green { color:var(--ims-green); }
+            #imsWidget .ims-red { color:var(--ims-red); }
+            #imsWidget .ims-main-c { color:var(--ims-main); }
+            #imsWidget .ims-blue { color:var(--ims-blue); }
+            #imsWidget .ims-amber { color:var(--ims-amber); }
+            #imsWidget .ims-tbl { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #imsWidget .ims-tbl th { background:#0B0F14; color:var(--ims-main); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #imsWidget .ims-tbl td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+            #imsWidget .ims-quiz-opt { display:block; width:100%; text-align:left; background:var(--surface2); border:1px solid var(--border); color:#C9D1D9; padding:9px 12px; border-radius:6px; margin:5px 0; font-size:12.5px; cursor:pointer; font-family:inherit; line-height:1.45; }
+            #imsWidget .ims-quiz-opt:hover { border-color:var(--ims-main); }
+            #imsWidget .ims-quiz-opt.correct { background:rgba(63,185,80,.15); border-color:var(--ims-green); color:#E6EDF3; }
+            #imsWidget .ims-quiz-opt.wrong { background:rgba(255,123,114,.13); border-color:var(--ims-red); color:#E6EDF3; }
+            #imsWidget .ims-quiz-exp { display:none; margin-top:8px; }
+            #imsWidget .ims-matrix { width:100%; border-collapse:collapse; margin:12px 0; font-size:12.5px; }
+            #imsWidget .ims-matrix th { background:#0B0F14; color:var(--ims-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; text-transform:uppercase; padding:9px 10px; text-align:center; border:1px solid var(--border); }
+            #imsWidget .ims-matrix td { padding:0; border:1px solid var(--border); text-align:center; }
+            #imsWidget .ims-mcell { width:100%; height:100%; min-height:54px; background:transparent; border:none; color:#C9D1D9; padding:12px 8px; font-family:inherit; font-size:12.5px; cursor:pointer; line-height:1.4; }
+            #imsWidget .ims-mcell:hover { background:rgba(244,114,182,.08); }
+            #imsWidget .ims-mcell.lit-err { background:rgba(255,123,114,.18); color:#FFB3AD; font-weight:600; }
+            #imsWidget .ims-mcell.lit-ok { background:rgba(63,185,80,.16); color:#7EE787; font-weight:600; }
+            #imsWidget .ims-mrowh { background:#0B0F14; color:var(--ims-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; text-transform:uppercase; padding:9px 10px; text-align:center; border:1px solid var(--border); white-space:nowrap; }
+            #imsWidget .ims-mout { display:block; white-space:pre-wrap; font-family:var(--mono); font-size:12px; line-height:1.6; color:#C9D1D9; background:#0B0F14; border:1px solid var(--border); border-radius:6px; padding:11px 13px; margin:10px 0; min-height:60px; }
+            #imsWidget .ims-reveal-btn { background:var(--surface2); border:1px solid rgba(244,114,182,.5); color:var(--ims-main); padding:6px 13px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; margin:4px 0; }
+            #imsWidget .ims-reveal-body { display:none; margin-top:8px; }
+          </style>
+
+          <div class="ims-h">Investment Manager Selection</div>
+          <div class="ims-sub">READING 14 &middot; Performance Measurement</div>
+
+          <div class="ims-modtabs">
+            <button class="ims-modtab active" onclick="imsMod(event,'imsm-141')">14.1 Selection Process</button>
+            <button class="ims-modtab" onclick="imsMod(event,'imsm-142')">14.2 Type I / II Errors</button>
+            <button class="ims-modtab" onclick="imsMod(event,'imsm-143')">Style Analysis</button>
+            <button class="ims-modtab" onclick="imsMod(event,'imsm-143b')">14.3 Philosophy</button>
+            <button class="ims-modtab" onclick="imsMod(event,'imsm-14g')">14.g Pooled / SMA</button>
+            <button class="ims-modtab" onclick="imsMod(event,'imsm-144')">14.4 Contracts &amp; Fees</button>
+            <button class="ims-modtab" onclick="imsMod(event,'imsm-err')">&#9888; Errors</button>
+          </div>
+
+          <!-- ════════ MODULE 14.1 ════════ -->
+          <div id="imsm-141" class="ims-modpanel active">
+            <div class="ims-toptabs">
+              <button class="ims-toptab active" onclick="imsTop(event,'ims141-dd')">Due Diligence</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims141-univ')">Manager Universe</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims141-qq')">Quant vs Qual</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims141-4ps')">4 Ps &amp; Risk</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims141-quiz')">Quiz 14.1</button>
+            </div>
+
+            <!-- DUE DILIGENCE -->
+            <div id="ims141-dd" class="ims-toppanel active">
+              <div class="ims-card">
+                <div class="ims-title">Due diligence &mdash; definition (LOS 14.a)</div>
+                <div class="ims-body"><b class="ims-main-c">Due diligence</b> = the analysis and investigation in support of an investment <b>decision, action, or recommendation</b>.</div>
+                <span class="ims-rule">It must emphasize the <b>sources AND reasons</b> behind the <b>actual returns generated in the past</b> &mdash; not just the level of past returns.</span>
+                <span class="ims-rule">Then evaluate the <b>probability of repeatedly earning sufficient or better returns in the future</b> using the <b>same investment process</b>.</span>
+                <div class="ims-trap"><b>Decisive detail:</b> DD is forward-looking judgment built on backward-looking evidence. The point is not "did returns happen" but <b class="ims-main-c">why they happened</b> and <b class="ims-main-c">can the same process repeat them</b>. An answer that stops at "past returns were good" is incomplete.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Three components of due diligence</div>
+                <table class="ims-tbl">
+                  <tr><th>Component</th><th>What it does</th><th>Performance assessed?</th></tr>
+                  <tr><td><b class="ims-main-c">Manager universe</b></td><td>Build the pool of <b>suitable</b> managers; establish the <b>role</b> &amp; risk fit</td><td><b class="ims-red">NO</b> &mdash; risk profile / fit only</td></tr>
+                  <tr><td><b class="ims-main-c">Quantitative analysis</b></td><td>Objective evaluation of the <b>distribution of past returns</b>; attribution + appraisal; capture ratio; drawdowns</td><td><b class="ims-green">YES</b> &mdash; this is where it happens</td></tr>
+                  <tr><td><b class="ims-main-c">Qualitative analysis</b></td><td>Will returns <b>continue</b>? Does the process capture <b>all relevant risks</b>? (4 Ps + risk assessment)</td><td>Judgment on sustainability</td></tr>
+                </table>
+                <div class="ims-trap"><b>Trap (stage placement):</b> performance assessment does <b class="ims-red">NOT</b> happen at the universe stage &mdash; it happens later in <b>quantitative analysis</b>. At the universe stage the emphasis is purely the manager's <b>risk profile and fit</b> for the portfolio's requirements.</div>
+              </div>
+            </div>
+
+            <!-- MANAGER UNIVERSE -->
+            <div id="ims141-univ" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">What makes a manager "suitable" for the universe</div>
+                <div class="ims-body">The universe contains <b>only suitable managers</b>. Suitable means they:</div>
+                <table class="ims-tbl">
+                  <tr><th>Driver</th><th>Requirement</th></tr>
+                  <tr><td><b class="ims-main-c">IPS fit</b></td><td>Fit the <b>objectives and constraints</b> of the IPS</td></tr>
+                  <tr><td><b class="ims-main-c">Relevant style</b></td><td>Invest in the relevant portfolio <b>style</b> desired by the client (value / growth / mixed)</td></tr>
+                  <tr><td><b class="ims-main-c">Active vs passive</b></td><td>Manage with the appropriate <b>balance between active and passive</b> approaches</td></tr>
+                </table>
+                <div class="ims-info">It is a <b>process of elimination</b> that balances having <b>too many vs too few</b> managers in the candidate pool. The purpose of the search is crucial (e.g., a new strategy, a new risk exposure, or a manager to <b>complement</b> existing holdings).</div>
+                <div class="ims-trap"><b>Subjectivity flag:</b> the terms <b>"best"</b> and <b>"complement"</b> carry an aspect of <b class="ims-main-c">subjectivity</b> that must be judged <b>in the context of the IPS</b> &mdash; not in the abstract.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Establishing the role &mdash; defined by the benchmark</div>
+                <div class="ims-body">The search begins by establishing the potential manager's <b>role within the portfolio</b>, which is <b class="ims-main-c">defined by the benchmark</b>. The benchmark can be determined using one or more of:</div>
+                <table class="ims-tbl">
+                  <tr><th>Method</th><th>Note</th></tr>
+                  <tr><td><b>Third-party categorization</b></td><td>From database/software providers &mdash; <b class="ims-red">trap:</b> the provider's definition may <b>not match</b> the definition needed for the role within <i>your</i> portfolio</td></tr>
+                  <tr><td><b>Returns-based style analysis (RBSA)</b></td><td>Examined in detail later (14.2)</td></tr>
+                  <tr><td><b>Holdings-based style analysis (HBSA)</b></td><td>Examined in detail later (14.2)</td></tr>
+                  <tr><td><b>Manager experience</b></td><td>Ascertained from analysis of <b>holdings</b> within the manager's portfolios as well as <b>past returns</b></td></tr>
+                </table>
+                <div class="ims-info">At the universe stage there should be <b>no performance assessment</b> &mdash; emphasis is on the manager's <b>risk profile</b> and whether it is a good fit for the portfolio's requirements. The universe is <b>constantly changing</b> as strategies change and managers come and go.</div>
+              </div>
+            </div>
+
+            <!-- QUANT VS QUAL -->
+            <div id="ims141-qq" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Quantitative analysis</div>
+                <div class="ims-body">Evaluate the manager <b>objectively</b> via the <b>distribution of past returns</b>. Components:</div>
+                <table class="ims-tbl">
+                  <tr><th>Tool</th><th>Purpose</th></tr>
+                  <tr><td><b class="ims-main-c">Attribution + appraisal</b></td><td>Distinguish <b>managerial skill vs luck</b> (luck = external market factors)</td></tr>
+                  <tr><td><b class="ims-main-c">Capture ratio</b></td><td>Examines performance in <b>both good AND weak</b> market conditions</td></tr>
+                  <tr><td><b class="ims-main-c">Drawdowns</b></td><td>Check for any significant drawdown = <b>peak-to-trough decline (in %)</b> over a specific time period</td></tr>
+                </table>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Qualitative analysis &mdash; the two issues</div>
+                <div class="ims-body">Two important issues arise:</div>
+                <span class="ims-rule"><b class="ims-main-c">(1)</b> What is the <b>likelihood the same level of returns will continue</b> in the future?</span>
+                <span class="ims-rule"><b class="ims-main-c">(2)</b> Does the manager's investment process <b>account for all the relevant risks</b>?</span>
+                <div class="ims-info">Issue (1) &rarr; assessed via the <b>four Ps</b>. Issue (2) &rarr; assessed via <b>risk assessment</b> of the firm. (See "4 Ps &amp; Risk" tab.)</div>
+                <div class="ims-trap"><b>Don't swap the stages.</b> "Performing investment due diligence" is a <b>qualitative</b> activity. "Defining the universe" is the universe stage. Only <b class="ims-main-c">evaluating a performance appraisal</b> belongs to <b>quantitative</b> analysis &mdash; this is the Quiz 14.1 Q1 distinction.</div>
+              </div>
+            </div>
+
+            <!-- 4 Ps & RISK -->
+            <div id="ims141-4ps" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Continuity of returns &mdash; the four Ps</div>
+                <div class="ims-body">Continuity of returns is assessed by looking at the <b class="ims-main-c">four Ps</b>:</div>
+                <table class="ims-tbl">
+                  <tr><th>P</th><th>What it covers</th></tr>
+                  <tr><td><b class="ims-main-c">Philosophy</b></td><td>Focuses on a <b>specific area of market inefficiency</b> to earn excess returns</td></tr>
+                  <tr><td><b class="ims-main-c">Process</b></td><td>Determines whether the strategy is <b>feasible</b></td></tr>
+                  <tr><td><b class="ims-main-c">People</b></td><td>Whether it is possible to <b>execute</b> the strategy with the <b>knowledge &amp; skills of the employees</b></td></tr>
+                  <tr><td><b class="ims-main-c">Portfolio</b></td><td>Must be <b>built congruent with</b> the philosophy and process</td></tr>
+                </table>
+                <div class="ims-info">Order of logic: <b>philosophy</b> (where's the edge?) &rarr; <b>process &amp; people</b> (can we actually do it?) &rarr; <b>portfolio</b> (does the book match what we claim?).</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Risk assessment (issue 2 &mdash; all relevant risks)</div>
+                <div class="ims-body">Risk assessment considers the <b>firm</b> and whether it is robust &amp; performing well, and its <b>likelihood of remaining a going concern</b>. It examines:</div>
+                <span class="ims-rule">Aspects such as the <b>quality of the back office</b>, the <b>process and procedures</b> of the firm.</span>
+                <span class="ims-rule">Ability to <b>safeguard assets</b> and to prepare <b>useful, timely reports</b> (operational due diligence).</span>
+                <span class="ims-rule">Going into such detail surfaces <b>risks not evident in past returns</b> &mdash; the focus is <b>sustainability</b>.</span>
+                <span class="ims-rule">The proposed <b>investment vehicle</b> and the <b>terms of the manager contract</b> must be assessed for suitability and must be <b>reasonable and relevant</b>.</span>
+                <span class="ims-rule">Finally, <b>continual monitoring</b> ensures the manager continues to be the appropriate one for the portfolio.</span>
+              </div>
+            </div>
+
+            <!-- QUIZ 14.1 -->
+            <div id="ims141-quiz" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Q1. Quantitative analysis of the manager selection process includes:</div>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q1',false)">A. defining the universe.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q1',true)">B. evaluating a performance appraisal.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q1',false)">C. performing investment due diligence.</button>
+                <div class="ims-quiz-exp" id="ims-q1-exp">
+                  <div class="ims-green-box"><b>Answer: B.</b> Attribution and <b>appraisal</b> are the quantitative steps (skill vs luck from the distribution of returns). <b class="ims-red">A</b> = the universe stage (no performance assessment there). <b class="ims-red">C</b> = a <b>qualitative</b> activity.</div>
+                </div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Q2. The expected cost of Type I and Type II errors is:</div>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q2',false)">A. higher the lower the difference between the mean return of skilled and unskilled managers.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q2',true)">B. lower the greater the difference between the mean return of skilled and unskilled managers.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q2',false)">C. higher the greater the difference between the mean return of skilled and unskilled managers.</button>
+                <div class="ims-quiz-exp" id="ims-q2-exp">
+                  <div class="ims-green-box"><b>Answer: B.</b> The <b>greater the difference in sample size &amp; mean</b> (wider dispersion between strong and weak managers), the <b>easier it is to distinguish</b> relative skill &rarr; <b>less likely</b> to make a Type I or II error &rarr; <b class="ims-green">lower expected cost</b>. Note A states the right relationship in the wrong direction (it's lower cost, not higher).</div>
+                </div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Q3. A return distribution of skilled managers that is <b>not distinct</b> from the return distribution of unskilled managers most likely implies a:</div>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q3',false)">A. highly inefficient market.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q3',false)">B. low opportunity cost of not hiring a skilled manager.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q3',true)">C. high opportunity cost of not hiring a skilled manager.</button>
+                <div class="ims-quiz-exp" id="ims-q3-exp">
+                  <div class="ims-green-box"><b>Answer: C.</b> Indistinct distributions = you <b>cannot tell skill apart</b>, so you are more likely to wrongly pass on / not hire a skilled manager = a <b>Type II error</b>, whose cost is the <b>opportunity (implicit) cost</b> of not hiring skill &mdash; and here that cost is <b class="ims-red">high</b>. <b class="ims-red">A</b> is wrong: indistinct distributions point to an <b>efficient</b> market (small dispersion), not inefficient. <b class="ims-red">B</b> has the magnitude backwards.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 14.2 (Type I/II) ════════ -->
+          <div id="imsm-142" class="ims-modpanel">
+            <div class="ims-toptabs">
+              <button class="ims-toptab active" onclick="imsTop(event,'ims142-mtx')">The Matrix</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims142-con')">I vs II Contrast</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims142-cost')">Costs &amp; Dispersion</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims142-prev')">Preventing II</button>
+            </div>
+
+            <!-- THE MATRIX -->
+            <div id="ims142-mtx" class="ims-toppanel active">
+              <div class="ims-card">
+                <div class="ims-title">The hypothesis setup (LOS 14.b)</div>
+                <span class="ims-rule"><b class="ims-main-c">H&#8320; (null):</b> the manager adds <b>NO value</b> (no skill).</span>
+                <span class="ims-rule">To reject H&#8320;, the calculated test statistic must be <b>large enough</b> &mdash; i.e., demonstrate value added on a <b>statistically significant basis</b>.</span>
+                <div class="ims-info"><b>Reject H&#8320;</b> &rarr; conclude there IS skill &rarr; <b>hire/retain</b>. &nbsp; <b>Fail to reject H&#8320;</b> &rarr; conclude no skill &rarr; <b>not hire / fire</b>.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Figure 14.1 &mdash; tap any cell</div>
+                <table class="ims-matrix">
+                  <tr><th rowspan="2" style="vertical-align:bottom;">Decision &#8595; &nbsp; Realization &#8594;</th><th colspan="2">Realization (the truth)</th></tr>
+                  <tr><th>Below expectations<br>(NO skill)</th><th>At/above expectations<br>(SKILL)</th></tr>
+                  <tr>
+                    <td class="ims-mrowh">Hire / retain</td>
+                    <td><button class="ims-mcell" onclick="imsMtx(this,'hire','noskill')">?</button></td>
+                    <td><button class="ims-mcell" onclick="imsMtx(this,'hire','skill')">?</button></td>
+                  </tr>
+                  <tr>
+                    <td class="ims-mrowh">Not hire / fire</td>
+                    <td><button class="ims-mcell" onclick="imsMtx(this,'pass','noskill')">?</button></td>
+                    <td><button class="ims-mcell" onclick="imsMtx(this,'pass','skill')">?</button></td>
+                  </tr>
+                </table>
+                <span class="ims-mout" id="ims-mtx-out">Tap a cell to reveal whether it is Correct, Type I, or Type II &mdash; and why.</span>
+                <button class="ims-reveal-btn" onclick="imsMtxAll()">Reveal all</button>
+                <div class="ims-trap"><b>Memory hook:</b> the error is named for the <b>action you took on the wrong target</b>. <b class="ims-red">Type I</b> = you <b>acted</b> (hired/retained) on a <b>no-skill</b> manager &mdash; a false positive, error of <b>commission</b>. <b class="ims-amber">Type II</b> = you <b>passed</b> (didn't hire / fired) a <b>skilled</b> manager &mdash; a false negative, error of <b>omission</b>.</div>
+              </div>
+            </div>
+
+            <!-- I vs II CONTRAST -->
+            <div id="ims142-con" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Type I vs Type II &mdash; full contrast</div>
+                <table class="ims-tbl">
+                  <tr><th>Attribute</th><th class="ims-red">Type I</th><th class="ims-amber">Type II</th></tr>
+                  <tr><td><b>Decision on H&#8320;</b></td><td>Reject H&#8320; when no value added</td><td>Fail to reject H&#8320; when value WAS added</td></tr>
+                  <tr><td><b>What you did</b></td><td><b>Hire / retain</b> a manager with <b>NO skill</b></td><td><b>Not hire / fire</b> a manager <b>WITH skill</b></td></tr>
+                  <tr><td><b>False...</b></td><td>False positive</td><td>False negative</td></tr>
+                  <tr><td><b>Error of...</b></td><td>Commission (an <b>active</b> decision)</td><td>Omission</td></tr>
+                  <tr><td><b>Cost visibility</b></td><td><b>Explicit / visible</b> costs</td><td><b>Implicit / opportunity</b> (less visible) costs</td></tr>
+                  <tr><td><b>Easy to determine?</b></td><td><b class="ims-green">Easier</b> &mdash; measure vs a benchmark</td><td><b class="ims-red">Difficult</b> &mdash; how do you judge a manager you never hired / fired?</td></tr>
+                  <tr><td><b>Attention received</b></td><td><b>More</b> attention</td><td>Less attention</td></tr>
+                </table>
+                <div class="ims-info"><b>Why Type I gets more attention:</b> (1) <b>regret aversion</b> &mdash; commission errors produce explicit, visible costs; (2) Type I is <b>easier to determine</b> (measurable vs benchmark); (3) it impacts the decision-maker's <b>compensation</b>, so extra care is taken to reduce it; (4) it is more <b>visible to clients</b>, who can see an investment that underperformed.</div>
+                <div class="ims-trap"><b>Decisive detail under pressure:</b> "errors of omission / opportunity cost / hard to see / hard to measure" &rarr; <b class="ims-amber">Type II</b>. "errors of commission / explicit cost / visible / measurable / compensation-relevant" &rarr; <b class="ims-red">Type I</b>. Don't let "the manager has no skill" auto-trigger Type II &mdash; hiring a no-skill manager is <b>Type I</b>.</div>
+              </div>
+            </div>
+
+            <!-- COSTS & DISPERSION -->
+            <div id="ims142-cost" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Costs of Type I and II errors</div>
+                <table class="ims-tbl">
+                  <tr><th>Error</th><th>Cost is...</th></tr>
+                  <tr><td><b class="ims-red">Type I</b></td><td>Cost of <b>retaining managers who are weak</b></td></tr>
+                  <tr><td><b class="ims-amber">Type II</b></td><td>Cost of <b>not retaining managers who are strong</b></td></tr>
+                </table>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Dispersion &rarr; expected cost (the key driver chain)</div>
+                <div class="ims-body">Assume two groups of managers (strong and weak). Decompose the driver:</div>
+                <table class="ims-tbl">
+                  <tr><th>Driver moves</th><th>Effect on distinguishing skill</th><th>Effect on error likelihood</th><th>Effect on expected cost</th></tr>
+                  <tr><td><b>Greater</b> difference in <b>sample size &amp; mean</b> (wider dispersion strong vs weak)</td><td><b class="ims-green">Easier</b> to distinguish relative skill</td><td><b class="ims-green">Less likely</b> Type I or II</td><td><b class="ims-green">LOWER</b> expected cost</td></tr>
+                  <tr><td><b>Smaller</b> dispersion (efficient market)</td><td><b class="ims-red">Harder</b> to distinguish skill</td><td><b class="ims-red">More likely</b> Type I or II</td><td><b class="ims-red">HIGHER</b> expected cost</td></tr>
+                </table>
+                <div class="ims-info"><b>Efficient market link:</b> in an efficient market it is harder to achieve alpha through active management, so the dispersion of return distributions between strong and weak is <b>smaller</b> &rarr; this <b>raises</b> the cost of hiring/retaining weak managers (a <b class="ims-red">Type I</b> cost).</div>
+                <div class="ims-trap"><b>Direction trap:</b> wider dispersion does NOT raise cost &mdash; it <b>lowers</b> it (easier to tell skill apart). The relationship is <b>inverse</b>: dispersion &#8593; &rArr; expected error cost &#8595;.</div>
+              </div>
+            </div>
+
+            <!-- PREVENTING II -->
+            <div id="ims142-prev" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Preventing Type II errors</div>
+                <div class="ims-body">An <b>excessive number of Type II errors</b> indicates a problem with the hiring and firing of managers. The obvious solution is to <b>track the subsequent performance</b> of managers who were <b>not hired</b> as well as those who were <b>fired</b>.</div>
+                <span class="ims-rule">Compare characteristics of <b>selected vs not-selected</b> managers &mdash; are the selected ones <b>consistent with the portfolio investment objectives</b>?</span>
+                <span class="ims-rule">Compare characteristics of <b>retained vs fired</b> managers &mdash; are the retained ones consistent with the portfolio objectives?</span>
+                <div class="ims-trap"><b>Ultimate principle:</b> do <b class="ims-red">not</b> hire or fire managers because of <b>short-term performance</b> or because of <b>behavioral biases</b>. Acting on either is exactly what generates excess Type II (and Type I) errors.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE: STYLE ANALYSIS (14.c intro) ════════ -->
+          <div id="imsm-143" class="ims-modpanel">
+            <div class="ims-toptabs">
+              <button class="ims-toptab active" onclick="imsTop(event,'ims143-sa')">RBSA / HBSA</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims143-rbsa')">RBSA Detail</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims143-hbsa')">HBSA Detail</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims143-cap')">Capture &amp; Drawdown</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims143-drift')">Style Drift &amp; Quality</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims143-quiz')">Quiz 14.2</button>
+            </div>
+
+            <!-- RBSA / HBSA -->
+            <div id="ims143-sa" class="ims-toppanel active">
+              <div class="ims-card">
+                <div class="ims-title">Style analysis &mdash; what it examines (LOS 14.c)</div>
+                <div class="ims-body"><b class="ims-main-c">Style analysis</b> examines the manager's <b>risk exposures</b> (e.g., industry, concentration, capitalization) <b>in relation to an appropriate benchmark</b>, and the <b>changes in those exposures over time</b>.</div>
+                <span class="ims-rule">Risk exposures allow <b>classification of managers by style</b> (e.g., value, growth) for selection purposes.</span>
+                <table class="ims-tbl">
+                  <tr><th>Type</th><th>Based on</th></tr>
+                  <tr><td><b class="ims-main-c">RBSA</b> &mdash; returns-based style analysis</td><td>The manager's <b>return</b> series</td></tr>
+                  <tr><td><b class="ims-main-c">HBSA</b> &mdash; holdings-based style analysis</td><td>The manager's actual <b>holdings</b></td></tr>
+                </table>
+                <div class="ims-info">Once RBSA and HBSA are performed, <b>congruence between the output and the investment process</b> is crucial &mdash; to ensure the process can be <b>replicated consistently</b> in the future.</div>
+              </div>
+            </div>
+
+            <!-- RBSA DETAIL -->
+            <div id="ims143-rbsa" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">RBSA &mdash; what it is</div>
+                <div class="ims-body">RBSA estimates the portfolio's <b>sensitivities to security market indexes</b> for a set of <b>key risk factors</b>. It is <b class="ims-main-c">top-down</b> in nature.</div>
+                <div class="ims-trap"><b>Decisive detail:</b> in RBSA the risk factors are <b class="ims-red">estimated</b> &mdash; NOT taken from predetermined style categories. That estimation is the "one complication" of RBSA.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">RBSA &mdash; advantages</div>
+                <table class="ims-tbl">
+                  <tr><th>Advantage</th><th>Why</th></tr>
+                  <tr><td><b class="ims-green">Easy / low data</b></td><td>Top-down; <b>little additional data</b> needed &rarr; computationally relatively easy</td></tr>
+                  <tr><td><b class="ims-green">Basic AND complex</b></td><td>Determines key risk factors &amp; return drivers for <b>basic and complex</b> strategies</td></tr>
+                  <tr><td><b class="ims-green">Objective + comparable</b></td><td>Uses <b>objective data</b>; allows comparability <b>between managers and through time</b></td></tr>
+                  <tr><td><b class="ims-green">Timely</b></td><td>Can be performed on a <b>timely basis</b> (e.g., right after data released)</td></tr>
+                </table>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">RBSA &mdash; drawbacks (decompose)</div>
+                <table class="ims-tbl">
+                  <tr><th>Drawback</th><th>Mechanism</th></tr>
+                  <tr><td><b class="ims-red">Lacks precision</b></td><td>Assumes a <b>static portfolio</b> for the period &rarr; hard to ascertain impact of <b>multiperiod</b> decisions; could alter the breakdown of value-added sources</td></tr>
+                  <tr><td><b class="ims-red">Stale prices</b></td><td>Illiquid securities &rarr; <b>stale prices understate risk exposure</b></td></tr>
+                  <tr><td><b class="ims-red">SD understated short-term</b></td><td>When performance is based on appraisals of ongoing projects &amp; IRR of cash distributions (VC, PE), short-term volatility may be understated &rarr; true SD best gauged over a <b>longer period</b></td></tr>
+                  <tr><td><b class="ims-red">Timeliness falls</b></td><td>Reporting timeliness <b>decreases</b> with illiquid/nontraded securities (longer time to price)</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- HBSA DETAIL -->
+            <div id="ims143-hbsa" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">HBSA &mdash; what it is</div>
+                <div class="ims-body">HBSA looks at the <b>actual securities</b> in the portfolio <b class="ims-main-c">at one point in time</b>. This allows estimating <b>current</b> risk exposures using a <b class="ims-main-c">security-specific (bottom-up)</b> approach.</div>
+                <div class="ims-info">Many advantages are the <b>same as RBSA</b> (key risk factors &amp; return drivers, comparability between managers and through time, performed on a timely basis). <b>Most appropriate for equity-based strategies.</b></div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">HBSA &mdash; drawbacks (decompose)</div>
+                <table class="ims-tbl">
+                  <tr><th>Drawback</th><th>Mechanism</th></tr>
+                  <tr><td><b class="ims-red">Computational load</b></td><td>Increases as <b>complexity rises</b> and <b>transparency decreases</b></td></tr>
+                  <tr><td><b class="ims-red">Point-in-time format</b></td><td>May <b>not be useful projecting forward</b>, or if the portfolio has <b>high turnover</b></td></tr>
+                  <tr><td><b class="ims-red">Stale pricing</b></td><td>Like RBSA, illiquid/nontraded securities &rarr; stale pricing <b>understates risk exposure</b> + <b>decreases reporting timeliness</b></td></tr>
+                </table>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">RBSA vs HBSA &mdash; the contrast that gets tested</div>
+                <table class="ims-tbl">
+                  <tr><th>Dimension</th><th>RBSA</th><th>HBSA</th></tr>
+                  <tr><td><b>Input</b></td><td>Return series</td><td>Actual holdings</td></tr>
+                  <tr><td><b>Direction</b></td><td><b class="ims-main-c">Top-down</b></td><td><b class="ims-main-c">Bottom-up</b> (security-specific)</td></tr>
+                  <tr><td><b>Time frame</b></td><td>Over a period (assumes static portfolio)</td><td><b>Point in time</b> (current exposures)</td></tr>
+                  <tr><td><b>Data / computation</b></td><td><b class="ims-green">Less</b> data, easier</td><td><b class="ims-red">More</b> as complexity rises</td></tr>
+                  <tr><td><b>Precision</b></td><td>Lacks precision (static assumption)</td><td><b>More precise</b> (security-specific)</td></tr>
+                  <tr><td><b>Best for</b></td><td>Basic &amp; complex strategies</td><td><b>Equity-based</b> strategies</td></tr>
+                  <tr><td><b>High turnover</b></td><td>&mdash;</td><td><b class="ims-red">Weak</b> &mdash; point-in-time snapshot misleads</td></tr>
+                </table>
+                <div class="ims-trap"><b>Quiz 14.2 Q1 trap:</b> "data required for HBSA is easier to obtain" is <b class="ims-red">NOT</b> an advantage &mdash; HBSA's computational/data requirement <b>increases</b> with complexity. HBSA's real advantages are <b>more precise</b> and <b>better for equity</b>.</div>
+              </div>
+            </div>
+
+            <!-- CAPTURE & DRAWDOWN -->
+            <div id="ims143-cap" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Capture ratios (LOS 14.d)</div>
+                <div class="ims-body">Capture ratios determine how <b>suitable</b> a manager is with respect to the investor's <b class="ims-main-c">risk tolerance and time horizon</b>.</div>
+                <table class="ims-tbl">
+                  <tr><th>Ratio</th><th>Measures capture when benchmark return is...</th><th>Outperformance when...</th></tr>
+                  <tr><td><b class="ims-main-c">Upside capture (UC)</b></td><td><b class="ims-green">POSITIVE</b></td><td>UC <b>&gt; 100%</b> (higher = outperform). UC &lt; 100% = underperform</td></tr>
+                  <tr><td><b class="ims-main-c">Downside capture (DC)</b></td><td><b class="ims-red">NEGATIVE</b></td><td>DC <b>&lt; 100%</b> (lower = outperform, lost less). DC &gt; 100% = underperform</td></tr>
+                </table>
+                <div class="ims-trap"><b>Inverse logic trap:</b> for UC, <b>higher</b> is better. For DC, <b>lower</b> is better. They move in opposite directions on what counts as "good" &mdash; a high DC is BAD (lost more than the benchmark on the way down).</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Capture ratio (CR) &mdash; calculator</div>
+                <span class="ims-rule"><b>CR = UC ratio / DC ratio.</b> &nbsp; CR <b>&gt; 1</b> = positive asymmetry (<b class="ims-main-c">convex</b>) &nbsp;|&nbsp; CR <b>&lt; 1</b> = negative asymmetry (<b>concave</b>).</span>
+                <table class="ims-tbl">
+                  <tr><th>Input (%)</th><th>Value</th></tr>
+                  <tr><td>Upside capture UC (%)</td><td><input id="ims-cap-uc" type="number" value="120" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                  <tr><td>Downside capture DC (%)</td><td><input id="ims-cap-dc" type="number" value="80" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                </table>
+                <button class="ims-reveal-btn" onclick="imsCapCalc()">Compute CR</button>
+                <span class="ims-mout" id="ims-cap-out">Enter UC and DC, then Compute.</span>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Convexity: natural vs manager skill</div>
+                <table class="ims-tbl">
+                  <tr><th>Source of positive asymmetry</th><th>Example &amp; signature</th></tr>
+                  <tr><td><b>Naturally convex (strategy)</b></td><td>Hedging: buy a series of <b>OTM puts</b> before severe downturns &rarr; many <b>small losses</b> (puts expire worthless &rarr; <b>low DC</b>) + far fewer <b>large gains</b> (<b>high UC</b>) &rarr; positive asymmetry comes from the <b>structure</b>, not skill</td></tr>
+                  <tr><td><b>Manager skill</b></td><td>Long-only equity needing <b>active management</b> to minimize losses &amp; maximize gains &rarr; requires <b>skill</b>; may <b>not</b> give consistent positive asymmetry</td></tr>
+                </table>
+                <div class="ims-info"><b>Beta link:</b> when betas are <b>increasing (decreasing)</b>, momentum-driven strategies should have <b>higher (lower)</b> UC than value-driven. A <b>low-beta (high-beta)</b> strategy will have <b>lower (higher)</b> UC and DC. CRs can be used to <b>confirm the stated investment strategy</b>.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Drawdown (LOS 14.d)</div>
+                <table class="ims-tbl">
+                  <tr><th>Term</th><th>Definition</th></tr>
+                  <tr><td><b class="ims-main-c">Drawdown</b></td><td>Total <b>peak-to-trough loss</b> for a specified time period</td></tr>
+                  <tr><td><b class="ims-main-c">Maximum drawdown</b></td><td>The <b>largest</b> peak-to-trough loss during that period</td></tr>
+                  <tr><td><b class="ims-main-c">Drawdown duration</b></td><td>Total time from when the drawdown <b>begins</b> to when it <b>recovers to zero</b> (achieved via offsetting gains)</td></tr>
+                </table>
+                <span class="ims-rule"><b>Use:</b> drawdowns help identify <b>poor / poorly-executed strategies, weak internal controls, and operational problems</b>.</span>
+                <span class="ims-rule">Large drawdowns are <b>not appropriate</b> for investors approaching the <b>end of their horizon</b>. Low-beta strategy may have <b>lower absolute returns</b> but lower drawdowns &rarr; <b>better risk-adjusted returns</b>.</span>
+                <div class="ims-trap"><b>Risk management vs self-preservation (the judgment call):</b> significant/extended drawdowns can push a manager into <b class="ims-red">self-preservationist tactics</b> that harm investors. Selling unrealized-loss assets in a downturn may be <b>prudent</b> (losses could worsen) OR <b>risky</b> (if a reversal follows). The exam question: did the manager act per the <b>IPS</b>, for <b>self-preservation</b>, or as an <b>overreaction</b>?</div>
+                <div class="ims-info"><b>Applying to the IPS:</b> investors with <b>shorter horizons</b> and <b>lower risk tolerance</b> should invest with managers showing <b>smaller and less extended drawdowns</b>.</div>
+              </div>
+            </div>
+
+            <!-- STYLE DRIFT & QUALITY -->
+            <div id="ims143-drift" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Detecting style drift</div>
+                <div class="ims-body">Monitoring RBSA and HBSA output <b>over time</b> can help detect <b class="ims-main-c">style drift</b> &mdash; whereby the manager's actions are <b>deviating from the manager's stated style</b>.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">When is style analysis relevant / best?</div>
+                <span class="ims-rule"><b>Relevant when:</b> comparisons can be made over time and between different managers; done on a <b>timely basis</b>; the risks analyzed are the <b>key sources</b> of the manager's risk &amp; return; reported amounts are <b>consistent with</b> the manager's actual risk exposures.</span>
+                <span class="ims-rule"><b>Works best for:</b> publicly traded investments with <b>frequent pricing data</b>.</span>
+                <span class="ims-rule"><b>Less liquid investments:</b> style analysis can still be used to <b>generate questions</b> in the due diligence process.</span>
+                <div class="ims-green-box"><b>A useful style analysis must be:</b> <b class="ims-main-c">meaningful, accurate, consistent, and timely</b>.</div>
+              </div>
+            </div>
+
+            <!-- QUIZ 14.2 -->
+            <div id="ims143-quiz" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Q1. Which statement is <b>least likely</b> an advantage of HBSA over RBSA?</div>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q4',false)">A. HBSA is a more precise tool.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q4',false)">B. HBSA is generally easier for equity strategies.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q4',true)">C. The data required for HBSA is generally easier to obtain.</button>
+                <div class="ims-quiz-exp" id="ims-q4-exp">
+                  <div class="ims-green-box"><b>Answer: C</b> (least likely &mdash; it is the false statement). HBSA's computational/data requirement <b>increases</b> as complexity rises and transparency decreases, so the data is <b class="ims-red">not</b> easier to obtain. <b class="ims-green">A</b> is a true advantage (security-specific bottom-up &rarr; more precise). <b class="ims-green">B</b> is true (HBSA is most appropriate for equity-based strategies).</div>
+                </div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Q2. A manager whose relative performance is better during market <b>upturns</b> most likely has a capture ratio that is:</div>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q5',false)">A. equal to one.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q5',false)">B. less than one.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q5',true)">C. greater than one.</button>
+                <div class="ims-quiz-exp" id="ims-q5-exp">
+                  <div class="ims-green-box"><b>Answer: C.</b> Better in upturns &rarr; strong <b>upside capture (UC)</b> relative to downside &rarr; CR = UC / DC <b>&gt; 1</b> = positive asymmetry (convex). <b class="ims-red">A</b> (=1) is symmetric; <b class="ims-red">B</b> (&lt;1) is concave / better on the downside.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 14.3: PHILOSOPHY ════════ -->
+          <div id="imsm-143b" class="ims-modpanel">
+            <div class="ims-toptabs">
+              <button class="ims-toptab active" onclick="imsTop(event,'ims143b-phil')">Investment Philosophy</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims143b-ineff')">Behavioral vs Structural</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims143b-proc')">Decision Process</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims143b-cap')">Capacity</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims143b-behav')">14.f Team Biases</button>
+            </div>
+
+            <!-- INVESTMENT PHILOSOPHY -->
+            <div id="ims143b-phil" class="ims-toppanel active">
+              <div class="ims-card">
+                <div class="ims-title">Investment philosophy (LOS 14.e)</div>
+                <div class="ims-body">The entire investment process should be driven by a <b class="ims-main-c">succinct and precise investment philosophy</b>.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Passive vs active &mdash; the core belief split</div>
+                <table class="ims-tbl">
+                  <tr><th></th><th>Passive view</th><th>Active view</th></tr>
+                  <tr><td><b>Belief about markets</b></td><td>Markets <b>very efficient</b>; active will <b>underperform after costs</b></td><td>Markets <b>inefficient</b>; prices can <b>deviate from intrinsic value</b></td></tr>
+                  <tr><td><b>What they do</b></td><td>Execute <b>passive</b> strategies; earn <b class="ims-main-c">risk premiums</b> instead</td><td><b>Exploit inefficiencies</b> when price &ne; intrinsic value</td></tr>
+                  <tr><td><b>Extra belief</b></td><td>&mdash;</td><td>Value of <b>diversification</b> for risk mgmt; prices <b>converge</b> to intrinsic value &rarr; exploit incongruence <b>before convergence</b></td></tr>
+                </table>
+                <div class="ims-info"><b>Risk premiums</b> = returns earned <b>above the risk-free rate</b> for bearing <b>undiversifiable</b> risk (a.k.a. <b class="ims-main-c">systematic / market</b> risk). Passive strategies target specific systematic factors: <b>equity, credit, liquidity, and volatility risk</b>.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Congruence test (the exam hook)</div>
+                <div class="ims-body">Whatever the philosophy, the manager must convey the <b>underlying assumptions clearly</b>. Do the assumptions make sense and are they <b class="ims-main-c">congruent with the investment process</b>?</div>
+                <div class="ims-trap"><b>Classic incongruence:</b> a belief in <b>inefficient markets</b> would <b class="ims-red">NOT</b> be congruent with a <b>passive</b> approach. The stated belief and the chosen process must line up &mdash; a mismatch is a red flag in due diligence.</div>
+              </div>
+            </div>
+
+            <!-- BEHAVIORAL VS STRUCTURAL -->
+            <div id="ims143b-ineff" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Two broad types of inefficiencies (active managers exploit)</div>
+                <table class="ims-tbl">
+                  <tr><th>Type</th><th>Caused by</th><th>Horizon</th><th>Exploitation</th></tr>
+                  <tr><td><b class="ims-main-c">Behavioral</b></td><td>Mispricings from other investors' <b>behavioral biases</b> (e.g., trend-following)</td><td><b class="ims-red">Short-term</b></td><td>Must be <b>quickly exploited</b> (sometimes within seconds) before the market corrects</td></tr>
+                  <tr><td><b class="ims-main-c">Structural</b></td><td><b>Laws and regulations</b></td><td><b class="ims-green">Long-term</b></td><td>Persist because the structural cause persists</td></tr>
+                </table>
+                <div class="ims-trap"><b>Decisive detail:</b> the split is <b>cause &rarr; horizon</b>. Behavioral = investor biases = short-term = exploit fast. Structural = laws/regulations = long-term. Don't swap which one is short vs long-lived.</div>
+              </div>
+            </div>
+
+            <!-- DECISION PROCESS -->
+            <div id="ims143b-proc" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Investment decision-making process &mdash; 3 stages</div>
+                <table class="ims-tbl">
+                  <tr><th>Stage</th><th>What happens</th><th>Key concern(s)</th></tr>
+                  <tr><td><b class="ims-main-c">Idea generation</b></td><td>An <b>investment signal</b> = a piece of information used to establish a position exploiting an inefficiency</td><td>Use <b>unique information</b> for an <b>informational advantage</b>; act <b>timely</b> (short window); needs <b>superior cognitive/interpretive skills</b></td></tr>
+                  <tr><td><b class="ims-main-c">Idea implementation</b></td><td>Idea &rarr; investment position (<b>signal capture</b>)</td><td><b>Repeatability</b> of process + <b>congruence</b> with philosophy; plus <b>determination &amp; approval</b> of the position</td></tr>
+                  <tr><td><b class="ims-main-c">Portfolio construction</b></td><td>Decide <b>what kinds of securities</b> build the portfolio (e.g., if derivatives used, is the manager knowledgeable/experienced enough to adapt?)</td><td>Allocations (quant or qual) must <b>make sense vs philosophy</b></td></tr>
+                </table>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Portfolio construction &mdash; the detail that gets tested</div>
+                <span class="ims-rule"><b>Congruence check:</b> a <b>passively managed portfolio should NOT have excessive turnover</b> &mdash; high turnover in a "passive" book is a red flag.</span>
+                <span class="ims-rule"><b>Account for manager views:</b> performance maximization by <b>overweighting expected outperformers</b> and <b>underweighting expected underperformers</b>.</span>
+                <span class="ims-rule"><b>Long &amp; short allocation:</b> if positions are <b>paired</b>, proper <b>position sizing eliminates market risk</b> while still allowing exploitation of inefficiencies before convergence.</span>
+                <span class="ims-rule"><b>AUM:</b> likely increases over time &rarr; underlying positions may need adjusting (e.g., <b>liquidity constraints</b>) to accommodate greater AUM.</span>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Stop losses (risk management tool)</div>
+                <div class="ims-body"><b class="ims-main-c">Stop losses</b> = orders to sell a security once it reaches a certain price. Two types:</div>
+                <table class="ims-tbl">
+                  <tr><th>Type</th><th>Behavior when loss threshold is met</th></tr>
+                  <tr><td><b class="ims-main-c">Hard</b> stop loss</td><td><b>Automatic</b> disposition when the specified loss threshold is met</td></tr>
+                  <tr><td><b class="ims-main-c">Soft</b> stop loss</td><td>Involves <b>subjective evaluations</b> when the threshold is met (not automatic)</td></tr>
+                </table>
+                <div class="ims-trap"><b>Hard vs soft:</b> hard = mechanical/automatic; soft = discretionary/subjective. Don't flip them &mdash; "automatic disposition" is always the <b>hard</b> stop.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Liquidity &mdash; net supplier or demander?</div>
+                <div class="ims-body">Determine whether the manager is a <b>net supplier or net demander</b> of liquidity. Ensure the portfolio reacts appropriately to changing market conditions and investor liquidity requirements.</div>
+                <div class="ims-trap"><b>Too many illiquid securities</b> &rarr; <b class="ims-red">high exit costs</b> + risk of selling at <b>depressed prices</b> if funds are suddenly required.</div>
+                <table class="ims-tbl">
+                  <tr><th>Liquidity test</th><th>Reading</th></tr>
+                  <tr><td>Can be liquidated in <b>5 days or less</b></td><td><b class="ims-green">More liquid</b> &rarr; greater flexibility</td></tr>
+                  <tr><td>Needs <b>more than 10 days</b> to liquidate</td><td><b class="ims-red">Less liquid</b> &rarr; higher transaction costs</td></tr>
+                  <tr><td><b>Average daily volume</b> weighted by position size</td><td>Necessary calculation</td></tr>
+                  <tr><td>Firm owns <b>&gt; 5%</b> of a security's total market cap</td><td><b class="ims-red">Liquidity problem flag</b> if the entire position must be disposed of suddenly</td></tr>
+                </table>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Portfolio monitoring</div>
+                <table class="ims-tbl">
+                  <tr><th>Factor type</th><th>Looks at</th></tr>
+                  <tr><td><b class="ims-main-c">External</b></td><td>General economy &amp; financial markets &rarr; impact on how the manager can exploit relevant inefficiencies</td></tr>
+                  <tr><td><b class="ims-main-c">Internal</b></td><td>Historical returns, risk level, allocations</td></tr>
+                </table>
+                <span class="ims-rule">Check for significant <b>deviations from the process</b> (e.g., <b>style drift</b>) and ensure decisions are <b>congruent with the most up-to-date client objectives</b>.</span>
+              </div>
+            </div>
+
+            <!-- CAPACITY -->
+            <div id="ims143b-cap" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Capacity of an inefficiency (LOS 14.e)</div>
+                <div class="ims-body">Assuming a <b>valid inefficiency</b> to exploit, <b class="ims-main-c">capacity</b> = the <b>amount, repeatability, and sustainability</b> of the inefficiency.</div>
+                <table class="ims-tbl">
+                  <tr><th>Question</th><th>Why it matters</th></tr>
+                  <tr><td>Enough <b>excess returns</b>?</td><td>Must cover <b>transaction costs and fees</b></td></tr>
+                  <tr><td><b>Leverage</b> required?</td><td>Then <b>borrowing costs</b> must be considered</td></tr>
+                  <tr><td><b>Repeatable</b> or one-time?</td><td>Is the inefficiency repeatable or just a one-time opportunity?</td></tr>
+                  <tr><td><b>Minimum asset level</b>?</td><td>What minimum asset level earns a sufficient return from the inefficiency</td></tr>
+                </table>
+                <div class="ims-info"><b>Sustainability driver:</b> sustainability depends on <b class="ims-main-c">market depth and liquidity</b>, plus the amount of <b>capital that can be set aside</b> to exploit the inefficiency.</div>
+              </div>
+            </div>
+
+            <!-- 14.f TEAM BIASES -->
+            <div id="ims143b-behav" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Behavioral biases among investment teams (LOS 14.f)</div>
+                <div class="ims-body">Many decisions are made by <b>teams</b>, not individuals. Using a group helps <b class="ims-main-c">mitigate key person risk</b>. But team performance can be adversely affected by <b>three common behavioral biases</b>:</div>
+                <table class="ims-tbl">
+                  <tr><th>Bias</th><th>What it is</th><th>Result / symptom</th></tr>
+                  <tr><td><b class="ims-main-c">Groupthink</b></td><td>Teams minimizing <b>conflict &amp; dissent</b> to reach/maintain consensus</td><td>Individuals <b>withhold information</b> / reluctant to share insights. Symptom = <b>confirmation bias</b> (new info, different interpretations, dissent minimized or discarded)</td></tr>
+                  <tr><td><b class="ims-main-c">Authority bias</b></td><td>Deferring decisions to members perceived as <b>subject-matter experts</b> or <b>in authority</b></td><td>Lack of <b>perspectives &amp; skills</b> from other group members</td></tr>
+                  <tr><td><b class="ims-main-c">Aversion to complexity</b><br>(Parkinson's law of triviality)</td><td>Too much attention on <b>small/familiar issues</b> rather than the important, difficult ones (asset allocation, manager selection)</td><td>E.g., over-researching a familiar small position instead of analyzing a large, less-known one</td></tr>
+                </table>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Mitigation &mdash; due diligence inquiry (driver &rarr; bias mitigated)</div>
+                <table class="ims-tbl">
+                  <tr><th>Inquiry</th><th>Best practice</th><th>Bias mitigated</th></tr>
+                  <tr><td><b>How large is the team?</b></td><td><b class="ims-main-c">3 to 5</b> is optimal; larger &rarr; coordination issues + higher groupthink odds</td><td><b>Groupthink</b></td></tr>
+                  <tr><td><b>How are decisions made?</b></td><td><b>Secret ballot</b> preferable over open deliberation</td><td><b>Groupthink + authority bias</b></td></tr>
+                  <tr><td><b>How are meetings / agenda conducted?</b></td><td>Agenda agreed <b>in advance</b>; most important topics discussed <b>first</b> with the most time</td><td><b>Complexity aversion + availability bias</b></td></tr>
+                  <tr><td><b>How diverse is the team?</b></td><td><b>Social &amp; cognitive diversity</b></td><td><b>Groupthink + errors</b> (reduced)</td></tr>
+                </table>
+                <div class="ims-trap"><b>Map the fix to the bias:</b> team size 3&ndash;5 &amp; diversity &rarr; groupthink; secret ballot &rarr; groupthink + authority; agenda-in-advance + most-important-first &rarr; complexity aversion + availability. Under pressure, don't give a generic "improve communication" &mdash; name the specific lever and the specific bias.</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ════════ MODULE 14.g: POOLED vs SMA ════════ -->
+          <div id="imsm-14g" class="ims-modpanel">
+            <div class="ims-toptabs">
+              <button class="ims-toptab active" onclick="imsTop(event,'ims14g-vs')">Pooled vs SMA</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims14g-ben')">SMA Benefits</button>
+            </div>
+
+            <!-- POOLED VS SMA -->
+            <div id="ims14g-vs" class="ims-toppanel active">
+              <div class="ims-card">
+                <div class="ims-title">Two ways to execute a strategy (LOS 14.g)</div>
+                <table class="ims-tbl">
+                  <tr><th>Vehicle</th><th>Structure</th><th>Customization</th></tr>
+                  <tr><td><b class="ims-main-c">Pooled investment vehicle</b><br>(mutual funds, ETFs, hedge funds)</td><td>Brings together funds from <b>all investors</b> into <b>one portfolio</b></td><td><b class="ims-red">None</b> for any specific investor</td></tr>
+                  <tr><td><b class="ims-main-c">Separately managed account (SMA)</b></td><td>Holds the funds of <b>one investor</b> in a <b>separate account</b></td><td><b class="ims-green">Yes</b> &mdash; tailored to that investor</td></tr>
+                </table>
+                <div class="ims-info">Key analysis for an SMA = the <b>cost-benefit tradeoff</b> of holding investments in a separate account. Also ensure the manager has the <b>capability and resources</b> to manage the SMA.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">The core tradeoff</div>
+                <div class="ims-trap"><b>Decisive detail:</b> compared to pooled investments, SMAs have <b class="ims-red">higher transaction costs</b> &mdash; that is the COST side. In exchange they provide <b class="ims-green">control, customization, tax efficiency, separate reporting, and greater transparency</b> &mdash; the BENEFIT side.</div>
+              </div>
+            </div>
+
+            <!-- SMA BENEFITS -->
+            <div id="ims14g-ben" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">The 5 SMA benefits (decomposed)</div>
+                <table class="ims-tbl">
+                  <tr><th>Benefit</th><th>What it means</th></tr>
+                  <tr><td><b class="ims-main-c">Control</b></td><td><b>Direct &amp; legal ownership</b> of the underlying securities by the investor &rarr; extra protection in a <b>liquidity event or bankruptcy of the manager</b>; investor is <b>not impacted by the redemption demands of other investors</b></td></tr>
+                  <tr><td><b class="ims-main-c">Customization</b></td><td>Tailor to <b>client-specific objectives and constraints</b></td></tr>
+                  <tr><td><b class="ims-main-c">Tax efficiency</b></td><td>Could be <b>higher</b> in SMAs (see trap)</td></tr>
+                  <tr><td><b class="ims-main-c">Separate reporting</b></td><td>Reporting specific to the one investor</td></tr>
+                  <tr><td><b class="ims-main-c">Greater transparency</b></td><td>Investor sees the actual holdings</td></tr>
+                </table>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Tax efficiency &mdash; realized vs unrealized (the trap)</div>
+                <table class="ims-tbl">
+                  <tr><th>Vehicle</th><th>Taxes paid on...</th></tr>
+                  <tr><td><b class="ims-main-c">SMA</b></td><td>Only <b class="ims-green">realized</b> capital gains; strategies can be <b>tailored to the investor's tax situation</b></td></tr>
+                  <tr><td><b class="ims-main-c">Pooled</b></td><td>Payment of accrued taxes on <b class="ims-red">unrealized</b> gains may be required</td></tr>
+                </table>
+                <div class="ims-trap"><b>Why SMAs are more tax-efficient:</b> in a pooled vehicle you can inherit a tax bill on <b>unrealized</b> gains you never benefited from (driven by other investors). In an SMA you pay only on <b>your own realized</b> gains &mdash; and the strategy can be tailored to your tax position.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 14.4: CONTRACTS & FEES ════════ -->
+          <div id="imsm-144" class="ims-modpanel">
+            <div class="ims-toptabs">
+              <button class="ims-toptab active" onclick="imsTop(event,'ims144-liq')">14.h Liquidity</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims144-mgmt')">Mgmt Fees</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims144-forms')">3 Fee Forms</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims144-calc')">Fee Calculator</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims144-call')">Call Option &amp; 14.j</button>
+              <button class="ims-toptab" onclick="imsTop(event,'ims144-quiz')">Quiz 14.4</button>
+            </div>
+
+            <!-- 14.h LIQUIDITY -->
+            <div id="ims144-liq" class="ims-toppanel active">
+              <div class="ims-card">
+                <div class="ims-title">Contract types ranked by liquidity (LOS 14.h)</div>
+                <table class="ims-tbl">
+                  <tr><th>Vehicle</th><th>Liquidity</th><th>Why</th></tr>
+                  <tr><td><b class="ims-main-c">Closed-end funds &amp; ETFs</b></td><td><b class="ims-green">Highest</b></td><td>Traded <b>intra-day</b></td></tr>
+                  <tr><td><b class="ims-main-c">Open-end funds</b></td><td>Almost as much</td><td>Traded on <b>end-of-day NAV only</b></td></tr>
+                  <tr><td><b class="ims-main-c">Hedge funds</b> (LP)</td><td>Lower</td><td>Redemption frequency, notification periods, gates, lockups</td></tr>
+                  <tr><td><b class="ims-main-c">Private equity / VC</b> (LP)</td><td><b class="ims-red">Lowest</b></td><td>Capital calls; returns only after ~5 yrs into ~10-yr life; manager may extend up to <b>two one-year periods</b></td></tr>
+                  <tr><td><b class="ims-main-c">SMA</b></td><td>Depends</td><td>Determined by liquidity of the <b>underlying assets</b> (securities can be sold any time)</td></tr>
+                </table>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Hedge fund liquidity terms (decompose)</div>
+                <table class="ims-tbl">
+                  <tr><th>Term</th><th>Meaning</th></tr>
+                  <tr><td><b class="ims-main-c">Redemption frequency</b></td><td>How <b>often</b> the investor may withdraw funds</td></tr>
+                  <tr><td><b class="ims-main-c">Notification period</b></td><td>Amount of <b>advance notice</b> required by the investor for a redemption</td></tr>
+                  <tr><td><b class="ims-main-c">Lockup period</b></td><td>Period <b>immediately after the initial investment</b> where funds may <b>NOT be withdrawn</b></td></tr>
+                  <tr><td><b class="ims-main-c">Gates</b></td><td>A <b>limit on the redemption amount</b> for any given redemption</td></tr>
+                </table>
+                <div class="ims-trap"><b>Hard vs soft LOCK (don't confuse with stop losses):</b> a <b class="ims-red">hard lock</b> does <b>NOT permit redemptions</b>; a <b class="ims-amber">soft lock</b> permits redemptions <b>for a fee</b>. (Earlier, hard/soft <i>stop losses</i> were automatic vs subjective &mdash; different concept, same adjective.)</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Limited partnership terms &mdash; advantages vs disadvantages</div>
+                <table class="ims-tbl">
+                  <tr><th class="ims-green">Advantages</th><th class="ims-red">Disadvantages</th></tr>
+                  <tr><td>Long investment horizon &rarr; investors <b>don't overreact to short-term aberrations</b></td><td>Impaired ability to <b>change allocations</b> in response to the market</td></tr>
+                  <tr><td>Earn <b>illiquidity premiums</b> by investing in illiquid assets</td><td>Impaired ability to <b>meet sudden liquidity demands</b></td></tr>
+                  <tr><td>Not forced to <b>sell at depressed prices</b> due to redemption requests</td><td>&mdash;</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- MGMT FEES -->
+            <div id="ims144-mgmt" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Management fees (LOS 14.i)</div>
+                <div class="ims-body">Cover the manager's <b>fixed &amp; variable costs</b> plus a <b>profit</b>. The asset-weighted expense ratio has <b>declined</b> over time as investors shifted to <b>no-load and index funds</b>. Often based on <b class="ims-main-c">AUM</b>; minimum balances sometimes required; structured as a fixed-dollar amount or a % of assets.</div>
+                <div class="ims-info"><b>Principal-agent angle:</b> fee structure matters for aligning manager &amp; investor interests. Misalignment sources: investor doesn't see the full extent of the manager's work; differing views on time horizons or losses; performance has a <b>luck</b> element, so in theory the manager shouldn't be rewarded for it.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">AUM-based fees &mdash; advantage vs disadvantages</div>
+                <table class="ims-tbl">
+                  <tr><th>Advantage</th><th>Disadvantages</th></tr>
+                  <tr><td>Rewards the manager's <b>skill &amp; ability to grow the asset base</b>; declining % for larger accounts reduces investor fees</td><td>(1) <b>Luck</b> may drive short-term asset growth. (2) Once assets are attained, more incentive to <b>retain</b> them (safe strategies like <b>indexing</b>) rather than take risk for the investor's benefit</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- 3 FEE FORMS -->
+            <div id="ims144-forms" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Performance-based fees = risk sharing</div>
+                <div class="ims-body">Performance-based fees are a form of <b class="ims-main-c">risk sharing</b> between investor and manager to <b>align interests</b>. Computed on <b>total or relative return</b>, via a <b>sharing percentage</b>, on total performance or performance <b>in excess of a base</b>.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">The three basic forms</div>
+                <table class="ims-tbl">
+                  <tr><th>Form</th><th>Fee formula</th><th>Key property</th></tr>
+                  <tr><td><b class="ims-main-c">Symmetrical</b><br>(full upside + downside)</td><td>Fee = <b>base + performance sharing</b><br>(sharing can be <b class="ims-red">negative</b>)</td><td><b class="ims-green">Greatest alignment</b> of incentives, but <b class="ims-red">increased risk to manager</b> (full downside exposure)</td></tr>
+                  <tr><td><b class="ims-main-c">Bonus &mdash; full upside, limited downside</b></td><td>Fee = <b>greater of</b>: (1) base, (2) base + sharing of <b>positive</b> performance</td><td>Downside floored at base; full upside</td></tr>
+                  <tr><td><b class="ims-main-c">Bonus &mdash; limited upside &amp; downside</b></td><td>Fee = <b>greater of</b>: (1) base, (2) base + sharing of positive performance &mdash; <b>within a limit (cap)</b></td><td>Floored at base AND capped at a maximum</td></tr>
+                </table>
+                <div class="ims-trap"><b>Common to ALL three:</b> the <b class="ims-red">base fee is paid even when the manager underperforms</b>. That's the universal feature exam answers love.</div>
+                <div class="ims-info"><b>Asymmetry &amp; risk-measure trap:</b> performance-based fees transform <b>symmetrical gross</b> active-return distributions into <b>asymmetrical net</b> distributions (lower relative variance on the upside vs downside). Using a <b>symmetrical risk measure (SD)</b> then leads to an <b class="ims-red">underestimation of downside risk</b>.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">High-water marks, clawbacks, and PE structure</div>
+                <span class="ims-rule"><b>High-water mark / clawback</b> provisions temper fees by <b>offsetting prior-period negative returns</b> against current positive returns (e.g., hedge funds).</span>
+                <span class="ims-rule"><b>PE:</b> investors = <b>limited partners</b>, manager = <b>general partner</b>. Beneficial term for LPs: repayment of <b>principal + share of profits to the LPs BEFORE</b> any performance fee is paid to the GP.</span>
+                <span class="ims-rule"><b>Negotiation:</b> only the <b>most successful</b> managers or those with <b>limited capacity</b> can command the highest base fees and/or sharing percentages.</span>
+              </div>
+            </div>
+
+            <!-- FEE CALCULATOR -->
+            <div id="ims144-calc" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Performance-fee calculator (all 3 forms)</div>
+                <table class="ims-tbl">
+                  <tr><th>Input</th><th>Value</th></tr>
+                  <tr><td>Form</td><td>
+                    <select id="ims-fee-form" style="background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);">
+                      <option value="sym">Symmetrical (full up + down)</option>
+                      <option value="bonus_up">Bonus: full upside, limited downside</option>
+                      <option value="bonus_cap">Bonus: limited upside + downside (cap)</option>
+                    </select>
+                  </td></tr>
+                  <tr><td>Base fee (%)</td><td><input id="ims-fee-base" type="number" value="2" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                  <tr><td>Sharing (%)</td><td><input id="ims-fee-share" type="number" value="20" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                  <tr><td>Performance the sharing applies to (%)<br><span style="font-size:11px;color:var(--muted)">net-of-base return, or active return &mdash; whatever the contract specifies</span></td><td><input id="ims-fee-perf" type="number" value="-5" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                  <tr><td>Max total fee / cap (%) <span style="font-size:11px;color:var(--muted)">(only for capped form)</span></td><td><input id="ims-fee-cap" type="number" value="2.9" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                </table>
+                <button class="ims-reveal-btn" onclick="imsFeeCalc()">Compute fee</button>
+                <span class="ims-mout" id="ims-fee-out">Pick a form, set inputs, then Compute.</span>
+                <div class="ims-info"><b>Setting up the "performance" input:</b> for a fee on return <b>net of base</b> (Fund X style), enter <b>gross &minus; base</b>. For a fee on <b>active</b> return (Fund Y style), enter <b>gross &minus; benchmark</b>.</div>
+              </div>
+            </div>
+
+            <!-- CALL OPTION & 14.j -->
+            <div id="ims144-call" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Call-option analogy (Fig 14.2 / 14.3)</div>
+                <span class="ims-rule">Bonus fee structures &asymp; the manager is <b>long a call option</b> on the portfolio's <b>active return</b>.</span>
+                <span class="ims-rule">The <b class="ims-main-c">exercise price = the base fee</b>. For the uncapped bonus (Schedule 1, Fig 14.2), the payoff to the manager is <b>theoretically unlimited</b>.</span>
+                <span class="ims-rule">Schedule 2 (Fig 14.3) <b>adds a short position in a less valuable call</b> (exercise price = the <b>maximum fee</b>) &rarr; this <b>caps</b> the payoff (limited upside + downside form).</span>
+                <div class="ims-trap"><b>Risk incentive (the recommendation):</b> a <b>net long call</b> on active return makes the manager want <b class="ims-red">more risk</b>, because option-pricing theory says <b>higher volatility increases option value</b>. Therefore managers should be <b>penalized for taking too much risk AND rewarded for higher risk-adjusted returns</b>.</div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Sample fee schedule (LOS 14.j, Fig 14.4)</div>
+                <table class="ims-tbl">
+                  <tr><th>Parameter</th><th>Value</th></tr>
+                  <tr><td>Standard fee</td><td>0.50%</td></tr>
+                  <tr><td>Base fee</td><td>0.25%</td></tr>
+                  <tr><td>Sharing</td><td>20%</td></tr>
+                  <tr><td>Breakeven active return</td><td>1.50%</td></tr>
+                  <tr><td>Maximum annual fee</td><td>0.75%</td></tr>
+                </table>
+                <span class="ims-fl">At breakeven 1.50%:
+  perf fee = (1.50% &minus; 0.25% base) &times; 20% = <b>0.25%</b>
+  total billed = 0.25% base + 0.25% perf = <b>0.50%</b> (= standard fee)
+
+At active &le; 0.25%:  perf fee = 0 (nonnegativity) &rarr; billed = <b>0.25%</b> base
+At active &ge; 2.75%:  perf fee maxed 0.50% &rarr; billed = <b>0.75%</b> max</span>
+                <div class="ims-info">This is a <b>bonus with limited upside + downside</b>: floored at base 0.25%, capped at max 0.75%. The Panel B table just plugs active returns of &le;0.25 / 1.50 / &ge;2.75% into this rule.</div>
+              </div>
+            </div>
+
+            <!-- QUIZ 14.4 -->
+            <div id="ims144-quiz" class="ims-toppanel">
+              <div class="ims-card">
+                <div class="ims-title">Q1. Which investment fund generally has the <b>least</b> amount of liquidity?</div>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q6',false)">A. Hedge fund.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q6',false)">B. Closed-end fund.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q6',true)">C. Private equity fund.</button>
+                <div class="ims-quiz-exp" id="ims-q6-exp">
+                  <div class="ims-green-box"><b>Answer: C.</b> PE/VC has the <b>lowest</b> liquidity (capital calls; returns only ~5 yrs into a ~10-yr life; life extendable). <b class="ims-red">B</b> closed-end funds are the <b>most</b> liquid (intra-day). Hedge funds sit between.</div>
+                </div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Q2. Which fee structure <b>most likely has no impact</b> on the volatility of a portfolio's net returns?</div>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q7',false)">A. Incentive fees only.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q7',true)">B. Management fees only.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q7',false)">C. Neither incentive fees nor management fees.</button>
+                <div class="ims-quiz-exp" id="ims-q7-exp">
+                  <div class="ims-green-box"><b>Answer: B.</b> A flat <b>management fee</b> is symmetric &mdash; it doesn't change the risk-taking incentive, so it has no impact on net-return volatility. <b class="ims-red">Incentive/performance fees</b> create the <b>call-option</b> payoff &rarr; manager wants more volatility &rarr; they DO affect volatility (so A and C are wrong).</div>
+                </div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Q3. Fund X earns <b>&minus;3%</b> gross. Fee = base 2% + 20% sharing of <b>both positive and negative</b> performance, based on return <b>net of the base fee</b>. Total management fee?</div>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q8',true)">A. 1.0%.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q8',false)">B. 1.4%.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q8',false)">C. 2.0%.</button>
+                <div class="ims-quiz-exp" id="ims-q8-exp">
+                  <div class="ims-green-box"><b>Answer: A (1.0%).</b> This is the <b>symmetrical</b> form (shares both up AND down). Performance net of base = &minus;3% &minus; 2% = <b>&minus;5%</b>. Sharing = 20% &times; (&minus;5%) = <b>&minus;1%</b>. Total fee = base 2% + (&minus;1%) = <b>1.0%</b>. <b class="ims-red">C (2.0%)</b> is the trap if you forget the negative sharing reduces the fee.</div>
+                </div>
+              </div>
+              <div class="ims-card">
+                <div class="ims-title">Q4. Fund Y earns <b>12%</b> gross, benchmark <b>3%</b>. Fee = higher of base 0.4% OR base + 20% sharing of positive performance, max 2.9%, sharing on <b>active</b> return. Total management fee?</div>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q9',true)">A. 2.2%.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q9',false)">B. 2.8%.</button>
+                <button class="ims-quiz-opt" onclick="imsQuiz(this,'q9',false)">C. 2.9%.</button>
+                <div class="ims-quiz-exp" id="ims-q9-exp">
+                  <div class="ims-green-box"><b>Answer: A (2.2%).</b> This is the <b>bonus with cap</b> form. Active return = 12% &minus; 3% = <b>9%</b>. Option 2 = 0.4% base + 20% &times; 9% = 0.4% + 1.8% = <b>2.2%</b>. Higher of (0.4%, 2.2%) = 2.2%, and 2.2% &lt; 2.9% cap so the cap doesn't bind. <b class="ims-red">C (2.9%)</b> is the trap if you wrongly assume the max binds.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE: ERRORS ════════ -->
+          <div id="imsm-err" class="ims-modpanel">
+            <div class="ims-toptabs">
+              <button class="ims-toptab active" onclick="imsTop(event,'imserr-pat')">Patterns</button>
+              <button class="ims-toptab" onclick="imsTop(event,'imserr-mcq')">MCQ Misses</button>
+              <button class="ims-toptab" onclick="imsTop(event,'imserr-essay')">Essay Misses</button>
+              <button class="ims-toptab" onclick="imsTop(event,'imserr-mastery')">Mastery</button>
+            </div>
+            <div id="imserr-pat" class="ims-toppanel active">
+              <div class="ims-card"><div class="ims-title">Patterns</div><div class="ims-info">Recurring mistake patterns from mocks land here.</div></div>
+            </div>
+            <div id="imserr-mcq" class="ims-toppanel">
+              <div class="ims-card"><div class="ims-title">MCQ Misses</div><div class="ims-info">Specific MCQ misses with the decisive detail that was dropped.</div></div>
+            </div>
+            <div id="imserr-essay" class="ims-toppanel">
+              <div class="ims-card"><div class="ims-title">Essay Misses</div><div class="ims-info">Constructed-response misses land here.</div></div>
+            </div>
+            <div id="imserr-mastery" class="ims-toppanel">
+              <div class="ims-card"><div class="ims-title">Mastery checklist</div><div class="ims-info">Once a pattern is no longer being missed, it moves here as a confirmed mastery point.</div></div>
+            </div>
+          </div>
+
+          <script>
+            function imsMod(ev,id){
+              var w=document.getElementById('imsWidget');
+              w.querySelectorAll('.ims-modpanel').forEach(function(p){p.classList.remove('active')});
+              w.querySelectorAll('.ims-modtabs > .ims-modtab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function imsTop(ev,id){
+              var mp=ev.currentTarget.closest('.ims-modpanel');
+              mp.querySelectorAll(':scope > .ims-toppanel').forEach(function(p){p.classList.remove('active')});
+              mp.querySelectorAll(':scope > .ims-toptabs > .ims-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function imsQuiz(btn,q,correct){
+              var card=btn.closest('.ims-card');
+              card.querySelectorAll('.ims-quiz-opt').forEach(function(b){b.classList.remove('correct','wrong');});
+              if(correct){ btn.classList.add('correct'); }
+              else {
+                btn.classList.add('wrong');
+                card.querySelectorAll('.ims-quiz-opt').forEach(function(b){
+                  if(b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+                });
+              }
+              var exp=document.getElementById('ims-'+q+'-exp');
+              if(exp) exp.style.display='block';
+            }
+            function imsMtxText(d,r){
+              if(d==='hire'&&r==='noskill') return {k:'Type I',cls:'lit-err',msg:'TYPE I (false positive)\nYou HIRED/RETAINED a manager with NO skill.\nError of COMMISSION \u2014 explicit/visible cost, easier to measure vs benchmark, gets more attention.\nCost = retaining a weak manager.'};
+              if(d==='hire'&&r==='skill') return {k:'Correct',cls:'lit-ok',msg:'CORRECT \u2713\nYou hired/retained a manager who truly has skill.'};
+              if(d==='pass'&&r==='noskill') return {k:'Correct',cls:'lit-ok',msg:'CORRECT \u2713\nYou passed on / fired a manager who truly has no skill.'};
+              if(d==='pass'&&r==='skill') return {k:'Type II',cls:'lit-err',msg:'TYPE II (false negative)\nYou DID NOT HIRE / FIRED a manager WITH skill.\nError of OMISSION \u2014 implicit/opportunity cost, hard to determine.\nCost = not retaining a strong manager.'};
+            }
+            function imsMtx(btn,d,r){
+              var w=document.getElementById('imsWidget');
+              w.querySelectorAll('.ims-mcell').forEach(function(c){c.classList.remove('lit-err','lit-ok');});
+              var t=imsMtxText(d,r);
+              btn.classList.add(t.cls);
+              btn.textContent=t.k;
+              document.getElementById('ims-mtx-out').textContent=t.msg;
+            }
+            function imsMtxAll(){
+              var w=document.getElementById('imsWidget');
+              var map=[['hire','noskill'],['hire','skill'],['pass','noskill'],['pass','skill']];
+              var cells=w.querySelectorAll('#ims142-mtx .ims-mcell');
+              for(var i=0;i<cells.length;i++){
+                var t=imsMtxText(map[i][0],map[i][1]);
+                cells[i].classList.remove('lit-err','lit-ok');
+                cells[i].classList.add(t.cls);
+                cells[i].textContent=t.k;
+              }
+              document.getElementById('ims-mtx-out').textContent='Top-left = Type I (hired no-skill). Bottom-right = Type II (passed on skill). The other diagonal = Correct.';
+            }
+            function imsCapCalc(){
+              try{
+                function v(id){return parseFloat(document.getElementById(id).value)||0;}
+                function rd(x,n){n=(n===undefined)?3:n;var p=Math.pow(10,n);return Math.round(x*p)/p;}
+                var uc=v('ims-cap-uc'), dc=v('ims-cap-dc');
+                var cr=(dc!==0)? uc/dc : 0;
+                var shape= cr>1 ? "positive asymmetry (CONVEX) \u2014 desirable" : (cr<1 ? "negative asymmetry (CONCAVE)" : "symmetric");
+                var ucf= uc>100 ? "outperforms on UP markets" : (uc<100 ? "underperforms on UP markets" : "matches benchmark on up");
+                var dcf= dc<100 ? "outperforms on DOWN markets (lost less)" : (dc>100 ? "underperforms on DOWN markets (lost more)" : "matches benchmark on down");
+                document.getElementById('ims-cap-out').textContent=
+                  "UC = "+uc+"%  \u2192 "+ucf+"\n"+
+                  "DC = "+dc+"%  \u2192 "+dcf+"\n"+
+                  "CR = UC / DC = "+uc+" / "+dc+" = "+rd(cr,3)+"\n"+
+                  "\u2192 "+shape;
+              }catch(e){}
+            }
+            function imsFeeCalc(){
+              try{
+                function v(id){return parseFloat(document.getElementById(id).value)||0;}
+                function rd(x,n){n=(n===undefined)?4:n;var p=Math.pow(10,n);return Math.round(x*p)/p;}
+                var form=document.getElementById('ims-fee-form').value;
+                var base=v('ims-fee-base'), sharePct=v('ims-fee-share'), perf=v('ims-fee-perf'), cap=v('ims-fee-cap');
+                var share=sharePct/100;
+                var out='';
+                if(form==='sym'){
+                  var sharing=share*perf;
+                  var fee=base+sharing;
+                  out="SYMMETRICAL (full upside + downside)\n"+
+                      "sharing = "+sharePct+"% \u00d7 "+perf+"% = "+rd(sharing)+"%  (sign follows performance)\n"+
+                      "fee = base "+base+"% + ("+rd(sharing)+"%) = "+rd(fee)+"%";
+                } else if(form==='bonus_up'){
+                  var posShare=share*Math.max(perf,0);
+                  var opt2=base+posShare;
+                  var fee=Math.max(base,opt2);
+                  out="BONUS \u2014 full upside, limited downside\n"+
+                      "option 1 = base = "+base+"%\n"+
+                      "option 2 = base + "+sharePct+"% \u00d7 max("+perf+"%,0) = "+base+"% + "+rd(posShare)+"% = "+rd(opt2)+"%\n"+
+                      "fee = greater of the two = "+rd(fee)+"%";
+                } else {
+                  var posShare2=share*Math.max(perf,0);
+                  var opt22=base+posShare2;
+                  var pre=Math.max(base,opt22);
+                  var fee=Math.min(pre,cap);
+                  out="BONUS \u2014 limited upside + downside (capped)\n"+
+                      "option 1 = base = "+base+"%\n"+
+                      "option 2 = base + "+sharePct+"% \u00d7 max("+perf+"%,0) = "+base+"% + "+rd(posShare2)+"% = "+rd(opt22)+"%\n"+
+                      "greater of the two = "+rd(pre)+"%\n"+
+                      "apply cap "+cap+"% \u2192 fee = "+rd(fee)+"%"+(pre>cap?"  (cap BINDS)":"  (cap not binding)");
+                }
+                document.getElementById('ims-fee-out').textContent=out;
+              }catch(e){}
+            }
+            function imsInit(){ try{ imsCapCalc(); imsFeeCalc(); }catch(e){} }
+          </script>
+        </div>
+
+
         <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
           <style>
             #sfWidget { --sf-main:#A78BFA; --sf-gold:#D4A017; --sf-green:#3DD68C; --sf-red:#FF7B72; --sf-orange:#F0A04B; --sf-blue:#79C0FF; --sf-purple:#BC8CFF; }
@@ -29047,7 +30014,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget','imsWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -29077,6 +30044,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'iiWidget' && typeof iiInit === 'function') setTimeout(iiInit, 50);
     if (widgetId === 'tcWidget' && typeof tcInit === 'function') setTimeout(tcInit, 50);
     if (widgetId === 'ppeWidget' && typeof ppeInit === 'function') setTimeout(ppeInit, 50);
+    if (widgetId === 'imsWidget' && typeof imsInit === 'function') setTimeout(imsInit, 50);
   }
 }
 
@@ -29102,6 +30070,7 @@ function openNote(key, topic, subtopic) {
     'Portfolio Construction||Portfolio Management for Institutional Investors': 'iiWidget',
     'Portfolio Construction||Trading Costs and Electronic Markets': 'tcWidget',
     'Performance Measurement||Portfolio Performance Evaluation': 'ppeWidget',
+    'Performance Measurement||Investment Manager Selection': 'imsWidget',
     'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
     'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
     'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
@@ -29113,7 +30082,7 @@ function openNote(key, topic, subtopic) {
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget','imsWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
