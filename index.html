@@ -24499,6 +24499,8 @@ Developed Asia/Aus.  = (29.86% &#8722; 31.16%)(12.85% &#8722; 22.67%) = +0.13%</
             #imsWidget .ims-mout { display:block; white-space:pre-wrap; font-family:var(--mono); font-size:12px; line-height:1.6; color:#C9D1D9; background:#0B0F14; border:1px solid var(--border); border-radius:6px; padding:11px 13px; margin:10px 0; min-height:60px; }
             #imsWidget .ims-reveal-btn { background:var(--surface2); border:1px solid rgba(244,114,182,.5); color:var(--ims-main); padding:6px 13px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; margin:4px 0; }
             #imsWidget .ims-reveal-body { display:none; margin-top:8px; }
+            #imsWidget .ims-fline { display:block; font-family:var(--mono); font-size:12px; line-height:1.5; color:#C9D1D9; background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:7px 11px; margin:6px 0; white-space:pre-wrap; }
+            #imsWidget .ims-step { font-family:var(--mono); font-size:11.5px; color:#C9D1D9; }
           </style>
 
           <div class="ims-h">Investment Manager Selection</div>
@@ -25236,13 +25238,27 @@ Developed Asia/Aus.  = (29.86% &#8722; 31.16%)(12.85% &#8722; 22.67%) = +0.13%</
                   <tr><td>Breakeven active return</td><td>1.50%</td></tr>
                   <tr><td>Maximum annual fee</td><td>0.75%</td></tr>
                 </table>
-                <span class="ims-fl">At breakeven 1.50%:
-  perf fee = (1.50% &minus; 0.25% base) &times; 20% = <b>0.25%</b>
-  total billed = 0.25% base + 0.25% perf = <b>0.50%</b> (= standard fee)
+                <div class="ims-body" style="margin-top:10px;"><b class="ims-main-c">The billing rule</b> (a bonus with limited upside + downside):</div>
+                <span class="ims-fline">billed fee = base + perf fee
+perf fee   = max( (active &minus; base) &times; sharing , 0 )   &larr; floored at 0
+billed fee = min( base + perf fee , max fee )      &larr; capped at max</span>
 
-At active &le; 0.25%:  perf fee = 0 (nonnegativity) &rarr; billed = <b>0.25%</b> base
-At active &ge; 2.75%:  perf fee maxed 0.50% &rarr; billed = <b>0.75%</b> max</span>
-                <div class="ims-info">This is a <b>bonus with limited upside + downside</b>: floored at base 0.25%, capped at max 0.75%. The Panel B table just plugs active returns of &le;0.25 / 1.50 / &ge;2.75% into this rule.</div>
+                <div class="ims-body" style="margin-top:12px;"><b class="ims-main-c">Worked example &mdash; at the breakeven active return of 1.50%:</b></div>
+                <table class="ims-tbl">
+                  <tr><th>Step</th><th>Calculation</th><th>Result</th></tr>
+                  <tr><td>Perf fee</td><td class="ims-step">(1.50% &minus; 0.25% base) &times; 20%</td><td><b>0.25%</b></td></tr>
+                  <tr><td>Billed fee</td><td class="ims-step">0.25% base + 0.25% perf</td><td><b>0.50%</b></td></tr>
+                  <tr><td>Check</td><td class="ims-step">billed = standard fee?</td><td><b class="ims-green">0.50% = 0.50% &#10003;</b></td></tr>
+                </table>
+
+                <div class="ims-body" style="margin-top:12px;"><b class="ims-main-c">The three regimes</b> (this is all Panel B does &mdash; plug the active return into the rule):</div>
+                <table class="ims-tbl">
+                  <tr><th>Active return</th><th>Perf fee</th><th>Billed fee</th><th>Why</th></tr>
+                  <tr><td><b>&le; 0.25%</b></td><td>0%</td><td><b class="ims-main-c">0.25%</b> (= base)</td><td><b class="ims-red">Floor</b>: perf fee can't go negative (nonnegativity constraint)</td></tr>
+                  <tr><td><b>= 1.50%</b> (breakeven)</td><td>0.25%</td><td><b class="ims-main-c">0.50%</b> (= standard)</td><td>Base + perf exactly equals the standard fee</td></tr>
+                  <tr><td><b>&ge; 2.75%</b></td><td>0.50% (maxed)</td><td><b class="ims-main-c">0.75%</b> (= max)</td><td><b class="ims-red">Cap</b>: billed fee can't exceed the maximum annual fee</td></tr>
+                </table>
+                <div class="ims-trap"><b>Where 2.75% comes from:</b> the cap binds once perf fee hits its max of 0.50%. Solve (active &minus; 0.25%) &times; 20% = 0.50% &rarr; active &minus; 0.25% = 2.50% &rarr; <b>active = 2.75%</b>. Above that, extra active return earns the manager nothing more.</div>
               </div>
             </div>
 
