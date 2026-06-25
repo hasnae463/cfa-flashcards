@@ -25315,10 +25315,152 @@ billed fee = min( base + perf fee , max fee )      &larr; capped at max</span>
               <div class="ims-card"><div class="ims-title">Patterns</div><div class="ims-info">Recurring mistake patterns from mocks land here.</div></div>
             </div>
             <div id="imserr-mcq" class="ims-toppanel">
-              <div class="ims-card"><div class="ims-title">MCQ Misses</div><div class="ims-info">Specific MCQ misses with the decisive detail that was dropped.</div></div>
+              <div class="ims-card"><div class="ims-title">MCQ Misses</div><div class="ims-info">Mock-exam MCQ misses, each with the <b>decisive detail that was dropped</b>. Re-test these cold before the exam.</div></div>
+
+              <div class="ims-card">
+                <div class="ims-title">M1 &mdash; ABC high-water mark fee (picked C 4.55%, ans <b class="ims-green">A 4.15%</b>)</div>
+                <div class="ims-body">ABC = symmetrical (base 2.5%, 10% sharing net of base), HWM recapture of prior loss required. Year 2 = &minus;4%, Year 3 gross = 23%.</div>
+                <span class="ims-fline">Step 1 (HWM, BEFORE the formula): recover Y2 loss
+  adjusted return = 23% &minus; 4% = 19%
+Step 2 (symmetrical fee on adjusted return):
+  perf = (19% &minus; 2.5% base) &times; 10% = 1.65%
+  fee  = 2.5% + 1.65% = 4.15%</span>
+                <div class="ims-trap"><b>Decisive detail:</b> the HWM adjusts the <b>return first</b> (it's a pre-step), THEN the normal fee formula runs on the adjusted number. Trap C (4.55%) = skipped HWM (used 23%). Trap B (4.40%) = forgot to net the base fee before sharing.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">M2 &mdash; Universe stage: what to AVOID (picked C, ans <b class="ims-green">A</b>)</div>
+                <div class="ims-body">Question: when defining the manager universe, the process should <b>avoid</b> ___. Answer = <b>excluding managers based on historical risk-adjusted returns</b>.</div>
+                <div class="ims-trap"><b>Decisive detail:</b> the universe stage has <b class="ims-red">NO performance assessment</b> &mdash; screen on role/fit only. So screening on past risk-adjusted returns is the thing to avoid. Identifying a benchmark (= the role) and using third-party categorization are both <b>legitimate</b> universe-building tools. The trap: you picked a correct practice (C) as the thing to avoid &mdash; the question was inverted.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">M3 &mdash; Style output inconsistent w/ philosophy (picked A, ans <b class="ims-green">B</b>)</div>
+                <div class="ims-body">Style analysis (RBSA/HBSA) results <b>not consistent</b> with the manager's stated philosophy/process &rarr; implies the <b>investment process may not be repeatable</b> (or not consistently implemented) &rarr; manager should <b>NOT</b> be included.</div>
+                <div class="ims-trap"><b>Decisive detail &mdash; the fork:</b><br>&bull; output <b>inconsistent with stated philosophy</b> &rarr; <b class="ims-main-c">repeatability red flag</b> (exclude). <br>&bull; output <b>tracks over time but drifts from stated style</b> &rarr; <b class="ims-main-c">style drift</b>.<br>"Absence of style drift" (A) is wrong &mdash; inconsistency isn't the absence of anything, it's a repeatability problem.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">M4 &mdash; Greatest risk incentive: Red Grass (picked Blue Water, ans <b class="ims-green">A</b>)</div>
+                <div class="ims-body">Red Grass = uncapped, higher-of base or base + sharing of <b>positive</b> performance &rarr; unlimited upside, no downside penalty. Blue Water = same shape but <b>capped at 2.50%</b>.</div>
+                <div class="ims-trap"><b>Decisive detail:</b> <b class="ims-main-c">no maximum fee + positive-only sharing = unlimited call option = greatest risk incentive.</b> A <b>cap</b> truncates the upside &rarr; it <b class="ims-red">removes</b> the incentive. Blue Water's 2.50% cap is exactly why it's NOT the answer. Don't let a high sharing % distract from the cap.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">M5 &mdash; Yellow Wood 2016 fee (picked A 3.00%, ans <b class="ims-green">B 4.20%</b>)</div>
+                <div class="ims-body">Yellow Wood = symmetrical (base 1.5%, 20% sharing net of base). 2016 gross = 15%.</div>
+                <span class="ims-fline">perf = 20% &times; (15% &minus; 1.5% base) = 20% &times; 13.5% = 2.70%
+fee  = 1.5% + 2.70% = 4.20%</span>
+                <div class="ims-trap"><b>Decisive detail (your #1 repeat error):</b> sharing always applies to <b class="ims-red">(return &minus; base fee)</b>, never raw return. Trap A 3.00% = 20% &times; 15% with the base-fee netting skipped &mdash; the <b>same</b> omission as trap B in M1. Always subtract the base before applying the sharing %.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">&#9733; Cross-cutting pattern (fees)</div>
+                <div class="ims-green-box"><b>Two recurring fee mistakes to drill:</b><br>(1) <b>Net the base fee</b> before applying the sharing % &mdash; missed in M1-trap and M5.<br>(2) <b>HWM is a pre-step</b> &mdash; adjust the return for recouped losses BEFORE the fee formula (M1).<br>(3) <b>Cap kills risk incentive</b> &mdash; "greatest incentive" = uncapped + upside-only (M4).</div>
+              </div>
             </div>
             <div id="imserr-essay" class="ims-toppanel">
-              <div class="ims-card"><div class="ims-title">Essay Misses</div><div class="ims-info">Constructed-response misses land here.</div></div>
+              <div class="ims-card"><div class="ims-title">Essay Misses</div><div class="ims-info">Constructed-response misses. Most were <b>partial credit</b> &mdash; right idea, missing a second required reason or the decisive mechanism. Re-drill the starred fee card.</div></div>
+
+              <div class="ims-card">
+                <div class="ims-title">&#9733; E1 &mdash; Schwinn net active return (you 2.55%, ans <b class="ims-green">2.60%</b>) &mdash; REPEAT ERROR</div>
+                <span class="ims-fline">return subject to sharing = 3.50% &minus; 0.25% base = 3.25%   &larr; NET of base
+sharing fee = 3.25% &times; 20% = 0.65%
+billed fee  = 0.25% base + 0.65% = 0.90%
+net active   = 3.50% &minus; 0.90% = 2.60%</span>
+                <div class="ims-trap"><b>Your 2.55% = sharing applied to GROSS 3.50% (0.20&times;3.50=0.70), billed 0.95%.</b> This is the <b class="ims-red">exact same base-netting error</b> as MCQ M1-trap and M5 &mdash; now <b>three times</b>. <b class="ims-main-c">Sharing is ALWAYS on (active return &minus; base fee), never on gross.</b> This is your #1 fee mistake &mdash; check it on every fee question.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">&#9733; E2 &mdash; Circue fee schedule (NO answer) &mdash; the 4-regime calc</div>
+                <div class="ims-body">Base 0.20%, sharing 25% on active beyond base, standard 0.35%, breakeven 1.25%, max 0.90%.</div>
+                <table class="ims-tbl">
+                  <tr><th>Gross active</th><th>Billed fee</th><th>Net active = gross &minus; billed</th><th>Note</th></tr>
+                  <tr><td><b>&le; 0.20%</b></td><td>0.20% (base only)</td><td><b class="ims-main-c">0.00%</b> (at 0.20)</td><td>No sharing &mdash; at/below base</td></tr>
+                  <tr><td><b>0.75%</b></td><td>0.20 + (0.75&minus;0.20)&times;25% = 0.3375%</td><td><b class="ims-main-c">0.41%</b></td><td>0.75 &minus; 0.3375 = 0.4125</td></tr>
+                  <tr><td><b>1.25%</b> (breakeven)</td><td>= standard <b>0.35%</b></td><td><b class="ims-main-c">0.90%</b></td><td>1.25 &minus; 0.35 = 0.90</td></tr>
+                  <tr><td><b>1.75%</b></td><td>0.20 + (1.75&minus;0.20)&times;25% = 0.5875%</td><td><b class="ims-main-c">1.16%</b></td><td>1.75 &minus; 0.5875 = 1.1625</td></tr>
+                </table>
+                <div class="ims-trap"><b>Breakeven is a special anchor:</b> at the breakeven active return (1.25%), the billed fee = the <b>standard fee 0.35%</b> by definition, NOT base + sharing (which would give 0.4625%). The breakeven is the point where the performance schedule is set to equal the standard fee. Use the standard fee directly there.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">E3 &mdash; Aspen consistent philosophy? (got reason 1, missed reason 2)</div>
+                <div class="ims-green-box"><b>You got:</b> passive label contradicts active strategy (exploiting structural inefficiencies / mispricings = active). &#10003;</div>
+                <div class="ims-trap"><b>Missed second reason:</b> Aspen states its strategy/philosophy has <b>evolved over time in response to fund and market performance</b> &rarr; it is <b class="ims-red">reacting to markets, not following a consistent philosophy</b> &rarr; results may <b>not be repeatable</b>. Two-reason questions need both: (1) the passive/active contradiction, (2) the changing-over-time reactivity.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">E4 &mdash; Lyon Detail 1 paired long/short (you "drawback", ans <b class="ims-green">benefit</b>)</div>
+                <div class="ims-trap"><b>Decisive detail:</b> <b class="ims-main-c">paired long &amp; short positions are a BENEFIT</b> &mdash; if well-matched and sized correctly, proper position sizing <b>offsets/eliminates market risk</b> while capturing alpha as prices converge. (This is the same "paired &rarr; eliminates market risk" point from the Decision Process tab.) Detail 2 (relies on unique info) = drawback (hard to keep an edge when regulation reduces info asymmetry). Detail 3 (AUM grew, positions unchanged) = drawback (should adjust positions for the larger AUM).</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">E5 &mdash; Yang best fund (you Beta, ans <b class="ims-green">Gamma</b>)</div>
+                <div class="ims-trap"><b>Decisive detail:</b> Yang retires in <b>3 years</b> + hates losses &rarr; <b>short horizon, low risk tolerance</b> &rarr; she needs the <b class="ims-main-c">shallowest AND shortest drawdown</b> &mdash; that's <b>Gamma</b> (28% loss, 12 months). You chose Beta on capture ratio, but the binding constraint here is <b class="ims-red">drawdown</b>, not capture. When the stem stresses short horizon + loss aversion, drawdown depth/duration is the decision driver, not the capture ratio.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">E6 &mdash; Patnode best manager (you Alcanfor, ans <b class="ims-green">Laurb&aelig;r</b>)</div>
+                <div class="ims-trap"><b>Decisive detail:</b> Patnode needs <b>predictable ongoing income</b> &rarr; favor the manager whose edge is <b>repeatable / evolving to stay ahead</b>. <b class="ims-main-c">Laurb&aelig;r</b> invests in new themes &amp; measures each one's contribution, and recognizes its edge can be arbitraged away &rarr; more likely to <b>evolve and sustain</b> returns. <b class="ims-red">Alcanfor</b> (your pick) judges itself on sector mispricing but measures against <b>overall market benchmarks</b> &mdash; a mismatch (not testing success in its own selection domain). Mylesten is ad-hoc / chases sentiment &rarr; not repeatable. Don't pick "mispriced securities" reflexively &mdash; check whether the manager <b>measures itself in the right domain</b> and can <b>sustain</b> the edge.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">E7 &mdash; Parade: SMA vs Diversified by characteristic (partial)</div>
+                <div class="ims-green-box"><b>You got:</b> Transparency &rarr; SMA; Investor behavior &rarr; (you said SMA "not subject to investor behavior"); Liquidity &rarr; SMA. Transparency and Liquidity are correct.</div>
+                <table class="ims-tbl">
+                  <tr><th>Characteristic</th><th>Best vehicle</th><th>Why</th></tr>
+                  <tr><td>Transparency</td><td><b class="ims-green">SMA</b></td><td>Real-time position-level detail; pooled may be delayed</td></tr>
+                  <tr><td>Investor behavior</td><td><b class="ims-red">Diversified (pooled)</b></td><td>NOT susceptible to investor micromanagement; manager sets decisions</td></tr>
+                  <tr><td>Cost</td><td><b class="ims-red">Diversified (pooled)</b></td><td>Pooled is cheaper (economies of scale)</td></tr>
+                  <tr><td>Liquidity</td><td><b class="ims-green">SMA</b></td><td>Owns securities directly; not hit by other investors' redemptions</td></tr>
+                  <tr><td>Tracking risk</td><td><b class="ims-red">Diversified (pooled)</b></td><td>Lower tracking risk; SMA customization raises it</td></tr>
+                </table>
+                <div class="ims-trap"><b>Decisive detail:</b> <b class="ims-main-c">Investor behavior &rarr; pooled</b> (the pooled fund is <b>protected from</b> investor micromanagement; an SMA investor CAN meddle). You assigned it to SMA &mdash; backwards. Also memorize: <b>Cost &amp; Tracking risk &rarr; pooled</b>; <b>Transparency &amp; Liquidity &rarr; SMA</b>.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">E8 &mdash; Circue vehicle choice (you Hedge fund, ans <b class="ims-green">Open-end + incentive fee</b>)</div>
+                <div class="ims-trap"><b>Decisive detail &mdash; the closet-indexing driver:</b> Circue has <b>heightened sensitivity to closet indexing</b> &rarr; needs an <b class="ims-main-c">incentive fee</b> to motivate the manager (mutual-fund assets are "sticky" &rarr; managers coast &rarr; closet index). <b>Open-end + incentive fee</b> gives daily liquidity (Circue tolerates some illiquidity) AND the incentive. <b class="ims-red">Hedge fund (your pick)</b> is wrong twice: least liquid, and a <b>soft lock charges a redemption fee</b> &rarr; conflicts with Circue's moderate fee sensitivity. Closed-end has no incentive fee &rarr; doesn't fix closet indexing. Match each IPS priority to a feature: closet-indexing&rarr;incentive fee; fee sensitivity&rarr;avoid soft-lock fee.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">E9 &mdash; Smith downside-risk under bonus fee (got incentive, missed the mechanism)</div>
+                <div class="ims-green-box"><b>You got:</b> bonus (full upside, limited downside) incentivizes the manager to increase portfolio risk to raise the bonus. &#10003; (partial credit)</div>
+                <div class="ims-trap"><b>The decisive mechanism the book wanted:</b> performance-based fees convert <b>symmetrical gross</b> active-return distributions into <b>asymmetrical net</b> distributions (variability reduced on the upside but NOT the downside). So a single <b>SD</b> on that net series leads to <b class="ims-red">underestimation of downside risk</b>. Phrase it as "estimated risk is <b>misestimated / downside underestimated</b>," not just "manager takes more risk."</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">E10 &mdash; Carpenter = call option (NO answer)</div>
+                <div class="ims-trap"><b>Answer: Carpenter Management.</b> A <b class="ims-main-c">bonus-style fee with a maximum</b> = the close equivalent of a manager's <b>call option on active return</b>: <b>exercise price = base fee</b> (18 bps), <b>long</b> a call struck at the base/min fee, <b>minus a short</b> (less valuable) call struck at the <b>maximum fee</b> (the cap). Hidden Lake is <b>symmetrical</b> (full up + down exposure) &rarr; NOT option-like. The tell for "call option" = bonus/asymmetric structure, usually with a cap.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">E11 &mdash; Vaudreuil (AUM) vs Pourtir (perf) adv/disadv (NO answer)</div>
+                <table class="ims-tbl">
+                  <tr><th>Manager</th><th>Advantage to client</th><th>Disadvantage to client</th></tr>
+                  <tr><td><b class="ims-main-c">Vaudreuil (AUM-based)</b></td><td>Fee impact <b>lower as assets grow</b> in a rising market</td><td>Once assets are large, manager may <b>coast to retain sticky assets</b> &rarr; lower returns than another structure</td></tr>
+                  <tr><td><b class="ims-main-c">Pourtir (performance-based)</b></td><td><b>Aligns interests</b> (both share results); client pays <b>lower fees when active returns are low</b>; manager may work harder</td><td>Client pays <b>base even if underperform</b>; may <b>misestimate risk / incentivize higher risk</b>; bonus-style misaligns; may hold assets to realize a profit even when client should sell</td></tr>
+                </table>
+                <div class="ims-info">One adv + one disadv each is enough for credit, but know both sides of each.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">E12 &mdash; Grimmett qual/quant considerations (over-narrow)</div>
+                <div class="ims-green-box"><b>You got valid quant:</b> attribution + appraisal (skill vs luck), capture ratio (up vs down). &#10003; Could add <b>drawdown</b> as the third quant tool.</div>
+                <div class="ims-trap"><b>Qualitative was too narrow:</b> you gave only the 4 Ps (philosophy/portfolio). The book splits qualitative into <b class="ims-main-c">(1) investment due diligence</b> (the 4 Ps: philosophy, process, people, portfolio) AND <b class="ims-main-c">(2) operational due diligence</b> (firm/infrastructure: track-record accuracy, back-office processes, investment vehicle suitability, contract terms, ongoing monitoring, firm profitability/culture/going-concern). For "two qualitative considerations," pick <b>process-and-people</b> + <b>operational due diligence</b> &mdash; not two flavors of the same 4 Ps.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">E13 &mdash; Grimmett preparatory steps (incomplete)</div>
+                <div class="ims-green-box"><b>You said:</b> due diligence (manager universe, quant, qual). That's the selection process itself, not the <b>preparatory</b> steps the question asked for.</div>
+                <div class="ims-trap"><b>The three preparatory steps BEFORE manager selection:</b> (1) decide that <b>outside support</b> is necessary; (2) complete an <b class="ims-main-c">IPS</b>; (3) determine the appropriate <b class="ims-main-c">asset allocation</b>. Without these you can't identify managers that fit, confirm IPS suitability, or trust they'll implement the right allocation. "Preparatory steps" = IPS + asset allocation come first; due diligence is what you do <b>after</b>.</div>
+              </div>
+
+              <div class="ims-card">
+                <div class="ims-title">&#9733; Essay cross-cutting patterns</div>
+                <div class="ims-green-box"><b>Drill list:</b><br>(1) <b>Base-netting</b> &mdash; sharing on (active &minus; base), never gross (E1, +MCQ M1/M5). Your single biggest leak.<br>(2) <b>Breakeven = standard fee</b> anchor, not base+sharing (E2).<br>(3) <b>Two-reason questions</b> &mdash; always give the SECOND reason (E3 Aspen, Patnode domain+sustainability).<br>(4) <b>Match the binding constraint to the stem</b> &mdash; short horizon&rarr;drawdown not capture (E5); closet-indexing&rarr;incentive fee (E8); income+repeatable&rarr;evolving manager (E6).<br>(5) <b>SMA vs pooled map</b> &mdash; Transparency/Liquidity = SMA; Cost/Tracking/Investor-behavior = pooled (E7).<br>(6) <b>Paired long/short = benefit</b> (offsets market risk) (E4).<br>(7) <b>Operational due diligence</b> is a distinct qualitative bucket from the 4 Ps (E12); IPS + asset allocation are <b>preparatory</b> (E13).</div>
+              </div>
             </div>
             <div id="imserr-mastery" class="ims-toppanel">
               <div class="ims-card"><div class="ims-title">Mastery checklist</div><div class="ims-info">Once a pattern is no longer being missed, it moves here as a confirmed mastery point.</div></div>
