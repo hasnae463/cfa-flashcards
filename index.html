@@ -25577,6 +25577,1228 @@ net active   = 3.50% &minus; 0.90% = 2.60%</span>
           </script>
         </div>
 
+        <div id="gipsWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #gipsWidget { --gips-main:#34D399; --gips-green:#3FB950; --gips-red:#FF7B72; --gips-blue:#79C0FF; --gips-amber:#E0A82E; }
+            #gipsWidget .gips-h { font-family:var(--serif); font-size:21px; color:var(--gips-main); font-weight:700; margin:0 0 4px; letter-spacing:.01em; }
+            #gipsWidget .gips-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:16px; letter-spacing:.04em; }
+            #gipsWidget .gips-modtabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
+            #gipsWidget .gips-modtab { background:var(--surface2); border:1px solid var(--gips-main); color:var(--gips-main); padding:10px 18px; border-radius:8px; font-family:var(--serif); font-size:14px; font-weight:700; cursor:pointer; letter-spacing:.02em; }
+            #gipsWidget .gips-modtab.active { background:var(--gips-main); color:#0D1117; }
+            #gipsWidget .gips-modpanel { display:none; }
+            #gipsWidget .gips-modpanel.active { display:block; }
+            #gipsWidget .gips-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #gipsWidget .gips-toptab { background:var(--surface2); border:1px solid rgba(52,211,153,.5); color:var(--gips-main); padding:7px 13px; border-radius:6px; font-family:var(--serif); font-size:12.5px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #gipsWidget .gips-toptab.active { background:var(--gips-main); color:#0D1117; }
+            #gipsWidget .gips-toppanel { display:none; }
+            #gipsWidget .gips-toppanel.active { display:block; }
+            #gipsWidget .gips-card { background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:16px 18px; margin-bottom:14px; }
+            #gipsWidget .gips-title { font-family:var(--serif); font-size:15.5px; color:var(--gips-main); font-weight:600; margin-bottom:9px; }
+            #gipsWidget .gips-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:6px; }
+            #gipsWidget .gips-rule { display:block; font-size:12.5px; line-height:1.5; color:#C9D1D9; padding:7px 0 7px 14px; border-left:2px solid var(--border); margin:7px 0; }
+            #gipsWidget .gips-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--gips-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #gipsWidget .gips-info { background:rgba(121,192,255,.08); border-left:3px solid var(--gips-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #gipsWidget .gips-green-box { background:rgba(63,185,80,.08); border-left:3px solid var(--gips-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #gipsWidget .gips-green { color:var(--gips-green); }
+            #gipsWidget .gips-red { color:var(--gips-red); }
+            #gipsWidget .gips-main-c { color:var(--gips-main); }
+            #gipsWidget .gips-blue { color:var(--gips-blue); }
+            #gipsWidget .gips-amber { color:var(--gips-amber); }
+            #gipsWidget .gips-tbl { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
+            #gipsWidget .gips-tbl th { background:#0B0F14; color:var(--gips-main); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
+            #gipsWidget .gips-tbl td { padding:8px 10px; border:1px solid var(--border); color:#C9D1D9; line-height:1.45; vertical-align:top; }
+            #gipsWidget .gips-quiz-opt { display:block; width:100%; text-align:left; background:var(--surface2); border:1px solid var(--border); color:#C9D1D9; padding:9px 12px; border-radius:6px; margin:5px 0; font-size:12.5px; cursor:pointer; font-family:inherit; line-height:1.45; }
+            #gipsWidget .gips-quiz-opt:hover { border-color:var(--gips-main); }
+            #gipsWidget .gips-quiz-opt.correct { background:rgba(63,185,80,.15); border-color:var(--gips-green); color:#E6EDF3; }
+            #gipsWidget .gips-quiz-opt.wrong { background:rgba(255,123,114,.13); border-color:var(--gips-red); color:#E6EDF3; }
+            #gipsWidget .gips-quiz-exp { display:none; margin-top:8px; }
+            #gipsWidget .gips-fline { display:block; font-family:var(--mono); font-size:12px; line-height:1.5; color:#C9D1D9; background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:7px 11px; margin:6px 0; white-space:pre-wrap; }
+            #gipsWidget .gips-reveal-btn { background:var(--surface2); border:1px solid rgba(52,211,153,.5); color:var(--gips-main); padding:6px 13px; border-radius:6px; font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer; margin:4px 0; }
+          </style>
+
+          <div class="gips-h">Overview of the GIPS Standards</div>
+          <div class="gips-sub">READING 15 &middot; Performance Measurement</div>
+
+          <div class="gips-modtabs">
+            <button class="gips-modtab active" onclick="gipsMod(event,'gipsm-151')">15.1 GIPS Overview</button>
+            <button class="gips-modtab" onclick="gipsMod(event,'gipsm-152')">15.2 Compliance Fundamentals</button>
+            <button class="gips-modtab" onclick="gipsMod(event,'gipsm-153')">15.3 Return Calculations</button>
+            <button class="gips-modtab" onclick="gipsMod(event,'gipsm-154')">15.4 Composites</button>
+            <button class="gips-modtab" onclick="gipsMod(event,'gipsm-155')">15.5 Presentation &amp; Reporting</button>
+            <button class="gips-modtab" onclick="gipsMod(event,'gipsm-156')">15.6 Valuation Hierarchy</button>
+            <button class="gips-modtab" onclick="gipsMod(event,'gipsm-157')">15.7 Verification</button>
+            <button class="gips-modtab" onclick="gipsMod(event,'gipsm-err')">&#9888; Errors</button>
+          </div>
+
+          <!-- ════════ MODULE 15.1 ════════ -->
+          <div id="gipsm-151" class="gips-modpanel active">
+            <div class="gips-toptabs">
+              <button class="gips-toptab active" onclick="gipsTop(event,'gips151-what')">What GIPS Is</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips151-obj')">Objectives</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips151-scope')">Scope &amp; Terms</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips151-claim')">Claiming Compliance</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips151-ben')">Benefits</button>
+            </div>
+
+            <!-- WHAT GIPS IS -->
+            <div id="gips151-what" class="gips-toppanel active">
+              <div class="gips-card">
+                <div class="gips-title">What the GIPS standards are</div>
+                <div class="gips-body">Ethical &amp; professional standards for the <b>presentation</b> of investment performance results.</div>
+                <table class="gips-tbl">
+                  <tr><th>Property</th><th>Detail</th></tr>
+                  <tr><td><b class="gips-main-c">Voluntary</b></td><td>Firms choose to adopt; not legally mandated</td></tr>
+                  <tr><td><b class="gips-main-c">Two fundamental principles</b></td><td><b>Full disclosure</b> + <b>fair representation</b> of performance results</td></tr>
+                  <tr><td><b class="gips-main-c">A minimum</b></td><td>Not all-encompassing &mdash; view as a <b>minimum</b> set; firms should always add <b>additional info</b> to help clients understand results</td></tr>
+                  <tr><td><b class="gips-main-c">Purpose</b></td><td>Lets clients/prospects/consultants <b>fairly assess historical</b> performance &amp; compare across firms</td></tr>
+                </table>
+                <div class="gips-trap"><b>Decisive detail:</b> GIPS is <b class="gips-main-c">voluntary</b> and a <b class="gips-main-c">minimum</b> standard for <b>presentation</b> &mdash; not a legal requirement, not exhaustive. Firms <b>add</b> information beyond the minimum; they don't treat GIPS as the ceiling.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">2020 edition &mdash; three sets of standards</div>
+                <table class="gips-tbl">
+                  <tr><th>For whom</th><th>Which standards they use</th></tr>
+                  <tr><td>Investment management firms</td><td><b class="gips-main-c">GIPS Standards for Firms</b></td></tr>
+                  <tr><td>Asset owners who <b>compete for business</b></td><td><b class="gips-main-c">GIPS Standards for Firms</b></td></tr>
+                  <tr><td>Asset owners who <b>do NOT compete for business</b></td><td><b class="gips-main-c">GIPS Standards for Asset Owners</b></td></tr>
+                  <tr><td>Verifiers (third parties)</td><td>Provide <b>verification</b> that a firm complies</td></tr>
+                </table>
+                <div class="gips-trap"><b>The competing-for-business fork:</b> an asset owner uses the <b>Firms</b> standards if it <b class="gips-main-c">competes for business</b>, and the <b>Asset Owners</b> standards if it <b class="gips-red">does not</b>. The LOS focus is the standards for <b>investment management firms</b>.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">The GIPS Report</div>
+                <div class="gips-body">When a firm <b>claims compliance</b>, it must calculate &amp; present compliant returns in a <b class="gips-main-c">GIPS Report</b>, provided to <b class="gips-red">ALL</b> (not just some) prospective clients &amp; investors.</div>
+                <span class="gips-rule">Contains <b>required + additional</b> disclosures; should be <b>up to date</b> and <b>comparable</b> to reports from other compliant firms.</span>
+              </div>
+            </div>
+
+            <!-- OBJECTIVES -->
+            <div id="gips151-obj" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">The 5 objectives of GIPS (LOS 15.a)</div>
+                <table class="gips-tbl">
+                  <tr><th>#</th><th>Objective</th></tr>
+                  <tr><td>1</td><td><b>Advance the interests of investors</b> &amp; increase their <b>confidence</b> in the investment industry</td></tr>
+                  <tr><td>2</td><td>Provide <b class="gips-main-c">accurate and comparable</b> data to investors</td></tr>
+                  <tr><td>3</td><td>Create a <b class="gips-main-c">globally accepted standard</b> for the determination &amp; presentation of performance</td></tr>
+                  <tr><td>4</td><td>Facilitate <b class="gips-main-c">fair competition</b> among global investment managers</td></tr>
+                  <tr><td>5</td><td>Encourage <b class="gips-main-c">self-regulation</b> in the global investment industry</td></tr>
+                </table>
+                <div class="gips-info"><b>Memory hook:</b> <b>C-C-G-F-S</b> &mdash; Confidence, Comparable data, Global standard, Fair competition, Self-regulation.</div>
+              </div>
+            </div>
+
+            <!-- SCOPE & TERMS -->
+            <div id="gips151-scope" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Who may claim compliance</div>
+                <div class="gips-body">Only <b>investment management firms</b> and <b>asset owners who compete for business</b> may claim compliance to the GIPS Standards for Firms.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Key terminology (memorize the definitions)</div>
+                <table class="gips-tbl">
+                  <tr><th>Term</th><th>Definition</th></tr>
+                  <tr><td><b class="gips-main-c">Composite</b></td><td>A collection of <b>portfolios with similar</b> investment mandates, objectives, or strategies</td></tr>
+                  <tr><td><b class="gips-main-c">Segregated account</b></td><td>A portfolio owned by a <b>single investor</b> (a.k.a. an <b>SMA</b>)</td></tr>
+                  <tr><td><b class="gips-main-c">Pooled fund</b></td><td>A portfolio <b>NOT owned by a single investor</b></td></tr>
+                  <tr><td><b class="gips-main-c">Broad distribution pooled fund (BDPF)</b></td><td>Subject to regulation, <b>available to the general public</b> (e.g., mutual funds)</td></tr>
+                  <tr><td><b class="gips-main-c">Limited distribution pooled fund (LDPF)</b></td><td><b>NOT available to the general public</b> (e.g., hedge funds)</td></tr>
+                </table>
+                <div class="gips-info"><b>Client vs investor:</b> a <b>client</b> invests via a <b>segregated account</b>; an <b>investor</b> invests in a firm's <b>pooled funds</b>. (The reading often uses the two interchangeably.)</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Scope rules</div>
+                <span class="gips-rule"><b>Firmwide only:</b> GIPS compliance can be claimed <b class="gips-main-c">only on a firmwide basis</b> &mdash; NOT for just some products, and NOT for only specific composites/funds/portfolios.</span>
+                <span class="gips-rule"><b>All, not some:</b> to claim compliance a firm must comply with <b class="gips-main-c">ALL</b> applicable requirements.</span>
+                <span class="gips-rule"><b>Requirements vs recommendations:</b> requirements are mandatory; <b>recommendations</b> are <b>optional but consistent with best practice</b>. The standards <b>evolve</b> over time.</span>
+              </div>
+            </div>
+
+            <!-- CLAIMING COMPLIANCE -->
+            <div id="gips151-claim" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">What a claim of compliance indicates</div>
+                <table class="gips-tbl">
+                  <tr><th>Requirement</th><th>Detail</th></tr>
+                  <tr><td><b class="gips-main-c">Compliant calcs</b></td><td>The firm's <b>data inputs, processes, and return calculations</b> are compliant</td></tr>
+                  <tr><td><b class="gips-main-c">Segregated accounts</b></td><td><b>ALL fee-paying segregated accounts</b> assigned to <b>at least one composite</b></td></tr>
+                  <tr><td><b class="gips-main-c">LDPF</b></td><td>All limited distribution pooled funds included in a composite <b>appropriate to their characteristics</b></td></tr>
+                  <tr><td><b class="gips-main-c">BDPF (the exception)</b></td><td>Only required to be in a composite <b class="gips-red">IF their strategy is also offered in separate accounts</b></td></tr>
+                </table>
+                <div class="gips-trap"><b>"Can't be halfway" rule:</b> to be compliant &mdash; <b>all customers</b> get a report, <b>all products</b> compliant, <b>all standards</b> followed. <br><b>The one exception = BDPF:</b> they often need NOT be in a composite, because BDPF are <b class="gips-main-c">government-regulated &rarr; investor protections already established</b>.</div>
+                <div class="gips-info"><b>Watch the trap:</b> "fee-paying segregated accounts &rarr; at least one composite" is required. A <b>non-fee-paying</b> account is not forced in. And BDPF only join a composite when the strategy is <b>also run in separate accounts</b>.</div>
+              </div>
+            </div>
+
+            <!-- BENEFITS -->
+            <div id="gips151-ben" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Benefits to prospective clients &amp; investors</div>
+                <table class="gips-tbl">
+                  <tr><th>Benefit</th><th>Why</th></tr>
+                  <tr><td><b class="gips-main-c">Comparable</b></td><td>Standardizes determination &amp; presentation &rarr; manager performance more <b>comparable</b></td></tr>
+                  <tr><td><b class="gips-main-c">Reliable</b></td><td>Manager performance is more <b>reliable</b> when the firm is GIPS compliant</td></tr>
+                  <tr><td><b class="gips-main-c">Benchmark discussion</b></td><td>GIPS <b>benchmark</b> requirements facilitate a discussion of the strategy's <b>past &amp; targeted future</b> performance</td></tr>
+                </table>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Benefits to investment managers (firms)</div>
+                <div class="gips-body">Firms incur <b>costs</b> to comply; in return GIPS may provide:</div>
+                <table class="gips-tbl">
+                  <tr><th>Benefit</th><th>Note</th></tr>
+                  <tr><td><b class="gips-main-c">Investor confidence</b></td><td>In the industry &amp; the firm &mdash; especially if <b>verified by a third party</b></td></tr>
+                  <tr><td><b class="gips-main-c">Attract investors</b></td><td>Many investors prefer or <b>require</b> GIPS-compliant managers</td></tr>
+                  <tr><td><b class="gips-main-c">Compete internationally</b></td><td>Firm performance is <b>comparable across borders</b></td></tr>
+                  <tr><td><b class="gips-main-c">Internal controls</b></td><td>Strengthened via the <b>recordkeeping &amp; reporting</b> GIPS requires</td></tr>
+                  <tr><td><b class="gips-main-c">Operational insight</b></td><td>Additional info about operations via the <b>technology</b> adopted to comply</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 15.2 ════════ -->
+          <div id="gipsm-152" class="gips-modpanel">
+            <div class="gips-toptabs">
+              <button class="gips-toptab active" onclick="gipsTop(event,'gips152-firm')">Firm &amp; DBE</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips152-assets')">Total Firm Assets</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips152-disc')">Discretionary?</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips152-other')">Other Fundamentals</button>
+            </div>
+
+            <!-- FIRM & DBE -->
+            <div id="gips152-firm" class="gips-toppanel active">
+              <div class="gips-card">
+                <div class="gips-title">Definition of the firm (LOS 15.b)</div>
+                <span class="gips-rule"><b class="gips-main-c">Firm</b> = an investment firm, subsidiary, or division <b>held out to clients or potential clients as a distinct business entity</b>.</span>
+                <span class="gips-rule"><b class="gips-main-c">Distinct business entity (DBE)</b> = a unit, division, department, or office that is <b>organizationally or functionally separated</b> from others, <b>retains discretion over the assets it manages</b>, and <b>should have autonomy over the investment decision-making process</b>.</span>
+                <div class="gips-info"><b>Why it matters:</b> compliance is claimed at the <b>firm</b> level, so how you draw the firm boundary determines what must comply. (Ties to the "can't be halfway" rule from 15.1.)</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Characteristics &mdash; more likely a DBE if it has a distinct:</div>
+                <table class="gips-tbl">
+                  <tr><th>8 distinguishing characteristics</th></tr>
+                  <tr><td><b class="gips-main-c">Legal organization</b> (e.g., a separate subsidiary)</td></tr>
+                  <tr><td><b class="gips-main-c">Market</b></td></tr>
+                  <tr><td><b class="gips-main-c">Client base</b></td></tr>
+                  <tr><td><b class="gips-main-c">Investment process</b></td></tr>
+                  <tr><td><b class="gips-main-c">Investment strategy</b></td></tr>
+                  <tr><td><b class="gips-main-c">Investment staff</b> (portfolio managers, analysts)</td></tr>
+                  <tr><td><b class="gips-main-c">Physical location</b></td></tr>
+                  <tr><td><b class="gips-main-c">Chain of command</b></td></tr>
+                </table>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Judgment call &mdash; the shared trading desk</div>
+                <div class="gips-body">Two divisions share the <b>same trading desk</b>. Whether they're still distinct depends on what the desk does:</div>
+                <table class="gips-tbl">
+                  <tr><th>Desk does...</th><th>Distinct business entities?</th></tr>
+                  <tr><td>Only <b>buys &amp; sells</b> securities (pure execution)</td><td><b class="gips-green">Still can be distinct</b> &mdash; sharing execution doesn't break separation</td></tr>
+                  <tr><td>Helps <b>value</b> securities</td><td><b class="gips-red">Less likely distinct</b> &mdash; the desk is now part of the investment process</td></tr>
+                </table>
+                <div class="gips-trap"><b>Decisive detail:</b> shared <b>execution</b> is fine; shared <b>valuation</b> (part of the investment process) undermines distinctness. Judgment is required &mdash; the characteristics are indicators, not a checklist.</div>
+              </div>
+            </div>
+
+            <!-- TOTAL FIRM ASSETS -->
+            <div id="gips152-assets" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Total firm assets (at fair value)</div>
+                <div class="gips-body">The firm definition is used to determine the <b>fair value of total firm assets</b>. <b class="gips-main-c">Fair value</b> = the value at which willing &amp; knowledgeable parties would exchange an asset (most easily = market value of identical assets in liquid markets).</div>
+                <table class="gips-tbl">
+                  <tr><th class="gips-green">INCLUDES</th><th class="gips-red">EXCLUDES</th></tr>
+                  <tr><td>Discretionary AND nondiscretionary assets</td><td><b>Advisory-only</b> assets (firm advises but has <b>no trading authority</b>)</td></tr>
+                  <tr><td>Fee-paying AND non-fee-paying assets</td><td><b>Uncalled, committed capital</b> (pledged but <b>not yet drawn</b>)</td></tr>
+                  <tr><td>Net of leverage used</td><td>&mdash;</td></tr>
+                  <tr><td>Only <b>actual</b> (not simulated) assets</td><td>&mdash;</td></tr>
+                </table>
+                <div class="gips-trap"><b>Total firm assets INCLUDE nondiscretionary; composite assets do NOT.</b> When calculating <b>composite</b> assets (not total firm assets), <b class="gips-red">nondiscretionary assets are excluded</b> &mdash; performance the manager doesn't control shouldn't be attributed to the manager. This firm-vs-composite split is a classic exam trap.</div>
+              </div>
+            </div>
+
+            <!-- DISCRETIONARY? -->
+            <div id="gips152-disc" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Discretionary vs nondiscretionary</div>
+                <table class="gips-tbl">
+                  <tr><th>Type</th><th>Definition</th></tr>
+                  <tr><td><b class="gips-main-c">Discretionary</b></td><td>Manager has <b>control of the investment strategy</b>. <b>Includes subadviser assets IF the manager selects the subadviser.</b></td></tr>
+                  <tr><td><b class="gips-main-c">Nondiscretionary</b></td><td><b>Client constraints materially affect</b> the manager's ability to execute the strategy.</td></tr>
+                </table>
+                <div class="gips-info"><b>Subadviser nuance:</b> assets run by a subadviser are still <b>discretionary to the firm</b> as long as the <b>firm chose the subadviser</b> &mdash; the firm is exercising control over strategy by that selection.</div>
+                <div class="gips-trap"><b>The test for nondiscretionary:</b> it's not "client has some rules" &mdash; it's that the constraints <b class="gips-red">materially affect</b> the manager's ability to execute the strategy. Material interference = nondiscretionary.</div>
+              </div>
+            </div>
+
+            <!-- OTHER FUNDAMENTALS -->
+            <div id="gips152-other" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Other compliance fundamentals</div>
+                <table class="gips-tbl">
+                  <tr><th>Fundamental</th><th>Detail</th></tr>
+                  <tr><td><b class="gips-main-c">Initial track record</b></td><td>To <b>initially</b> claim compliance: minimum of <b>5 years</b> &mdash; or <b>since inception</b> if the firm has existed less than 5 years</td></tr>
+                  <tr><td><b class="gips-main-c">Policies &amp; procedures</b></td><td>Must <b>establish, update on a timely basis, and document</b> P&amp;P for meeting GIPS &mdash; including for any <b>recommendations voluntarily adopted</b> and any <b>error corrections</b></td></tr>
+                  <tr><td><b class="gips-main-c">Conflict with local law</b></td><td>If GIPS conflicts with local laws/regulations &rarr; <b>comply with local law AND disclose the conflict</b></td></tr>
+                  <tr><td><b class="gips-main-c">No false/misleading info</b></td><td>Must <b>not</b> present false or misleading performance info &mdash; <b>whether or not</b> it pertains to GIPS</td></tr>
+                </table>
+                <div class="gips-trap"><b>Local law conflict:</b> you do NOT abandon GIPS or ignore the law &mdash; you <b class="gips-main-c">follow local law AND disclose</b> the conflict. Both actions, not one.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 15.3 ════════ -->
+          <div id="gipsm-153" class="gips-modpanel">
+            <div class="gips-toptabs">
+              <button class="gips-toptab active" onclick="gipsTop(event,'gips153-base')">Base Rules</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips153-twrr')">Exact TWRR</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips153-approx')">Approximations</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips153-calc')">Dietz Calculator</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips153-mwr')">MWR &amp; Frequency</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips153-fees')">Fees &amp; Other</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips153-quiz')">Quiz 15.1-3</button>
+            </div>
+
+            <!-- BASE RULES -->
+            <div id="gips153-base" class="gips-toppanel active">
+              <div class="gips-card">
+                <div class="gips-title">Return calculation requirements (LOS 15.c)</div>
+                <div class="gips-body">GIPS requires <b>comparable calculation methods</b> by all firms to facilitate comparison.</div>
+                <table class="gips-tbl">
+                  <tr><th>Rule</th><th>Detail</th></tr>
+                  <tr><td><b class="gips-main-c">Frequency</b></td><td>Nonprivate market portfolios: returns calculated <b>monthly</b>; geometrically linked to an annual return</td></tr>
+                  <tr><td><b class="gips-main-c">Total return basis</b></td><td>Calculate on a <b>total return</b> basis (income + capital gains/losses)</td></tr>
+                  <tr><td><b class="gips-main-c">No interim ECF</b></td><td>If no interim external cash flows: <b>R = (EV &minus; BV) / BV</b></td></tr>
+                </table>
+                <span class="gips-fline">R_t = (EV &minus; BV) / BV       (no interim ECFs)</span>
+                <div class="gips-info"><b>Why ECFs are a problem:</b> interim <b>external cash flows</b> (client withdrawals = outflows; contributions = inflows) distort the calc &mdash; large interim flows affect EV and it becomes unclear how much return is from <b>client cash flows</b> vs <b>manager performance</b>.</div>
+              </div>
+            </div>
+
+            <!-- EXACT TWRR -->
+            <div id="gips153-twrr" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Exact (true) TWRR</div>
+                <div class="gips-body">Ideally, to <b>eliminate ECF distortion</b>, the portfolio is <b>valued each time an ECF occurs</b>; subperiod returns are geometrically linked.</div>
+                <span class="gips-fline">R_TWRR = (1+R&#8321;)(1+R&#8322;)(1+R&#8323;) &times; ... &times; (1+R_t) &minus; 1</span>
+                <div class="gips-info">Because of the <b>interim valuations</b>, this is called a <b class="gips-main-c">true / exact TWRR</b> &mdash; not distorted by the ECFs.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Worked example &mdash; Rooney account (ECF at end of each subperiod)</div>
+                <div class="gips-body">BV $2,500,000; EV $2,700,000. Inflows: $45,000 Day 7, $25,000 Day 19. Values (incl. CF): $2,555,000 (Day 7), $2,575,000 (Day 19). 30-day month.</div>
+                <span class="gips-fline">Sub 1 (Days 1-7): (2,555,000 &minus; 2,500,000 &minus; 45,000) / 2,500,000 = 0.4%
+Sub 2 (Days 8-19): (2,575,000 &minus; 2,555,000 &minus; 25,000) / 2,555,000 = &minus;0.2%
+Sub 3 (Days 20-30): (2,700,000 &minus; 2,575,000) / 2,575,000 = 4.9%
+
+TWRR = (1.004)(0.998)(1.049) &minus; 1 = 5.1%</span>
+                <div class="gips-trap"><b>Subperiod numerator:</b> when the ECF lands at the <b>end</b> of a subperiod, subtract the ECF in that subperiod's numerator (it's not manager-generated). The denominator is the subperiod's <b>beginning</b> value.</div>
+              </div>
+            </div>
+
+            <!-- APPROXIMATIONS -->
+            <div id="gips153-approx" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">When approximations are allowed</div>
+                <div class="gips-body">If a firm doesn't value portfolios every day AND the ECFs are <b>relatively small</b>, approximations of the monthly return give a close estimate of the true TWRR.</div>
+                <table class="gips-tbl">
+                  <tr><th>Situation</th><th>Method</th></tr>
+                  <tr><td>Daily valuation done</td><td>Daily returns geometrically linked &rarr; <b>monthly true TWRR</b></td></tr>
+                  <tr><td>No daily valuation, ECFs <b>small</b></td><td><b>Approximation</b> (no interim valuation needed): Modified Dietz or MIRR</td></tr>
+                  <tr><td>ECFs <b>large</b></td><td>Portfolio <b class="gips-red">must be valued at the time of the ECF</b> to calculate a subperiod return</td></tr>
+                </table>
+                <div class="gips-trap"><b>Large vs small ECF:</b> the firm defines "large" per composite (and must document it). A <b>large</b> ECF forces an actual valuation at the flow; a <b>small</b> one permits an approximation. The larger the ECFs &amp; the more volatile the market, the <b class="gips-red">bigger the gap</b> between true TWRR and the approximation.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Modified Dietz return</div>
+                <span class="gips-fline">R_MD = (EV &minus; BV &minus; ECF) / (BV + adjusted ECF)</span>
+                <div class="gips-body"><b>Numerator logic:</b> subtract ECFs (manager shouldn't get credit for client contributions). <b>Denominator logic:</b> add the <b>day-weighted</b> ECF (manager had use of the cash for part of the period).</div>
+                <span class="gips-fline">Weight W = (days in period &minus; day of ECF) / days in period
+
+Rooney: ECF +45k Day7 &rarr; W = 23/30 &rarr; adj 34,500
+        ECF +25k Day19 &rarr; W = 11/30 &rarr; adj 9,167
+
+R_MD = (2,700,000 &minus; 2,500,000 &minus; 70,000)
+       / (2,500,000 + 34,500 + 9,167) = 5.1%</span>
+                <div class="gips-trap"><b>Sign of the ECF:</b> inflows are <b>positive</b>; outflows (client withdrawals) get a <b class="gips-red">negative</b> sign in both numerator and the weighted denominator term.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">MIRR (modified internal rate of return)</div>
+                <div class="gips-body">An IRR that <b>adjusts for the timing of ECFs</b>. Solve for the rate r that equates EV to the future value of BV and the ECFs. Like Modified Dietz, each ECF is <b>weighted by the days of the month</b>.</div>
+                <span class="gips-fline">2,700 = 2,500(1+r) + 45(1+r)^0.77 + 25(1+r)^0.37
+MIRR = 5.1%
+(exponents: 23/30 = 0.77, 11/30 = 0.37)</span>
+                <div class="gips-info"><b>Modified Dietz and MIRR typically give similar values</b> &mdash; both adjust for <b>daily-weighted ECFs</b>. With small ECFs and a path of returns that doesn't vary much by subperiod, all three (true TWRR, Mod Dietz, MIRR) are close.</div>
+              </div>
+            </div>
+
+            <!-- DIETZ CALCULATOR -->
+            <div id="gips153-calc" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Modified Dietz calculator</div>
+                <table class="gips-tbl">
+                  <tr><th>Input</th><th>Value</th></tr>
+                  <tr><td>Beginning value (BV)</td><td><input id="gips-md-bv" type="number" value="2500000" style="width:120px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                  <tr><td>Ending value (EV)</td><td><input id="gips-md-ev" type="number" value="2700000" style="width:120px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                  <tr><td>Days in period</td><td><input id="gips-md-days" type="number" value="30" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                  <tr><td>ECF 1 amount (+ in / &minus; out)</td><td><input id="gips-md-cf1" type="number" value="45000" style="width:120px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                  <tr><td>ECF 1 day</td><td><input id="gips-md-d1" type="number" value="7" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                  <tr><td>ECF 2 amount (0 if none)</td><td><input id="gips-md-cf2" type="number" value="25000" style="width:120px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                  <tr><td>ECF 2 day</td><td><input id="gips-md-d2" type="number" value="19" style="width:90px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:4px 6px;font-family:var(--mono);"></td></tr>
+                </table>
+                <button class="gips-reveal-btn" onclick="gipsMDCalc()">Compute Modified Dietz</button>
+                <span class="gips-fline" id="gips-md-out">Set inputs and Compute. (Defaults = Rooney example &rarr; 5.1%)</span>
+                <div class="gips-info"><b>Outflows:</b> enter client withdrawals as <b>negative</b> amounts. The calculator day-weights each flow as (days &minus; ECF day)/days.</div>
+              </div>
+            </div>
+
+            <!-- MWR & FREQUENCY -->
+            <div id="gips153-mwr" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">When money-weighted return (MWR) is allowed</div>
+                <div class="gips-body">Normally GIPS requires <b>TWRR</b> (removes the client's cash-flow timing). But where the <b>firm controls</b> the timing &amp; size of ECFs, an <b class="gips-main-c">MWR</b> better represents the manager's skill. MWR can be used instead of TWRR <b>IF</b>:</div>
+                <table class="gips-tbl">
+                  <tr><th>Both conditions</th></tr>
+                  <tr><td>(1) The firm has <b>control of the timing of ECFs</b></td></tr>
+                  <tr><td>(2) The portfolios are <b>closed-end, fixed-life, fixed-commitment</b>, OR have a <b>significant amount of illiquid assets</b></td></tr>
+                </table>
+                <span class="gips-rule"><b>MWR</b> is an <b>IRR</b> calculation; portfolios must be valued <b>at least annually</b>.</span>
+                <div class="gips-trap"><b>Quiz hook (15.3 Q5):</b> MWR over TWRR is most likely when <b class="gips-main-c">the manager controls the timing of ECFs</b> &mdash; NOT because the account is large or nondiscretionary. Control of cash-flow timing is the decisive condition.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Valuation frequency by portfolio type</div>
+                <table class="gips-tbl">
+                  <tr><th>Portfolio type</th><th>Valuation / return frequency</th></tr>
+                  <tr><td>Nonprivate market</td><td><b>Monthly</b> (daily return geometrically linked if daily valuation done)</td></tr>
+                  <tr><td><b class="gips-main-c">Private market</b> (real estate, PE, illiquid)</td><td><b class="gips-red">Quarterly</b></td></tr>
+                  <tr><td>Pooled funds not in a composite</td><td>At least <b>annually</b> &mdash; AND valued + subperiod return at the time of <b>subscriptions/redemptions</b></td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- FEES & OTHER -->
+            <div id="gips153-fees" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Other return calculation requirements</div>
+                <table class="gips-tbl">
+                  <tr><th>Requirement</th><th>Detail</th></tr>
+                  <tr><td><b class="gips-main-c">Trade date</b></td><td>Use <b>trade date, not settlement date</b>, prices</td></tr>
+                  <tr><td><b class="gips-main-c">No annualizing partial year</b></td><td>Partial-year returns <b class="gips-red">cannot be annualized</b> (= representing simulated as actual returns &mdash; not allowed)</td></tr>
+                  <tr><td><b class="gips-main-c">Total returns</b></td><td>Include income + capital gains/losses; income-generating (e.g., bonds) use <b>accrual accounting</b></td></tr>
+                  <tr><td><b class="gips-main-c">Cash returns</b></td><td>Returns must reflect the manager's allocations to <b>cash &amp; cash equivalents</b> &mdash; <b>even if an outside firm manages the cash</b></td></tr>
+                </table>
+                <div class="gips-info"><b>Cash equivalents</b> = money market instruments and fixed-income securities with maturities <b>less than a year</b>.</div>
+                <div class="gips-trap"><b>The "can't be halfway" theme again:</b> total returns must be used (not price-only), partial-year can't be annualized, and cash returns count even when outsourced. A manager may dislike the low cash return showing up, but excluding it isn't fair representation.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Gross-of-fees, transaction costs &amp; bundled fees</div>
+                <table class="gips-tbl">
+                  <tr><th>Item</th><th>Treatment</th></tr>
+                  <tr><td><b class="gips-main-c">Gross-of-fees return</b></td><td>Must be calculated <b>AFTER the deduction of transaction costs</b></td></tr>
+                  <tr><td><b class="gips-main-c">Transaction costs</b></td><td>Costs of buying/selling (brokerage commissions, spreads, exchange fees; PE: legal/advisory). Can be <b>estimated only if unknown</b></td></tr>
+                  <tr><td><b class="gips-red">Custody fees</b></td><td><b>NOT included</b> (not a transaction cost)</td></tr>
+                  <tr><td><b class="gips-main-c">Bundled / all-in fees</b></td><td>If they include trading + mgmt + custody + admin: reduce gross-of-fees by the <b>portion due to transaction costs</b>; OR by the <b>ENTIRE bundled fee</b> if transaction costs can't be separated out</td></tr>
+                </table>
+                <div class="gips-trap"><b>Decisive detail:</b> <b class="gips-main-c">gross-of-fees is still net of transaction (trading) costs</b> &mdash; it's "gross" of <b>investment management</b> fees, not of trading costs. Custody fees are excluded entirely. Net-of-fees (which also removes mgmt fees) is recommended to also be shown, and investors should get a fee schedule.</div>
+              </div>
+            </div>
+
+            <!-- QUIZ 15.1-3 -->
+            <div id="gips153-quiz" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Q1. Firm Z sweeps excess cash into a money market fund it does NOT manage, and excludes that cash from its total return calc. Is claiming GIPS compliance acceptable? (essay)</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q1-ans');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q1-ans" style="display:none;">
+                  <div class="gips-trap"><b class="gips-red">NOT acceptable.</b> Returns <b>must reflect the manager's allocations to cash &amp; cash equivalents &mdash; even if an outside firm manages the cash</b>. Excluding the swept cash from the total return understates the cash drag and is not fair representation. Firm Z cannot claim compliance while excluding the cash portion.</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q2. Growth &amp; income composite quarterly returns: Q1 3.00%, Q2 4.15%, Q3 3.75%, Q4 3.15%. Calculate the annual return under GIPS.</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q2-ans');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q2-ans" style="display:none;">
+                  <span class="gips-fline">Annual = (1.0300)(1.0415)(1.0375)(1.0315) &minus; 1 = 14.80%</span>
+                  <div class="gips-trap"><b>Geometric linking, not addition.</b> The trap is summing to 14.05%. GIPS requires subperiod returns be <b>geometrically linked</b> &rarr; 14.80%.</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q3. JIM creates 5 composites covering 60% of its fee-paying discretionary portfolios and claims compliance "for most of the assets." Acceptable? (essay)</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q3-ans');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q3-ans" style="display:none;">
+                  <div class="gips-trap"><b class="gips-red">NOT acceptable.</b> Compliance is <b>firmwide, all-or-nothing</b> &mdash; it <b>cannot be claimed for "most" or only some</b> composites/portfolios. ALL fee-paying segregated accounts must be in at least one composite. A "for most of the assets" claim is a prohibited partial claim ("can't be halfway").</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q4. Kenzo Fund ($m): Sep1 BV 50.0; Sep10 51.5 before, +5.0 CF, 56.5 after; Sep20 59.0 before, &minus;2.0 CF, 57.0 after; Sep30 EV 55.0. 30-day month.</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q4-ans');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q4-ans" style="display:none;">
+                  <span class="gips-fline">(a) Modified Dietz:
+  net ECF = +5.0 &minus; 2.0 = +3.0
+  adj ECF = 5.0&times;(30&minus;10)/30 + (&minus;2.0)&times;(30&minus;20)/30
+          = 5.0&times;20/30 + (&minus;2.0)&times;10/30 = 3.333 &minus; 0.667 = 2.667
+  R_MD = (55.0 &minus; 50.0 &minus; 3.0) / (50.0 + 2.667) = 2.0 / 52.667 = 3.80%
+
+(b) Exact TWRR (revalue at every ECF):
+  Sub1: (51.5 &minus; 50.0)/50.0 = 3.00%
+  Sub2: (59.0 &minus; 56.5)/56.5 = 4.42%
+  Sub3: (55.0 &minus; 57.0)/57.0 = &minus;3.51%
+  TWRR = (1.0300)(1.0442)(0.9649) &minus; 1 = 3.78%</span>
+                  <div class="gips-trap"><b>Two methods, two numbers:</b> Mod Dietz <b>3.80%</b> (day-weighted approximation) vs exact TWRR <b>3.78%</b> (reval at each ECF). Close because ECFs are small. In (b), each subperiod's denominator is the value <b>after</b> the prior CF.</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q5. MWR could most likely be used instead of TWRR if the:</div>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q5',false)">A. account is large.</button>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q5',false)">B. account is nondiscretionary.</button>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q5',true)">C. manager can control the timing of external cash flows into and out of the portfolio.</button>
+                <div class="gips-quiz-exp" id="gips-q5-exp">
+                  <div class="gips-green-box"><b>Answer: C.</b> MWR is allowed when the <b>firm/manager controls the timing of ECFs</b> (and the portfolio is closed-end/fixed-life/fixed-commitment or has significant illiquid assets). Account <b>size</b> (A) and <b>nondiscretionary</b> status (B) are irrelevant to the TWRR-vs-MWR choice.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 15.4 ════════ -->
+          <div id="gipsm-154" class="gips-modpanel">
+            <div class="gips-toptabs">
+              <button class="gips-toptab active" onclick="gipsTop(event,'gips154-intro')">Composites 101</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips154-methods')">3 Weighting Methods</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips154-calc')">Composite Calculator</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips154-disc')">Discretion (15.f)</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips154-incl')">Inclusion/Exclusion</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips154-scf')">Sig. CF &amp; Min Assets</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips154-construct')">Construction (15.g)</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips154-quiz')">Quiz 15.4</button>
+            </div>
+
+            <!-- COMPOSITES 101 -->
+            <div id="gips154-intro" class="gips-toppanel active">
+              <div class="gips-card">
+                <div class="gips-title">What a composite is (LOS 15.e)</div>
+                <span class="gips-rule"><b class="gips-main-c">Composite</b> = a grouping of one or more portfolios with <b>similar investment mandates, objectives, or strategy</b>.</span>
+                <div class="gips-body">Composite returns are essential for communicating with investors, so GIPS requires composite returns be calculated <b>at least monthly</b> (except private market: <b>quarterly</b>; pooled funds not in a composite: <b>annually</b>).</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Must / must NOT be in a composite</div>
+                <table class="gips-tbl">
+                  <tr><th class="gips-green">Must be in &ge;1 composite</th><th class="gips-red">Must NOT be in a composite</th></tr>
+                  <tr><td>All <b>actual, fee-paying, discretionary</b> segregated accounts</td><td><b>Nondiscretionary</b> accounts</td></tr>
+                  <tr><td>Pooled funds <b>also offered as segregated accounts</b> (limited- or broad-distribution with a separate-account version)</td><td>Pooled funds <b>not</b> also offered as segregated accounts (e.g., a broad-distribution fund &mdash; typically government-regulated)</td></tr>
+                  <tr><td>&mdash;</td><td><b>Simulated</b> portfolios</td></tr>
+                </table>
+                <div class="gips-info"><b>Optional inclusions:</b> <b>Non-fee-paying</b> discretionary segregated accounts MAY be included <b>with additional disclosure</b> (disclose the % of composite assets they represent).</div>
+                <div class="gips-trap"><b>The three discriminators:</b> a "must include" account is <b class="gips-main-c">actual + fee-paying + discretionary + segregated</b>. Drop any one and it changes: non-fee-paying &rarr; optional w/ disclosure; nondiscretionary &rarr; excluded; simulated &rarr; excluded.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Model / simulated portfolios &amp; seed money</div>
+                <table class="gips-tbl">
+                  <tr><th>Type</th><th>Treatment</th></tr>
+                  <tr><td><b class="gips-main-c">Simulated / model / theoretical / backtested</b></td><td><b class="gips-red">Cannot</b> be in a composite. Performance only as <b>supplemental</b> info (labeled, must not contradict GIPS disclosures)</td></tr>
+                  <tr><td><b class="gips-main-c">Seed money</b> (firm's own funds for a new strategy)</td><td>These are <b>actual</b> portfolios &mdash; can be in existing/new composites; subject to <b>non-fee-paying</b> disclosure rules</td></tr>
+                </table>
+                <div class="gips-trap"><b>Actual vs simulated is the line:</b> backtested model = supplemental only. Seed money is real money &rarr; allowed in a composite (just disclose as non-fee-paying).</div>
+              </div>
+            </div>
+
+            <!-- 3 WEIGHTING METHODS -->
+            <div id="gips154-methods" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Three ways to calculate a composite return (LOS 15.e)</div>
+                <table class="gips-tbl">
+                  <tr><th>#</th><th>Method</th><th>How</th></tr>
+                  <tr><td>1</td><td><b class="gips-main-c">Asset-weight by beginning-of-period (BOP) values</b></td><td>Each portfolio return &times; its <b>BOP weight</b> (simplest)</td></tr>
+                  <tr><td>2</td><td><b class="gips-main-c">Asset-weight by BOP values + ECFs</b></td><td>Same, but weights use the <b>Modified Dietz denominator</b> (BOP + day-weighted CF)</td></tr>
+                  <tr><td>3</td><td><b class="gips-main-c">Aggregate method</b></td><td>Treat the whole composite as <b>one portfolio</b>; apply Modified Dietz to <b>total</b> values &amp; flows</td></tr>
+                </table>
+                <div class="gips-info">Methods 2 &amp; 3 weight the ECFs (familiar from Modified Dietz). <b>In many cases methods 2 and 3 produce the same result.</b></div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Worked example &mdash; 3-portfolio equity composite (October, 31 days, $m)</div>
+                <table class="gips-tbl">
+                  <tr><th>Port</th><th>30-Sep BV</th><th>ECF (day)</th><th>31-Oct EV</th><th>Mod Dietz</th></tr>
+                  <tr><td>A</td><td>110.00</td><td>&minus;10.10 (19th)</td><td>109.20</td><td><b>8.77%</b></td></tr>
+                  <tr><td>B</td><td>167.80</td><td>&minus;11.10 (13th)</td><td>166.90</td><td><b>6.32%</b></td></tr>
+                  <tr><td>C</td><td>344.20</td><td>+22.00 (3rd)</td><td>345.10</td><td><b>&minus;5.80%</b></td></tr>
+                  <tr><td><b>Total</b></td><td><b>622.00</b></td><td>&mdash;</td><td><b>621.20</b></td><td>&mdash;</td></tr>
+                </table>
+                <div class="gips-info"><b>a) Per-portfolio Mod Dietz</b> &mdash; note A's EV &lt; BV but return is <b>positive</b> (client withdrew 10.10); C contributed 22.00 so its return is <b>negative</b> even though EV &gt; BV. The flow direction flips the intuition.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">b) Method 1 &mdash; BOP weights</div>
+                <span class="gips-fline">Weights: A 110/622 = 17.68%
+         B 167.80/622 = 26.98%
+         C 344.20/622 = 55.34%
+
+Composite = 0.1768(8.77%) + 0.2698(6.32%) + 0.5534(&minus;5.80%)
+          = 1.5505% + 1.7051% &minus; 3.2097% = 0.05%</span>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">c) Method 2 &mdash; BOP + ECF weights (Mod Dietz denominators)</div>
+                <span class="gips-fline">Denominators (BOP + weighted CF):
+  A 106.09, B 161.35, C 364.07  &rarr; total 631.51
+
+Weights: A 16.80%, B 25.55%, C 57.65%
+
+Composite = 0.1680(8.77%) + 0.2555(6.32%) + 0.5765(&minus;5.80%)
+          = &minus;0.25%</span>
+                <div class="gips-trap"><b>Why method 2 &lt; method 1 here:</b> Portfolio C's contribution came <b>early</b> (3rd) so its Mod-Dietz denominator (and weight) is larger &rarr; C's <b class="gips-red">negative</b> return gets more influence &rarr; composite turns slightly negative. Timing of the flow changes the weight.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">d) Method 3 &mdash; aggregate method</div>
+                <span class="gips-fline">Treat composite as one portfolio (Mod Dietz on totals):
+numerator uses total EV, BV, and total CF from bottom row;
+denominator = total BOP + total weighted CF (= 631.51)
+
+R = (621.20 &minus; 22 &minus; &minus;11.10 &minus; &minus;10.10 &minus; 622) / 631.51
+  = &minus;1.60 / 631.51 = &minus;0.25%</span>
+                <div class="gips-info"><b>Methods 2 and 3 both give &minus;0.25%</b> here &mdash; the second and third methods frequently produce the same result.</div>
+              </div>
+            </div>
+
+            <!-- COMPOSITE CALCULATOR -->
+            <div id="gips154-calc" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Composite return calculator (all 3 methods)</div>
+                <div class="gips-body">Up to 3 portfolios. Enter BV, EV, days, and up to 2 ECFs each (inflows +, outflows &minus;; leave amount 0 if none). Defaults = the equity example.</div>
+                <table class="gips-tbl">
+                  <tr><th>Port</th><th>BV</th><th>EV</th><th>CF1</th><th>day1</th><th>CF2</th><th>day2</th></tr>
+                  <tr><td>A</td>
+                    <td><input id="gips-c-bvA" type="number" value="110.00" style="width:74px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-evA" type="number" value="109.20" style="width:74px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-cf1A" type="number" value="-10.10" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-d1A" type="number" value="19" style="width:48px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-cf2A" type="number" value="0" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-d2A" type="number" value="0" style="width:48px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td></tr>
+                  <tr><td>B</td>
+                    <td><input id="gips-c-bvB" type="number" value="167.80" style="width:74px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-evB" type="number" value="166.90" style="width:74px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-cf1B" type="number" value="-11.10" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-d1B" type="number" value="13" style="width:48px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-cf2B" type="number" value="0" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-d2B" type="number" value="0" style="width:48px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td></tr>
+                  <tr><td>C</td>
+                    <td><input id="gips-c-bvC" type="number" value="344.20" style="width:74px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-evC" type="number" value="345.10" style="width:74px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-cf1C" type="number" value="22.00" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-d1C" type="number" value="3" style="width:48px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-cf2C" type="number" value="0" style="width:64px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td>
+                    <td><input id="gips-c-d2C" type="number" value="0" style="width:48px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 4px;font-family:var(--mono);font-size:12px;"></td></tr>
+                </table>
+                <div class="gips-body">Days in period: <input id="gips-c-days" type="number" value="31" style="width:60px;background:#0B0F14;border:1px solid var(--border);color:#E6EDF3;border-radius:4px;padding:3px 5px;font-family:var(--mono);"> &nbsp; (set a portfolio's BV to 0 to exclude it)</div>
+                <button class="gips-reveal-btn" onclick="gipsCompCalc()">Compute composite (3 methods)</button>
+                <span class="gips-fline" id="gips-comp-out">Defaults = equity example &rarr; M1 +0.05%, M2/M3 &minus;0.25%</span>
+              </div>
+            </div>
+
+            <!-- DISCRETION 15.f -->
+            <div id="gips154-disc" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">"Discretionary" in composite construction (LOS 15.f)</div>
+                <span class="gips-rule">A key determinant of inclusion is whether the <b>manager has discretion</b> &mdash; whether the manager's ability to <b>implement the investment strategy</b> is intact. If performance doesn't reflect the manager's decisions (nondiscretionary), the portfolio is <b class="gips-red">excluded</b> from composite returns.</span>
+                <div class="gips-info"><b>The purpose of the construction rules</b> is partly to prevent managers from <b>excluding poorly performing portfolios</b> from composites (cherry-picking).</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">IPS constraints &mdash; degrees of discretion</div>
+                <div class="gips-body">A client IPS specifies risk preferences &amp; constraints (benchmark, sector/credit limits, derivatives use, ESG, restrictions on selling company stock, low-basis-stock limits, legal e.g. domestic-only). <b>None of these automatically</b> make a portfolio nondiscretionary &mdash; there are <b>degrees of discretion</b>.</div>
+                <span class="gips-rule">Guidance: is the manager's ability to use <b>professional judgment materially constrained</b>?</span>
+                <table class="gips-tbl">
+                  <tr><th>Constraint is...</th><th>Manager action</th></tr>
+                  <tr><td><b class="gips-green">Immaterial</b> (e.g., IPS bans derivatives the manager wouldn't use anyway)</td><td>Portfolio is <b>discretionary</b> &rarr; place in composite with similar <b>unconstrained</b> portfolios</td></tr>
+                  <tr><td><b class="gips-red">Material</b></td><td>Either group with similar <b>constrained</b> portfolios, OR <b>exclude from all composites</b></td></tr>
+                </table>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Restricted assets &amp; ECF-driven nondiscretion</div>
+                <table class="gips-tbl">
+                  <tr><th>Situation</th><th>Manager may...</th></tr>
+                  <tr><td>Restrictions on <b>particular assets</b> (e.g., can't sell low-basis stock)</td><td>(1) treat the <b>entire portfolio nondiscretionary</b>; OR (2) <b>remove the restricted assets</b> and put the remainder in a composite; OR (3) treat the <b>entire portfolio discretionary</b> if restricted-asset value is <b>below a stated % threshold</b></td></tr>
+                  <tr><td><b>ECFs</b> indicate nondiscretion (client makes large withdrawals forcing a large cash balance)</td><td>Restricts the manager's ability to invest in equity &rarr; may render the portfolio nondiscretionary (same as any constraint)</td></tr>
+                </table>
+                <div class="gips-trap"><b>Discretion is a judgment, not a checklist:</b> the test is whether professional judgment is <b class="gips-main-c">materially constrained</b>. A constraint that doesn't bite (manager wouldn't act differently) leaves the portfolio discretionary.</div>
+              </div>
+            </div>
+
+            <!-- INCLUSION / EXCLUSION -->
+            <div id="gips154-incl" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Inclusion &amp; exclusion of portfolios (LOS 15.h)</div>
+                <div class="gips-body">Firms must have <b>documented policies</b>, applied <b>consistently &amp; on a composite-by-composite basis</b>, for: inclusion, exclusion, switching, cash flows from new investments/liquidations, and the minimum asset level.</div>
+                <table class="gips-tbl">
+                  <tr><th>Event</th><th>Rule</th></tr>
+                  <tr><td><b class="gips-main-c">New portfolio inclusion</b></td><td>Include at the <b>beginning of the next full measurement period</b> (funded with cash July 6, monthly composite &rarr; include Aug 1). Firm has <b>discretion to wait longer</b> if it takes time to invest (illiquid/emerging markets, or must sell other securities first)</td></tr>
+                  <tr><td><b class="gips-red">Terminated portfolio exclusion</b></td><td>Include through the <b>last full measurement period the firm had discretion</b>. (Client says June 4 they leave July 9 &rarr; include only through <b>May 31</b>)</td></tr>
+                </table>
+                <div class="gips-trap"><b>The asymmetry:</b> new portfolios join at the <b>start</b> of the next full period; terminated ones stay through the <b>last full period of discretion</b> (the partial final period is dropped). For the June-4/July-9 case the last full month of discretion ends <b class="gips-main-c">May 31</b>.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Switching portfolios between composites</div>
+                <table class="gips-tbl">
+                  <tr><th>Trigger</th><th>Detail</th></tr>
+                  <tr><td><b class="gips-main-c">Client changes</b> mandate/objective/strategy</td><td>e.g., client now allows derivatives &rarr; switch to a composite that allows them</td></tr>
+                  <tr><td><b class="gips-main-c">Firm redefines</b> the composite</td><td>Should be <b>highly unusual</b> &mdash; in most cases the firm should <b>create a new composite</b> instead</td></tr>
+                </table>
+                <div class="gips-trap"><b>History stays put:</b> when a portfolio is switched to a new composite, its <b class="gips-red">past performance must remain in the OLD composite's historical record</b> &mdash; you don't retroactively move history (that would enable cherry-picking).</div>
+              </div>
+            </div>
+
+            <!-- SIGNIFICANT CF & MIN ASSETS -->
+            <div id="gips154-scf" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Significant cash flows</div>
+                <span class="gips-rule"><b class="gips-main-c">Significant cash flow</b> = one large enough that it <b>impedes the firm from implementing the strategy on a timely basis</b> (e.g., a contribution/withdrawal too large to invest/divest quickly in an illiquid market). The firm <b>documents</b> what counts as "significant."</span>
+                <div class="gips-body">To prevent composite performance being distorted by a significant CF, a firm can:</div>
+                <table class="gips-tbl">
+                  <tr><th>Option</th><th>Detail</th></tr>
+                  <tr><td>1. <b>Temporarily exclude</b> the portfolio</td><td>Remove from the composite while the flow is being invested/divested</td></tr>
+                  <tr><td>2. <b>Temporary new account</b> (outside the composite)</td><td>Holds <b>cash contributions until invested</b>, OR <b>securities until divested</b></td></tr>
+                </table>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Example &mdash; Account #207 (illiquid fixed income, large infusion Apr 12, ~60 days to invest)</div>
+                <table class="gips-tbl">
+                  <tr><th>Approach</th><th>What happens</th></tr>
+                  <tr><td><b class="gips-green">Best solution</b></td><td>Put funds in a temporary subaccount <b>207T</b> (not in any composite); keep reporting 207 in its composite. Once 207T is invested per objectives, <b>merge 207T into 207</b>. Client still gets reports on 207T + 207 (Standards of Professional Conduct); 207T is only excluded from <b>GIPS</b> reporting</td></tr>
+                  <tr><td><b>Alternative</b></td><td>Put funds directly into 207, but <b>temporarily exclude 207 from the composite</b> until invested. If done by June 15, exclude 207 for <b>April, May, June</b> (monthly composites)</td></tr>
+                </table>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Minimum asset levels</div>
+                <table class="gips-tbl">
+                  <tr><th>Rule</th><th>Detail</th></tr>
+                  <tr><td>Exclude if too small</td><td>A portfolio may be excluded if its <b>size is so small it can't be invested appropriately</b></td></tr>
+                  <tr><td>Add/remove thresholds</td><td>Min level must be <b>specified in advance</b>; add when size rises above (e.g., &euro;5m), remove when it falls below (e.g., &euro;4.5m)</td></tr>
+                  <tr><td><b class="gips-red">History preserved</b></td><td>Portfolios removed for falling below the minimum <b>cannot have their prior performance removed</b> from the composite's historical record</td></tr>
+                </table>
+                <div class="gips-trap"><b>Recurring "history stays" theme:</b> whether a portfolio is terminated, switched, or removed for min-asset reasons &mdash; its <b class="gips-main-c">prior performance always stays</b> in the composite history. This blocks cherry-picking.</div>
+              </div>
+            </div>
+
+            <!-- CONSTRUCTION 15.g -->
+            <div id="gips154-construct" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Role of mandate/objective/strategy (LOS 15.g)</div>
+                <div class="gips-body">Per GIPS, composites must:</div>
+                <table class="gips-tbl">
+                  <tr><th>Composites must...</th></tr>
+                  <tr><td>Be <b class="gips-main-c">determined by investment mandate, objective, or strategy</b></td></tr>
+                  <tr><td><b>Contain all portfolios</b> that match the composite definition</td></tr>
+                  <tr><td>Be based on criteria <b>documented in P&amp;P</b></td></tr>
+                  <tr><td>Be defined so clients can <b>compare one firm to another</b></td></tr>
+                  <tr><td>Be <b>representative of the firm's products</b> &amp; consistent with its marketing strategy</td></tr>
+                </table>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Too narrow vs too broad</div>
+                <table class="gips-tbl">
+                  <tr><th>Definition</th><th>Consequence</th></tr>
+                  <tr><td><b class="gips-red">Too narrow</b> (e.g., small-cap value frontier-market stocks)</td><td>Too <b>few portfolios</b> in each &rarr; unnecessary costs, jeopardizes <b>client confidentiality</b></td></tr>
+                  <tr><td><b class="gips-red">Too broad</b></td><td><b>Disparate performance</b> among composite portfolios (not comparable)</td></tr>
+                </table>
+                <div class="gips-info"><b>Bases for composite construction:</b> equity style; the benchmark; equity/bond sector; risk-return profile (e.g., tracking error); active vs passive vs core-plus; investment strategy (sector rotation, fundamental analysis, etc.).</div>
+                <div class="gips-info"><b>A portfolio can be in more than one composite</b> (e.g., a value portfolio in both a value composite and a small-cap-value composite, if it meets both definitions) &mdash; but the firm must <b>not double-count its assets</b> in total firm value.</div>
+              </div>
+            </div>
+
+            <!-- QUIZ 15.4 -->
+            <div id="gips154-quiz" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Q1. RRC runs a long-short strategy but never intends to market it, so excludes those portfolios from all composites. Acceptable if claiming GIPS compliance? (essay)</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q41-ans');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q41-ans" style="display:none;">
+                  <div class="gips-trap"><b class="gips-red">NOT acceptable.</b> ALL <b>actual, fee-paying, discretionary</b> segregated accounts must be in <b>at least one composite</b> &mdash; regardless of whether the firm markets that strategy. "We don't market it" is not an exemption. (A composite need not be presented to a given prospect, but the portfolios still must be assigned to a composite.)</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q2. TIM builds an aggressive-growth composite from <b>hypothetical</b> assets + a backtested allocation, and wants to show those model results in its presentation. Acceptable? (essay)</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q42-ans');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q42-ans" style="display:none;">
+                  <div class="gips-trap"><b class="gips-red">NOT acceptable.</b> <b>Simulated / model / backtested</b> portfolios <b>cannot be in a composite</b>. Their performance may only be shown as <b>supplemental information</b> (clearly labeled, not contradicting GIPS disclosures) &mdash; not as composite results.</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q3. For each, choose may-be-included vs must-be-excluded and explain. (i) significant liquidity needs + large cash position; (ii) client pays no fees; (iii) client requests strictly following an index.</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q43-ans');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q43-ans" style="display:none;">
+                  <div class="gips-green-box"><b>(i) Must be EXCLUDED.</b> A large forced cash position from significant liquidity needs <b>materially constrains</b> the manager's ability to implement the strategy &rarr; <b class="gips-red">nondiscretionary</b>.</div>
+                  <div class="gips-green-box"><b>(ii) MAY be included.</b> Non-fee-paying discretionary accounts <b>may</b> be included <b>with additional disclosure</b> (disclose % of composite assets) &mdash; not required, not forbidden.</div>
+                  <div class="gips-green-box"><b>(iii) MAY be included.</b> "Strictly follow an index" is a defined <b>passive mandate</b>, not a loss of discretion &mdash; the manager still implements the (indexing) strategy. Group it in a composite of similar index/passive portfolios.</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q4. JIM uses monthly valuation. When is it appropriate to remove a portfolio from JIM's composite if it's terminated on July 15, 2015? (essay)</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q44-ans');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q44-ans" style="display:none;">
+                  <div class="gips-trap"><b>Keep it through the last full measurement period of discretion = through June 30, 2015.</b> The partial month (July 1&ndash;15) is <b>dropped</b> because it's not a full measurement period. The portfolio's prior performance <b class="gips-main-c">stays in the composite history</b>.</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q5. UK composite, 2 portfolios, April (30-day, &pound;m). A: BV 400, +25 (12th), +10 (22nd), EV 467. B: BV 200, &minus;13 (20th), EV 224. Total BV 600, EV 691. Compute (i) per-portfolio Mod Dietz, (ii) BOP-weighted, (iii) BOP+CF, (iv) aggregate.</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q45-ans');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q45-ans" style="display:none;">
+                  <span class="gips-fline">(i) Mod Dietz:
+  A: adj CF = 25&times;18/30 + 10&times;8/30 = 15 + 2.667 = 17.667
+     R = (467 &minus; 400 &minus; 35)/(400 + 17.667) = 7.66%
+  B: adj CF = &minus;13&times;10/30 = &minus;4.333
+     R = (224 &minus; 200 &minus; &minus;13)/(200 &minus; 4.333) = 18.91%
+
+(ii) BOP weights A 400/600 = 66.67%, B 33.33%
+   Composite = 0.6667(7.66%) + 0.3333(18.91%) = 11.41%
+
+(iii) BOP+CF denoms A 417.67, B 195.67 &rarr; tot 613.33
+   weights A 68.10%, B 31.90%
+   Composite = 0.6810(7.66%) + 0.3190(18.91%) = 11.25%
+
+(iv) Aggregate:
+   net CF = 25 + 10 &minus; 13 = 22; adj CF = 15 + 2.667 &minus; 4.333 = 13.333
+   R = (691 &minus; 600 &minus; 22)/(600 + 13.333) = 11.25%</span>
+                  <div class="gips-trap"><b>Methods (iii) and (iv) match (11.25%)</b> &mdash; the BOP+CF and aggregate methods frequently give the same answer. Method (ii) differs (11.41%) because it ignores the cash-flow timing in the weights.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 15.5 ════════ -->
+          <div id="gipsm-155" class="gips-modpanel">
+            <div class="gips-toptabs">
+              <button class="gips-toptab active" onclick="gipsTop(event,'gips155-reports')">GIPS Reports</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips155-history')">Performance History</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips155-returns')">Returns &amp; Size</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips155-disp')">Risk &amp; Dispersion</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips155-port')">Portability (15.j)</button>
+            </div>
+
+            <!-- GIPS REPORTS -->
+            <div id="gips155-reports" class="gips-toppanel active">
+              <div class="gips-card">
+                <div class="gips-title">GIPS Reports (LOS 15.i)</div>
+                <span class="gips-rule">When marketing a strategy, firms must make <b>every reasonable effort</b> to provide a GIPS Report to <b>prospective clients</b> and <b>limited-distribution pooled fund</b> investors.</span>
+                <table class="gips-tbl">
+                  <tr><th>Two report types</th><th>For</th></tr>
+                  <tr><td><b class="gips-main-c">GIPS Composite Report</b></td><td>Composite (segregated-account) strategies &mdash; the curriculum's focus</td></tr>
+                  <tr><td><b class="gips-main-c">GIPS Pooled Fund Report</b></td><td>Pooled funds</td></tr>
+                </table>
+                <div class="gips-info">The exam focuses on the <b>composite time-weighted return report</b> requirements (below).</div>
+              </div>
+            </div>
+
+            <!-- PERFORMANCE HISTORY -->
+            <div id="gips155-history" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Performance history requirement</div>
+                <table class="gips-tbl">
+                  <tr><th>Rule</th><th>Detail</th></tr>
+                  <tr><td>On adoption</td><td>Present GIPS-compliant <b>annual</b> performance for <b class="gips-main-c">at least 5 years</b></td></tr>
+                  <tr><td>Younger composite</td><td>Or <b>since inception</b> if the composite has existed &lt; 5 years</td></tr>
+                  <tr><td>Build-up</td><td>Then <b>extend each year</b> until the firm has a <b class="gips-main-c">10-year</b> GIPS-compliant track record</td></tr>
+                </table>
+                <div class="gips-trap"><b>5 &rarr; 10:</b> start at a minimum of <b>5 years</b> (or since inception), then add a year annually until you reach a <b>10-year</b> compliant history. Don't confuse the 5-year start with the 10-year target.</div>
+              </div>
+            </div>
+
+            <!-- RETURNS & SIZE -->
+            <div id="gips155-returns" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Returns &amp; size measures the report must include</div>
+                <table class="gips-tbl">
+                  <tr><th>Must include</th></tr>
+                  <tr><td><b class="gips-main-c">Time-weighted returns</b> for the composite AND the benchmark</td></tr>
+                  <tr><td>The amount of <b>firm assets</b></td></tr>
+                  <tr><td>The amount of <b>composite assets</b></td></tr>
+                  <tr><td>The <b>number of portfolios</b> in the composite &mdash; <b>only if there are 6 or more</b></td></tr>
+                </table>
+                <div class="gips-trap"><b>Two number-of-portfolios traps:</b> (1) you only <b>report the count if &ge; 6</b> portfolios; (2) but there is <b class="gips-red">NO minimum number of portfolios for a composite to be formed</b> &mdash; a composite can hold just one portfolio. "Need 6 to report the count" &ne; "need 6 to have a composite."</div>
+              </div>
+            </div>
+
+            <!-- RISK & DISPERSION -->
+            <div id="gips155-disp" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Risk: three dispersion measures</div>
+                <div class="gips-body">The report must include <b>annual</b> measures of: internal composite dispersion, benchmark dispersion, and composite dispersion as a whole.</div>
+                <table class="gips-tbl">
+                  <tr><th>Measure</th><th>What it shows</th><th>Scale</th></tr>
+                  <tr><td><b class="gips-main-c">Internal dispersion</b></td><td>Variability of <b>portfolio returns within the composite</b> &mdash; how consistent performance is across portfolios</td><td><b>Micro</b></td></tr>
+                  <tr><td><b class="gips-main-c">Benchmark dispersion</b> + <b class="gips-main-c">composite-as-a-whole</b></td><td>Compare the composite's historical risk against a <b>benchmark</b></td><td><b>Macro</b></td></tr>
+                </table>
+                <div class="gips-info"><b>Large internal dispersion</b> may indicate the firm wasn't consistent in implementing the strategy, and/or the composite definition is <b>too broad</b>.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Internal dispersion &mdash; eligibility &amp; methods</div>
+                <span class="gips-rule"><b>Only portfolios in the composite for the ENTIRE year</b> can be included in internal dispersion. (Figure 15.1: A, C, E were in all 4 quarters &rarr; included; B, D, F lack a full year &rarr; excluded.)</span>
+                <table class="gips-tbl">
+                  <tr><th>Acceptable internal-dispersion methods</th><th>Note</th></tr>
+                  <tr><td>High &amp; low returns; <b>Range</b></td><td>Simplest, easy to interpret; but an <b>extreme value skews</b> them and they're <b>not stand-alone risk measures</b></td></tr>
+                  <tr><td><b class="gips-main-c">Equal-weighted standard deviation</b></td><td>Most widely accepted measure of within-composite dispersion</td></tr>
+                  <tr><td><b class="gips-main-c">Asset-weighted standard deviation</b></td><td>Weights each portfolio by its market weight</td></tr>
+                  <tr><td>Another firm-chosen measure</td><td>If it fairly represents the composite's internal dispersion</td></tr>
+                </table>
+                <div class="gips-trap"><b>The "&ge;6 to report" link:</b> Figure 15.1 leaves only 3 full-year portfolios &rarr; below 6, so <b class="gips-red">no dispersion need be reported</b>. The full-year rule and the 6-portfolio reporting threshold both gate dispersion.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">The two SD formulas (reference)</div>
+                <span class="gips-fline">Equal-weighted SD of composite:
+  &sigma;_C = sqrt[ &Sigma;(R_i &minus; meanR)&sup2; / (n &minus; 1) ]
+  R_i = return on portfolio i; meanR = equal-weighted mean; n = # portfolios
+  (n or n&minus;1 both defensible; firm should disclose which)
+
+Asset-weighted SD:
+  dispersion = sqrt[ &Sigma; w_i (R_i &minus; C_ASSET)&sup2; ]
+  w_i = market weight of portfolio i; C_ASSET = &Sigma; w_i R_i (asset-wtd return)</span>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Composite &amp; benchmark dispersion (the macro measures)</div>
+                <table class="gips-tbl">
+                  <tr><th>Rule</th><th>Detail</th></tr>
+                  <tr><td>Measure</td><td><b>Ex post standard deviation</b></td></tr>
+                  <tr><td>Frequency</td><td><b>Each annual period</b></td></tr>
+                  <tr><td>Of what</td><td>The <b>composite AND the benchmark</b></td></tr>
+                  <tr><td>Window</td><td>Using the <b>previous 3 years</b> of data, <b>annualized</b></td></tr>
+                </table>
+                <div class="gips-trap"><b>3-year annualized ex post SD</b> is the macro risk measure presented each year &mdash; distinct from the within-year internal dispersion (range / equal- or asset-weighted SD across portfolios).</div>
+              </div>
+            </div>
+
+            <!-- PORTABILITY -->
+            <div id="gips155-port" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Portability of performance (LOS 15.j)</div>
+                <div class="gips-body">When a firm acquires/joins another firm, manager group, or manager, the new firm <b>can link to the previous firm's historical performance ONLY IF ALL 4</b> conditions hold:</div>
+                <table class="gips-tbl">
+                  <tr><th>#</th><th>Condition</th></tr>
+                  <tr><td>1</td><td><b>Substantially all</b> the investment decision-makers are <b>retained</b> by the new firm</td></tr>
+                  <tr><td>2</td><td>The decision-making <b>process remains substantially intact &amp; independent</b> within the new firm</td></tr>
+                  <tr><td>3</td><td>The new firm has <b>records that document</b> the previous firm's performance</td></tr>
+                  <tr><td>4</td><td>There is <b>no break</b> in the performance record between the new and previous firm</td></tr>
+                </table>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">The "garden" exception &amp; the 1-year grace period</div>
+                <table class="gips-tbl">
+                  <tr><th>Scenario</th><th>Result</th></tr>
+                  <tr><td><b>Only the first 3</b> conditions met (e.g., previous firm's employees take a <b>garden</b> / temporary leave at acquisition)</td><td>Previous history <b>can still be used</b> to represent the new firm's, BUT the records <b class="gips-red">may not be LINKED</b> &mdash; assets aren't managed during the garden period &rarr; a <b>break</b> in the presented record</td></tr>
+                  <tr><td>New firm is GIPS-compliant but the <b>previous firm was not</b></td><td>New firm has <b class="gips-main-c">1 year</b> to bring the assets into compliance for future reporting</td></tr>
+                </table>
+                <div class="gips-trap"><b>Condition 4 is the linking switch:</b> all 4 &rarr; <b class="gips-green">link</b> the history (continuous record). Only 1&ndash;3 (a break exists) &rarr; you can <b>use/represent</b> the history but <b class="gips-red">not link</b> it. "Use" &ne; "link." And a non-compliant acquired firm = <b>1 year</b> grace to get compliant.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 15.6 ════════ -->
+          <div id="gipsm-156" class="gips-modpanel">
+            <div class="gips-toptabs">
+              <button class="gips-toptab active" onclick="gipsTop(event,'gips156-fv')">Fair Value &amp; Advisory</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips156-hier')">Valuation Hierarchy (15.d)</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips156-quiz')">Quiz 15.5-6</button>
+            </div>
+
+            <!-- FAIR VALUE & ADVISORY -->
+            <div id="gips156-fv" class="gips-toppanel active">
+              <div class="gips-card">
+                <div class="gips-title">Advisory-only &amp; uncalled committed capital reporting</div>
+                <span class="gips-rule">Advisory-only assets and uncalled-but-committed capital <b>cannot be in total firm assets</b>. But the firm <b>can report info on them</b> separately or combined with composite/firm assets &mdash; if combined, it must <b>also report separately</b> for the advisory-only / uncalled-committed portion, and in any case must <b>clearly label</b> those assets.</span>
+                <div class="gips-info">Ties back to 15.2: total firm assets <b>exclude</b> advisory-only and uncalled committed capital. Here's the disclosure mechanics if a firm chooses to show them.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Fair value &amp; accrued income</div>
+                <table class="gips-tbl">
+                  <tr><th>Rule</th><th>Detail</th></tr>
+                  <tr><td><b class="gips-main-c">Fair value</b></td><td>The amount an asset would be sold for in an <b>arm's-length</b> transaction between willing &amp; knowledgeable parties</td></tr>
+                  <tr><td><b>Accrued income</b></td><td>Fair value should <b>include accrued income</b> for bonds &amp; other income-generating assets</td></tr>
+                  <tr><td><b>Cash income</b></td><td>For cash, income may be accounted for on a <b>cash OR accrual</b> basis</td></tr>
+                  <tr><td>Documentation</td><td>Firms must <b>document</b> the valuation process &amp; methodologies (composite- or pooled-fund-specific)</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- VALUATION HIERARCHY -->
+            <div id="gips156-hier" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Recommended valuation hierarchy (LOS 15.d)</div>
+                <span class="gips-rule"><b>Descending order of usage</b> &mdash; a level lower in the hierarchy is used <b>only when all higher levels are unavailable</b>.</span>
+                <table class="gips-tbl">
+                  <tr><th>#</th><th>Level</th><th>Example / note</th></tr>
+                  <tr><td>1</td><td><b class="gips-green">Quoted price for an IDENTICAL asset in a LIQUID market, same day</b></td><td>The gold standard</td></tr>
+                  <tr><td>2</td><td>Quoted price for a <b>SIMILAR</b> asset in a <b>liquid</b> market, same day</td><td>&mdash;</td></tr>
+                  <tr><td>3</td><td>Quoted price for identical/similar assets in <b>markets that are NOT active</b></td><td>e.g., a stock trades infrequently &mdash; last price is days old</td></tr>
+                  <tr><td>4</td><td>A value based on <b>market inputs</b></td><td>e.g., apply a comparable P/E to the firm's earnings</td></tr>
+                  <tr><td>5</td><td><b class="gips-red">Subjective, unobservable value</b></td><td>Last resort &mdash; only when observable inputs/prices aren't available/appropriate; if used, <b>disclose</b> these assets as a <b>% of composite assets</b></td></tr>
+                </table>
+                <div class="gips-trap"><b>The two collapsing dimensions:</b> price moves from <b>identical&rarr;similar</b> and market moves from <b>liquid/active&rarr;inactive&rarr;model&rarr;subjective</b>. Level 1 = identical + liquid + same day. Drop to a lower level <b class="gips-main-c">only if every level above is unavailable</b>. Level 5 (subjective) triggers a <b>%-of-composite-assets disclosure</b>.</div>
+              </div>
+            </div>
+
+            <!-- QUIZ 15.5-6 -->
+            <div id="gips156-quiz" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Q1(i). Tribon: returns are gross-of-fees, but GIPS requires net-of-management-fees. Guptar agrees to recalculate to net. Is Tribon correct? (essay)</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q561i');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q561i" style="display:none;">
+                  <div class="gips-trap"><b class="gips-red">Tribon is INCORRECT.</b> GIPS <b>permits gross-of-fees</b> presentation (gross is still net of <b>transaction costs</b>). Net-of-management-fees is only <b>recommended</b>, not required. Guptar should NOT "fix" a presentation that is already acceptable &mdash; gross-of-fees is compliant.</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q1(ii). Excerpt 2: assets directed to <b>client-appointed</b> subadvisers. Guptar says GIPS requires including them in total firm assets. Is Guptar correct? (essay)</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q561ii');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q561ii" style="display:none;">
+                  <div class="gips-green-box"><b>Guptar is CORRECT.</b> A <b>client-appointed</b> subadviser means the firm did NOT select it &rarr; those assets are <b>nondiscretionary</b> to the firm. But <b class="gips-main-c">total firm assets INCLUDE nondiscretionary assets</b> (only <b>composite</b> assets exclude them). So they must be included in total firm assets.</div>
+                  <div class="gips-trap"><b>The firm-vs-composite trap again:</b> nondiscretionary &rarr; IN total firm assets, OUT of composite assets. Don't reflexively exclude "nondiscretionary."</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q2. PMG's 8 actions &mdash; compliant or not, and why?</div>
+                <button class="gips-reveal-btn" onclick="var e=document.getElementById('gips-q562');e.style.display=e.style.display==='block'?'none':'block';">Show answer</button>
+                <div id="gips-q562" style="display:none;">
+                  <table class="gips-tbl">
+                    <tr><th>Action</th><th>Verdict</th><th>Why</th></tr>
+                    <tr><td>1. S&amp;P 500 as benchmark for all 3 composites (fixed income, equity, balanced)</td><td><b class="gips-red">NOT compliant</b></td><td>Benchmark must <b>reflect the composite's mandate</b>; S&amp;P 500 doesn't fit a fixed-income or balanced composite</td></tr>
+                    <tr><td>2. Accrual accounting BUT <b>book values</b> for fixed-income returns</td><td><b class="gips-red">NOT compliant</b></td><td>Must use <b>fair (market) value</b>, not book value</td></tr>
+                    <tr><td>3. Accrued income included for fixed-income</td><td><b class="gips-green">Compliant</b></td><td>Fair value should include accrued income for bonds</td></tr>
+                    <tr><td>4. Fee schedule NOT included</td><td><b class="gips-red">NOT compliant</b></td><td>Investors must be <b>provided a fee schedule</b></td></tr>
+                    <tr><td>5. Asset-weighted composite using <b>end-of-period</b> weightings</td><td><b class="gips-red">NOT compliant</b></td><td>Must weight by <b>beginning-of-period</b> values (&plusmn; CF), not end-of-period</td></tr>
+                    <tr><td>6. Composites only actual AUM, not linked to simulated/model</td><td><b class="gips-green">Compliant</b></td><td>Simulated/model can't be in composites</td></tr>
+                    <tr><td>7. <b>Equal-weighted</b> (CF-adjusted) returns for <b>portfolio</b> returns</td><td><b class="gips-red">NOT compliant</b></td><td>Portfolio/composite returns must be <b>asset-weighted</b>; equal-weighting is for <b>internal dispersion</b>, not the return itself</td></tr>
+                    <tr><td>8. Performance after deduction of actual <b>trading expenses</b></td><td><b class="gips-green">Compliant</b></td><td>Gross-of-fees must be net of <b>transaction costs</b></td></tr>
+                  </table>
+                  <div class="gips-trap"><b>Pattern:</b> the non-compliant ones each violate a specific rule &mdash; benchmark-must-match-mandate (1), fair-value-not-book (2), provide-fee-schedule (4), BOP-not-EOP weighting (5), asset-weight-not-equal-weight portfolio returns (7). The compliant ones (3, 6, 8) are accrued income, no-simulated, and net-of-transaction-costs.</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q3. A security has no observable quoted market price in an active market. The next best valuation basis per the GIPS hierarchy is:</div>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q563',false)">A. subjective, unobservable inputs.</button>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q563',false)">B. observable market-based inputs other than quoted prices.</button>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q563',true)">C. quoted prices from an inactive market for the same or a similar security.</button>
+                <div class="gips-quiz-exp" id="gips-q563-exp">
+                  <div class="gips-green-box"><b>Answer: C.</b> Levels 1&ndash;2 (active-market quotes for identical/similar) are unavailable. The <b>next level down (3)</b> is a <b>quoted price in an INACTIVE market</b> for the same or similar security. Only below that come <b>market inputs</b> (B, level 4) and <b>subjective unobservable</b> (A, level 5, last resort). "Next best" = level 3 = C.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE 15.7 ════════ -->
+          <div id="gipsm-157" class="gips-modpanel">
+            <div class="gips-toptabs">
+              <button class="gips-toptab active" onclick="gipsTop(event,'gips157-what')">Purpose &amp; Scope</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips157-select')">Selecting a Verifier</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips157-process')">Process</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gips157-quiz')">Quiz 15.7</button>
+            </div>
+
+            <!-- PURPOSE & SCOPE -->
+            <div id="gips157-what" class="gips-toppanel active">
+              <div class="gips-card">
+                <div class="gips-title">What verification is (LOS 15.k)</div>
+                <span class="gips-rule"><b class="gips-main-c">Verification</b> = the process whereby an <b>independent, outside party</b> assesses the firm's: (1) P&amp;P for composite/pooled-fund construction &amp; maintenance, (2) performance calculation, (3) performance presentation, (4) distribution of performance.</span>
+                <table class="gips-tbl">
+                  <tr><th>Aspect</th><th>Detail</th></tr>
+                  <tr><td><b class="gips-main-c">Purpose</b></td><td>Provide greater <b>confidence</b> to investors &amp; the firm in its GIPS-compliance claim; based on the GIPS principle of <b>fair presentation &amp; full disclosure</b></td></tr>
+                  <tr><td><b class="gips-red">What it does NOT do</b></td><td>Does <b>NOT assure</b> that the construction, calculation, &amp; presentation for any <b>particular portfolio or composite is accurate</b></td></tr>
+                  <tr><td><b class="gips-main-c">Required?</b></td><td><b class="gips-red">No</b> &mdash; voluntary, but <b>recommended</b> &amp; consistent with best practices</td></tr>
+                </table>
+                <div class="gips-trap"><b>Three things people get wrong:</b> (1) verification is <b>voluntary, not required</b>; (2) it gives <b>confidence</b> but does <b>not assure accuracy</b> of any particular portfolio/composite; (3) it is <b>not</b> part of the GIPS-compliant presentation itself.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Benefits to the firm</div>
+                <table class="gips-tbl">
+                  <tr><th>Beyond confidence in the compliance claim</th></tr>
+                  <tr><td>Increased <b>knowledge</b> of performance-presentation personnel</td></tr>
+                  <tr><td>Better <b>quality presentations</b></td></tr>
+                  <tr><td>Better <b>internal processes &amp; procedures</b></td></tr>
+                  <tr><td>Possible <b>marketing</b> benefits</td></tr>
+                </table>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Scope &mdash; firmwide only</div>
+                <span class="gips-rule">Verification must follow the <b>GIPS Standards for Verifiers</b> and be issued <b class="gips-main-c">firmwide</b>. It <b class="gips-red">cannot</b> be provided for a single portfolio, composite, or pooled fund. A firm can't say a portfolio/fund/strategy is "in compliance" &mdash; verification is for the <b>entire firm</b>, and a firm must meet ALL requirements (no compliance "except for").</span>
+                <div class="gips-info"><b>The exception:</b> a firm CAN have a verifier do a detailed <b class="gips-main-c">performance examination</b> on one or more composites/pooled funds, then state that a performance examination was issued on that <b>specific</b> composite/fund. (Verification = firmwide; performance examination = single composite.)</div>
+                <div class="gips-trap"><b>"Can't be halfway" again:</b> <b>verification</b> = firmwide, all-or-nothing. The <b>single-composite</b> deep-dive is a <b class="gips-main-c">performance examination</b>, a different deliverable. Don't conflate the two.</div>
+              </div>
+            </div>
+
+            <!-- SELECTING A VERIFIER -->
+            <div id="gips157-select" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Choosing a verifier &mdash; fit to the firm</div>
+                <div class="gips-body">A firm should weigh its operations, products &amp; needs. Different firm pairs need different verifiers, e.g.:</div>
+                <table class="gips-tbl">
+                  <tr><th>These pairs have different needs</th></tr>
+                  <tr><td>Large global firm vs small local firm</td></tr>
+                  <tr><td>Tax-exempt investor (pension fund) vs a firm focused on managing portfolio taxes</td></tr>
+                  <tr><td>Quantitative manager using derivatives vs a direct real-estate investor</td></tr>
+                </table>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Info to request from potential verifiers</div>
+                <table class="gips-tbl">
+                  <tr><th>Request</th></tr>
+                  <tr><td>A <b>description</b> of the verifier (personnel &amp; organizational structure)</td></tr>
+                  <tr><td><b>Services</b> offered &amp; previous projects completed</td></tr>
+                  <tr><td>The verifier's <b>project management, sampling &amp; testing procedures</b></td></tr>
+                  <tr><td><b>References</b> from previous clients</td></tr>
+                  <tr><td><b>Fees, proposal &amp; timeline</b></td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- PROCESS -->
+            <div id="gips157-process" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">The verification process</div>
+                <div class="gips-body">The GIPS Standards for Verifiers set the procedures. Focus: <b>planning, sample selection, testing</b>.</div>
+                <table class="gips-tbl">
+                  <tr><th>Stage</th><th>Detail</th></tr>
+                  <tr><td><b class="gips-main-c">Planning</b></td><td>Verifier gathers info on the firm &mdash; all products, calculation methodologies, GIPS P&amp;P</td></tr>
+                  <tr><td><b class="gips-main-c">Sampling</b></td><td>Verification is asserted <b>firmwide</b>, but verifiers often use <b>samples</b>. When choosing samples, consider: firm &amp; composite <b>size</b>, internal controls &amp; methods, <b>number of portfolios</b>, <b>number of years</b> verified, etc. Deficiencies found &rarr; larger samples / additional procedures</td></tr>
+                </table>
+                <div class="gips-trap"><b>Sampling is the key nuance:</b> verification is <b>firmwide</b>, yet it's done via <b class="gips-main-c">samples</b> &mdash; so it is NOT a "detailed analysis of every product." If the verifier finds deficiencies, it expands the sample.</div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Testing areas</div>
+                <table class="gips-tbl">
+                  <tr><th>Verifiers test whether the firm satisfies requirements in:</th></tr>
+                  <tr><td>Recordkeeping</td></tr>
+                  <tr><td>Policies &amp; procedures</td></tr>
+                  <tr><td>Firm definition</td></tr>
+                  <tr><td>Thoroughness of the firm's list of composites &amp; limited-distribution pooled funds</td></tr>
+                  <tr><td>Calculation of total firm assets</td></tr>
+                  <tr><td><b>Input data</b> (e.g., portfolio inflows/outflows &mdash; verifiable vs <b>custodial statements</b> &amp; third-party docs)</td></tr>
+                  <tr><td>Construction &amp; maintenance of composites: classification of portfolios as <b>discretionary/nondiscretionary</b>; <b>assignment</b> of portfolios to appropriate composites (outlier returns may flag calc errors or misassignment)</td></tr>
+                  <tr><td>Content of the firm's <b>GIPS Report</b> &amp; any marketing material</td></tr>
+                </table>
+              </div>
+            </div>
+
+            <!-- QUIZ 15.7 -->
+            <div id="gips157-quiz" class="gips-toppanel">
+              <div class="gips-card">
+                <div class="gips-title">Q1. Which statement about verification is LEAST accurate? Verification is:</div>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q571',false)">A. voluntary.</button>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q571',false)">B. recommended as part of best practices.</button>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q571',true)">C. a requirement and noted as part of a GIPS-compliant presentation.</button>
+                <div class="gips-quiz-exp" id="gips-q571-exp">
+                  <div class="gips-green-box"><b>Answer: C (least accurate = the false one).</b> Verification is <b>voluntary</b> (A true) and <b>recommended / best practice</b> (B true). It is <b class="gips-red">NOT required</b>, and it is <b>not</b> part of the GIPS-compliant presentation. C is false on both counts.</div>
+                </div>
+              </div>
+              <div class="gips-card">
+                <div class="gips-title">Q2. Which statement about verification is MOST accurate?</div>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q572',true)">A. The verification process includes a detailed analysis of all the firm's products.</button>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q572',false)">B. Verification can be provided for a single portfolio, composite, or pooled fund.</button>
+                <button class="gips-quiz-opt" onclick="gipsQuiz(this,'q572',false)">C. Verification does not assure that the construction, calculation, and presentation for any particular portfolio or composite is accurate.</button>
+                <div class="gips-quiz-exp" id="gips-q572-exp">
+                  <div class="gips-green-box"><b>Kaplan's answer: A.</b> In planning, the verifier must gather info on <b>all the firm's products</b> to assert compliance on a <b>firmwide</b> basis. B is false (verification is firmwide, NOT single-portfolio/composite/fund &mdash; that would be a <b>performance examination</b>).</div>
+                  <div class="gips-trap"><b>Watch the A-vs-C tension:</b> statement <b>C is also a true sentence</b> (it's verbatim curriculum &mdash; verification doesn't assure any particular portfolio is accurate). Kaplan keys <b>A</b> because the question targets the firmwide/all-products scope; but note A slightly overstates ("detailed analysis of <b>all</b>") since verification actually uses <b>samples</b>. If the exam pits A against C, read the stem: a scope question &rarr; A; an "assurance/limitations" question &rarr; C. Both describe true features of verification.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ════════ MODULE: ERRORS ════════ -->
+          <div id="gipsm-err" class="gips-modpanel">
+            <div class="gips-toptabs">
+              <button class="gips-toptab active" onclick="gipsTop(event,'gipserr-pat')">Patterns</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gipserr-mcq')">MCQ Misses</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gipserr-essay')">Essay Misses</button>
+              <button class="gips-toptab" onclick="gipsTop(event,'gipserr-mastery')">Mastery</button>
+            </div>
+            <div id="gipserr-pat" class="gips-toppanel active">
+              <div class="gips-card"><div class="gips-title">Patterns</div><div class="gips-info">Recurring mistake patterns from mocks land here.</div></div>
+            </div>
+            <div id="gipserr-mcq" class="gips-toppanel">
+              <div class="gips-card"><div class="gips-title">MCQ Misses</div><div class="gips-info">Specific MCQ misses with the decisive detail that was dropped.</div></div>
+            </div>
+            <div id="gipserr-essay" class="gips-toppanel">
+              <div class="gips-card"><div class="gips-title">Essay Misses</div><div class="gips-info">Constructed-response misses land here.</div></div>
+            </div>
+            <div id="gipserr-mastery" class="gips-toppanel">
+              <div class="gips-card"><div class="gips-title">Mastery checklist</div><div class="gips-info">Confirmed mastery points move here.</div></div>
+            </div>
+          </div>
+
+          <script>
+            function gipsMod(ev,id){
+              var w=document.getElementById('gipsWidget');
+              w.querySelectorAll('.gips-modpanel').forEach(function(p){p.classList.remove('active')});
+              w.querySelectorAll('.gips-modtabs > .gips-modtab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function gipsTop(ev,id){
+              var mp=ev.currentTarget.closest('.gips-modpanel');
+              mp.querySelectorAll(':scope > .gips-toppanel').forEach(function(p){p.classList.remove('active')});
+              mp.querySelectorAll(':scope > .gips-toptabs > .gips-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function gipsQuiz(btn,q,correct){
+              var card=btn.closest('.gips-card');
+              card.querySelectorAll('.gips-quiz-opt').forEach(function(b){b.classList.remove('correct','wrong');});
+              if(correct){ btn.classList.add('correct'); }
+              else {
+                btn.classList.add('wrong');
+                card.querySelectorAll('.gips-quiz-opt').forEach(function(b){
+                  if(b.getAttribute('onclick').indexOf('true')>-1) b.classList.add('correct');
+                });
+              }
+              var exp=document.getElementById('gips-'+q+'-exp');
+              if(exp) exp.style.display='block';
+            }
+            function gipsMDCalc(){
+              try{
+                function v(id){return parseFloat(document.getElementById(id).value)||0;}
+                function rd(x,n){n=(n===undefined)?4:n;var p=Math.pow(10,n);return Math.round(x*p)/p;}
+                var bv=v('gips-md-bv'), ev=v('gips-md-ev'), days=v('gips-md-days');
+                var cf1=v('gips-md-cf1'), d1=v('gips-md-d1'), cf2=v('gips-md-cf2'), d2=v('gips-md-d2');
+                if(days<=0){ document.getElementById('gips-md-out').textContent='Days must be > 0.'; return; }
+                var w1=(days-d1)/days, w2=(days-d2)/days;
+                var adj1=cf1*w1, adj2=cf2*w2;
+                var adj=adj1+(cf2!==0?adj2:0);
+                var netCF=cf1+cf2;
+                var denom=bv+adj;
+                var r=(denom!==0)?(ev-bv-netCF)/denom:0;
+                var out="net ECF = "+rd(netCF,2)+"\n";
+                out+="adj ECF = "+cf1+"\u00d7("+days+"\u2212"+d1+")/"+days+" = "+rd(adj1,2);
+                if(cf2!==0){ out+="  +  "+cf2+"\u00d7("+days+"\u2212"+d2+")/"+days+" = "+rd(adj2,2); }
+                out+="\n        = "+rd(adj,2)+"\n";
+                out+="R_MD = ("+ev+" \u2212 "+bv+" \u2212 "+rd(netCF,2)+") / ("+bv+" + "+rd(adj,2)+")\n";
+                out+="     = "+rd(ev-bv-netCF,2)+" / "+rd(denom,2)+" = "+rd(r*100,4)+"%";
+                document.getElementById('gips-md-out').textContent=out;
+              }catch(e){}
+            }
+            function gipsCompCalc(){
+              try{
+                function v(id){return parseFloat(document.getElementById(id).value)||0;}
+                function rd(x,n){n=(n===undefined)?4:n;var p=Math.pow(10,n);return Math.round(x*p)/p;}
+                var days=v('gips-c-days'); if(days<=0){ document.getElementById('gips-comp-out').textContent='Days must be > 0.'; return; }
+                var labels=['A','B','C'];
+                var ports=[];
+                labels.forEach(function(L){
+                  var bv=v('gips-c-bv'+L);
+                  if(bv===0) return; // skip excluded
+                  var ev=v('gips-c-ev'+L);
+                  var cf1=v('gips-c-cf1'+L), d1=v('gips-c-d1'+L), cf2=v('gips-c-cf2'+L), d2=v('gips-c-d2'+L);
+                  var netCF=cf1+cf2;
+                  var adjCF=cf1*((days-d1)/days)+(cf2!==0?cf2*((days-d2)/days):0);
+                  var denom=bv+adjCF;
+                  var md=(denom!==0)?(ev-bv-netCF)/denom:0;
+                  ports.push({L:L,bv:bv,ev:ev,netCF:netCF,adjCF:adjCF,denom:denom,md:md});
+                });
+                if(ports.length===0){ document.getElementById('gips-comp-out').textContent='Enter at least one portfolio (BV > 0).'; return; }
+                var totBV=ports.reduce(function(s,p){return s+p.bv;},0);
+                var totEV=ports.reduce(function(s,p){return s+p.ev;},0);
+                var totNet=ports.reduce(function(s,p){return s+p.netCF;},0);
+                var totAdj=ports.reduce(function(s,p){return s+p.adjCF;},0);
+                var totDen=ports.reduce(function(s,p){return s+p.denom;},0);
+                var m1=ports.reduce(function(s,p){return s+(p.bv/totBV)*p.md;},0);
+                var m2=ports.reduce(function(s,p){return s+(p.denom/totDen)*p.md;},0);
+                var m3=(totBV+totAdj!==0)?(totEV-totBV-totNet)/(totBV+totAdj):0;
+                var out="Per-portfolio Modified Dietz:\n";
+                ports.forEach(function(p){ out+="  "+p.L+": R = "+rd(p.md*100,2)+"%  (BOP wt "+rd(p.bv/totBV*100,2)+"%, BOP+CF wt "+rd(p.denom/totDen*100,2)+"%)\n"; });
+                out+="\nMethod 1 (BOP weights):        "+rd(m1*100,4)+"%\n";
+                out+="Method 2 (BOP + ECF weights):  "+rd(m2*100,4)+"%\n";
+                out+="Method 3 (aggregate):          "+rd(m3*100,4)+"%";
+                document.getElementById('gips-comp-out').textContent=out;
+              }catch(e){}
+            }
+            function gipsInit(){ try{ gipsMDCalc(); gipsCompCalc(); }catch(e){} }
+          </script>
+        </div>
+
+
 
         <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
           <style>
@@ -30172,7 +31394,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget','imsWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget','imsWidget','gipsWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -30203,6 +31425,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'tcWidget' && typeof tcInit === 'function') setTimeout(tcInit, 50);
     if (widgetId === 'ppeWidget' && typeof ppeInit === 'function') setTimeout(ppeInit, 50);
     if (widgetId === 'imsWidget' && typeof imsInit === 'function') setTimeout(imsInit, 50);
+    if (widgetId === 'gipsWidget' && typeof gipsInit === 'function') setTimeout(gipsInit, 50);
   }
 }
 
@@ -30229,6 +31452,7 @@ function openNote(key, topic, subtopic) {
     'Portfolio Construction||Trading Costs and Electronic Markets': 'tcWidget',
     'Performance Measurement||Portfolio Performance Evaluation': 'ppeWidget',
     'Performance Measurement||Investment Manager Selection': 'imsWidget',
+    'Performance Measurement||Overview of the Global Investment Performance Standards': 'gipsWidget',
     'Asset Allocation||Capital Market Expectation: Framework and Macro Considerations': 'cmeWidget',
     'Asset Allocation||Capital Market Expectation: Forecasting Asset Class Returns': 'fiWidget',
     'Asset Allocation||Overview of Asset Allocation': 'oaWidget',
@@ -30240,7 +31464,7 @@ function openNote(key, topic, subtopic) {
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget','imsWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget','imsWidget','gipsWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
