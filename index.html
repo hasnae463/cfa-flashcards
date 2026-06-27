@@ -4126,6 +4126,7 @@ Total active return: −0.04 + −0.18 = −0.22%
             <button class="aw-tab" onclick="awTab('sc',this)">Style Classification</button>
             <button class="aw-tab" onclick="awTab('vs',this)">Value & Factors</button>
             <button class="aw-tab" onclick="awTab('ed',this)">Event-driven & Pairs</button>
+            <button class="aw-tab" onclick="awTab('re',this)">Recap</button>
             <button class="aw-tab" onclick="awTab('er',this)">Errors & Qs</button>
           </div>
 
@@ -4517,6 +4518,165 @@ Exit: when spread reverts to ~μ</div>
                 <text x="555" y="200" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="9">→ stop-loss kicks in</text>
               </svg>
             </div>
+          </div>
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB · RECAP (quick-review summary)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="aw-re" class="aw-panel">
+
+            <div class="aw-card">
+              <div class="aw-title">The whole module in one map</div>
+              <div class="aw-body">Active equity sits on <span class="aw-hl">two independent axes</span> (how decisions are made × direction of analysis), plus a toolbox of <span class="aw-hl">specific strategy types</span>, two ways to <span class="aw-hl">build a strategy</span>, and two ways to <span class="aw-hl">classify style</span>.</div>
+              <div class="aw-svg-wrap">
+                <svg width="100%" viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg">
+                  <text x="20" y="22" font-family="monospace" font-size="11" fill="#8B949E">2×2: the two axes are ORTHOGONAL — any cell is possible</text>
+                  <!-- axis labels -->
+                  <text x="20" y="120" font-family="Georgia,serif" font-size="12" fill="#D4A017" transform="rotate(-90 20 120)" text-anchor="middle">HOW decisions made</text>
+                  <text x="400" y="245" font-family="Georgia,serif" font-size="12" fill="#D4A017" text-anchor="middle">DIRECTION of analysis</text>
+                  <!-- column headers -->
+                  <text x="245" y="48" font-family="monospace" font-size="11" fill="#79C0FF" text-anchor="middle">BOTTOM-UP (stock-first)</text>
+                  <text x="540" y="48" font-family="monospace" font-size="11" fill="#79C0FF" text-anchor="middle">TOP-DOWN (macro-first)</text>
+                  <!-- row labels -->
+                  <text x="50" y="95" font-family="monospace" font-size="11" fill="#7EE787">FUNDAMENTAL</text>
+                  <text x="50" y="170" font-family="monospace" font-size="11" fill="#7EE787">QUANTITATIVE</text>
+                  <!-- cells -->
+                  <rect x="150" y="62" width="190" height="56" rx="4" fill="rgba(212,160,23,.07)" stroke="#8A6810"/>
+                  <text x="245" y="86" font-family="sans-serif" font-size="11" fill="#C9D1D9" text-anchor="middle">Pick great companies</text>
+                  <text x="245" y="104" font-family="sans-serif" font-size="10" fill="#8B949E" text-anchor="middle">by judgement (Buffett)</text>
+                  <rect x="350" y="62" width="190" height="56" rx="4" fill="rgba(212,160,23,.07)" stroke="#8A6810"/>
+                  <text x="445" y="86" font-family="sans-serif" font-size="11" fill="#C9D1D9" text-anchor="middle">Pick great sectors /</text>
+                  <text x="445" y="104" font-family="sans-serif" font-size="10" fill="#8B949E" text-anchor="middle">countries / themes</text>
+                  <rect x="150" y="135" width="190" height="56" rx="4" fill="rgba(56,139,253,.06)" stroke="#30475E"/>
+                  <text x="245" y="159" font-family="sans-serif" font-size="11" fill="#C9D1D9" text-anchor="middle">Rank stocks by factors</text>
+                  <text x="245" y="177" font-family="sans-serif" font-size="10" fill="#8B949E" text-anchor="middle">(value, size, momentum)</text>
+                  <rect x="350" y="135" width="190" height="56" rx="4" fill="rgba(56,139,253,.06)" stroke="#30475E"/>
+                  <text x="445" y="159" font-family="sans-serif" font-size="11" fill="#C9D1D9" text-anchor="middle">Smart-beta tilts /</text>
+                  <text x="445" y="177" font-family="sans-serif" font-size="10" fill="#8B949E" text-anchor="middle">factor rotation</text>
+                </svg>
+              </div>
+              <div class="aw-tip">Memory anchor: <span class="aw-green">company-by-company</span> = fundamental · <span class="aw-green">factor-by-factor across many stocks</span> = quantitative · <span class="aw-green">starts at the security</span> = bottom-up · <span class="aw-green">starts at macro/sector</span> = top-down. The axes don't depend on each other.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Axis 1 — Fundamental vs Quantitative (how)</div>
+              <table class="aw-table">
+                <thead><tr><th>Dimension</th><th>Fundamental</th><th>Quantitative</th></tr></thead>
+                <tbody>
+                  <tr><td>Nature</td><td>Subjective, discretionary judgement</td><td>Objective, systematic model rules</td></tr>
+                  <tr><td>Focus</td><td>Deep dive on <span class="aw-orange">few</span> companies</td><td>Factors across a <span class="aw-orange">large</span> universe</td></tr>
+                  <tr><td>Positions</td><td>Fewer, larger, higher-conviction</td><td>Many, smaller, spread factor bets</td></tr>
+                  <tr><td>Weights set by</td><td>Conviction (within risk limits)</td><td>Portfolio optimization (max alpha/IR)</td></tr>
+                  <tr><td>Where risk lies</td><td><span class="aw-red">Company level</span> (misjudged IV, or mispricing persists)</td><td><span class="aw-red">Portfolio level</span> (factors don't deliver)</td></tr>
+                  <tr><td>Rebalancing</td><td>Any time, continuous monitoring</td><td>Automatic at set intervals (monthly/qtrly)</td></tr>
+                </tbody>
+              </table>
+              <div class="aw-trap">Exam trap: "forecasting underlying company prospects" is the defining feature of <span class="aw-hl">fundamental</span>, NOT quantitative. Quants don't try to know each company deeply.</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Axis 2 — Bottom-up sub-types (the value/growth families)</div>
+              <div class="aw-body"><span class="aw-hl">Value-based</span> — buy below intrinsic value:</div>
+              <table class="aw-table">
+                <tbody>
+                  <tr><td>Relative value</td><td>Low P/E, P/B vs industry peers</td></tr>
+                  <tr><td>Contrarian</td><td>Buy against sentiment — depressed cyclicals, low/neg earnings</td></tr>
+                  <tr><td>High-quality value</td><td>IV <span class="aw-orange">+</span> financial strength &amp; quality mgmt (Buffett)</td></tr>
+                  <tr><td>Income</td><td>High dividend yield + positive div growth</td></tr>
+                  <tr><td>Deep value</td><td>Extremely low P/B, often distress</td></tr>
+                  <tr><td>Restructuring / distressed</td><td>Invest pre/in bankruptcy; release value via restructuring or liquidation</td></tr>
+                  <tr><td>Special situations</td><td>Mispricing from divestitures, spinoffs, mergers</td></tr>
+                </tbody>
+              </table>
+              <div class="aw-body" style="margin-top:8px"><span class="aw-hl">Growth-based</span> — buy faster-than-market growers (less worried about high multiples, more about source &amp; persistence of growth):</div>
+              <table class="aw-table">
+                <tbody>
+                  <tr><td>Consistent LT growth</td><td>Durable multi-year growers</td></tr>
+                  <tr><td>ST earnings momentum</td><td>Recent earnings acceleration</td></tr>
+                  <tr><td>GARP</td><td>Growth at reasonable price — uses <span class="aw-orange">PEG</span> (P/E ÷ growth); lower = better</td></tr>
+                </tbody>
+              </table>
+              <div class="aw-tip">Top-down toolbox: broad/smart-beta ETFs + derivatives to tilt <span class="aw-green">country, sector, volatility</span> (VIX futures, variance swaps, straddles), and <span class="aw-green">thematic</span> bets. Smart beta = top-down on return drivers (vs bottom-up security mispricing).</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Factor investing — the hedged-portfolio approach</div>
+              <div class="aw-rule">A <span class="aw-hl">factor</span> = a characteristic correlated with returns. <span class="aw-hl">Rewarded</span> factors carry a long-run positive risk premium.</div>
+              <div class="aw-svg-wrap">
+                <svg width="100%" viewBox="0 0 680 130" xmlns="http://www.w3.org/2000/svg">
+                  <text x="20" y="20" font-family="monospace" font-size="10.5" fill="#8B949E">Rank universe by factor → split into quantiles → LONG best, SHORT worst</text>
+                  <rect x="20" y="35" width="120" height="34" rx="4" fill="rgba(61,214,140,.10)" stroke="#2EA043"/>
+                  <text x="80" y="56" font-family="sans-serif" font-size="11" fill="#7EE787" text-anchor="middle">LONG top Q</text>
+                  <rect x="150" y="35" width="120" height="34" rx="4" fill="rgba(56,139,253,.05)" stroke="#30475E"/>
+                  <text x="210" y="56" font-family="sans-serif" font-size="10" fill="#8B949E" text-anchor="middle">mid Qs (ignored)</text>
+                  <rect x="280" y="35" width="120" height="34" rx="4" fill="rgba(56,139,253,.05)" stroke="#30475E"/>
+                  <text x="340" y="56" font-family="sans-serif" font-size="10" fill="#8B949E" text-anchor="middle">mid Qs (ignored)</text>
+                  <rect x="410" y="35" width="120" height="34" rx="4" fill="rgba(255,123,114,.10)" stroke="#C0392B"/>
+                  <text x="470" y="56" font-family="sans-serif" font-size="11" fill="#FF7B72" text-anchor="middle">SHORT bottom Q</text>
+                  <text x="560" y="48" font-family="sans-serif" font-size="10.5" fill="#C9D1D9">= factor</text>
+                  <text x="560" y="62" font-family="sans-serif" font-size="10.5" fill="#C9D1D9">return</text>
+                  <text x="20" y="95" font-family="monospace" font-size="10" fill="#8B949E">Factor-mimicking pf = dollar-neutral, unit exposure to ONE factor, 0 to others</text>
+                </svg>
+              </div>
+              <div class="aw-trap">4 drawbacks: (1) middle-quantile info is <span class="aw-hl">lost</span>; (2) assumes a <span class="aw-hl">linear</span> factor→return relation; (3) "diversified" multi-factor pf may not be if factors are <span class="aw-hl">correlated</span>; (4) assumes you <span class="aw-hl">can short</span>. Also it's not a "pure" factor pf — it keeps other factor exposures. <span class="aw-orange">Factor timing</span> = style rotation (factors work at different times).</div>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Building a strategy — Fundamental vs Quant process</div>
+              <table class="aw-table">
+                <thead><tr><th>Fundamental process</th><th>Quantitative process</th></tr></thead>
+                <tbody>
+                  <tr><td>1. Define market opportunity</td><td>1. Define market opportunity</td></tr>
+                  <tr><td>2. Prescreen universe</td><td>2. <span class="aw-orange">Acquire &amp; process data</span> (most time-consuming)</td></tr>
+                  <tr><td>3. Analyze industry / position / financials</td><td>3. Backtest (compute the <span class="aw-orange">IC</span>)</td></tr>
+                  <tr><td>4. Forecast (CFs / earnings)</td><td>4. Evaluate via <span class="aw-orange">OOS</span> testing</td></tr>
+                  <tr><td>5. Convert forecasts to valuations</td><td>5. Construct pf (risk models, trading costs)</td></tr>
+                  <tr><td>6. Construct pf to risk profile</td><td>&nbsp;</td></tr>
+                  <tr><td>7. Rebalance as needed</td><td>&nbsp;</td></tr>
+                </tbody>
+              </table>
+              <div class="aw-info"><span class="aw-hl">IC (information coefficient)</span> = correlation between factor score and subsequent return. <span class="aw-hl">Pearson IC</span> is sensitive to outliers; <span class="aw-hl">Spearman IC</span> (rank-based) is more robust.</div>
+              <table class="aw-table" style="margin-top:8px">
+                <thead><tr><th>Fundamental pitfalls (behavioral)</th><th>Quant pitfalls</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="aw-red">Value trap</span> — cheap stock keeps falling (really overvalued)</td><td><span class="aw-red">Survivorship bias</span> — backtest excludes dead firms → too rosy</td></tr>
+                  <tr><td><span class="aw-red">Growth trap</span> — growth already (over-)priced in</td><td><span class="aw-red">Look-ahead bias</span> — uses data not available at the time</td></tr>
+                  <tr><td>&nbsp;</td><td><span class="aw-red">Data-mining / overfitting</span>; turnover; borrow availability; transaction costs; <span class="aw-red">overcrowding</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Specific strategy types — the toolbox</div>
+              <table class="aw-table">
+                <thead><tr><th>Strategy</th><th>Core idea / mechanics</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="aw-hl">Activist</span></td><td>Buy stake → public proposal → threaten/launch proxy contest. Targets: slow growth, negative momentum, weak governance. Improves growth/profit/governance but <span class="aw-orange">raises debt</span>. Defenses: multi-class shares, poison pills, staggered boards.</td></tr>
+                  <tr><td><span class="aw-hl">Statistical arb</span></td><td>Technical price/volume data; profit from <span class="aw-orange">mean reversion</span>. Risk = no reversion.</td></tr>
+                  <tr><td>&nbsp;&nbsp;↳ Pairs trade</td><td>Two correlated same-industry stocks diverge → <span class="aw-green">long the loser, short the winner</span>, profit when they re-converge.</td></tr>
+                  <tr><td>&nbsp;&nbsp;↳ Microstructure</td><td>Supply/demand imbalances lasting milliseconds.</td></tr>
+                  <tr><td><span class="aw-hl">Event-driven</span></td><td>Inefficiencies around M&amp;A, earnings, buybacks, spinoffs.</td></tr>
+                  <tr><td>&nbsp;&nbsp;↳ Risk arb (cash deal)</td><td>Buy target after announcement (trades below deal price for risk); profit on close.</td></tr>
+                  <tr><td>&nbsp;&nbsp;↳ Risk arb (share deal)</td><td><span class="aw-green">Short acquirer + long target</span> in the exchange ratio. Risk = deal breaks → big loss.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="aw-card">
+              <div class="aw-title">Style classification — Holdings vs Returns</div>
+              <table class="aw-table">
+                <thead><tr><th></th><th>Holdings-based</th><th>Returns-based</th></tr></thead>
+                <tbody>
+                  <tr><td>Method</td><td>Aggregate each stock's attributes (Morningstar box)</td><td>Regress fund returns on passive style indexes</td></tr>
+                  <tr><td>Captures</td><td><span class="aw-orange">Current</span> exposure (most up-to-date)</td><td><span class="aw-orange">Average</span> exposure over the period (automatic)</td></tr>
+                  <tr><td>Needs</td><td>All holdings + each stock's style attributes</td><td>Only returns — no holdings needed</td></tr>
+                  <tr><td>(+)</td><td>Accurate; per-holding contribution</td><td>Easy, universally applicable</td></tr>
+                  <tr><td>(−)</td><td>Data-heavy; derivatives hard to classify</td><td>Constraints (slopes sum to 1) hide extreme styles</td></tr>
+                </tbody>
+              </table>
+              <div class="aw-info">Holdings net style score: strongly <span class="aw-red">negative</span> = value · strongly <span class="aw-green">positive</span> = growth · near <span class="aw-orange">zero</span> = core/blend. Returns model: Rp = a + b₁SCG + b₂LCG + b₃SCV + b₄LCV + e, with Σbᵢ = 1 (slopes = style allocations, a = manager value-add).</div>
+            </div>
+
           </div>
 
           <!-- ═════════════════════════════════════════════════════════════════
