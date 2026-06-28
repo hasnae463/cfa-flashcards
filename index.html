@@ -5261,6 +5261,7 @@ Exit: when spread reverts to ~μ</div>
             <button class="pcw-tab" onclick="pcwTab('riskbudget',this)">Allocating Risk Budget</button>
             <button class="pcw-tab" onclick="pcwTab('wellpf',this)">Well-Constructed PF</button>
             <button class="pcw-tab" onclick="pcwTab('scale',this)">Scale &amp; AUM Limits</button>
+            <button class="pcw-tab" onclick="pcwTab('recap',this)">Recap</button>
             <button class="pcw-tab" onclick="pcwTab('errors',this)">Errors &amp; Mastery</button>
           </div>
 
@@ -6047,6 +6048,142 @@ Lesser of the two = <b style="color:#D4A017">0.2%</b></div>
             </div>
 
           </div><!-- /pcw-scale panel -->
+
+          <!-- ═════════════════════════════════════════════════════════════════
+               TAB · RECAP (quick-review summary)
+               ═════════════════════════════════════════════════════════════════ -->
+          <div id="pcw-recap" class="pcw-panel">
+
+            <div class="pcw-card">
+              <div class="pcw-title">Three sources of active return</div>
+              <table class="pcw-table">
+                <thead><tr><th>Source</th><th>Driven by</th><th>Building block</th></tr></thead>
+                <tbody>
+                  <tr><td>1. Strategic exposure to <span class="pcw-hl">rewarded factors</span> (beta, size, value, liquidity…)</td><td>Risk premia — now cheap via rules-based index, so <span class="pcw-orange">no longer alpha</span></td><td>Factor weightings</td></tr>
+                  <tr><td>2. Tactical exposure to <span class="pcw-hl">mispricings</span> (securities, sectors, factors)</td><td><span class="pcw-green">Alpha → manager skill</span></td><td>Alpha skills</td></tr>
+                  <tr><td>3. <span class="pcw-hl">Idiosyncratic</span> risk from concentrated positions</td><td><span class="pcw-red">Luck</span></td><td>Position sizing</td></tr>
+                </tbody>
+              </table>
+              <div class="pcw-rule">Active return is positive when you <span class="pcw-green">overweight outperformers</span> and <span class="pcw-red">underweight underperformers</span> — it's driven by the <span class="pcw-hl">differences in weights</span> vs the benchmark.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">The building blocks + breadth</div>
+              <table class="pcw-table">
+                <thead><tr><th>Block</th><th>What it is</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="pcw-hl">Factor weightings</span></td><td>Rewarded-factor exposures that differ from benchmark (active return from Δbeta). Maps to source #1.</td></tr>
+                  <tr><td><span class="pcw-hl">Alpha skills</span></td><td>Skill — esp. <span class="pcw-orange">factor timing</span> (when a factor will out/underperform), incl. unrewarded factors (geography, sector, commodities, security selection). Maps to source #2.</td></tr>
+                  <tr><td><span class="pcw-hl">Position sizing</span></td><td>Balances conviction vs idiosyncratic risk. Smaller positions in more names → diversify away idiosyncratic risk → lower vol.</td></tr>
+                </tbody>
+              </table>
+              <div class="pcw-info"><span class="pcw-hl">Breadth of expertise</span> ties them together — the <span class="pcw-hl">fundamental law of active management</span>: more <span class="pcw-green">independent</span> decisions (higher breadth) → higher active return. Factor manager spreads wide (minimizes idiosyncratic risk); stock-picker concentrates (deliberately takes idiosyncratic risk).</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Active Share vs Active Risk — the key comparison</div>
+              <table class="pcw-table">
+                <thead><tr><th></th><th>Active Share</th><th>Active Risk (tracking error)</th></tr></thead>
+                <tbody>
+                  <tr><td>Definition</td><td>½ Σ|w<sub>p</sub> − w<sub>b</sub>| (0 to 1)</td><td>SD of (pf − benchmark) returns</td></tr>
+                  <tr><td>Measures</td><td>How <span class="pcw-hl">different the holdings</span> are from the bench</td><td>How <span class="pcw-hl">consistent</span> performance is vs bench</td></tr>
+                  <tr><td>Affected by correlations?</td><td><span class="pcw-red">NO</span></td><td><span class="pcw-green">YES</span> (cross-correlations, variances)</td></tr>
+                  <tr><td>Manager control</td><td><span class="pcw-green">Full</span> (controls weights)</td><td><span class="pcw-red">Not full</span> (predicted risk needs estimates that may not realize)</td></tr>
+                </tbody>
+              </table>
+              <span class="pcw-fl">Active Share = ½ Σ |w_p − w_b|</span>
+              <div class="pcw-trap">Same bench, both invest only in bench securities → the pf with <span class="pcw-hl">fewer/more concentrated</span> positions has <span class="pcw-hl">higher Active Share</span>. Active Share is used to judge fee-per-unit-of-active-management: AS 0.2 is "expensive" vs AS 0.5 at the same fee. Factor bets <span class="pcw-orange">necessarily raise Active Share</span>, but high Active Share does NOT imply factor bets were taken.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Active risk composition + manager-style fingerprints</div>
+              <table class="pcw-table">
+                <thead><tr><th>Research conclusion on active return</th></tr></thead>
+                <tbody>
+                  <tr><td>High net factor exposure → high active risk</td></tr>
+                  <tr><td><span class="pcw-hl">No net factor exposure</span> → active risk attributed <span class="pcw-hl">entirely to Active Share</span></td></tr>
+                  <tr><td>Active risk from Active Share is <span class="pcw-orange">inversely proportional to # of securities</span></td></tr>
+                  <tr><td>Active risk rises as factor &amp; idiosyncratic risk levels rise</td></tr>
+                </tbody>
+              </table>
+              <table class="pcw-table" style="margin-top:8px">
+                <thead><tr><th>Style</th><th>Constraint fingerprint</th></tr></thead>
+                <tbody>
+                  <tr><td>Sector rotator</td><td>Large permitted <span class="pcw-hl">sector</span>-weight deviations</td></tr>
+                  <tr><td>Stock picker</td><td>Large permitted <span class="pcw-hl">individual-security</span> deviations</td></tr>
+                  <tr><td>Diversified multifactor</td><td>Moderate flexibility (not large) — moderate active risk</td></tr>
+                  <tr><td>Closet indexer</td><td><span class="pcw-red">Low</span> targeted active risk + low deviation</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Risk budgeting — absolute vs relative</div>
+              <div class="pcw-body">Process: (1) pick the right <span class="pcw-hl">risk measure</span> for the mandate → (2) understand each strategy's risk contribution → (3) set the overall budget level → (4) allocate risk across positions/factors.</div>
+              <table class="pcw-table">
+                <thead><tr><th></th><th>Absolute risk</th><th>Relative / active risk</th></tr></thead>
+                <tbody>
+                  <tr><td>When</td><td>Objective in <span class="pcw-hl">total returns</span> (e.g., L/S vs cash + margin)</td><td>Objective is to <span class="pcw-hl">beat an index</span></td></tr>
+                  <tr><td>Contribution of asset i</td><td>CV<sub>i</sub> = w<sub>i</sub>·C<sub>ip</sub> (= Σ w<sub>i</sub>w<sub>j</sub>C<sub>ij</sub>)</td><td>CAV<sub>i</sub> = (w<sub>pi</sub> − w<sub>bi</sub>)·RC<sub>ip</sub></td></tr>
+                  <tr><td>Sums to</td><td>Portfolio variance</td><td>Active variance (AV<sub>p</sub>)</td></tr>
+                </tbody>
+              </table>
+              <span class="pcw-fl">CVi  = wi · Cip                 (absolute)
+CAVi = (wpi − wbi) · RCip        (active)   RCip = Σ(wpi − wbi)RCij</span>
+              <div class="pcw-trap">Active variance uses <span class="pcw-hl">active risk, not absolute SD</span>. Cash has tiny SD but ~2× the active risk of the indexes (low correlation to the bench) → cash can contribute <span class="pcw-hl">100%</span> of active variance. And if the bench = equal-weight of Index A &amp; B, the active returns of A and B are correlated <span class="pcw-hl">−1</span> (one above bench ⇒ the other below).</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Determining the appropriate level of risk</div>
+              <table class="pcw-table">
+                <thead><tr><th>Factor</th><th>Effect</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="pcw-hl">Implementation constraints</span></td><td>Short/leverage limits cap under/overweights; liquidity costs rise with active risk → <span class="pcw-red">degrade the info ratio</span></td></tr>
+                  <tr><td><span class="pcw-hl">Limited diversification</span></td><td>Concave efficient frontier — higher risk/return targets run out of high-return ideas → falling Sharpe</td></tr>
+                  <tr><td><span class="pcw-hl">Leverage</span></td><td>Fixes diversification in one period, but in multi-period <span class="pcw-red">too much leverage lowers compounded return</span></td></tr>
+                </tbody>
+              </table>
+              <span class="pcw-fl">Rg ≈ Ra − vol² / 2</span>
+              <div class="pcw-info">Leverage raises both R<sub>a</sub> and vol, but the <span class="pcw-hl">vol² term</span> means past a point, more leverage <span class="pcw-red">reduces</span> geometric compounded return over time.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Risk measures — heuristic vs formal</div>
+              <table class="pcw-table">
+                <thead><tr><th>Heuristic (experience-based)</th><th>Formal (statistical)</th></tr></thead>
+                <tbody>
+                  <tr><td>Limits on position / sector / region exposure, leverage, liquidity, turnover</td><td>Limits on vol, active risk, skewness, drawdown, VaR-family</td></tr>
+                  <tr><td>No return-distribution forecast needed</td><td><span class="pcw-red">Require forecasts → estimation error</span></td></tr>
+                </tbody>
+              </table>
+              <table class="pcw-table" style="margin-top:8px">
+                <thead><tr><th>VaR family</th><th>Meaning</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="pcw-hl">CVaR</span></td><td>Expected loss <span class="pcw-orange">given VaR is exceeded</span> (expected tail loss / shortfall)</td></tr>
+                  <tr><td><span class="pcw-hl">IVaR</span></td><td>Change in VaR from <span class="pcw-orange">adding a new position</span></td></tr>
+                  <tr><td><span class="pcw-hl">Marginal VaR</span></td><td>Impact of a <span class="pcw-orange">very small change</span> in a position size on VaR</td></tr>
+                </tbody>
+              </table>
+              <div class="pcw-trap">Leverage magnifies the cost of bad risk estimates — tail events can force liquidation at the worst time. Few-position pfs have <span class="pcw-hl">higher estimation error</span> → formal measures are harder to apply. Style matters: absolute-return/benchmark-agnostic manager cares little about drawdown; market-neutral manager targets a tight absolute-vol band.</div>
+            </div>
+
+            <div class="pcw-card">
+              <div class="pcw-title">Implicit costs — market impact &amp; slippage</div>
+              <div class="pcw-rule"><span class="pcw-hl">Market impact</span> = the price move your own trade causes. Driven by: AUM vs security cap (small-caps = liquidity barrier for big AUM), higher turnover / shorter horizon, and trades that signal <span class="pcw-hl">"information"</span> to others.</div>
+              <table class="pcw-table">
+                <thead><tr><th>Slippage facts</th></tr></thead>
+                <tbody>
+                  <tr><td>= execution price − <span class="pcw-hl">midpoint of bid-ask</span> when the trade was entered</td></tr>
+                  <tr><td>Usually <span class="pcw-orange">higher than explicit costs</span></td></tr>
+                  <tr><td>Greater for <span class="pcw-hl">small-cap</span> than large-cap</td></tr>
+                  <tr><td><span class="pcw-red">NOT necessarily greater in EM</span></td></tr>
+                  <tr><td>Substantially higher in <span class="pcw-hl">high volatility</span></td></tr>
+                </tbody>
+              </table>
+              <div class="pcw-info">Small-cap strategy hitting capacity from rising slippage → manager should <span class="pcw-green">close the fund to new money</span> or <span class="pcw-green">warn that the strategy may change</span>. Broadly: a small-cap firm must <span class="pcw-hl">limit AUM, diversify, limit turnover, or adapt trading</span> as AUM grows.</div>
+            </div>
+
+          </div><!-- /pcw-recap panel -->
 
           <!-- ═════════════════════════════════════════════════════════════════
                TAB 6 · ERRORS & MASTERY — 11 wrong questions reorganized by error pattern
