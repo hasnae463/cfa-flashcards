@@ -657,139 +657,279 @@ Negative Nf = short futures   ·   BPV gap = |portfolio BPV − liability BPV|</
           <div id="lw-recap" class="lw-panel">
 
             <div class="lw-card">
-              <div class="lw-title">Adjusting the duration gap (DG) on a rate view</div>
-              <div class="lw-body">A <span class="lw-hl">100% hedge eliminates the DG</span>. In the normal case <span class="lw-fl">BPV_assets &lt; BPV_liab</span>, a manager tilts the hedge based on the rate view:</div>
-              <table class="lw-table">
-                <thead><tr><th>Rate view</th><th>Action</th><th>Why</th></tr></thead>
-                <tbody>
-                  <tr><td>Expect rates <span class="lw-red">↑</span></td><td><span class="lw-hl">Reduce</span> hedge → BPV_assets below fully-hedged</td><td>Lower asset BPV → assets <span class="lw-green">decline less</span> as rates rise</td></tr>
-                  <tr><td>Expect rates <span class="lw-green">↓</span></td><td><span class="lw-hl">Increase</span> hedge → BPV_assets above fully-hedged</td><td>Higher asset BPV → assets <span class="lw-green">gain more</span> as rates fall</td></tr>
-                </tbody>
-              </table>
-              <div class="lw-tip">Mnemonic: hedge <span class="lw-hl">less</span> if you expect rates up, <span class="lw-hl">more</span> if you expect rates down — you're positioning asset BPV for the move you expect.</div>
+              <div class="lw-title">Reading map — Liability-Driven &amp; Index-Based Strategies</div>
+              <div class="lw-body">Two halves: <span class="lw-hl">liability-driven</span> (fund a known liability — immunization, duration matching, managing a duration gap with derivatives) and <span class="lw-hl">index-based</span> (track a bond index — replication, primary-risk matching, indirect exposure, benchmark choice).</div>
+              <div class="lw-svg-wrap">
+                <svg width="100%" viewBox="0 0 680 150" xmlns="http://www.w3.org/2000/svg">
+                  <text x="20" y="18" font-family="monospace" font-size="10.5" fill="#8B949E">LIABILITY-DRIVEN</text>
+                  <rect x="20" y="28" width="150" height="30" rx="4" fill="rgba(212,160,23,.08)" stroke="#8A6810"/>
+                  <text x="95" y="47" font-family="sans-serif" font-size="10" fill="#C9D1D9" text-anchor="middle">1 liability: match MacDur</text>
+                  <rect x="180" y="28" width="150" height="30" rx="4" fill="rgba(212,160,23,.08)" stroke="#8A6810"/>
+                  <text x="255" y="47" font-family="sans-serif" font-size="10" fill="#C9D1D9" text-anchor="middle">Many: match BPV</text>
+                  <rect x="340" y="28" width="160" height="30" rx="4" fill="rgba(212,160,23,.08)" stroke="#8A6810"/>
+                  <text x="420" y="47" font-family="sans-serif" font-size="10" fill="#C9D1D9" text-anchor="middle">Duration gap: derivatives</text>
+                  <text x="20" y="88" font-family="monospace" font-size="10.5" fill="#8B949E">INDEX-BASED</text>
+                  <rect x="20" y="98" width="150" height="30" rx="4" fill="rgba(56,139,253,.07)" stroke="#1F6FEB"/>
+                  <text x="95" y="117" font-family="sans-serif" font-size="10" fill="#C9D1D9" text-anchor="middle">Replicate / sample</text>
+                  <rect x="180" y="98" width="150" height="30" rx="4" fill="rgba(56,139,253,.07)" stroke="#1F6FEB"/>
+                  <text x="255" y="117" font-family="sans-serif" font-size="10" fill="#C9D1D9" text-anchor="middle">Match primary risks</text>
+                  <rect x="340" y="98" width="160" height="30" rx="4" fill="rgba(56,139,253,.07)" stroke="#1F6FEB"/>
+                  <text x="420" y="117" font-family="sans-serif" font-size="10" fill="#C9D1D9" text-anchor="middle">Indirect: funds/ETF/TRS</text>
+                </svg>
+              </div>
             </div>
 
             <div class="lw-card">
-              <div class="lw-title">3 instruments to adjust the DG</div>
+              <div class="lw-title">Immunizing a SINGLE liability (LOS a)</div>
+              <div class="lw-rule">Immunization = manage the portfolio to <span class="lw-hl">minimize the variability of the realized return</span> over a horizon, so the FV is confident enough to fund the liability.</div>
               <table class="lw-table">
-                <thead><tr><th>Tool</th><th>Note</th></tr></thead>
                 <tbody>
-                  <tr><td><span class="lw-hl">Futures</span></td><td>Operational/practical risk — <span class="lw-orange">daily margin</span> must be posted &amp; adjusted</td></tr>
-                  <tr><td><span class="lw-hl">IRS</span></td><td>Receive-fixed swap raises asset BPV</td></tr>
-                  <tr><td><span class="lw-hl">Swaption collar</span></td><td>Buy <span class="lw-green">receiver</span> swaption (benefit if SFR falls) + sell <span class="lw-red">payer</span> swaption to cut the premium outlay</td></tr>
+                  <tr><td>Perfect hedge</td><td>Buy a <span class="lw-hl">zero-coupon default-free bond</span> with par + maturity matching the liability → no cash flow or price risk</td></tr>
+                  <tr><td>Single liability ≈</td><td>a zero-coupon liability → its time-to-payment <span class="lw-hl">IS</span> its Macaulay duration</td></tr>
+                  <tr><td>So match</td><td><span class="lw-hl">Macaulay duration</span> of assets = MacDur of the liability (D = D<sub>L</sub>)</td></tr>
                 </tbody>
               </table>
+              <div class="lw-info">At Macaulay duration, <span class="lw-green">price risk</span> (sell before maturity) and <span class="lw-green">reinvestment risk</span> (reinvest coupons) exactly offset for a small one-time parallel move: rates ↑ → higher reinvestment income offsets the price loss; rates ↓ → lower reinvestment income offsets the price gain.</div>
+              <div class="lw-trap">Goal = earn the <span class="lw-hl">initial portfolio IRR</span>, NOT the average YTM of the bonds. Earning the IRR is what grows the portfolio to the required FV. Use <span class="lw-hl">portfolio statistics</span> (aggregate-cash-flow IRR), not bond-by-bond weighted averages — the two differ on a non-flat curve (on an upward-sloping curve, portfolio duration/IRR &gt; weighted-average, since longer bonds act over a longer time).</div>
             </div>
 
             <div class="lw-card">
-              <div class="lw-title">3 swap methods to reduce a negative DG — picked by the rate forecast</div>
-              <div class="lw-body">All three raise asset BPV; which is <span class="lw-hl">optimal</span> depends on where future rates land relative to the swaption strikes:</div>
+              <div class="lw-title">Convexity, dispersion &amp; the %ΔV engine</div>
+              <span class="lw-fl">%ΔV = (−MD × ΔY) + (½ × C × ΔY²)</span>
+              <span class="lw-fl">Convexity = (MacDur² + MacDur + dispersion) / (1 + periodic IRR)²</span>
+              <table class="lw-table">
+                <tbody>
+                  <tr><td>Modified duration</td><td>= MacDur / (1 + periodic IRR); slightly better immediate price-change measure</td></tr>
+                  <tr><td>Dispersion</td><td>weighted variance of <span class="lw-hl">when</span> cash flows arrive, around MacDur</td></tr>
+                  <tr><td>Convexity</td><td>rises with dispersion; with MD gives the more accurate price change</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-info">Dispersion &amp; convexity reveal the immunization's <span class="lw-hl">structural risk</span> — exposure to shifts AND twists in the curve.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">The structural-risk logic (corrected, key for exam)</div>
+              <div class="lw-rule">A single ZC bond has <span class="lw-hl">zero dispersion</span> → it perfectly replicates a single liability. The closer the asset portfolio gets to that ZC, the lower the structural risk.</div>
+              <table class="lw-table">
+                <tbody>
+                  <tr><td>Minimize <span class="lw-hl">dispersion</span> of asset CFs around the liability</td><td>→ minimizes <span class="lw-hl">convexity</span> (for a given MacDur &amp; CF yield)</td></tr>
+                  <tr><td>→ asset CFs cluster near the liability date</td><td>→ closer to the immunizing ZC → <span class="lw-green">less structural risk</span></td></tr>
+                </tbody>
+              </table>
+              <div class="lw-trap">Rules for immunizing a <span class="lw-hl">single</span> liability: (1) PVA ≥ PVL; (2) MacDur<sub>asset</sub> = D<sub>L</sub>; (3) <span class="lw-red">MINIMIZE</span> convexity/dispersion; (4) rebalance as time/yields drift (vs transaction-cost tradeoff). Note the tension: +convexity helps immediate price change, but for immunization the real issue is reaching the FV — so you minimize it.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Effects of yield-curve changes (the twist taxonomy)</div>
+              <div class="lw-body">Parallel shifts: immunization works (it's <span class="lw-hl">zero replication</span> — IRR change matches the replicating zero). But this is <span class="lw-hl">sufficient, NOT necessary</span>, and does NOT mean buy-and-hold (coupon-bond duration falls slower than maturity, so rebalance to keep D = D<sub>L</sub>). Twists are where structural risk bites — L/M/H = low/mid/high duration; M = the liability point:</div>
+              <table class="lw-table">
+                <thead><tr><th>Twist</th><th>Yields move</th><th>PVA vs PVL</th><th>Structural risk?</th></tr></thead>
+                <tbody>
+                  <tr><td>Steepening</td><td>Yield L <span class="lw-green">↓</span>, Yield H <span class="lw-red">↑</span> (M flat)</td><td>PVA <span class="lw-red">below</span> PVL (long bond falls more)</td><td>Yes — may fail</td></tr>
+                  <tr><td>Flattening</td><td>Yield L <span class="lw-red">↑</span>, Yield H <span class="lw-green">↓</span> (M flat)</td><td>PVA <span class="lw-green">above</span> PVL (long bond gains more)</td><td>Yes</td></tr>
+                  <tr><td>Positive butterfly</td><td>L &amp; H <span class="lw-red">↑</span>, M <span class="lw-green">↓</span></td><td>PVA below PVL (detrimental)</td><td>Yes — significant</td></tr>
+                  <tr><td>Negative butterfly</td><td>L &amp; H <span class="lw-green">↓</span>, M <span class="lw-red">↑</span></td><td>PVA above PVL (favorable)</td><td>Yes — possible</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-trap">PVA below PVL "by itself does NOT indicate the strategy will fail" — if portfolio IRR rises enough vs the liability discount rate, the required FV can still be reached. Steepening tends to raise IRR above the single M-point YTM (helps); flattening tends to lower it.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Immunizing MULTIPLE liabilities — duration matching (LOS b, c)</div>
+              <div class="lw-body">More flexible / practical than cash-flow matching. Match <span class="lw-hl">money durations (BPV)</span> rather than Macaulay duration when initial amounts differ.</div>
+              <table class="lw-table">
+                <thead><tr><th>Rule</th><th>Detail</th></tr></thead>
+                <tbody>
+                  <tr><td>1. PVA ≥ PVL</td><td>(exceptions when initial portfolio IRR ≠ liability discount rate)</td></tr>
+                  <tr><td>2. <span class="lw-hl">BPV<sub>A</sub> = BPV<sub>L</sub></span></td><td>money durations match</td></tr>
+                  <tr><td>3. Asset dispersion &amp; convexity <span class="lw-hl">EXCEED</span> liabilities'</td><td><span class="lw-red">but NOT by too much</span> — minimizes structural-risk exposure to curve reshaping</td></tr>
+                  <tr><td>4. Rebalance</td><td>maintain BPV match as time &amp; yields change</td></tr>
+                </tbody>
+              </table>
+              <span class="lw-fl">BPV = MD × V × 0.0001   (= PVBP = "value of an 01")</span>
+              <div class="lw-info"><span class="lw-hl">Single vs multiple — the one thing to nail:</span> single liability MINIMIZES convexity (get to the ZC); multiple liabilities sets asset convexity slightly ABOVE the liabilities'. Both then cap it to limit structural risk.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Worked example — recommending a portfolio (UK bond company)</div>
+              <div class="lw-body">Liability: BPV 344,250, convexity 45.12. Three candidates — pick the one whose BPV matches and whose convexity slightly exceeds:</div>
+              <table class="lw-table">
+                <thead><tr><th></th><th>Liab</th><th>A</th><th>B</th><th>C</th></tr></thead>
+                <tbody>
+                  <tr><td>BPV</td><td>344,250</td><td>343,100</td><td><span class="lw-green">345,400</span></td><td>339,120</td></tr>
+                  <tr><td>Convexity</td><td>45.12</td><td>35.14</td><td>46.29</td><td>65.97</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-info"><span class="lw-hl">Recommend B</span>: (1) BPV closely matches, and (2) convexity slightly exceeds the liability. If the company expects high volatility + large parallel shifts → consider <span class="lw-hl">C</span> (much higher convexity → more upside on big parallel moves), but its BPV match is worse.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Managing a duration gap with derivatives (Module P4.2)</div>
+              <div class="lw-rule">A <span class="lw-hl">derivatives overlay</span> adjusts portfolio duration without trading the underlying bonds. Normal case: BPV<sub>A</sub> &lt; BPV<sub>L</sub> → a positive duration gap to close by <span class="lw-hl">adding asset-side BPV</span>.</div>
+              <span class="lw-fl">N_f = (BPV_liability − BPV_current portfolio) / BPV_futures</span>
+              <span class="lw-fl">futures BPV ≈ BPV_CTD / CF_CTD</span>
+              <table class="lw-table">
+                <thead><tr><th>Step</th><th>DB pension example</th></tr></thead>
+                <tbody>
+                  <tr><td>BPV<sub>L</sub></td><td>2.57bn × 9.35 × 0.0001 = <span class="lw-hl">2,402,950</span></td></tr>
+                  <tr><td>BPV<sub>A</sub></td><td>3.07bn × 40% × 2.85 × 0.0001 = <span class="lw-hl">349,980</span></td></tr>
+                  <tr><td>Gap</td><td>2,402,950 − 349,980 = <span class="lw-hl">2,052,970</span></td></tr>
+                  <tr><td>Futures BPV</td><td>128.98 / 0.9436 = 136.6893</td></tr>
+                  <tr><td>N<sub>f</sub> (100%)</td><td>2,052,970 / 136.6893 = <span class="lw-green">15,019 buy</span></td></tr>
+                </tbody>
+              </table>
+              <div class="lw-trap">CTD &amp; conversion factor: buyer pays initial price × CF<sub>CTD</sub>; seller delivers the cheapest-to-deliver. The CTD's duration drives the contract's BPV — so <span class="lw-hl">if the CTD changes, futures BPV changes</span> (a measurement risk). To raise asset BPV, buy contracts regardless of which contract is used; pick the contract whose duration best matches the liability to minimize structural risk (e.g., 10-yr over 5-yr for an 8.99 liability duration).</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Tilting the hedge on a rate view (active over/under-hedge)</div>
+              <div class="lw-body">100% hedge = remove the gap, no view. With a view you deliberately re-open it — the hedge dial sets asset BPV/duration:</div>
+              <table class="lw-table">
+                <thead><tr><th>Rate view</th><th>Hedge</th><th>Asset BPV</th><th>Why</th></tr></thead>
+                <tbody>
+                  <tr><td>Expect rates <span class="lw-red">↑</span></td><td><span class="lw-hl">Under</span>-hedge (&lt;100%)</td><td>lower (e.g. 90%: 13,517)</td><td>assets <span class="lw-green">fall less</span>; reduced contract losses; surplus improves</td></tr>
+                  <tr><td>Expect rates <span class="lw-green">↓</span></td><td><span class="lw-hl">Over</span>-hedge (&gt;100%)</td><td>higher (e.g. 110%: 16,521)</td><td>assets <span class="lw-green">gain more</span>; contract gains rise; surplus improves</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-trap">"Hedge" names the <span class="lw-hl">instrument</span>; a true (Sense-2) hedge is only the 100% case. Anything else = a partial hedge + directional bet. More hedge = more asset BPV = MORE rate sensitivity (both ways), not "more protection." Futures margin: each 1/32 = 31.25 G/L per contract, posted in cash <span class="lw-orange">daily</span> — on ~15,000 contracts even a ~0.2bp move is large cash flow → 100% hedges are rare, partial hedges common.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Three instruments to add asset BPV — IRS, swaption, collar</div>
+              <table class="lw-table">
+                <thead><tr><th>Tool</th><th>Mechanics</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="lw-hl">Receive-fixed IRS</span></td><td>= buying bonds → <span class="lw-green">positive (+) duration</span>, raises BPV. Pay-fixed = negative duration. Net swap duration = difference of the replicating fixed &amp; floating bonds. May avoid futures' daily margin (though many now post collateral too).</td></tr>
+                  <tr><td><span class="lw-hl">Buy receiver swaption</span></td><td>Right to enter a receive-fixed swap → gains if SFR <span class="lw-green">declines</span>. Premium is a sunk cost, irrelevant to the exercise decision.</td></tr>
+                  <tr><td><span class="lw-hl">Swaption collar</span></td><td>Buy receiver swaption + sell payer swaption (cuts premium, often zero-cost). Selling the payer caps upside: its buyer exercises (you must pay-fixed) when SFRs rise above the payer strike.</td></tr>
+                </tbody>
+              </table>
+              <span class="lw-fl">NP = duration-gap BPV / (net swap BPV per 1 NP)   →  e.g. 2,052,970 / (0.0893/100) = 2.3bn for 100%</span>
+              <div class="lw-info">Net swap BPV: fixed-side BPV − floating-side BPV (e.g. 0.0918 − 0.0025 = 0.0893 per 100 NP). 30% hedge → 0.69bn; raising to 70% needs an extra 0.92bn NP.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Choosing the optimal swap strategy — the rate-line decision</div>
+              <div class="lw-body">All three protect against falling rates (the plan's risk when BPV<sub>A</sub> &lt; BPV<sub>L</sub>). Which is optimal depends on where the <span class="lw-hl">new SFR</span> lands vs the swap rate and the payer-swaption strike:</div>
               <div class="lw-svg-wrap">
                 <svg width="100%" viewBox="0 0 680 150" xmlns="http://www.w3.org/2000/svg">
                   <line x1="40" y1="95" x2="640" y2="95" stroke="#30475E" stroke-width="2"/>
-                  <text x="40" y="120" font-family="monospace" font-size="10" fill="#8B949E">LOW rates</text>
-                  <text x="600" y="120" font-family="monospace" font-size="10" fill="#8B949E">HIGH rates</text>
-                  <!-- markers -->
-                  <line x1="230" y1="86" x2="230" y2="104" stroke="#D4A017" stroke-width="2"/>
-                  <text x="230" y="80" font-family="monospace" font-size="9" fill="#D4A017" text-anchor="middle">swap SFR</text>
-                  <line x1="440" y1="86" x2="440" y2="104" stroke="#D4A017" stroke-width="2"/>
-                  <text x="440" y="80" font-family="monospace" font-size="9" fill="#D4A017" text-anchor="middle">payer swaption SFR</text>
-                  <!-- zones -->
-                  <rect x="40" y="35" width="190" height="34" rx="4" fill="rgba(61,214,140,.10)" stroke="#2EA043"/>
-                  <text x="135" y="56" font-family="sans-serif" font-size="10.5" fill="#7EE787" text-anchor="middle">Receiver-FIXED swap</text>
-                  <rect x="230" y="35" width="210" height="34" rx="4" fill="rgba(212,160,23,.10)" stroke="#8A6810"/>
-                  <text x="335" y="51" font-family="sans-serif" font-size="10.5" fill="#D4A017" text-anchor="middle">Zero-cost COLLAR</text>
-                  <text x="335" y="64" font-family="sans-serif" font-size="9" fill="#8B949E" text-anchor="middle">(moderately higher)</text>
-                  <rect x="440" y="35" width="200" height="34" rx="4" fill="rgba(56,139,253,.10)" stroke="#1F6FEB"/>
-                  <text x="540" y="56" font-family="sans-serif" font-size="10.5" fill="#79C0FF" text-anchor="middle">Buy RECEIVER swaption</text>
+                  <text x="40" y="118" font-family="monospace" font-size="10" fill="#8B949E">LOW SFR</text>
+                  <text x="585" y="118" font-family="monospace" font-size="10" fill="#8B949E">HIGH SFR</text>
+                  <line x1="250" y1="86" x2="250" y2="104" stroke="#D4A017" stroke-width="2"/>
+                  <text x="250" y="80" font-family="monospace" font-size="9" fill="#D4A017" text-anchor="middle">receive-fixed SFR (2.5%)</text>
+                  <line x1="460" y1="86" x2="460" y2="104" stroke="#D4A017" stroke-width="2"/>
+                  <text x="460" y="80" font-family="monospace" font-size="9" fill="#D4A017" text-anchor="middle">payer-swaption strike (3.3%)</text>
+                  <rect x="40" y="35" width="210" height="34" rx="4" fill="rgba(61,214,140,.10)" stroke="#2EA043"/>
+                  <text x="145" y="56" font-family="sans-serif" font-size="10.5" fill="#7EE787" text-anchor="middle">Receive-FIXED swap</text>
+                  <rect x="250" y="35" width="210" height="34" rx="4" fill="rgba(212,160,23,.10)" stroke="#8A6810"/>
+                  <text x="355" y="51" font-family="sans-serif" font-size="10.5" fill="#D4A017" text-anchor="middle">Zero-cost COLLAR</text>
+                  <text x="355" y="64" font-family="sans-serif" font-size="9" fill="#8B949E" text-anchor="middle">(between the two strikes)</text>
+                  <rect x="460" y="35" width="180" height="34" rx="4" fill="rgba(56,139,253,.10)" stroke="#1F6FEB"/>
+                  <text x="550" y="56" font-family="sans-serif" font-size="10.5" fill="#79C0FF" text-anchor="middle">Buy RECEIVER swaption</text>
                 </svg>
               </div>
               <table class="lw-table">
                 <tbody>
-                  <tr><td><span class="lw-green">Receiver-fixed swap</span></td><td>Optimal if future rates are <span class="lw-hl">below the swap's SFR</span></td></tr>
-                  <tr><td><span class="lw-orange">Zero-cost collar</span> (buy receiver + sell payer)</td><td>Optimal if rates are <span class="lw-hl">moderately higher</span> — between the swap &amp; payer-swaption SFRs</td></tr>
-                  <tr><td><span class="lw-blue">Buy receiver swaption</span></td><td>Optimal if rates <span class="lw-hl">exceed the payer-swaption SFR</span> by some amount</td></tr>
+                  <tr><td><span class="lw-green">Receive-fixed swap</span></td><td>optimal if new SFR is at or <span class="lw-hl">below the swap SFR</span> (locks the now-above-market fixed rate; = buying fixed bonds financed at MRR)</td></tr>
+                  <tr><td><span class="lw-orange">Zero-cost collar</span></td><td>optimal if SFR is <span class="lw-hl">between</span> the swap &amp; payer strikes — receiver leg adds no value above the swap rate but cost nothing, and the short payer isn't exercised below its strike</td></tr>
+                  <tr><td><span class="lw-blue">Buy receiver swaption</span></td><td>optimal if SFR rises <span class="lw-hl">above the payer strike</span> — keeps falling-rate protection while losing only the premium; the swap would post escalating negative value and the collar's short payer would be exercised against you</td></tr>
                 </tbody>
               </table>
+              <div class="lw-trap">"Payer/receiver swaption" always names the <span class="lw-hl">buyer's fixed-rate action</span>. Buy receiver swaption for high rates ≠ a high-rate bet — it's the cheapest <span class="lw-hl">capped-loss</span> way to stay protected if you're wrong. Premium is sunk: it never affects whether to exercise.</div>
             </div>
 
             <div class="lw-card">
-              <div class="lw-title">Risks in LDI hedging</div>
+              <div class="lw-title">Worked example — swap vs swaption (US pension, gap 450,000)</div>
               <table class="lw-table">
-                <thead><tr><th>Risk</th><th>What it is</th></tr></thead>
                 <tbody>
-                  <tr><td><span class="lw-hl">Convexity / structural</span></td><td>Hedge ignores convexity (matters for <span class="lw-orange">large</span> moves); duration assumes <span class="lw-orange">parallel</span> shifts. Twists create structural risk; immunization may fail to replicate the ZC bond</td></tr>
-                  <tr><td><span class="lw-hl">Model</span></td><td>Assumptions to estimate DB-plan liab, effective duration &amp; BPV</td></tr>
-                  <tr><td><span class="lw-hl">Measurement error</span></td><td>Using weighted-avg characteristics instead of true pf statistics (cash-flow IRR). Futures BPV assumes a <span class="lw-orange">CTD bond that can change</span>; should adjust for accrued interest at short rates</td></tr>
-                  <tr><td><span class="lw-hl">Spread</span></td><td>Asset vs liab discount rates shift unexpectedly (liab=corp rates, assets=govt; Treasury contracts &amp; higher Treasury vol; swaps reflect MRR)</td></tr>
-                  <tr><td><span class="lw-hl">Counterparty → cash-flow</span></td><td>OTC credit risk; collateral reduces it but creates <span class="lw-orange">cash-flow risk</span> (must post collateral on demand)</td></tr>
-                  <tr><td><span class="lw-hl">Asset liquidity</span></td><td>Positions can't be adjusted quickly at reasonable cost</td></tr>
+                  <tr><td>50% hedge NP</td><td>(450,000 × 0.50) / (0.2571/100) = <span class="lw-hl">87.515mn</span> receive-fixed</td></tr>
+                  <tr><td>Adjust 50%→35% (sell 15%)</td><td>(450,000 × 0.15)/(0.2571/100) = 26.254mn; to REDUCE a receive-fixed hedge, <span class="lw-hl">buy a payer swaption</span></td></tr>
+                  <tr><td>Payer-swaption premium</td><td>26.254mn × 0.0055 = <span class="lw-hl">144,397</span></td></tr>
+                  <tr><td>Exercise rule</td><td>payer swaption (right to pay 2.7%) is valuable &amp; exercised if <span class="lw-hl">new SFR &gt; 2.7%</span></td></tr>
                 </tbody>
               </table>
+              <div class="lw-info">Contingent immunization (CI): a hybrid active/passive strategy needing a <span class="lw-hl">significant surplus</span> (PVA &gt; PVL). Manage actively while the surplus lasts; if it shrinks toward zero, revert to a pure immunizing portfolio. Vulnerable to liquidity risk if all assets (not just surplus) are active and must be liquidated fast.</div>
             </div>
 
             <div class="lw-card">
-              <div class="lw-title">Index-based investing — and why bonds are harder than equities</div>
+              <div class="lw-title">Risks of managing against a liability (LOS d)</div>
               <table class="lw-table">
-                <thead><tr><th>Type</th><th>How</th></tr></thead>
+                <thead><tr><th>Risk</th><th>Source</th></tr></thead>
                 <tbody>
-                  <tr><td><span class="lw-hl">Pure index</span></td><td>Hold ALL securities at index weights (full replication)</td></tr>
-                  <tr><td><span class="lw-hl">Enhanced index</span></td><td>Match primary risk exposures, not all holdings (<span class="lw-orange">stratified sampling / cell matching</span>)</td></tr>
+                  <tr><td><span class="lw-hl">Convexity / structural</span></td><td>hedges ignore convexity (matters for large moves); duration assumes parallel shifts; twists create structural risk → immunization may fail to replicate the ZC</td></tr>
+                  <tr><td><span class="lw-hl">Model</span></td><td>assumptions to estimate DB-plan liabilities, effective duration, BPV</td></tr>
+                  <tr><td><span class="lw-hl">Measurement error</span></td><td>using weighted-average characteristics instead of portfolio statistics (aggregate CF + IRR)</td></tr>
+                  <tr><td><span class="lw-hl">Counterparty → cash-flow</span></td><td>OTC credit risk; collateral cuts it but creates cash-flow risk (post collateral on demand). Same for futures (daily margin).</td></tr>
+                  <tr><td><span class="lw-hl">Spread</span></td><td>asset vs liability discount rates differ &amp; shift unexpectedly — see below</td></tr>
+                  <tr><td><span class="lw-hl">Asset liquidity</span></td><td>positions can't be adjusted quickly at reasonable cost</td></tr>
                 </tbody>
               </table>
-              <div class="lw-trap">Why full replication is impractical for bonds: (1) far more issues with diverse terms; (2) liquidity declined post-2008, varies by issue; (3) OTC, dealers supply less liquidity (higher capital cost → less inventory); (4) most bonds rarely trade → <span class="lw-hl">matrix pricing</span>; (5) index composition changes fast (new issuance, maturity, credit migration).</div>
+              <div class="lw-trap">Spread risk, three flavors: (1) liability rate = corporate, assets = government → using <span class="lw-hl">Treasury contracts</span> introduces spread risk; (2) Treasuries are highly liquid → higher reported volatility → more frequent (nonparallel) price change; (3) <span class="lw-hl">swaps</span> create spread risk because swap rates track the MRR market.</div>
             </div>
 
             <div class="lw-card">
-              <div class="lw-title">Matching the primary risk factors (instead of full replication)</div>
+              <div class="lw-title">Index-based investing (LOS e) — why bonds are harder than equities</div>
               <table class="lw-table">
-                <thead><tr><th>Match…</th><th>To minimize tracking error from…</th></tr></thead>
+                <thead><tr><th>Approach</th><th>How</th></tr></thead>
                 <tbody>
-                  <tr><td><span class="lw-hl">Modified duration</span></td><td><span class="lw-orange">Parallel</span> shifts</td></tr>
-                  <tr><td><span class="lw-hl">Key rate durations</span></td><td><span class="lw-orange">Non-parallel</span> (twist) shifts</td></tr>
-                  <tr><td><span class="lw-hl">Sector &amp; quality weights</span></td><td>Spread changes — MD = change from general rates; <span class="lw-hl">spread duration</span> = nongov vs gov when credit spreads move</td></tr>
-                  <tr><td><span class="lw-hl">Sector/coupon/maturity cell weights</span></td><td>Cell-level mismatches</td></tr>
-                  <tr><td><span class="lw-hl">Issuer exposure weights</span></td><td><span class="lw-orange">Issuer-specific event risk</span> (e.g., bankruptcy)</td></tr>
+                  <tr><td><span class="lw-hl">Pure index / full replication</span></td><td>hold ALL securities at index weights</td></tr>
+                  <tr><td><span class="lw-hl">Enhanced index</span></td><td>match primary risk exposures, not all holdings (via stratified sampling / cell matching)</td></tr>
                 </tbody>
               </table>
+              <div class="lw-trap">5 reasons full replication is impractical: (1) far more bond issues, widely varying terms; (2) any issuer has many issues differing in liquidity → concentrate in liquid ones; (3) OTC dealing, post-2008 higher capital cost → less dealer inventory, wider bid-ask, <span class="lw-hl">liquidity declined</span>; (4) most bonds rarely trade → price via <span class="lw-hl">matrix/evaluated pricing</span>; (5) index composition changes fast (new issuance, maturity, credit migration). Goal of index investing = <span class="lw-hl">minimize tracking error</span> (= active risk = SD of active return).</div>
             </div>
 
             <div class="lw-card">
-              <div class="lw-title">Indirect exposure — funds, ETFs, TRS</div>
-              <div class="lw-body">Alternatives to holding bonds directly: avoid initial trading costs, but incur ongoing fees / other risks.</div>
+              <div class="lw-title">Matching the primary risk factors</div>
+              <table class="lw-table">
+                <thead><tr><th>Match…</th><th>Minimizes tracking error from…</th><th>Formula</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="lw-hl">Modified duration</span> (effective D if embedded options)</td><td>parallel shifts</td><td>%ΔV = −MD × Δy</td></tr>
+                  <tr><td><span class="lw-hl">Key rate durations</span></td><td>nonparallel (twist) shifts</td><td>%ΔV = −MD<sub>krn</sub> × Δy<sub>n</sub></td></tr>
+                  <tr><td><span class="lw-hl">Sector &amp; quality weights</span> + spread duration</td><td>spread changes</td><td>%ΔV<sub>rel</sub> = −D<sub>S</sub> × Δspread</td></tr>
+                  <tr><td><span class="lw-hl">Sector/coupon/maturity cell</span> weights</td><td>cell mismatches (matching cells → matches eff. dur. &amp; convexity)</td><td>—</td></tr>
+                  <tr><td><span class="lw-hl">Issuer</span> exposure weights</td><td>issuer-specific event risk (e.g. bankruptcy)</td><td>—</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-info">MD measures the change from a general rate move (govt yields); <span class="lw-hl">spread duration</span> measures how nongov bonds move vs govts when credit spreads change. Spread = y<sub>higher-yield</sub> − y<sub>government</sub>. Matching the PV-distribution of cash flows (the (t)(w) duration-contribution table) simultaneously matches duration AND key-rate durations.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Cell matching, ESG &amp; enhancement techniques</div>
+              <table class="lw-table">
+                <tbody>
+                  <tr><td><span class="lw-hl">Stratified sampling</span></td><td>divide index into cells (e.g. duration 1–5/5–10/10–15 × Treasury/Corporate/ABS), hold the cell's weight without using the same bonds</td></tr>
+                  <tr><td><span class="lw-hl">ESG overlay</span></td><td>cell matching can embed socially-responsible rules (exclude high-carbon, prefer clean energy) while still matching cell weights</td></tr>
+                </tbody>
+              </table>
+              <div class="lw-info">Enhancements to add value / cut cost: reduce fund expenses &amp; transaction costs; overweight undervalued / underweight overvalued (favor spread <span class="lw-green">narrowing</span>, avoid spread <span class="lw-red">widening</span>) while still matching overall index; over-/under-weight callable bonds — favor them for higher yield when rate volatility is expected <span class="lw-hl">low</span> (call impact more predictable), avoid when volatility is high.</div>
+            </div>
+
+            <div class="lw-card">
+              <div class="lw-title">Indirect exposure — funds, ETFs, TRS (LOS f)</div>
               <table class="lw-table">
                 <thead><tr><th>Vehicle</th><th>Key features</th></tr></thead>
                 <tbody>
-                  <tr><td><span class="lw-hl">Mutual funds</span></td><td>Good for smaller investors; broad exposure + economies of scale (pooled capital → better prices)</td></tr>
-                  <tr><td><span class="lw-hl">Open-end</span></td><td>Buy/redeem at <span class="lw-orange">NAV once/day</span>; ongoing fees; no maturity, holdings &amp; income drift over time</td></tr>
-                  <tr><td><span class="lw-hl">ETFs</span></td><td>Trade <span class="lw-orange">continuously</span> on exchange; but the arbitrage mechanism is <span class="lw-red">less effective</span> than equity ETFs due to illiquid underlying bonds</td></tr>
-                  <tr><td><span class="lw-hl">Total return swap (TRS)</span></td><td>Receive index total return (income + price) vs pay <span class="lw-orange">MRR + spread</span> = buying the index on borrowed funds. If index return is negative, receiver <span class="lw-red">pays</span> it. Has counterparty/credit risk</td></tr>
+                  <tr><td><span class="lw-hl">Mutual funds</span></td><td>good for smaller investors; broad exposure + economies of scale (pooled capital → better prices)</td></tr>
+                  <tr><td><span class="lw-hl">Open-end</span></td><td>buy/redeem at <span class="lw-orange">NAV once per day</span>; ongoing fees, possible front/back loads; no maturity, holdings &amp; income drift</td></tr>
+                  <tr><td><span class="lw-hl">ETFs</span></td><td>trade <span class="lw-orange">continuously</span> on-exchange; authorized participants redeem/create in-kind → arbitrage keeps price ≈ NAV, but that arb is <span class="lw-red">less effective</span> than for equity ETFs (illiquid underlying bonds)</td></tr>
+                  <tr><td><span class="lw-hl">Total return swap</span></td><td>receive index total return (income + price) vs pay <span class="lw-orange">MRR + spread</span> = buying the index on borrowed funds. If index return is negative, receiver <span class="lw-red">pays</span> it. If not fully collateralized → leveraged; counterparty/credit risk; you don't own the bonds</td></tr>
                 </tbody>
               </table>
             </div>
 
             <div class="lw-card">
-              <div class="lw-title">Benchmark selection &amp; the credit barbell</div>
-              <div class="lw-body">Start from client objectives/constraints → SAA. Bond benchmarks are trickier than equity:</div>
+              <div class="lw-title">Bond benchmark selection (LOS g)</div>
+              <div class="lw-rule">Start from client objectives &amp; constraints → SAA → then pick the index (manager may get tactical discretion).</div>
               <table class="lw-table">
                 <tbody>
-                  <tr><td>Static pf → <span class="lw-hl">duration declines as bonds age</span></td></tr>
-                  <tr><td>New issuance shifts index characteristics (issuers move to shorter/longer maturities) → index may no longer fit the desired duration</td></tr>
-                  <tr><td>May need a <span class="lw-hl">custom index</span> of sub-exposures (e.g., 50% 5–10y Treasuries + 50% 1–3y IG)</td></tr>
+                  <tr><td>Static bond portfolio</td><td>duration <span class="lw-hl">declines as bonds age</span></td></tr>
+                  <tr><td>New issuance</td><td>shifts index characteristics (issuers move shorter/longer) → index may no longer fit the desired duration</td></tr>
+                  <tr><td>Custom index</td><td>define desired duration &amp; sector sub-exposures (e.g. 50% 5–10y Treasuries + 50% 1–3y IG)</td></tr>
                 </tbody>
               </table>
-              <div class="lw-info"><span class="lw-hl">Credit barbell</span> (a smart-beta custom index): <span class="lw-green">LT Treasuries</span> (no credit/spread risk) supply the duration exposure; <span class="lw-green">ST corporates</span> add spread return and are less exposed to relative price underperformance if spreads widen.</div>
-            </div>
-
-            <div class="lw-card">
-              <div class="lw-title">Convexity, structural risk &amp; the bear steepener</div>
-              <table class="lw-table">
-                <tbody>
-                  <tr><td>Minimizing pf convexity = minimizing <span class="lw-hl">CF dispersion around MacD</span> → pf closer to the ZC bond that gives perfect immunization</td></tr>
-                  <tr><td>Structural risk is reduced by <span class="lw-hl">minimizing CF dispersion</span> = minimizing convexity for a given MacD &amp; CF yield</td></tr>
-                </tbody>
-              </table>
-              <div class="lw-trap"><span class="lw-hl">Bear steepener</span>: long rates rise faster than short rates (non-parallel). If assets have <span class="lw-red">lower convexity/dispersion than the liabilities</span>, the liabilities change by <span class="lw-hl">more</span> than the assets → assets <span class="lw-red">underperform</span>. (Note the tension: you minimize dispersion to cut structural risk, but too little asset convexity vs the liability hurts in a steepener — match thoughtfully.)</div>
+              <div class="lw-info"><span class="lw-hl">Credit barbell</span> (a smart-beta rule): <span class="lw-green">long-term Treasuries</span> (no credit/spread risk) supply the duration exposure; <span class="lw-green">short-term corporates</span> add spread return and are less vulnerable to relative price underperformance if spreads widen.</div>
             </div>
 
           </div><!-- /lw-recap -->
