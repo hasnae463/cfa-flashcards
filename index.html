@@ -3534,9 +3534,11 @@ Ratio = ESD 10yr / ESD 5yr = 8.9 / 4.9 = 1.82×</span>
               <div class="cw-body">expected excess spread = spread − (EffSpreadDur × Δspread) − (POD × LGD). Given a set of spread/POD/LGD assumptions, the bond with the <span class="cw-hl">highest expected excess spread</span> offers the best relative value. Watch for structural differences (embedded options, seniority), liquidity, and M&amp;A effects on spreads.</div>
               <div class="cw-card" style="background:var(--surface2)">
                 <div class="cw-ctitle">Worked: fair spread for a new 10y issue</div>
-                <div class="cw-body">Issuer bonds: 5y spread 0.7%, 15y spread 1.0% (15y needs interp govt: (0.75×2.0)+(0.25×4.0)=2.5% ⇒ 3.5−2.5=1.0%). New 10y = interp of 5y &amp; 15y spreads + 5bp new-issue premium.</div>
-                <div class="cw-drow"><span class="cw-dlabel">Interp</span> (0.5×0.7%)+(0.5×1.0%) = 0.85%</div>
-                <div class="cw-drow"><span class="cw-dlabel">+ NIP</span> 0.85% + 0.05% = <span class="cw-hl">0.90%</span></div>
+                <div class="cw-body">Given: issuer 5y spread = 0.7%. Goal: fair spread on a new 10y issue = interpolate 5y &amp; 15y issuer spreads, then add a 5bp new-issue premium.</div>
+                <div class="cw-drow"><span class="cw-dlabel">Step 1</span> Need the 15y issuer spread. Interp the 15y govt yield: (0.75×2.0%)+(0.25×4.0%) = 2.5%.</div>
+                <div class="cw-drow"><span class="cw-dlabel">Step 2</span> 15y issuer spread = 15y bond yield − 15y govt = 3.5% − 2.5% = 1.0%.</div>
+                <div class="cw-drow"><span class="cw-dlabel">Step 3</span> Interp 10y spread from 5y &amp; 15y: (0.5×0.7%)+(0.5×1.0%) = 0.85%.</div>
+                <div class="cw-drow"><span class="cw-dlabel">Step 4</span> Add 5bp new-issue premium: 0.85% + 0.05% = <span class="cw-hl">0.90%</span>.</div>
               </div>
             </div>
 
