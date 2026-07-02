@@ -3454,7 +3454,7 @@ Ratio = ESD 10yr / ESD 5yr = 8.9 / 4.9 = 1.82×</span>
                 <div class="cw-ctitle">Worked: 1y FRN, quarterly, MRR 0.55%, QM 1.25%, DM 1.55%</div>
                 <div class="cw-drow"><span class="cw-dlabel">Coupon</span> (MRR+QM)/4 = (0.55+1.25)/4 = 0.45% ⇒ $4,500/qtr on $1m</div>
                 <div class="cw-drow"><span class="cw-dlabel">Disc rate</span> (MRR+DM)/4 = (0.55+1.55)/4 = 0.525%</div>
-                <div class="cw-drow"><span class="cw-dlabel">Value</span> 3×$4,500 + $1,004,500 disc @0.525%/qtr = <span class="cw-hl">$997,039</span> (below par, DM&gt;QM ✓)</div>
+                <div class="cw-drow"><span class="cw-dlabel">Value</span> discount 4 quarterly CFs @0.525%/qtr: $4,500 (Q1) + $4,500 (Q2) + $4,500 (Q3) + $1,004,500 (Q4, coupon + $1m par) = <span class="cw-hl">$997,039</span> (below par, DM&gt;QM ✓)</div>
               </div>
               <div class="cw-rule"><b>Z-DM</b> (zero-discount margin) = DM analogue that respects the MRR term structure: future coupons use MRR forward rates + QM; discount uses spot MRR + Z-DM. If MRR curve is upward-sloping, Z-DM &lt; DM.</div>
               <div class="cw-fl">EffRateDur_FRN = (PV₋ − PV₊) / (2 · ΔMRR · PV₀)</div>
