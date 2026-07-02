@@ -1989,6 +1989,7 @@ Step 5 Currency (compound −0.50%):
             <button class="cw-tab" onclick="cwTab('ed',this)">Empirical Dur</button>
             <button class="cw-tab" onclick="cwTab('ee',this)">Exam Errors</button>
             <button class="cw-tab" onclick="cwTab('eq',this)">All Questions</button>
+            <button class="cw-tab" onclick="cwTab('recap',this)">Recap</button>
           </div>
 
           <!-- ══════════════════════════════
@@ -3318,6 +3319,442 @@ Ratio = ESD 10yr / ESD 5yr = 8.9 / 4.9 = 1.82×</span>
               </div>
             </div>
           </div>
+
+          <div id="cw-recap" class="cw-panel">
+
+            <div style="font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:#D4A017;margin-bottom:10px">Reading P6 · Full Recap · follows the reading section-by-section</div>
+
+            <!-- ══════════ P6.1 CREDIT RISK & CREDIT SPREAD ══════════ -->
+            <div class="cw-card">
+              <div class="cw-title">P6.1 — Credit Risk &amp; Credit Spread <span class="cw-badge cw-blue">LOS a</span></div>
+              <div class="cw-body">
+                A <span class="cw-hl">spread</span> = excess return of a bond over a comparable benchmark. It compensates for two risks the benchmark does not carry:
+              </div>
+              <div class="cw-rule"><b>Credit risk</b> — issuer fails to pay as promised. Decomposes into:
+                <div class="cw-drow"><span class="cw-dlabel">POD</span> probability of default — chance issuer misses payment when due (annualized).</div>
+                <div class="cw-drow"><span class="cw-dlabel">LGD</span> loss given default = <span class="cw-hl">1 − RR</span>. RR = recovery rate = % of exposure recovered.</div>
+              </div>
+              <div class="cw-rule"><b>Liquidity risk</b> — cannot trade at a reasonable price. (This reading focuses on credit risk.)</div>
+              <div class="cw-section">Loss chain</div>
+              <div class="cw-body">
+                Expected credit loss (per period) = <span class="cw-hl">POD × LGD</span>, scaled by exposure at default and summed over periods.
+                PV of those expected losses = <span class="cw-hl">CVA</span> (credit valuation adjustment) — the discount below an equivalent risk-free security.
+                The historical realized % lost to default = <span class="cw-hl">credit loss rate</span> (the analyst's starting point for forecasting).
+              </div>
+              <div class="cw-fl">credit spread ≈ POD × LGD</div>
+              <div class="cw-card" style="background:var(--surface2);margin-top:10px">
+                <div class="cw-ctitle">Worked: lien seniority</div>
+                <div class="cw-body">First-lien bonds: spread 1.5%, RR 50%. Second-lien: RR 40%. Same issuer ⇒ same POD.</div>
+                <div class="cw-drow"><span class="cw-dlabel">Step 1</span> POD = spread / LGD = 1.5% / (1−0.50) = <span class="cw-hl">3%</span></div>
+                <div class="cw-drow"><span class="cw-dlabel">Step 2</span> 2nd-lien spread = POD × LGD = 3% × (1−0.40) = <span class="cw-hl">1.8%</span></div>
+                <div class="cw-tip">Lower recovery ⇒ higher LGD ⇒ higher spread for the <b>same</b> default probability.</div>
+              </div>
+              <div class="cw-section">IG vs HY &amp; migration</div>
+              <div class="cw-body">
+                IG = BBB and above; HY / speculative = BB and below. Actual defaults in IG are rare — the bigger IG risk is <span class="cw-hl">credit migration</span> (ratings downgrade). For lower-quality bonds, default risk dominates migration risk.
+              </div>
+            </div>
+
+            <!-- credit spread curve over the cycle -->
+            <div class="cw-card">
+              <div class="cw-title">Credit spread curve over the cycle <span class="cw-badge cw-warn">Figure P6.1</span></div>
+              <div class="cw-body">Plot of spread vs maturity. Upward-sloping ⇒ POD more likely long-term. Flat ⇒ defaults equally likely across maturities. Shape is driven by the credit cycle:</div>
+              <table class="cw-table">
+                <tr><th></th><th>Early exp. (recovery)</th><th>Late exp.</th><th>Peak</th><th>Contraction (recession)</th></tr>
+                <tr><td>Corp defaults</td><td>Peak</td><td>Falling</td><td>Stable</td><td>Rising</td></tr>
+                <tr><td>Spread level</td><td>Stable</td><td>Falling</td><td>Rising</td><td>Peak</td></tr>
+                <tr><td>IG slope</td><td>Stable</td><td>Upward</td><td>Upward</td><td>Flat</td></tr>
+                <tr><td>HY slope</td><td class="cw-red">Inverted</td><td>Upward</td><td>Upward</td><td class="cw-red">Inverted</td></tr>
+              </table>
+              <div class="cw-svg-wrap">
+                <svg viewBox="0 0 460 180" width="100%" style="max-width:460px">
+                  <text x="8" y="14" fill="#7D8590" font-size="9" font-family="monospace">Spread</text>
+                  <text x="185" y="14" fill="#E6EDF3" font-size="10" font-family="monospace">Contraction / Peak of stress</text>
+                  <!-- axes L -->
+                  <line x1="30" y1="20" x2="30" y2="150" stroke="#2A3441"/>
+                  <line x1="30" y1="150" x2="215" y2="150" stroke="#2A3441"/>
+                  <text x="95" y="168" fill="#7D8590" font-size="9" font-family="monospace">Tenor</text>
+                  <!-- HY inverted (downward) -->
+                  <path d="M40,45 L205,80" stroke="#FF7B72" stroke-width="2" fill="none"/>
+                  <text x="150" y="42" fill="#FF7B72" font-size="9" font-family="monospace">HY inverted</text>
+                  <!-- IG flat -->
+                  <path d="M40,120 L205,112" stroke="#38BDF8" stroke-width="2" fill="none" stroke-dasharray="4 3"/>
+                  <text x="150" y="132" fill="#38BDF8" font-size="9" font-family="monospace">IG flat</text>
+                  <!-- axes R : expansion -->
+                  <line x1="255" y1="20" x2="255" y2="150" stroke="#2A3441"/>
+                  <line x1="255" y1="150" x2="450" y2="150" stroke="#2A3441"/>
+                  <text x="320" y="168" fill="#7D8590" font-size="9" font-family="monospace">Tenor</text>
+                  <text x="300" y="14" fill="#E6EDF3" font-size="10" font-family="monospace">Expansion</text>
+                  <!-- both upward -->
+                  <path d="M265,120 L440,55" stroke="#FF7B72" stroke-width="2" fill="none"/>
+                  <text x="380" y="55" fill="#FF7B72" font-size="9" font-family="monospace">HY up</text>
+                  <path d="M265,135 L440,95" stroke="#38BDF8" stroke-width="2" fill="none" stroke-dasharray="4 3"/>
+                  <text x="380" y="108" fill="#38BDF8" font-size="9" font-family="monospace">IG up</text>
+                </svg>
+              </div>
+              <div class="cw-trap">Decisive detail: only the <b>HY curve inverts</b> in a downturn (near-term POD &amp; downgrade risk spike). IG stays flat, never inverts. HY shows sharper changes in level &amp; slope over the cycle than IG.</div>
+            </div>
+
+            <!-- empirical vs analytical duration -->
+            <div class="cw-card">
+              <div class="cw-title">Empirical vs analytical duration</div>
+              <div class="cw-body">Risk-free rates and spreads are <span class="cw-hl">negatively correlated</span>. This dampens the price sensitivity of low-quality bonds to benchmark yields.</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: HY bond, MD = 4.4</div>
+                <div class="cw-drow"><span class="cw-dlabel">Start</span> yield 6% = rf 2% + spread 4%</div>
+                <div class="cw-drow"><span class="cw-dlabel">Contraction</span> flight-to-quality: rf falls 2%→1%; spread widens 4%→5%</div>
+                <div class="cw-drow"><span class="cw-dlabel">Net</span> yield unchanged at 6% ⇒ price barely moves ⇒ observed sensitivity ≈ 0, far below MD 4.4</div>
+              </div>
+              <div class="cw-rule"><b>Empirical duration</b> = regression of actual price returns on benchmark-rate changes. Since real prices move on <i>both</i> rates and spreads, empirical &lt; analytical (modified) duration for low-quality securities.</div>
+            </div>
+
+            <!-- ══════════ P6.2 CREDIT SPREAD MEASURES ══════════ -->
+            <div class="cw-card">
+              <div class="cw-title">P6.2 — Fixed-Rate Spread Measures <span class="cw-badge cw-blue">LOS b</span></div>
+              <div class="cw-body">All use the same worked bond: 12y corp, coupon 4.30%, YTM 4.5%, ModDur 11.1. Govt: 10y YTM 3.0%, 20y YTM 5.0%.</div>
+              <div class="cw-rule"><b>Yield spread</b> = corp YTM − closest on-the-run govt YTM = 4.5% − 3.0% = <span class="cw-hl">1.5%</span> (uses nearest single govt, ignores exact maturity).</div>
+              <div class="cw-rule"><b>g-spread</b> = corp YTM − <i>interpolated</i> govt YTM matching the corp's exact maturity.
+                <div class="cw-drow"><span class="cw-dlabel">Weight L</span> (M−S)/(L−S) = (12−10)/(20−10) = 0.2 in the 20y, 0.8 in the 10y</div>
+                <div class="cw-drow"><span class="cw-dlabel">Interp</span> (0.8×3.0%)+(0.2×5.0%) = 3.4%</div>
+                <div class="cw-drow"><span class="cw-dlabel">g-spread</span> 4.5% − 3.4% = <span class="cw-hl">1.1%</span></div>
+              </div>
+              <div class="cw-fl">weight in longer bond = (M − S) / (L − S)</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Scenario: 20y govt falls 10bp, spread &amp; 10y unchanged</div>
+                <div class="cw-drow"><span class="cw-dlabel">New interp</span> (0.8×3.0%)+(0.2×4.9%) = 3.38%</div>
+                <div class="cw-drow"><span class="cw-dlabel">New corp YTM</span> 3.38% + 1.1% = 4.48% ⇒ ΔY = −0.02%</div>
+                <div class="cw-drow"><span class="cw-dlabel">Price</span> −MD×ΔY = −11.1 × (−0.02%) = <span class="cw-hl">+0.222%</span></div>
+              </div>
+            </div>
+
+            <div class="cw-card">
+              <div class="cw-title">i-spread, ASW, z-spread, CDS basis, OAS</div>
+              <div class="cw-rule"><b>i-spread</b> = corp YTM − interpolated <i>swap</i> fixed rate. Advantage: swap is a tradeable hedge (duration / carry). 10y swap = 3.0+0.2 = 3.2%; 20y swap = 5.0+0.3 = 5.3%; interp 12y = (0.8×3.2)+(0.2×5.3) = 3.62%.
+                <div class="cw-drow"><span class="cw-dlabel">i-spread</span> 4.50% − 3.62% = <span class="cw-hl">0.88%</span></div>
+              </div>
+              <div class="cw-rule"><b>ASW</b> (asset swap spread) = corp fixed <i>coupon</i> − interpolated swap fixed rate = 4.30% − 3.62% = <span class="cw-hl">0.68%</span>. It is the spread over floating MRR earned by buying the bond + paying fixed on a swap.</div>
+              <div class="cw-rule"><b>z-spread</b> (zero-volatility) = single spread added to risk-free <i>spot</i> curve so discounted CFs = market price (trial-and-error). Respects the term structure of spot rates, which YTM-based spreads ignore.</div>
+              <div class="cw-rule"><b>CDS basis</b> = CDS spread − z-spread. Both are risk premia for the same credit; differences arise from technicals (bond off par, accrued, idiosyncratic CDS features). Useful for CDS traders.</div>
+              <div class="cw-trap"><b>OAS is the ONLY spread appropriate for a bond with an embedded option.</b> It builds an interest-rate tree, adjusts CFs for optionality, then solves the single spread over every node. The option's impact is <b>removed</b> ("option-removed" spread). OAS is best for consistent comparison of bonds with and without embedded options. A significantly different OAS vs peers ⇒ hint of an embedded option.</div>
+            </div>
+
+            <!-- FRN measures -->
+            <div class="cw-card">
+              <div class="cw-title">Floating-Rate Note (FRN) measures</div>
+              <div class="cw-body">FRN pays MRR + fixed <span class="cw-hl">QM</span> (quoted margin). Coupon resets with MRR, so FRNs have low <i>rate</i> duration. Required return above MRR = <span class="cw-hl">DM</span> (discount margin) — DM plays the role of yield, QM the role of coupon.</div>
+              <div class="cw-drow"><span class="cw-dlabel">DM &gt; QM</span> investors want more than paid ⇒ trades <span class="cw-red">below par</span></div>
+              <div class="cw-drow"><span class="cw-dlabel">DM &lt; QM</span> trades <span class="cw-green">above par</span></div>
+              <div class="cw-drow"><span class="cw-dlabel">DM = QM</span> trades at / near par</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: 1y FRN, quarterly, MRR 0.55%, QM 1.25%, DM 1.55%</div>
+                <div class="cw-drow"><span class="cw-dlabel">Coupon</span> (MRR+QM)/4 = (0.55+1.25)/4 = 0.45% ⇒ $4,500/qtr on $1m</div>
+                <div class="cw-drow"><span class="cw-dlabel">Disc rate</span> (MRR+DM)/4 = (0.55+1.55)/4 = 0.525%</div>
+                <div class="cw-drow"><span class="cw-dlabel">Value</span> 3×$4,500 + $1,004,500 disc @0.525%/qtr = <span class="cw-hl">$997,039</span> (below par, DM&gt;QM ✓)</div>
+              </div>
+              <div class="cw-rule"><b>Z-DM</b> (zero-discount margin) = DM analogue that respects the MRR term structure: future coupons use MRR forward rates + QM; discount uses spot MRR + Z-DM. If MRR curve is upward-sloping, Z-DM &lt; DM.</div>
+              <div class="cw-fl">EffRateDur_FRN = (PV₋ − PV₊) / (2 · ΔMRR · PV₀)</div>
+              <div class="cw-fl">EffSpreadDur_FRN = (PV₋ − PV₊) / (2 · ΔDM · PV₀)</div>
+              <div class="cw-body" style="margin-top:8px">Note QM is fixed: if credit quality deteriorates, DM rises above QM and the FRN falls in price ⇒ EffSpreadDur is significantly higher than its rate duration.</div>
+            </div>
+
+            <!-- eff spread duration/convexity + DTS -->
+            <div class="cw-card">
+              <div class="cw-title">Effective spread duration / convexity &amp; DTS</div>
+              <div class="cw-body">Step 4 of return decomposition = sensitivity to <i>spread</i> (not benchmark yield):</div>
+              <div class="cw-fl">%Δprice = (−EffSpreadDur × Δspread) + (½ × EffSpreadCon × Δspread²)</div>
+              <div class="cw-body">Δspread here is the change in OAS. Practical observation: spread changes are proportional to spread <i>level</i> — big-spread bonds move more. Captured by:</div>
+              <div class="cw-fl">DTS ≈ EffSpreadDur × spread</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: DTS portfolio</div>
+                <div class="cw-drow"><span class="cw-dlabel">A-rated</span> 9.0 × 180 = 1,620 (weight 70%)</div>
+                <div class="cw-drow"><span class="cw-dlabel">C-rated</span> 9.5 × 400 = 3,800 (weight 30%)</div>
+                <div class="cw-drow"><span class="cw-dlabel">Port DTS</span> 0.7×1,620 + 0.3×3,800 = <span class="cw-hl">2,274</span></div>
+                <div class="cw-drow"><span class="cw-dlabel">20bp on 200bp index</span> proportionate widening = 20/200 = 10%</div>
+                <div class="cw-drow"><span class="cw-dlabel">Expected fall</span> 2,274 × 0.10 = <span class="cw-red">−227.4 bps</span></div>
+              </div>
+            </div>
+
+            <!-- excess spread + rolldown -->
+            <div class="cw-card">
+              <div class="cw-title">Excess spread &amp; corp-vs-govt rolldown</div>
+              <div class="cw-fl">expected excess spread = spread − (EffSpreadDur × Δspread) − (POD × LGD)</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: 6-month holding</div>
+                <div class="cw-body">EffSpreadDur 4.5, spread 250bp, POD 1.5% ann, LGD 55%, spread → 270bp over 6mo. <b>Work in decimals, halve annual inputs for the 6mo period.</b></div>
+                <div class="cw-drow"><span class="cw-dlabel">Carry</span> 0.025 × 0.5 = +0.0125</div>
+                <div class="cw-drow"><span class="cw-dlabel">Spread chg</span> −4.5 × (0.027−0.025) = −0.0090</div>
+                <div class="cw-drow"><span class="cw-dlabel">Exp loss</span> −(0.015×0.5) × 0.55 = −0.0041...</div>
+                <div class="cw-drow"><span class="cw-dlabel">Total</span> = −0.000625 = <span class="cw-red">−6.25 bps</span> ⇒ negative excess return ⇒ <b>overvalued</b></div>
+              </div>
+              <div class="cw-trap">Units minefield: convert everything to decimals. Small numbers keep their true size. Decimals in ⇒ decimals out.</div>
+              <div class="cw-card" style="background:var(--surface2);margin-top:10px">
+                <div class="cw-ctitle">Corp vs govt rolldown (5-step return decomp)</div>
+                <div class="cw-body">Corp: 5y, cpn 4%, YTM 2.25%. Govt: 4.5y, cpn 2%, YTM 1.20%. Semiannual, 6mo horizon.</div>
+                <div class="cw-drow"><span class="cw-dlabel">Corp</span> price 108.232→107.450; cpn yld (0.5×4)/108.232=1.849%; roll (107.450/108.232−1)=−0.723%; annualized (1.849−0.723)×2 = <span class="cw-hl">2.25%</span></div>
+                <div class="cw-drow"><span class="cw-dlabel">Govt</span> 103.494→103.115; cpn yld 0.966%; roll −0.366%; annualized (0.966−0.366)×2 = <span class="cw-hl">1.20%</span></div>
+                <div class="cw-drow"><span class="cw-dlabel">Excess rolling yield</span> 2.25% − 1.20% = <span class="cw-hl">1.05%</span></div>
+              </div>
+            </div>
+
+            <!-- ══════════ P6.3 BOTTOM-UP & TOP-DOWN ══════════ -->
+            <div class="cw-card">
+              <div class="cw-title">P6.3 — Bottom-Up Credit Strategies <span class="cw-badge cw-blue">LOS c</span></div>
+              <div class="cw-body">Security selection: find the best <i>issuer/bond</i>, not the best macro environment. Identify the universe → divide into sectors (industry/geography) → find relative misvaluation within each sector.</div>
+              <div class="cw-rule">Fundamental analysis = likelihood issuer meets scheduled P&amp;I. Factors:
+                <div class="cw-drow"><span class="cw-dlabel">Ops</span> operating history &amp; competitive position within industry</div>
+                <div class="cw-drow"><span class="cw-dlabel">Ratios</span> profitability (EBITDA/total assets), leverage (debt/equity), coverage (EBITDA/interest)</div>
+              </div>
+            </div>
+
+            <div class="cw-card">
+              <div class="cw-title">Credit risk models</div>
+              <div class="cw-rule"><b>Structural</b> — POD driven by likelihood asset value falls below the default threshold ("distance-to-default"). POD from asset volatility, estimated via <span class="cw-hl">equity</span> market data (mkt cap, equity vol). Examples: Moody's EDF, Bloomberg DRSK.</div>
+              <div class="cw-rule"><b>Reduced-form</b> — relates macro conditions + borrower financial ratios to <span class="cw-hl">default intensity</span> (periodic POD). Example: Altman's z-score.</div>
+              <div class="cw-fl">z = 1.2·A + 1.4·B + 3.3·C + 0.6·D + 0.999·E</div>
+              <div class="cw-body" style="margin-top:6px">
+                A = WC/TA · B = RE/TA · C = EBIT/TA · D = MV equity/TL · E = Sales/TA
+              </div>
+              <div class="cw-drow"><span class="cw-dlabel">z &gt; 3.0</span> <span class="cw-green">low</span> chance of default</div>
+              <div class="cw-drow"><span class="cw-dlabel">1.8–3.0</span> <span class="cw-orange">some</span> risk</div>
+              <div class="cw-drow"><span class="cw-dlabel">z &lt; 1.8</span> <span class="cw-red">likely</span> to default</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked (quiz): sales 2000, TA 3500, WC 2100, RE 1900, EBIT 600, TL 1200, MVE 3000</div>
+                <div class="cw-drow"><span class="cw-dlabel">z</span> 1.2(.600)+1.4(.543)+3.3(.171)+0.6(2.500)+0.999(.571) = <span class="cw-hl">4.12</span> ⇒ &gt;3.0 ⇒ low default risk</div>
+              </div>
+              <div class="cw-trap">Structural model: to <b>decrease</b> POD, decrease the issuer's asset/share-price volatility (moves it away from the default threshold). Increasing leverage or cutting coverage <i>raises</i> POD.</div>
+            </div>
+
+            <div class="cw-card">
+              <div class="cw-title">Bottom-up relative value</div>
+              <div class="cw-body">expected excess spread = spread − (EffSpreadDur × Δspread) − (POD × LGD). Given a set of spread/POD/LGD assumptions, the bond with the <span class="cw-hl">highest expected excess spread</span> offers the best relative value. Watch for structural differences (embedded options, seniority), liquidity, and M&amp;A effects on spreads.</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: fair spread for a new 10y issue</div>
+                <div class="cw-body">Issuer bonds: 5y spread 0.7%, 15y spread 1.0% (15y needs interp govt: (0.75×2.0)+(0.25×4.0)=2.5% ⇒ 3.5−2.5=1.0%). New 10y = interp of 5y &amp; 15y spreads + 5bp new-issue premium.</div>
+                <div class="cw-drow"><span class="cw-dlabel">Interp</span> (0.5×0.7%)+(0.5×1.0%) = 0.85%</div>
+                <div class="cw-drow"><span class="cw-dlabel">+ NIP</span> 0.85% + 0.05% = <span class="cw-hl">0.90%</span></div>
+              </div>
+            </div>
+
+            <div class="cw-card">
+              <div class="cw-title">Top-Down &amp; Factor Strategies <span class="cw-badge cw-blue">LOS d</span></div>
+              <div class="cw-body">Top-down = macro factors: strength of growth &amp; corporate profits. Stronger growth ⇒ decreasing spreads ⇒ move <span class="cw-hl">down in credit quality</span> (HY over IG) for greater price gains. Default rate &amp; real growth are negatively correlated (imperfect).</div>
+              <div class="cw-rule">Portfolio average rating: assign a number to each rating and take the <b>market-value-weighted</b> average. Use a scale that rises faster than linear (e.g., 1,10,20,40) because default rates/losses rise faster than linearly as ratings fall — a linear scale understates credit risk.</div>
+              <div class="cw-rule">Four style factors offering a corporate-bond risk premium:
+                <div class="cw-drow"><span class="cw-dlabel">Carry</span> expected return if conditions unchanged — measured by OAS</div>
+                <div class="cw-drow"><span class="cw-dlabel">Defensive</span> lower-risk assets offer higher <i>risk-adjusted</i> returns</div>
+                <div class="cw-drow"><span class="cw-dlabel">Momentum</span> recent out/under-performers continue</div>
+                <div class="cw-drow"><span class="cw-dlabel">Value</span> low market vs fundamental value (high excess return)</div>
+              </div>
+              <div class="cw-tip">Quiz: "low-risk assets have higher risk-adjusted returns" ⇒ <b>Defensive</b> factor.</div>
+              <div class="cw-section">ESG</div>
+              <div class="cw-body">Negative <b>screening</b> (exclude poor-ESG names) · ESG <b>ratings</b> (classify like credit ratings; positive relationship — poor ESG ⇒ more distress + agencies fold ESG into ratings) · <b>green bonds</b> (directly fund environmental projects; strong investor demand).</div>
+            </div>
+
+            <!-- ══════════ P6.4 LIQUIDITY & TAIL RISK ══════════ -->
+            <div class="cw-card">
+              <div class="cw-title">P6.4 — Liquidity Risk <span class="cw-badge cw-blue">LOS e</span></div>
+              <div class="cw-body">Liquidity ranges from very high (large on-the-run developed sovereigns) to very low (small off-the-run corporates that may not trade all day). For illiquid bonds, <span class="cw-hl">matrix / evaluated pricing</span> estimates fair value from yields/prices of similar actively-traded &amp; government securities.</div>
+              <div class="cw-body">OTC dealer-quoted market (ETFs &amp; electronic trading growing). Transaction cost = effective spread:</div>
+              <div class="cw-fl">buy: trade size × (trade price − midquote)</div>
+              <div class="cw-fl">sell: trade size × (midquote − trade price)</div>
+              <div class="cw-body" style="margin-top:6px">midquote = (bid + ask)/2. Costs also observable via <span class="cw-hl">TRACE</span> (reported prices &amp; volumes for US corporates).</div>
+              <div class="cw-section">Managing liquidity risk</div>
+              <div class="cw-drow"><span class="cw-dlabel">On-the-run</span> use liquid OTR for shorter-term strategies, less-liquid for longer-term</div>
+              <div class="cw-drow"><span class="cw-dlabel">Liquid alts</span> CDS &amp; ETFs. ETF creation/redemption happens between an <b>authorized participant</b> and the ETF manager, so ETF investors never trade the underlying directly. ETFs never mature &amp; have no drifting duration (unless target-maturity ETFs).</div>
+              <div class="cw-drow"><span class="cw-dlabel">Asset swaps</span> to hedge an illiquid holding while unwinding slowly: enter a pay-fixed asset swap to hedge the fixed-coupon income; unwind the swap concurrently as the bond is sold.</div>
+            </div>
+
+            <div class="cw-card">
+              <div class="cw-title">Tail Risk <span class="cw-badge cw-blue">LOS f</span></div>
+              <div class="cw-body">Tail risk = losses from infrequent, high-negative-impact events. <span class="cw-hl">VaR</span> = minimum expected loss over a horizon at a given probability. 1% daily VaR of $7m ⇒ 1% chance of losing $7m <i>or more</i> on a given day (99% chance of not). VaR is the percentile where the tail begins.</div>
+              <div class="cw-section">Three ways to derive the return distribution</div>
+              <div class="cw-rule"><b>Parametric</b> — assumes normal; uses mean &amp; SD. 5th pctile = 1.65 SD below mean; 1st pctile = 2.33 SD. Simple, but <span class="cw-red">poor for non-normal</span> portfolios (e.g., options).</div>
+              <div class="cw-rule"><b>Historical simulation</b> — applies historical moves to current portfolio. Uses actual data, handles non-normal; but heavily dependent on the historical sample — the past may not guide the future.</div>
+              <div class="cw-rule"><b>Monte Carlo</b> — return distribution from random draws off a user model. Flexible for non-normal; but high model risk (VaR only as good as the assumptions).</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: fixed-rate bond VaR</div>
+                <div class="cw-body">$100m into 15y bond, cpn 2%, yield 3%, MD 12, annual yield vol 1.5%. 99% (1% tail), 1 month.</div>
+                <div class="cw-drow"><span class="cw-dlabel">Monthly vol</span> 1.5% × √(1/12) = 0.433%</div>
+                <div class="cw-drow"><span class="cw-dlabel">99% move</span> 2.33 × 0.433% = 1.0089% (≈100.89 bps)</div>
+                <div class="cw-drow"><span class="cw-dlabel">Price impact</span> −12 × 1.0089% = −12.107%</div>
+                <div class="cw-drow"><span class="cw-dlabel">VaR</span> 12.107% × $100m = <span class="cw-red">$12.107m</span></div>
+              </div>
+              <div class="cw-section">VaR drawbacks &amp; extensions</div>
+              <div class="cw-drow"><span class="cw-dlabel">Drawbacks</span> tail events more frequent/severe than VaR forecasts · misses correlation &amp; liquidity shifts in stress · does not quantify the loss <i>during</i> a tail event</div>
+              <div class="cw-drow"><span class="cw-dlabel">CVaR</span> conditional VaR = expected (average) loss <i>given</i> a tail loss occurs — fixes drawback #3</div>
+              <div class="cw-drow"><span class="cw-dlabel">IVaR</span> incremental VaR = change in VaR from adding/removing a position</div>
+              <div class="cw-drow"><span class="cw-dlabel">Relative VaR</span> VaR of returns relative to a benchmark — min underperformance of an active manager</div>
+              <div class="cw-tip">Risk analysis extends beyond quantitative loss: model consequences of stress — leverage users model margin calls, DB plans model extra sponsor contributions, banks model regulatory reserves.</div>
+            </div>
+
+            <!-- ══════════ P6.5 CDS & SYNTHETIC ══════════ -->
+            <div class="cw-card">
+              <div class="cw-title">P6.5 — CDS Mechanics <span class="cw-badge cw-blue">LOS g</span></div>
+              <div class="cw-body">Protection buyer pays a regular fixed coupon; receives payment on a credit event ⇒ buyer is <span class="cw-hl">short risk</span> (synthetically short the bond). Protection seller is <span class="cw-hl">long risk</span> (like owning the bond).</div>
+              <div class="cw-rule">Standardized fixed coupon: <b>1% for IG, 5% for HY</b> (operational/clearing). This is NOT the fair spread. Fair spread = <b>CDS spread</b> (from credit models). Up-front premium reconciles the two:</div>
+              <table class="cw-table">
+                <tr><th>Scenario</th><th>Up-front premium</th></tr>
+                <tr><td>CDS spread = fixed coupon</td><td>None</td></tr>
+                <tr><td>CDS spread &gt; fixed coupon</td><td>(CDS spread − fixed) × EffSpreadDur — <b>buyer pays seller</b></td></tr>
+                <tr><td>CDS spread &lt; fixed coupon</td><td>(fixed − CDS spread) × EffSpreadDur — <b>paid to buyer</b></td></tr>
+              </table>
+              <div class="cw-fl">CDS price ≈ 1 + [(fixed coupon − CDS spread) × EffSpreadDur]</div>
+              <div class="cw-drow"><span class="cw-dlabel">Higher-quality issuer</span> CDS spread &lt; fixed ⇒ CDS price <span class="cw-green">above par</span></div>
+              <div class="cw-drow"><span class="cw-dlabel">Lower-quality issuer</span> CDS spread &gt; fixed ⇒ CDS price <span class="cw-red">below par</span></div>
+              <div class="cw-trap">Inverse price/spread: when CDS spreads <b>rise, CDS price falls</b> (and vice versa) — the "1" (par) is adjusted by the premium to create the inverse relationship.</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: buy HY protection, spread 5.5%, EffSprDur 4.5</div>
+                <div class="cw-drow"><span class="cw-dlabel">Fixed cpn</span> HY = 5%; spread 5.5% &gt; 5% ⇒ buyer pays up-front</div>
+                <div class="cw-drow"><span class="cw-dlabel">Up-front</span> (5.5%−5%)×4.5 = 2.25%</div>
+                <div class="cw-drow"><span class="cw-dlabel">CDS price</span> 1+(5%−5.5%)×4.5 = 0.9775 = 97.75%</div>
+                <div class="cw-drow"><span class="cw-dlabel">MTM if spread→5.4%</span> −(5.40%−5.50%)×4.5 = +0.45%... buyer is short risk ⇒ spread <b>fell</b> ⇒ buyer <span class="cw-red">loses 0.45%</span></div>
+              </div>
+            </div>
+
+            <div class="cw-card">
+              <div class="cw-title">CDS: single vs index, options, long-short</div>
+              <div class="cw-body">CDS references a single name or an index (e.g., Markit CDX NA IG = 125 equally-weighted names). Options: payer holder profits if fair CDS spread &gt; strike at expiry; receiver holder profits if spread &lt; strike.</div>
+              <div class="cw-rule"><b>CDS long-short</b> — buy protection where spreads expected to <span class="cw-red">widen</span> (short risk), sell protection where spreads expected to <span class="cw-green">narrow</span> (long risk).</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: ↑exposure XYZ, ↓exposure ABC, $15m each</div>
+                <div class="cw-body">ABC spread 220bp EffSprDur 4.59; XYZ 240bp EffSprDur 4.62.</div>
+                <div class="cw-drow"><span class="cw-dlabel">ABC</span> buy protection; widens 15bp ⇒ $15m×0.0015×4.59 = +$103,275</div>
+                <div class="cw-drow"><span class="cw-dlabel">XYZ</span> sell protection; narrows 20bp ⇒ $15m×0.0020×4.62 = +$138,600</div>
+                <div class="cw-drow"><span class="cw-dlabel">Total P/L</span> <span class="cw-hl">+$241,875</span></div>
+              </div>
+              <div class="cw-svg-wrap">
+                <svg viewBox="0 0 440 120" width="100%" style="max-width:440px">
+                  <rect x="10" y="35" width="130" height="50" rx="6" fill="#1C2330" stroke="#38BDF8"/>
+                  <text x="75" y="58" fill="#38BDF8" font-size="11" font-family="monospace" text-anchor="middle">Spread Buyer</text>
+                  <text x="75" y="74" fill="#7D8590" font-size="9" font-family="monospace" text-anchor="middle">(SHORT risk)</text>
+                  <rect x="300" y="35" width="130" height="50" rx="6" fill="#1C2330" stroke="#D4A017"/>
+                  <text x="365" y="58" fill="#D4A017" font-size="11" font-family="monospace" text-anchor="middle">Prot. Seller</text>
+                  <text x="365" y="74" fill="#7D8590" font-size="9" font-family="monospace" text-anchor="middle">(LONG risk)</text>
+                  <line x1="140" y1="48" x2="300" y2="48" stroke="#7D8590" marker-end="url(#cwar)"/>
+                  <text x="220" y="43" fill="#E6EDF3" font-size="9" font-family="monospace" text-anchor="middle">fixed coupon →</text>
+                  <line x1="300" y1="72" x2="140" y2="72" stroke="#FF7B72" marker-end="url(#cwar2)"/>
+                  <text x="220" y="86" fill="#FF7B72" font-size="9" font-family="monospace" text-anchor="middle">← payment on credit event</text>
+                  <defs>
+                    <marker id="cwar" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7D8590"/></marker>
+                    <marker id="cwar2" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#FF7B72"/></marker>
+                  </defs>
+                </svg>
+              </div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: duration-neutral flattener (HY 5y/10y)</div>
+                <div class="cw-body">Expect curve to flatten ⇒ 10y spread falls vs 5y. Buy 5y protection (short risk), sell 10y protection (long risk). Hold $5m notional 5y (EffSprDur 4.78), stay duration-neutral.</div>
+                <div class="cw-drow"><span class="cw-dlabel">5y BPV</span> $5m × 4.78 × 0.0001 = $2,390</div>
+                <div class="cw-drow"><span class="cw-dlabel">10y notional</span> match BPV: $2,390 / (9.18 × 0.0001) = $2,603,486</div>
+                <div class="cw-drow"><span class="cw-dlabel">5y (bought)</span> 5bp fall ⇒ −5 × $2,390 = −$11,950</div>
+                <div class="cw-drow"><span class="cw-dlabel">10y (sold)</span> 20bp fall ⇒ +20 × $2,390 = +$47,800</div>
+                <div class="cw-drow"><span class="cw-dlabel">Total</span> <span class="cw-hl">+$35,850</span></div>
+              </div>
+              <div class="cw-tip">Quiz P6.5 Q1: HY, spread 4.7% &lt; fixed 5% ⇒ up-front = (5%−4.7%)×4.5 = 0.135% × $10m = $135,000 <b>paid to protection buyer</b>.</div>
+            </div>
+
+            <!-- ══════════ P6.h CURVE POSITIONING ══════════ -->
+            <div class="cw-card">
+              <div class="cw-title">Credit Spread Curve Positioning <span class="cw-badge cw-blue">LOS h</span></div>
+              <div class="cw-section">Static curve (view: curve unchanged)</div>
+              <div class="cw-body">Earn excess return by lowering credit quality (equivalent to leverage) or extending duration via buy-and-hold longer-dated bonds.</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: overweight 15y vs 10y corp, $10m, 6mo</div>
+                <div class="cw-drow"><span class="cw-dlabel">Incr. coupon</span> [(3.1%−2.4%)/2] × $10m = $35,000</div>
+                <div class="cw-drow"><span class="cw-dlabel">10y roll</span> 9.5y interp yld 2.27%; price 100.8888→101.1053 ⇒ $21,650</div>
+                <div class="cw-drow"><span class="cw-dlabel">15y roll</span> 14.5y interp yld 2.84%; price 102.4187→103.0726 ⇒ $65,390</div>
+                <div class="cw-drow"><span class="cw-dlabel">Incr. rolldown</span> $65,390 − $21,650 = $43,740</div>
+                <div class="cw-drow"><span class="cw-dlabel">Total incr. return</span> $35,000 + $43,740 = <span class="cw-hl">$78,740</span></div>
+                <div class="cw-body" style="margin-top:6px">Attribution: 10y rolldown ($21,650) all from govt-YTM change (g-spread flat). 15y rolldown ($65,390) splits evenly — half ($32,695) benchmark yields, half credit spread.</div>
+              </div>
+              <div class="cw-body" style="margin-top:8px">CDS version of static view: increase risk by <b>selling protection</b> on lower-quality issuers or longer-dated CDS.</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: sell $50m 10y HY-index protection, EffSprDur 8.1</div>
+                <div class="cw-drow"><span class="cw-dlabel">Coupon</span> receive 5% × $50m = $2,500,000 (long risk)</div>
+                <div class="cw-drow"><span class="cw-dlabel">Open price</span> 1+(0.05−0.055)×8.9 = 0.9555 (9y interp spread = 0.8×550+0.2×450 = 530bp)</div>
+                <div class="cw-drow"><span class="cw-dlabel">New price</span> 1+(0.05−0.053)×8.1 = 0.9757</div>
+                <div class="cw-drow"><span class="cw-dlabel">Price app</span> (0.9757−0.9555)×$50m = $1,010,000</div>
+                <div class="cw-drow"><span class="cw-dlabel">Total return</span> $2,500,000 + $1,010,000 = <span class="cw-hl">$3,510,000</span></div>
+              </div>
+              <div class="cw-trap">Sold protection = long risk = profits if spreads fall &amp; prices rise (like a long bond). Bought protection = short risk = profits if spreads rise &amp; prices fall.</div>
+            </div>
+
+            <div class="cw-card">
+              <div class="cw-title">Dynamic curve strategies</div>
+              <table class="cw-table">
+                <tr><th>Stage</th><th>Curve</th><th>Cash</th><th>CDS</th></tr>
+                <tr><td rowspan="2">Recovery</td><td>HY narrows &gt; IG</td><td>Buy HY / Sell IG</td><td>Sell HY prot / Buy IG prot</td></tr>
+                <tr><td>HY curve steepens</td><td>Buy short-HY / Sell long-HY</td><td>Sell short-HY prot / Buy long-HY prot</td></tr>
+                <tr><td rowspan="2">Slowdown</td><td>HY widens &gt; IG</td><td>Buy IG / Sell HY</td><td>Sell IG prot / Buy HY prot</td></tr>
+                <tr><td>HY curve flattens/inverts</td><td>Buy long-HY / Sell short-HY</td><td>Sell long-HY prot / Buy short-HY prot</td></tr>
+              </table>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: cash slowdown — excess spread (A / BBB / BB)</div>
+                <div class="cw-body">Slowdown: HY widens more than IG. Go 100% long A-rated, 100% short BB-rated (flight to quality). OAS &amp; loss rise 40% IG, 80% HY.</div>
+                <div class="cw-drow"><span class="cw-dlabel">A</span> 1.30% − 6.00×(1.30%×0.4) − 0.09%×1.4 = −1.946%</div>
+                <div class="cw-drow"><span class="cw-dlabel">BBB</span> 1.72% − 6.60×(1.72%×0.4) − 0.39%×1.4 = −3.367%</div>
+                <div class="cw-drow"><span class="cw-dlabel">BB</span> 2.60% − 5.90×(2.60%×0.8) − 0.79%×1.8 = −11.094%</div>
+                <div class="cw-drow"><span class="cw-dlabel">Benchmark</span> (equal-wt) = −5.47%</div>
+                <div class="cw-drow"><span class="cw-dlabel">Active</span> (+1×A) + (−1×BB) = −1.946% + 11.094% = <span class="cw-hl">+9.15%</span></div>
+              </div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: synthetic slowdown — buy HY prot / sell IG prot, $50m each</div>
+                <div class="cw-drow"><span class="cw-dlabel">Net coupon</span> pay 5% HY, receive 1% IG ⇒ −$50m×(0.05−0.01) = −$2,000,000</div>
+                <div class="cw-drow"><span class="cw-dlabel">IG (sold)</span> price 1→0.9846 ⇒ (0.9846−1)×$50m = −$770,000</div>
+                <div class="cw-drow"><span class="cw-dlabel">HY (bought)</span> price 1.11575→1.0191 ⇒ (1.11575−1.0191)×$50m = +$4,832,500</div>
+                <div class="cw-drow"><span class="cw-dlabel">Price app</span> −$770,000 + $4,832,500 = $4,062,500</div>
+                <div class="cw-drow"><span class="cw-dlabel">Total P/L</span> $4,062,500 − $2,000,000 = <span class="cw-hl">+$2,062,500</span></div>
+              </div>
+              <div class="cw-tip">Summary — <b>Sell protection (long risk)</b>: profit if spreads FALL / prices RISE. <b>Buy protection (short risk)</b>: profit if spreads RISE / prices FALL.</div>
+            </div>
+
+            <div class="cw-card">
+              <div class="cw-title">P6.6 — Global, Structured Credit &amp; Analytics <span class="cw-badge cw-blue">LOS i · j · k</span></div>
+              <div class="cw-section">Global / cross-border</div>
+              <div class="cw-drow"><span class="cw-dlabel">Diversification</span> EM reliant on one industry/commodity ⇒ little diversification (all move together)</div>
+              <div class="cw-drow"><span class="cw-dlabel">Sector mix</span> differs even across developed markets (US has far more ABS/MBS)</div>
+              <div class="cw-drow"><span class="cw-dlabel">Accounting</span> standards differ ⇒ profitability/solvency ratios not comparable</div>
+              <div class="cw-drow"><span class="cw-dlabel">Cycle timing</span> credit cycles differ in magnitude/timing across countries ⇒ opportunities in yields, FX, spread curves</div>
+              <div class="cw-fl">R_DC = (1 + R_FC)(1 + R_FX) − 1</div>
+              <div class="cw-card" style="background:var(--surface2)">
+                <div class="cw-ctitle">Worked: US mgr, EUR HY index CDS, $50m</div>
+                <div class="cw-drow"><span class="cw-dlabel">Init price</span> 1+(0.05−0.045)×4.55 = 1.02275</div>
+                <div class="cw-drow"><span class="cw-dlabel">New price</span> spread falls 20%: 1+(0.05−0.045×0.8)×4.55 = 1.0637</div>
+                <div class="cw-drow"><span class="cw-dlabel">R_FC</span> (1.0637−1.02275)/1.02275 = 4.0%</div>
+                <div class="cw-drow"><span class="cw-dlabel">R_DC</span> (1.04)(1.02)−1 = <span class="cw-hl">6.08%</span> (EUR +2%)</div>
+              </div>
+              <div class="cw-body" style="margin-top:8px"><b>EM sovereign analysis:</b> Institutional (property rights, contract law, political stability, geopolitical/ESG); Economic profile (tax revenues, debt &amp; deficit as % GDP); Exchange-rate regime (fixed regimes limit monetary flexibility; high external debt/GDP + low reserves/GDP ⇒ higher distress chance). Corporates face a <span class="cw-hl">sovereign ceiling</span> — usually rated no higher than their government. Liquidity risk is elevated (few EM bonds trade regularly ⇒ liquidity premium). Uncovered interest rate parity does <b>not</b> hold ⇒ FX carry can earn excess returns (forward rate bias).</div>
+              <div class="cw-section">Structured credit</div>
+              <div class="cw-body">Securities backed by debt collateral (mortgages, loans). Two reasons to invest:</div>
+              <div class="cw-drow"><span class="cw-dlabel">Tranching</span> different risk profiles unavailable in the raw collateral. Losses hit the <b>junior</b> tranche first ⇒ senior tranche = lowest credit risk, highest rating. Lets investors who can't hold the raw collateral (rating too low) access it via senior tranches. Examples: <b>CDOs</b> (general debt), <b>CLOs</b> (leveraged loans to non-IG companies)</div>
+              <div class="cw-drow"><span class="cw-dlabel">Exposure</span> to collateral not directly accessible. Examples: <b>MBS</b> (mortgages), <b>ABS</b> (credit-card/auto/other loans), <b>covered bonds</b> (senior bank debt backed by a pool + recourse to the bank; on balance sheet; lower credit risk than SPV products since the bank substitutes non-performing collateral)</div>
+              <div class="cw-tip">L3 application: expecting recovery ⇒ sell senior tranches, buy junior (lower-quality outperforms), mirroring lowering portfolio credit rating before a recovery.</div>
+              <div class="cw-section">Fixed-income analytics</div>
+              <div class="cw-drow"><span class="cw-dlabel">Inputs</span> position data, market data (prices/yields/FX/vol), credit &amp; ESG ratings, index subscriptions</div>
+              <div class="cw-drow"><span class="cw-dlabel">User params</span> term-structure/risk (VaR) models, scenario analysis, sector/ESG filters, time horizon, objective (total-return vs LDI)</div>
+              <div class="cw-drow"><span class="cw-dlabel">Outputs</span> position &amp; risk summary vs benchmark, selection/construction tools, risk &amp; scenario analysis, trading/cash tools</div>
+              <div class="cw-body" style="margin-top:6px">Consider: accuracy of inputs, appropriateness of model assumptions, and how outputs relate to the manager's overall objectives.</div>
+            </div>
+
+            <!-- ══════════ DECISIVE-DETAIL QUIZ BANK ══════════ -->
+            <div class="cw-card">
+              <div class="cw-title">Decisive-detail traps &amp; quiz answers</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.1 Q1</span> Peak of cycle ⇒ spread <b>rising</b> &amp; curve <b>upward</b> sloping. (A)</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.1 Q2</span> Only the <b>HY curve</b> inverts in recession. (C)</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.1 Q3</span> HY empirical duration &lt; analytical ⇒ <b>lower</b>. (A)</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.2 Q1</span> Upward curve ⇒ interp govt &gt; nearest shorter govt ⇒ g-spread &lt; yield spread ⇒ yield spread <b>higher than g-spread</b>. (C)</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.2 Q2</span> Bond below par ⇒ coupon &lt; YTM ⇒ ASW (uses coupon) &lt; i-spread (uses YTM) ⇒ i-spread <b>higher than ASW</b>. (C)</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.2 Q3</span> Portfolio OAS is market-value weighted, so it need not equal the simple average ⇒ compute; answer is the MV-weighted figure (not simply 130bps). Verify with position weights.</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.2 Q4</span> Upward MRR curve ⇒ Z-DM &lt; DM ⇒ <b>lower than the DM</b>. (A)</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.3 Q1</span> z = 4.12 &gt; 3.0 ⇒ <b>low default risk</b>. (A)</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.3 Q2</span> Structural: lower share-price <b>volatility</b> ⇒ lower POD. (B)</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.4</span> To manage rate risk while slowly selling a large illiquid holding ⇒ pay-fixed swap, unwind <b>over time as the bond is sold</b> (concurrent). Best tool to see impact of resizing an active position ⇒ <b>incremental VaR</b>.</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.5 Q1</span> HY spread 4.7% &lt; fixed 5% ⇒ $135,000 to protection <b>buyer</b>. (B)</div>
+              <div class="cw-drow"><span class="cw-dlabel">P6.5 Q2</span> Static-curve manager <b>least likely</b> to lower credit rating (that's a slowdown/defensive move, not a static-curve carry/duration play). (C)</div>
+              <div class="cw-trap">Sign discipline everywhere: long risk (sell protection / own bond) profits on falling spreads; short risk (buy protection) profits on rising spreads. Work CDS P/L in decimals × notional × EffSpreadDur.</div>
+            </div>
+
+          </div>
+
 
           <script>
             // ═══════════════════════════════════════════════
