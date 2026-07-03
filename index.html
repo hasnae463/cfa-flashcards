@@ -655,6 +655,7 @@ Negative Nf = short futures   ·   BPV gap = |portfolio BPV − liability BPV|</
                TAB · RECAP (quick-review summary)
                ═════════════════════════════════════════════════════════════════ -->
           <div id="lw-recap" class="lw-panel">
+            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
 
             <div class="lw-card">
               <div class="lw-title">Reading map — Liability-Driven &amp; Index-Based Strategies</div>
@@ -1352,6 +1353,7 @@ Example: Duration 5 · MV $10M → BPV = 5 × $10M × 0.0001 = $5,000 per bp</di
 
           <!-- ══ TAB 8: RECAP (full reading walkthrough, section-by-section) ══ -->
           <div id="ycs-recap" class="lw-panel">
+            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
 
             <div class="lw-card">
               <div class="lw-row"><div class="lw-title">Reading P5 · Yield Curve Strategies — full recap</div><span class="lw-badge lw-blue">Follows the reading's own flow</span></div>
@@ -3321,6 +3323,7 @@ Ratio = ESD 10yr / ESD 5yr = 8.9 / 4.9 = 1.82×</span>
           </div>
 
           <div id="cw-recap" class="cw-panel">
+            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
 
             <style>
               #cw-recap .cw-drow{display:block;justify-content:normal;align-items:normal;line-height:1.6}
@@ -7273,6 +7276,7 @@ Lesser of the two = <b style="color:#D4A017">0.2%</b></div>
                TAB · RECAP (quick-review summary)
                ═════════════════════════════════════════════════════════════════ -->
           <div id="pcw-recap" class="pcw-panel">
+            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
 
             <div class="pcw-card">
               <div class="pcw-title">Three sources of active return</div>
@@ -9494,6 +9498,7 @@ Which to prioritize depends on:
           </div><!-- /tsw-essays panel -->
 
           <div id="tsw-recap" class="tsw-panel">
+            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
 
             <style>
               #tsw-recap .tsw-drv-row{display:block;font-family:inherit}
@@ -33437,6 +33442,75 @@ function onNoteKey(e) {
       }
     }
   }
+}
+
+// ══════════════════════════════════════════════════
+// PRINT ALL RECAPS (ink-friendly light theme)
+// ══════════════════════════════════════════════════
+function printAllRecaps() {
+  const order = [
+    { id: 'lw-recap',  title: 'Reading P4 · Liability-Driven &amp; Index Strategies' },
+    { id: 'ycs-recap', title: 'Reading P5 · Yield Curve Strategies' },
+    { id: 'cw-recap',  title: 'Reading P6 · Credit Strategies' },
+    { id: 'pcw-recap', title: 'Active Equity · Portfolio Construction' },
+    { id: 'tsw-recap', title: 'Reading P7 · Trade Strategy &amp; Execution' }
+  ];
+  let body = '';
+  order.forEach(function(sec) {
+    var el = document.getElementById(sec.id);
+    if (!el) return;
+    body += '<section class="recap-sec"><h1 class="recap-h1">' + sec.title + '</h1>' + el.innerHTML + '</section>';
+  });
+  if (!body) { alert('No recap panels found to print.'); return; }
+  var css = [
+    '@page { margin: 14mm; }',
+    '* { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }',
+    'body { background:#fff; color:#1a1a1a; font-family: Georgia, "Times New Roman", serif; font-size:11pt; line-height:1.5; margin:0; padding:0; }',
+    'style { display:none; }',
+    '.recap-sec { page-break-before: always; }',
+    '.recap-sec:first-child { page-break-before: avoid; }',
+    '.recap-h1 { font-size:18pt; color:#0b3d66; border-bottom:2px solid #0b3d66; padding-bottom:4px; margin:0 0 12px; }',
+    // cards
+    '[class*="-card"] { border:1px solid #ccc; border-radius:5px; padding:10px 12px; margin:0 0 10px; background:#fafafa; page-break-inside: avoid; }',
+    '[class*="-title"] { font-weight:700; font-size:13pt; color:#0b3d66; margin-bottom:6px; }',
+    '[class*="-body"] { color:#222; margin:4px 0; }',
+    // rules / sub-rows
+    '[class*="-rule"] { border-left:3px solid #b8860b; padding:2px 0 2px 9px; margin:5px 0; }',
+    '[class*="-drivers"] { background:#f0f0f0; border-radius:4px; padding:7px 9px; margin:7px 0; }',
+    '[class*="-drv-row"], [class*="-drow"] { display:block; margin:3px 0; font-family:inherit; }',
+    '[class*="-drv-lbl"], [class*="-dlabel"] { display:inline; color:#0b5; font-weight:700; margin-right:7px; font-family:monospace; font-size:9pt; color:#7a4d00; }',
+    // formulas
+    '[class*="-fl"] { font-family:"Courier New",monospace; font-size:9.5pt; background:#eef4fb; border-left:3px solid #2a6db5; padding:7px 10px; border-radius:3px; color:#0b3d66; white-space:pre-wrap; margin:6px 0; }',
+    // callouts
+    '[class*="-trap"] { background:#fbeceb; border-left:3px solid #c0392b; padding:7px 10px; border-radius:3px; color:#7a1f16; margin:6px 0; }',
+    '[class*="-tip"] { background:#eef8ee; border-left:3px solid #2e7d32; padding:7px 10px; border-radius:3px; color:#1b4d1f; margin:6px 0; }',
+    '[class*="-info"] { background:#eef4fb; border-left:3px solid #2a6db5; padding:7px 10px; border-radius:3px; color:#0b3d66; margin:6px 0; }',
+    // benchmark cards
+    '[class*="-bm"] { border:1px solid #ddd; border-left:3px solid #2a6db5; border-radius:5px; padding:9px 12px; margin:0 0 8px; opacity:1 !important; transform:none !important; background:#fff; page-break-inside:avoid; }',
+    '[class*="-bm-name"] { font-weight:700; font-size:12pt; color:#0b3d66; }',
+    // inline emphasis colors -> readable dark
+    '[class*="-hl"] { color:#7a4d00; font-weight:700; }',
+    '[class*="-green"] { color:#1b7d1f; font-weight:600; }',
+    '[class*="-red"] { color:#c0392b; font-weight:600; }',
+    '[class*="-orange"] { color:#b5651d; font-weight:600; }',
+    // tables
+    'table { border-collapse:collapse; width:100%; margin:6px 0; font-size:9.5pt; page-break-inside:avoid; }',
+    'th, td { border:1px solid #bbb; padding:4px 6px; text-align:left; color:#1a1a1a; }',
+    'th { background:#e8eef5; font-weight:700; }',
+    // svg
+    'svg { max-width:100%; height:auto; }',
+    'svg text { fill:#1a1a1a !important; }',
+    '[class*="-svg-wrap"] { border:1px solid #ddd; border-radius:4px; padding:6px; margin:6px 0; page-break-inside:avoid; }',
+    // hide any tab bars / buttons that slipped in
+    'button, [class*="-tabs"], [class*="print-btn"] { display:none !important; }'
+  ].join('\n');
+  var w = window.open('', '_blank');
+  if (!w) { alert('Please allow pop-ups to print the recaps.'); return; }
+  w.document.open();
+  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>CFA L3 — All Recaps</title><style>' + css + '</style></head><body>' + body + '</body></html>');
+  w.document.close();
+  w.focus();
+  setTimeout(function(){ try { w.print(); } catch(e){} }, 400);
 }
 
 // ══════════════════════════════════════════════════
