@@ -8011,6 +8011,7 @@ Fund A active risk 3× Fund B with same Active Share → A makes sector bets, NO
             <button class="tsw-tab" onclick="tswTab('governance',this)">Trade Governance</button>
             <button class="tsw-tab" onclick="tswTab('errors',this)">Errors &amp; Mastery</button>
             <button class="tsw-tab" onclick="tswTab('essays',this)">Essay Framework</button>
+            <button class="tsw-tab" onclick="tswTab('recap',this)">Recap</button>
           </div>
 
           <!-- ═════════════════════════════════════════════════════════════════
@@ -9491,6 +9492,341 @@ Which to prioritize depends on:
             </div>
 
           </div><!-- /tsw-essays panel -->
+
+          <div id="tsw-recap" class="tsw-panel">
+
+            <style>
+              #tsw-recap .tsw-drv-row{display:block;font-family:inherit}
+              #tsw-recap .tsw-drv-lbl{display:inline;min-width:0;margin-right:8px;color:#79C0FF;font-family:monospace;font-size:10px}
+            </style>
+
+            <div style="font-family:monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:#79C0FF;margin-bottom:10px">Reading P7 · Full Recap · follows the reading module-by-module</div>
+
+            <!-- ═══════ P7.1 TRADE MOTIVATIONS ═══════ -->
+            <div class="tsw-card">
+              <div class="tsw-title">P7.1 — Trade Motivations <span class="tsw-bm-tag">LOS a</span></div>
+              <div class="tsw-body">Four categories of trade motivation. Each maps to a different <span class="tsw-hl">urgency</span>, which drives the trading strategy.</div>
+              <div class="tsw-rule"><b>1. Profit seeking</b> — active managers trade perceived mispricing to generate alpha.
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">alpha decay</span> deterioration in alpha once the decision is made — the core driver of urgency</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">high decay</span> e.g. trading on daily news flow ⇒ short time frames ⇒ <span class="tsw-hl">high urgency</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">low decay</span> e.g. long-term company fundamentals ⇒ <span class="tsw-hl">low urgency</span></div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">info leakage</span> to avoid alerting the market, trade across multiple venues incl. dark pools</div>
+                </div>
+              </div>
+              <div class="tsw-rule"><b>2. Risk management / hedging</b> — trade to maintain targeted risk (rebalance after market moves; hedge a factor). Derivatives can be used <i>only</i> if liquid contracts exist and the mandate permits; else trade the underlying. Leverage magnifies risk ⇒ monitor closely.</div>
+              <div class="tsw-rule"><b>3. Cash flow needs</b> — driven by investor subscriptions (in) and redemptions (out). Urgency depends on cash-flow nature, fund liquidity, and liquidity terms promised.
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">cash drag</span> illiquid funds can't invest new money fast ⇒ low cash returns drag vs benchmark</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">equitization</span> use ETFs/derivatives for market exposure while buying underlying over time (fixes cash drag)</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">redemptions</span> priced at NAV (closing prices) ⇒ liquidate at close to eliminate price-mismatch risk; consider liquidity + tax</div>
+                </div>
+              </div>
+              <div class="tsw-rule"><b>4. Corporate actions, margin calls, index reconstitution</b> — mergers/acquisitions/spinoffs, reinvesting dividends/coupons when income is insufficient for distributions, urgent sales on margin calls, and index-tracking funds trading at the close to minimize tracking error when the benchmark reconstitutes.</div>
+            </div>
+
+            <!-- dark pools & venue vocab -->
+            <div class="tsw-card">
+              <div class="tsw-title">Venues &amp; information leakage</div>
+              <div class="tsw-drivers">
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">dark pool</span> low pre-trade transparency; no info leakage, BUT can't see the other side ⇒ unknown pre-trade fill likelihood. US = ATS; Europe = MTFs (multilateral) or SIs (single-dealer)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">lit venue</span> high pre-trade transparency; national stock exchanges are lit</div>
+              </div>
+            </div>
+
+            <!-- ═══════ P7.1b TRADING STRATEGY INPUTS ═══════ -->
+            <div class="tsw-card">
+              <div class="tsw-title">Trading Strategy Inputs <span class="tsw-bm-tag">LOS b</span></div>
+              <div class="tsw-body">Four factors dictate the optimal strategy: (1) order characteristics, (2) security characteristics, (3) market conditions, (4) individual risk aversion.</div>
+              <div class="tsw-rule"><b>1. Order characteristics</b>
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">side</span> buy / sell / short-cover / short-sell. Matters with momentum — costlier to buy in a rising market. One-sided lists carry more market risk than offsetting buys+sells</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">absolute size</span> larger orders ⇒ higher <span class="tsw-hl">market impact cost</span> (order's own adverse effect on price). Trade larger orders with less urgency to mitigate</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">relative size</span> order as % of <span class="tsw-hl">ADV</span>; higher %ADV ⇒ higher market impact</div>
+                </div>
+              </div>
+              <div class="tsw-rule"><b>2. Security characteristics</b>
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">type</span> underlying/ETF/ADR/GDR/derivative/FX — different markets, costs, regulation, liquidity</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">short-term alpha</span> high alpha decay ⇒ more urgency; also more urgency in adverse conditions (buying rising / selling falling)</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">price volatility</span> high vol ⇒ high <span class="tsw-hl">execution risk</span> = risk of an adverse price move over the trading horizon</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">liquidity</span> greater liquidity ⇒ lower execution risk &amp; market impact. Indicators: narrow bid-ask + market depth (volume available)</div>
+                </div>
+              </div>
+              <div class="tsw-rule"><b>3. Market conditions</b> — volatility &amp; liquidity levels; both worsen in crises (2008 credit crisis; Aug 2007 quant liquidity shock from herding). Lower liquidity ⇒ longer horizons, but higher volatility may push faster trading to avoid execution risk.</div>
+              <div class="tsw-rule"><b>4. Individual risk aversion</b> — higher risk aversion ⇒ more worried about adverse price moves than market impact ⇒ trades with <span class="tsw-hl">more urgency</span>.</div>
+              <div class="tsw-trap"><b>Trader's dilemma:</b> the two big costs pull opposite ways. <b>Market impact</b> comes from trading too <b>quickly</b> (adverse moves + info leakage). <b>Execution risk</b> comes from trading too <b>slowly</b> (adverse moves over the horizon). Alleviating one worsens the other — skilled traders balance them.</div>
+            </div>
+
+            <!-- ═══════ P7.2 REFERENCE PRICE BENCHMARKS ═══════ -->
+            <div class="tsw-card">
+              <div class="tsw-title">P7.2 — Reference Price Benchmarks <span class="tsw-bm-tag">LOS c</span></div>
+              <div class="tsw-body">Reference prices estimate expected trading cost (to pick a strategy) and are the key input to post-trade cost measurement. Four categories: pre-trade, intraday, post-trade, price target.</div>
+
+              <div class="tsw-bm">
+                <div class="tsw-bm-h"><span class="tsw-bm-name">Pre-trade</span> <span class="tsw-cat-pre">known before trading</span></div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">decision price</span> price when the PM made the investment decision</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">previous close</span> prior day's close — proxy for decision price for quant/systematic managers</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">opening price</span> proxy for decision price for subjective fundamental long-term managers (doesn't punish/reward overnight news). NOT good if the trade itself enters the opening auction that sets it</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">arrival price</span> price when the order is sent to market — active alpha-seekers often benchmark to this</div>
+                </div>
+              </div>
+
+              <div class="tsw-bm">
+                <div class="tsw-bm-h"><span class="tsw-bm-name">Intraday</span> <span class="tsw-cat-intra">prices during the trading period</span></div>
+                <div class="tsw-body">Used by managers trading passively over a day, or rebalancing / minimizing risk.</div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">VWAP</span> volume-weighted avg price over the horizon — participate with volume patterns (e.g., fund buys from sell-order cash in a rebalance)</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">TWAP</span> equal- (time-) weighted avg, <span class="tsw-hl">ignores volume</span> — removes impact of outlier trades at day's highs/lows; good when volume fluctuates wildly through the day</div>
+                </div>
+              </div>
+
+              <div class="tsw-bm">
+                <div class="tsw-bm-h"><span class="tsw-bm-name">Post-trade</span> <span class="tsw-cat-post">determined after trading</span></div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">closing price</span> most common post-trade benchmark; used by managers executing at close to cut tracking error. Drawback: not known until after trading ⇒ can't assess performance <i>during</i> the horizon</div>
+                </div>
+              </div>
+
+              <div class="tsw-bm">
+                <div class="tsw-bm-h"><span class="tsw-bm-name">Price target</span> <span class="tsw-cat-pt">manager's fair-value view</span></div>
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">price target</span> profit-seekers aiming for short-term alpha vs their fair-value estimate. E.g., stock at $10 believed worth $10.50 ⇒ target $10.50, buy as many shares as possible below it</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ═══════ P7.d TRADING STRATEGY SELECTION ═══════ -->
+            <div class="tsw-card">
+              <div class="tsw-title">Trading Strategy Selection <span class="tsw-bm-tag">LOS d</span></div>
+              <div class="tsw-body">Match trade type → urgency → reference price → execution method.</div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Short-term alpha</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">objective</span> trade short-term mispricing in a liquid equity market (news overreaction)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">urgency</span> <span class="tsw-red">high</span></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">ref price</span> price target (fair value) + arrival price for placed orders</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">execution</span> computer algorithm</div>
+              </div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Long-term alpha</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">objective</span> long-term fundamental change (e.g., sell illiquid bonds facing deteriorating credit over next year)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">urgency</span> <span class="tsw-green">low</span></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">ref price</span> difficult to use in practice</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">execution</span> sell gradually over weeks in small parts (avoid info leakage &amp; dealer price pressure)</div>
+              </div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Risk rebalance</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">objective</span> rebalance/hedge (e.g., liquidate long &amp; short FX to cut fund vol to target)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">urgency</span> <span class="tsw-green">low</span> — buying AND selling ⇒ no directional exposure ⇒ low execution risk</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">ref price</span> TWAP</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">execution</span> algorithmically target TWAP over the next couple of days</div>
+              </div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Cash-flow driven (client redemption)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">objective</span> liquidate to meet redemptions priced at closing prices; fund bears risk if not filled at close</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">urgency</span> complete by end of trading day</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">ref price</span> closing price</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">execution</span> some liquidity in the closing auction; remainder before close (e.g., at VWAP)</div>
+              </div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Cash-flow driven (new mandate)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">objective</span> invest new funds (e.g., track small-cap index, 3% TE); measurement starts at today's close</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">urgency</span> liquidity too low to fill in underlying by close, but immediate exposure required</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">ref price</span> closing price</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">execution</span> long index futures for immediate exposure (kills cash drag); build underlying over time, unwind futures. Caveats: may be no futures closing auction (trade near close); mandate must allow derivatives</div>
+              </div>
+              <div class="tsw-trap">Decisive detail: a <b>two-sided risk rebalance has LOW urgency</b> because there's no directional exposure. Recommending arrival-price aggressive execution would be wrong.</div>
+            </div>
+
+            <!-- ═══════ P7.3 EXECUTION & ALGORITHMS ═══════ -->
+            <div class="tsw-card">
+              <div class="tsw-title">P7.3 — Trade Execution &amp; Implementation <span class="tsw-bm-tag">LOS e</span></div>
+              <div class="tsw-rule"><b>High-touch</b> — high human involvement; needed for large (block) trades or less liquid markets.
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">principal (broker risk)</span> dealer/market maker takes on execution risk, priced into their spread. Quote-driven OTC / off-exchange / RFQ (quotes only on request)</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">agency</span> broker finds the other side; execution risk stays with the PM/trader</div>
+                </div>
+              </div>
+              <div class="tsw-rule"><b>Electronic</b> — via computer, more liquid markets, order-driven (limit orders in a central limit order book). A limit order trades at a set price or better. Includes <span class="tsw-hl">DMA</span> (buy-side accesses the exchange order book through the broker's tech) and algorithmic trading.</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">Execution algorithm classes</div>
+              <div class="tsw-body">Algorithmic trading = programmed rules to trade electronically, for two purposes: profit-seeking (market makers/quant/HFT) and trade execution. Execution algos:</div>
+              <div class="tsw-rule"><b>Scheduled (POV, VWAP, TWAP)</b> — driven by historical volumes or set time periods.
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">POV</span> (participation) trade a set % of traded volume. <span class="tsw-green">+</span> auto-exploits added liquidity; <span class="tsw-red">−</span> keeps trading at any (adverse) price, may not fill in time if trading is thin</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">VWAP</span> time-slice to match VWAP using historical intraday volumes (trade more at open/close, less midday)</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">TWAP</span> equal shares per time period (e.g., each hour). <span class="tsw-green">+</span> ensures set shares in set time; <span class="tsw-red">−</span> may force trades in low liquidity or trade too little in high liquidity</div>
+                </div>
+              </div>
+              <div class="tsw-rule"><b>Liquidity-seeking (opportunistic)</b> — take favorable liquidity when offered (e.g., wait for a large seller, then market-order). Uses lit + dark venues.</div>
+              <div class="tsw-rule"><b>Arrival price</b> — trade close to prices prevailing when the order entered; trade more aggressively (faster) than others to get shares near the arrival price.</div>
+              <div class="tsw-rule"><b>Dark strategies / liquidity aggregators</b> — execute in dark pools; aggregators optimize across multiple dark venues.</div>
+              <div class="tsw-rule"><b>Smart order routers (SORs)</b> — pick the best destination (lit or dark) to route an order: best price for market orders, or highest fill probability for limit orders.</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">Which algorithm? <span class="tsw-bm-tag">exam-critical</span></div>
+              <div class="tsw-drivers">
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Scheduled</span> relatively <b>small</b> orders in <b>liquid</b> markets, <b>less</b> urgency / greater risk tolerance for longer execution, minimizing market impact (e.g., a risk rebalance over a day)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Liquidity-seeking</span> <b>larger</b> orders in <b>less liquid</b> markets with <b>higher</b> urgency, mitigating market impact; also when displaying limit orders risks info leakage, or liquidity is thin with sporadic bursts of high liquidity</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Arrival price</span> relatively <b>small</b> orders (e.g., &lt;15% of expected volume) in <b>liquid</b> markets, for managers who think prices will move against them (profit-seekers) and wish to trade aggressively; also for <b>more risk-averse</b> managers minimizing execution risk</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Dark / aggregators</span> <b>large</b> orders in <b>illiquid</b> markets (arrival/scheduled would cause high impact); lower fill chance in dark ⇒ suits managers who don't need the full order filled immediately</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">SORs</span> small market orders with low market impact where the market moves quickly, or small limit orders with low info leakage where multiple venues exist</div>
+              </div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Worked: pick the algorithm (each used once)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">SFDL</span> buy, 10,000 sh vs 20,000 ADV (50% ADV, large, illiquid), high urgency ⇒ <span class="tsw-hl">liquidity-seeking</span> (minimize impact, trade when liquidity offered, executes quickly)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">TWEL</span> buy, 5,000 vs 100,000 ADV (5%, small, liquid), low urgency ⇒ <span class="tsw-hl">scheduled</span> (POV/VWAP/TWAP; passive, low impact)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">UDSL</span> sell, 1,000,000 vs 1,000,000 ADV (100% ADV) ⇒ <span class="tsw-hl">high-touch principal</span> (algo would leak info + huge impact; human discretion finds the other side)</div>
+              </div>
+              <div class="tsw-tip">Recent developments: <b>clustering</b> (ML groups trades by similar attributes to quantitatively test which algo is optimal — finds features a human hadn't considered) and <b>high-frequency market forecasting</b> (models short-term direction; <b>LASSO</b> shrinks many candidate variables to a manageable significant set).</div>
+            </div>
+
+            <!-- ═══════ P7.f KEY MARKETS ═══════ -->
+            <div class="tsw-card">
+              <div class="tsw-title">Characteristics of Key Markets <span class="tsw-bm-tag">LOS f</span></div>
+              <div class="tsw-drivers">
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">equities</span> stock exchanges (lit) + dark pools; most tech-advanced; algos commonplace; mostly electronic</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">fixed income</span> many heterogeneous issues, low liquidity, large order sizes ⇒ dealer-based quote-driven; RFQ growing; algo trading largely limited to most-liquid on-the-run US Treasuries; other FI uses high-touch (urgent ⇒ principal broker-risk, less urgent ⇒ agency)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">exch-traded derivatives</span> electronic common; algo less common than equities, more for futures than options; buy-side generally uses DMA</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">OTC derivatives</span> dealer quote-driven, high-touch; since 2008 regulators push transparency + central clearing of basic OTC (e.g., IRS; Dodd-Frank 2010)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">spot FX</span> OTC, electronic + high-touch; three tiers = interbank, interdealer, bank-to-client (decreasing size, increasing spreads). Large urgent ⇒ RFQ w/ brokers; large non-urgent ⇒ scheduled algos or high-touch agency; small ⇒ DMA</div>
+              </div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Worked: trade approach by market (each used once)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Futures, small, high</span> ⇒ <span class="tsw-hl">DMA</span> — evolved electronic markets; small urgent trade executes best direct; algo poorly developed in derivatives &amp; scheduled too slow</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Agency MBS, med, low</span> ⇒ <span class="tsw-hl">high-touch brokered</span> — FI outside Treasuries/corporates uses high-touch; unlikely to have algo/DMA</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">Equity, large, low</span> ⇒ <span class="tsw-hl">scheduled algorithm</span> — large ⇒ too much impact via DMA; not urgent ⇒ no high-touch; equities trade electronically</div>
+              </div>
+            </div>
+
+            <!-- ═══════ P7.4 TRADE COST MEASUREMENT ═══════ -->
+            <div class="tsw-card">
+              <div class="tsw-title">P7.4 — Trade Cost Measurement (IS) <span class="tsw-bm-tag">LOS g</span></div>
+              <div class="tsw-body">Costs are explicit (visible: commissions/fees) or implicit (embedded: market impact / execution risk). Total cost measured by <span class="tsw-hl">implementation shortfall (IS)</span>.</div>
+              <div class="tsw-fl">IS = paper return − actual return</div>
+              <div class="tsw-drivers">
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">paper return</span> hypothetical: full order filled at the original <b>decision price</b> with zero cost</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">actual return</span> real portfolio, net of all costs</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">IS in bps</span> IS ÷ (initial paper-portfolio cost) × 10,000</div>
+              </div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Worked: buy 50,000 SJB, decision $20.00</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">fill</span> bought 40,000 @ $20.34; comm $0.02/sh; close $20.55</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">paper</span> 50,000 × ($20.55 − $20.00) = $27,500</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">actual</span> 40,000 × ($20.55 − $20.34) − 40,000 × $0.02 = $7,600</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">IS</span> $27,500 − $7,600 = $19,900</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">IS bps</span> $19,900 ÷ (50,000 × $20 = $1,000,000) = 0.0199 = <span class="tsw-hl">199 bps</span></div>
+              </div>
+              <div class="tsw-tip">1 bp = 1/100 of 1%. Multiply a decimal by 10,000 to convert to bps.</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">IS decomposition</div>
+              <div class="tsw-rule"><b>Execution cost</b> = executing at a worse price than the decision price. Splits into:
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">delay cost</span> adverse move between PM submitting the order and trader releasing it to market (time to set the strategy)</div>
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">trading cost</span> market impact of executing the trade</div>
+                </div>
+              </div>
+              <div class="tsw-rule"><b>Opportunity cost</b> — cost of <i>not</i> trading the unfilled part of the order (lost profit on shares the paper portfolio assumed filled at decision price).</div>
+              <div class="tsw-rule"><b>Fixed fees</b> — explicit commissions/fees.</div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Worked: SJB decomposition (arrival $20.10)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">delay</span> 40,000 × ($20.10 − $20.00) = $4,000 = 40 bps</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">trading</span> 40,000 × ($20.34 − $20.10) = $9,600 = 96 bps</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">opportunity</span> 10,000 × ($20.55 − $20.00) = $5,500 = 55 bps</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">fixed fees</span> 40,000 × $0.02 = $800 = 8 bps</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">total</span> $19,900 = <span class="tsw-hl">199 bps</span> ✓ (40 + 96 + 55 + 8)</div>
+              </div>
+              <div class="tsw-rule"><b>Improving execution:</b> minimize delay cost with efficient pre/post-trade analysis for swift strategy decisions. Analyzing opportunity cost lets a manager deploy the unfilled portion elsewhere — e.g., if only 80% of an order will fill, invest the other 20% in the next-best trade to avoid cash drag. Analyzing trading (impact) cost helps set proper benchmarks and urgency.</div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">IS for a SELL order (signs flip)</div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Worked: sell 100,000 FTRB, decision £2.56</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">fill</span> 70,000 @ £2.60; arrival £2.59; comm £400; close £2.54</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">paper</span> 100,000 × (£2.56 − £2.54) = £2,000 (sell ⇒ gain if price falls)</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">actual</span> 70,000 × (£2.60 − £2.54) − £400 = £3,800</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">IS</span> £2,000 − £3,800 = −£1,800 ⇒ −£1,800 / £256,000 = <span class="tsw-green">−70.3 bps</span></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">delay</span> 70,000 × (£2.56 − £2.59) = −£2,100 = −82.0 bps</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">trading</span> 70,000 × (£2.59 − £2.60) = −£700 = −27.3 bps</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">opportunity</span> 30,000 × (£2.56 − £2.54) = £600 = 23.4 bps</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">fixed fees</span> £400 = 15.6 bps</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">total</span> −82.0 − 27.3 + 23.4 + 15.6 = <span class="tsw-green">−70.3 bps</span></div>
+              </div>
+              <div class="tsw-trap"><b>Negative IS is a BENEFIT</b> — the trader added value vs the paper portfolio. Here prices rose after the decision, so selling later (at higher prices) beat an immediate fill. Negative delay/trading cost = the move worked in the seller's favor / execution improved on the arrival price.</div>
+            </div>
+
+            <!-- ═══════ P7.5 EVALUATING TRADE EXECUTION ═══════ -->
+            <div class="tsw-card">
+              <div class="tsw-title">P7.5 — Evaluating Trade Execution <span class="tsw-bm-tag">LOS h</span></div>
+              <div class="tsw-body">Assess brokers/algos/strategies vs a benchmark price (arrival, VWAP, TWAP, or close). A <span class="tsw-hl">positive</span> cost = underperformance vs the benchmark.</div>
+              <div class="tsw-fl">absolute cost ($) = side × (execution − benchmark) × shares
+trade cost (bps) = side × (execution − benchmark) / benchmark × 10,000
+side = +1 buy, −1 sell</div>
+              <div class="tsw-trap">Intuition: you suffer cost (underperform) when you <b>buy high</b> (exec &gt; benchmark) or <b>sell low</b> (exec &lt; benchmark). Buyers incur cost above the benchmark; sellers incur cost below it.</div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Worked: buy, MOC benchmark</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">data</span> buy @ $25.50; close $25.60; side +1</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">bps</span> +1 × ($25.50 − $25.60)/$25.60 × 10,000 = <span class="tsw-green">−39.1 bps</span> (bought below close ⇒ added value)</div>
+              </div>
+            </div>
+
+            <div class="tsw-card">
+              <div class="tsw-title">Market-adjusted cost &amp; added value</div>
+              <div class="tsw-body">Buy in a rising market / sell in a falling market incur positive cost regardless of skill. Strip out general market moves with <span class="tsw-hl">market-adjusted cost</span>.</div>
+              <div class="tsw-fl">index cost (bps) = side × (index VWAP − index arrival) / index arrival × 10,000
+market-adjusted cost (bps) = arrival cost (bps) − β × index cost (bps)</div>
+              <div class="tsw-bm">
+                <div class="tsw-bm-name">Worked: buy, β = 1.5</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">data</span> sec arrival €10.00, exec €10.15; index arrival 3,500, VWAP 3,507; side +1</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">index cost</span> +1 × (3,507 − 3,500)/3,500 × 10,000 = 20 bps</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">arrival cost</span> +1 × (10.15 − 10.00)/10.00 × 10,000 = 150 bps</div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">market-adj</span> 150 − 1.5 × 20 = <span class="tsw-hl">120 bps</span></div>
+              </div>
+              <div class="tsw-rule"><b>Added value</b> = arrival cost (bps) − estimated pre-trade cost (bps). Beat the pre-trade model ⇒ value added. E.g., arrival 150 − pre-trade estimate 160 = <span class="tsw-green">−10 bps</span> (negative = benefit).</div>
+            </div>
+
+            <!-- ═══════ P7.6 TRADE GOVERNANCE ═══════ -->
+            <div class="tsw-card">
+              <div class="tsw-title">P7.6 — Trade Governance <span class="tsw-bm-tag">LOS i</span></div>
+              <div class="tsw-body">Good practice (and usually required): a <span class="tsw-hl">formal written trade policy</span> with four key areas.</div>
+              <div class="tsw-rule"><b>1. Meaning of best execution</b> — regulators' term for the duty to seek the best possible <b>result</b> (not simply best price / lowest cost). Factors: execution price, trading costs, speed &amp; likelihood of execution/settlement, order size &amp; liquidity, nature/urgency. Define it within the applicable regulatory framework.
+                <div class="tsw-tip">Example: selling a large stake in a company about to file bankruptcy — selling a block to a trusted dealer at a discounted price can be best execution (avoids execution risk + info leakage), even if small higher bids exist elsewhere.</div>
+              </div>
+              <div class="tsw-rule"><b>2. Factors for the optimal execution approach</b> — urgency &amp; size; liquidity (ADV) &amp; nature (standardized vs customized); venue characteristics; investment strategy objectives (long vs short term); reason for the trade. Must reflect regulations &amp; market conventions per asset class.
+                <div class="tsw-drivers">
+                  <div class="tsw-drv-row"><span class="tsw-drv-lbl">MiFID II</span> effectively prohibits <b>soft-dollar</b> arrangements in Europe (paying for goods/services via rebates from client commissions — can jeopardize best execution if used for the manager's own benefit)</div>
+                </div>
+              </div>
+              <div class="tsw-rule"><b>3. List of eligible brokers &amp; venues</b> — approved list + the process to build it. Best practice: a <span class="tsw-hl">BEMC</span> (best-execution monitoring committee) of portfolio-execution, compliance &amp; risk personnel maintains/updates/distributes it. Broker due diligence matters most for OTC (no exchange rules, low transparency, no central clearing). Approval principles: high service quality (competitive price / speed / size capacity), financial stability, good ethical reputation, adequate settlement facilities, competitive explicit costs, willingness to commit capital to principal trades in less-liquid securities.</div>
+              <div class="tsw-rule"><b>4. Monitoring execution arrangements</b> — constantly monitor the broker list for reputational issues, trading errors, criminal actions, financial stability; remove failing brokers promptly. Monitor execution quality ongoing. Keep trading records to support analysis and answer client/regulator concerns on executions &amp; allocations.</div>
+              <div class="tsw-trap">Governance traps: the head trader is <b>not exclusively</b> responsible — a <b>BEMC committee</b> handles monitoring/governance. And the broker list is <b>not</b> built on lowest implicit+explicit cost alone — best execution weighs service, stability, reputation, settlement, and capital commitment too.</div>
+            </div>
+
+            <!-- ═══════ QUIZ BANK ═══════ -->
+            <div class="tsw-card">
+              <div class="tsw-title">Module-quiz answers &amp; decisive details</div>
+              <div class="tsw-drivers">
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">P7.1 Q1</span> targets closing prices ⇒ cash-flow needs (redemption). <b>C</b></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">P7.1 Q2</span> higher liquidity lowers BOTH execution risk and market impact. <b>C</b></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">P7.2 Q1</span> passive over a day + mitigate outlier impact ⇒ TWAP. <b>A</b></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">P7.2 Q2</span> low-TE index fund, NAV at close, reconstitution ⇒ market on close. <b>C</b></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">P7.3 Q1</span> arrival price = small order + minimize execution risk. STU (10% ADV, high risk aversion) fits; PQR 50% ADV too large, VWX 20% medium. <b>B</b></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">P7.3 Q2</span> RFQ systems ⇒ fixed income (dealer quote-driven). <b>B</b></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">P7.4/5 Q1</span> sell 10k STU: paper 10,000×(32.50−32.35)=1,500; actual 4,000×(32.65−32.35)−4,000×0.03=1,080; IS 420 ÷ 325,000 = <span class="tsw-hl">12.92 bps</span>. <b>B</b></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">P7.4/5 Q2</span> sell, avg 8.38, arrival 8.40, index 3,000→VWAP 3,050, β 1.3: index cost −1×(50/3000)×10⁴=−166.67; arrival −1×(−0.02/8.40)×10⁴=23.81; adj = 23.81 − 1.3×(−166.67) = <span class="tsw-hl">240.5 bps</span>. <b>C</b></div>
+                <div class="tsw-drv-row"><span class="tsw-drv-lbl">P7.4/5 Q3</span> Stmt1 false (BEMC committee, not sole head trader); Stmt2 false (best execution ≠ lowest cost only) ⇒ Zero. <b>A</b></div>
+              </div>
+            </div>
+
+          </div>
+
 
           <script>
             function tswTab(id, btn){
