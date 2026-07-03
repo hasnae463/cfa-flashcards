@@ -655,7 +655,7 @@ Negative Nf = short futures   ·   BPV gap = |portfolio BPV − liability BPV|</
                TAB · RECAP (quick-review summary)
                ═════════════════════════════════════════════════════════════════ -->
           <div id="lw-recap" class="lw-panel">
-            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
+            <button class="recap-print-btn" onclick="printOneRecap('lw-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
 
             <div class="lw-card">
               <div class="lw-title">Reading map — Liability-Driven &amp; Index-Based Strategies</div>
@@ -1353,7 +1353,7 @@ Example: Duration 5 · MV $10M → BPV = 5 × $10M × 0.0001 = $5,000 per bp</di
 
           <!-- ══ TAB 8: RECAP (full reading walkthrough, section-by-section) ══ -->
           <div id="ycs-recap" class="lw-panel">
-            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
+            <button class="recap-print-btn" onclick="printOneRecap('ycs-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
 
             <div class="lw-card">
               <div class="lw-row"><div class="lw-title">Reading P5 · Yield Curve Strategies — full recap</div><span class="lw-badge lw-blue">Follows the reading's own flow</span></div>
@@ -3323,7 +3323,7 @@ Ratio = ESD 10yr / ESD 5yr = 8.9 / 4.9 = 1.82×</span>
           </div>
 
           <div id="cw-recap" class="cw-panel">
-            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
+            <button class="recap-print-btn" onclick="printOneRecap('cw-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
 
             <style>
               #cw-recap .cw-drow{display:block;justify-content:normal;align-items:normal;line-height:1.6}
@@ -7276,7 +7276,7 @@ Lesser of the two = <b style="color:#D4A017">0.2%</b></div>
                TAB · RECAP (quick-review summary)
                ═════════════════════════════════════════════════════════════════ -->
           <div id="pcw-recap" class="pcw-panel">
-            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
+            <button class="recap-print-btn" onclick="printOneRecap('pcw-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
 
             <div class="pcw-card">
               <div class="pcw-title">Three sources of active return</div>
@@ -9498,7 +9498,7 @@ Which to prioritize depends on:
           </div><!-- /tsw-essays panel -->
 
           <div id="tsw-recap" class="tsw-panel">
-            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
+            <button class="recap-print-btn" onclick="printOneRecap('tsw-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
 
             <style>
               #tsw-recap .tsw-drv-row{display:block;font-family:inherit}
@@ -12597,7 +12597,7 @@ Map to phase:
               #cme-recap .cme-table td.q { color:#D4A017; font-weight:600; white-space:nowrap; vertical-align:top; }
             </style>
 
-            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
+            <button class="recap-print-btn" onclick="printOneRecap('cme-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
 
             <div class="cme-card">
               <div class="cme-title">Reading 1 · Capital Market Expectations, Part 1 — Framework &amp; Macro</div>
@@ -15685,7 +15685,7 @@ equivalently:
               #fir-recap .rc-badge.nu { background:rgba(121,192,255,.12); border:1px solid var(--fi-blue); color:var(--fi-blue); }
             </style>
 
-            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
+            <button class="recap-print-btn" onclick="printOneRecap('fir-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
 
             <div class="fi-card">
               <div class="fi-title">Reading 2 · Capital Market Expectations, Part 2 — Forecasting Asset Class Returns</div>
@@ -17360,7 +17360,7 @@ duration · foreign exchange · default risk</div>
               #oar-recap .oa-table td.q { color:var(--oa-gold); font-weight:600; }
             </style>
 
-            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
+            <button class="recap-print-btn" onclick="printOneRecap('oar-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
 
             <div class="oa-card">
               <div class="oa-title">Reading 3 · Overview of Asset Allocation</div>
@@ -18834,7 +18834,7 @@ Var(s,m)  = variance of surplus return</div>
               #par-recap .pa-table td.q { color:var(--pa-gold); font-weight:600; vertical-align:top; }
             </style>
 
-            <button class="recap-print-btn" onclick="printAllRecaps()" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print all recaps</button>
+            <button class="recap-print-btn" onclick="printOneRecap('par-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
 
             <div class="pa-card">
               <div class="pa-title">Reading 4 · Principles of Asset Allocation</div>
@@ -35152,26 +35152,22 @@ function onNoteKey(e) {
 // ══════════════════════════════════════════════════
 // PRINT ALL RECAPS (ink-friendly light theme)
 // ══════════════════════════════════════════════════
-function printAllRecaps() {
-  const order = [
-    { id: 'lw-recap',  title: 'Reading P4 · Liability-Driven &amp; Index Strategies' },
-    { id: 'ycs-recap', title: 'Reading P5 · Yield Curve Strategies' },
-    { id: 'cw-recap',  title: 'Reading P6 · Credit Strategies' },
-    { id: 'pcw-recap', title: 'Active Equity · Portfolio Construction' },
-    { id: 'tsw-recap', title: 'Reading P7 · Trade Strategy &amp; Execution' },
-    { id: 'cme-recap', title: 'Reading 1 · Capital Market Expectations, Part 1 (Framework &amp; Macro)' },
-    { id: 'fir-recap', title: 'Reading 2 · Capital Market Expectations, Part 2 (Forecasting Asset Class Returns)' },
-    { id: 'oar-recap', title: 'Reading 3 · Overview of Asset Allocation' },
-    { id: 'par-recap', title: 'Reading 4 · Principles of Asset Allocation' }
-  ];
-  let body = '';
-  order.forEach(function(sec) {
-    var el = document.getElementById(sec.id);
-    if (!el) return;
-    body += '<section class="recap-sec"><h1 class="recap-h1">' + sec.title + '</h1>' + el.innerHTML + '</section>';
-  });
-  if (!body) { alert('No recap panels found to print.'); return; }
-  var css = [
+// Registry of every recap panel and its printable title.
+var RECAP_REGISTRY = [
+  { id: 'lw-recap',  title: 'Reading P4 · Liability-Driven &amp; Index Strategies' },
+  { id: 'ycs-recap', title: 'Reading P5 · Yield Curve Strategies' },
+  { id: 'cw-recap',  title: 'Reading P6 · Credit Strategies' },
+  { id: 'pcw-recap', title: 'Active Equity · Portfolio Construction' },
+  { id: 'tsw-recap', title: 'Reading P7 · Trade Strategy &amp; Execution' },
+  { id: 'cme-recap', title: 'Reading 1 · Capital Market Expectations, Part 1 (Framework &amp; Macro)' },
+  { id: 'fir-recap', title: 'Reading 2 · Capital Market Expectations, Part 2 (Forecasting Asset Class Returns)' },
+  { id: 'oar-recap', title: 'Reading 3 · Overview of Asset Allocation' },
+  { id: 'par-recap', title: 'Reading 4 · Principles of Asset Allocation' }
+];
+
+// Shared print stylesheet used by both single- and all-recap printing.
+function recapPrintCss() {
+  return [
     '@page { margin: 14mm; }',
     '* { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }',
     'body { background:#fff; color:#1a1a1a; font-family: Georgia, "Times New Roman", serif; font-size:11pt; line-height:1.5; margin:0; padding:0; }',
@@ -35213,13 +35209,39 @@ function printAllRecaps() {
     // hide any tab bars / buttons that slipped in
     'button, [class*="-tabs"], [class*="print-btn"] { display:none !important; }'
   ].join('\n');
+}
+
+// Open a print window with the shared recap CSS and the given title/body.
+function openPrintWindow(docTitle, body) {
+  if (!body) { alert('No recap content found to print.'); return; }
   var w = window.open('', '_blank');
-  if (!w) { alert('Please allow pop-ups to print the recaps.'); return; }
+  if (!w) { alert('Please allow pop-ups to print the recap.'); return; }
   w.document.open();
-  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>CFA L3 — All Recaps</title><style>' + css + '</style></head><body>' + body + '</body></html>');
+  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + docTitle + '</title><style>' + recapPrintCss() + '</style></head><body>' + body + '</body></html>');
   w.document.close();
   w.focus();
   setTimeout(function(){ try { w.print(); } catch(e){} }, 400);
+}
+
+// Print a single recap panel by its id (e.g. 'oar-recap').
+function printOneRecap(id) {
+  var el = document.getElementById(id);
+  if (!el) { alert('Recap panel not found.'); return; }
+  var entry = RECAP_REGISTRY.filter(function(r){ return r.id === id; })[0];
+  var title = entry ? entry.title : 'Recap';
+  var body = '<section class="recap-sec"><h1 class="recap-h1">' + title + '</h1>' + el.innerHTML + '</section>';
+  openPrintWindow('CFA L3 — ' + title.replace(/&amp;/g, '&'), body);
+}
+
+// Print every recap panel, one per section.
+function printAllRecaps() {
+  var body = '';
+  RECAP_REGISTRY.forEach(function(sec) {
+    var el = document.getElementById(sec.id);
+    if (!el) return;
+    body += '<section class="recap-sec"><h1 class="recap-h1">' + sec.title + '</h1>' + el.innerHTML + '</section>';
+  });
+  openPrintWindow('CFA L3 — All Recaps', body);
 }
 
 // ══════════════════════════════════════════════════
