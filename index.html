@@ -35168,28 +35168,28 @@ var RECAP_REGISTRY = [
 // Shared print stylesheet used by both single- and all-recap printing.
 function recapPrintCss() {
   return [
-    '@page { margin: 14mm; }',
+    '@page { margin: 11mm; }',
     '* { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }',
-    'body { background:#fff; color:#1a1a1a; font-family: Georgia, "Times New Roman", serif; font-size:11pt; line-height:1.5; margin:0; padding:0; }',
+    'body { background:#fff; color:#1a1a1a; font-family: Georgia, "Times New Roman", serif; font-size:10.5pt; line-height:1.4; margin:0; padding:0; }',
     'style { display:none; }',
     '.recap-sec { page-break-before: always; }',
     '.recap-sec:first-child { page-break-before: avoid; }',
-    '.recap-h1 { font-size:18pt; color:#0b3d66; border-bottom:2px solid #0b3d66; padding-bottom:4px; margin:0 0 12px; }',
-    // cards
-    '[class*="-card"] { border:1px solid #ccc; border-radius:5px; padding:10px 12px; margin:0 0 10px; background:#fafafa; page-break-inside: avoid; }',
-    '[class*="-title"] { font-weight:700; font-size:13pt; color:#0b3d66; margin-bottom:6px; }',
-    '[class*="-body"] { color:#222; margin:4px 0; }',
+    '.recap-h1 { font-size:16pt; color:#0b3d66; border-bottom:2px solid #0b3d66; padding-bottom:3px; margin:0 0 9px; }',
+    // cards — allow breaking across pages so page bottoms fill up (no more big gaps)
+    '[class*="-card"] { border:1px solid #ccc; border-radius:5px; padding:8px 11px; margin:0 0 8px; background:#fafafa; }',
+    '[class*="-title"] { font-weight:700; font-size:12pt; color:#0b3d66; margin-bottom:5px; page-break-after:avoid; break-after:avoid; }',
+    '[class*="-body"] { color:#222; margin:3px 0; }',
     // rules / sub-rows
-    '[class*="-rule"] { border-left:3px solid #b8860b; padding:2px 0 2px 9px; margin:5px 0; }',
-    '[class*="-drivers"] { background:#f0f0f0; border-radius:4px; padding:7px 9px; margin:7px 0; }',
-    '[class*="-drv-row"], [class*="-drow"] { display:block; margin:3px 0; font-family:inherit; }',
+    '[class*="-rule"] { border-left:3px solid #b8860b; padding:2px 0 2px 9px; margin:4px 0; page-break-inside:avoid; }',
+    '[class*="-drivers"] { background:#f0f0f0; border-radius:4px; padding:6px 9px; margin:6px 0; }',
+    '[class*="-drv-row"], [class*="-drow"] { display:block; margin:2px 0; font-family:inherit; page-break-inside:avoid; }',
     '[class*="-drv-lbl"], [class*="-dlabel"] { display:inline; color:#0b5; font-weight:700; margin-right:7px; font-family:monospace; font-size:9pt; color:#7a4d00; }',
     // formulas
-    '[class*="-fl"] { font-family:"Courier New",monospace; font-size:9.5pt; background:#eef4fb; border-left:3px solid #2a6db5; padding:7px 10px; border-radius:3px; color:#0b3d66; white-space:pre-wrap; margin:6px 0; }',
+    '[class*="-fl"] { font-family:"Courier New",monospace; font-size:9pt; background:#eef4fb; border-left:3px solid #2a6db5; padding:6px 10px; border-radius:3px; color:#0b3d66; white-space:pre-wrap; margin:5px 0; page-break-inside:avoid; }',
     // callouts
-    '[class*="-trap"] { background:#fbeceb; border-left:3px solid #c0392b; padding:7px 10px; border-radius:3px; color:#7a1f16; margin:6px 0; }',
-    '[class*="-tip"] { background:#eef8ee; border-left:3px solid #2e7d32; padding:7px 10px; border-radius:3px; color:#1b4d1f; margin:6px 0; }',
-    '[class*="-info"] { background:#eef4fb; border-left:3px solid #2a6db5; padding:7px 10px; border-radius:3px; color:#0b3d66; margin:6px 0; }',
+    '[class*="-trap"] { background:#fbeceb; border-left:3px solid #c0392b; padding:6px 10px; border-radius:3px; color:#7a1f16; margin:5px 0; page-break-inside:avoid; }',
+    '[class*="-tip"] { background:#eef8ee; border-left:3px solid #2e7d32; padding:6px 10px; border-radius:3px; color:#1b4d1f; margin:5px 0; page-break-inside:avoid; }',
+    '[class*="-info"] { background:#eef4fb; border-left:3px solid #2a6db5; padding:6px 10px; border-radius:3px; color:#0b3d66; margin:5px 0; page-break-inside:avoid; }',
     // benchmark cards
     '[class*="-bm"] { border:1px solid #ddd; border-left:3px solid #2a6db5; border-radius:5px; padding:9px 12px; margin:0 0 8px; opacity:1 !important; transform:none !important; background:#fff; page-break-inside:avoid; }',
     '[class*="-bm-name"] { font-weight:700; font-size:12pt; color:#0b3d66; }',
