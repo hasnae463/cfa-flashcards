@@ -12581,9 +12581,14 @@ Map to phase:
               #cme-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 4px; }
               #cme-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(212,160,23,.14); border:1px solid #D4A017; color:#D4A017; border-radius:3px; padding:1px 6px; margin-right:6px; }
               #cme-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:8px 0; }
-              #cme-recap .rc-drow { display:block; padding:4px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12px; line-height:1.55; }
+              #cme-recap .rc-drow { display:grid; grid-template-columns:150px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12px; line-height:1.6; color:#C9D1D9; }
+              #cme-recap .rc-dlabel { color:#D4A017; font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #cme-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #cme-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #cme-recap .rc-dlabel { padding-top:0; }
+              }
               #cme-recap .rc-drow:last-child { border-bottom:none; }
-              #cme-recap .rc-dlabel { display:inline-block; min-width:150px; color:#D4A017; font-family:var(--mono); font-size:10px; letter-spacing:.04em; vertical-align:top; margin-right:6px; }
               #cme-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:8px 0; overflow-x:auto; }
               #cme-recap .rc-badge { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; padding:1px 7px; border-radius:10px; margin:0 3px 3px 0; }
               #cme-recap .rc-badge.up { background:rgba(46,160,67,.12); border:1px solid #3DD68C; color:#3DD68C; }
@@ -12606,8 +12611,8 @@ Map to phase:
               <div class="cme-body">Set <b>long-term</b> expectations for every allowable asset class in the IPS; optionally set <b>short-term</b> expectations for active decisions. A disciplined approach improves security selection, asset allocation, and risk management.</div>
               <div class="cme-body">Two consistency requirements on any set of forecasts:</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Cross-sectional</span>Consistency <b>across asset classes</b> regarding portfolio risk &amp; return characteristics.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Intertemporal</span>Consistency <b>across investment horizons</b> — portfolio decisions over time.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Cross-sectional</span><span class="rc-dbody">Consistency <b>across asset classes</b> regarding portfolio risk &amp; return characteristics.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Intertemporal</span><span class="rc-dbody">Consistency <b>across investment horizons</b> — portfolio decisions over time.</span></span>
               </div>
               <div class="cme-trap"><b>Exam trap:</b> cross-<u>sectional</u> = across classes at one time; inter<u>temporal</u> = across time horizons. MCQ swaps the two.</div>
             </div>
@@ -12629,15 +12634,15 @@ Map to phase:
               <div class="cme-title"><span class="rc-los">LOS 1.b</span>The 9 problems in forecasting</div>
               <div class="cme-body">Poor forecasts → inappropriate asset allocation. Nine problems in data, models, and the resulting expectations:</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Economic data limits</span>Collection→publication <b>lag</b> (IMF up to 2 yrs); <b>revisions</b> after release (CPI basket, methodology change); <b>rebasing</b> of indexes (unaware analyst mis-computes % changes).</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Measurement error/bias</span><b>Transcription</b> errors (worst if biased); <b>survivorship bias</b> (poor performers deleted → upward bias); <b>appraisal (smoothed) data</b> → path looks smoother, σ biased <u>down</u>, correlations look closer to 0 (a real-estate / alternatives problem).</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Historical estimate limits</span>Values must be adjusted forward as economic/political/regulatory/tech environments change. <b>Regime changes</b> → <b>nonstationary</b> data (e.g. 2007–09 GFC). Different subperiods have different statistical properties.</span>
-                <span class="rc-drow"><span class="rc-dlabel">4 · Ex post → ex ante</span>Using after-the-fact data to set before-the-fact risk/return. Post-risk-event high returns make the analyst blind to the risk that existed → <u>underestimate risk, overestimate return</u>. Outliers/rare events also distort VaR upward.</span>
-                <span class="rc-drow"><span class="rc-dlabel">5 · Data biases</span><b>Data mining</b> (5% significance × 40 vars → ~2 spurious "significant" relations); <b>time-period bias</b> (small-cap "premium" vanishes if 2000–2010 excluded).</span>
-                <span class="rc-drow"><span class="rc-dlabel">6 · Conditioning information</span>Relationship of returns to the economy is <b>not constant</b> over the cycle. A firm's β = 1.2 historically may be 1.0 in expansions, 1.4 in recessions → use the beta matching the <b>expected</b> regime.</span>
-                <span class="rc-drow"><span class="rc-dlabel">7 · Misinterpreting correlation</span>Causality direction (rain→corn, not corn→rain; rain exogenous, corn endogenous); spurious correlation; a third variable; nonlinear links missed by (linear) correlation.</span>
-                <span class="rc-drow"><span class="rc-dlabel">8 · Psychological bias</span>Anchoring (cog) · status quo (emo) · confirmation (cog) · overconfidence (emo) · prudence (cog) · availability (cog). See table below.</span>
-                <span class="rc-drow"><span class="rc-dlabel">9 · Model uncertainty</span>Which model (DCF vs relative value)? <b>Parameter</b> uncertainty (estimation error in params) · <b>input</b> uncertainty (correct input values). <span class="cme-red">Model uncertainty is the MOST serious</span> — a wrong model → invalid conclusions.</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Economic data limits</span><span class="rc-dbody">Collection→publication <b>lag</b> (IMF up to 2 yrs); <b>revisions</b> after release (CPI basket, methodology change); <b>rebasing</b> of indexes (unaware analyst mis-computes % changes).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Measurement error/bias</span><span class="rc-dbody"><b>Transcription</b> errors (worst if biased); <b>survivorship bias</b> (poor performers deleted → upward bias); <b>appraisal (smoothed) data</b> → path looks smoother, σ biased <u>down</u>, correlations look closer to 0 (a real-estate / alternatives problem).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Historical estimate limits</span><span class="rc-dbody">Values must be adjusted forward as economic/political/regulatory/tech environments change. <b>Regime changes</b> → <b>nonstationary</b> data (e.g. 2007–09 GFC). Different subperiods have different statistical properties.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">4 · Ex post → ex ante</span><span class="rc-dbody">Using after-the-fact data to set before-the-fact risk/return. Post-risk-event high returns make the analyst blind to the risk that existed → <u>underestimate risk, overestimate return</u>. Outliers/rare events also distort VaR upward.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">5 · Data biases</span><span class="rc-dbody"><b>Data mining</b> (5% significance × 40 vars → ~2 spurious "significant" relations); <b>time-period bias</b> (small-cap "premium" vanishes if 2000–2010 excluded).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">6 · Conditioning information</span><span class="rc-dbody">Relationship of returns to the economy is <b>not constant</b> over the cycle. A firm's β = 1.2 historically may be 1.0 in expansions, 1.4 in recessions → use the beta matching the <b>expected</b> regime.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">7 · Misinterpreting correlation</span><span class="rc-dbody">Causality direction (rain→corn, not corn→rain; rain exogenous, corn endogenous); spurious correlation; a third variable; nonlinear links missed by (linear) correlation.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">8 · Psychological bias</span><span class="rc-dbody">Anchoring (cog) · status quo (emo) · confirmation (cog) · overconfidence (emo) · prudence (cog) · availability (cog). See table below.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">9 · Model uncertainty</span><span class="rc-dbody">Which model (DCF vs relative value)? <b>Parameter</b> uncertainty (estimation error in params) · <b>input</b> uncertainty (correct input values). <span class="cme-red">Model uncertainty is the MOST serious</span> — a wrong model → invalid conclusions.</span></span>
               </div>
               <div class="cme-trap"><b>Decisive detail:</b> among the three uncertainties (model / parameter / input), <b>model uncertainty is the most serious</b>. Appraisal-data smoothing biases σ <b>downward</b> (not up) and pushes correlations toward 0.</div>
             </div>
@@ -12670,17 +12675,17 @@ Map to phase:
               <div class="cme-title"><span class="rc-los">LOS 1.c</span>Exogenous shocks &amp; growth trends</div>
               <div class="cme-body">Economic growth splits into <span class="cme-hl">cyclical variations</span> (short-term focused) and <span class="cme-hl">growth trends</span> (relevant for long-term return expectations).</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Exogenous shock</span><b>Unanticipated</b> event <b>outside</b> the normal course of the economy → <u>NOT</u> already built into market prices. Likely produces a statistical <b>regime change</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Endogenous (contrast)</span><b>Normal trends</b> arising within the economy → <u>ARE</u> built into current market prices.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Exogenous shock</span><span class="rc-dbody"><b>Unanticipated</b> event <b>outside</b> the normal course of the economy → <u>NOT</u> already built into market prices. Likely produces a statistical <b>regime change</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Endogenous (contrast)</span><span class="rc-dbody"><b>Normal trends</b> arising within the economy → <u>ARE</u> built into current market prices.</span></span>
               </div>
               <div class="cme-body">Causes of exogenous shocks (drivers, each with direction on growth):</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Govt policies</span>Sound fiscal policy, minimal interference w/ free markets, competition, infrastructure &amp; human capital, sound tax policy → <span class="cme-green">↑ long-term growth</span>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Political events</span>Geopolitical tension diverts resources to less productive uses → <span class="cme-red">↓ growth</span>; peace dividend / defense cuts → <span class="cme-green">↑ growth</span>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Technological progress</span>New markets/products/tech → <span class="cme-green">↑ growth potential</span>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Natural disasters</span><span class="cme-red">↓ short-term growth</span>; may <span class="cme-green">↑ long-term</span> if more efficient capacity replaces old (counter: owners already replace when optimal).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Resource discovery</span>New resources / cheaper recovery → <span class="cme-green">↑ growth</span>; higher production costs / lower supply → <span class="cme-red">↓ growth</span>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Financial crises</span>Crisis of confidence → <span class="cme-red">↓ output short-term AND ↓ trend growth</span>.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Govt policies</span><span class="rc-dbody">Sound fiscal policy, minimal interference w/ free markets, competition, infrastructure &amp; human capital, sound tax policy → <span class="cme-green">↑ long-term growth</span>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Political events</span><span class="rc-dbody">Geopolitical tension diverts resources to less productive uses → <span class="cme-red">↓ growth</span>; peace dividend / defense cuts → <span class="cme-green">↑ growth</span>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Technological progress</span><span class="rc-dbody">New markets/products/tech → <span class="cme-green">↑ growth potential</span>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Natural disasters</span><span class="rc-dbody"><span class="cme-red">↓ short-term growth</span>; may <span class="cme-green">↑ long-term</span> if more efficient capacity replaces old (counter: owners already replace when optimal).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Resource discovery</span><span class="rc-dbody">New resources / cheaper recovery → <span class="cme-green">↑ growth</span>; higher production costs / lower supply → <span class="cme-red">↓ growth</span>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Financial crises</span><span class="rc-dbody">Crisis of confidence → <span class="cme-red">↓ output short-term AND ↓ trend growth</span>.</span></span>
               </div>
             </div>
 
@@ -12688,17 +12693,17 @@ Map to phase:
               <div class="cme-title"><span class="rc-los">LOS 1.d</span>Applying trend growth to CME</div>
               <div class="cme-body">Why the trend rate matters (drivers of its relevance):</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">DCF discipline</span>DCF forecasts incorporate trend growth → keeps forecasts consistent w/ long-term growth; trend rate <b>anchors</b> long-term bond &amp; equity returns.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Equity link</span>Higher trend growth → potentially higher stock returns, <u>if not already reflected in prices</u>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Inflation headroom</span>Higher trend growth = economy can grow faster before inflation is a concern → influences monetary policy &amp; bond yield levels.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Bond yields</span>Higher trend growth → higher government bond yields.</span>
+                <span class="rc-drow"><span class="rc-dlabel">DCF discipline</span><span class="rc-dbody">DCF forecasts incorporate trend growth → keeps forecasts consistent w/ long-term growth; trend rate <b>anchors</b> long-term bond &amp; equity returns.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Equity link</span><span class="rc-dbody">Higher trend growth → potentially higher stock returns, <u>if not already reflected in prices</u>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Inflation headroom</span><span class="rc-dbody">Higher trend growth = economy can grow faster before inflation is a concern → influences monetary policy &amp; bond yield levels.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Bond yields</span><span class="rc-dbody">Higher trend growth → higher government bond yields.</span></span>
               </div>
               <div class="cme-info">Trend growth is relatively <b>stable in developed</b> economies; in <b>emerging</b> economies it is less predictable and can include longer catch-up periods of rapid growth.</div>
               <div class="cme-body">Basic growth model — three inputs:</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Labor input</span>Labor-force growth (population + demographics) + labor participation (real wages, work/leisure, social factors).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Capital per worker</span>Raises labor productivity.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Total factor productivity</span>Technological progress + government-policy changes.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Labor input</span><span class="rc-dbody">Labor-force growth (population + demographics) + labor participation (real wages, work/leisure, social factors).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Capital per worker</span><span class="rc-dbody">Raises labor productivity.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Total factor productivity</span><span class="rc-dbody">Technological progress + government-policy changes.</span></span>
               </div>
             </div>
 
@@ -12764,9 +12769,9 @@ Equity return     = capital gains + div yld
               <div class="cme-body">Trend growth guides <b>long-term</b> expectations; deviations from trend cancel over the long run but are useful for <b>shorter-term</b> projections. Economic activity is cyclical because decision-makers act on <b>imperfect information</b>, adjustments take time, and reversing wrong decisions is costly.</div>
               <div class="cme-body">Why the cycle↔CME relationship is <b>not straightforward</b>:</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Duration/intensity vary</span>Turning points hard to predict; cycles = interaction of many subcycles across frequencies.</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Trend vs cycle</span>Hard to separate short-term (business-cycle) effects from long-term (trend-growth) effects.</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Markets ≠ only economy</span>Capital-market returns also depend on investors' expectations &amp; risk tolerances, not just the real economy.</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Duration/intensity vary</span><span class="rc-dbody">Turning points hard to predict; cycles = interaction of many subcycles across frequencies.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Trend vs cycle</span><span class="rc-dbody">Hard to separate short-term (business-cycle) effects from long-term (trend-growth) effects.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Markets ≠ only economy</span><span class="rc-dbody">Capital-market returns also depend on investors' expectations &amp; risk tolerances, not just the real economy.</span></span>
               </div>
               <div class="cme-info">Business-cycle analysis is most useful <b>within</b> one typical cycle's horizon. For long horizons spanning multiple full cycles, current-state info is <b>less valuable</b>.</div>
             </div>
@@ -12806,9 +12811,9 @@ Equity return     = capital gains + div yld
             <div class="cme-card">
               <div class="cme-title"><span class="rc-los">LOS 1.g</span>Inflation vs the business cycle</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Inflation</span>Generally rising prices. CPI 100→105 = <b>+5%</b>. Typically <b>accelerates late</b> in the cycle (near the peak).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Disinflation</span><b>Deceleration</b> of inflation (still positive). CPI 105→108 ≈ <b>+3%</b>. Typically decelerates as the economy approaches / enters recession.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Deflation</span>Generally <b>falling</b> prices. CPI 108→106 ≈ <b>−2%</b>. Severe threat.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Inflation</span><span class="rc-dbody">Generally rising prices. CPI 100→105 = <b>+5%</b>. Typically <b>accelerates late</b> in the cycle (near the peak).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Disinflation</span><span class="rc-dbody"><b>Deceleration</b> of inflation (still positive). CPI 105→108 ≈ <b>+3%</b>. Typically decelerates as the economy approaches / enters recession.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Deflation</span><span class="rc-dbody">Generally <b>falling</b> prices. CPI 108→106 ≈ <b>−2%</b>. Severe threat.</span></span>
               </div>
               <div class="cme-trap"><b>Why deflation is dangerous:</b> (1) encourages <b>debt default</b> — home $100k / mortgage $95k → equity only $5k; a &gt;5% price fall → negative equity → panic sales &amp; default; (2) with negative inflation, nominal rates hit ~0 → limits central banks' ability to cut &amp; stimulate (post-2007–09 → QE).</div>
               <div class="cme-info"><b>QE:</b> after the GFC, with rates near zero, CBs bought high-quality (and later MBS/corporate) fixed income. QE differed from ordinary open-market ops in being <b>larger in scale</b> and intended as a <b>long-term</b> increase in bank reserves. CBs target a slightly positive inflation rate; investors expect equity &amp; bond prices to reflect some positive inflation.</div>
@@ -12876,9 +12881,9 @@ Equity return     = capital gains + div yld
               <div class="cme-title"><span class="rc-los">LOS 1.h</span>Monetary policy</div>
               <div class="cme-body">Central banks use monetary policy as a <b>countercyclical</b> force, balancing <b>price stability</b> against <b>economic growth</b>. Goal: keep growth near its long-run sustainable rate — growth persistently above it → inflation. Late-expansion inflation → CBs turn restrictive; <span class="cme-red">risk: overtighten and cause a recession</span>.</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Lower rates →</span>↑ consumer spending, ↑ business spending, ↑ stock prices, ↑ bond prices, lower domestic currency → ↑ exports.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Level matters too</span>Rates raised 4%→6% to fight inflation may still be <b>low vs the country's average</b> → still growth-permissive. Direction ≠ whole story.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Neutral rate</span>Equilibrium rate balancing growth &amp; inflation = <b>real growth component + inflation component</b> (+ judgment). e.g. inflation target 3% + growth 2% → neutral <b>5%</b>.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Lower rates →</span><span class="rc-dbody">↑ consumer spending, ↑ business spending, ↑ stock prices, ↑ bond prices, lower domestic currency → ↑ exports.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Level matters too</span><span class="rc-dbody">Rates raised 4%→6% to fight inflation may still be <b>low vs the country's average</b> → still growth-permissive. Direction ≠ whole story.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Neutral rate</span><span class="rc-dbody">Equilibrium rate balancing growth &amp; inflation = <b>real growth component + inflation component</b> (+ judgment). e.g. inflation target 3% + growth 2% → neutral <b>5%</b>.</span></span>
               </div>
             </div>
 
@@ -12920,9 +12925,9 @@ n_target − i_expected = r_neutral + [0.5(GDP_exp − GDP_trend) + 0.5(i_exp �
               <div class="cme-title">Negative interest rates</div>
               <div class="cme-body">A <b>negative rate</b> = a net payment made to keep money on deposit, or a net fee to invest in short-term instruments. A pre-2007–09 curiosity.</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Why 0 seemed the floor</span>Investors could hold physical cash (0 interest) instead → withdrawals shrink bank balance sheets → less lending → higher borrowing rate (simple supply/demand).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Why it was wrong</span>No big move into physical cash — daily fund flows are too large; the convenience of deposits for settling transactions outweighed the explicit cost → negative rates proved <b>sustainable</b> for extended periods.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Intended effect</span>Like QE: holders spend/invest in longer-term stocks &amp; bonds (↑ prices, wealth effect) or borrow &amp; spend now → stimulate activity.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Why 0 seemed the floor</span><span class="rc-dbody">Investors could hold physical cash (0 interest) instead → withdrawals shrink bank balance sheets → less lending → higher borrowing rate (simple supply/demand).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Why it was wrong</span><span class="rc-dbody">No big move into physical cash — daily fund flows are too large; the convenience of deposits for settling transactions outweighed the explicit cost → negative rates proved <b>sustainable</b> for extended periods.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Intended effect</span><span class="rc-dbody">Like QE: holders spend/invest in longer-term stocks &amp; bonds (↑ prices, wealth effect) or borrow &amp; spend now → stimulate activity.</span></span>
               </div>
               <div class="cme-trap"><b>Negative rates complicate CME:</b> (1) risk-free rate anchors buildup models — when it's negative, use a <b>sustainable</b> expected risk-free rate (e.g. the policy neutral rate in the Taylor rule); that rate isn't fully risk-free, so a <b>modest default premium can be removed</b>. (2) Must forecast the <b>path</b> back to a long-run sustainable risk-free rate (use multiple path projections). (3) Alternatively read negative risk-free rates as consistent with the <b>contraction or early-recovery</b> stages. (4) Historical data is more problematic — few comparable periods, regime change, + untested QE → more subjective assessments.</div>
             </div>
@@ -12931,8 +12936,8 @@ n_target − i_expected = r_neutral + [0.5(GDP_exp − GDP_trend) + 0.5(i_exp �
               <div class="cme-title">Fiscal policy</div>
               <div class="cme-body">To stimulate: <b>loose</b> fiscal policy = <span class="cme-green">↓ taxes or ↑ spending</span> → larger budget deficit. To rein in growth: fiscal tightening.</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">It's the CHANGE, not the level</span>The <b>level</b> of the deficit doesn't stimulate — an <b>increase</b> in the deficit does. A steady deficit is not stimulative.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Cyclical ≠ policy</span>Deficit changes that occur <b>naturally</b> over the cycle are neither stimulative nor restrictive (expansion → deficits fall as tax receipts ↑ &amp; transfers ↓; recession → opposite). Only <b>policy-directed</b> changes influence growth.</span>
+                <span class="rc-drow"><span class="rc-dlabel">It's the CHANGE, not the level</span><span class="rc-dbody">The <b>level</b> of the deficit doesn't stimulate — an <b>increase</b> in the deficit does. A steady deficit is not stimulative.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Cyclical ≠ policy</span><span class="rc-dbody">Deficit changes that occur <b>naturally</b> over the cycle are neither stimulative nor restrictive (expansion → deficits fall as tax receipts ↑ &amp; transfers ↓; recession → opposite). Only <b>policy-directed</b> changes influence growth.</span></span>
               </div>
               <div class="cme-trap"><b>Exam trap:</b> a large deficit by itself does <u>not</u> stimulate; only a <b>discretionary increase</b> in the deficit does. Automatic-stabilizer swings don't count as stimulus/restraint.</div>
             </div>
@@ -12958,10 +12963,10 @@ n_target − i_expected = r_neutral + [0.5(GDP_exp − GDP_trend) + 0.5(i_exp �
                 </svg>
               </div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Both expansive</span>Sharply <b>upward-sloping</b> (short &lt; long) → economy likely to <b>expand</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Both restrictive</span><b>Downward-sloping / inverted</b> (short &gt; long) → economy likely to <b>contract</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Monetary restrictive + fiscal stimulative</span>Yield curve <b>flat</b> → implications <b>less clear</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Monetary stimulative + fiscal restrictive</span>Yield curve <b>moderately steep</b> → implications <b>less clear</b>.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Both expansive</span><span class="rc-dbody">Sharply <b>upward-sloping</b> (short &lt; long) → economy likely to <b>expand</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Both restrictive</span><span class="rc-dbody"><b>Downward-sloping / inverted</b> (short &gt; long) → economy likely to <b>contract</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Monetary restrictive + fiscal stimulative</span><span class="rc-dbody">Yield curve <b>flat</b> → implications <b>less clear</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Monetary stimulative + fiscal restrictive</span><span class="rc-dbody">Yield curve <b>moderately steep</b> → implications <b>less clear</b>.</span></span>
               </div>
               <div class="cme-info"><b>Curve over the cycle:</b> typically <b>steep at the bottom</b> of the cycle; <b>flattens</b> toward expansion; <b>flat→inverted at the top</b>; <b>re-steepens during contraction</b>. Analysts can use the curve to read the state of the economy and the future path of rates — but the relationships may not always hold.</div>
               <div class="cme-trap"><b>Two "less clear" cases (memorize the pairing):</b> M-restrictive + F-stimulative → <b>flat</b>; M-stimulative + F-restrictive → <b>moderately steep</b>. Both-same-direction cases give the clean steep(expand) / inverted(contract) signals.</div>
@@ -12973,8 +12978,8 @@ n_target − i_expected = r_neutral + [0.5(GDP_exp − GDP_trend) + 0.5(i_exp �
               <div class="cme-title"><span class="rc-los">LOS 1.j</span>Macro, interest-rate &amp; exchange-rate linkages</div>
               <div class="cme-body">Economic links between countries matter more with globalization — especially for <b>small countries with undiversified economies</b>. Large diversified economies (e.g. US) are less affected but still influenced.</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Macro links</span>Can produce <b>convergence in business cycles</b>. <b>Trade</b>: a country's economy is depressed by a slowdown in a trading partner (exports ↓, imports ↓). <b>Capital flows</b>: cross-border investing declines as a partner's economy contracts.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Current vs capital account</span>Current account ≈ net exports; capital account ≈ net investment flows. They are <b>opposites</b> — a surplus in one produces a deficit in the other.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Macro links</span><span class="rc-dbody">Can produce <b>convergence in business cycles</b>. <b>Trade</b>: a country's economy is depressed by a slowdown in a trading partner (exports ↓, imports ↓). <b>Capital flows</b>: cross-border investing declines as a partner's economy contracts.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Current vs capital account</span><span class="rc-dbody">Current account ≈ net exports; capital account ≈ net investment flows. They are <b>opposites</b> — a surplus in one produces a deficit in the other.</span></span>
               </div>
               <div class="cme-fl">Current-account identity:
 net exports = net private saving + government surplus
@@ -12987,15 +12992,15 @@ I=investment spending  T=tax  G=govt spending</div>
             <div class="cme-card">
               <div class="cme-title">Currency pegs &amp; interest-rate differentials</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Peg = strong link</span>Smaller economy unilaterally pegs its currency to a larger, more developed one → business cycles converge because the pegging country must follow the anchor country's economic policies. If it doesn't, investors favor one currency → <b>peg fails</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Rate differential</span>Pegged-currency rates generally <b>exceed</b> the anchor's rates; the differential moves with <b>market confidence in the peg</b>. High confidence → small differential; doubt → larger differential (compensation for risk).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Defending the peg</span>If investors lose confidence &amp; the currency starts to fall, the pegging country must <b>raise short-term rates</b> to attract capital &amp; hold the peg.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Peg = strong link</span><span class="rc-dbody">Smaller economy unilaterally pegs its currency to a larger, more developed one → business cycles converge because the pegging country must follow the anchor country's economic policies. If it doesn't, investors favor one currency → <b>peg fails</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Rate differential</span><span class="rc-dbody">Pegged-currency rates generally <b>exceed</b> the anchor's rates; the differential moves with <b>market confidence in the peg</b>. High confidence → small differential; doubt → larger differential (compensation for risk).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Defending the peg</span><span class="rc-dbody">If investors lose confidence &amp; the currency starts to fall, the pegging country must <b>raise short-term rates</b> to attract capital &amp; hold the peg.</span></span>
               </div>
               <div class="cme-body">Without pegging, interest-rate differentials &amp; currency movement reflect:</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Overvalued currency</span>If substantially overvalued &amp; expected to decline → bond rates likely <b>higher</b> to compensate foreign investors for the expected currency decline.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Relative bond yields</span>Both nominal &amp; real yields <b>rise with strong economic activity</b> &amp; increasing demand for funds.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Real rates</span>Driven by savings/investment decisions &amp; capital productivity. Real rates differ across countries but <b>tend to move together</b> — global saving &amp; investing are linked through the current account.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Overvalued currency</span><span class="rc-dbody">If substantially overvalued &amp; expected to decline → bond rates likely <b>higher</b> to compensate foreign investors for the expected currency decline.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Relative bond yields</span><span class="rc-dbody">Both nominal &amp; real yields <b>rise with strong economic activity</b> &amp; increasing demand for funds.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Real rates</span><span class="rc-dbody">Driven by savings/investment decisions &amp; capital productivity. Real rates differ across countries but <b>tend to move together</b> — global saving &amp; investing are linked through the current account.</span></span>
               </div>
             </div>
 
@@ -15664,9 +15669,14 @@ equivalently:
               #fir-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
               #fir-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(212,160,23,.14); border:1px solid var(--fi-gold); color:var(--fi-gold); border-radius:3px; padding:1px 6px; margin-right:6px; }
               #fir-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
-              #fir-recap .rc-drow { display:block; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+              #fir-recap .rc-drow { display:grid; grid-template-columns:150px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+              #fir-recap .rc-dlabel { color:var(--fi-gold); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #fir-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #fir-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #fir-recap .rc-dlabel { padding-top:0; }
+              }
               #fir-recap .rc-drow:last-child { border-bottom:none; }
-              #fir-recap .rc-dlabel { display:inline-block; min-width:165px; color:var(--fi-gold); font-family:var(--mono); font-size:10px; letter-spacing:.04em; vertical-align:top; margin-right:6px; }
               #fir-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
               #fir-recap .fi-table td.q { color:var(--fi-gold); font-weight:600; vertical-align:top; }
               #fir-recap .rc-badge { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; padding:1px 7px; border-radius:10px; margin:0 3px 3px 0; }
@@ -15687,15 +15697,15 @@ equivalently:
               <div class="rc-sec">Introduction · Approaches to Forecasting CME</div>
               <div class="fi-title">Three approaches: formal tools, surveys, judgment</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Formal tools</span>Give forecasts <b>replicable</b> by other analysts when applied to reputable data. Three types below.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Surveys</span>Poll experts (economists, analysts) for opinions — useful to gauge <b>consensus</b>. E.g. the Philadelphia Fed's ongoing CPI/GDP survey.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Judgment</span>Qualitative, experience-based. Even with quantitative models, an analyst must sometimes <b>adjust</b> the numbers with insight.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Formal tools</span><span class="rc-dbody">Give forecasts <b>replicable</b> by other analysts when applied to reputable data. Three types below.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Surveys</span><span class="rc-dbody">Poll experts (economists, analysts) for opinions — useful to gauge <b>consensus</b>. E.g. the Philadelphia Fed's ongoing CPI/GDP survey.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Judgment</span><span class="rc-dbody">Qualitative, experience-based. Even with quantitative models, an analyst must sometimes <b>adjust</b> the numbers with insight.</span></span>
               </div>
               <div class="fi-body">The three <b>formal tools</b>:</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Statistical methods</span><b>Sample statistics</b> (means, variance, correlation from known data — clearest, but can be imprecise); <b>shrinkage estimate</b> (weighted average of historical estimate + another projection); <b>time-series estimate</b> (forecasts a variable from its own lagged values + lags of others, incorporating volatility dynamics).</span>
-                <span class="rc-drow"><span class="rc-dlabel">DCF models</span>Intrinsic value = PV of future cash flows. Advantage: correct emphasis on future cash flows and ability to <b>back out a required return</b>. Best for long-term valuation.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Risk premium / buildup</span>Start with a risk-free rate, add compensation for <b>priced risks</b>. Used for FI and equity. Includes equilibrium models (e.g. CAPM), factor models, and building blocks.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Statistical methods</span><span class="rc-dbody"><b>Sample statistics</b> (means, variance, correlation from known data — clearest, but can be imprecise); <b>shrinkage estimate</b> (weighted average of historical estimate + another projection); <b>time-series estimate</b> (forecasts a variable from its own lagged values + lags of others, incorporating volatility dynamics).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">DCF models</span><span class="rc-dbody">Intrinsic value = PV of future cash flows. Advantage: correct emphasis on future cash flows and ability to <b>back out a required return</b>. Best for long-term valuation.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Risk premium / buildup</span><span class="rc-dbody">Start with a risk-free rate, add compensation for <b>priced risks</b>. Used for FI and equity. Includes equilibrium models (e.g. CAPM), factor models, and building blocks.</span></span>
               </div>
             </div>
 
@@ -15712,8 +15722,8 @@ equivalently:
               <div class="fi-trap"><b>Why realized return deviates from initial YTM:</b> (1) hold-to-maturity ignores <b>optionality</b> → cash flows may not arrive as expected; (2) sell before maturity → capital gain/loss; (3) rate changes alter reinvestment: falling (rising) rates decrease (increase) reinvestment returns.</div>
               <div class="fi-title" style="font-size:14px;margin-top:12px">Horizon vs Macaulay duration — the decisive rule</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Horizon &lt; Macaulay dur</span><b>Capital gain/loss dominates.</b> Falling (rising) rates → <span class="fi-green">higher</span> (<span class="fi-red">lower</span>) realized return.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Horizon &gt; Macaulay dur</span><b>Reinvestment risk dominates.</b> Falling (rising) rates → <span class="fi-red">lower</span> (<span class="fi-green">higher</span>) realized return.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Horizon &lt; Macaulay dur</span><span class="rc-dbody"><b>Capital gain/loss dominates.</b> Falling (rising) rates → <span class="fi-green">higher</span> (<span class="fi-red">lower</span>) realized return.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Horizon &gt; Macaulay dur</span><span class="rc-dbody"><b>Reinvestment risk dominates.</b> Falling (rising) rates → <span class="fi-red">lower</span> (<span class="fi-green">higher</span>) realized return.</span></span>
               </div>
               <div class="fi-info"><b>For the exam:</b> Macaulay duration = modified duration × (1 + YTM).</div>
             </div>
@@ -15740,20 +15750,20 @@ Falling yields → HIGHER realized return than the initial YTM.
                 <div class="fi-stack-sum">= Required return on the bond</div>
               </div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Short-term rate</span>Matches the forecast horizon; closest to the government zero-coupon yield, tied to the central bank policy rate. If horizon ≫ instrument maturity → use a longer-maturity zero yield, or the roll-over return (<b>futures rates</b> proxy the expected short-rate path).</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Term premium</span>Positive, related to duration. The <u>real</u> term premium can't be derived from the yield curve alone. Four primary drivers below.</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Credit premium</span>Compensates for expected risk of <b>default</b> — separate from compensation for expected default losses (both are in the credit spread).</span>
-                <span class="rc-drow"><span class="rc-dlabel">4 · Liquidity premium</span>Highest at a bond's <b>earliest</b> stages (first few weeks). Most liquid: newest issues, current-coupon MBS, some sovereigns.</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Short-term rate</span><span class="rc-dbody">Matches the forecast horizon; closest to the government zero-coupon yield, tied to the central bank policy rate. If horizon ≫ instrument maturity → use a longer-maturity zero yield, or the roll-over return (<b>futures rates</b> proxy the expected short-rate path).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Term premium</span><span class="rc-dbody">Positive, related to duration. The <u>real</u> term premium can't be derived from the yield curve alone. Four primary drivers below.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Credit premium</span><span class="rc-dbody">Compensates for expected risk of <b>default</b> — separate from compensation for expected default losses (both are in the credit spread).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">4 · Liquidity premium</span><span class="rc-dbody">Highest at a bond's <b>earliest</b> stages (first few weeks). Most liquid: newest issues, current-coupon MBS, some sovereigns.</span></span>
               </div>
             </div>
 
             <div class="fi-card">
               <div class="fi-title">Term premium — 4 primary drivers + other indicators</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Inflation uncertainty</span>Higher inflation → higher inflation uncertainty → nominal yields rise and the <b>term premium increases</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Recession hedge</span>Inflation from <b>strong aggregate demand</b> → nominal bond returns <span class="fi-red">negatively</span> correlated with growth → <b>low</b> term premiums. Inflation from <b>aggregate supply</b> → <span class="fi-green">positively</span> correlated with growth → <b>higher</b> term premiums.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Supply &amp; demand</span>Relative supply of short- vs long-term default-free bonds sets the curve slope, which influences the term-premium level.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Business cycles</span>Curve slope &amp; term-premium level are also tied to the business cycle.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Inflation uncertainty</span><span class="rc-dbody">Higher inflation → higher inflation uncertainty → nominal yields rise and the <b>term premium increases</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Recession hedge</span><span class="rc-dbody">Inflation from <b>strong aggregate demand</b> → nominal bond returns <span class="fi-red">negatively</span> correlated with growth → <b>low</b> term premiums. Inflation from <b>aggregate supply</b> → <span class="fi-green">positively</span> correlated with growth → <b>higher</b> term premiums.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Supply &amp; demand</span><span class="rc-dbody">Relative supply of short- vs long-term default-free bonds sets the curve slope, which influences the term-premium level.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Business cycles</span><span class="rc-dbody">Curve slope &amp; term-premium level are also tied to the business cycle.</span></span>
               </div>
               <div class="fi-info"><b>Other term-premium indicators:</b> ex-ante (forecast) real yield · Cochrane-Piazzesi curve factor (slope + curvature) · Kim-Wright premium (3-factor term-structure model) · slope of the yield curve · supply indicator (% of debt with maturity &gt; 10 yrs) · cyclical proxies (corporate profit-to-GDP, business confidence, unemployment).</div>
             </div>
@@ -15761,10 +15771,10 @@ Falling yields → HIGHER realized return than the initial YTM.
             <div class="fi-card">
               <div class="fi-title">Credit premium — behavior &amp; predictors</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Uneven / clustered</span>Premiums earned are uneven, with clustering of persistent high/low default rates → the <b>yield spread is NOT a good predictor</b> of future default rates.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Strong spread predictors</span>Stock returns, stock volatility, and the risk-free rate. <b>Weak</b> predictors: GDP growth and default-rate changes.</span>
-                <span class="rc-drow"><span class="rc-dlabel">High-quality (AAA/AA)</span>Extremely low default rates → premium/spread driven mainly by <b>downgrade bias</b> (asymmetric: downgrade more likely than upgrade). Low(er)-rated / HY bonds carry much higher credit-risk compensation.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Maturity relation</span>Credit premiums are <b>NOT positively related to maturity</b> — often <u>higher at shorter maturities</u> (event risk: defaults are large credit-negative events; older short bonds tend to be illiquid).</span>
+                <span class="rc-drow"><span class="rc-dlabel">Uneven / clustered</span><span class="rc-dbody">Premiums earned are uneven, with clustering of persistent high/low default rates → the <b>yield spread is NOT a good predictor</b> of future default rates.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Strong spread predictors</span><span class="rc-dbody">Stock returns, stock volatility, and the risk-free rate. <b>Weak</b> predictors: GDP growth and default-rate changes.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">High-quality (AAA/AA)</span><span class="rc-dbody">Extremely low default rates → premium/spread driven mainly by <b>downgrade bias</b> (asymmetric: downgrade more likely than upgrade). Low(er)-rated / HY bonds carry much higher credit-risk compensation.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Maturity relation</span><span class="rc-dbody">Credit premiums are <b>NOT positively related to maturity</b> — often <u>higher at shorter maturities</u> (event risk: defaults are large credit-negative events; older short bonds tend to be illiquid).</span></span>
               </div>
               <div class="fi-tip"><b>Steep yield curve = bullish:</b> high OAS → higher credit premium; steep Treasury curve → declining default rates. Steep curves imply large compensation for credit losses (high credit AND term premiums). Managers exploit these with a <b>barbell</b> — take credit risk from shorter maturities, duration risk from long maturities.</div>
             </div>
@@ -15795,23 +15805,23 @@ Falling yields → HIGHER realized return than the initial YTM.
               <div class="fi-body">EM debt offers high expected returns at the cost of higher risk. Many EMs depend on <b>foreign borrowing</b> → later crises in economy, currency, and financial markets. Often unstable political/social systems, undiversified economies. For the bond investor the key risk is <b>credit risk</b> — does the country have the ability AND willingness to repay? Economic, political, and legal risks matter too.</div>
               <div class="fi-title" style="font-size:14px;margin-top:12px">Signs an EM is more susceptible to risk</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Concentration</span>Wealth concentration; income concentration &amp; a less diverse tax base.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Economic structure</span>Greater dominance of cyclical industries (incl. commodities) &amp; less pricing power.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Restrictions</span>Restrictions on capital flows, trade, and currency.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Policy &amp; capacity</span>Inadequate fiscal/monetary policies; poor workforce education, infrastructure, weak tech advancement.</span>
-                <span class="rc-drow"><span class="rc-dlabel">External fragility</span>Large foreign borrowing in foreign currencies; small/underdeveloped financial markets; exposure to volatile capital flows.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Concentration</span><span class="rc-dbody">Wealth concentration; income concentration &amp; a less diverse tax base.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Economic structure</span><span class="rc-dbody">Greater dominance of cyclical industries (incl. commodities) &amp; less pricing power.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Restrictions</span><span class="rc-dbody">Restrictions on capital flows, trade, and currency.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Policy &amp; capacity</span><span class="rc-dbody">Inadequate fiscal/monetary policies; poor workforce education, infrastructure, weak tech advancement.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">External fragility</span><span class="rc-dbody">Large foreign borrowing in foreign currencies; small/underdeveloped financial markets; exposure to volatile capital flows.</span></span>
               </div>
             </div>
 
             <div class="fi-card">
               <div class="fi-title">EM health checklist — the decisive thresholds</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Deficit-to-GDP</span><span class="fi-red">&gt; 4%</span> indicates substantial credit risk (fiscal-policy gauge). EMs borrow short and refinance periodically → debt buildup raises non-payment likelihood.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Debt-to-GDP</span><span class="fi-red">70%–80%</span> has been troublesome for EMs.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Real growth rate</span>Investors should expect <span class="fi-green">≥ 4%</span> to compensate for higher risk; below that may signal a slowing economy.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Current account deficit</span><span class="fi-red">&gt; 4% of GDP</span> is a warning sign of potential difficulty.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Debt levels</span>Foreign debt <span class="fi-red">&gt; 50% of GDP</span>, or growing beyond the country's ability to service it, indicates overleverage. Foreign debt as a large share of <b>short-term</b> debt is a trouble sign.</span>
-                <span class="rc-drow"><span class="rc-dlabel">FX reserves / short-term debt</span>Reserves relative to short-term debt: <span class="fi-red">&lt; 100%</span> important; <span class="fi-green">&gt; 200%</span> considered strong.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Deficit-to-GDP</span><span class="rc-dbody"><span class="fi-red">&gt; 4%</span> indicates substantial credit risk (fiscal-policy gauge). EMs borrow short and refinance periodically → debt buildup raises non-payment likelihood.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Debt-to-GDP</span><span class="rc-dbody"><span class="fi-red">70%–80%</span> has been troublesome for EMs.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Real growth rate</span><span class="rc-dbody">Investors should expect <span class="fi-green">≥ 4%</span> to compensate for higher risk; below that may signal a slowing economy.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Current account deficit</span><span class="rc-dbody"><span class="fi-red">&gt; 4% of GDP</span> is a warning sign of potential difficulty.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Debt levels</span><span class="rc-dbody">Foreign debt <span class="fi-red">&gt; 50% of GDP</span>, or growing beyond the country's ability to service it, indicates overleverage. Foreign debt as a large share of <b>short-term</b> debt is a trouble sign.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">FX reserves / short-term debt</span><span class="rc-dbody">Reserves relative to short-term debt: <span class="fi-red">&lt; 100%</span> important; <span class="fi-green">&gt; 200%</span> considered strong.</span></span>
               </div>
               <div class="fi-info"><b>Government stance:</b> support for structural reforms, responsible fiscal policy, competition, and privatization → better growth prospects &amp; a more hospitable environment. Weak enforcement of property-rights laws, nationalization, and corruption are hazard signs. <b>Coalition governments</b> are riskier due to inherent political/policy instability.</div>
             </div>
@@ -15829,8 +15839,8 @@ Falling yields → HIGHER realized return than the initial YTM.
               <div class="fi-body">Over 100+ years, mean real equity returns across countries don't show statistically meaningful differences (sample averages are imprecise unless volatility is small) → <b>shrinkage estimators</b> are typically more reliable predictors of equity returns.</div>
               <div class="fi-body">Two main tools: <b>DCF</b> (most suitable for long-term valuation) and the <b>risk-premium</b> approach (Module 2.4).</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Gordon growth (constant)</span>Most common DCF for equities; often applied to whole markets. Backs out expected return; growth proxied by nominal GDP growth (real GDP + inflation), adjusted for any gap between the economy's growth and the equity index's growth.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Grinold-Kroner (2002)</span>Extends Gordon: adds a variable for <b>share repurchases</b> and for <b>P/E changes</b>. Below.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Gordon growth (constant)</span><span class="rc-dbody">Most common DCF for equities; often applied to whole markets. Backs out expected return; growth proxied by nominal GDP growth (real GDP + inflation), adjusted for any gap between the economy's growth and the equity index's growth.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Grinold-Kroner (2002)</span><span class="rc-dbody">Extends Gordon: adds a variable for <b>share repurchases</b> and for <b>P/E changes</b>. Below.</span></span>
               </div>
             </div>
 
@@ -15844,9 +15854,9 @@ D/P    = dividend yield
 %ΔP/E  = expected % change in the P/E ratio</div>
               <div class="fi-body">Regroup into three components:</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Income return</span><b>D/P − %ΔS</b>. Current yield adjusted for repurchases/issues.</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Nominal earnings growth</span><b>%ΔE</b> = real earnings growth + expected inflation.</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Repricing return</span><b>%ΔP/E</b> = expected change in the P/E multiple.</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Income return</span><span class="rc-dbody"><b>D/P − %ΔS</b>. Current yield adjusted for repurchases/issues.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Nominal earnings growth</span><span class="rc-dbody"><b>%ΔE</b> = real earnings growth + expected inflation.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Repricing return</span><span class="rc-dbody"><b>%ΔP/E</b> = expected change in the P/E multiple.</span></span>
               </div>
               <div class="fi-trap"><b>Sign of %ΔS (Prof's note):</b> a share <u>repurchase</u> reduces shares outstanding → it is a <b>negative %ΔS</b> term. Subtracting a negative makes income return larger — repurchases raise EPS, cash flow to investors, and expected return.</div>
               <div class="fi-info"><b>Infinite-horizon shortcoming:</b> G-K ignores the investor's time horizon. Any positive assumed %ΔP/E growth rate implies an <b>infinitely rising P/E</b> — implausible. For very long horizons the theoretically appropriate assumption is <b>%ΔP/E = 0 (and %ΔS = 0)</b>, i.e. P/E reverts to its long-term average. Empirically the P/E has an observable long-term mean it reverts to in the long term, but not the short term.</div>
@@ -15882,8 +15892,8 @@ E(Re)  = 2.0% + 6.8% + 0.0%        = 8.8%</div>
               <div class="rc-sec">Module 2.4 · The Risk Premium Approach</div>
               <div class="fi-title">Equity risk premium — two definitions</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Relative to risk-free</span>The amount equity return exceeds the <b>risk-free rate</b> → a <b>single</b> premium for equity.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Relative to bonds</span>The amount equity return exceeds the expected return on a <b>default-free bond</b> → uses a <b>building-block</b> approach.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Relative to risk-free</span><span class="rc-dbody">The amount equity return exceeds the <b>risk-free rate</b> → a <b>single</b> premium for equity.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Relative to bonds</span><span class="rc-dbody">The amount equity return exceeds the expected return on a <b>default-free bond</b> → uses a <b>building-block</b> approach.</span></span>
               </div>
               <div class="fi-info">Forecasting the equity premium is challenging regardless of approach — supplement with other analysis.</div>
             </div>
@@ -15898,19 +15908,19 @@ Step 2:  RPi = βi,M · RPM = ρi,M · σi · (RPM / σM)
          → RPi = ρi,M · σi · (market Sharpe ratio)</div>
               <div class="fi-info"><b>Reading of Step 2:</b> an asset's risk premium = its correlation with the global market × its own σ × the global market's <b>Sharpe ratio</b>. The global investable market = all investable assets, traditional + alternative.</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Segmentation (adjustment)</span>The model adjusts CAPM for market imperfections. <b>Segmented</b>: capital does NOT flow freely across borders (govt restrictions on investing are a frequent cause) → two same-risk assets can have <b>different expected returns</b>; investment barriers <b>increase</b> the risk premium.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Integration (contrast)</span>Capital flows freely; same risk → same expected return.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Reality</span>Most markets are partial. Developed equity ≈ <b>75%–90%</b> integrated; emerging equity ≈ <b>50%–75%</b> integrated. Investors have a home-country bias, preventing full exploitation of overseas opportunities.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Segmentation (adjustment)</span><span class="rc-dbody">The model adjusts CAPM for market imperfections. <b>Segmented</b>: capital does NOT flow freely across borders (govt restrictions on investing are a frequent cause) → two same-risk assets can have <b>different expected returns</b>; investment barriers <b>increase</b> the risk premium.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Integration (contrast)</span><span class="rc-dbody">Capital flows freely; same risk → same expected return.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Reality</span><span class="rc-dbody">Most markets are partial. Developed equity ≈ <b>75%–90%</b> integrated; emerging equity ≈ <b>50%–75%</b> integrated. Investors have a home-country bias, preventing full exploitation of overseas opportunities.</span></span>
               </div>
             </div>
 
             <div class="fi-card">
               <div class="fi-title">Singer-Terhaar — the 4-step procedure</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Step 1 · β</span>βi,M = Cov(Ri,RM)/Var(RM) = ρi,M(σi/σM).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Step 2 · RP (integrated)</span>RPi = ρi,M · σi · (market Sharpe ratio) — the <b>fully integrated</b> premium (uses the global correlation).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Step 3 · RP (segmented)</span>If ρi,M = 1 → RPiˢ = σi · (RPiˢ/σi) = σi × Sharpe. Under full segmentation the asset <b>is its own market</b>, so it is perfectly correlated with itself (β = ρ = 1). If no local Sharpe is given, use the global market Sharpe.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Step 4 · Weighted RP</span>RP = φ·RP<sup>G</sup> + (1 − φ)·RP<sup>S</sup>, where φ = degree of integration with global markets (G = globally integrated, S = segmented).</span>
+                <span class="rc-drow"><span class="rc-dlabel">Step 1 · β</span><span class="rc-dbody">βi,M = Cov(Ri,RM)/Var(RM) = ρi,M(σi/σM).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Step 2 · RP (integrated)</span><span class="rc-dbody">RPi = ρi,M · σi · (market Sharpe ratio) — the <b>fully integrated</b> premium (uses the global correlation).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Step 3 · RP (segmented)</span><span class="rc-dbody">If ρi,M = 1 → RPiˢ = σi · (RPiˢ/σi) = σi × Sharpe. Under full segmentation the asset <b>is its own market</b>, so it is perfectly correlated with itself (β = ρ = 1). If no local Sharpe is given, use the global market Sharpe.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Step 4 · Weighted RP</span><span class="rc-dbody">RP = φ·RP<sup>G</sup> + (1 − φ)·RP<sup>S</sup>, where φ = degree of integration with global markets (G = globally integrated, S = segmented).</span></span>
               </div>
               <div class="fi-trap"><b>Illiquidity premium:</b> for emerging / illiquid markets, add an illiquidity risk premium to the CAPM-derived risk premium (in BOTH the integrated and segmented calculations) before taking the weighted average.</div>
             </div>
@@ -15966,9 +15976,9 @@ EXPECTED RETURN = Rf + RP
               <div class="fi-body">Unlike traditional asset classes, real estate is <b>immobile, illiquid, heterogeneous</b>, and has significant operating/maintenance costs. Returns are often computed via <b>appraisals</b> → subject to time lags and <b>data smoothing</b> (done infrequently) → appraised values can differ significantly from market values.</div>
               <div class="fi-title" style="font-size:14px;margin-top:12px">Real estate cycles</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Supply is fixed short-run</span>Property values exhibit <b>cyclicality</b>; demand depends on quality &amp; type. High-quality properties fluctuate <u>less</u> with the cycle; low-quality show <u>more</u> cyclicality.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Boom</span>Rising demand → higher values &amp; lease rates → induces construction → stronger economic activity.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Bust</span>Falling demand → overcapacity &amp; overbuilding → values &amp; lease rates fall. Long leases lock in tenants &amp; high moving costs → excess supply can't be absorbed quickly.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Supply is fixed short-run</span><span class="rc-dbody">Property values exhibit <b>cyclicality</b>; demand depends on quality &amp; type. High-quality properties fluctuate <u>less</u> with the cycle; low-quality show <u>more</u> cyclicality.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Boom</span><span class="rc-dbody">Rising demand → higher values &amp; lease rates → induces construction → stronger economic activity.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Bust</span><span class="rc-dbody">Falling demand → overcapacity &amp; overbuilding → values &amp; lease rates fall. Long leases lock in tenants &amp; high moving costs → excess supply can't be absorbed quickly.</span></span>
               </div>
               <div class="fi-info">A recent study suggests the U.S. commercial RE collapse after the GFC was caused by <b>leverage and speculation</b> rather than business-cycle movements.</div>
             </div>
@@ -15980,20 +15990,20 @@ EXPECTED RETURN = Rf + RP
 E(R_re)   = cap rate + NOI growth rate              (infinite horizon)
 E(R_re)   = cap rate + NOI growth rate − %Δcap rate (finite horizon)</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">NOI growth ≈ GDP</span>During stable periods the long-run NOI growth rate should be close to GDP growth. Like G-K, NOI growth is a <b>nominal</b> measure (real growth + inflation).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Competitive pressure</span>Cap rate is sensitive to competition — e.g. the mall cap-rate gap between high- and low-productivity malls grew from <b>1.2% (2008) to 3.2% (2018)</b> with the rise of online retail.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Rates &amp; vacancy</span>Cap rates are <b>positively</b> related to interest rates and vacancy rates (used as a long-term risk discount rate).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Credit availability</span>Lenders less willing to extend credit → higher perceived risk → cap rates <b>inversely</b> related to credit/debt-financing availability. <b>Credit spreads (countercyclical) mitigate</b> the cyclical sensitivity of cap rates.</span>
+                <span class="rc-drow"><span class="rc-dlabel">NOI growth ≈ GDP</span><span class="rc-dbody">During stable periods the long-run NOI growth rate should be close to GDP growth. Like G-K, NOI growth is a <b>nominal</b> measure (real growth + inflation).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Competitive pressure</span><span class="rc-dbody">Cap rate is sensitive to competition — e.g. the mall cap-rate gap between high- and low-productivity malls grew from <b>1.2% (2008) to 3.2% (2018)</b> with the rise of online retail.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Rates &amp; vacancy</span><span class="rc-dbody">Cap rates are <b>positively</b> related to interest rates and vacancy rates (used as a long-term risk discount rate).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Credit availability</span><span class="rc-dbody">Lenders less willing to extend credit → higher perceived risk → cap rates <b>inversely</b> related to credit/debt-financing availability. <b>Credit spreads (countercyclical) mitigate</b> the cyclical sensitivity of cap rates.</span></span>
               </div>
             </div>
 
             <div class="fi-card">
               <div class="fi-title">Risk premiums on real estate</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Term premium</span>For holding long-term assets.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Credit premium</span>For risk of tenant <b>nonpayment</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Equity risk premium</span>Above corporate-bond returns, for fluctuation in RE values, leases, and vacancies.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Liquidity premium</span>RE (incl. REITs) can't always be sold quickly at a fair price — sellable only at periodic times. <b>2%–4%</b> for commercial real estate.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Term premium</span><span class="rc-dbody">For holding long-term assets.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Credit premium</span><span class="rc-dbody">For risk of tenant <b>nonpayment</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Equity risk premium</span><span class="rc-dbody">Above corporate-bond returns, for fluctuation in RE values, leases, and vacancies.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Liquidity premium</span><span class="rc-dbody">RE (incl. REITs) can't always be sold quickly at a fair price — sellable only at periodic times. <b>2%–4%</b> for commercial real estate.</span></span>
               </div>
               <div class="fi-info"><b>Combined RE risk premium is higher than corporate bonds but lower than equities.</b> Using equilibrium models (e.g. Singer-Terhaar) for RE requires two adjustments: remove the impact of <b>smoothing</b> from the data, and incorporate a <b>liquidity premium</b>. Also consider RE's <b>local (not global)</b> nature.</div>
             </div>
@@ -16001,10 +16011,10 @@ E(R_re)   = cap rate + NOI growth rate − %Δcap rate (finite horizon)</div>
             <div class="fi-card">
               <div class="fi-title">Public vs private RE · residential</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">REITs vs direct</span>REITs strongly correlated with equities <b>short-term</b>; direct RE shows low correlation (partly smoothing). Over <b>long</b> horizons REITs have relatively high correlation with direct RE.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Leverage adjustment</span>REITs use significant leverage → must be <b>unlevered</b> for a fair comparison with direct holdings. Adjusted for leverage, REITs historically show <b>higher returns &amp; lower volatility</b> — capturing the liquidity premium of direct investment plus professional management.</span>
-                <span class="rc-drow"><span class="rc-dlabel">By class (REITs)</span><b>Retail</b> REITs: highest return, second-lowest volatility. <b>Industrial</b> REITs: lowest return, highest volatility. Directly-owned: <b>apartments</b> highest return, <b>offices</b> lowest.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Residential</span>Largest class (~<b>75%</b> of global developed-property value). Outperformed equities on an inflation-adjusted basis with lower volatility; strongest postwar returns 1950–1980, weaker 1980–2015. Postwar residential returns were <b>uncorrelated across countries</b> (good for diversification) while equity returns showed rising correlations.</span>
+                <span class="rc-drow"><span class="rc-dlabel">REITs vs direct</span><span class="rc-dbody">REITs strongly correlated with equities <b>short-term</b>; direct RE shows low correlation (partly smoothing). Over <b>long</b> horizons REITs have relatively high correlation with direct RE.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Leverage adjustment</span><span class="rc-dbody">REITs use significant leverage → must be <b>unlevered</b> for a fair comparison with direct holdings. Adjusted for leverage, REITs historically show <b>higher returns &amp; lower volatility</b> — capturing the liquidity premium of direct investment plus professional management.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">By class (REITs)</span><span class="rc-dbody"><b>Retail</b> REITs: highest return, second-lowest volatility. <b>Industrial</b> REITs: lowest return, highest volatility. Directly-owned: <b>apartments</b> highest return, <b>offices</b> lowest.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Residential</span><span class="rc-dbody">Largest class (~<b>75%</b> of global developed-property value). Outperformed equities on an inflation-adjusted basis with lower volatility; strongest postwar returns 1950–1980, weaker 1980–2015. Postwar residential returns were <b>uncorrelated across countries</b> (good for diversification) while equity returns showed rising correlations.</span></span>
               </div>
               <div class="fi-tip"><b>Module Quiz 2.5:</b> the two adjustments analysts must make to RE risk premiums from equilibrium models — <b>(1) remove the impact of smoothing</b> from the data, and <b>(2) incorporate a liquidity premium</b> (also consider the local rather than global nature of RE).</div>
             </div>
@@ -16016,16 +16026,16 @@ E(R_re)   = cap rate + NOI growth rate − %Δcap rate (finite horizon)</div>
               <div class="fi-body">FX forecasting is particularly difficult — managers either fully hedge or accept the volatility. Currencies are the units of account for asset prices; exchange-rate moves reprice all assets in one currency relative to others. Rates are influenced by trading, governments, financial systems, geographies, laws, and customs.</div>
               <div class="fi-title" style="font-size:14px;margin-top:12px">A. Trade in goods &amp; services — 3 channels</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Trade flows</span>Net trade flows have a <b>relatively small</b> impact on FX (assuming they can be financed). Large trade flows <b>without</b> large financing flows → likely a crisis.</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Purchasing power parity</span>Expected FX movement follows expected <b>inflation-rate differentials</b>; expected change in the real rate should be zero. PPP works poorly short-term, better long-term and when inflation differences are large (money-supply driven). Doesn't hold with trade barriers, non-traded goods, or capital flows; FX also moves with economic development independent of PPP.</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Competitiveness / current account</span>See capital-mobility channels below — current-account sustainability drives FX.</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Trade flows</span><span class="rc-dbody">Net trade flows have a <b>relatively small</b> impact on FX (assuming they can be financed). Large trade flows <b>without</b> large financing flows → likely a crisis.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Purchasing power parity</span><span class="rc-dbody">Expected FX movement follows expected <b>inflation-rate differentials</b>; expected change in the real rate should be zero. PPP works poorly short-term, better long-term and when inflation differences are large (money-supply driven). Doesn't hold with trade barriers, non-traded goods, or capital flows; FX also moves with economic development independent of PPP.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Competitiveness / current account</span><span class="rc-dbody">See capital-mobility channels below — current-account sustainability drives FX.</span></span>
               </div>
             </div>
 
             <div class="fi-card">
               <div class="fi-title">B. Capital flows — 3 considerations</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Capital mobility</span>Expected % FX change = difference between domestic &amp; foreign nominal short-term rates AND risk premiums:</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Capital mobility</span><span class="rc-dbody">Expected % FX change = difference between domestic &amp; foreign nominal short-term rates AND risk premiums:</span></span>
               </div>
               <div class="fi-fl">E(%ΔS_d/f) = (r^d − r^f)
              + (Term^d − Term^f)
@@ -16033,9 +16043,9 @@ E(R_re)   = cap rate + NOI growth rate − %Δcap rate (finite horizon)</div>
              + (Equity^d − Equity^f)
              + (Liquid^d − Liquid^f)</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Overshooting (3 phases)</span>When investment opportunities improve, the currency (1) initially <b>appreciates significantly</b>; (2) in the intermediate term investors expect a <b>reversal</b>; (3) long-run it <b>reverts / depreciates</b> once opportunities are realized. Positive E(%ΔS_d/f) → domestic currency depreciates by that %.</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Uncovered interest rate parity (UIP)</span>FX changes should <b>equal differences in nominal interest rates</b> → only the interest-rate differential matters, not the premium differentials. In contrast, <b>carry trades</b> (borrow low-rate, lend high-rate currency) are considered successful because they include a risk premium — confirming the risk premiums in the equation.</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Portfolio balance &amp; composition</span>Strong economic growth → an increasing share of that country's currency in the global market portfolio; investors must be <b>induced</b> (higher returns) to raise allocations.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Overshooting (3 phases)</span><span class="rc-dbody">When investment opportunities improve, the currency (1) initially <b>appreciates significantly</b>; (2) in the intermediate term investors expect a <b>reversal</b>; (3) long-run it <b>reverts / depreciates</b> once opportunities are realized. Positive E(%ΔS_d/f) → domestic currency depreciates by that %.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Uncovered interest rate parity (UIP)</span><span class="rc-dbody">FX changes should <b>equal differences in nominal interest rates</b> → only the interest-rate differential matters, not the premium differentials. In contrast, <b>carry trades</b> (borrow low-rate, lend high-rate currency) are considered successful because they include a risk premium — confirming the risk premiums in the equation.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Portfolio balance &amp; composition</span><span class="rc-dbody">Strong economic growth → an increasing share of that country's currency in the global market portfolio; investors must be <b>induced</b> (higher returns) to raise allocations.</span></span>
               </div>
               <div class="fi-trap"><b>Hot money:</b> capital flowing in on rate differentials. Creates monetary-policy problems: (1) limits central banks' policy effectiveness; (2) firms use short-term financing for long-term investment → ↑ financial-market risk; (3) FX tends to <b>overshoot</b> → business disruption. Central banks may counter via currency-market intervention: <b>selling government securities</b> to limit bank-reserve growth, or maintaining interest-rate targets.</div>
             </div>
@@ -16043,9 +16053,9 @@ E(R_re)   = cap rate + NOI growth rate − %Δcap rate (finite horizon)</div>
             <div class="fi-card">
               <div class="fi-title">Current account &amp; FX — mitigating factors</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Current-account balances</span>Have the largest FX impact when <b>persistent and sustained</b>; the <b>length</b> of the imbalance matters more than its size. Structural imbalances arise from: (1) fiscal imbalances, (2) demographics/trade preferences, (3) abundant/scarce resources, (4) availability (or lack) of viable investment opportunities, (5) terms of trade.</span>
-                <span class="rc-drow"><span class="rc-dlabel">High trend rate mitigants</span>Weakens currency &amp; ↑ risk premiums, BUT: home-country bias (investors absorb more new assets); if growth is from <b>productivity gains</b>, funded by financial flows &amp; FDI; high-trend countries tend to be smaller EMs (raising their weight generally doesn't weaken the currency).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Large deficit mitigants</span>Deficits from large <b>investment spending</b> are easier to finance if expected profitable; small deficits in <b>global reserve currencies</b> (incl. USD) provide global liquidity and benefit the financial system.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Current-account balances</span><span class="rc-dbody">Have the largest FX impact when <b>persistent and sustained</b>; the <b>length</b> of the imbalance matters more than its size. Structural imbalances arise from: (1) fiscal imbalances, (2) demographics/trade preferences, (3) abundant/scarce resources, (4) availability (or lack) of viable investment opportunities, (5) terms of trade.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">High trend rate mitigants</span><span class="rc-dbody">Weakens currency &amp; ↑ risk premiums, BUT: home-country bias (investors absorb more new assets); if growth is from <b>productivity gains</b>, funded by financial flows &amp; FDI; high-trend countries tend to be smaller EMs (raising their weight generally doesn't weaken the currency).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Large deficit mitigants</span><span class="rc-dbody">Deficits from large <b>investment spending</b> are easier to finance if expected profitable; small deficits in <b>global reserve currencies</b> (incl. USD) provide global liquidity and benefit the financial system.</span></span>
               </div>
             </div>
 
@@ -16061,10 +16071,10 @@ E(R_re)   = cap rate + NOI growth rate − %Δcap rate (finite horizon)</div>
               <div class="fi-title"><span class="rc-los">LOS 2.g</span>Methods of forecasting volatility</div>
               <div class="fi-body">Estimating variance for a single asset is easy; for many assets it requires a <b>variance-covariance (VCV) matrix</b> or other tools. Four methods below.</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Sample VCV</span>Derive variances &amp; covariances from sample statistics. <b>Sample-size rule:</b> number of observations should be <b>≥ 10× the number of assets</b>; the number of assets cannot exceed the observations or outcomes are meaningless (a large portfolio can appear riskless).</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Factor-based VCV</span>Multifactor models <b>reduce the required observations</b> — correlations from a few common factors, variances need asset-specific factors.</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Shrinkage</span>Weighted average of the sample VCV and a target (e.g. factor-based) matrix → more precise, reduced estimation error.</span>
-                <span class="rc-drow"><span class="rc-dlabel">4 · Smoothed returns</span>Adjust for data smoothing that understates risk &amp; overstates diversification.</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Sample VCV</span><span class="rc-dbody">Derive variances &amp; covariances from sample statistics. <b>Sample-size rule:</b> number of observations should be <b>≥ 10× the number of assets</b>; the number of assets cannot exceed the observations or outcomes are meaningless (a large portfolio can appear riskless).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Factor-based VCV</span><span class="rc-dbody">Multifactor models <b>reduce the required observations</b> — correlations from a few common factors, variances need asset-specific factors.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Shrinkage</span><span class="rc-dbody">Weighted average of the sample VCV and a target (e.g. factor-based) matrix → more precise, reduced estimation error.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">4 · Smoothed returns</span><span class="rc-dbody">Adjust for data smoothing that understates risk &amp; overstates diversification.</span></span>
               </div>
             </div>
 
@@ -16121,24 +16131,24 @@ Example λ = 0.6:  (1 + 0.6)/(1 − 0.6) = 1.6/0.4 = 4×
               <div class="fi-title"><span class="rc-los">LOS 2.h</span>Recommending portfolio weight changes</div>
               <div class="fi-body">Apply everything learned to adjust allocations — the focus is <b>how</b> to adjust, not the forecast mechanics. Five guiding questions:</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Trend growth</span>Have the drivers of trend growth changed significantly?</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Integration</span>Are markets becoming more or less integrated?</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Business cycle</span>Where is the country in the cycle, and are fiscal/monetary policies consistent with that phase?</span>
-                <span class="rc-drow"><span class="rc-dlabel">4 · Current account</span>What is the trend in current-account balances?</span>
-                <span class="rc-drow"><span class="rc-dlabel">5 · Currencies</span>Strong or weak, and how are they affecting growth &amp; competitiveness?</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Trend growth</span><span class="rc-dbody">Have the drivers of trend growth changed significantly?</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Integration</span><span class="rc-dbody">Are markets becoming more or less integrated?</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Business cycle</span><span class="rc-dbody">Where is the country in the cycle, and are fiscal/monetary policies consistent with that phase?</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">4 · Current account</span><span class="rc-dbody">What is the trend in current-account balances?</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">5 · Currencies</span><span class="rc-dbody">Strong or weak, and how are they affecting growth &amp; competitiveness?</span></span>
               </div>
             </div>
 
             <div class="fi-card">
               <div class="fi-title">The adjustment playbook</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Trend growth ↑</span><span class="fi-green">Favorable to equities</span> (implies long-term earnings growth); <span class="fi-red">unfavorable to bonds</span> (higher interest rates). Use country-specific &amp; global VCV to shift equity↔bond weights.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Integration ↑</span>Required returns <b>fall</b> as markets integrate (Singer-Terhaar). <b>Increase</b> allocations to EMs expected to see more integration; <b>decrease</b> from already-highly-integrated markets.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Trough of cycle</span>Equities perform well; valuation ratios &amp; earnings growth rising → <b>increase equity weights</b> (use G-K for ERP). Curve is steep w/ high credit &amp; term premiums, but rising-rate expectation → bonds underperform → <b>reduce bond allocation &amp; duration</b>; a <b>barbell</b> may be optimal (↑ short + long, ↓ medium).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Peak of cycle</span>Reverse the trough strategy: <b>reduce equity</b>, <b>increase bond exposure &amp; duration</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Policy</span>Focus on <b>structural</b> changes (tax code, QE), not policy activities already reflected in prices.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Current account</span>The <b>long-term trend</b> matters. Rising deficits → rising required returns → falling asset prices, and increased capital flows to fund the deficit (also moving currencies).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Currency</span>Higher risk-adjusted return potential → capital inflow → upward currency pressure. Judge whether the currency still has room to appreciate or is at its <b>peak</b>.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Trend growth ↑</span><span class="rc-dbody"><span class="fi-green">Favorable to equities</span> (implies long-term earnings growth); <span class="fi-red">unfavorable to bonds</span> (higher interest rates). Use country-specific &amp; global VCV to shift equity↔bond weights.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Integration ↑</span><span class="rc-dbody">Required returns <b>fall</b> as markets integrate (Singer-Terhaar). <b>Increase</b> allocations to EMs expected to see more integration; <b>decrease</b> from already-highly-integrated markets.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Trough of cycle</span><span class="rc-dbody">Equities perform well; valuation ratios &amp; earnings growth rising → <b>increase equity weights</b> (use G-K for ERP). Curve is steep w/ high credit &amp; term premiums, but rising-rate expectation → bonds underperform → <b>reduce bond allocation &amp; duration</b>; a <b>barbell</b> may be optimal (↑ short + long, ↓ medium).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Peak of cycle</span><span class="rc-dbody">Reverse the trough strategy: <b>reduce equity</b>, <b>increase bond exposure &amp; duration</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Policy</span><span class="rc-dbody">Focus on <b>structural</b> changes (tax code, QE), not policy activities already reflected in prices.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Current account</span><span class="rc-dbody">The <b>long-term trend</b> matters. Rising deficits → rising required returns → falling asset prices, and increased capital flows to fund the deficit (also moving currencies).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Currency</span><span class="rc-dbody">Higher risk-adjusted return potential → capital inflow → upward currency pressure. Judge whether the currency still has room to appreciate or is at its <b>peak</b>.</span></span>
               </div>
             </div>
 
@@ -17335,9 +17345,14 @@ duration · foreign exchange · default risk</div>
               #oar-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
               #oar-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(212,160,23,.14); border:1px solid var(--oa-gold); color:var(--oa-gold); border-radius:3px; padding:1px 6px; margin-right:6px; }
               #oar-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
-              #oar-recap .rc-drow { display:block; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+              #oar-recap .rc-drow { display:grid; grid-template-columns:150px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+              #oar-recap .rc-dlabel { color:var(--oa-gold); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #oar-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #oar-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #oar-recap .rc-dlabel { padding-top:0; }
+              }
               #oar-recap .rc-drow:last-child { border-bottom:none; }
-              #oar-recap .rc-dlabel { display:inline-block; min-width:170px; color:var(--oa-gold); font-family:var(--mono); font-size:10px; letter-spacing:.04em; vertical-align:top; margin-right:6px; }
               #oar-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
               #oar-recap .oa-table { width:100%; border-collapse:collapse; margin:10px 0; font-size:12px; }
               #oar-recap .oa-table th { background:#0B0F14; color:var(--oa-gold); font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; padding:8px 10px; text-align:left; border:1px solid var(--border); }
@@ -17359,21 +17374,21 @@ duration · foreign exchange · default risk</div>
               <div class="oa-body">Governance ensures the <b>appropriate individuals/groups</b> make informed decisions and conduct oversight. Objective: match the investor's objectives with constraints while complying with laws/regulations, and improve performance by aligning asset allocation with implementation.</div>
               <div class="oa-body">Effective governance models do the following (6):</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Objectives</span>Establish long-term and short-term investment objectives.</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Rights &amp; responsibilities</span>Allocate rights and responsibilities within the governance structure.</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · IPS process</span>Specify processes for creating an investment policy statement.</span>
-                <span class="rc-drow"><span class="rc-dlabel">4 · SAA process</span>Specify processes for creating a strategic asset allocation.</span>
-                <span class="rc-drow"><span class="rc-dlabel">5 · Reporting framework</span>Apply a reporting framework to monitor progress toward stated goals &amp; objectives.</span>
-                <span class="rc-drow"><span class="rc-dlabel">6 · Governance audit</span>Periodically perform a governance audit.</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Objectives</span><span class="rc-dbody">Establish long-term and short-term investment objectives.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Rights &amp; responsibilities</span><span class="rc-dbody">Allocate rights and responsibilities within the governance structure.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · IPS process</span><span class="rc-dbody">Specify processes for creating an investment policy statement.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">4 · SAA process</span><span class="rc-dbody">Specify processes for creating a strategic asset allocation.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">5 · Reporting framework</span><span class="rc-dbody">Apply a reporting framework to monitor progress toward stated goals &amp; objectives.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">6 · Governance audit</span><span class="rc-dbody">Periodically perform a governance audit.</span></span>
               </div>
             </div>
 
             <div class="oa-card">
               <div class="oa-title">Investment objectives &amp; the required return</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Pension fund</span>Plan assets meet current &amp; ongoing plan liabilities.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Endowment</span>Achieve a rate of return that exceeds the return required to fund current &amp; ongoing distributions.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Individual investor</span>Sufficient assets for retirement while adhering to constraints &amp; risk preferences.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Pension fund</span><span class="rc-dbody">Plan assets meet current &amp; ongoing plan liabilities.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Endowment</span><span class="rc-dbody">Achieve a rate of return that exceeds the return required to fund current &amp; ongoing distributions.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Individual investor</span><span class="rc-dbody">Sufficient assets for retirement while adhering to constraints &amp; risk preferences.</span></span>
               </div>
               <div class="oa-body">At the core of the objective statement is the <b>return requirement</b>. Context includes the investor's <b>willingness &amp; ability to tolerate risk</b>, the funding obligations, and cash-flow timing. Overall goal: discover the <b>optimal risk-return combination</b> given the investor's constraints &amp; risk tolerance.</div>
               <div class="oa-trap"><b>Risk sensitivities drive required return:</b> beyond liquidity risk (illiquid assets are hard to fund obligations during market stress → risk of selling at the worst time), governance must weigh <b>volatility risk</b> — high-risk allocations with high expected returns bring greater price swings.</div>
@@ -17382,11 +17397,11 @@ duration · foreign exchange · default risk</div>
             <div class="oa-card">
               <div class="oa-title">Rights &amp; responsibilities · IPS · SAA · reporting · audit</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Rights &amp; responsibilities</span>Delegate decision-making to the <b>best-qualified</b> individuals (knowledge, experience, capacity, timely execution). Allocation varies with program size, internal-staff availability, and staff skill. Small programs → simpler options; large programs → more complex strategies (if robust internal controls), but can hit <b>capacity constraints when too many managers are involved</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">IPS</span>An effective program begins with a well-developed IPS — a <b>roadmap</b> for portfolio management giving stakeholders confidence the program is managed with due diligence &amp; care.</span>
-                <span class="rc-drow"><span class="rc-dlabel">SAA</span>The <b>investment committee</b> (highest governance level) typically approves the SAA. Developed after (1) the IPS is constructed, (2) results are simulated over the appropriate horizon(s), and (3) risk/return attributes of all possible allocations are considered. Good governance also specifies <b>rebalancing</b> decisions &amp; responsibilities.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Reporting framework</span>Lets stakeholders evaluate performance, guideline compliance, and progress. <b>Proper benchmarking</b> is key for evaluating managers/staff; shows which parts of the portfolio are ahead/behind schedule; governance reporting done regularly to address strengths/weaknesses.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Governance audit</span>An <b>independent third party</b> audits structure, policies, procedures — examines governing documents, capacity to execute, and portfolio efficiency given constraints.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Rights &amp; responsibilities</span><span class="rc-dbody">Delegate decision-making to the <b>best-qualified</b> individuals (knowledge, experience, capacity, timely execution). Allocation varies with program size, internal-staff availability, and staff skill. Small programs → simpler options; large programs → more complex strategies (if robust internal controls), but can hit <b>capacity constraints when too many managers are involved</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">IPS</span><span class="rc-dbody">An effective program begins with a well-developed IPS — a <b>roadmap</b> for portfolio management giving stakeholders confidence the program is managed with due diligence &amp; care.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">SAA</span><span class="rc-dbody">The <b>investment committee</b> (highest governance level) typically approves the SAA. Developed after (1) the IPS is constructed, (2) results are simulated over the appropriate horizon(s), and (3) risk/return attributes of all possible allocations are considered. Good governance also specifies <b>rebalancing</b> decisions &amp; responsibilities.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Reporting framework</span><span class="rc-dbody">Lets stakeholders evaluate performance, guideline compliance, and progress. <b>Proper benchmarking</b> is key for evaluating managers/staff; shows which parts of the portfolio are ahead/behind schedule; governance reporting done regularly to address strengths/weaknesses.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Governance audit</span><span class="rc-dbody">An <b>independent third party</b> audits structure, policies, procedures — examines governing documents, capacity to execute, and portfolio efficiency given constraints.</span></span>
               </div>
               <div class="oa-tip"><b>Key term — decision-reversal risk:</b> effective governance aims to <u>minimize</u> the risk of reversing investment decisions at the worst possible time (creating the maximum loss) — helping the program survive market-stress periods. Governance also provides <b>durability</b> (evaluates staff/committee turnover &amp; overreliance on one member; new members properly trained).</div>
             </div>
@@ -17397,8 +17412,8 @@ duration · foreign exchange · default risk</div>
               <div class="oa-title"><span class="rc-los">LOS 3.b</span>Economic balance sheet (EBS)</div>
               <div class="oa-body">The <b>traditional accounting</b> balance sheet has an organization's assets, liabilities, and owner's equity. An <b>economic balance sheet</b> adds any <b>nonfinancial (extended portfolio) assets and liabilities</b> relevant to the asset-allocation decision that don't appear on traditional sheets.</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Extended assets</span>PV of expected earnings / <b>human capital</b> (individuals); PV of pension income (individuals); PV of intellectual-property royalties &amp; underground mineral resources (institutions).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Extended liabilities</span>PV of expected <b>consumption</b> (individuals); PV of expected <b>foundation payouts</b> (institutions).</span>
+                <span class="rc-drow"><span class="rc-dlabel">Extended assets</span><span class="rc-dbody">PV of expected earnings / <b>human capital</b> (individuals); PV of pension income (individuals); PV of intellectual-property royalties &amp; underground mineral resources (institutions).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Extended liabilities</span><span class="rc-dbody">PV of expected <b>consumption</b> (individuals); PV of expected <b>foundation payouts</b> (institutions).</span></span>
               </div>
             </div>
 
@@ -17438,9 +17453,9 @@ duration · foreign exchange · default risk</div>
             <div class="oa-card">
               <div class="oa-title"><span class="rc-los">LOS 3.d</span>Relevant risk concepts by approach</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Asset-only</span>Focus on asset-class risk &amp; effective combinations. Primary measure for MVO = <b>standard deviation of portfolio returns</b> (uses volatilities + correlations). Other sensitivities: relative risk vs benchmark → <b>tracking error</b>; downside risk → <b>VaR, semivariance, or maximum drawdown</b>. <b>Monte Carlo simulation</b> complements MVO — simulate multiple return paths to see downside risk under market stress and refine the allocation.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Liability-relative</span>Primary risk = <b>not having enough assets to pay liabilities</b> when due. <b>Volatility of the surplus</b> (and volatility of contributions used for funding) is the relevant measure. Liability characteristics (size, interest-rate sensitivity) are the main drivers of risk.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Goals-based</span>Risk = <b>not achieving the stated financial goals</b>. With multiple goals over multiple horizons, total portfolio risk = the <b>weighted sum of the risk attached to each goal</b>.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Asset-only</span><span class="rc-dbody">Focus on asset-class risk &amp; effective combinations. Primary measure for MVO = <b>standard deviation of portfolio returns</b> (uses volatilities + correlations). Other sensitivities: relative risk vs benchmark → <b>tracking error</b>; downside risk → <b>VaR, semivariance, or maximum drawdown</b>. <b>Monte Carlo simulation</b> complements MVO — simulate multiple return paths to see downside risk under market stress and refine the allocation.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Liability-relative</span><span class="rc-dbody">Primary risk = <b>not having enough assets to pay liabilities</b> when due. <b>Volatility of the surplus</b> (and volatility of contributions used for funding) is the relevant measure. Liability characteristics (size, interest-rate sensitivity) are the main drivers of risk.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Goals-based</span><span class="rc-dbody">Risk = <b>not achieving the stated financial goals</b>. With multiple goals over multiple horizons, total portfolio risk = the <b>weighted sum of the risk attached to each goal</b>.</span></span>
               </div>
             </div>
 
@@ -17451,20 +17466,20 @@ duration · foreign exchange · default risk</div>
               <div class="oa-body">An asset class = a group of assets with <b>similar investment characteristics</b>. Each class has its own quantifiable systematic risk. <b>SAA is a conscious effort to gain the desired exposure to systematic risk</b> via specific weights to individual classes → SAA reflects the investor's desired systematic-risk exposure.</div>
               <div class="oa-body"><b>Three "super asset classes":</b></div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Capital assets</span>Provide a <b>continuous source of value</b> (e.g. dividends) — stocks, bonds.</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Consumable / transformable</span>Can be consumed or transformed into a source of value — e.g. commodities.</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Store-of-value</span>Provide value when <b>exchanged or sold</b> — e.g. currencies, art.</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Capital assets</span><span class="rc-dbody">Provide a <b>continuous source of value</b> (e.g. dividends) — stocks, bonds.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Consumable / transformable</span><span class="rc-dbody">Can be consumed or transformed into a source of value — e.g. commodities.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Store-of-value</span><span class="rc-dbody">Provide value when <b>exchanged or sold</b> — e.g. currencies, art.</span></span>
               </div>
             </div>
 
             <div class="oa-card">
               <div class="oa-title">Criteria for specifying an asset class</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Similar attributes</span>Assets in a class should be similar <b>descriptively AND statistically</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Mutually exclusive</span>An asset <b>cannot be classified into more than one</b> class — if it can, the class descriptions are too vague.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Low correlation</span>Classes should <b>not be highly correlated</b>, to provide diversification. High correlation → classes are related on risk/return → defeats the purpose of separate classes.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Cover investable universe</span>Classes should cover <b>all possible investable assets</b> — increases the investable set and pushes up the efficient frontier (more expected return at every risk level).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Sufficient liquidity</span>Contain a sufficiently large percentage of <b>liquid</b> assets — if liquidity/transaction costs are significant, the class may not be ideal.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Similar attributes</span><span class="rc-dbody">Assets in a class should be similar <b>descriptively AND statistically</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Mutually exclusive</span><span class="rc-dbody">An asset <b>cannot be classified into more than one</b> class — if it can, the class descriptions are too vague.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Low correlation</span><span class="rc-dbody">Classes should <b>not be highly correlated</b>, to provide diversification. High correlation → classes are related on risk/return → defeats the purpose of separate classes.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Cover investable universe</span><span class="rc-dbody">Classes should cover <b>all possible investable assets</b> — increases the investable set and pushes up the efficient frontier (more expected return at every risk level).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Sufficient liquidity</span><span class="rc-dbody">Contain a sufficiently large percentage of <b>liquid</b> assets — if liquidity/transaction costs are significant, the class may not be ideal.</span></span>
               </div>
               <div class="oa-trap"><b>Granularity trap:</b> too much granularity (too many sub-divisions) makes it difficult to construct an optimal portfolio for the investor's required return &amp; risk. Sub-asset classes are <b>less distinct</b> than broad classes (Fig 3.2: global equity → US/non-US → large/small-cap, developed/emerging; global FI → US/non-US → IG/HY, developed/emerging). <b>SAA focuses primarily on divisions with distinctly different characteristics</b> (global equity vs global FI); moving down in granularity, differences shrink. Progressing from SAA to policy implementation &amp; <b>TAA</b>, decisions focus more on sub-asset classes.</div>
             </div>
@@ -17472,10 +17487,10 @@ duration · foreign exchange · default risk</div>
             <div class="oa-card">
               <div class="oa-title"><span class="rc-los">LOS 3.f</span>Risk factors &amp; factor-based allocation</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Asset-based allocation</span>Traditional units of analysis are asset classes (e.g. MVO uses expected return, volatility, correlation of selected classes). Problem: <b>overlapping risk factors across classes</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Common risk factors</span>Volatility, liquidity, inflation, interest rates, duration, foreign exchange, default risk. Exposures overlap — e.g. domestic equity &amp; domestic FI both share FX, liquidity, and volatility exposures. Examining overlaps helps identify correlations among classes.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Factor-based allocation</span>Focus on <b>risk factors</b> as the units of analysis: identify factors + desired exposure, then use <b>multifactor models to build factor portfolios that isolate systematic (nondiversifiable) risk</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Limitations</span>Not inherently more useful. Investors may not be able to invest directly in all factors. But factors offer added insight and often correspond to expected-return premiums; some are investable via <b>spread positions</b> (long/short) or derivatives.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Asset-based allocation</span><span class="rc-dbody">Traditional units of analysis are asset classes (e.g. MVO uses expected return, volatility, correlation of selected classes). Problem: <b>overlapping risk factors across classes</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Common risk factors</span><span class="rc-dbody">Volatility, liquidity, inflation, interest rates, duration, foreign exchange, default risk. Exposures overlap — e.g. domestic equity &amp; domestic FI both share FX, liquidity, and volatility exposures. Examining overlaps helps identify correlations among classes.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Factor-based allocation</span><span class="rc-dbody">Focus on <b>risk factors</b> as the units of analysis: identify factors + desired exposure, then use <b>multifactor models to build factor portfolios that isolate systematic (nondiversifiable) risk</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Limitations</span><span class="rc-dbody">Not inherently more useful. Investors may not be able to invest directly in all factors. But factors offer added insight and often correspond to expected-return premiums; some are investable via <b>spread positions</b> (long/short) or derivatives.</span></span>
               </div>
               <div class="oa-info"><b>Isolating a factor (examples):</b> to isolate <b>inflation risk</b> — go long Treasuries (compensation for consensus-expected inflation) and short inflation-linked bonds (adjust for actual future inflation); or invest in <b>VIX futures</b> with payoffs based on actual change in volatility.</div>
             </div>
@@ -17509,15 +17524,15 @@ duration · foreign exchange · default risk</div>
               <div class="oa-info">Most quantitative approaches are based on <b>utility theory</b> — a utility function incorporating investor risk aversion. Expected utility for an allocation is found from a distribution of ending-wealth values (from class weights, class returns, beginning wealth). The <b>maximum utility subject to class constraints</b> = the investor's optimal allocation for the horizon.</div>
               <div class="oa-body">The 9 steps to select &amp; justify an SAA:</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Objectives</span>How will the investor use the assets? Liabilities &amp; goals? How measured?</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Risk tolerance</span>Sensitivities to risk; how should risk be measured?</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Time horizon(s)</span>Horizon to evaluate objectives; horizon to evaluate risk tolerance.</span>
-                <span class="rc-drow"><span class="rc-dlabel">4 · Constraints</span>Tax situation; ESG considerations; legal/regulatory/political; any IPS-specified constraints.</span>
-                <span class="rc-drow"><span class="rc-dlabel">5 · Select approach</span>Choose the most ideal approach (asset-only / liability-relative / goals-based).</span>
-                <span class="rc-drow"><span class="rc-dlabel">6 · Specify classes</span>Once classes are specified, establish capital market expectations.</span>
-                <span class="rc-drow"><span class="rc-dlabel">7 · Develop allocations</span>Use optimization to construct candidate allocations.</span>
-                <span class="rc-drow"><span class="rc-dlabel">8 · Simulate results</span>Test whether candidates align with objectives &amp; risk tolerance for the horizon.</span>
-                <span class="rc-drow"><span class="rc-dlabel">9 · Iterate</span>Repeat Step 7 until the optimal allocation is discovered.</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Objectives</span><span class="rc-dbody">How will the investor use the assets? Liabilities &amp; goals? How measured?</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Risk tolerance</span><span class="rc-dbody">Sensitivities to risk; how should risk be measured?</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Time horizon(s)</span><span class="rc-dbody">Horizon to evaluate objectives; horizon to evaluate risk tolerance.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">4 · Constraints</span><span class="rc-dbody">Tax situation; ESG considerations; legal/regulatory/political; any IPS-specified constraints.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">5 · Select approach</span><span class="rc-dbody">Choose the most ideal approach (asset-only / liability-relative / goals-based).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">6 · Specify classes</span><span class="rc-dbody">Once classes are specified, establish capital market expectations.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">7 · Develop allocations</span><span class="rc-dbody">Use optimization to construct candidate allocations.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">8 · Simulate results</span><span class="rc-dbody">Test whether candidates align with objectives &amp; risk tolerance for the horizon.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">9 · Iterate</span><span class="rc-dbody">Repeat Step 7 until the optimal allocation is discovered.</span></span>
               </div>
               <div class="oa-tip"><b>Monitoring:</b> once implemented, the SAA is monitored regularly per the IPS with a <b>feedback loop</b> so long-term market changes feed back into the model. If market changes are only <b>short-term</b>, use <b>tactical</b> measures instead of changing the SAA.</div>
             </div>
@@ -17536,8 +17551,8 @@ duration · foreign exchange · default risk</div>
                 </tbody>
               </table>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Allocation A → goals-based</span>Cash 45% × $5M = $2.25M &gt; the $1.2M liquidity need → more than sufficient for mortgage, education, and a possible annuity purchase; high cash reduces volatility; fits his conservative views.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Allocation B → asset-only</span>Emphasizes higher-growth equity (50%); provides diversification via alternatives + some fixed income.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Allocation A → goals-based</span><span class="rc-dbody">Cash 45% × $5M = $2.25M &gt; the $1.2M liquidity need → more than sufficient for mortgage, education, and a possible annuity purchase; high cash reduces volatility; fits his conservative views.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Allocation B → asset-only</span><span class="rc-dbody">Emphasizes higher-growth equity (50%); provides diversification via alternatives + some fixed income.</span></span>
               </div>
               <div class="oa-trap"><b>Exam framing:</b> you were told NOT to draw a final conclusion on the optimal overall approach — this is an initial step showing the need to develop a complete IPS and consider additional allocations that may better meet the objectives.</div>
             </div>
@@ -17555,9 +17570,9 @@ duration · foreign exchange · default risk</div>
               <div class="oa-title"><span class="rc-los">LOS 3.i</span>Strategic implementation choices — passive vs active</div>
               <div class="oa-body">Once the SAA is built, decide passive/active for both (a) <b>asset-class weights</b> and (b) <b>allocations within classes</b>. First aspect: should the investor deviate from the SAA by adjusting the asset mix? Second: how to allocate within selected classes?</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">TAA (tactical)</span><b>Active</b> strategy deviating from the SAA to exploit perceived <b>short-term</b> opportunities → seeks incremental return (<b>alpha</b>) but adds risk. Deviations restricted by <b>risk budgets or rebalancing ranges</b>; may be based on forecasted valuation, business-cycle state, or price momentum.</span>
-                <span class="rc-drow"><span class="rc-dlabel">DAA (dynamic)</span>A <b>multiperiod</b> view: asset (and liability) performance in one period affects the required return &amp; acceptable risk in later periods.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Scope of TAA</span>Changes to the SAA may be as simple as adjusting the stock/bond/cash mix, or a broader, more complex <b>global TAA</b> multiasset approach.</span>
+                <span class="rc-drow"><span class="rc-dlabel">TAA (tactical)</span><span class="rc-dbody"><b>Active</b> strategy deviating from the SAA to exploit perceived <b>short-term</b> opportunities → seeks incremental return (<b>alpha</b>) but adds risk. Deviations restricted by <b>risk budgets or rebalancing ranges</b>; may be based on forecasted valuation, business-cycle state, or price momentum.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">DAA (dynamic)</span><span class="rc-dbody">A <b>multiperiod</b> view: asset (and liability) performance in one period affects the required return &amp; acceptable risk in later periods.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Scope of TAA</span><span class="rc-dbody">Changes to the SAA may be as simple as adjusting the stock/bond/cash mix, or a broader, more complex <b>global TAA</b> multiasset approach.</span></span>
               </div>
               <div class="oa-body"><b>Risk budgeting:</b> addresses the <b>types</b> of risk and the <b>amount</b> to take. Risk measured by the risk focus — volatility → standard deviation; tail risk → VaR. Budgets stated in relative or absolute terms, money or percentage (e.g. 10% return volatility) — specify how risk is distributed among assets <b>without regard to expected returns</b>. In passive/active choices, <b>active risk budgeting</b> sets how much additional risk to take vs the benchmark (objective: outperform while staying within the budget). Active risk for the class mix is measured vs the <b>SAA benchmark</b>; within classes, vs the <b>asset-class benchmark</b>.</div>
             </div>
@@ -17566,13 +17581,13 @@ duration · foreign exchange · default risk</div>
               <div class="oa-title"><span class="rc-los">LOS 3.j</span>Rebalancing — strategic considerations</div>
               <div class="oa-body">SAA is specified as a <b>range</b> (e.g. domestic equity 30–40%); if actual weight drifts outside the range, rebalance. <b>Primary benefit: maintain the investor's desired systematic-risk exposure</b> — if allowed to drift, riskier assets take over (rising equities become a larger share → portfolio risk rises). Rebalancing also provides <b>discipline</b> (counters the urge to "let it ride" after gains).</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Cost of NOT rebalancing</span>Failure to realize gains from temporarily overvalued securities before they fall back to true value.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Cost of rebalancing</span>Selling appreciated equities → <b>tax liability</b> + transaction costs. Costs depend on whether the trade <b>requires</b> liquidity (selling when others sell → wide bid-ask) or <b>provides</b> liquidity (selling when others buy → minimal cost).</span>
+                <span class="rc-drow"><span class="rc-dlabel">Cost of NOT rebalancing</span><span class="rc-dbody">Failure to realize gains from temporarily overvalued securities before they fall back to true value.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Cost of rebalancing</span><span class="rc-dbody">Selling appreciated equities → <b>tax liability</b> + transaction costs. Costs depend on whether the trade <b>requires</b> liquidity (selling when others sell → wide bid-ask) or <b>provides</b> liquidity (selling when others buy → minimal cost).</span></span>
               </div>
               <div class="oa-body"><b>Two rebalancing approaches:</b></div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Calendar rebalancing</span>Rebalance on a <b>predetermined schedule</b> (monthly/quarterly). Benefit: discipline without constant monitoring. Drawback: portfolio can <b>stray considerably between dates</b> (tied to passage of time, not portfolio value).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Percentage-range rebalancing</span>Triggered by <b>changes in value</b>. Manager sets <b>tolerance bands / corridors</b> (e.g. 50% ± 5% → 45%–55%). Benefit: minimizes how far classes stray from targets. Cost: constant monitoring + potentially more frequent trading.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Calendar rebalancing</span><span class="rc-dbody">Rebalance on a <b>predetermined schedule</b> (monthly/quarterly). Benefit: discipline without constant monitoring. Drawback: portfolio can <b>stray considerably between dates</b> (tied to passage of time, not portfolio value).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Percentage-range rebalancing</span><span class="rc-dbody">Triggered by <b>changes in value</b>. Manager sets <b>tolerance bands / corridors</b> (e.g. 50% ± 5% → 45%–55%). Benefit: minimizes how far classes stray from targets. Cost: constant monitoring + potentially more frequent trading.</span></span>
               </div>
               <div class="oa-info"><b>Four range-based rebalancing questions:</b> (1) Who is ultimately responsible? (2) How frequently monitor? (3) What is the corridor size? (4) Rebalance to target fully or only partially?</div>
             </div>
@@ -18807,9 +18822,14 @@ Var(s,m)  = variance of surplus return</div>
               #par-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
               #par-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(212,160,23,.14); border:1px solid var(--pa-gold); color:var(--pa-gold); border-radius:3px; padding:1px 6px; margin-right:6px; }
               #par-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
-              #par-recap .rc-drow { display:block; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+              #par-recap .rc-drow { display:grid; grid-template-columns:150px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+              #par-recap .rc-dlabel { color:var(--pa-gold); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #par-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #par-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #par-recap .rc-dlabel { padding-top:0; }
+              }
               #par-recap .rc-drow:last-child { border-bottom:none; }
-              #par-recap .rc-dlabel { display:inline-block; min-width:165px; color:var(--pa-gold); font-family:var(--mono); font-size:10px; letter-spacing:.04em; vertical-align:top; margin-right:6px; }
               #par-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
               #par-recap .pa-table td.q { color:var(--pa-gold); font-weight:600; vertical-align:top; }
             </style>
@@ -18836,8 +18856,8 @@ E(R_m) = expected return of allocation m
 λ      = risk-aversion coefficient ("lambda")
 Var_m  = variance of allocation m</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Coefficient trap</span>Use <b>0.005</b> when return/variance are in <b>percent</b> (8.00); use <b>0.5</b> when in <b>decimal</b> (0.08). Same answer either way.</span>
-                <span class="rc-drow"><span class="rc-dlabel">λ interpretation</span>Higher expected return (same risk) ↑ utility; higher risk (same return) ↓ utility — a "penalty" for risk (risk-averse). λ is unique to each investor (willingness + ability). Risk-neutral → λ = 0; in practice λ is <b>1–10, average ≈ 4</b>.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Coefficient trap</span><span class="rc-dbody">Use <b>0.005</b> when return/variance are in <b>percent</b> (8.00); use <b>0.5</b> when in <b>decimal</b> (0.08). Same answer either way.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">λ interpretation</span><span class="rc-dbody">Higher expected return (same risk) ↑ utility; higher risk (same return) ↓ utility — a "penalty" for risk (risk-averse). λ is unique to each investor (willingness + ability). Risk-neutral → λ = 0; in practice λ is <b>1–10, average ≈ 4</b>.</span></span>
               </div>
             </div>
 
@@ -18861,13 +18881,13 @@ Var_m  = variance of allocation m</div>
               </div>
               <div class="pa-body"><b>MVO process (Fig 4.2):</b></div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Inputs</span>Expected returns · variances · covariances (correlations) · risk-aversion factor · constraints.</span>
-                <span class="rc-drow"><span class="rc-dlabel">MVO</span>Maximize utility, subject to constraint(s).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Outputs</span>Asset allocations (portfolio weights) · portfolio expected return · portfolio variance.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Inputs</span><span class="rc-dbody">Expected returns · variances · covariances (correlations) · risk-aversion factor · constraints.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">MVO</span><span class="rc-dbody">Maximize utility, subject to constraint(s).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Outputs</span><span class="rc-dbody">Asset allocations (portfolio weights) · portfolio expected return · portfolio variance.</span></span>
               </div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Budget (unity) constraint</span>Most common — asset weights must sum to <b>100%</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Nonnegativity constraint</span>Next most common — weights between 0% and 100% (<b>no short positions</b>).</span>
+                <span class="rc-drow"><span class="rc-dlabel">Budget (unity) constraint</span><span class="rc-dbody">Most common — asset weights must sum to <b>100%</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Nonnegativity constraint</span><span class="rc-dbody">Next most common — weights between 0% and 100% (<b>no short positions</b>).</span></span>
               </div>
               <div class="pa-info"><b>Two Level-I/II assumptions now dropped:</b> (1) no longer assume all tradable assets are used or that the frontier from all assets is optimal for a given investor; (2) no longer assume a <b>true risk-free asset</b> exists (where variance of return = 0 and return is uncorrelated with all other assets, correlation = 0). At L-I/II the tangent portfolio (highest Sharpe) plus the risk-free asset defined the optimal market portfolio for all investors.</div>
             </div>
@@ -18875,12 +18895,12 @@ Var_m  = variance of allocation m</div>
             <div class="pa-card">
               <div class="pa-title">The 6 criticisms of MVO</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · GIGO</span>Output is highly sensitive to input quality (expected returns, variances, correlations). <b>Expected returns are the most problematic</b> (biggest source of estimation error) → the focus is improving return inputs.</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Concentrated allocations</span>MVO often produces portfolios <b>concentrated</b> in a subset of classes (zero to others). Lowest calculated σ ≠ practical diversification.</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Skewness &amp; kurtosis</span>MVO uses only the first two moments (mean, variance). Real returns show significant skewness &amp; kurtosis (not normal).</span>
-                <span class="rc-drow"><span class="rc-dlabel">4 · Risk diversification</span>Diversifies across <b>classes</b>, not necessarily across <b>sources of risk</b> — equities &amp; FI share common risk factors, so class diversification ≠ factor diversification.</span>
-                <span class="rc-drow"><span class="rc-dlabel">5 · Ignores liabilities</span>Ignores that portfolios fund future needs (individual consumption, pension liability). A robust approach accounts for the factors driving liabilities and the asset-liability correlations.</span>
-                <span class="rc-drow"><span class="rc-dlabel">6 · Single-period framework</span>Ignores interim cash flows &amp; serial correlation across periods → ignores rebalancing costs/benefits as conditions change and allocations drift.</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · GIGO</span><span class="rc-dbody">Output is highly sensitive to input quality (expected returns, variances, correlations). <b>Expected returns are the most problematic</b> (biggest source of estimation error) → the focus is improving return inputs.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Concentrated allocations</span><span class="rc-dbody">MVO often produces portfolios <b>concentrated</b> in a subset of classes (zero to others). Lowest calculated σ ≠ practical diversification.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Skewness &amp; kurtosis</span><span class="rc-dbody">MVO uses only the first two moments (mean, variance). Real returns show significant skewness &amp; kurtosis (not normal).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">4 · Risk diversification</span><span class="rc-dbody">Diversifies across <b>classes</b>, not necessarily across <b>sources of risk</b> — equities &amp; FI share common risk factors, so class diversification ≠ factor diversification.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">5 · Ignores liabilities</span><span class="rc-dbody">Ignores that portfolios fund future needs (individual consumption, pension liability). A robust approach accounts for the factors driving liabilities and the asset-liability correlations.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">6 · Single-period framework</span><span class="rc-dbody">Ignores interim cash flows &amp; serial correlation across periods → ignores rebalancing costs/benefits as conditions change and allocations drift.</span></span>
               </div>
               <div class="pa-tip"><b>Roadmap:</b> the first two (GIGO &amp; concentration) are addressed by <b>improving inputs, especially expected return</b> (reverse optimization, Black-Litterman, resampling, adding constraints). The others are addressed by MCS, factor/risk-parity, ALM, and multiperiod methods.</div>
             </div>
@@ -18891,8 +18911,8 @@ Var_m  = variance of allocation m</div>
               <div class="pa-title">Reverse optimization</div>
               <div class="pa-body">Instead of starting with expected returns → deriving weights, <b>reverse optimization</b> starts with assumed "optimal" weights (the <b>global market portfolio</b>) and derives the expected returns consistent with them (called <b>implied returns</b>). Those implied returns then feed a traditional MVO to derive weights for the particular investor.</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Reverse MVO</span>Inputs: assumed optimal allocations, variances, covariances, risk-aversion, constraints → <b>output: implied returns</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Then MVO</span>Inputs: implied returns + variances/covariances/λ/constraints → outputs: revised allocations, portfolio return, portfolio variance.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Reverse MVO</span><span class="rc-dbody">Inputs: assumed optimal allocations, variances, covariances, risk-aversion, constraints → <b>output: implied returns</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Then MVO</span><span class="rc-dbody">Inputs: implied returns + variances/covariances/λ/constraints → outputs: revised allocations, portfolio return, portfolio variance.</span></span>
               </div>
               <div class="pa-tip"><b>Why the world market portfolio:</b> it's assumed to provide optimal diversification, so it's the appropriate starting point. Advantage: derived returns already reflect a highly diversified portfolio → you <b>avoid MVO's tendency toward highly concentrated allocations</b>. Other starting points possible (e.g. an existing client IPS).</div>
             </div>
@@ -18901,8 +18921,8 @@ Var_m  = variance of allocation m</div>
               <div class="pa-title">Black-Litterman model</div>
               <div class="pa-body">An <b>extension of reverse optimization</b> in which the implied returns (actually implied <b>excess</b> returns) are <b>adjusted to reflect the investor's unique views</b> of future returns, then fed back through MVO.</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Absolute view</span>Reverse opt derives EM equities return of 6.5%; you believe it's too low → adjust up by 75 bps to <b>7.25%</b>, then rerun MVO.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Relative view</span>Reverse opt gives UK large-cap 8.2% vs US large-cap 8.0% (20 bps differential); you believe US will outperform UK by <b>100 bps</b> → adjust the differential.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Absolute view</span><span class="rc-dbody">Reverse opt derives EM equities return of 6.5%; you believe it's too low → adjust up by 75 bps to <b>7.25%</b>, then rerun MVO.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Relative view</span><span class="rc-dbody">Reverse opt gives UK large-cap 8.2% vs US large-cap 8.0% (20 bps differential); you believe US will outperform UK by <b>100 bps</b> → adjust the differential.</span></span>
               </div>
               <div class="pa-info"><b>Flow (Fig 4.4):</b> assumed optimal weights → Reverse MVO → implied returns → <b>Black-Litterman adjustment (views)</b> → reverse-implied returns → MVO → revised allocations.</div>
             </div>
@@ -18911,18 +18931,18 @@ Var_m  = variance of allocation m</div>
               <div class="pa-title">Adding constraints · Resampled MVO · Nonnormal</div>
               <div class="pa-body"><b>Adding constraints</b> (beyond budget &amp; nonnegativity) addresses GIGO &amp; concentration by making the allocation more acceptable — include/exclude certain classes. Typical examples:</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Fixed allocation</span>To one or more assets, often <b>nontradable</b> (human capital, REITs).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Range for a class</span>e.g. 10%–15% for global REITs.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Upper limit</span>To address liquidity (e.g. no more than 10% to private equity).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Relative allocation</span>Between classes (e.g. Asia bonds &lt; Asia equities).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Hedge constraint</span>(Liability-relative setting) require an allocation to assets that hedge the liability.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Fixed allocation</span><span class="rc-dbody">To one or more assets, often <b>nontradable</b> (human capital, REITs).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Range for a class</span><span class="rc-dbody">e.g. 10%–15% for global REITs.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Upper limit</span><span class="rc-dbody">To address liquidity (e.g. no more than 10% to private equity).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Relative allocation</span><span class="rc-dbody">Between classes (e.g. Asia bonds &lt; Asia equities).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Hedge constraint</span><span class="rc-dbody">(Liability-relative setting) require an allocation to assets that hedge the liability.</span></span>
               </div>
               <div class="pa-trap"><b>Constraint caution:</b> if too many constraints exist, you're <b>no longer really optimizing</b> — you're forcing the outcome you desire.</div>
               <div class="pa-body"><b>Resampled MVO</b> (also addresses GIGO/concentration):</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Step 1</span>Basic MVO with best estimates of return/σ/correlations → efficient frontier + allocations for each point.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Step 2</span>Monte Carlo generates <b>thousands</b> of input variations around the initial estimates → a frontier + allocations for each.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Step 3</span>The <b>resampled efficient frontier is the average</b> of all simulated frontiers; each point's allocation is the average of possible portfolios for that point.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Step 1</span><span class="rc-dbody">Basic MVO with best estimates of return/σ/correlations → efficient frontier + allocations for each point.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Step 2</span><span class="rc-dbody">Monte Carlo generates <b>thousands</b> of input variations around the initial estimates → a frontier + allocations for each.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Step 3</span><span class="rc-dbody">The <b>resampled efficient frontier is the average</b> of all simulated frontiers; each point's allocation is the average of possible portfolios for that point.</span></span>
               </div>
               <div class="pa-info"><b>Why it helps:</b> an average is more stable than any single set of guesses, and every class appearing in any single allocation is included in the average → the average allocation is <b>more diversified</b> (includes more classes). <b>Nonnormal distributions</b> (skewness/kurtosis) can be addressed by incorporating skewness/kurtosis into the utility function and using an <b>asymmetric risk measure like conditional VaR (CVaR)</b> instead of variance (details beyond exam scope).</div>
             </div>
@@ -18971,8 +18991,8 @@ Risk of optimal portfolio = σ_BB × w = 27% × 0.40 = 10.8%</div>
               <div class="pa-title"><span class="rc-los">LOS 4.c</span>Asset allocation &amp; the individual's economic balance sheet</div>
               <div class="pa-body">A significant part of the typical investor's portfolio is <b>human capital</b> and the <b>residential real estate</b> they own &amp; live in. Adapt MVO to include them.</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Human capital modeling</span>Stable jobs with wages rising with inflation → model as an <b>inflation-linked bond</b>. Less-certain/volatile wages → model as a <b>mix</b> of inflation-linked bonds, equities, and corporate bonds. Including it raises the investor's <b>capacity to take risk</b>. Because human capital is <b>not tradable</b>, one constraint sets its allocation at whatever it is currently valued at, as a % of total portfolio.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Residential real estate</span>Treated similarly — return/risk inputs from a residential RE index for the investor's region; allocation constrained to its current value as a % of total portfolio.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Human capital modeling</span><span class="rc-dbody">Stable jobs with wages rising with inflation → model as an <b>inflation-linked bond</b>. Less-certain/volatile wages → model as a <b>mix</b> of inflation-linked bonds, equities, and corporate bonds. Including it raises the investor's <b>capacity to take risk</b>. Because human capital is <b>not tradable</b>, one constraint sets its allocation at whatever it is currently valued at, as a % of total portfolio.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Residential real estate</span><span class="rc-dbody">Treated similarly — return/risk inputs from a residential RE index for the investor's region; allocation constrained to its current value as a % of total portfolio.</span></span>
               </div>
               <div class="pa-info">Human capital &amp; residential RE are typically <b>large but often-overlooked</b> components of total wealth. Including them (alongside traditional vehicles) increases the investor's <b>capacity to bear risk</b>.</div>
             </div>
@@ -18980,8 +19000,8 @@ Risk of optimal portfolio = σ_BB × w = 27% × 0.40 = 10.8%</div>
             <div class="pa-card">
               <div class="pa-title"><span class="rc-los">LOS 4.e</span>Monte Carlo simulation &amp; scenario analysis</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Addresses single-period limit</span>MVO is single-period (taxes easy, rebalancing irrelevant). In a <b>multiperiod</b> framework, rebalancing triggers taxable gains/losses and investors add/spend money (interim cash flows) — MCS handles this at each future point.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Guides risk-tolerance</span>Illustrates the range &amp; likelihood of outcomes under various assumptions — retirement clients can <b>see how often &amp; when they may run out of money</b>.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Addresses single-period limit</span><span class="rc-dbody">MVO is single-period (taxes easy, rebalancing irrelevant). In a <b>multiperiod</b> framework, rebalancing triggers taxable gains/losses and investors add/spend money (interim cash flows) — MCS handles this at each future point.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Guides risk-tolerance</span><span class="rc-dbody">Illustrates the range &amp; likelihood of outcomes under various assumptions — retirement clients can <b>see how often &amp; when they may run out of money</b>.</span></span>
               </div>
               <div class="pa-tip"><b>Prof's note — MCS has two distinct uses:</b> (1) in <b>resampling</b>, to generate a range of input variations around the best-guess inputs for MVO; (2) here, to <b>simulate multiple future return paths</b> for a portfolio over time (around a best-guess return &amp; risk). Random = random <b>within user-defined boundaries</b>.</div>
             </div>
@@ -18990,15 +19010,15 @@ Risk of optimal portfolio = σ_BB × w = 27% × 0.40 = 10.8%</div>
               <div class="pa-title"><span class="rc-los">LOS 4.f</span>Asset-class liquidity considerations</div>
               <div class="pa-body">Less-liquid classes (direct real estate, infrastructure, private equity) require a <b>liquidity return premium</b>, but are hard to include in MVO because:</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Few indexes</span>Few accurately track these illiquid investments → hard to estimate return/risk/correlations.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Not investable</span>Even where indexes give return data, they're generally <b>not investable</b> as a passive alternative to active management.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Specific ≠ class</span>A specific RE/PE/infrastructure investment differs from its asset class. The class (if investable) would reflect only <b>systematic</b> risk, but any single fund isn't fully diversified → reflects both systematic AND nonsystematic risk.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Few indexes</span><span class="rc-dbody">Few accurately track these illiquid investments → hard to estimate return/risk/correlations.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Not investable</span><span class="rc-dbody">Even where indexes give return data, they're generally <b>not investable</b> as a passive alternative to active management.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Specific ≠ class</span><span class="rc-dbody">A specific RE/PE/infrastructure investment differs from its asset class. The class (if investable) would reflect only <b>systematic</b> risk, but any single fund isn't fully diversified → reflects both systematic AND nonsystematic risk.</span></span>
               </div>
               <div class="pa-body"><b>Three ways to address these issues:</b></div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Approach 1</span><b>Exclude</b> illiquid classes from the MVO, but use them to <b>set separate target allocations</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Approach 2</span><b>Include</b> them, modeling inputs of the <b>specific investment</b> you plan to use (risk estimate based on both systematic &amp; nonsystematic).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Approach 3</span><b>Include</b> them using <b>highly diversified asset-class inputs</b>, recognizing actual investments may differ. Alt-investment indexes are usually not pure — they include characteristics of other classes → violates the <b>mutually-exclusive</b> requirement and <b>biases reported correlations upward</b>.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Approach 1</span><span class="rc-dbody"><b>Exclude</b> illiquid classes from the MVO, but use them to <b>set separate target allocations</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Approach 2</span><span class="rc-dbody"><b>Include</b> them, modeling inputs of the <b>specific investment</b> you plan to use (risk estimate based on both systematic &amp; nonsystematic).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Approach 3</span><span class="rc-dbody"><b>Include</b> them using <b>highly diversified asset-class inputs</b>, recognizing actual investments may differ. Alt-investment indexes are usually not pure — they include characteristics of other classes → violates the <b>mutually-exclusive</b> requirement and <b>biases reported correlations upward</b>.</span></span>
               </div>
             </div>
 
@@ -19027,9 +19047,9 @@ Risk of optimal portfolio = σ_BB × w = 27% × 0.40 = 10.8%</div>
 ACTR_i = weight_i × MCTR_i
 % of risk contributed by position i = ACTR_i / total portfolio risk</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">MCTR (marginal)</span>Marginal contribution to total risk = the change in total portfolio risk for a small change in the allocation to that class (the partial derivative of risk).</span>
-                <span class="rc-drow"><span class="rc-dlabel">ACTR (absolute)</span>The class's absolute contribution to portfolio volatility.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Optimality condition</span>Optimal allocations occur when the <b>ratio of excess return to MCTR is equal for all classes</b> and equal to the <b>portfolio Sharpe ratio</b>.</span>
+                <span class="rc-drow"><span class="rc-dlabel">MCTR (marginal)</span><span class="rc-dbody">Marginal contribution to total risk = the change in total portfolio risk for a small change in the allocation to that class (the partial derivative of risk).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">ACTR (absolute)</span><span class="rc-dbody">The class's absolute contribution to portfolio volatility.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Optimality condition</span><span class="rc-dbody">Optimal allocations occur when the <b>ratio of excess return to MCTR is equal for all classes</b> and equal to the <b>portfolio Sharpe ratio</b>.</span></span>
               </div>
             </div>
 
@@ -19057,15 +19077,15 @@ Portfolio Sharpe = 5% / 12% = 0.417</div>
               <div class="pa-title"><span class="rc-los">LOS 4.h / 4.i</span>Client preferences &amp; investment factors</div>
               <div class="pa-body"><b>LOS 4.h — incorporating client risk preferences</b> (three ways):</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Additional constraints</span>Limits on risky classes or a ceiling on portfolio risk (Plowshare example).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Risk-aversion factor λ</span>e.g. average investor Bronsten with λ = 4.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Monte Carlo simulation</span>Illustrate the wealth outcomes possible under allocations with different risk levels.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Additional constraints</span><span class="rc-dbody">Limits on risky classes or a ceiling on portfolio risk (Plowshare example).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Risk-aversion factor λ</span><span class="rc-dbody">e.g. average investor Bronsten with λ = 4.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Monte Carlo simulation</span><span class="rc-dbody">Illustrate the wealth outcomes possible under allocations with different risk levels.</span></span>
               </div>
               <div class="pa-body"><b>LOS 4.i — factor-based allocation:</b> instead of asset classes, define the opportunity set as <b>factors</b> (market exposure, size, valuation, momentum, liquidity, duration, credit, volatility). Consistent with fundamental factor models like <b>Fama-French</b> (market, size, value-growth).</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Factors are zero-dollar</span>Long the better-performing attribute, short the underperforming attribute. Fama-French three factors: long small / short large (<b>size</b>); long value / short growth (<b>value-growth</b>); and the <b>market portfolio</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Why it helps</span>Factors are <b>not highly correlated</b> with each other or the market → improves the risk-return tradeoff and expands the efficient frontier. Once factor returns/variances/covariances are identified, MVO is used the same way.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Class vs factor</span>Research: when the two opportunity sets broadly reflect the <b>same underlying exposures</b>, the resulting efficient frontiers are <b>not significantly different</b> (neither is clearly superior). Choice depends on how you form CME: <b>think in asset classes → allocate risk by class; think in risk factors → allocate risk by factor.</b></span>
+                <span class="rc-drow"><span class="rc-dlabel">Factors are zero-dollar</span><span class="rc-dbody">Long the better-performing attribute, short the underperforming attribute. Fama-French three factors: long small / short large (<b>size</b>); long value / short growth (<b>value-growth</b>); and the <b>market portfolio</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Why it helps</span><span class="rc-dbody">Factors are <b>not highly correlated</b> with each other or the market → improves the risk-return tradeoff and expands the efficient frontier. Once factor returns/variances/covariances are identified, MVO is used the same way.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Class vs factor</span><span class="rc-dbody">Research: when the two opportunity sets broadly reflect the <b>same underlying exposures</b>, the resulting efficient frontiers are <b>not significantly different</b> (neither is clearly superior). Choice depends on how you form CME: <b>think in asset classes → allocate risk by class; think in risk factors → allocate risk by factor.</b></span></span>
               </div>
             </div>
 
@@ -19097,22 +19117,22 @@ Overfunded    → funding ratio &gt; 1</div>
             <div class="pa-card">
               <div class="pa-title"><span class="rc-los">LOS 4.j</span>Characteristics of liabilities relevant to allocation</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Fixed vs contingent</span><b>Fixed</b>: cash flows &amp; timing specified in advance (like a fixed-rate corporate bond). <b>Contingent</b>: cash flows depend on uncertain future events (DB pension liability).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Legal vs quasi-legal</span><b>Legal</b>: obligations defined in a legal agreement. <b>Quasi-legal</b>: not legal obligations but expected cash outflows essential to the mission (university endowment payouts).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Duration &amp; convexity</span>Measure the change in a liability's value for a change in interest rates (concept applies to any liability, not just fixed income).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Liability vs sponsor size</span>A large liability relative to the sponsor must be accounted for; a small one can usually be ignored (minimal effect on the optimal allocation).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Factors affecting cash flows</span>Inflation, interest rates, risk premiums, other economic conditions (DB obligations influenced by the discount-rate choice).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Timing considerations</span>Include <b>longevity risk</b>.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Regulations</span>Affecting how the liability's value is determined (typically in insurance).</span>
+                <span class="rc-drow"><span class="rc-dlabel">Fixed vs contingent</span><span class="rc-dbody"><b>Fixed</b>: cash flows &amp; timing specified in advance (like a fixed-rate corporate bond). <b>Contingent</b>: cash flows depend on uncertain future events (DB pension liability).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Legal vs quasi-legal</span><span class="rc-dbody"><b>Legal</b>: obligations defined in a legal agreement. <b>Quasi-legal</b>: not legal obligations but expected cash outflows essential to the mission (university endowment payouts).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Duration &amp; convexity</span><span class="rc-dbody">Measure the change in a liability's value for a change in interest rates (concept applies to any liability, not just fixed income).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Liability vs sponsor size</span><span class="rc-dbody">A large liability relative to the sponsor must be accounted for; a small one can usually be ignored (minimal effect on the optimal allocation).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Factors affecting cash flows</span><span class="rc-dbody">Inflation, interest rates, risk premiums, other economic conditions (DB obligations influenced by the discount-rate choice).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Timing considerations</span><span class="rc-dbody">Include <b>longevity risk</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Regulations</span><span class="rc-dbody">Affecting how the liability's value is determined (typically in insurance).</span></span>
               </div>
             </div>
 
             <div class="pa-card">
               <div class="pa-title"><span class="rc-los">LOS 4.k / 4.l</span>Three approaches to liability-relative allocation</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">1 · Surplus optimization</span>An MVO extension: build an efficient frontier based on the <b>surplus</b>, with <b>surplus volatility</b> as the risk measure (money or % terms). Include the liabilities' expected returns &amp; variances; correlations reflect how well assets hedge liabilities.</span>
-                <span class="rc-drow"><span class="rc-dlabel">2 · Two-portfolio (hedging + return-seeking)</span>Split assets into a <b>hedging portfolio</b> (hedges the liabilities) and a <b>return-seeking portfolio</b> (managed independently via MVO).</span>
-                <span class="rc-drow"><span class="rc-dlabel">3 · Integrated asset-liability</span>Integrates assets AND liabilities in a <b>joint optimization</b>.</span>
+                <span class="rc-drow"><span class="rc-dlabel">1 · Surplus optimization</span><span class="rc-dbody">An MVO extension: build an efficient frontier based on the <b>surplus</b>, with <b>surplus volatility</b> as the risk measure (money or % terms). Include the liabilities' expected returns &amp; variances; correlations reflect how well assets hedge liabilities.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">2 · Two-portfolio (hedging + return-seeking)</span><span class="rc-dbody">Split assets into a <b>hedging portfolio</b> (hedges the liabilities) and a <b>return-seeking portfolio</b> (managed independently via MVO).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3 · Integrated asset-liability</span><span class="rc-dbody">Integrates assets AND liabilities in a <b>joint optimization</b>.</span></span>
               </div>
               <div class="pa-fl">Surplus optimization:
   R_s,m = surplus return = (Δ asset value − Δ liability value) / initial asset value
@@ -19122,11 +19142,11 @@ Overfunded    → funding ratio &gt; 1</div>
             <div class="pa-card">
               <div class="pa-title">Two-portfolio &amp; integrated approaches in depth</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Hedging portfolio build</span>Via fixed-income techniques: <b>cash flow matching, duration matching, immunization</b>. Estimate liability inputs by (1) assuming liabilities behave like corporate bonds (use corporate-bond expected return &amp; volatility), or (2) a factor approach identifying common factors driving both assets &amp; liabilities.</span>
-                <span class="rc-drow"><span class="rc-dlabel">When used</span>Most often for <b>insurance companies and overfunded pension plans</b> that want to minimize underfunding risk.</span>
-                <span class="rc-drow"><span class="rc-dlabel">More aggressive variants</span>(1) Only <b>partially</b> hedge liabilities → allocate more to the return-seeking portfolio; (2) increase the hedge as the funding ratio &amp; surplus rise. Both trade higher expected return for higher risk.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Two limitations</span>(1) If funding ratio &lt; 1, it's difficult to fully hedge the liabilities. (2) A hedging portfolio may not be available for certain risks (e.g. earthquakes).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Integrated distinctive feature</span>Two-portfolio &amp; surplus optimization assume the liability composition is <b>already in place</b> when the asset allocation is decided (two independent decisions). <b>Banks, hedge funds (short positions), insurers</b> decide liability composition <b>jointly</b> with asset allocation → a <b>continuous feedback loop</b> → a multiperiod integrated model. Example: a highly leveraged bank stress-tests both sides of the balance sheet.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Hedging portfolio build</span><span class="rc-dbody">Via fixed-income techniques: <b>cash flow matching, duration matching, immunization</b>. Estimate liability inputs by (1) assuming liabilities behave like corporate bonds (use corporate-bond expected return &amp; volatility), or (2) a factor approach identifying common factors driving both assets &amp; liabilities.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">When used</span><span class="rc-dbody">Most often for <b>insurance companies and overfunded pension plans</b> that want to minimize underfunding risk.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">More aggressive variants</span><span class="rc-dbody">(1) Only <b>partially</b> hedge liabilities → allocate more to the return-seeking portfolio; (2) increase the hedge as the funding ratio &amp; surplus rise. Both trade higher expected return for higher risk.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Two limitations</span><span class="rc-dbody">(1) If funding ratio &lt; 1, it's difficult to fully hedge the liabilities. (2) A hedging portfolio may not be available for certain risks (e.g. earthquakes).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Integrated distinctive feature</span><span class="rc-dbody">Two-portfolio &amp; surplus optimization assume the liability composition is <b>already in place</b> when the asset allocation is decided (two independent decisions). <b>Banks, hedge funds (short positions), insurers</b> decide liability composition <b>jointly</b> with asset allocation → a <b>continuous feedback loop</b> → a multiperiod integrated model. Example: a highly leveraged bank stress-tests both sides of the balance sheet.</span></span>
               </div>
             </div>
 
@@ -19147,10 +19167,10 @@ Overfunded    → funding ratio &gt; 1</div>
               <div class="pa-title"><span class="rc-los">LOS 4.m</span>Goals-based asset allocation</div>
               <div class="pa-body">Useful for <b>individuals</b> with multiple (sometimes conflicting) objectives across different horizons &amp; urgency levels, measured as <b>required probabilities of success</b>. Example: college tuition in 10 yrs at 90% probability (more urgent) vs $1,000,000 in 30 yrs to fund a foundation at 60% probability.</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Sub-portfolios</span>The portfolio is composed of sub-portfolios; each goal addressed individually with its own sub-portfolio. Taxable &amp; tax-exempt investments are both in the opportunity set.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Minimum expectations</span>Instead of an average expected return, identify a <b>"minimum expectation"</b> for each goal — the minimum expected return needed to provide the required probability of success over the horizon.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Modules</span>Advisers often select from pre-established sub-portfolios (<b>modules</b>) distinguished by risk-return tradeoffs, liquidity, and class inclusion/exclusion.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Selection &amp; sizing</span>For each goal, pick the module with the <b>highest expected return at the specified probability over the horizon</b>. Investment size = <b>PV of the future goal discounted at that module's expected return</b>. Total portfolio = sum of the individual investments.</span>
+                <span class="rc-drow"><span class="rc-dlabel">Sub-portfolios</span><span class="rc-dbody">The portfolio is composed of sub-portfolios; each goal addressed individually with its own sub-portfolio. Taxable &amp; tax-exempt investments are both in the opportunity set.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Minimum expectations</span><span class="rc-dbody">Instead of an average expected return, identify a <b>"minimum expectation"</b> for each goal — the minimum expected return needed to provide the required probability of success over the horizon.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Modules</span><span class="rc-dbody">Advisers often select from pre-established sub-portfolios (<b>modules</b>) distinguished by risk-return tradeoffs, liquidity, and class inclusion/exclusion.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Selection &amp; sizing</span><span class="rc-dbody">For each goal, pick the module with the <b>highest expected return at the specified probability over the horizon</b>. Investment size = <b>PV of the future goal discounted at that module's expected return</b>. Total portfolio = sum of the individual investments.</span></span>
               </div>
             </div>
 
@@ -19177,11 +19197,11 @@ Goal 2 (30yr, 75%): highest return = Module C at 5.2%
             <div class="pa-card">
               <div class="pa-title"><span class="rc-los">LOS 4.n</span>Heuristic &amp; other approaches (ad hoc, not theory-based)</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">120 − age</span>Equity % = 120 − age; remainder to fixed income. (40-yr-old → 80/20; 50 → 70/30.) Consistent with declining human capital → shift equity to FI as you age; comes close to mimicking target-date funds.</span>
-                <span class="rc-drow"><span class="rc-dlabel">60/40 split</span>Maintain 60% stocks / 40% bonds. Not far-fetched — the global financial asset portfolio has historically been ~60/40.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Endowment / Yale model</span>Allocate <b>more to alternatives</b> (PE, real estate, natural resources) than strict MVO recommends. Rationale: these markets are less informationally efficient (skilled managers outperform), and long-horizon institutions can bear liquidity risk for a liquidity premium. Popular with university endowments.</span>
-                <span class="rc-drow"><span class="rc-dlabel">Risk parity</span>Each asset class contributes the <b>same amount to total portfolio risk</b> → addresses the MVO criticism that class diversification ≠ risk-source diversification. Criticism: it <b>ignores expected returns</b> and focuses only on risk.</span>
-                <span class="rc-drow"><span class="rc-dlabel">1/N rule</span>Equal weight — each of N classes gets 1/N (8 classes → 12.5% each), commonly rebalanced quarterly. Despite its simplicity, empirical evidence shows it performs <b>better than expected</b>.</span>
+                <span class="rc-drow"><span class="rc-dlabel">120 − age</span><span class="rc-dbody">Equity % = 120 − age; remainder to fixed income. (40-yr-old → 80/20; 50 → 70/30.) Consistent with declining human capital → shift equity to FI as you age; comes close to mimicking target-date funds.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">60/40 split</span><span class="rc-dbody">Maintain 60% stocks / 40% bonds. Not far-fetched — the global financial asset portfolio has historically been ~60/40.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Endowment / Yale model</span><span class="rc-dbody">Allocate <b>more to alternatives</b> (PE, real estate, natural resources) than strict MVO recommends. Rationale: these markets are less informationally efficient (skilled managers outperform), and long-horizon institutions can bear liquidity risk for a liquidity premium. Popular with university endowments.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Risk parity</span><span class="rc-dbody">Each asset class contributes the <b>same amount to total portfolio risk</b> → addresses the MVO criticism that class diversification ≠ risk-source diversification. Criticism: it <b>ignores expected returns</b> and focuses only on risk.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">1/N rule</span><span class="rc-dbody">Equal weight — each of N classes gets 1/N (8 classes → 12.5% each), commonly rebalanced quarterly. Despite its simplicity, empirical evidence shows it performs <b>better than expected</b>.</span></span>
               </div>
             </div>
 
@@ -19192,10 +19212,10 @@ Goal 2 (30yr, 75%): highest return = Module C at 5.2%
               <div class="pa-body">Rebalancing (CFA definition) = adjusting allocations to move back toward the originally defined <b>strategic</b> allocation goal. <b>Percentage-range rebalancing</b> sets trigger points around the optimal allocation and rebalances back to target (or partially) when triggers are hit.</div>
               <div class="pa-body">Key factors affecting the optimal <b>corridor width</b> (rebalancing range):</div>
               <div class="rc-drivers">
-                <span class="rc-drow"><span class="rc-dlabel">Transaction costs</span>Higher costs → <b>wider</b> corridor (benefits of rebalancing must "pay" for higher costs).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Risk tolerance</span>Higher risk tolerance → <b>wider</b> corridor (less concerned about deviations from optimal).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Correlation with rest of portfolio</span>Higher correlation → <b>wider</b> corridor (the portfolio moves with the class → allocation strays more slowly from target).</span>
-                <span class="rc-drow"><span class="rc-dlabel">Volatility of the class</span>Higher volatility → <b>narrower</b> corridor (higher volatility ↑ the likelihood the actual allocation diverges from target).</span>
+                <span class="rc-drow"><span class="rc-dlabel">Transaction costs</span><span class="rc-dbody">Higher costs → <b>wider</b> corridor (benefits of rebalancing must "pay" for higher costs).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Risk tolerance</span><span class="rc-dbody">Higher risk tolerance → <b>wider</b> corridor (less concerned about deviations from optimal).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Correlation with rest of portfolio</span><span class="rc-dbody">Higher correlation → <b>wider</b> corridor (the portfolio moves with the class → allocation strays more slowly from target).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Volatility of the class</span><span class="rc-dbody">Higher volatility → <b>narrower</b> corridor (higher volatility ↑ the likelihood the actual allocation diverges from target).</span></span>
               </div>
               <div class="pa-tip"><b>Ultimately</b> the choice of corridor width is a <b>tradeoff between risk control, transaction costs, and correlations</b>. In complex situations a quantified cost-benefit analysis is required.</div>
             </div>
