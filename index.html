@@ -19464,6 +19464,7 @@ Goal 2 (30yr, 75%): highest return = Module C at 5.2%
             <button class="rw-toptab" onclick="rwTop('calc', this)">Calculators</button>
             <button class="rw-toptab" onclick="rwTop('err', this)">Errors</button>
             <button class="rw-toptab" onclick="rwTop('mas', this)">Mastery</button>
+            <button class="rw-toptab" onclick="rwTop('recap', this)">Recap</button>
           </div>
 
           <!-- ===================== TOP PANEL 1: CONSTRAINTS 5.a ===================== -->
@@ -20085,6 +20086,296 @@ Range = 40% ± 7.14% = <span class="rw-green">32.86% – 47.14%</span></div>
           <!-- ===================== TOP PANEL 6: MASTERY ===================== -->
           <div id="rwr-mas" class="rw-toppanel">
             <div class="rw-empty">Mastery items to be populated.</div>
+          </div>
+
+          <div id="rwr-recap" class="rw-toppanel">
+            <style>
+              #rwr-recap .rw-card { opacity:1; transform:none; }
+              #rwr-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+              #rwr-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(212,160,23,.14); border:1px solid var(--rw-gold); color:var(--rw-gold); border-radius:3px; padding:1px 6px; margin-right:6px; }
+              #rwr-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
+              #rwr-recap .rc-drow { display:grid; grid-template-columns:150px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+              #rwr-recap .rc-dlabel { color:var(--rw-gold); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #rwr-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #rwr-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #rwr-recap .rc-dlabel { padding-top:0; }
+              }
+              #rwr-recap .rc-drow:last-child { border-bottom:none; }
+              #rwr-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
+              #rwr-recap .rw-table td.q { color:var(--rw-gold); font-weight:600; vertical-align:top; }
+            </style>
+
+            <button class="recap-print-btn" onclick="printOneRecap('rwr-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+            <div class="rw-card">
+              <div class="rw-title">Reading 5 &middot; Asset Allocation with Real-World Constraints</div>
+              <div class="rw-body">Full-reading recap, module by module. Asset allocation is <b>not an exercise in abstract math</b> &mdash; this reading is about the practical constraints that shape a real client's allocation: <b>asset size, liquidity, time horizon, regulatory/other constraints (5.a)</b>; <b>taxes in allocation &amp; rebalancing (5.b)</b>; <b>revising the SAA when goals/constraints/beliefs change (5.c)</b>; <b>tactical (short-term) shifts (5.d)</b>; and <b>behavioral biases (5.e)</b>. Be ready to recognize the impact of an issue on a <span class="rw-gold">particular client's</span> allocation.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 5.1 — 5.a CONSTRAINTS ═══════════ -->
+            <div class="rw-card">
+              <div class="rc-sec">Module 5.1 &middot; Real-World Issues</div>
+              <div class="rw-title"><span class="rc-los">LOS 5.a</span>Constraint 1 &mdash; Asset Size</div>
+              <div class="rw-body">Fund size creates opposite problems at each extreme. The tension is between <b>too small to diversify</b> and <b>too large to deploy</b>.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Small funds</span><span class="rc-dbody">Lack the <b>expertise &amp; governance</b> to run complex strategies &rarr; struggle to reach adequate diversification. Local legislation may restrict some assets to investors above a capital/experience threshold. Fix: <b>commingled accounts</b> (pool a small group) or families pooling to hit minimum-investment levels.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Large funds</span><span class="rc-dbody">Access more expertise &amp; complex strategies; meet high minimum-investment requirements &rarr; higher diversification. <b>Economies of scale:</b> lower per-participant governance cost + negotiating power on fees &rarr; competitive edge in <b>PE, hedge funds, infrastructure</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Too-large funds</span><span class="rc-dbody">Can't use classes that <b>lack capacity</b> (e.g. small-cap). Diseconomies: (1) larger trades &rarr; more <b>price impact</b>; (2) capital inflow tempts managers to <b>abandon core strategy</b>; (3) more staff &rarr; slower decisions. Splitting among managers adds monitoring burden/cost &rarr; large funds often go <b>passive</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Very-large funds</span><span class="rc-dbody">May find too few alternatives available (e.g. too few hedge funds) &rarr; choose a <b>fund-of-funds (FoF)</b>. Cost: <b>double fee layer</b> (FoF + underlying) and one manager's strategy may <b>offset</b> another's.</span></span>
+              </div>
+              <div class="rw-trap"><b>Trap:</b> "bigger is always better" is wrong. Both very small <i>and</i> very large funds face diversification/deployment problems &mdash; small-cap and niche alternatives are where the <b>too-large</b> fund is constrained, not the small one.</div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Constraint 2 &mdash; Liquidity Needs</div>
+              <div class="rw-body">Key: integrate the <b>owner's needs</b> with the <b>asset class characteristics</b>. High-need owners hold high-quality short-term liquid assets; low-need, long-horizon owners can harvest the <b>illiquidity premium</b> (real estate, infrastructure).</div>
+              <table class="rw-table">
+                <thead><tr><th>Portfolio owner</th><th>Typical liquidity need</th></tr></thead>
+                <tbody>
+                  <tr><td>Banks</td><td><span class="rw-red">High</span> &mdash; fund day-to-day operations &amp; stand ready to repay deposits</td></tr>
+                  <tr><td>SWFs, endowments, pension plans, foundations</td><td><span class="rw-green">Lower</span> &mdash; longer time horizons</td></tr>
+                  <tr><td>Property &amp; casualty insurance</td><td>Relatively <span class="rw-red">high</span> &mdash; claims are <b>unpredictable</b></td></tr>
+                  <tr><td>Life &amp; auto insurance</td><td>Relatively <span class="rw-green">low</span> &mdash; claims are <b>predictable</b></td></tr>
+                  <tr><td>Individuals</td><td>Varies by individual circumstance</td></tr>
+                </tbody>
+              </table>
+              <div class="rw-info"><b>Case-specific exceptions</b> break the pattern: a bank with a highly liquid loan portfolio (liquidity from the loan book, not the investments); or a foundation funding <b>unpredictable breakthrough research</b> (needs high liquidity despite the "low" endowment label).</div>
+              <div class="rw-trap"><b>Twist &mdash; extreme conditions:</b> plan liquidity for stress. In a crisis, <b>unsophisticated investors may panic-sell</b> &rarr; permanent losses &amp; lower total returns from the capital base when markets revert to precrisis levels. Good <b>portfolio governance</b> guards against this.</div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Constraint 3 &mdash; Time Horizon</div>
+              <div class="rw-body">A portfolio's horizon is defined by a <b>liability to be paid</b> or a <b>goal to be funded</b> at a future date. Allocation must consider the horizon of each liability/goal <b>and adapt</b> as the asset/liability mix changes over time.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Human capital ↓</span><span class="rc-dbody">The value of human capital <b>declines over time</b> &rarr; allocation shifts toward <b>lower-risk classes (fixed income)</b> as the investor ages.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Changing liabilities</span><span class="rc-dbody">A pension for a <b>young workforce</b> &rarr; heavily long-term bonds; a <b>mature scheme</b> &rarr; moves to intermediate/short-term bonds.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Time diversification</span><span class="rc-dbody">Longer horizons &rarr; often more <b>higher-risk</b> assets. Evidence: risky returns <b>mean-revert</b> over time, evening out below-/above-average returns. That is <b>time diversification</b>.</span></span>
+              </div>
+              <div class="rw-info"><b>EXAMPLE &mdash; Barry Garland (older retired, age 70).</b> Two goals: G1 = constant standard of living to 85; G2 = constant standard 85&ndash;100. <b>Life expectancy at 70 = 17.5 yrs</b> (&rarr; ~age 87.5). G1 is <b>fully funded &amp; higher priority</b> (survival probability falls as he ages) &rarr; its subportfolio is <b>conservative</b>. G2 is <b>lower priority &amp; only partially funded</b> &rarr; invested <b>more aggressively</b> for growth.</div>
+              <div class="rw-tip"><b>Priority rule:</b> higher-priority / fully-funded goals &rarr; conservative subportfolio; lower-priority / underfunded goals &rarr; aggressive subportfolio. This is the goals-based logic reused throughout the reading.</div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Time Horizon in action &mdash; the Bigstone family (Fig 5.1 &rarr; 5.2)</div>
+              <div class="rw-body">Jane &amp; Arthur Bigstone (both 52, lawyers) have four goals &rarr; split into <b>six subportfolios</b>. The lifestyle/consumption goal splits into worst-case (Minimum), baseline (Maintain), aspirational cases.</div>
+              <table class="rw-table">
+                <thead><tr><th>Goal</th><th>Risk</th><th>Allocation</th><th>% Total (Fig 5.1)</th><th>15 yrs later (Fig 5.2)</th></tr></thead>
+                <tbody>
+                  <tr><td>Minimum</td><td>Conservative</td><td>100% bonds &amp; cash</td><td>65%</td><td>60%</td></tr>
+                  <tr><td>Maintain</td><td>Moderate</td><td>60% equity &amp; 40% bonds</td><td>12%</td><td>10%</td></tr>
+                  <tr><td>Aspirational</td><td>Aggressive</td><td>100% equity</td><td>8%</td><td>6%</td></tr>
+                  <tr><td>College fund</td><td>Conservative</td><td>100% bonds &amp; cash</td><td>6%</td><td>&mdash; (funded)</td></tr>
+                  <tr><td>Campaign donation</td><td>Aggressive</td><td>100% equity</td><td>6%</td><td>&mdash; (funded)</td></tr>
+                  <tr><td>Scholarship</td><td>Aggressive</td><td>100% equity</td><td>3%</td><td>24%</td></tr>
+                  <tr><td><b>Aggregate</b></td><td>&mdash;</td><td><b>Fig 5.1: 25% equity &amp; 75% bonds<br>Fig 5.2: 35% equity &amp; 65% bonds</b></td><td>100%</td><td>100%</td></tr>
+                </tbody>
+              </table>
+              <div class="rw-info"><b>15 years later:</b> fewer consumption years &rarr; less needed for future consumption; college &amp; campaign are funded and drop out; only the scholarship remains aspirational (now 24%). Aggregate equity rises <b>25% &rarr; 35%</b>. New goals (e.g. a Congress run for Mark) could later replace the scholarship.</div>
+              <div class="rw-trap"><b>Prof's note trap:</b> the specific percentages are <b>arbitrary &mdash; there is no formula.</b> Don't try to compute them. The exam skill is the <i>logic</i>: why one subportfolio gets more equity/bond/cash than another (priority + funded-status + horizon).</div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Constraint 4 &mdash; Regulatory &amp; Other External Constraints</div>
+              <div class="rw-body">Each portfolio faces its own regulatory/external set. Know the entity-by-entity pattern:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Insurance cos.</span><span class="rc-dbody">Largest allocation = <b>fixed income</b> (match assets to projected cash flows of insured risks). Local accounting often lets FI be held at <b>book value</b> &rarr; insurer focuses on <b>cash-flow pattern, not market-value volatility</b>. Risk considerations: risk-based capital measures, liquidity, yield levels, credit ratings, ability to liquidate to meet claims. Local law may cap <b>equity to as little as 10%</b>, with caps on PE &amp; high-yield.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Pension funds</span><span class="rc-dbody">Law caps classes &amp; adds tax/accounting/reporting/funding constraints; tax incentives to invest <b>domestically</b>; accounting may allow <b>deferred loss recognition</b>. Decision weighs <b>anticipated funding cost</b> &amp; reported pension expense. Trade-off: more equity &rarr; more volatility &rarr; risk low returns raise required contributions; but higher expected return <b>lowers PV of expected contributions</b>. Optimize risk (contributions exceed a threshold) vs return (PV of expected contributions) within regulatory limits.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Endowments &amp; foundations</span><span class="rc-dbody"><b>Infinite horizon</b>, very few regulatory constraints. Some countries: <b>minimum annual distribution</b> or <b>socially-responsible investment</b> to keep tax-exempt status. Long horizon allows risky assets &mdash; but if the endowment funds an organization, <b>lender covenants</b> may constrain the portfolio.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Sovereign wealth funds</span><span class="rc-dbody">Government-owned, investing for the state; <b>typically not matching assets &amp; liabilities</b>. Subject to <b>citizen scrutiny</b> &rarr; may reduce risk below what the long horizon would otherwise allow.</span></span>
+              </div>
+              <div class="rw-body"><b>Self-imposed (self-governance) caps</b> each fund may add:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Min in SRI</span><span class="rc-dbody">Minimum investment in socially/ethically acceptable assets.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Max in risky</span><span class="rc-dbody">Maximum in risky assets such as alternatives.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Currency limits</span><span class="rc-dbody">Limits on investment allowed in certain currencies.</span></span>
+              </div>
+              <div class="rw-tip"><b>ESG timing:</b> investing in ethically acceptable assets (E/S/G goals) is <b>usually NOT part of the initial allocation</b> &mdash; rather, an allocation is <b>set aside</b> and invested in acceptable assets.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 5.1 — 5.b TAX ═══════════ -->
+            <div class="rw-card">
+              <div class="rc-sec">Module 5.1 &middot; Tax Considerations</div>
+              <div class="rw-title"><span class="rc-los">LOS 5.b</span>Tax in allocation &amp; rebalancing &mdash; the four characteristics</div>
+              <div class="rw-body">Under taxation, <b>pretax vs after-tax</b> risk/return characteristics can differ substantially &rarr; taxable entities must use <b>after-tax</b> inputs <i>during</i> allocation. Adjusting for tax <b>after</b> allocating leads to <b>suboptimal</b> allocations.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Interest</span><span class="rc-dbody">Usually taxed at the <b>highest</b> rate, often progressively &rarr; <b>tax-exempt bonds</b> (e.g. US munis) can form a large part of a taxable investor's FI allocation.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Dividends</span><span class="rc-dbody">Usually taxed <b>lower than interest</b> &rarr; some investors hold <b>preferred stock</b> in place of bonds.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Capital gains</span><span class="rc-dbody">Usually taxed <b>lower than income</b>; <b>capital losses</b> can offset gains elsewhere in the portfolio.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Account type</span><span class="rc-dbody">Some accounts are tax-deferred / tax-exempt &rarr; place the <b>least tax-efficient (most heavily taxed)</b> assets in the <b>most tax-advantaged</b> accounts.</span></span>
+              </div>
+              <div class="rw-trap"><b>Trap:</b> taxes complicate optimization &mdash; return <b>and</b> risk must be considered on both a pretax and after-tax basis, <b>but correlations are UNAFFECTED by taxes.</b></div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Worked example 1 &mdash; after-tax return (interest)</div>
+              <div class="rw-body">Investor pays <b>40%</b> income tax; bond with a <b>5% coupon</b>, held to maturity. What return goes into the allocation process?</div>
+              <div class="rw-fl">After-tax return = 5% &times; (1 &minus; 0.40) = <b>3%</b></div>
+              <div class="rw-info">This is the <b>Calculators &rarr; "Simple after-tax return (interest)"</b> widget with its default inputs (5%, 40%). <span class="rw-green">Verified: matches textbook 3%.</span></div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Worked example 2 &mdash; multi-step after-tax return (equity)</div>
+              <div class="rw-body">Income tax <b>30%</b> on dividends, <b>20%</b> on capital gains. Stock: pretax return <b>16%</b>, of which <b>10% is dividend income</b> and <b>90% is price appreciation</b> (capital gains realized annually).</div>
+              <div class="rw-fl">Pretax dividend income:  16% &times; 0.1        = 1.6%
+After-tax dividend:      1.6% &times; (1 &minus; 0.3)  = 1.12%
+Pretax capital gain:     16% &times; 0.9        = 14.4%
+After-tax capital gain:  14.4% &times; (1 &minus; 0.2) = 11.52%
+After-tax return:        1.12% + 11.52%     = <b>12.64%</b></div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Why split</span><span class="rc-dbody">Equity return has <b>two components taxed at different rates</b> &mdash; dividends (30%) and gains (20%). You must tax each piece <b>separately</b> then add.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Decisive detail</span><span class="rc-dbody">The 10%/90% <b>split of the return</b> (not of the tax) is what's easy to drop. Apply the split to the 16% first, <b>then</b> the respective tax rate.</span></span>
+              </div>
+              <div class="rw-info"><b>Calculators &rarr; "Multi-step after-tax return (equity)"</b>, defaults 16 / 10 / 30 / 20. <span class="rw-green">Verified: matches textbook 12.64%.</span></div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Worked example 3 &mdash; after-tax standard deviation of return</div>
+              <div class="rw-body">Security with pretax <b>&sigma; = 12%</b>, capital-gains tax <b>20%</b>. Capital-gains tax reduces gains on appreciation <i>and</i> (via the ability to use losses to offset gains) reduces realized losses &rarr; a <b>posttax &sigma;</b> should be the input.</div>
+              <div class="rw-fl">&sigma;<sub>AT</sub> = &sigma;<sub>PT</sub> &times; (1 &minus; t) = 12% &times; (1 &minus; 0.20) = <b>9.6%</b></div>
+              <div class="rw-info"><b>Calculators &rarr; "After-tax standard deviation"</b>, defaults 12 / 20. <span class="rw-green">Verified: matches textbook 9.6%.</span> Note: taxes <b>cushion</b> both upside &amp; downside &rarr; <b>decrease</b> after-tax &sigma;.</div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Embedded gains/losses &amp; effect on the frontier</div>
+              <div class="rw-body">When an asset's <b>cost basis differs from market value</b>: cost basis below market &rarr; <b>unrealized gain</b> (embedded tax <b>liability</b>); cost basis above market &rarr; <b>loss</b> (embedded tax <b>asset</b>). Three ways to adjust market value to reflect the liability/asset:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Method 1</span><span class="rc-dbody"><b>Subtract</b> the embedded capital-gains tax from current market value as if sold <b>today</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Method 2</span><span class="rc-dbody">Assume sale <b>in the future</b> &amp; discount the tax liability to PV using the asset's <b>after-tax return</b> as the discount rate.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Method 3</span><span class="rc-dbody">Assume sale <b>in the future</b> &amp; discount the tax liability to PV using the <b>after-tax risk-free rate</b>.</span></span>
+              </div>
+              <div class="rw-tip"><b>Frontier effect:</b> using after-tax returns &amp; after-tax risk shifts the efficient frontier &mdash; allocations to <b>tax-inefficient assets (e.g. high-yield bonds) usually DECREASE</b>. But such assets can still earn a place if they have <b>low correlations</b> with other portfolio assets.</div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Portfolio rebalancing under tax</div>
+              <div class="rw-body">To maintain the SAA all portfolios rebalance periodically. Taxable owners realize <b>taxable gains at each rebalancing</b> &rarr; must balance "maintain the SAA" against "avoid taxable gains." Because taxes <b>lower return volatility</b> (correlations unaltered), <b>rebalance less frequently</b> in taxable portfolios.</div>
+              <div class="rw-fl">after-tax deviation from target = pretax deviation / (1 &minus; t)</div>
+              <div class="rw-trap"><b>Prof's note &mdash; DO NOT confuse the two "(1&minus;t)" formulas:</b><br>&bull; After-tax <b>&sigma; of return</b>: &sigma;<sub>AT</sub> = &sigma;<sub>PT</sub> &times; (1&minus;t) &rarr; taxes <b>DECREASE</b> it (multiply).<br>&bull; Allowable <b>deviation from target weight</b>: dev<sub>AT</sub> = dev<sub>PT</sub> / (1&minus;t) &rarr; taxes <b>INCREASE</b> it (divide). Because lower volatility means the weight drifts less, so a wider band is tolerable.</div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Worked example 4 &mdash; pretax vs after-tax deviation from target weight</div>
+              <div class="rw-body">Tax-exempt investor's SAA: <b>40% fixed income, &plusmn;5%</b> (range 35%&ndash;45%). If FI returns were subject to a <b>30%</b> tax, find the equivalent after-tax rebalancing range.</div>
+              <div class="rw-fl">Pretax allowable deviation = 45% &minus; 40% = 5%
+Posttax deviation = 5% / (1 &minus; 0.30) = <b>7.14%</b>
+Range = 40% &plusmn; 7.14% = <b>32.86% &ndash; 47.14%</b></div>
+              <div class="rw-info"><b>Calculators &rarr; "After-tax rebalancing range"</b> (defaults 40 / &plusmn;5 / 30 &rarr; 7.14%, 32.86&ndash;47.14). <span class="rw-green">Verified: matches textbook 7.14% and 32.86&ndash;47.14%.</span></div>
+              <div class="rw-trap"><b>Decisive detail:</b> the range <b>widens</b> (divide by 1&minus;t), it does not shrink. Higher tax &rarr; wider tolerable band &rarr; rebalance <b>less</b> often.</div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Two strategies to reduce tax impact + asset location</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Tax loss harvesting</span><span class="rc-dbody">Deliberately <b>realize losses to offset gains</b> elsewhere.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Strategic asset location</span><span class="rc-dbody">Make the most efficient use of tax-advantaged accounts. Two advantaged types: <b>Tax-exempt</b> (assets not subject to tax) and <b>Tax-deferred</b> (appreciate tax-free, taxed on distribution).</span></span>
+              </div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Value adjustment</span><span class="rc-dbody">Assets in <b>tax-exempt</b> accounts need <b>no</b> market-value adjustment. Assets in <b>tax-deferred &amp; taxable</b> accounts are <b>reduced by the tax burden</b> before entering allocation.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Inputs by vehicle</span><span class="rc-dbody">Risk/return inputs for assets in the <b>tax-deferred</b> vehicle (grow tax-free) should be <b>pretax</b>; inputs for assets in the <b>taxable</b> vehicle should be <b>after-tax</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Account multiplier</span><span class="rc-dbody">The optimization uses both classes <b>and</b> locations: 2 asset classes &times; 2 account types &rarr; the process uses <b>4</b> "account types" (each class in taxable vs tax-deferred).</span></span>
+              </div>
+              <div class="rw-trap"><b>Two asset-location rules (don't swap them):</b><br>&bull; Assets subject to the <b>lowest tax rates</b> (typically <b>equity</b>) &rarr; allocated <b>first to taxable</b> accounts.<br>&bull; Assets subject to <b>frequent trading &amp; high tax rates</b> &rarr; allocated to <b>tax-advantaged</b> accounts.<br>Liquidity for consumption should always be considered (pension assets may not be reachable without penalty).</div>
+            </div>
+
+            <!-- ═══════════ MODULE 5.2 — 5.c ADJUSTING SAA ═══════════ -->
+            <div class="rw-card">
+              <div class="rc-sec">Module 5.2 &middot; Adjusting the Strategic Asset Allocation</div>
+              <div class="rw-title"><span class="rc-los">LOS 5.c</span>Revising allocation for changes in goals / constraints / beliefs</div>
+              <div class="rw-body">The initial optimal SAA is unlikely to last a portfolio's whole life &mdash; reevaluate <b>annually</b> or when goals, constraints, or beliefs change. Three triggers:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Change in goals</span><span class="rc-dbody">Business cycle can shift institutional goals. A business downturn &rarr; higher cash-flow needs from the portfolio (e.g. airlines under low-budget competition reduce pension risk to smooth contributions; pension deficits force reexamination). For individuals: <b>employment change or starting a family</b> shifts willingness &amp; ability to take risk.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Change in constraints</span><span class="rc-dbody">Examples: govt regs requiring increased distributions to keep tax-exempt status; large one-off cash flows; increased funding for an endowment beneficiary; forced early retirement due to illness. <b>Direction:</b> a change needing <b>increased cash outflows</b> &rarr; shift to <b>more liquid</b> assets; a large <b>inflow</b> (e.g. donation) &rarr; <b>more flexibility to take risk</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Change in beliefs</span><span class="rc-dbody">Owner's activities follow a set of principles/beliefs that can change &mdash; e.g. a new <b>investment-committee</b> makeup (new members walked through an allocation study). Economic-environment change &rarr; new expected returns/volatility/correlations &rarr; new optimal allocation (pre-2008 vs post-2008 rate regimes give very different FI expectations).</span></span>
+              </div>
+              <div class="rw-tip"><b>Predetermined changes:</b> some allocations shift on schedule with <b>no reexamination</b> &mdash; <b>target-date funds</b> use a <b>glide path</b>, moving from equity to more conservative investments (nominal &amp; inflation-protected bonds) as the target date approaches.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 5.2 — 5.d TAA ═══════════ -->
+            <div class="rw-card">
+              <div class="rw-title"><span class="rc-los">LOS 5.d</span>Short-term shifts &mdash; Tactical Asset Allocation (TAA)</div>
+              <div class="rw-body"><b>SAA</b> = the long-term target weightings in the IPS. <b>TAA</b> = short-term deviations to exploit <b>cyclical conditions</b> or a <b>perceived mispricing</b> in a class.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Objective</span><span class="rc-dbody">Increase <b>risk-adjusted returns</b> by exploiting short-term opportunities. <b>Assumes short-term returns are predictable</b> (not a random walk). Success depends on <b>market/factor timing, NOT security selection</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Constraints</span><span class="rc-dbody">Still respects the IPS <b>risk constraint</b>, but <b>ignores specific goals/liabilities</b>. Judged against the <b>SAA benchmark</b>; deviations often limited by a range of predicted volatility or a <b>tracking-error budget</b> vs the SAA.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Drawbacks</span><span class="rc-dbody">Extra <b>trading costs &amp; taxes</b> (for taxable investors); overweighting a class <b>concentrates risk</b> &amp; reduces diversification.</span></span>
+              </div>
+              <div class="rw-body"><b>Evaluation &mdash; measuring TAA success:</b></div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Sharpe</span><span class="rc-dbody">Compare Sharpe ratios under the TAA vs the SAA.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">IR / t-stat</span><span class="rc-dbody">Information ratio or t-statistic of the <b>excess realized returns</b> relative to the SAA.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">vs frontier</span><span class="rc-dbody">Compare realized risk/return of the TAA to portfolios on the <b>SAA's efficient frontier</b> (TAA may be less optimal than other frontier portfolios).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Attribution</span><span class="rc-dbody">Attribution analysis on the excess return &rarr; identify the contribution of specific under-/over-weightings.</span></span>
+              </div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Approaches to TAA &mdash; discretionary vs systematic</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Discretionary</span><span class="rc-dbody"><b>Qualitative interpretation</b> of macro variables. Skilled manager enhances returns in a rising market &amp; hedges in a falling one by forecasting short-term deviations. Uses macro data (<b>bond yields, credit spreads, monetary policy, GDP, earnings &amp; inflation predictions, leading indicators</b>), fundamental data (deviation of <b>P/E, P/B, dividend yield</b> from historic means), and sentiment (<b>consumer confidence index</b>). Data may be quantitative, but the <b>manager decides</b> which indicators to use &amp; how to weight them.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Systematic</span><span class="rc-dbody"><b>Quantitative</b>; captures returns from historically predictable &amp; persistent patterns. Two main factors: <b>value</b> &amp; <b>momentum</b>.</span></span>
+              </div>
+              <div class="rw-body"><b>Market sentiment</b> (used in discretionary TAA) can be assessed with:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Margin borrowing</span><span class="rc-dbody">Rising margin purchases drive prices up &rarr; <b>bullish</b>; but <b>too high</b> &rarr; bearish sign (over-enthusiasm).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Short interest</span><span class="rc-dbody">Aggregate short selling. Rising short interest drives prices down &rarr; <b>bearish</b>; but <b>very high</b> levels could mark a <b>near-low</b> (opposite of margin).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Volatility indexes</span><span class="rc-dbody">Level of <b>fear</b>; from bid-ask spread on index options. <b>Rises</b> with more put buying, <b>falls</b> with more call buying.</span></span>
+              </div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Value (systematic)</span><span class="rc-dbody">Exploits excess return of value over growth. Equities: dividend/cash-flow yields, <b>Shiller E/P</b> (10-yr avg inflation-adjusted earnings vs price). Currencies: short-term interest-rate differentials. Commodities: roll yields &mdash; <b>backwardation &rarr; positive</b> roll yield (long), <b>contango &rarr; negative</b>. Fixed income: yield spreads over risk-free.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Momentum (systematic)</span><span class="rc-dbody">Assumes <b>trends persist</b> &rarr; recent price moves signal over-/under-weighting. Indicators: <b>most recent 12-month trend</b> (assumed to persist next 12 months); <b>moving-average crossover</b> (shorter-term MA crossing <b>above</b> longer-term &rarr; uptrend, and vice versa).</span></span>
+              </div>
+              <div class="rw-trap"><b>Backwardation vs contango &mdash; don't flip it:</b> backwardation = <b>positive</b> roll yield (go long); contango = <b>negative</b> roll yield. And for the VIX-type index: <b>puts &uarr; volatility &uarr;</b>, calls &uarr; volatility &darr;.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 5.3 — 5.e BEHAVIORAL ═══════════ -->
+            <div class="rw-card">
+              <div class="rc-sec">Module 5.3 &middot; Behavioral Issues</div>
+              <div class="rw-title"><span class="rc-los">LOS 5.e</span>Behavioral biases in asset allocation &amp; how to overcome them</div>
+              <div class="rw-body"><b>Awareness that a bias exists</b> is crucial to dealing with every bias. Learn each bias with its <b>signature symptom</b> and its <b>fix</b>.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Loss aversion</span><span class="rc-dbody">Dislike losses more than equivalent gains &rarr; hard to keep discipline when returns are negative; tempted to alter the allocation. <b>Fix: goals-based investing</b> &mdash; prioritize goals, fund high-priority goals with less risky assets, use riskier assets as priority declines; focus risk analysis on <b>downside measures (shortfall risk)</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Illusion of control</span><span class="rc-dbody">Overestimate ability to control events; with overconfidence &rarr; fail to diversify &amp;/or trade too much. Signs: frequent trading/TAA market-timing; institutions doing active selection believing resources give superior skill; above-average short selling &amp; leverage; shifting allocations despite no consensus (trustee "knows better"); concentrated positions exposing diversifiable risk; biased forecasts &rarr; <b>extreme corner portfolios</b>. <b>Fix:</b> start from the <b>CAPM market portfolio</b>; subject shifts to a <b>formal review</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Hindsight bias</span><span class="rc-dbody"><b>Exacerbates illusion of control</b> &mdash; looking back at past strategies as if outcomes were predictable.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Mental accounting</span><span class="rc-dbody">Separate assets/liabilities into subjective "<b>buckets</b>" &rarr; suboptimal allocations (e.g. spend a tax refund on luxuries while under-saved; keep low-interest savings while paying high credit-card interest; hold a founded company in a high-risk bucket). <b>Endowment effect</b> (ownership &rarr; overvalue an asset) also feeds it. <b>Fix: goals-based investing.</b></span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Representative / recency</span><span class="rc-dbody">Over-weight <b>recent</b> data vs old &rarr; shift toward recent winners (e.g. 1990s house "flipping" by a generation that only saw rising prices). <b>Fix: strong governance &amp; objective allocation processes.</b></span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Framing</span><span class="rc-dbody">The way information is <b>presented</b> changes the decision (risk as &sigma; &rarr; most pick lower risk; downside measures may be better: <b>VaR</b> = loss amount at a probability over time; <b>CVaR</b> = average loss within the VaR tail; <b>shortfall probability</b> = probability of an adverse outcome). <b>Fix: present a full range of relevant information</b>, don't selectively frame.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Availability</span><span class="rc-dbody">Personally-experienced or easily-recalled events dominate (e.g. tech-bubble victim avoids tech forever); benchmarking to other investors regardless of comparable goals. <b>Familiarity</b> (offshoot): over-weight the familiar. <b>Home bias</b> (offshoot): over-allocate domestic, miss international diversification. <b>Fix: start allocation from the global market portfolio.</b></span></span>
+              </div>
+              <div class="rw-tip"><b>Fix pattern to memorize:</b> loss aversion &amp; mental accounting &rarr; <b>goals-based investing</b>; illusion of control, availability/familiarity/home &rarr; <b>start from the (global) CAPM market portfolio</b> + formal review; representative &rarr; <b>governance &amp; objective process</b>; framing &rarr; <b>full information, not selective framing</b>.</div>
+              <div class="rw-trap"><b>Prof's note:</b> mental accounting is <b>NOT</b> the same as goals-based investing. Goals-based investing <b>has some elements of</b> mental accounting, but it is a <b>rational effort</b> to differentiate goal priority and then use subportfolios to raise the chance of meeting the goals.</div>
+            </div>
+
+            <div class="rw-card">
+              <div class="rw-title">Investment Governance</div>
+              <div class="rw-body">Essential to keeping behavioral biases under control. An effective framework incorporates:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Objectives</span><span class="rc-dbody">Clearly stated <b>long-term &amp; short-term</b> objectives.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Responsibility</span><span class="rc-dbody">Logical allocation of decision responsibility <b>based on skills &amp; workload</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Documented IPS</span><span class="rc-dbody">Documented processes for developing &amp; approving the <b>investment policy statement</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Documented SAA</span><span class="rc-dbody">Documented processes for developing &amp; approving the <b>SAA</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Monitoring</span><span class="rc-dbody">A framework to <b>monitor &amp; report performance</b> relative to specified goals &amp; objectives.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Audits</span><span class="rc-dbody"><b>Periodic audits.</b></span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE QUIZZES ═══════════ -->
+            <div class="rw-card">
+              <div class="rc-sec">Module Quizzes &middot; verified reasoning</div>
+              <div class="rw-title">Quiz answers &amp; the decisive detail</div>
+              <div class="rw-info">Answer keys were <b>not in the uploaded photos</b>; the answers below are <b>my verified reasoning</b> from the reading, not a copy of the official key.</div>
+              <table class="rw-table">
+                <thead><tr><th>Quiz</th><th>Question</th><th>Answer</th><th>Why</th></tr></thead>
+                <tbody>
+                  <tr><td class="q">5.1 &middot; Q1</td><td>Extremely large fund seeking a large allocation &rarr; liquidity constraint when investing in?</td><td><b>A. Hedge funds</b></td><td>Alternatives (hedge funds) have <b>limited capacity</b>; a huge allocation can't be absorbed. Global equity &amp; IG bonds are deep/liquid.</td></tr>
+                  <tr><td class="q">5.1 &middot; Q2</td><td>SAA 60/40, after-tax rebal range &plusmn;12.5% (tax 20%); current 71/29. Which is most accurate?</td><td><b>C. Neither fund is outside its range</b></td><td>Equity drift = 71&minus;60 = <b>11%</b>. The &plusmn;12.5% band is stated as the <b>after-tax</b> range and applies to <b>both</b> funds; 11% &lt; 12.5% &rarr; both within. <span class="rw-green">Verified.</span></td></tr>
+                  <tr><td class="q">5.2/5.3 &middot; Q1</td><td>Target-date fund, retire at 65 &rarr; most likely?</td><td><b>A. Increase inflation-protected bonds later in the glide path</b></td><td>Glide path shifts equity &rarr; conservative (nominal <b>and</b> inflation-protected) bonds <b>as the date approaches</b> (i.e. later), not earlier.</td></tr>
+                  <tr><td class="q">5.2/5.3 &middot; Q2</td><td>TAA vs SAA relative success &mdash; most likely correct?</td><td><b>B. TAA is unsuccessful if the information ratio is negative</b></td><td>A negative IR means TAA underperformed the SAA per unit of active risk. A positive Sharpe alone (A) or lower &sigma; (C) doesn't establish success <b>vs the SAA benchmark</b>.</td></tr>
+                  <tr><td class="q">5.2/5.3 &middot; Q3</td><td>Rotheram: aggressive side portfolio in home-state REITs + equity of her ex-employer. Which bias?</td><td><b>B. Familiarity bias</b></td><td>She over-weights what she <b>knows</b> (home-state property, former employer) &mdash; an availability offshoot. Not mental accounting (that's the two-portfolio split, which is <b>rational</b> goals-based here) and not framing.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
           </div>
 
           <script>
@@ -35162,7 +35453,8 @@ var RECAP_REGISTRY = [
   { id: 'cme-recap', title: 'Reading 1 · Capital Market Expectations, Part 1 (Framework &amp; Macro)' },
   { id: 'fir-recap', title: 'Reading 2 · Capital Market Expectations, Part 2 (Forecasting Asset Class Returns)' },
   { id: 'oar-recap', title: 'Reading 3 · Overview of Asset Allocation' },
-  { id: 'par-recap', title: 'Reading 4 · Principles of Asset Allocation' }
+  { id: 'par-recap', title: 'Reading 4 · Principles of Asset Allocation' },
+  { id: 'rwr-recap', title: 'Reading 5 · Asset Allocation with Real-World Constraints' }
 ];
 
 // Shared print stylesheet used by both single- and all-recap printing.
