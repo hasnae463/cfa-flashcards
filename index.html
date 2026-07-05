@@ -21787,6 +21787,7 @@ BREAKEVEN:  S₀ + net</div>
             <button class="eq-toptab" onclick="eqTop(event,'eq-bm')">Benchmark (6.f)</button>
             <button class="eq-toptab" onclick="eqTop(event,'eq-cheat')">Cheat Sheet</button>
             <button class="eq-toptab" onclick="eqTop(event,'eq-quiz')">Quiz &amp; Traps</button>
+            <button class="eq-toptab" onclick="eqTop(event,'eq-recap')">Recap</button>
           </div>
 
           <!-- ════════ ROLES 6.a ════════ -->
@@ -22273,6 +22274,244 @@ Inclusion: exhaustive (CRSP) vs selective (S&P500, DJIA)</div>
             </div>
           </div>
 
+          <div id="eq-recap" class="eq-toppanel">
+            <style>
+              #eq-recap .eq-card { opacity:1; transform:none; }
+              #eq-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+              #eq-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(129,140,248,.14); border:1px solid var(--eq-main); color:var(--eq-main); border-radius:3px; padding:1px 6px; margin-right:6px; }
+              #eq-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
+              #eq-recap .rc-drow { display:grid; grid-template-columns:150px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+              #eq-recap .rc-dlabel { color:var(--eq-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #eq-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #eq-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #eq-recap .rc-dlabel { padding-top:0; }
+              }
+              #eq-recap .rc-drow:last-child { border-bottom:none; }
+              #eq-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
+            </style>
+
+            <button class="recap-print-btn" onclick="printOneRecap('eq-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+            <div class="eq-card">
+              <div class="eq-title">Reading 6 &middot; Overview of Equity Portfolio Management</div>
+              <div class="eq-body">Full-reading recap, module by module. Covers the <b>roles of equities (6.a)</b>, how a manager's universe is <b>segmented (6.b)</b>, the <b>income &amp; costs</b> of managing equity (6.c), <b>shareholder engagement (6.d)</b>, the <b>active/passive spectrum (6.e)</b>, and <b>benchmark selection (6.f)</b> including index weighting &amp; the HHI. Mostly conceptual &mdash; the one calculation is HHI / effective number of stocks (see the Benchmark tab's live calculator).</div>
+            </div>
+
+            <!-- ═══════════ MODULE 6.1 — 6.a ROLES ═══════════ -->
+            <div class="eq-card">
+              <div class="rc-sec">Module 6.1 &middot; Equity Investment Roles</div>
+              <div class="eq-title"><span class="rc-los">LOS 6.a</span>Four roles of equities in the overall portfolio</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Capital appreciation</span><span class="rc-dbody">The <b>main driver of long-term equity returns</b> (price growth from rising cash flows, revenues, and/or earnings). Ranges from small growth-tech to large well-established value firms. Over the last <b>50 years</b>, equity returns &gt; bonds &amp; bills on average. Equities <b>outperform</b> in strong economic growth, <b>underperform</b> in weak growth.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Dividend income</span><span class="rc-dbody">Excess cash flows distributed rather than reinvested. Recent yields ~<b>1%&ndash;3%</b>. <b>Dividend yield is more stable</b> than the price-change return. Dividends are <b>not guaranteed</b> to rise or continue.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Diversification</span><span class="rc-dbody">Equities have <b>&lt; +1.0 correlation</b> with other classes &rarr; portfolio &sigma; is <b>lower than the weighted sum</b> of individual &sigma;. <b>Twist:</b> the benefit is not constant &mdash; in a financial crisis correlations <b>rise</b> (benefit shrinks) and class &sigma; can <b>rise too</b>, further cutting the risk reduction.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Inflation hedge</span><span class="rc-dbody">A firm that can raise prices when input costs rise passes inflation into cash flow/earnings; commodity producers (e.g. oil) benefit directly. <b>Record is mixed:</b> generally positive real-return/inflation correlation, but it <b>varies by time &amp; country</b>; equities &amp; inflation can turn <b>negative in hyperinflation</b>; equity prices <b>lead</b> while inflation <b>lags</b> &rarr; a <b>less-than-perfect</b> correlation.</span></span>
+              </div>
+              <div class="eq-trap"><b>Trap:</b> equities are only an <i>imperfect</i> inflation hedge (leading vs lagging, hyperinflation flips the sign). Don't overstate it as a reliable hedge.</div>
+            </div>
+
+            <div class="eq-card">
+              <div class="eq-title">Client investment considerations &amp; ESG constraints</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Risk tolerance</span><span class="rc-dbody">Per the IPS: <b>high risk tolerance &rarr; growth-oriented</b> companies; <b>low risk tolerance &rarr; stable, well-established dividend payers</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Negative screening</span><span class="rc-dbody">(= <b>exclusionary</b> screening) excludes companies/sectors that fail client standards (e.g. exclude oil &amp; gas).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Positive screening</span><span class="rc-dbody">(= <b>best-in-class</b> screening) uncovers/overweights the most favorably ranked companies (e.g. overweight strong-governance firms).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">ESG integration</span><span class="rc-dbody">The <b>dominant</b> sustainable strategy &mdash; embed ESG throughout valuation, expected returns, risk analysis, and portfolio construction.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Thematic investing</span><span class="rc-dbody">Screens equities on a <b>specific theme</b> (e.g. climate change).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Impact investing</span><span class="rc-dbody">Meets objectives by becoming <b>actively engaged</b> and/or directly funding company projects with the <b>explicit intention</b> of a positive social/environmental impact <b>alongside</b> a financial return.</span></span>
+              </div>
+              <div class="eq-info"><b>Don't confuse:</b> negative = exclusionary; positive = best-in-class. Thematic = theme screen; impact = active engagement + intended real-world impact.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 6.1 — 6.b SEGMENTATION ═══════════ -->
+            <div class="eq-card">
+              <div class="rc-sec">Module 6.1 &middot; Equity Investment Segmentation</div>
+              <div class="eq-title"><span class="rc-los">LOS 6.b</span>Three ways to segment the investment universe</div>
+              <div class="eq-body">Three main approaches: <b>size &amp; style</b>, <b>geography</b>, and <b>economic activity</b>. Segmentation improves understanding of how equities fit the overall portfolio and enhances diversification.</div>
+              <div class="eq-body"><b>1 &middot; Size &amp; style.</b> Size = market cap (large / mid / small). Style = value / growth / blend (a.k.a. <b>core</b>), determined by metrics like P/E, P/B, dividend yield, and earnings/book-value growth. A <b>style box</b> (3&times;3) ranks companies:</div>
+              <div class="rc-svg-wrap">
+                <table class="eq-tbl" style="margin:0;">
+                  <tr><th>Size &darr; / Style &rarr;</th><th>Value</th><th>Blend</th><th>Growth</th></tr>
+                  <tr><td><b>Large</b></td><td>Large-cap value</td><td>Large-cap blend</td><td>Large-cap growth</td></tr>
+                  <tr><td><b>Medium</b></td><td>Mid-cap value</td><td>Mid-cap blend</td><td>Mid-cap growth</td></tr>
+                  <tr><td><b>Small</b></td><td>Small-cap value</td><td>Small-cap blend</td><td>Small-cap growth</td></tr>
+                </table>
+              </div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Advantages</span><span class="rc-dbody">(1) Better address client risk/return considerations; (2) greater diversification across sectors/industries; (3) build <b>relevant benchmarks</b> for a specific size/style fund; (4) analyze how company characteristics <b>change over time</b> (a small-cap growth firm may mature into mid/large and drift toward blend).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Disadvantage</span><span class="rc-dbody">The last advantage is also the drawback: <b>categories are not stable over time</b> (style drift).</span></span>
+              </div>
+              <div class="eq-body"><b>2 &middot; Geography.</b> Categorizes markets by stage of economic development:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Developed</span><span class="rc-dbody">US, UK, Germany, Australia, Japan.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Emerging</span><span class="rc-dbody">Brazil, Russia, India, China, South Africa.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Frontier</span><span class="rc-dbody">Iceland, Estonia, Nigeria, Jordan, Vietnam.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Advantage</span><span class="rc-dbody">Domestically-concentrated investors learn to diversify <b>internationally</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Disadvantages</span><span class="rc-dbody">(1) <b>Currency risk</b>; (2) <b>overestimated diversification</b> &mdash; a large foreign firm may already be globally diversified and even earn much of its income from the investor's own country.</span></span>
+              </div>
+              <div class="eq-body"><b>3 &middot; Economic activity.</b> Groups firms into sectors/industries via a <b>market-oriented</b> or <b>production-oriented</b> approach:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Market-oriented</span><span class="rc-dbody">Segments by <b>markets served</b>, how products are used by consumers, and how <b>cash flows</b> are generated. Used by <b>GICS</b>. Might classify a coal company in <b>energy</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Production-oriented</span><span class="rc-dbody">Segments by <b>products manufactured</b> &amp; inputs required in production. Used by <b>ICB, TRBC, RGS</b>. Might classify the same coal company in <b>basic materials</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Four structures</span><span class="rc-dbody"><b>GICS</b> (market-oriented) · <b>ICB</b> · <b>TRBC</b> · <b>RGS</b> (production-oriented).</span></span>
+              </div>
+              <div class="eq-trap"><b>Prof's note &mdash; sector vs industry ordering:</b> <b>GICS, TRBC, RGS</b> start at the top with <b>sectors</b> then subdivide into industries. <b>ICB is the exception</b> &mdash; it starts with <b>industries</b> then subdivides into sectors. GICS example (Consumer Staples): Sector &rarr; Industry group (Food, beverage &amp; tobacco) &rarr; Industry (Beverages) &rarr; Subindustry (Soft drinks).</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Adv (econ activity)</span><span class="rc-dbody">Analyze/compare &amp; construct <b>performance benchmarks</b> by sector/industry; diversification enhanced across sectors/industries.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Disadvantage</span><span class="rc-dbody">Some firms (esp. <b>larger</b> ones) have operations <b>not easily assigned</b> to one sector/industry.</span></span>
+              </div>
+              <div class="eq-info"><b>Indexes combine approaches:</b> MSCI Europe Large Cap Value &amp; MSCI China Small Cap mix size/style + geography; MSCI World Energy &amp; S&amp;P Global Natural Resources track by sector/industry. Indexes can also track ESG.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 6.2 — 6.c INCOME ═══════════ -->
+            <div class="eq-card">
+              <div class="rc-sec">Module 6.2 &middot; Portfolio Income &amp; Costs</div>
+              <div class="eq-title"><span class="rc-los">LOS 6.c</span>Ways to earn current income from an equity portfolio</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Dividend income</span><span class="rc-dbody">Most obvious &amp; often largest. Watch <b>taxation</b> (income and/or withholding). <b>Growth-focused investors are less likely</b> to seek dividend income.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Optional stock dividend</span><span class="rc-dbody">Investor chooses <b>cash or new shares</b>. The "option" itself has value &amp; can be <b>sold</b> to another investor.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Special dividend</span><span class="rc-dbody">A <b>one-time</b> cash payment (vs the regular periodic dividend).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Securities lending</span><span class="rc-dbody">Lend stock (often to enable a <b>short sale</b>) for a <b>fee</b>; may also earn a return reinvesting posted <b>cash collateral</b>. Common in index funds, large institutional portfolios (pension funds), endowments.</span></span>
+              </div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Lending issues</span><span class="rc-dbody">Short selling drives the price <b>down</b> (bad for the lender, who still owns it) &mdash; concerns an <b>active</b> manager more than a <b>passive</b> one. Watch <b>borrower quality</b> &amp; return ability. Borrower must <b>compensate the lender for dividends</b> during the loan; lender generally <b>loses voting rights</b> during the loan.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Lending fee</span><span class="rc-dbody">~<b>0.2%&ndash;0.5%</b> annually in developed markets; much higher for EM loans or high-demand stocks (<b>specials</b>). Cash-collateral reinvestment adds market/credit/operational risk + admin costs.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Writing options</span><span class="rc-dbody">Sell options for premium. <b>Covered call</b> = write a call on a stock owned (lose upside above strike). <b>Cash-covered / cash-secured put</b> = sell a put &amp; set aside cash to buy the stock if exercised (risk: buyer exercises only if the stock <b>falls</b>).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Dividend capture</span><span class="rc-dbody">Buy just before the ex-dividend date, hold through it (earn the dividend), then sell. <b>Profitable if the price declines by less than the dividend.</b> Theory says price drops by the dividend, but market forces &amp; taxes can differ.</span></span>
+              </div>
+            </div>
+
+            <div class="eq-card">
+              <div class="eq-title">Equity portfolio fees &amp; costs</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Management (ad valorem)</span><span class="rc-dbody">Pay the manager + research, hardware/software, compliance, trade processing. Based on <b>% of AUM</b>, due at intervals. <b>Higher for active</b> (more analysis &amp; turnover). Usually a standard schedule but <b>negotiable</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Performance (incentive)</span><span class="rc-dbody">Earned when the portfolio beats a stated objective; common for hedge/alternative funds, e.g. <b>10%&ndash;20%</b> of appreciation above a threshold. <b>One-sided</b> &mdash; manager shares upside, not penalized for underperformance. A <b>high-water mark</b> stops paying twice for the same gains.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Administration</span><span class="rc-dbody">Corporate-activity services (risk/return measurement, voting). May be inside the mgmt fee or separate if external. Sub-types: <b>custody</b> (independent custodian holds assets), <b>depository</b> (segregate assets + verify compliance with limits like leverage/cash), <b>registration</b> (register mutual-fund share ownership).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Marketing &amp; distribution</span><span class="rc-dbody">Sales/client teams, advertising, conferences, brochures, online <b>platform fees</b>, sales commissions to intermediaries (e.g. financial planners/brokers).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Trading costs</span><span class="rc-dbody"><b>Explicit</b>: broker commissions, exchange fees, taxes. <b>Implicit</b>: bid-ask spread, price impact, and <b>delay/slippage</b> costs (trade not completed due to illiquidity).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Investment strategy</span><span class="rc-dbody">Implicit cost of the chosen strategy. Active &gt; passive cost, but even passive index funds face <b>predatory trading</b> &mdash; traders buy/sell shares soon to be added/removed from an index &rarr; price-impact cost to the fund, profit to the predator.</span></span>
+              </div>
+              <div class="eq-tip"><b>Liquidity demand vs supply:</b> <b>momentum</b> strategies <b>demand</b> liquidity (buy rising / sell falling) &rarr; <b>high</b> market-impact cost. <b>Contrarian</b> strategies <b>supply</b> liquidity (buy falling / sell rising) &rarr; <b>low</b> impact cost. <b>Passive index replication</b> falls in the <b>middle</b>.</div>
+              <div class="eq-info"><b>Prof's note:</b> a manager may bundle all of these into one management fee, break some out separately, or a third party may charge them. Bottom line &mdash; services aren't free; consider <b>total</b> cost regardless of how the bill is presented.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 6.2 — 6.d ENGAGEMENT ═══════════ -->
+            <div class="eq-card">
+              <div class="rc-sec">Module 6.2 &middot; Shareholder Engagement</div>
+              <div class="eq-title"><span class="rc-los">LOS 6.d</span>Benefits of engagement &amp; the equity manager's role</div>
+              <div class="eq-body">Engagement = investors/managers interacting with companies (calls, voting at general assemblies) to <b>favorably influence the stock price</b> and improve corporate governance. Meetings may cover:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Corporate strategy</span><span class="rc-dbody">Objectives, constraints, growth opportunities, resources; research, culture, products, competitive environment, sustainability; balancing short-term obligations with long-term goals.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Capital allocation</span><span class="rc-dbody">New-project selection, M&amp;A, capex, use of leverage, dividends, equity financing.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Corporate governance</span><span class="rc-dbody">Internal controls, audit &amp; risk committees, regulatory &amp; political risk management.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Compensation</span><span class="rc-dbody">Top-management remuneration/incentives &amp; alignment with shareholders; larger shareholders may influence future comp structures.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Board composition</span><span class="rc-dbody">Board experience, competence, diversity, culture, effectiveness; succession planning for departing members.</span></span>
+              </div>
+              <div class="eq-body"><b>Benefits &amp; economics of engagement:</b></div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Active vs passive</span><span class="rc-dbody"><b>Active</b> managers engage to improve performance; <b>passive</b> managers focus on <b>minimizing</b> engagement costs.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Scale</span><span class="rc-dbody"><b>Larger investors</b> absorb costs more easily (spread over more assets).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Free riders</span><span class="rc-dbody">Successful engagement benefits <b>all</b> shareholders, including <b>free riders</b> who don't engage but reap the same stock-price gain.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Nonfinancial</span><span class="rc-dbody">Can address ESG concerns, though benefits are <b>harder to quantify</b>. Other stakeholders (employees, customers, creditors, regulators, governments) are also affected.</span></span>
+              </div>
+              <div class="eq-trap"><b>Limitations / disadvantages (isolated):</b> engagement is <b>not free</b> (time + resources); it may (1) focus on <b>short-term</b> goals at the expense of long-term ones; (2) lead to acquiring <b>material nonpublic information</b> &rarr; insider-trading risk; (3) create <b>conflicts of interest</b> (e.g. an engaged manager backs management because management invests in the manager's fund).</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Manager's role</span><span class="rc-dbody">Equity managers play a key role &amp; may have <b>staff assigned</b>; firms may consult <b>outside experts</b>. Some countries set legal/regulatory rules on voting &amp; monitoring, requiring <b>written documentation</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Activist investing</span><span class="rc-dbody">Goes further: propose <b>shareholder resolutions</b>, launch <b>media campaigns</b>, seek <b>board representation</b>, and launch <b>proxy fights</b> (persuading other shareholders to back their proposals).</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 6.2 — 6.e ACTIVE/PASSIVE ═══════════ -->
+            <div class="eq-card">
+              <div class="rc-sec">Module 6.2 &middot; Active / Passive Management</div>
+              <div class="eq-title"><span class="rc-los">LOS 6.e</span>Rationales across the active-management spectrum</div>
+              <div class="eq-body"><b>Passive</b> = replicate an index/benchmark; <b>Active</b> = outperform &amp; add value (riskier &mdash; can also underperform). Real strategies blur the line (closely tracking with limited deviations). Rationales for shifting toward <b>active</b>:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Manager skill</span><span class="rc-dbody">Confidence the manager has expert knowledge/skill to add value.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Client mandates</span><span class="rc-dbody">Mandates to invest in certain companies (e.g. ESG) may <b>require</b> active screening techniques.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Client preferences</span><span class="rc-dbody">Need enough interested investors to cover active costs. <b>Growth</b> styles are more likely to benefit from active; <b>value</b> may be more passive.</span></span>
+              </div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Expectations</span><span class="rc-dbody">Manage what investors should reasonably expect; unreasonable expectations &rarr; dissatisfaction.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Capacity</span><span class="rc-dbody">Strategies that get <b>too popular</b> are a problem &mdash; too much capital makes it harder to find value.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Benchmark breadth</span><span class="rc-dbody">Active needs a benchmark with a <b>broad range</b> of liquid equities. <b>Narrow/limited benchmarks</b> give little room to deviate &rarr; favor a <b>passive</b> approach.</span></span>
+              </div>
+              <div class="eq-trap"><b>Active management risks (isolated):</b> results are <b>less certain</b> and costs higher. <b>Key-person risk</b> (a person essential to the fund's success leaves the firm) and <b>higher portfolio turnover</b> &rarr; higher tax burdens (tax-mitigation techniques are themselves costly/risky and need extra knowledge of country-specific tax rules).</div>
+            </div>
+
+            <!-- ═══════════ MODULE 6.3 — 6.f BENCHMARK ═══════════ -->
+            <div class="eq-card">
+              <div class="rc-sec">Module 6.3 &middot; Benchmark Selection</div>
+              <div class="eq-title"><span class="rc-los">LOS 6.f</span>Choosing a benchmark for an equity portfolio</div>
+              <div class="eq-body">A usable equity-index benchmark must be <b>(1) rules based, (2) transparent, (3) investable</b>:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Rules based</span><span class="rc-dbody">Inclusion/exclusion rules, weighting scheme &amp; rebalancing frequency are <b>consistent, objective, predictable</b> &rarr; investors can replicate performance.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Transparent</span><span class="rc-dbody">Rules are <b>public, clearly stated, understandable</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Investable</span><span class="rc-dbody">Investors can actually <b>replicate</b> the index's return/risk.</span></span>
+              </div>
+              <div class="eq-body">Two considerations when choosing: (1) determine desired <b>market &amp; risk exposures</b>; (2) identify the <b>construction/maintenance methods</b> of the index.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Market exposure</span><span class="rc-dbody">Broad vs focused (sectors); domestic vs international; developed vs emerging vs frontier.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Risk-factor exposure</span><span class="rc-dbody">Sensitivity to factors: <b>market risk (beta), firm size, style (growth vs value), prior returns (momentum)</b>; also liquidity, volatility, firm <b>quality</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Inclusion method</span><span class="rc-dbody"><b>Exhaustive</b> (every stock in a universe, e.g. CRSP US Total Market) vs <b>selective</b> (a subset, e.g. S&amp;P 500, DJIA).</span></span>
+              </div>
+            </div>
+
+            <div class="eq-card">
+              <div class="eq-title">Index weighting methods</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Market-cap</span><span class="rc-dbody">Weight each stock by its cap as a % of total. CAPM market portfolio &amp; most indexes (S&amp;P 500) are cap-weighted; practice uses <b>free-float</b> shares (exclude closely-held).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Price</span><span class="rc-dbody">Weight by <b>price</b> &rarr; equivalent to holding an <b>equal number of shares</b>; higher-priced stocks get larger weights (e.g. <b>DJIA</b>). <b>Stock splits</b> complicate the calculation.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Equal</span><span class="rc-dbody">Invest equal amounts &rarr; <b>reduces concentration risk</b> vs cap-weighting (esp. large-cap). <b>Small-cap bias</b> vs cap-weighting; <b>factor-indifderent</b> (randomizes factor mispricing); returns <b>more volatile</b>; can earn marginally better returns before costs when prices vary around intrinsic value; higher transaction costs.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Fundamental</span><span class="rc-dbody">Weight by a fundamental factor's share of the index total (sales, income, dividends). E.g. a firm paying 3% of all index dividends gets a <b>3% weight</b> in a dividend-weighted index.</span></span>
+              </div>
+              <div class="eq-fl">Stock concentration &mdash; Herfindahl-Hirschman Index (HHI):
+  HHI = &#931;&#7522;&#8321;&#8319; w&#7522;&#178;        (w&#7522; = weight of stock i, n = number of stocks)
+
+  Range:  1/n  (equal-weighted, lowest concentration)  &rarr;  1  (single stock)
+  Higher HHI  &rarr;  higher concentration risk
+
+  Effective number of stocks = 1 / HHI</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Example (cap)</span><span class="rc-dbody">A cap-weighted index of 500 stocks might have HHI = <b>0.01</b> &rarr; effective number = 1/0.01 = <b>100</b>. That 100 &lt; 500 reflects the <b>disproportionate weight of the largest-cap stocks</b>. <span class="eq-green">Verified.</span></span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Example (equal)</span><span class="rc-dbody">An equal-weighted 500-stock index has HHI = 1/500 = <b>0.002</b> &rarr; effective number = 1/0.002 = <b>500</b>. <span class="eq-green">Verified.</span> See the <b>Benchmark &rarr; HHI Calculator</b> tab.</span></span>
+              </div>
+              <div class="eq-trap"><b>Decisive detail:</b> effective number of stocks &le; actual number; they're <b>equal only when equally weighted</b>. A large gap signals heavy concentration in the biggest names.</div>
+            </div>
+
+            <div class="eq-card">
+              <div class="eq-title">Index maintenance &mdash; rebalancing, reconstitution, migration</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Rebalancing</span><span class="rc-dbody">Adjust <b>weights</b> as weightings change. Equal-weight drifts as prices move; price-weight changes on <b>splits/dividends</b>; cap-weight needs rebalancing when firms <b>issue/repurchase</b> significant shares. Incurs <b>trading (and possibly tax) costs</b> &rarr; done <b>periodically, often quarterly</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Reconstitution</span><span class="rc-dbody">Remove &amp; replace stocks that <b>no longer fit</b> the index's market exposure (e.g. a small-cap grows to mid-cap and leaves a small-cap index). Also incurs trading costs &rarr; lowers index returns.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Buffering</span><span class="rc-dbody">Reduces migration trading costs via a <b>threshold (buffer zone)</b> a firm's rank must cross before switching indexes. E.g. large-cap = top 200, mid-cap = next 300; a rising mid-cap isn't moved to large-cap until its rank reaches, say, <b>150 or higher</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Packeting</span><span class="rc-dbody">Alternative: when a mid-cap grows into large-cap, move <b>half</b> the position to large-cap on the reconstitution date; if it still qualifies at the <b>next</b> reconstitution, move the <b>remainder</b>.</span></span>
+              </div>
+              <div class="eq-tip"><b>Rebalance vs reconstitute:</b> rebalance = adjust <b>weights</b>; reconstitute = <b>swap stocks</b> in/out. Buffering (rank threshold) and packeting (move in halves) both cut migration costs.</div>
+            </div>
+
+            <!-- ═══════════ MODULE QUIZZES ═══════════ -->
+            <div class="eq-card">
+              <div class="rc-sec">Module Quizzes &middot; verified reasoning</div>
+              <div class="eq-title">Quiz answers &amp; the decisive detail</div>
+              <div class="eq-info">Quizzes 6.1 &amp; 6.2 are <b>constructed-response</b> (no MCQ key). Quiz 6.3 Q1 is MCQ; its answer key was <b>not in the photos</b>, so the answer below is my <b>verified reasoning</b>, not a copy of the key.</div>
+              <table class="eq-tbl">
+                <tr><th>Quiz</th><th>Task</th><th>Full-credit / verified answer</th></tr>
+                <tr><td><b>6.1 &middot; Q1</b></td><td><b>Discuss</b> two reasons a crisis affects diversification's risk reduction</td><td>Two labeled chains: (1) correlations rise toward +1.0 &rarr; cross-asset offset shrinks; (2) asset-class &sigma; rise &rarr; portfolio &sigma; climbs even at fixed correlation. Both erode the benefit.</td></tr>
+                <tr><td><b>6.1 &middot; Q2</b></td><td><b>Describe</b> two advantages of economic-activity segmentation</td><td>(1) Analyze/compare &amp; build <b>performance benchmarks</b> by sector/industry; (2) <b>diversification enhanced</b> across sectors/industries. (Don't borrow size/style advantages.)</td></tr>
+                <tr><td><b>6.2 &middot; Q1</b></td><td><b>Explain</b> why active portfolios have higher fees/costs</td><td>More investment analysis + higher <b>turnover</b> &rarr; higher management fees &amp; trading/tax costs than passive.</td></tr>
+                <tr><td><b>6.2 &middot; Q2</b></td><td><b>Explain</b> how engagement benefits non-engaged investors</td><td><b>Free-rider</b> effect: successful engagement raises the stock price, benefiting <b>all</b> shareholders including those who didn't engage.</td></tr>
+                <tr><td><b>6.2 &middot; Q3</b></td><td><b>Identify</b> two disadvantages of engagement</td><td>Any two of: costly (time/resources); short-termism; risk of acquiring <b>MNPI</b> (insider-trading risk); conflicts of interest.</td></tr>
+                <tr><td><b>6.2 &middot; Q4</b></td><td>Low fees + big value-add + many ESG restrictions + narrow large-cap benchmark: two reasons each for passive vs active</td><td><b>Passive:</b> low-fee preference; <b>narrow/limited benchmark</b> gives little room to deviate. <b>Active:</b> wants substantial value-add vs benchmark; numerous <b>ESG restrictions</b> require active screening.</td></tr>
+                <tr><td><b>6.2 &middot; Q5</b></td><td><b>Identify &amp; describe</b> two additional active-manager/investor risks</td><td><b>Key-person risk</b> (essential person leaves) and <b>higher turnover</b> &rarr; higher tax burden (mitigation techniques costly/risky).</td></tr>
+                <tr><td><b>6.3 &middot; Q1</b></td><td>Necessary characteristic for an equity index used as a benchmark?</td><td><b>B. Investable</b> &mdash; the three requirements are rules-based, transparent, and investable. "Selective" and "flexible" are not requirements.</td></tr>
+              </table>
+            </div>
+
+          </div>
+
+
           <script>
             function eqTop(ev,id){
               var w=document.getElementById('eqWidget');
@@ -22390,6 +22629,7 @@ Inclusion: exhaustive (CRSP) vs selective (S&P500, DJIA)</div>
             <button class="fipm-toptab" onclick="fipmTop(event,'fipm-ldi')">LDI &amp; Ladders (7.g&ndash;i)</button>
             <button class="fipm-toptab" onclick="fipmTop(event,'fipm-cheat')">Cheat Sheet</button>
             <button class="fipm-toptab" onclick="fipmTop(event,'fipm-quiz')">Quiz &amp; Traps</button>
+            <button class="fipm-toptab" onclick="fipmTop(event,'fipm-recap')">Recap</button>
           </div>
 
           <!-- ════════ ROLES & MANDATES 7.a ════════ -->
@@ -23055,6 +23295,252 @@ bid-ask trade cost  ≈ duration × (ask yield − bid yield)</div>
             </div>
           </div>
 
+          <div id="fipm-recap" class="fipm-toppanel">
+            <style>
+              #fipm-recap .fipm-card { opacity:1; transform:none; }
+              #fipm-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+              #fipm-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(45,212,191,.14); border:1px solid var(--fipm-main); color:var(--fipm-main); border-radius:3px; padding:1px 6px; margin-right:6px; }
+              #fipm-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
+              #fipm-recap .rc-drow { display:grid; grid-template-columns:150px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+              #fipm-recap .rc-dlabel { color:var(--fipm-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #fipm-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #fipm-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #fipm-recap .rc-dlabel { padding-top:0; }
+              }
+              #fipm-recap .rc-drow:last-child { border-bottom:none; }
+              #fipm-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
+            </style>
+
+            <button class="recap-print-btn" onclick="printOneRecap('fipm-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+            <div class="fipm-card">
+              <div class="fipm-title">Reading 7 &middot; Overview of Fixed-Income Portfolio Management</div>
+              <div class="fipm-body">Full-reading recap, module by module: <b>roles of FI + two mandate types (7.a)</b>, <b>risk/return measures (7.b)</b>, <b>bond liquidity (7.c)</b>, the <b>five-component return model (7.d)</b>, <b>leverage (7.e)</b>, <b>taxable vs tax-exempt (7.f)</b>, and <b>LDI: liability types, cash-flow matching &amp; ladders (7.g&ndash;i)</b>. All worked figures below are <span class="fipm-green">node-verified</span> against the textbook and reproduced by the widget's live calculators.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 7.1 — 7.a ROLES & MANDATES ═══════════ -->
+            <div class="fipm-card">
+              <div class="rc-sec">Module 7.1 &middot; Role of Fixed Income</div>
+              <div class="fipm-title"><span class="rc-los">LOS 7.a</span>Three roles of FI + how mandates are classified</div>
+              <div class="fipm-body">The FI market is highly varied: public bonds &amp; money-market, plus nonpublic loans &amp; private placements; varies by maturity, credit quality; structures include straight bonds, embedded prepayment options, variable coupons, inflation adjustment. Three portfolio <b>roles</b>:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Diversification</span><span class="rc-dbody">Low correlation to equity. 2000&ndash;2019 correlations to S&amp;P 500 ranged <b>&minus;0.30 (10-yr UST)</b> to <b>+0.63 (US high-yield)</b>. <b>Flight to quality:</b> in stress, HY &amp; equities fall together (corr &rarr; +1) as investors buy high-quality developed-gov bonds &rarr; those gov bonds' corr to risky assets <b>falls, may go negative</b>. Bond-return volatility also rises for HY in a crisis.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Regular cash flow</span><span class="rc-dbody">Predictable coupons fund future obligations (living expenses, tuition, insurer payouts). <b>Buy-and-hold laddered</b> portfolio = no planned trading + roughly equal par maturing periodically. Assumes no significant credit risk &amp; all payments made.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Inflation hedge</span><span class="rc-dbody">Standard fixed-coupon (nominal) bonds do <b>NOT</b> hedge inflation &mdash; if inflation rises, fixed coupon loses real value &amp; price must fall. Two that DO: inflation-linked &amp; floating-rate.</span></span>
+              </div>
+              <div class="fipm-fl">Inflation-linked (real-rate) bond: PAR adjusts for inflation.
+  1M par, inflation 5% &rarr; par = 1.05M ; coupon = rate &times; adjusted par.
+  Real rate 0.5% &rarr; first annual coupon = 1,050,000 &times; 0.005 = 5,250.
+  &rarr; BOTH coupon &amp; principal inflation-protected.
+
+Floating-coupon bond: coupon = MRR + spread; PAR unchanged.
+  MRR 3.5% + 100bp on 1M &rarr; 45,000.
+  Inflation +2% &rarr; MRR 5.5% + 100bp &rarr; 65,000  (par stays 1M).
+  &rarr; COUPONS inflation-protected, principal is NOT.</div>
+              <div class="fipm-trap"><b>Decisive detail:</b> inflation-linked adjusts <b>par</b> (so coupon &amp; principal both protected); floating adjusts the <b>coupon rate</b> only (principal unprotected). The floating coupon jump 45k&rarr;65k is a <b>+44.4%</b> rise while the linker's par/coupon rose only 5% &mdash; different mechanics, same "full protection" idea. In an efficient market all three (nominal/linked/floating, same issuer/maturity) price to the same expected return; realized winners depend on the actual inflation path.</div>
+            </div>
+
+            <div class="fipm-card">
+              <div class="fipm-title">Fixed-income mandates &mdash; the two types</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Liability-based</span><span class="rc-dbody">Assets managed <b>solely to meet expected future liability payouts</b>; all asset cash flows reinvested until paid out &mdash; often called <b>immunization</b>. Forms below.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Total return</span><span class="rc-dbody">Don't fund liabilities; target an absolute return OR (more commonly) match/beat a <b>benchmark</b>. Key metrics: <b>active return</b> (= value added = alpha) and <b>active risk</b> (= tracking error/tracking risk = &sigma; of active return).</span></span>
+              </div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Cash flow matching</span><span class="rc-dbody"><b>Simplest</b> immunization &mdash; assets' cash flows occur <b>when &amp; in the size</b> needed to meet payouts.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Duration matching</span><span class="rc-dbody">Match asset &amp; liability <b>duration</b> so both move alike as rates change &rarr; ending values stay matched.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Contingent immun. (CI)</span><span class="rc-dbody">Hybrid of active + immunization. Fund with <b>more than required</b> (PVA &gt; PVL &rarr; positive <b>surplus</b>). While surplus &gt; 0, manage actively. Success &rarr; ultimate cost <b>less</b> than initial immunizing; if surplus hits zero &rarr; <b>immediately immunize</b> &amp; cost is <b>more</b> than initial immunizing but by a <b>known</b> amount.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Derivatives overlay</span><span class="rc-dbody">Futures or swaps to implement duration matching or CI.</span></span>
+              </div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Pure indexing</span><span class="rc-dbody">Replicate a bond index; <b>zero</b> active return/risk. Full replication is impractical (huge # of illiquid bonds) &rarr; instead <b>match all risk factors</b> (duration, credit/quality, sectors, prepayment) with some leeway on individual bonds; <b>low</b> turnover ~ index turnover.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Enhanced indexing</span><span class="rc-dbody">Modest active return; <b>duration still matched</b> to index but small risk mismatches (over/underweight sectors &amp; quality) allowed &rarr; slightly higher turnover.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Active management</span><span class="rc-dbody">Large deviations from index risk factors, greater active return sought; <b>duration can be mismatched</b>; turnover much higher.</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 7.1 — 7.b MEASURES ═══════════ -->
+            <div class="fipm-card">
+              <div class="rc-sec">Module 7.1 &middot; Fixed-Income Portfolio Measures</div>
+              <div class="fipm-title"><span class="rc-los">LOS 7.b</span>Risk &amp; return measures &mdash; interpretation focus</div>
+              <div class="fipm-body">L3 tests <b>interpretation &amp; use</b>, not calculation. Know what each measure tells you:</div>
+              <table class="fipm-tbl">
+                <tr><th>Measure</th><th>What it is / tells you</th></tr>
+                <tr><td><b>Macaulay duration</b></td><td>Weighted-avg <b>time</b> to receive CFs (weights = PV of CFs). Higher &rarr; wait longer &rarr; higher price volatility when yields change.</td></tr>
+                <tr><td><b>Modified duration</b></td><td>Macaulay / (1 + periodic yield). Approx % price change for a <b>1% yield</b> change (MD 7 &rarr; &minus;7% if yields +1%).</td></tr>
+                <tr><td><b>Effective duration</b></td><td>Price sensitivity to a <b>parallel benchmark-curve</b> shift, by modeling prices. Used for <b>complex bonds</b> (embedded options, uncertain CFs).</td></tr>
+                <tr><td><b>Key rate (partial) duration</b></td><td>Sensitivity to a change at a <b>specific maturity</b>, others held constant &rarr; assesses <b>nonparallel</b> curve shifts.</td></tr>
+                <tr><td><b>Empirical duration</b></td><td>Interest-rate sensitivity from <b>regressing bond returns vs benchmark-yield changes</b> &mdash; same interpretation as effective duration but from <b>past observed behavior</b>, not modeling.</td></tr>
+                <tr><td><b>Money (dollar) duration</b></td><td>= MD &times; market value. Absolute currency gain/loss for a <b>1% yield</b> change.</td></tr>
+                <tr><td><b>PVBP / DV01 / BPV</b></td><td>= money duration &times; 0.0001. Absolute value change for a <b>1 bp</b> yield move.</td></tr>
+                <tr><td><b>Convexity</b></td><td>Nonlinearity of price-vs-yield; positive for option-free bonds. Positive convexity &rarr; price rises <b>more</b> than duration implies when yields fall &amp; falls <b>less</b> when yields rise.</td></tr>
+                <tr><td><b>Effective convexity</b></td><td>Nonlinear version modeled from curve shifts; for complex/embedded-option bonds.</td></tr>
+                <tr><td><b>Spread duration</b></td><td>% price sensitivity to a <b>1% credit-spread</b> change.</td></tr>
+                <tr><td><b>Duration times spread (DTS)</b></td><td>= spread duration &times; credit spread. Higher sensitivity when spreads are higher (spread <i>changes</i> tend to be proportional to spread <i>levels</i>).</td></tr>
+              </table>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Convexity facts</span><span class="rc-dbody">Valuable when yields expected to change &rarr; investors <b>pay higher prices / accept lower yields</b> for more convexity. <b>Second-order</b>: ~proportional to <b>duration&sup2;</b> (dur-20 bond has ~4&times; the convexity of a dur-10 bond). Directly related to <b>dispersion</b> of CFs in time &mdash; for a given Macaulay duration, the <b>lowest-convexity</b> bond is a <b>zero-coupon</b> (single CF at maturity).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Portfolio aggregation</span><span class="rc-dbody">Portfolio Macaulay/modified duration &amp; convexity &asymp; <b>cash-weighted average</b> of the individual bonds. Ex: 40% dur-10 + 60% dur-15 &rarr; (0.4&times;10)+(0.6&times;15) = <b>13</b>. Effective duration/convexity of a portfolio use the PV&#8323;/PV&#8331;/PV&#8330; curve-shift formulas.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Manager use</span><span class="rc-dbody">Expect rates to <b>fall</b> &rarr; <b>raise</b> duration (bigger price gain); expect rates to <b>rise</b> &rarr; <b>lower</b> duration. Expect spreads to <b>narrow</b> &rarr; <b>raise spread duration</b> (may lower credit rating / buy higher-DTS bonds); expect spreads to <b>widen</b> &rarr; <b>lower spread duration</b> / raise average credit rating. Relative-value techniques rank bonds to pick the best expression of the view.</span></span>
+              </div>
+              <div class="fipm-fl">Portfolio effective duration &amp; convexity (see Risk-Measures calculator):
+  eff duration  = (PV₋ − PV₊) / (2 · Δcurve · PV₀)
+  eff convexity = (PV₋ + PV₊ − 2·PV₀) / (Δcurve² · PV₀)</div>
+            </div>
+
+            <!-- ═══════════ MODULE 7.1 — 7.c LIQUIDITY ═══════════ -->
+            <div class="fipm-card">
+              <div class="rc-sec">Module 7.1 &middot; Bond Liquidity</div>
+              <div class="fipm-title"><span class="rc-los">LOS 7.c</span>Bond liquidity, subsector differences &amp; effect on PM</div>
+              <div class="fipm-body"><b>Correlations between FI sectors:</b> bonds in the same market are highly correlated (shared macro). <b>IG</b> returns driven mainly by the benchmark sovereign curve; <b>HY</b> driven more by <b>spread</b> than rates &rarr; usually a <b>negative</b> rate&ndash;spread relationship (bad economy: low rates but high spreads) &rarr; HY correlates <b>more with equity</b>.</div>
+              <div class="fipm-body"><b>Liquidity</b> = transact in large size, quickly, with minimal price deviation. On-the-run developed-gov bonds are very liquid; other bonds may trade rarely / at wide spreads.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Why illiquid</span><span class="rc-dbody">(1) <b>Huge number of bond issues</b> (one issuer has many bonds, each unique in maturity/coupon/call &mdash; heterogeneous) vs one homogeneous common stock; (2) bonds trade <b>OTC</b> &rarr; higher search cost, less transparent past price/volume.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">On/off-the-run</span><span class="rc-dbody">Recently-issued (<b>on-the-run</b>) is more liquid (dealer inventory). Over time bonds get locked in buy-and-hold portfolios; a new similar issue makes the old one <b>off-the-run</b> &rarr; liquidity falls &rarr; higher YTM = <b>liquidity premium</b> (extra yield for lack of liquidity; "illiquidity premium" = same thing).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">By subsector</span><span class="rc-dbody"><b>Sovereign</b> on-the-run high-quality: high liquidity, large, homogeneous, used as benchmarks &amp; repo collateral. <b>Corporate</b>: varies with quality &amp; issue size &rarr; liquidity falls with lower quality &amp; smaller size; small issuers harder to build a large holding &amp; may be excluded from indexes.</span></span>
+              </div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Pricing data</span><span class="rc-dbody">OTC + infrequent trading &rarr; hard to price. Use <b>matrix pricing</b> &mdash; infer price from recent trades of bonds with similar features (maturity, quality, coupon).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Portfolio construction</span><span class="rc-dbody"><b>Buy-and-hold</b> investors need less liquidity &rarr; accept <b>less liquid</b> bonds for <b>higher yield</b>. <b>Active</b> investors prefer <b>more liquid</b> bonds. Those anticipating possible early sales avoid illiquid (long-maturity, small issuers, private placements).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Bid-ask cost</span><span class="rc-dbody">Cost of crossing the spread &asymp; <b>duration &times; (ask yield &minus; bid yield)</b>. Ex: duration 10, 20 bp spread &rarr; 10 &times; 0.002 = <b>0.02 = 2%</b> if bought at ask &amp; instantly sold at bid. Less-liquid, dealer-market bonds trade at <b>wider</b> bid-ask (dealers widen to be paid for holding harder-to-resell inventory).</span></span>
+              </div>
+              <div class="fipm-body"><b>Alternatives to direct bond investment:</b></div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Fixed-income ETFs</span><span class="rc-dbody">Replicate many FI sectors; exchange-listed &rarr; traded intraday, <b>high liquidity</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Open-end mutual funds</span><span class="rc-dbody">Daily subscribe/redeem; diversification &amp; economies of scale small investors can't get directly.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Derivatives / TRS</span><span class="rc-dbody">Exchange bond futures/options &amp; OTC swaps. Under a <b>total return swap (TRS)</b>, the <b>total-return receiver</b> pays an interest rate + spread for the total return of a reference bond portfolio. Prefer TRS: needs <b>little collateral</b> vs fully funding an ETF. Drawbacks: <b>counterparty risk</b> of the payer, <b>rollover risk</b> at maturity, potential <b>regulatory reform</b> raising collateral/cost.</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 7.2 — 7.d RETURN MODEL ═══════════ -->
+            <div class="fipm-card">
+              <div class="rc-sec">Module 7.2 &middot; Modeling Return</div>
+              <div class="fipm-title"><span class="rc-los">LOS 7.d</span>The five-component fixed-income return model</div>
+              <div class="fipm-body">Expected FI return = sum of five components. Same worked example throughout (par 50M, coupon 3.0%, price 101.50, projected price 102.419, C=28, MD=5.60, &Delta;Y=&minus;0.54%, &Delta;spread=&minus;0.06%, currency +3.925% on 40% foreign). See the Return-Model calculator.</div>
+              <div class="fipm-fl">1. Coupon income   = annual coupon / current price
+                   = 3.0 / 101.50            = 2.956%
+
+2. Rolldown return = (projected price − begin price) / begin price
+                   = (102.419 − 101.50) / 101.50 = 0.905%
+   Rolling yield   = #1 + #2 = 2.956 + 0.905 = 3.86%
+
+3. Δ price from Δ benchmark yield (ΔY = −0.54%):
+   (−MD × ΔY) + (½ × C × ΔY²)
+   = (−5.60 × −0.0054) + (½ × 28 × (−0.0054)²)
+   = 0.03024 + 0.00041      = 3.065%
+
+4. Δ price from Δ credit spread (ΔS = −0.06%):
+   (−MD × ΔS) + (½ × C × ΔS²)
+   = (−5.60 × −0.0006) + (½ × 28 × (−0.0006)²)
+   = 0.00336 + 0.000005     = 0.337%
+
+5. Currency G/L = FX change × foreign weight
+   = 3.925% × 0.40          = 1.570%
+
+   TOTAL expected return = 2.956 + 0.905 + 3.065 + 0.337 + 1.570 = 8.833%</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Rolling yield</span><span class="rc-dbody">= coupon income + rolldown (components 1+2 combined). Rolldown assumes an <b>unchanged</b> yield curve.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Rolldown sign</span><span class="rc-dbody">Flat curve, premium (discount) bond &rarr; price pulled to par &rarr; projected price <b>lower (higher)</b>. Upward- (downward-) sloping curve &rarr; rolldown <b>higher (lower)</b> than start YTM (bond ages into a lower/higher point on the curve).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Convexity effect</span><span class="rc-dbody">Small (only +0.041% here) &mdash; often insignificant for option-free bonds <b>unless &Delta;Y is large</b>. Embedded-option bonds &rarr; use <b>effective</b> duration &amp; convexity; floaters have low duration but still sensitivity to spreads.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">What's projected</span><span class="rc-dbody">Only <b>coupon income</b> is (nearly) certain. Rolldown assumes an unchanged curve; the &Delta;Y, &Delta;spread &amp; currency pieces are <b>pure predictions</b>. Model uses only duration &amp; convexity &mdash; ignores relative-valuation shifts across individual bonds.</span></span>
+              </div>
+              <div class="fipm-trap"><b>Prof's-note trap (Part 4):</b> technically <b>spread duration</b> should be used for the spread component, but the curriculum example uses <b>modified duration</b> (a fair approximation for a fixed-coupon bond, but poor for floaters, where MD is low yet spread duration is high). In a question: use <b>effective</b> duration/convexity for Part 3 and <b>spread</b> duration/convexity for Part 4 when both are given.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 7.3 — 7.e LEVERAGE ═══════════ -->
+            <div class="fipm-card">
+              <div class="rc-sec">Module 7.3 &middot; Leverage &amp; Tax</div>
+              <div class="fipm-title"><span class="rc-los">LOS 7.e</span>Leverage &mdash; use, methods &amp; risks</div>
+              <div class="fipm-body">Leverage boosts return, attractive when rates/expected returns are <b>low</b>. As long as funds borrow at a rate <b>below</b> the return earned (r&#7522; &gt; r&#7346;), leverage enhances return; it also raises interest-rate risk &amp; losses if the asset return falls below the borrow rate. Borrowing is usually short-term &rarr; asset duration normally <b>exceeds</b> liability duration in a leveraged portfolio.</div>
+              <div class="fipm-fl">Leveraged portfolio return (return on equity):
+  r_p = r_I + [(V_B / V_E) × (r_I − r_B)]
+  r_I = return on invested assets ; r_B = borrow rate
+  V_B = amount of leverage (borrowed) ; V_E = equity invested</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Repo (repurchase)</span><span class="rc-dbody">Owner "sells" a security for cash &amp; agrees to "buy" it back later &mdash; functionally a <b>collateralized loan</b>; assets are collateral. Usually overnight, renegotiated daily. Ex: 100M overnight at 2.5% &rarr; pay back 100,000,000 &times; [1 + (0.025/360)]. <b>Haircut</b>: dealer delivers collateral worth &gt;100% (e.g. <b>102%</b> = 102M, a 2% haircut) &rarr; extra security for the lender; bigger haircut for riskier/less-liquid collateral. <b>General collateral</b> (cash-driven, any agreed gov bonds) vs <b>security-driven</b> (lender wants a specific bond &rarr; offers a lower repo rate). Bilateral vs <b>tri-party</b> (a bank holds &amp; records the collateral). Repo rate may be adjusted for collateral quality instead of the haircut.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Futures</span><span class="rc-dbody">Small initial margin controls full contract value &rarr; leverage = <b>(notional value &minus; margin) / margin</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Swaps</span><span class="rc-dbody">A <b>receive-fixed / pay-MRR</b> swap &asymp; buying fixed-rate bonds funded by floating borrowing &rarr; <b>increases</b> bond-market exposure &amp; duration with <b>no explicit funds</b>. Receive-floating/pay-fixed = opposite. Post-2007&ndash;09 crisis, many swaps clear through a <b>central clearinghouse</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Securities lending</span><span class="rc-dbody">Related to repo but supports <b>short selling</b> (short seller borrows the security to deliver). Lender takes collateral (often &gt;100%, e.g. 105%) &amp; can reinvest cash collateral. <b>rebate rate = collateral earnings rate &minus; security lending rate.</b> Usually <b>open-ended</b> (no set maturity) &rarr; extra risk if a counterparty won't reverse. Lender earns more when the borrower badly needs that specific security.</span></span>
+              </div>
+              <div class="fipm-trap"><b>Risks created by leverage:</b> beyond the obvious, if borrowing cost rises above portfolio earnings (or rates rise &rarr; leveraged portfolio &amp; collateral fall in value), lenders <b>demand repayment &amp; force liquidation</b>. Selling under distress = <b>fire sale</b>; if widespread it drives a <b>vicious cycle</b> (each sale lowers prices &rarr; more repayment demands &amp; halted lending).</div>
+            </div>
+
+            <div class="fipm-card">
+              <div class="fipm-title"><span class="rc-los">LOS 7.f</span>Managing taxable vs tax-exempt portfolios</div>
+              <div class="fipm-body">Both seek the highest risk-adjusted return net of fees &amp; costs; taxable is more complex because after-tax return &amp; risk matter. Two return sources taxed differently: <b>income</b> vs <b>capital gains</b> (price change).</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Tax facts</span><span class="rc-dbody">Income &amp; gains usually taxed differently. Zero-coupon: <b>imputed income</b> (accretion to par) taxed yearly even with no cash flow. Gains usually taxed <b>only at sale</b> &amp; at a <b>lower</b> rate than income; <b>long-term</b> (longer hold) often taxed below short-term. Capital <b>losses</b> may offset gains (sometimes carried <b>forward</b>, sometimes <b>back</b> for a refund).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Taxable strategies</span><span class="rc-dbody">(1) Realize <b>losses</b> to offset gains (selective tax-loss harvesting for partial sales / multiple lots); (2) extend holding to get <b>long-term</b> vs short-term rates; (3) extend holding to <b>defer</b> taxes; (4) weigh <b>income-vs-gain rate differentials</b> when selecting investments; (5) use tax-sheltered/advantaged accounts where possible.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Funds vs SMA</span><span class="rc-dbody">Collective funds: income usually taxed to the fund/investor when earned; gain taxation <b>varies</b> &mdash; <b>pass-through</b> (taxed when fund realizes; that payment cuts later tax when shares sold) vs <b>deferred</b> (taxed only when fund shares are sold). A <b>separately managed account (SMA)</b> passes all income/gains/losses straight to the client's return &mdash; taxable to the client.</span></span>
+              </div>
+              <div class="fipm-info"><b>EXAMPLE &mdash; taxable vs tax-exempt (sell decision).</b> Two substantially identical bonds, same market value; Bond A has a big unrealized <b>gain</b>, Bond B a big unrealized <b>loss</b>; B has a slightly higher yield. <b>(1) Taxable investor: sell Bond B</b> (realize the loss / avoid triggering a taxable gain now &mdash the reading frames it as avoiding realizing a gain and paying tax now). <b>(2) Tax-exempt investor: sell Bond A</b>, keep Bond B for its slightly better yield (taxes irrelevant).</div>
+              <div class="fipm-trap"><b>PWM cross-check:</b> the tax-drag intuition here is the same one the private-wealth tax calculator captures &mdash; the accrual-tax regime example returns a <b>39.7%</b> tax drag on the stated inputs. Deferral &amp; loss-harvesting are the levers that reduce that drag.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 7.4 — 7.g LDI ═══════════ -->
+            <div class="fipm-card">
+              <div class="rc-sec">Module 7.4 &middot; Liability-Driven Investing</div>
+              <div class="fipm-title"><span class="rc-los">LOS 7.g</span>Liability-driven investing &amp; the four liability types</div>
+              <div class="fipm-body">LDI applies when there are <b>definable future liabilities</b> paid from portfolio assets &mdash; classified as <b>passive total return</b>, but "passive" doesn't mean do nothing (many strategies need continual monitoring). Mostly institutional (insurers, DB pensions), also individuals saving for retirement. Key terms:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">ALM</span><span class="rc-dbody">Asset-liability management &mdash; strategies considering assets <b>in relation to</b> liabilities; appropriate when PV of <b>both</b> assets &amp; liabilities change with rates.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">LDI</span><span class="rc-dbody">Takes <b>liabilities as given</b>, manages assets to meet them (this reading's focus).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">ADL</span><span class="rc-dbody">Asset-driven liabilities &mdash; takes <b>assets as given</b>, structures/adjusts the liabilities (e.g. a leasing company designs its debt to match its financial assets).</span></span>
+              </div>
+              <table class="fipm-tbl">
+                <tr><th>Type</th><th>Amount</th><th>Date</th><th>Example</th><th>Modeling</th></tr>
+                <tr><td><b>Type I</b></td><td>Known</td><td>Known</td><td>Option-free fixed-rate bond</td><td><b>Simple duration</b> (Macaulay/modified) is adequate &mdash; easiest to model</td></tr>
+                <tr><td><b>Type II</b></td><td>Known</td><td><b>Uncertain</b></td><td>Callable/putable bond; term life insurer (amount known, date not &mdash; law of large numbers estimates)</td><td>Effective duration</td></tr>
+                <tr><td><b>Type III</b></td><td><b>Uncertain</b></td><td>Known</td><td>Floating-rate instruments; real-rate bonds (TIPS)</td><td>Effective duration</td></tr>
+                <tr><td><b>Type IV</b></td><td><b>Uncertain</b></td><td><b>Uncertain</b></td><td>Property &amp; casualty; some DB plan liabilities</td><td>Effective duration</td></tr>
+              </table>
+              <div class="fipm-tip"><b>Modeling rule:</b> only <b>Type I</b> is simple enough for Macaulay/modified duration. Types II&ndash;IV need <b>effective duration</b> &mdash; model the initial curve shape plus assumed up/down shifts to estimate the amount &amp; timing of payouts.</div>
+            </div>
+
+            <div class="fipm-card">
+              <div class="fipm-title"><span class="rc-los">LOS 7.h</span>Cash flow matching (incl. multiple liabilities)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Single liability</span><span class="rc-dbody"><b>Simplest but least flexible</b> immunization. Buy a <b>zero-coupon</b> bond with par &amp; maturity matching the liability &rarr; no cash flow or price risk. Bonds must be <b>default-free</b>. May allow <b>accounting defeasance</b> (assets legally set aside &amp; dedicated &rarr; both assets &amp; liabilities removed from the balance sheet).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Multiple liabilities</span><span class="rc-dbody">Can use coupon bonds, built <b>recursively from the longest liability backward</b>: buy a bond whose <b>par + final coupon</b> exactly funds the longest liability; its <b>earlier coupons</b> partially meet earlier liabilities; then fund the next-longest with another bond's par+final coupon (crediting coupons of bonds already bought), and so on.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Cash-in-advance</span><span class="rc-dbody">Perfect matching is unlikely in practice. A <b>cash-in-advance constraint</b> requires the funding bond to mature <b>before</b> the liability date &rarr; exposes the portfolio to <b>reinvestment risk</b>: with an upward-sloping curve, cash received early must be reinvested at the <b>lower short-end rates</b> until payout.</span></span>
+              </div>
+            </div>
+
+            <div class="fipm-card">
+              <div class="fipm-title"><span class="rc-los">LOS 7.i</span>Laddered bond portfolios &mdash; construction, benefits, limits</div>
+              <div class="fipm-body">A <b>ladder</b> holds roughly <b>equal par across different maturities</b>. Same duration could instead come from a <b>bullet</b> (concentrate at one middle maturity) or a <b>barbell</b> (short + long holdings); all three with the same duration share roughly the same price sensitivity to a <b>parallel</b> shift.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Benefit &mdash; liquidity</span><span class="rc-dbody"><b>Regular liquidity</b> as bonds mature each year (matters when less-liquid bonds like corporates are used &rarr; less need to sell at wide bid-ask). Near-maturity bonds are <b>less risky</b> collateral &amp; can borrow at favorable rates.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Benefit &mdash; diversification</span><span class="rc-dbody">Broad <b>diversification of cash flow across time</b> &amp; <b>less concentrated</b> exposure to nonparallel curve changes at specific maturities.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Benefit &mdash; risk balance</span><span class="rc-dbody">Diversifies <b>price risk</b> (long-dated bonds) against <b>reinvestment risk</b> (short-dated); maturing bonds reinvest at long-term (typically higher) rates &rarr; keeps overall duration <b>stable over time</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Benefit &mdash; convexity</span><span class="rc-dbody">More convexity than a <b>bullet</b> (convexity relates to CF <b>dispersion</b> in time) &mdash; helpful under large parallel shifts. But the ladder is <b>not</b> as convex as a <b>barbell</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Target-date ETFs</span><span class="rc-dbody">Alternative to individual bonds: a ladder of <b>fixed-maturity (target-date) bond ETFs</b>, each maturing in a designated year, passively managed. Often cheaper &amp; more liquid than buying individual bonds if unanticipated sales are needed.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Disadvantage</span><span class="rc-dbody">For some investors an <b>ongoing (no target-date) passive index or active bond fund</b> is better &mdash; larger, greater credit-risk diversification, more liquid than direct bonds.</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE QUIZZES ═══════════ -->
+            <div class="fipm-card">
+              <div class="rc-sec">Module Quizzes &middot; verified reasoning</div>
+              <div class="fipm-title">Quiz answers &amp; the decisive detail</div>
+              <div class="fipm-info">MCQ answer keys were <b>not in the uploaded photos</b>; the answers below are my <b>verified reasoning</b> from the reading (Q7.2/7.3 Q1 is also node-verified), not a copy of the official key.</div>
+              <table class="fipm-tbl">
+                <tr><th>Quiz</th><th>Question</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>7.1 &middot; Q1</b></td><td>Which security protects <b>both</b> coupon &amp; notional principal from inflation?</td><td><b>B. Inflation-linked bonds</b></td><td>Par adjusts for inflation &rarr; both coupon &amp; principal protected. Floating protects the coupon only; fixed protects neither.</td></tr>
+                <tr><td><b>7.1 &middot; Q2</b></td><td>Pure indexing to beat/track the Agg &mdash; most accurate?</td><td><b>C. Match all risk factors, some leeway on individual bonds</b></td><td>Full replication is impractical; pure indexing matches duration/credit/sectors/prepayment with low turnover. A (large deviations) = active; B (sector/quality mismatches) = enhanced.</td></tr>
+                <tr><td><b>7.1 &middot; Q3</b></td><td>Which issue gives higher liquidity?</td><td><b>B. On-the-run sovereign gov debt</b></td><td>Large, homogeneous, benchmark/repo collateral. Small or below-IG corporates are less liquid.</td></tr>
+                <tr><td><b>7.2/7.3 &middot; Q1</b></td><td>25M par, coupon 5%, MD 8, C 0.5, &Delta;Y +0.35%, no spread change &mdash; expected price change?</td><td><b>B. &minus;2.799%</b></td><td>(&minus;8&times;0.0035)+(&frac12;&times;0.5&times;0.0035&sup2;) = &minus;0.028 + 0.0000031 = <b>&minus;2.799%</b>. <span class="fipm-green">Node-verified.</span></td></tr>
+                <tr><td><b>7.2/7.3 &middot; Q2</b></td><td>Leverage &amp; its risks &mdash; most correct?</td><td><b>A. If rates rise, the leveraged portfolio &amp; collateral decline</b></td><td>Rising rates cut bond &amp; collateral value &rarr; margin/repayment pressure. B is backwards (asset duration &gt; liability duration). C ignores that losses magnify if r&#7522; &lt; r&#7346;.</td></tr>
+                <tr><td><b>7.2/7.3 &middot; Q3</b></td><td>Taxable-investor strategy &mdash; most likely applied?</td><td><b>C. Consider income-vs-gain tax-rate differentials when selecting investments</b></td><td>A is wrong (realize <b>losses</b>, not gains); B is wrong (<b>extend</b> holding periods, not shorten).</td></tr>
+                <tr><td><b>7.4 &middot; Q1</b></td><td>Issuer wants a liability easily managed with known amounts &amp; dates &mdash; which type?</td><td><b>B. Option-free fixed-rate bonds</b></td><td>Known amount + known date = <b>Type I</b>, modeled with simple duration. Callable = Type II (uncertain date); TIPS = Type III (uncertain amount).</td></tr>
+                <tr><td><b>7.4 &middot; Q2</b></td><td>Laddered-portfolio construction/advantages &mdash; most correct?</td><td><b>A. The investor is diversified between price &amp; reinvestment risk</b></td><td>Core ladder benefit. B is not the ladder's claim; C is false &mdash; a ladder has <b>more</b> convexity than a bullet (more distributed CFs &rarr; more, not less, convexity).</td></tr>
+              </table>
+            </div>
+
+          </div>
+
+
           <script>
             function fipmTop(ev,id){
               var w=document.getElementById('fipmWidget');
@@ -23270,6 +23756,7 @@ bid-ask trade cost  ≈ duration × (ask yield − bid yield)</div>
             <button class="aai-toptab" onclick="aaiTop(event,'aai-liq')">Liquidity &amp; Monitoring (8.g/8.h)</button>
             <button class="aai-toptab" onclick="aaiTop(event,'aai-cheat')">Cheat Sheet</button>
             <button class="aai-toptab" onclick="aaiTop(event,'aai-quiz')">Quiz &amp; Traps</button>
+            <button class="aai-toptab" onclick="aaiTop(event,'aai-recap')">Recap</button>
           </div>
 
           <!-- ════════ ROLES & MITIGATORS 8.a / 8.b ════════ -->
@@ -23822,6 +24309,205 @@ MOIC              = (value of underlying investments + distributions) / total in
               <span class="aai-rule"><b class="aai-red">Effective &lt; target:</b> uncalled committed capital means the portfolio's effective alt allocation is below target until the GP invests it.</span>
             </div>
           </div>
+
+          <div id="aai-recap" class="aai-toppanel">
+            <style>
+              #aai-recap .aai-card { opacity:1; transform:none; }
+              #aai-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+              #aai-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(167,139,250,.14); border:1px solid var(--aai-main); color:var(--aai-main); border-radius:3px; padding:1px 6px; margin-right:6px; }
+              #aai-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
+              #aai-recap .rc-drow { display:grid; grid-template-columns:150px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+              #aai-recap .rc-dlabel { color:var(--aai-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #aai-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #aai-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #aai-recap .rc-dlabel { padding-top:0; }
+              }
+              #aai-recap .rc-drow:last-child { border-bottom:none; }
+              #aai-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
+            </style>
+
+            <button class="recap-print-btn" onclick="printOneRecap('aai-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+            <div class="aai-card">
+              <div class="aai-title">Reading 8 &middot; Asset Allocation to Alternative Investments</div>
+              <div class="aai-body">Full-reading recap, module by module: <b>roles of alts (8.a)</b>, <b>alts vs bonds as risk mitigators (8.b)</b>, <b>traditional vs risk-based opportunity sets (8.c)</b>, <b>allocation considerations &amp; vehicles (8.d)</b>, <b>suitability (8.e)</b>, <b>allocation approaches (8.f)</b>, <b>liquidity planning (8.g)</b>, and <b>monitoring (8.h)</b>. The two calculation pieces &mdash; the PE cash-flow timeline and the liquidity-forecasting model &mdash; are <span class="aai-green">node-verified</span> and reproduced by the widget's Cash-Flow Calculator.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 8.1 — 8.a ROLES ═══════════ -->
+            <div class="aai-card">
+              <div class="rc-sec">Module 8.1 &middot; Role of Alternative Investments</div>
+              <div class="aai-title"><span class="rc-los">LOS 8.a</span>Roles that alternatives play in multi-asset portfolios</div>
+              <div class="aai-body"><b>Alternative investments</b> = hedge funds, private equity, private credit, commercial real estate, and real assets. <b>Real assets</b> = agricultural commodities, precious &amp; industrial metals, agricultural land, oil. Hedge-fund strategies include long-short hedging, short bias, risk arbitrage, and quantitative strategies. Each has different risk/return &amp; correlation with traditional assets.</div>
+              <div class="aai-body"><b>Overall goal:</b> improve the portfolio's risk/return profile (e.g. raise the <b>Sharpe ratio</b>) &mdash; from higher expected returns, low return correlation with other assets (diversification reduces risk without sacrificing return), income, capital growth, or safety (preservation of value).</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Return-enhancing</span><span class="rc-dbody"><b>Private equity &amp; private credit</b> &mdash; return-enhancing (and risk-increasing).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Risk-reducing</span><span class="rc-dbody"><b>Real assets</b> &mdash; risk-reducing (and thus lower-return).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Anywhere on spectrum</span><span class="rc-dbody"><b>Hedge funds</b> &mdash; fall anywhere depending on the manager's strategy.</span></span>
+              </div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Capital growth</span><span class="rc-dbody">Public &amp; private <b>equity</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Income</span><span class="rc-dbody">Bonds or <b>real estate</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Diversify equity risk</span><span class="rc-dbody"><b>Real assets</b> &amp; some hedge-fund strategies.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Diversify FI risk</span><span class="rc-dbody"><b>Private credit</b> (for a portfolio primarily exposed to interest-rate risk).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Safe-haven</span><span class="rc-dbody"><b>Precious metals</b> or government bonds.</span></span>
+              </div>
+              <table class="aai-tbl">
+                <tr><th>Class</th><th>Detail to remember</th></tr>
+                <tr><td><b>Hedge funds</b></td><td>Equity long/short &amp; short bias may <b>reduce equity beta</b> but mainly add return via manager <b>security-selection skill</b>. Merger arbitrage / global macro are <b>less correlated</b>. Arbitrage &amp; event-driven often have <b>negatively skewed</b> returns &rarr; <b>tail risk</b> (= "short volatility" exposure to downturns/unexpected events).</td></tr>
+                <tr><td><b>Private equity</b></td><td>For a public-equity portfolio, <b>limited diversification</b> (public &amp; private face the same risk factors) &rarr; main function is to <b>increase expected return</b>.</td></tr>
+                <tr><td><b>Private credit</b></td><td>Direct lending (income-producing; similar risk-return to public debt but an <b>illiquidity premium</b>) + distressed debt (behaves <b>more like equity</b> &mdash; issuer-specific factors dominate).</td></tr>
+                <tr><td><b>Commercial real estate</b></td><td>Hedges <b>inflation</b> &mdash; both rental income &amp; property value may rise with inflation.</td></tr>
+                <tr><td><b>Real assets</b></td><td>Commodities, farm/timberland, infrastructure hedge inflation; can <b>target subsets</b> (energy, food, building materials). Infrastructure needs a <b>longer horizon</b> &amp; its inflation correlation may be limited by utility-rate regulation.</td></tr>
+              </table>
+            </div>
+
+            <!-- ═══════════ MODULE 8.1 — 8.b ALTS VS BONDS ═══════════ -->
+            <div class="aai-card">
+              <div class="rc-sec">Module 8.1 &middot; Alts vs Bonds as Risk Mitigators</div>
+              <div class="aai-title"><span class="rc-los">LOS 8.b</span>Alternatives vs bonds for diversifying a long equity position</div>
+              <div class="aai-body">Which is the better equity diversifier &mdash; alts or bonds? <b>It depends on the investor's time horizon.</b></div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Short horizon</span><span class="rc-dbody">Primary risk = <b>returns volatility</b>. Best reduced by allocating to an asset with <b>low correlation</b> to equities. Reported alt volatility &amp; equity correlation <i>look</i> low, but are <b>biased downward</b> &mdash; so <b>bonds</b> are the better short-horizon diversifier.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Long horizon</span><span class="rc-dbody">Primary risk = <b>failing to achieve a minimum required return</b> over time (e.g. an endowment must earn &gt; inflation + required distributions). Bonds' <b>low expected return</b> can <i>increase</i> the risk of missing the target &rarr; <b>alternatives</b> are the better long-horizon diversifier (still-imperfect equity correlation gives diversification, plus higher expected return).</span></span>
+              </div>
+              <div class="aai-trap"><b>Why reported alt stats are biased DOWNWARD (understate risk &amp; correlation):</b><br>&bull; <b>Appraisal-based</b> valuations of private holdings &rarr; <b>smoothing</b> of reported returns.<br>&bull; Databases have <b>sampling biases</b> &mdash; <b>survivorship bias</b> &amp; <b>backfill bias</b> &rarr; downside risk understated.<br>&bull; Alt <b>indexes</b> hold funds with low mutual correlation &rarr; index volatility &lt; average component volatility.<br>&rarr; True alt volatility &amp; equity correlation are <b>higher</b> than reported.</div>
+              <div class="aai-info"><b>Bond comparison:</b> over the 20 years before 2017, bonds' correlation with equities was <b>negative</b> (it was positive in the two prior decades when inflation was higher) &rarr; a bond allocation reduces equity-portfolio volatility <b>more</b> than an equal alt allocation. Decisive detail: <b>short horizon &rarr; bonds; long horizon &rarr; alternatives.</b></div>
+            </div>
+
+            <!-- ═══════════ MODULE 8.1 — 8.c OPPORTUNITY SET ═══════════ -->
+            <div class="aai-card">
+              <div class="rc-sec">Module 8.1 &middot; Defining the Investment Opportunity Set</div>
+              <div class="aai-title"><span class="rc-los">LOS 8.c</span>Traditional vs risk-based approaches to the opportunity set</div>
+              <div class="aai-body"><b>Traditional approaches</b> classify asset groups by <b>liquidity</b> or by <b>how they perform over economic cycles</b>.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Liquidity-based</span><span class="rc-dbody">Distinguish <b>publicly traded</b> alts (futures, REITs) vs <b>non-public</b>; among non-public, classify by <b>length of commitment</b>. E.g. <b>private equity requires a longer-term commitment than private credit</b>, and both longer than more-liquid alts. (Fig 8.1: more-liquid = cash, bonds, public equity, commodity futures, REITs &rarr; less-liquid = private credit, equity hedge funds, private real estate, private equity, private real assets.)</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Economic-environment</span><span class="rc-dbody">Classify by expected performance across growth &amp; inflation scenarios (Fig 8.2): <b>growth</b> (equities), <b>inflation hedges</b> (real assets, indexed bonds), <b>deflation hedges</b> (non-inflation-indexed gov bonds). High growth &rarr; public/private equity, private credit; high inflation &rarr; indexed bonds, commodities, real assets.</span></span>
+              </div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Risk-factor-based</span><span class="rc-dbody">Statistically estimate each asset's <b>sensitivity to risk factors</b> (economic growth &amp; inflation, rates &amp; credit spreads, currency; also liquidity, capitalization, value-vs-growth). Shows some alts resemble traditional classes: <b>PE returns are sensitive to the same risks as public equity; private credit has the same risk sensitivities as public high-yield bonds.</b></span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Advantages</span><span class="rc-dbody">Identifies <b>risk common across classes</b> (mitigates the traditional flaw of splitting investments into "different" classes that share risk factors &rarr; false sense of diversification); supports an <b>integrated risk-management framework</b> &amp; highlights the primary drivers of portfolio risk.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Disadvantages</span><span class="rc-dbody">Factor estimates are <b>sensitive to the analysis period</b>; results are <b>harder to communicate &amp; implement</b> than traditional approaches.</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 8.2 — 8.d CONSIDERATIONS ═══════════ -->
+            <div class="aai-card">
+              <div class="rc-sec">Module 8.2 &middot; Considerations in Allocating</div>
+              <div class="aai-title"><span class="rc-los">LOS 8.d</span>Considerations specific to alternative investments</div>
+              <div class="aai-body">Beyond the usual risk/return/correlation, an alt allocation must weigh: choice of <b>investment vehicle</b>, <b>liquidity</b>, <b>expenses &amp; fees</b>, <b>tax status</b>, and <b>access to expertise</b>.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Return expectations</span><span class="rc-dbody">Hard to set &mdash; <b>short history</b> &amp; limited data validity. Suggested approach: estimate each <b>risk-factor exposure</b>, add expected returns from those exposures to the <b>risk-free rate</b>; may add assumed manager <b>alpha</b> and subtract fees &amp; taxes.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">MVO limits</span><span class="rc-dbody">Illiquidity/valuation issues, <b>option-like return patterns</b>, and returns low/negative in a drawdown then high later mean <b>returns are NOT normally distributed</b> &rarr; MVO is less useful. Also, uncalled committed capital &rarr; a portfolio's <b>effective allocation may be below target</b>.</span></span>
+              </div>
+              <div class="aai-body"><b>Investment vehicles:</b></div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Limited partnership</span><span class="rc-dbody">Typical structure: manager = <b>general partner (GP)</b>, investors = <b>limited partners (LPs)</b> whose liability is capped at committed capital; often registered offshore for tax/reporting. Direct LP investing suits <b>large</b> investors with the expertise to evaluate managers; LPs may <b>co-invest</b> with a GP but can't be involved in fund operations.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Fund-of-funds (FoF)</span><span class="rc-dbody">For investors lacking expertise. Pools capital into LPs; usually specializes. <b>Benefit:</b> access to the class for those who otherwise couldn't. <b>Drawback:</b> an <b>additional layer of fees</b> above the underlying LPs.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">SMA / fund of one</span><span class="rc-dbody"><b>Separately managed accounts (SMAs)</b> for large investors who can demand favorable terms (challenging to implement). A <b>fund of one</b> = LP with a single client. Risk: GPs allocating scarce opportunities may <b>favor LPs paying standard fees</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">UCITS / mutual funds</span><span class="rc-dbody">Open-ended funds &amp; <b>UCITS</b> give <b>smaller</b> investors access, but are <b>more regulated</b> &amp; may <b>constrain strategy</b> &rarr; returns may not match the asset class as a whole.</span></span>
+              </div>
+            </div>
+
+            <div class="aai-card">
+              <div class="aai-title">Liquidity concerns, fees &amp; taxes, in-house vs intermediaries</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Hedge-fund liquidity</span><span class="rc-dbody">LPs structured with <b>subscription provisions</b>, <b>lockup periods</b> (often 6 months&ndash;1 year; redemptions blocked or penalized), redemptions on a quarterly/annual schedule with a <b>notice period</b>, and <b>"gates"</b> (max redeemable at once).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">PE/PC/RE/RA liquidity</span><span class="rc-dbody"><b>Stricter</b> than hedge funds. Subscriptions in <b>"closes"</b> over ~1 year; LPs <b>commit</b>, GP <b>"calls"</b> capital over an investment period (3&ndash;5 yrs). <b>No redemptions</b> &mdash; the fund <b>distributes</b> capital over its life (10&ndash;12 yrs) as it exits. A small <b>secondary market</b> exists but trades at big <b>discounts to NAV</b> &amp; may need GP approval.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Fees</span><span class="rc-dbody">"<b>2 and 20</b>" (2% of AUM management + 20% of gains incentive). <b>Drawdown funds charge fees on committed capital</b> regardless of how much is called &rarr; <b>negative returns in early years</b>. Admin expenses may pass through.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Taxes</span><span class="rc-dbody">Some strategies create <b>short-term taxable income</b> or tax withholding; unpredictable returns make annual tax estimation hard. <b>Tax-exempt orgs</b> must ensure fund income isn't <b>unrelated business income</b> (taxable).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">In-house vs intermediary</span><span class="rc-dbody"><b>"Build or buy"</b> &mdash; large investors may run an in-house program for customization, control, or co-investment. Depends on whether they can match an intermediary at lower cost or generate excess returns. Must be able to <b>identify top managers</b> (who may be <b>closed</b> to new capital) &amp; perform <b>due diligence</b> on key decision-makers.</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 8.3 — 8.e SUITABILITY ═══════════ -->
+            <div class="aai-card">
+              <div class="rc-sec">Module 8.3 &middot; Suitability, Approaches, Liquidity, Monitoring</div>
+              <div class="aai-title"><span class="rc-los">LOS 8.e</span>Suitability considerations</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Expertise / size</span><span class="rc-dbody">Suitable only for <b>large investors</b> who have or can hire the specialized knowledge to select profitable investments &amp; understand the risks &amp; market factors driving each strategy.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Belief in active mgmt</span><span class="rc-dbody">Alts rest on the premise that <b>skilled managers create value through active management</b> &rarr; <b>NOT suitable</b> for investors who believe in market <b>price efficiency</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Time horizon (key)</span><span class="rc-dbody"><b>PE &amp; private real assets</b>: only for <b>long horizons (15+ years)</b>. Shorter horizons &rarr; hedge funds with <b>short lockups</b> &amp; strategies that exit quickly (e.g. funds holding publicly-traded equities or commodity futures).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Governance</span><span class="rc-dbody">Needs a strong governance program: <b>formal IPS with clear objectives</b>, decision-making in <b>expert hands</b>, and a <b>reliable reporting framework</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Transparency</span><span class="rc-dbody">Investors must accept <b>lower transparency</b> than traditional investments (private partnerships aren't bound by public reporting; reports lag &amp; vary). Hedge funds often use independent administrators for NAV; PE/private real assets <b>typically don't</b> &rarr; wider valuation discretion; PE/RA may be <b>"blind pools"</b> (fund buys assets only after capital is committed).</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 8.3 — 8.f APPROACHES ═══════════ -->
+            <div class="aai-card">
+              <div class="aai-title"><span class="rc-los">LOS 8.f</span>Approaches to allocating to alternatives</div>
+              <div class="aai-body">Suggested to allocate in <b>two stages</b>: first with only traditional classes, then also considering alternatives. Three statistical tools (used alone or combined):</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Monte Carlo</span><span class="rc-dbody">(1) Decide whether to simulate <b>asset-class returns or risk factors</b>; (2) define statistical behavior (mean reversion, fat tails, unstable correlations); (3) if factor-based, <b>translate factors to asset-class returns</b>; (4) use the return scenarios for outputs like the <b>probability of a shortfall</b> to the required return.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">MVO</span><span class="rc-dbody">Can <b>over-allocate</b> to alts (esp. illiquid PE) when smoothed data isn't adjusted. <b>Constrain</b> min/max % or cap volatility/downside risk. Treat MVO output as a <b>guideline, not a prescription</b>; watch input sensitivity (small input changes &rarr; big allocation swings).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Risk-factor-based opt.</span><span class="rc-dbody">Like MVO but models <b>risk factors &amp; a risk budget</b> instead of asset return/risk; optimize exposures within factor constraints, then <b>translate optimized exposures back to an asset allocation</b>. Limitations: asset-class factor sensitivities <b>may not be stable</b>, and <b>factor correlations rise in financial stress</b>.</span></span>
+              </div>
+              <div class="aai-trap"><b>Modeling the return distribution (isolated):</b> alt returns are <b>nonnormal</b> &mdash; appraisal-based valuations &rarr; smoothed, <b>stale</b> data understate risk (detect via <b>serial correlation</b>; unsmooth if present); returns show <b>skew &amp; excess kurtosis (fat tails)</b>. Model fat tails via <b>regime switching</b> (a normal period + a high-volatility period, each with its own mean/variance, combined by scenario probability &rarr; nonnormal) or <b>extreme value theory</b>. A further limitation: <b>short history</b> &rarr; small-sample &amp; time-period biases.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 8.3 — 8.g LIQUIDITY PLANNING ═══════════ -->
+            <div class="aai-card">
+              <div class="aai-title"><span class="rc-los">LOS 8.g</span>Liquidity planning &mdash; cash-flow forecasting</div>
+              <div class="aai-body">Crucial with near-term capital drawdowns + long horizons: meet capital commitments <b>while</b> providing required liquidity. Model cash flows to/from a fund and the annual commitments needed to reach &amp; maintain the target alt allocation.</div>
+              <div class="aai-fl">Capital contribution in period t:
+  = (% to be called)_t × (committed capital − capital previously called)
+
+Distribution in period t (as a % of NAV):
+  = (% to be distributed)_t × [NAV_(t−1) × (1 + growth rate)]
+
+NAV in period t:
+  = NAV_(t−1) × (1 + growth rate) + contributions_t − distributions_t
+    (NAV rises with capital calls &amp; investment growth, falls with distributions)</div>
+              <div class="aai-info">These are the <b>Liquidity &amp; Monitoring &rarr; Cash-Flow Calculator</b> formulas. Example (verified): 25% call rate on 10 committed with 0 previously called &rarr; contribution 2.5; NAV 10 growing 10% with a 20% distribution &rarr; distribution 0.20&times;(10&times;1.10) = <b>2.2</b>.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Fig 8.3 timeline</span><span class="rc-dbody">$10M PE commitment: drawdowns of &minus;3/&minus;4/&minus;2 in the drawdown period (only <b>$9M called</b>, not the full $10M &rarr; $1M uncalled); distributions of $4/$5/$3M &rarr; total $12M; the fund terminates ~yr 10.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Return caveat</span><span class="rc-dbody">A fund may post an impressive rate of return, but the LP earns it <b>only on called capital</b>. Neither calls nor distributions follow a <b>predetermined schedule</b> &mdash; both can happen anytime, affecting how much of the target is <b>actually invested</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Opportunity cost</span><span class="rc-dbody">Uncalled committed capital has an opportunity cost: parking it in <b>cash reduces returns</b>, but chasing higher-return, less-liquid investments <b>risks missing a capital call</b> (penalty can be forfeiting all capital invested to date). Suggested fix: park committed-but-uncalled capital in <b>publicly-traded proxies</b> (e.g. commit to private real estate &rarr; hold public REITs meanwhile).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Building to target</span><span class="rc-dbody">A $15B fund at 0% PE wanting <b>10% ($1.5B)</b> can't get there at once (and shouldn't &mdash; wouldn't be <b>diversified across vintage years</b>). Build over years; <b>stress-test</b> the plan (e.g. delayed distributions earmarked to fund capital calls).</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 8.3 — 8.h MONITORING ═══════════ -->
+            <div class="aai-card">
+              <div class="aai-title"><span class="rc-los">LOS 8.h</span>Monitoring an alternative-investments program</div>
+              <div class="aai-body">Monitor to ensure the program achieves its goals (return, risk, income, safety). Evaluate performance <b>in the context of those goals, not simply against a benchmark</b> &mdash; even during the build-up phase, to keep investments consistent with objectives (correcting illiquid investments takes considerable time).</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Benchmark problem</span><span class="rc-dbody">Active, strategy-dependent alts make a representative benchmark hard to pick; published indexes are <b>inconsistent</b> in how they define strategies.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">IRR vs MOIC</span><span class="rc-dbody">Reporting is infrequent &amp; lagged; private funds often report <b>IRR</b>, which is <b>timing-influenced &amp; manipulable</b>. Prefer <b>MOIC = (underlying value + distributions) / invested capital</b> &mdash; less timing-sensitive. Either way, watch for <b>stale pricing &amp; appraisal-based valuations</b>; understanding the holdings <b>qualitatively</b> may best judge whether the manager adds value.</span></span>
+              </div>
+              <div class="aai-body"><b>Fund-management issues to monitor:</b></div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Key persons</span><span class="rc-dbody">Specified in fund docs; LPs may get rights if a <b>key person</b> leaves &mdash; understand why they departed.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Alignment</span><span class="rc-dbody">Manager interests should align with the LP's; conflicts if the manager raises a <b>new fund</b> holding some of the same assets, or <b>withdraws</b> capital they'd invested alongside LPs.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Style drift</span><span class="rc-dbody">GPs have wide discretion &rarr; watch holdings over time for <b>style drift</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Risk framework</span><span class="rc-dbody">Monitor the fund's risk management, especially for <b>leveraged</b> strategies.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Other investors</span><span class="rc-dbody">Judge whether other LPs are long-term. <b>Unexpected redemptions</b> by others = warning sign (fund may sell attractive holdings &rarr; remaining LPs left with illiquid/poor assets; "gates" may block redemptions). A large, unexpected <b>inflow</b> may push the manager into <b>lesser opportunities</b> &rarr; whole-fund performance suffers.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Service providers</span><span class="rc-dbody">Reliable auditors, custodians, third parties &mdash; if relationships change, learn whether it's positive (outgrew a provider) or negative (auditor quit over the manager's actions).</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE QUIZZES ═══════════ -->
+            <div class="aai-card">
+              <div class="rc-sec">Module Quizzes &middot; verified reasoning</div>
+              <div class="aai-title">Quiz answers &amp; the decisive detail</div>
+              <div class="aai-info">MCQ answer keys were <b>not in the uploaded photos</b>; the answers below are my <b>verified reasoning</b> from the reading, not a copy of the official key.</div>
+              <table class="aai-tbl">
+                <tr><th>Quiz</th><th>Question</th><th>Answer</th><th>Why</th></tr>
+                <tr><td><b>8.1 &middot; Q1</b></td><td>Most appropriate to diversify a portfolio of public equity?</td><td><b>C. Commercial real estate &amp; global macro hedge funds</b></td><td>Both have <b>low correlation</b> to public equity. A (PE + short-bias) &mdash; PE shares equity's risk factors (limited diversification). B (long-short + distressed) &mdash; distressed behaves like equity.</td></tr>
+                <tr><td><b>8.1 &middot; Q2</b></td><td>For alts, appraisal &amp; sampling biases are believed to <b>overstate</b>?</td><td><b>C. Diversification benefits</b></td><td>Smoothing + survivorship/backfill understate volatility &amp; correlation &rarr; alts <i>appear</i> to diversify more than they do &rarr; diversification benefit is <b>overstated</b>. (Risk is <b>understated</b>, not overstated.)</td></tr>
+                <tr><td><b>8.2 &middot; Q1</b></td><td>LP structure with a single client is known as?</td><td><b>B. A fund of one</b></td><td>Single-client LP = fund of one. UCITS = retail vehicle; SMA is not a partnership.</td></tr>
+                <tr><td><b>8.2 &middot; Q2</b></td><td>Cash flows from investors into a PE limited partnership?</td><td><b>A. Are at the discretion of the general partner</b></td><td>The GP <b>calls</b> capital on no set schedule. B (100% after 3&ndash;5 yrs) &amp; C (only at establishment) are wrong &mdash; calls are unpredictable &amp; often &lt;100%.</td></tr>
+                <tr><td><b>8.2 &middot; Q3</b></td><td>Term for a hedge fund designating holdings exempt from ordinary redemption terms?</td><td><b>C. Side pocket</b></td><td>A gate caps redemptions; a lockup blocks early redemptions; a <b>side pocket</b> segregates specific (illiquid) holdings from ordinary redemption terms.</td></tr>
+                <tr><td><b>8.3 &middot; Q1</b></td><td>Which public class is affected by similar risk factors to private credit?</td><td><b>C. High-yield bonds</b></td><td>Private credit has the <b>same risk sensitivities as publicly-traded high-yield bonds</b> (PE ↔ public equity, not private credit).</td></tr>
+                <tr><td><b>8.3 &middot; Q2</b></td><td>Alts most suitable for an investor that…?</td><td><b>C. Believes active management can generate excess risk-adjusted returns</b></td><td>Alts rest on skilled active management. B (believes markets are efficient) is the opposite; A (governance/transparency) doesn't by itself make alts suitable &mdash; and alts offer <b>lower</b> transparency.</td></tr>
+                <tr><td><b>8.3 &middot; Q3</b></td><td>Recommended optimization practices <b>least likely</b> include?</td><td><b>A. Using smoothed historical data as inputs</b></td><td>Smoothed data <b>understates risk</b> &mdash; you should <b>unsmooth</b> it. Modeling normal/high-vol regimes (B) and constraining allocations (C) <b>are</b> recommended.</td></tr>
+                <tr><td><b>8.3 &middot; Q4</b></td><td>$20B endowment raising PE &amp; PC from 5% to 10% each &mdash; most likely needs to?</td><td><b>B. Account for the expected growth rate of the portfolio when planning the commitment</b></td><td>Reaching/maintaining a target requires forecasting both portfolio &amp; fund values over years. A (hold all in cash) defeats the purpose &amp; drags returns; C (vehicles for $100M each) misstates the scale/task.</td></tr>
+                <tr><td><b>8.3 &middot; Q5</b></td><td>Vs IRR, a partnership's MOIC is <b>less</b> affected by?</td><td><b>B. Timing of capital calls</b></td><td>MOIC = (value + distributions)/invested capital &rarr; <b>not timing-sensitive</b>. Both metrics can still be affected by stale pricing/appraisal valuations (A, C).</td></tr>
+              </table>
+            </div>
+
+          </div>
+
 
           <script>
             function aaiTop(ev,id){
@@ -35454,7 +36140,10 @@ var RECAP_REGISTRY = [
   { id: 'fir-recap', title: 'Reading 2 · Capital Market Expectations, Part 2 (Forecasting Asset Class Returns)' },
   { id: 'oar-recap', title: 'Reading 3 · Overview of Asset Allocation' },
   { id: 'par-recap', title: 'Reading 4 · Principles of Asset Allocation' },
-  { id: 'rwr-recap', title: 'Reading 5 · Asset Allocation with Real-World Constraints' }
+  { id: 'rwr-recap', title: 'Reading 5 · Asset Allocation with Real-World Constraints' },
+  { id: 'eq-recap',  title: 'Reading 6 · Overview of Equity Portfolio Management' },
+  { id: 'fipm-recap', title: 'Reading 7 · Overview of Fixed-Income Portfolio Management' },
+  { id: 'aai-recap', title: 'Reading 8 · Asset Allocation to Alternative Investments' }
 ];
 
 // Shared print stylesheet used by both single- and all-recap printing.
