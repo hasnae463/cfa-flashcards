@@ -24642,6 +24642,7 @@ NAV in period t:
             <button class="pwm-modtab" onclick="pwmMod(event,'pwmm-94')">9.4 Taxation &amp; Inflation</button>
             <button class="pwm-modtab" onclick="pwmMod(event,'pwmm-95')">9.5 Investors &amp; IPS</button>
             <button class="pwm-modtab" onclick="pwmMod(event,'pwmm-essay')">9.E Essay Method</button>
+            <button class="pwm-modtab" onclick="pwmMod(event,'pwmm-recap')">Recap</button>
           </div>
 
           <!-- ════════ MODULE 9.1 Wealth Across the World ════════ -->
@@ -25622,6 +25623,319 @@ Average tax rate = 188,250 / 695,000 = 27.09%</div>
             </div>
           </div>
 
+          <!-- ════════════════════ MODULE 9.RECAP ════════════════════ -->
+          <div id="pwmm-recap" class="pwm-modpanel">
+            <div id="pwm-recap" class="pwm-toppanel active">
+              <style>
+                #pwm-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+                #pwm-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(224,168,46,.14); border:1px solid var(--pwm-main); color:var(--pwm-main); border-radius:3px; padding:1px 6px; margin-right:6px; }
+                #pwm-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
+                #pwm-recap .rc-drow { display:grid; grid-template-columns:150px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+                #pwm-recap .rc-drow:last-child { border-bottom:none; }
+                #pwm-recap .rc-dlabel { color:var(--pwm-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+                #pwm-recap .rc-dbody { min-width:0; }
+                @media (max-width:640px) {
+                  #pwm-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                  #pwm-recap .rc-dlabel { padding-top:0; }
+                }
+                #pwm-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
+              </style>
+
+              <button class="recap-print-btn" onclick="printOneRecap('pwm-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+              <div class="pwm-card">
+                <div class="pwm-title">Reading 9 &middot; An Overview of Private Wealth Management</div>
+                <div class="pwm-body">Full-reading recap, module by module: <b>wealth types &amp; distribution (9.a)</b>, <b>human/financial capital across the life cycle (9.b)</b>, <b>returns, risks, objectives &amp; constraints vs. HC/FC (9.c)</b>, <b>taxation &amp; inflation (9.d)</b>, and <b>private clients &amp; the IPS (9.e)</b>. Every calculation &mdash; progressive tax, employment+investment tax, tax drag (accrual/deferral/basis), inflation adjustment, the combined income+CG comprehensive example, and the holistic balance sheet &mdash; is <span class="pwm-green">node-verified</span> against the textbook figures and reproduced by the widget's Tax &amp; Wealth Calculator.</div>
+                <div class="pwm-info"><b>How to read the driver rows:</b> the left label is the <i>lever</i>; the right side is what that lever <i>does</i> to the value. Focus on <b>why</b> a number lands where it does, not just the label &mdash; that's where marks are dropped under time pressure.</div>
+              </div>
+
+              <!-- ═══════════ MODULE 9.1 — 9.a WEALTH ACROSS THE WORLD ═══════════ -->
+              <div class="pwm-card">
+                <div class="rc-sec">Module 9.1 &middot; Wealth Across the World</div>
+                <div class="pwm-title"><span class="rc-los">LOS 9.a</span>Types of individual wealth &amp; how it is created / distributed</div>
+                <div class="pwm-body"><b>Key wealth definitions</b> (Figure 9.1). The one that trips people up is <b class="pwm-hl">net worth vs. aggregate vs. economic net worth</b> &mdash; know which items each includes.</div>
+                <table class="pwm-tbl">
+                  <tr><th>Measure</th><th>What it is / the decisive detail</th></tr>
+                  <tr><td><b>Aggregate wealth</b></td><td>Total value of <b>all assets</b> owned (personal property, financial, real, productive, rights). <b class="pwm-hl">Asset-only &mdash; stated BEFORE subtracting liabilities.</b></td></tr>
+                  <tr><td><b>Net worth</b></td><td>Assets &minus; liabilities, using values <b>easy to measure</b> (listed securities, real estate, debts). <b class="pwm-red">Excludes complex intangibles</b> like copyrights.</td></tr>
+                  <tr><td><b>Financial wealth</b></td><td>All <b>financial assets</b> (funds, stocks, bonds, hedge funds) + accrued pension rights. <b class="pwm-red">Excludes stakes in family businesses</b> &rarr; those are <i>productive</i> wealth.</td></tr>
+                  <tr><td><b>Real wealth</b></td><td>Tangible assets: real estate + commodities. <b class="pwm-red">Not</b> personal property or financial assets. Primary residence is often the biggest piece.</td></tr>
+                  <tr><td><b>Personal property</b></td><td>Cars, clothes, furniture. <b>Not expected to appreciate</b>; may be worth more to the holder than fair market value.</td></tr>
+                  <tr><td><b>Productive wealth</b></td><td>Assets used to generate wealth via production/business (e.g. a direct shareholding in a family business).</td></tr>
+                  <tr><td><b>Liquid wealth</b></td><td>Easily converted to cash (listed securities). A subset of the above.</td></tr>
+                  <tr><td><b>Investable wealth</b></td><td>Financial &amp; other assets <b>readily available for investment</b>; usually a subset of financial wealth. <b class="pwm-main-c">This is the main focus of private wealth management.</b></td></tr>
+                  <tr><td><b>Economic net worth</b></td><td>Net worth <b>extended</b>: assets also include <b>pension benefits + human capital</b>; liabilities also include <b>PV of future consumption + bequests</b>. HC = PV of future earnings.</td></tr>
+                </table>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Real wealth creation</span><span class="rc-dbody"><b>Entrepreneurship + asset-price appreciation</b> = primary sources in most economies. Global stock-market cap &amp; global GDP both grew ~<b>7%/yr, 1970&ndash;2021</b>, and are highly correlated.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">NOT new wealth</span><span class="rc-dbody"><b class="pwm-red">Gambling wins, inheritances, lottery, sudden fame</b> &mdash; only a <b>transfer</b> of wealth within a country, not an increase in overall net wealth. (Quiz 9.1 Q4 &rarr; none of lottery/inheritance/fame create new wealth.)</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Long-term growth drivers</span><span class="rc-dbody">Market-oriented policies &amp; competition, shift to free-market capitalism (privatization), lower regulatory barriers, global connectivity, entrepreneurship, asset-price appreciation.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Long-term DRAG</span><span class="rc-dbody"><b class="pwm-red">State ownership of major industries</b> decreases long-term growth (Quiz 9.1 Q2 &rarr; A). Foreign investment &amp; competition <i>increase</i> it.</span></span>
+                </div>
+                <div class="pwm-body"><b>Regional drivers</b> (know the one-liner for each):</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">North America</span><span class="rc-dbody">Business formation &amp; entrepreneurship + productivity + financial-asset appreciation. <b>Uneven</b> &mdash; benefits professionals/executives with equity &amp; business-sellers.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Europe</span><span class="rc-dbody">Similar to NA (economic growth) but <b class="pwm-hl">more wealth in privately-held family business &amp; inherited real estate</b>. E. Europe: post-Soviet market transition; some oil/mineral wealth to politically-connected <b>oligarchs</b>. (EU+NA &asymp; <b>57%</b> of global wealth.)</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Asia-Pacific</span><span class="rc-dbody">Agrarian &rarr; manufacturing/services; heavy education &amp; training investment, high entrepreneurship, inward FDI.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Latin America</span><span class="rc-dbody">Modernized but <b>persistent inequality</b> &amp; instability; Argentina hyperinflation (ARS near parity 2012 &rarr; 175/USD 2022).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Middle East</span><span class="rc-dbody">Petroleum wealth, <b>very concentrated</b> in inheriting families; diversifying away from oil (Saudi ~40% of GDP oil-related).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Africa</span><span class="rc-dbody">Rising commodities revenue + inward FDI; <b>high inequality</b>, wealth concentrated in ruling elite/executives/professionals.</span></span>
+                </div>
+                <div class="pwm-body"><b>Inequality &amp; the Gini coefficient</b> (Figures 9.2&ndash;9.3):</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Gini = 0</span><span class="rc-dbody"><b>Perfect equality.</b> Each 10% of population holds 10% of wealth; <b class="pwm-hl">mean = median</b>; Lorenz curve = 45&deg; line.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Gini &rarr; 1</span><span class="rc-dbody"><b>Maximum inequality.</b> Wealth in the hands of very few; <b class="pwm-hl">mean &raquo; median</b> (positive skew). Higher Gini = higher skew &amp; more Lorenz bowing.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Rises when</span><span class="rc-dbody"><b class="pwm-red">Severe economic contraction / recession</b> (GFC 2007&ndash;09, COVID), greater income variability, fewer safety nets. (Quiz 9.1 Q6: 0.5&rarr;0.6 &rarr; A, contraction.) Russia &asymp;0.9, China &asymp;0.82.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Mean vs median</span><span class="rc-dbody">Gini 0.5 &rarr; positive skew &rarr; <b>mean &gt; median</b> (Quiz 9.1 Q7 &rarr; C). Lorenz curve = area under the cumulative wealth-vs-household curve.</span></span>
+                </div>
+                <div class="pwm-tip"><b>Global stats to anchor (Credit Suisse 2022):</b> 53% of adults had wealth &lt; USD 10k; only 1% &gt; USD 1m. Median USD 8,360 vs mean USD 87,489 (positive skew). Bottom 50% held &lt;1%; top decile held <b>82%</b> of global wealth.</div>
+                <div class="pwm-body"><b>HNW / UHNW &amp; family offices:</b> no precise cutoff, but complexity rises with wealth. UHNW = tens of millions USD (centimillionaires &gt;$100m, billionaires) often use <b>family offices</b>. <span class="rc-los">Family-office primary objective</span> <b class="pwm-hl">preserve &amp; grow wealth across generations</b>, aware of the family's unique opportunities/challenges (multiple tax &amp; legal jurisdictions). Tax havens vs. ethics/political-risk trade-off for cross-border moves.</div>
+                <div class="pwm-trap"><b>Quiz 9.1 traps.</b> Q1 &rarr; <b>B</b>: a savings account &amp; a tax-advantaged investment account are <i>both</i> investable assets. (A is false &mdash; vested DB benefits <i>are</i> in aggregate wealth; C is false &mdash; family-business shares are <i>productive</i>, not financial, wealth.) Q3 &rarr; <b>B</b> is <i>least accurate</i>: it's the <b>Middle East / oligarchs (E. Europe)</b>, not Asia-Pacific, that concentrate natural-resource wealth. Q5 (hyperinflation) &rarr; <b>A</b>: currency weakens &amp; nominal local-currency GDP per capita <i>rises</i>. <span class="pwm-blue">(Circled/verified from photos: Q2&rarr;A, Q6&rarr;A. Others reasoning-derived; official keys not in photos.)</span></div>
+              </div>
+
+              <!-- ═══════════ MODULE 9.2 — 9.b LIFE-CYCLE & HUMAN CAPITAL ═══════════ -->
+              <div class="pwm-card">
+                <div class="rc-sec">Module 9.2 &middot; Life-Cycle View of Human Capital</div>
+                <div class="pwm-title"><span class="rc-los">LOS 9.b</span>How HC, FC &amp; economic net worth change across the seven stages</div>
+                <div class="pwm-body">The <b>seven financial stages of life</b> &mdash; and the key fact attached to each:</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">1. Education</span><span class="rc-dbody">Before the workforce; financially dependent on parents; <b>little FC</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">2. Early career</span><span class="rc-dbody">Enters workforce, starts a family, begins to save, takes on debt (house).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">3. Career development</span><span class="rc-dbody">~ages <b>35&ndash;50</b>; income growth but rising responsibilities/outgoings <b>limit ability to save</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">4. Peak accumulation</span><span class="rc-dbody"><b>Maximum earnings.</b> Retirement planning &amp; <b>tax minimization</b> a key focus.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">5. Preretirement</span><span class="rc-dbody">Few years before retiring; may adjust lifestyle expectations to match wealth.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">6. Early retirement</span><span class="rc-dbody"><b>Most active</b> retirement period; keep <b>some risk</b> in the portfolio to ensure asset growth.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">7. Late retirement</span><span class="rc-dbody">Complex, unknown duration; <b class="pwm-red">longevity risk</b> = outliving financial assets; health care a concern.</span></span>
+                </div>
+                <div class="pwm-body"><b>Human capital (HC)</b> = <b>PV of expected future employment income</b>. Conceptually simple, practically un-valuable exactly. Exam-relevant inputs:</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Future income</span><span class="rc-dbody">Current income &times; assumed growth rate &times; remaining years of employment.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Survival prob.</span><span class="rc-dbody">Weight each future year by probability of survival (actuarial tables &mdash; may not fit an individual's risk profile).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Discount rate</span><span class="rc-dbody"><b class="pwm-hl">Nominal risk-free rate + risk premium</b> for earnings-stream uncertainty. Volatile professions (investment banker) &rarr; <b>higher premium &rarr; discounted more heavily</b> than a stable government worker/teacher.</span></span>
+                </div>
+                <div class="pwm-body"><b>Holistic (economic) balance sheet</b> &mdash; extends net worth to include HC &amp; pensions as assets, and PV of future consumption + bequests as liabilities. The worked example (all figures in <b>000s</b>) is the calculation to lock:</div>
+                <table class="pwm-tbl">
+                  <tr><th>Assets (000s)</th><th></th><th>Liabilities (000s)</th><th></th></tr>
+                  <tr><td>Current assets</td><td>500</td><td>Short-term debt</td><td>175</td></tr>
+                  <tr><td>Investment assets</td><td>1,500</td><td>Home mortgage</td><td>500</td></tr>
+                  <tr><td>Home</td><td>750</td><td><i>PV of future consumption</i></td><td><i>3,500</i></td></tr>
+                  <tr><td>DC plan balance</td><td>1,450</td><td><i>Planned bequests</i></td><td><i>1,000</i></td></tr>
+                  <tr><td><i>Private pension</i></td><td><i>40</i></td><td></td><td></td></tr>
+                  <tr><td><i>Government pension</i></td><td><i>450</i></td><td></td><td></td></tr>
+                  <tr><td><i>Future labor income (HC)</i></td><td><i>250</i></td><td></td><td></td></tr>
+                  <tr><td><b>Total assets</b></td><td><b>4,940</b></td><td><b>Total liabilities</b></td><td><b>5,175</b></td></tr>
+                </table>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Traditional BS</span><span class="rc-dbody">Assets <b>4,200</b> (500+1,500+750+1,450) vs explicit debt <b>675</b> (175+500) &rarr; looks healthy (+3,525).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Holistic BS</span><span class="rc-dbody">4,940 &minus; 5,175 = <b class="pwm-red">&minus;235 net worth</b>. The italic items (pensions, HC, PV consumption, bequests) flip the picture.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Interpretation</span><span class="rc-dbody">Negative economic net worth &rarr; consumption/bequest plans are <b>unrealistic &amp; must eventually change</b>. Caveats: harder to value the extra items; could be estimation error; may be a missing asset (e.g. expected inheritance). <b class="pwm-hl">Low HC (250) relative to pensions signals the individual is near retirement.</b></span></span>
+                </div>
+                <div class="pwm-body"><b>HC composition over the life cycle &amp; entrepreneurship:</b></div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Young</span><span class="rc-dbody">HC is the <b>dominant asset</b>; FC small.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Over time</span><span class="rc-dbody">Remaining work-life shortens &rarr; <b>HC declines</b>; savings/investment build &rarr; <b>FC rises</b>. Total wealth (HC+FC) &amp; FC peak <b>near retirement</b>, then draw down.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Entrepreneur</span><span class="rc-dbody">Gives up stable employment income for volatile business cash flows. <b class="pwm-hl">Unlike HC, business value can be turned into FC when the owner liquidates the stake</b> &rarr; entrepreneurship <b>adds to total wealth &amp; offsets the HC decline</b>.</span></span>
+                </div>
+                <div class="pwm-tip"><b>Diversification rule (very testable):</b> use pension &amp; financial assets to diversify the risk embedded in HC.<br>&bull; <b>Government employee / stable salary</b> &rarr; <b class="pwm-green">can take MORE equity risk</b> in the financial portfolio (bond-like HC) &rarr; greater growth. (Quiz 9.2 Q3 &rarr; <b>B</b>: more of FC to equities vs an entrepreneur.)<br>&bull; <b>Entrepreneur / volatile HC</b> &rarr; portfolio should be <b>more fixed-income-heavy</b> &amp; include industries <b>not correlated</b> with the business; trade-off is lower returns may pressure meeting objectives.<br>&bull; Pensions carry risk too (private-pension failure, government-pension shortfall) &mdash; less concern for the very wealthy but real for pension-reliant clients.</div>
+                <div class="pwm-trap"><b>Quiz 9.2 keys (reasoning-derived; official keys not in photos).</b> Q1 <i>least accurate</i> &rarr; <b>A</b>: the discount rate uses the <b>nominal</b> (not real) risk-free rate + risk premium. (B &amp; C are true.) Q2 <i>least likely a liability</i> on a holistic BS &rarr; <b>A</b>: <b>human capital is an ASSET</b>; planned bequests &amp; PV of future consumption are the liabilities. Q3 &rarr; <b>B</b> (above).</div>
+              </div>
+
+              <!-- ═══════════ MODULE 9.3 — 9.c RETURNS / RISKS / OBJECTIVES / CONSTRAINTS ═══════════ -->
+              <div class="pwm-card">
+                <div class="rc-sec">Module 9.3 &middot; Individual Investor Considerations</div>
+                <div class="pwm-title"><span class="rc-los">LOS 9.c</span>Returns, risks, objectives &amp; constraints vs. human &amp; financial capital</div>
+                <div class="pwm-body"><b>Returns &mdash; think in inflation-adjusted (real) terms.</b> Inflation erodes purchasing power &amp; compounds; objectives need returns that <b>outpace</b> inflation, not just nominal returns. Distinguish <b class="pwm-hl">outpacing inflation vs. hedging against inflation</b>:</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Equities</span><span class="rc-dbody"><b>Outpace</b> inflation over the long term (above-inflation real return), but <b class="pwm-red">volatile short-term &amp; may NOT outpace</b> persistent/rising inflation short-term. &rarr; long-term outpacer, <b>not</b> a reliable short-term hedge.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Commodities</span><span class="rc-dbody">Oil/gold prices can <b>outperform during inflationary periods</b> (commodity prices may <i>cause</i> inflation) &rarr; short-term <b>hedge</b>. But don't always beat persistent inflation; prices volatile.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Real estate</span><span class="rc-dbody">Hedge &mdash; property prices track the general price level; rents may be <b>pegged to inflation indexes</b>. But can stagnate/drop in inflationary times if economic uncertainty is high.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Fixed income</span><span class="rc-dbody"><b class="pwm-red">Most bonds are NOT inflation-linked</b> &rarr; suffer in real terms. Inflation-linked govt bonds keep pace but offer <b>low real returns</b>.</span></span>
+                </div>
+                <div class="pwm-body"><b>Risks individuals face:</b></div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Return volatility</span><span class="rc-dbody">Fluctuations in value &amp; returns.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Drawdown risk</span><span class="rc-dbody"><b class="pwm-hl">Difference between the investment's peak value and its lowest point</b> over a period. <b class="pwm-red">Not a realized loss</b> unless forced to liquidate at that low.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Missing objectives</span><span class="rc-dbody">Failing to meet financial objectives &mdash; from market conditions OR <b>under-allocating capital</b> to the goal.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Mitigant</span><span class="rc-dbody">Volatility &amp; drawdown risk are reduced by <b>diversification across asset classes</b>.</span></span>
+                </div>
+                <div class="pwm-body"><b>Four ways to describe a client's risk orientation</b> &mdash; keep <i>tolerance</i>, <i>capacity</i>, and <i>perception</i> distinct:</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Risk tolerance</span><span class="rc-dbody">Both <b>willingness AND ability</b> to take risk. Opposite = risk aversion.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Risk capacity</span><span class="rc-dbody"><b>Ability only</b> &mdash; based on wealth, income, horizon, liquidity needs, importance of goals. Higher capacity = portfolio can sustain losses without jeopardizing goals.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Risk perception</span><span class="rc-dbody"><b>Subjective</b> view of investment risk; varies by client; the wealth manager can <b>influence</b> it via education.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Evaluation</span><span class="rc-dbody">Questionnaires <b>+</b> conversations. Conversations surface past successes/failures, perception &amp; background hard to get from a questionnaire (Quiz 9.3 Q2 &rarr; <b>C</b>: capacity AND perception).</span></span>
+                </div>
+                <div class="pwm-body"><b>Risk capacity is DECREASED by</b> (drivers of lower ability to bear risk):</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Shorter horizon</span><span class="rc-dbody">Less time to recover from losses.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Large critical goals</span><span class="rc-dbody">Goals large relative to portfolio size.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Important / non-deferrable goals</span><span class="rc-dbody">Goals that matter or can't be postponed.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">High liquidity needs</span><span class="rc-dbody">More cash demands on the portfolio.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Sole source of support</span><span class="rc-dbody">Portfolio is the only support, or client can't tolerate value losses.</span></span>
+                </div>
+                <div class="pwm-body"><b>Objectives &amp; constraints &mdash; goal categories:</b></div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Planned goals</span><span class="rc-dbody"><b>Reasonably estimated within a specified time horizon.</b> Retirement, specific purchases (residence), education of dependents, family events (weddings), charitable giving, wealth transfer during life or at death.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Unplanned goals</span><span class="rc-dbody"><b class="pwm-red">Unexpected expenditures</b> &mdash; harder to deal with due to uncertain amount and/or timing. E.g. property repairs, medical costs not covered by insurance, long-term care.</span></span>
+                </div>
+                <div class="pwm-body"><b>Wealth-manager's role in formulating goals:</b> <b>Quantifying</b> (make vague goals specific &amp; realistic), <b>Prioritizing</b> (into primary vs. secondary when goals compete &mdash; <b class="pwm-hl">higher priority need not be the earliest-in-time</b>), and <b>Changing</b> (revise goals &amp; strategy as circumstances change). Use <b>capital sufficiency (capital needs) analysis</b> to test whether goals are achievable and revise if not.</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Risk tolerance by goal</span><span class="rc-dbody"><b class="pwm-hl">Low</b> risk tolerance for <b>more important</b> goals; <b>higher</b> tolerance for lower-priority goals. Near-term goals &rarr; lower tolerance than long-term goals.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Sample question</span><span class="rc-dbody">"When you invest, do you focus on: A always gain / B usually gain / C always loss?" Answer <b>C</b> &rarr; strong risk aversion &rarr; indicates the client's <b>risk perception</b>.</span></span>
+                </div>
+                <div class="pwm-trap"><b>Quiz 9.3 keys (reasoning-derived; official keys not in photos).</b> Q1 <i>most accurate on inflation protection</i> &rarr; <b>B</b>: equities give a long-term above-inflation return <i>and</i> a short-term hedge. (A false &mdash; FI suffers, esp. short run; C false &mdash; inflation-linked bonds protect short <i>and</i> long run.) Q2 &rarr; <b>C</b>: a questionnaire helps understand <b>capacity + perception</b>. <span class="pwm-blue">DuBois goals worked example lives in Module 9.5 recap below.</span></div>
+              </div>
+
+              <!-- ═══════════ MODULE 9.4 — 9.d TAXATION & INFLATION ═══════════ -->
+              <div class="pwm-card">
+                <div class="rc-sec">Module 9.4 &middot; Impact of Taxation &amp; Inflation</div>
+                <div class="pwm-title"><span class="rc-los">LOS 9.d</span>How different taxes &amp; inflation influence investment decisions</div>
+                <div class="pwm-body"><b>How each return source is taxed</b> (drives the whole module):</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Interest income</span><span class="rc-dbody">Taxed in the year received (<b>accrual</b>). Some jurisdictions exempt some interest or apply favorable rates.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Dividend income</span><span class="rc-dbody">Taxed in the year received (<b>accrual</b>). Often favorable &mdash; the company already paid tax on profits.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Capital gains</span><span class="rc-dbody">Levied on <b>realized</b> gains (asset must be sold/transferred) &rarr; <b>deferral basis</b>. Rate varies by asset type/holding period; <b class="pwm-hl">longer-term gains taxed favorably</b> to encourage long-term investment &amp; saving.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Wealth taxes</span><span class="rc-dbody">Annual tax on wealth in some systems; unusual; excluded from this module's calcs.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Accrual vs deferral</span><span class="rc-dbody"><b>Accrual</b> = taxed annually (dividends, interest). <b>Deferral</b> = tax postponed to realization (capital gains). <span class="pwm-red">"Deferred" here has no link to the accounting concept of deferred tax.</span></span></span>
+                </div>
+
+                <div class="pwm-body"><b class="pwm-main-c">Calc 1 &mdash; Progressive tax.</b> Each slice of income taxed at its band rate; investment income sits <b>on top of</b> employment income. Baghurst, taxable income EUR 600,000:</div>
+                <div class="pwm-fl">Bands: 0&ndash;10k @10% | 10&ndash;40k @20% | 40&ndash;100k @30% | 100&ndash;500k @40% | 500k+ @50%
+Cumulative tax to 500k (Column 3) = 185,000
+Tax = 185,000 + (600,000 &minus; 500,000) &times; 50% = <b>EUR 235,000</b>
+Average rate = 235,000 / 600,000 = <b>39.17%</b>   |   Marginal rate = <b>50%</b></div>
+                <div class="pwm-info"><b>Why avg &lt; marginal:</b> lower slices are taxed at lower band rates, so the blended (average) rate is always below the top (marginal) band in a progressive system. (Quiz 9.4 Q3 &rarr; <b>A</b>.)</div>
+
+                <div class="pwm-body"><b class="pwm-main-c">Calc 2 &mdash; Employment + investment income.</b> Emp 450k, interest 60k, dividends 100k.</div>
+                <div class="pwm-fl">Case 1 (all income treated equally) &mdash; total 610,000:
+Tax = 185,000 + (610,000 &minus; 500,000) &times; 50% = <b>EUR 240,000</b>
+Average = 240,000 / 610,000 = <b>39.34%</b>
+
+Case 2 (25k interest EXEMPT; dividends 20% flat):
+Taxable interest = 60,000 &minus; 25,000 = 35,000
+Progressive base = 450,000 + 35,000 = 485,000
+  &rarr; cumulative to 100k = 25,000; + (485,000 &minus; 100,000) &times; 40% = 25,000 + 154,000 = 179,000
+Dividends 100,000 &times; 20% = 20,000
+Total tax = 179,000 + 20,000 = <b>EUR 199,000</b>
+Average = 199,000 / 610,000 = <b>32.62%</b></div>
+                <div class="pwm-info"><b>Driver:</b> Case 2 is lower purely because <b>25k interest is exempt</b> and <b>dividends get a flat 20%</b> (vs the 40&ndash;50% top bands they'd otherwise hit). Same gross income, different tax treatment &rarr; 6.7pp lower average rate.</div>
+
+                <div class="pwm-body"><b class="pwm-main-c">Calc 3 &mdash; Tax drag (accrual).</b> 50k, 8%/yr, 25% tax annually. <b>FV = [1 + R(1&minus;t)]<sup>T</sup></b> per unit.</div>
+                <div class="pwm-fl">20y: FV = 50,000 &times; [1 + 0.08(1&minus;0.25)]<sup>20</sup> = <b>EUR 160,357</b>
+No-tax: 50,000 &times; 1.08<sup>20</sup> = 233,048
+Tax drag = (233,048 &minus; 160,357) / (233,048 &minus; 50,000) = 72,691 / 183,048 = <b>39.7%</b>
+
+30y: FV = 50,000 &times; [1.06]<sup>30</sup> = <b>EUR 287,175</b>   |   No-tax = 503,133
+Tax drag = 215,958 / 453,133 = <b>47.7%</b></div>
+                <div class="pwm-trap"><b>Decisive detail (Quiz 9.4 Q4 &rarr; A):</b> with <b>accrual</b> tax, the tax drag <b class="pwm-red">EXCEEDS the tax rate</b> (39.7% &gt; 25%) because you lose 25% of the gain <b>every year</b> and forgo compounding on it. Tax drag <b>rises</b> with a <b>longer horizon</b> (39.7% &rarr; 47.7%) and with a <b>higher pretax return</b>. So Q4's B ("decreases for higher returns") &amp; C ("increases for shorter periods") are both backwards.</div>
+
+                <div class="pwm-body"><b class="pwm-main-c">Calc 4 &mdash; Tax deferral (capital gains realized at end).</b> Same 50k, 8%, 25%, 20y, all gain realized at end.</div>
+                <div class="pwm-fl">FV = 50,000 &times; 1.08<sup>20</sup> &minus; (50,000 &times; 1.08<sup>20</sup> &minus; 50,000) &times; 25% = <b>EUR 187,286</b>
+Tax drag = (233,048 &minus; 187,286) / (233,048 &minus; 50,000) = 45,762 / 183,048 = <b>25.0%</b></div>
+                <div class="pwm-tip"><b>The key contrast:</b> under <b>pure deferral</b> (all return taxed once at the end) the <b>tax drag = the tax rate</b> exactly (25% = 25%). Deferral lets gains <b>compound tax-free until realization</b> &rarr; far lower drag than accrual (25% vs 39.7% for the same inputs). Tax-advantaged retirement accounts are a further deferral example &rarr; drag reduced to the tax rate.</div>
+
+                <div class="pwm-body"><b class="pwm-main-c">Calc 5 &mdash; Impact of cost basis on CG.</b> Low basis = a stored-up untaxed liability. Baghurst: 50k value, cost basis 20k, 8%, 20y, 25% deferred.</div>
+                <div class="pwm-fl">FV = 50,000 &times; 1.08<sup>20</sup> &minus; (50,000 &times; 1.08<sup>20</sup> &minus; 20,000) &times; 25% = <b>EUR 179,786</b>
+  (using basis factor B = 20,000/50,000 = 0.25)
+Tax drag = (233,048 &minus; 179,786) / (233,048 &minus; 50,000) = 53,262 / 183,048 = <b>29.1%</b></div>
+                <div class="pwm-info"><b>Why drag (29.1%) &gt; deferral (25%):</b> the <b>30,000 embedded gain</b> above cost basis (50k &minus; 20k) gets taxed <b>on top of</b> future gains &rarr; a low basis raises the effective drag. Formula: <code>FV = (1+R)<sup>T</sup>(1&minus;t<sub>cg</sub>) + B&times;t<sub>cg</sub></code>.</div>
+
+                <div class="pwm-body"><b class="pwm-main-c">Calc 6 &mdash; Inflation adjustment.</b> Take the nominal after-tax 179,786 to real terms at 3% over 20y:</div>
+                <div class="pwm-fl">FV(real, after-tax) = 179,786 / 1.03<sup>20</sup> = <b>EUR 99,543</b></div>
+                <div class="pwm-trap"><b>Inflation + tax interaction (Quiz 9.5 Q6 context).</b> Taxes are levied on <b>nominal</b> gains, so inflation <b>exacerbates</b> the tax erosion on long-term gains &mdash; an asset merely keeping pace with inflation is still taxed on the nominal "gain." <b class="pwm-hl">Inflation has a GREATER eroding impact on after-tax gains than on annual income</b>, and tax-advantaged accounts protect against <i>tax</i> but <b class="pwm-red">not</b> against inflation's loss of purchasing power. The <i>least accurate</i> claim (Quiz 9.5 Q6 &rarr; <b>B</b>) is that "as long as the nominal-vs-inflation gap is the same, the impact is the same" &mdash; false, because the nominal base being taxed differs.</div>
+
+                <div class="pwm-body"><b class="pwm-main-c">Calc 7 &mdash; Comprehensive (income + capital gains combined).</b> 200,000 portfolio, 3% dividend income + 6% price appreciation, both taxed 20%, dividends on accrual, CG realized at 15y.</div>
+                <div class="pwm-fl">Case 1 (as stated):
+Annual return = 6% + 3%&times;(1&minus;0.2) = <b>8.4%</b>
+First term = 1.084<sup>15</sup> = 3.353   |   CG ratio = 6% / 8.4% = 71.4%
+Growth 3.353 &minus; 1 = 2.353 ; net CG tax = 71.4% &times; 2.353 &times; 20% = 0.336
+After-tax factor = 3.353 &minus; 0.336 = 3.017 &rarr; FV = &times; 200,000 = <b>EUR 603,379</b>
+
+Case 2 (swap: 6% dividend, 3% appreciation):
+Annual return = 3% + 6%&times;(1&minus;0.2) = <b>7.8%</b> ; first term 1.078<sup>15</sup> = 3.085
+CG ratio = 3% / 7.8% = 38.5% ; net CG tax = 38.5% &times; 2.085 &times; 20% = 0.160
+After-tax factor = 3.085 &minus; 0.160 = 2.925 &rarr; FV = <b>EUR 584,958</b>
+
+Tax drag (no-tax factor = 1.09<sup>15</sup> = 3.642, gain 2.642):
+Case 1 drag = (3.642 &minus; 3.017)/2.642 = <b>23.7%</b>
+Case 2 drag = (3.642 &minus; 2.925)/2.642 = <b>27.2%</b></div>
+                <div class="pwm-info"><b>Why Case 2 drag &gt; Case 1:</b> Case 2 has a <b>higher proportion of return as income</b> (6% vs 3%), which is taxed <b>annually on accrual</b> &rarr; loses compounding &rarr; higher drag, even though total pretax return (9%) is identical. <b>More income share &rarr; more accrual tax &rarr; more drag.</b></div>
+
+                <div class="pwm-trap"><b>Module Quiz 9.4 answers (reasoning &amp; node-verified; official keys not in photos).</b><br>
+                <b>Q1</b> (emp 150k + realized CG 100k + div 25k, all equal, bands 5/10/20/30/40%): total 275k &rarr; 59,500 + (275&minus;250)k&times;40% = 69,500; avg 69,500/275,000 = 25.3% &rarr; <b>A (25%)</b>. <span class="pwm-blue">(A circled in photo.)</span><br>
+                <b>Q2</b> (dividends exempt, CG 20% flat): prog on 150k emp = 14,500 + (150&minus;100)k&times;30% = 29,500; + CG 100k&times;20% = 20,000 &rarr; total <b>EUR 49,500 &rarr; B</b>. <span class="pwm-blue">(&#10003; in photo.)</span><br>
+                <b>Q3</b> &rarr; <b>A</b>: progressive avg rate &lt; marginal rate. <span class="pwm-blue">(A circled.)</span><br>
+                <b>Q4</b> &rarr; <b>A</b>: accrual tax drag &gt; the applied tax rate. <span class="pwm-blue">(A circled.)</span><br>
+                <b>Q5</b> (MV 80k, basis 20k, 7%, 30% CG, 10y deferred): 80k&times;1.07<sup>10</sup> &minus; (80k&times;1.07<sup>10</sup> &minus; 20k)&times;30% = ~116,000 &rarr; <b>B (GBP 116,000)</b>. <span class="pwm-blue">(B circled.)</span><br>
+                <b>Q6</b> (inflation, <i>least accurate</i>) &rarr; <b>B</b> (same gap &ne; same impact). <span class="pwm-blue">(B circled.)</span><br>
+                <b>Q7</b> (500k, 3% income + 5% appr, 25% both, income accrual, CG at 20y): using the book's combined method, after-tax factor 3.53 vs no-tax 1.08<sup>20</sup>=4.66 &rarr; drag &asymp; <b>30.9% &rarr; A</b>. <span class="pwm-orange">(Reasoning-derived; not circled in photos. This matches the curriculum's Comprehensive-Example structure.)</span></div>
+              </div>
+
+              <!-- ═══════════ MODULE 9.5 — 9.e INDIVIDUAL INVESTORS & IPS ═══════════ -->
+              <div class="pwm-card">
+                <div class="rc-sec">Module 9.5 &middot; Individual Investors &amp; the IPS</div>
+                <div class="pwm-title"><span class="rc-los">LOS 9.e</span>Private vs. institutional clients &amp; formulating a private-client IPS</div>
+                <div class="pwm-body">The <b>IPS</b> documents a private client's objectives, risk tolerance, horizon, liquidity preferences &amp; constraints; the manager builds the portfolio given prevailing capital-market conditions. A private-client IPS covers <b>five areas</b> &mdash; and the exam constantly tests <b class="pwm-hl">which item belongs in which section</b>:</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">1. Background &amp; objectives</span><span class="rc-dbody">Client background (personal, financial &amp; <b>tax</b> info; assets in &amp; outside the portfolio; external cash flows like a DB pension) + quantified &amp; prioritized <b>investment objectives</b> (primary vs secondary). <b class="pwm-hl">Taxes live here</b>, in financial background.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">2. Key investment parameters</span><span class="rc-dbody"><b>Risk tolerance, time horizon, asset-class preferences, liquidity preferences, other investment preferences, constraints.</b> In this reading, risk tolerance/horizon/liquidity/other-prefs/constraints are all <b>parameters</b> (not "objectives").</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">3. Portfolio asset allocation</span><span class="rc-dbody"><b>Strategic AA</b> = long-term targets, rebalanced to maintain. <b>Tactical AA</b> = active, usually a <b>range</b> per class rather than a point target.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">4. Portfolio management &amp; implementation</span><span class="rc-dbody"><b>Discretionary authority</b> (full / limited / nondiscretionary), <b>rebalancing</b> (time-based vs threshold-based), <b>tactical-change</b> authority &amp; bounds, <b>implementation</b> (in-house/external managers, ETFs, funds, due diligence).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">5. Duties &amp; responsibilities</span><span class="rc-dbody">Formulate/review IPS, select investments &amp; build AA, monitor &amp; rebalance, monitor costs &amp; third-party providers, report performance, report taxes/financials, vote proxies.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">IPS Appendix</span><span class="rc-dbody">Items that change more often: <b>modeled portfolio performance</b> (range of outcomes/distribution of returns at percentiles) &amp; <b>capital market expectations</b> (expected return, risk, correlations).</span></span>
+                </div>
+                <div class="pwm-body"><b>Section placement &mdash; the recurring MCQ pattern:</b></div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Risk tolerance</span><span class="rc-dbody">&rarr; Key investment parameters.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Time horizon</span><span class="rc-dbody">&rarr; Key investment parameters. Described as a <b>range</b> (e.g. "&gt;15y long", "&lt;10y short"), not a precise length; multiple goals &rarr; multiple horizons.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liquidity preferences</span><span class="rc-dbody">&rarr; Key investment parameters. <b class="pwm-hl">A cash reserve, or a constraint on asset selection because the portfolio may need to be sold quickly, goes HERE</b> (Quiz 9.5 Q4 &rarr; A).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Constraints (e.g. ESG)</span><span class="rc-dbody">&rarr; Key investment parameters. ESG/ethical-investing restrictions are a <b>constraint</b> (Quiz 9.5 Q2 &rarr; A).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">A specific purchase / goal</span><span class="rc-dbody">&rarr; Investment <b>objectives</b> (Background &amp; objectives). E.g. a $2m holiday-apartment purchase in 2y is an objective, not a parameter (Quiz 9.5 Q1 &rarr; B).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Rebalancing methodology</span><span class="rc-dbody">&rarr; Portfolio management section (Quiz 9.5 Q3 &rarr; C). Capital-market expectations &amp; modeled behavior sit in the <b>Appendix</b>, not here.</span></span>
+                </div>
+                <div class="pwm-tip"><b>Discretionary authority spectrum:</b> full discretion &rarr; act without prior approval; limited &rarr; only prespecified actions (e.g. rebalance within agreed ranges); <b>nondiscretionary</b> &rarr; can recommend but <b>cannot act without client approval</b>. Rebalancing: <b>time-based</b> (quarterly/semiannual/annual &mdash; ignores drift) vs <b>threshold-based</b> (rebalance once weights drift a preset amount from target).</div>
+
+                <div class="pwm-body"><b class="pwm-main-c">Worked example A &mdash; Elam (preparing objectives).</b> William &amp; Elizabeth, both 30, three kids (8/5/3), salaries cover living expenses, $20k credit-card debt, $750k inheritance.</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Portfolio purpose</span><span class="rc-dbody">Pay children's <b>college</b>, fund <b>retirement</b>, set up a <b>trust fund</b> for the kids &mdash; NOT to improve current lifestyle.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Distributions begin</span><span class="rc-dbody">~10y (college), apart from paying off the credit card immediately. Then trust + retirement funding.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Manager's job</span><span class="rc-dbody"><b>Quantify &amp; prioritize</b> the competing objectives; use <b>capital-sufficiency analysis</b> to test feasibility &amp; revise if unsupported.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Time horizons</span><span class="rc-dbody">Multiple: college <b>&gt;10y</b>; trust for children (post-college) likely <b>&gt;20y</b>; retirement <b>&gt;30y</b>. State each separately.</span></span>
+                </div>
+
+                <div class="pwm-body"><b class="pwm-main-c">Worked example B &mdash; DuBois (formulating goals).</b> 60, retired 35-yr fashion career, $2m portfolio, paid-off house, needs $60k/yr (inflation-adjusted), comprehensive health insurance but worries about long-term care; supports son Barry's family $30k/yr for 5y (top priority, proximity); wants a vacation property in 5y (funding unsure); estate gifted to a museum at death.</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Planned goals</span><span class="rc-dbody">(1) fund retirement lifestyle, (2) support son's family 5y, (3) purchase vacation property, (4) gift estate to museum at death.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Unplanned goals</span><span class="rc-dbody"><b class="pwm-red">Long-term-care costs</b> if health deteriorates, and <b>property repairs</b> on the house &amp; (if bought) the vacation property.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Quantify</span><span class="rc-dbody">Retirement &amp; son-support are already quantified; manager must help quantify the <b>vacation-property</b> goal &amp; funding, and the <b>museum bequest</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Prioritize</span><span class="rc-dbody">Client says supporting the son is top priority (proximity in time). <b class="pwm-hl">Timing should NOT be the primary reason for priority</b> &mdash; manager helps rank which goals truly matter most; if son-support competes with the vacation property &amp; a meaningful bequest, she should <b>reevaluate priorities</b>.</span></span>
+                </div>
+
+                <div class="pwm-body"><b class="pwm-main-c">Worked example C &mdash; DuBois IPS revision (IPS Appendix example).</b> A year later: son &amp; wife promoted &rarr; no longer need support. Now she'll <b>plan bequests</b> ($1.2m each to son &amp; museum = $2.4m), keeps her modest lifestyle, and the equity sleeve must be <b>domestic only</b>. Withdrawals now $75k/yr &rarr; $90k/yr inflation-adjusted; cash reserve $10k &rarr; $25k. Horizon still &gt;15y. What changes to each IPS section:</div>
+                <table class="pwm-tbl">
+                  <tr><th>IPS Section</th><th>Change</th></tr>
+                  <tr><td><b>Background &amp; objectives</b></td><td>New <b>primary objective = retirement lifestyle</b> (son-support dropped); add bequests of $1.2m each to son &amp; museum ($2.4m total). Distribution need rises to <b>$90k/yr</b> inflation-adjusted. Manager works to keep the rate sustainable &amp; reevaluate other goals via capital-sufficiency analysis.</td></tr>
+                  <tr><td><b>Risk tolerance</b></td><td><b class="pwm-red">No change.</b></td></tr>
+                  <tr><td><b>Investment horizon</b></td><td><b class="pwm-red">No change</b> &mdash; still reasonable to exceed 15 years.</td></tr>
+                  <tr><td><b>Asset-class preferences</b></td><td>Equities now <b>domestic only</b>; advise her on the return &amp; diversification implications; <b>mean-variance optimization must incorporate the no-foreign-equity constraint</b>. (Full asset-class list otherwise unchanged.)</td></tr>
+                  <tr><td><b>Other investment preferences</b></td><td><b class="pwm-red">No change</b> (concentrated Chic Apparel position &mdash; not a significant concentration risk; actively traded).</td></tr>
+                  <tr><td><b>Liquidity preferences</b></td><td>Cash reserve <b>$10,000 &rarr; $25,000</b> (unexpected expenses likely to rise).</td></tr>
+                  <tr><td><b>Constraints</b></td><td>Add the <b>domestic-equities-only</b> constraint; note the Chic Apparel position has significant <b>embedded capital gains</b>.</td></tr>
+                  <tr><td><b>Portfolio mgmt / responsibilities / review</b></td><td><b class="pwm-red">No changes required.</b></td></tr>
+                </table>
+                <div class="pwm-info"><b>DuBois strategic AA (with rebalancing ranges) for reference:</b> Cash 5% (4&ndash;6), Domestic govt bonds 10% (8&ndash;12), Domestic corp bonds 10% (8&ndash;12), Global govt bonds 10% (8&ndash;12), Domestic equities 40% (35&ndash;45), Global equities 10% (8&ndash;12), Domestic real estate 10% (8&ndash;12), Commodities 5% (4&ndash;6). Ranges in brackets = threshold-rebalancing bounds.</div>
+
+                <div class="pwm-trap"><b>Module Quiz 9.5 keys (reasoning-derived; official keys not in photos, except where noted circled).</b><br>
+                <b>Q1</b> (low risk tol / $2m holiday-apartment in 2y / no commodities&amp;HF): the item for the <b>objectives</b> section is the <b>$2m vacation-apartment purchase &rarr; B</b>. (Risk tolerance &amp; asset-class exclusions are parameters.)<br>
+                <b>Q2</b> most likely a <b>constraint</b> &rarr; <b>A (ESG investing)</b>. (Time horizon &amp; liquidity are parameters, not constraints.)<br>
+                <b>Q3</b> item in the <b>portfolio-management</b> section &rarr; <b>C (rebalancing methodology)</b>. (Capital-market expectations &amp; modeled behavior are Appendix items.)<br>
+                <b>Q4</b> cash reserve / must-sell-quickly constraint &rarr; <b>A (liquidity preferences)</b>. <span class="pwm-blue">(A circled.)</span><br>
+                <b>Q5</b> Collins (45, retire 20y; college 3&ndash;6y = top priority; gifting at death): multiple horizons stated as <b>ranges</b> &rarr; <b>C</b> (college <i>exceeding</i> 3y, retirement <i>exceeding</i> 20y, gifting <i>exceeding</i> 35y). <span class="pwm-blue">(Photo: B first circled then struck, C circled &mdash; horizons are ranges per the curriculum, so C.)</span></div>
+              </div>
+
+            </div><!-- /#pwm-recap -->
+          </div><!-- /#pwmm-recap -->
+
           <script>
             function pwmMod(ev,id){
               var w=document.getElementById('pwmWidget');
@@ -25734,6 +26048,7 @@ Average tax rate = 188,250 / 695,000 = 27.09%</div>
             <button class="ii-modtab" onclick="iiMod(event,'iim-104')">10.4 Endow &amp; Found</button>
             <button class="ii-modtab" onclick="iiMod(event,'iim-105')">10.5 Banks &amp; Insurers</button>
             <button class="ii-modtab" onclick="iiMod(event,'iim-106')">10.6 Balance Sheet Mgmt</button>
+            <button class="ii-modtab" onclick="iiMod(event,'iim-recap')">Recap</button>
             <button class="ii-modtab" onclick="iiMod(event,'iim-err')">⚠ Errors</button>
           </div>
 
@@ -26957,6 +27272,260 @@ Portfolio = 5.70%  <  6%   -> NOT appropriate</div>
             </div>
           </div>
 
+          <!-- ════════════════════ MODULE 10.RECAP ════════════════════ -->
+          <div id="iim-recap" class="ii-modpanel">
+            <div id="ii-recap" class="ii-toppanel active">
+              <style>
+                #ii-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+                #ii-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(56,189,248,.14); border:1px solid var(--ii-main); color:var(--ii-main); border-radius:3px; padding:1px 6px; margin-right:6px; }
+                #ii-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
+                #ii-recap .rc-drow { display:grid; grid-template-columns:160px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+                #ii-recap .rc-drow:last-child { border-bottom:none; }
+                #ii-recap .rc-dlabel { color:var(--ii-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+                #ii-recap .rc-dbody { min-width:0; }
+                @media (max-width:640px) {
+                  #ii-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                  #ii-recap .rc-dlabel { padding-top:0; }
+                }
+                #ii-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
+              </style>
+
+              <button class="recap-print-btn" onclick="printOneRecap('ii-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+              <div class="ii-card">
+                <div class="ii-title">Reading 10 &middot; Portfolio Management for Institutional Investors</div>
+                <div class="ii-body">Full-reading recap, module by module: <b>common characteristics (10.a)</b>, <b>IPS &amp; the four AA models (10.b)</b>, <b>stakeholders / liabilities / horizons / liquidity (10.c)</b>, <b>legal-regulatory-tax constraints (10.d)</b>, <b>DB risk considerations (10.e)</b>, <b>IPS evaluation (10.f)</b>, <b>portfolio evaluation of DB / SWF / endowment / foundation (10.g)</b>, and <b>balance-sheet management for banks &amp; insurers (10.h)</b>. Every calculation &mdash; the endowment required return &amp; SAA, the equity-sensitivity %&Delta;E, equity duration D<sub>E</sub>, and equity volatility &sigma;<sub>E</sub> &mdash; is <span class="ii-green">node-verified</span> against the textbook and reproduced by the widget's calculators.</div>
+                <div class="ii-info"><b>The master framework (memorize the running order):</b> for every institution &mdash; <b>Mission &rarr; Stakeholders &rarr; Liabilities &amp; horizon &rarr; Liquidity &rarr; External constraints &rarr; Investment objectives &rarr; Asset allocation.</b> The exam gives a case; you slot facts into these buckets.</div>
+              </div>
+
+              <!-- ═══════════ MODULE 10.1 — 10.a / 10.b OVERVIEW ═══════════ -->
+              <div class="ii-card">
+                <div class="rc-sec">Module 10.1 &middot; Overview of Institutional Investors</div>
+                <div class="ii-title"><span class="rc-los">LOS 10.a</span>Five common characteristics of institutional investors</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">1. Scale (size)</span><span class="rc-dbody">Larger than individuals. <b>Too large</b> for low-capacity investments (small-cap, VC) &rarr; direct-access &amp; in-house. <b>Too small</b> &rarr; can't diversify into high-minimum assets (PE, RE) &amp; can't hire skilled staff &rarr; outsource to external managers/consultants.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">2. Long horizon</span><span class="rc-dbody">Longer than individuals (with exceptions) &mdash; driven by meeting <b>specific liabilities</b> and relatively <b>low liquidity needs</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">3. Regulatory framework</span><span class="rc-dbody">Different legal/regulatory/accounting/tax rules by jurisdiction. Tightened since the <b>2007&ndash;09 GFC</b> to lower leverage, increase centralized clearing, improve reporting transparency.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">4. Governance framework</span><span class="rc-dbody">Formal structure: <b>board of directors + investment committee</b> (may be a board subcommittee). Board sets long-term SAA; board/IC establish the IPS &amp; monitor performance. Strategy implemented by an <b>investment office headed by a CIO</b>; management in-house or outsourced.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">5. Principal-agent</span><span class="rc-dbody">Conflict when a principal (asset owner) appoints an agent whose interests diverge. <b>Internal</b>: appointing the IC &amp; staff. <b>External</b>: outsourced managers. Classic external example &rarr; <b>high management fee paid regardless of performance</b>.</span></span>
+                </div>
+                <div class="ii-title"><span class="rc-los">LOS 10.b</span>Investment policy of institutional investors &amp; the four AA models</div>
+                <div class="ii-body">The <b>IPS should include:</b> mission &amp; investment objectives (return &amp; risk tolerance); investment horizon &amp; liabilities; external constraints (legal, regulatory, tax, accounting); an <b>asset-allocation policy</b> (weights, ranges, benchmarks); a <b>rebalancing policy</b>; reporting requirements. <b>Reviewed annually</b>; revised on material changes in circumstances/market.</div>
+                <table class="ii-tbl">
+                  <tr><th>Model (Fig 10.1)</th><th>Asset allocation</th><th>Advantages / Disadvantages</th></tr>
+                  <tr><td><b>Norway (SWF)</b></td><td><b>Passive</b> public equities+bonds (base 60/40); <b>little/no alternatives</b>; tight tracking-error limits.</td><td>+ Low cost/fees, easy for board. &minus; <b>No chance to outperform markets.</b></td></tr>
+                  <tr><td><b>Yale (endowment)</b></td><td><b>High alternatives</b>, significant <b>active</b> management, <b class="ii-hl">externally managed</b> assets.</td><td>+ Potential to outperform. &minus; Hard for small institutions w/o alts expertise; capacity issues for large managers; <b>high fees/costs</b>.</td></tr>
+                  <tr><td><b>Canada Pension Plan</b></td><td>High alternatives, significant active, <b class="ii-hl">internally managed</b>; uses an easily-communicated <b>reference portfolio</b> of passive public assets as benchmark.</td><td>+ Outperformance potential + builds internal capability. &minus; Potentially expensive &amp; difficult to manage.</td></tr>
+                  <tr><td><b>Liability-driven (LDI)</b></td><td><b>Maximize expected surplus</b> (assets &minus; liabilities) &amp; manage <b>surplus volatility</b>.</td><td>+ Explicitly recognizes liabilities in the process. &minus; Some liability risks (e.g. <b>longevity</b>) are hard to hedge.</td></tr>
+                </table>
+                <div class="ii-trap"><b>Quiz 10.1 keys.</b> <b>Q1</b> (Statement 1: different scale narrows the universe / Statement 2: institutional governance more formal): both true &rarr; <b>C (both correct)</b>. Scale <i>does</i> narrow the universe (too big for small-cap/VC, too small for high-minimum alts); institutional governance <i>is</i> more formal than an individual's. <b>Q2</b> (SJT Foundation: aggressive alts to hedge inflation, <b>outsource</b> due to no internal alts experience, active outperformance) &rarr; <b>B (Yale)</b>. Yale = high alts + active + <b>external</b> management. (Canada would be internal; Norway is passive with no alts.) <span class="ii-blue">(Reasoning-derived; official keys not in photos.)</span></div>
+              </div>
+
+              <!-- ═══════════ MODULE 10.2 — PENSION FUNDS (10.c/d/e/g) ═══════════ -->
+              <div class="ii-card">
+                <div class="rc-sec">Module 10.2 &middot; Pension Funds (DB &amp; DC)</div>
+                <div class="ii-title"><span class="rc-los">LOS 10.c/e/g</span>DB vs DC &mdash; the distinctions that carry the marks</div>
+                <table class="ii-tbl">
+                  <tr><th>Feature (Fig 10.2)</th><th>Defined Benefit (DB)</th><th>Defined Contribution (DC)</th></tr>
+                  <tr><td><b>Benefit payments</b></td><td>Contractually defined (usually on <b>final salary</b>) &rarr; creates a <b>measurable liability</b> for the sponsor.</td><td>Depend on <b>investment performance</b>. Once promised contributions are met, <b class="ii-red">no liability</b> for sponsor.</td></tr>
+                  <tr><td><b>Contributions</b></td><td>Primarily by <b>employer</b> (employee may too).</td><td>Primarily by <b>employee</b> (employer may too).</td></tr>
+                  <tr><td><b>Decision-making</b></td><td>Pension fund (sponsor + staff).</td><td>Sponsor offers a suite of funds; <b>employee</b> decides level &amp; AA.</td></tr>
+                  <tr><td><b>Investment risk</b></td><td>Faced by <b class="ii-hl">sponsor</b>.</td><td>Faced by <b class="ii-hl">beneficiary</b>.</td></tr>
+                  <tr><td><b>Mortality/longevity</b></td><td><b>Pooled</b> at fund level (early deaths fund those who live long); general life-expectancy rises fall on sponsor.</td><td>Employee faces <b>longevity risk</b> of outliving own savings.</td></tr>
+                </table>
+                <div class="ii-body"><b>Trend DB&rarr;DC</b> (sponsors want lower financial risk; DC is <b>portable</b>). <b>Hybrid</b> = e.g. cash-balance plan (sponsor defines contributions, then pooled; sponsor bears some investment risk like DB).</div>
+
+                <div class="ii-title" style="margin-top:14px;">DB Pension Plan &mdash; stakeholders, liabilities, risk</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Stakeholders</span><span class="rc-dbody"><b>Sponsors</b> (must top up an underfunded plan), <b>beneficiaries</b> (risk of sponsor default), investment staff/IC/board, <b>governments</b> (tax incentives; taxpayers bear the welfare cost of under-saving), <b>shareholders</b> of the corporate sponsor (underfunding &rarr; balance-sheet liability &rarr; lower income &rarr; higher financial risk &amp; share-price volatility).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liability = PV(benefits)</span><span class="rc-dbody">PV of future benefits promised. Employees qualify after <b>vesting</b> (minimum years of service). <b>Funded ratio = FV of plan assets / PV of DB obligations.</b></span></span>
+                </div>
+                <div class="ii-body"><b>Liability factors (Fig 10.3)</b> &mdash; know the direction each pushes the liability:</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Service/tenure &uarr;</span><span class="rc-dbody"><b>Increases</b> liability (benefits linked to years of service).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Salary &uarr;</span><span class="rc-dbody"><b>Increases</b> (benefits linked to final salary).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Longevity &uarr;</span><span class="rc-dbody"><b>Increases</b> (more years of benefits paid).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Employee turnover &uarr;</span><span class="rc-dbody"><b class="ii-green">Lowers</b> (fewer reach vesting).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Additional/matching contributions &uarr;</span><span class="rc-dbody"><b>Increases</b> (usually raises promised benefits).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Expected investment return &uarr;</span><span class="rc-dbody"><b class="ii-green">Potentially lowers</b> (may raise the discount rate used).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Discount rate &uarr;</span><span class="rc-dbody"><b class="ii-green">Lowers</b> (higher rate &rarr; lower PV of benefits). <span class="ii-orange">Quiz 10.2 Q1 &rarr; the factor that DECREASES liability = none of life-expectancy/service; among A/B/C, <b>C (employee turnover)</b>.</span></span></span>
+                </div>
+                <div class="ii-body"><b>Active vs retired lives:</b> a higher proportion of <b>retired lives</b> (drawing benefits) &rarr; <b>shorter horizon &amp; lower risk tolerance</b>. <b>Frozen plans</b> (closed to new active lives) also have shorter horizons.</div>
+                <div class="ii-body"><b class="ii-main-c">DB risk considerations (Fig 10.4, LOS 10.e)</b> &mdash; each drives plan risk tolerance:</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Funded status &uarr;</span><span class="rc-dbody"><b class="ii-green">&uarr; risk tolerance</b> (can absorb short-term losses). <span class="ii-hl">But if the plan is in surplus &amp; sponsor wants to stay there, willingness may stay low &rarr; LDI to minimize surplus volatility.</span></span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Sponsor financial strength &uarr;</span><span class="rc-dbody"><b class="ii-green">&uarr;</b> (lower debt / higher profitability &rarr; capacity to contribute after losses).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Plan small vs sponsor</span><span class="rc-dbody"><b class="ii-green">&uarr;</b> (sponsor can tolerate more contribution volatility).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Common risk exposures &darr;</span><span class="rc-dbody"><b class="ii-green">&uarr;</b> &mdash; <b>lower correlation</b> between sponsor results &amp; pension assets = greater risk tolerance (sponsor likely profitable &amp; able to contribute when plan underperforms). <span class="ii-orange">Quiz 10.2 Q2: change that INCREASES risk tolerance &rarr; <b>C (allocate to assets with low correlation to sponsor operating results)</b>. A (older workforce) &amp; B (overfunded&rarr;underfunded) both LOWER it.</span></span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Early-retirement / lump-sum provisions</span><span class="rc-dbody"><b class="ii-red">&darr;</b> (shorter horizon &rarr; less time to recover).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Younger workforce / more active lives</span><span class="rc-dbody"><b class="ii-green">&uarr;</b> (greater liability duration &rarr; more time to recover).</span></span>
+                </div>
+                <div class="ii-tip"><b>Viewpoint Research (10.g worked example).</b> Factors that <b>INCREASE</b> ability to take risk: (1) <b>zero retired lives</b> (all still working/left) &rarr; long-duration liabilities, time to recover; (2) <b>no early-retirement / lump-sum options</b> &rarr; longer, more predictable liabilities. Factors that <b>DECREASE</b>: (1) <b>higher debt</b> than industry &rarr; sponsor less able to top up after poor performance; (2) plan running a <b>deficit</b> &rarr; further underperformance threatens meeting liabilities. <span class="ii-red">Trap:</span> don't cite the one-year high ROE/profitability as increasing risk &mdash; it's a single year at high leverage, not sustainable.</div>
+                <div class="ii-body"><b>DB liquidity</b> higher when: more retired lives (frozen &gt; nonfrozen), older workforce (shorter time to pay), higher funded status (lower sponsor contributions &rarr; benefits met from assets), ability to switch/withdraw. Lower liquidity needs &rarr; can hold more risky/illiquid assets.</div>
+                <div class="ii-body"><b>DB external constraints:</b> regulations tightened post-GFC (fee/cost reporting; personal liability for trustees). <b>US: ERISA</b> (regulates investing/funding/payouts; created the <b>PBGC</b> protecting beneficiaries of terminated plans); <b>Pension Protection Act 2006</b> set minimum funding ratios (a later revision let firms discount liabilities at an average high-grade bond yield over 25y &rarr; lower liabilities, but may push more risk-taking to grow assets at the higher discount rate). <b>Europe: IORP II.</b> Tax: pensions often favorably treated; consider CGT on turnover, derivatives, double-taxation treaties. <b>Accounting: US corporate DB &rarr; GAAP ASC 715</b> (funded status on the balance sheet); <b>public plans &rarr; GASB</b> (assets at market; liabilities via a <b>blended</b> rate &mdash; expected return on assets for the funded portion, muni yield for the unfunded).</div>
+                <div class="ii-body"><b>DB investment objectives:</b> primary = achieve a <b>target return over a long horizon consistent with meeting contractual liabilities</b>; secondary = <b>minimize (PV) the sponsor's cash contributions</b>. Target return should let assets grow in line with liabilities (the discount rate); a deficit means assets must grow faster &mdash; split between investment return and extra contributions per the plan's risk tolerance &amp; sponsor's ability.</div>
+
+                <div class="ii-title" style="margin-top:14px;">DC Pension Plan &mdash; the contrasts to lock</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Stakeholders</span><span class="rc-dbody"><b>Sponsors</b> (no investment/longevity risk, but keep <b>fiduciary</b> duties: contribute, oversee investments, offer suitable options); <b>beneficiaries</b> (bear investment + longevity risk); <b>board</b> (communicate to participants at their sophistication level; select a <b>default option</b> for <i>disengaged</i> members); governments.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liabilities/horizon</span><span class="rc-dbody">Sponsor liability = required contributions only &mdash; <b class="ii-red">no future-benefit liability</b>. Pooling/scale can access alternatives not open to retail. Sponsor bears <b>liquidity risk</b> of member exits. Individual horizon tied to <b>age</b> (older &rarr; shorter).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Life-cycle / target-date</span><span class="rc-dbody">Default option managed to a retirement date. <b>Participant-switching</b>: auto-switch a member to more conservative AA as they age. <b>Participant/cohort</b>: pool members with a similar retirement date; fund managed more conservatively as the date nears.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liquidity / constraints</span><span class="rc-dbody">Liquidity driven by workforce age &amp; switch/withdraw ability. Regulators require participant education (default options for disengaged); AU &amp; US require a <b>diversified default</b> (doesn't absolve trustees of fiduciary duty). Tax: US <b>401(k)</b> = tax-deferred (pretax contributions, earnings untaxed, benefits taxed as ordinary income; &lt;59&frac12; penalty +10%). ERISA/IORP II apply to both DB &amp; DC.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Objectives</span><span class="rc-dbody">Prudently grow assets to meet retirement spending; onus on sponsor for <b>cost-efficient default</b> options; secondary = outperform the default's passive SAA (or outperform competing DC providers where members can switch).</span></span>
+                </div>
+                <div class="ii-body"><b>Aggregate DB+DC AA data:</b> varies by region (external constraints, risk appetite, stakeholder prefs); past decade shows a <b>rotation from equities into alternatives &amp; fixed income</b> to lower funded-ratio volatility; some <b>home bias</b> to domestic equity.</div>
+              </div>
+
+              <!-- ═══════════ MODULE 10.3 — SOVEREIGN WEALTH FUNDS (10.g) ═══════════ -->
+              <div class="ii-card">
+                <div class="rc-sec">Module 10.3 &middot; Sovereign Wealth Funds</div>
+                <div class="ii-title"><span class="rc-los">LOS 10.g</span>Five IMF categories of SWF &mdash; mission drives everything else</div>
+                <table class="ii-tbl">
+                  <tr><th>SWF type</th><th>Mission</th><th>Liabilities / horizon</th><th>Liquidity</th><th>Objective &amp; typical AA</th></tr>
+                  <tr><td><b>Budget stabilization</b></td><td>Insulate govt budget from <b>commodity-price / cyclical</b> volatility (revenues tied to a natural resource).</td><td>Uncertain, tied to commodity prices; <b>short-term</b> horizon (budget support needed short-term).</td><td><b class="ii-hl">Highest</b> liquidity; low risk of short-term loss.</td><td>Capital preservation; beat inflation with low loss probability; <b class="ii-red">avoid assets correlated with the revenue source</b>. AA: mostly <b>fixed income &amp; cash</b> (defensive).</td></tr>
+                  <tr><td><b>Development</b></td><td>Prioritize national <b>socioeconomic</b> projects (infrastructure, key industries).</td><td>Linked to socioeconomic investments; some long, some medium (e.g. medical research).</td><td><b>Low</b> (long-term infrastructure/R&amp;D).</td><td>Support economic development; implicit = real return &gt; real GDP/productivity growth. AA driven by the <b>socioeconomic mission</b> (local infrastructure).</td></tr>
+                  <tr><td><b>Savings</b></td><td>Invest nonrenewable-resource revenues for <b>future generations</b>.</td><td>Linked to future generations &rarr; <b>long term</b>.</td><td><b class="ii-hl">Lowest</b> (rises as resources deplete &amp; govt withdraws for budget needs).</td><td>Maintain purchasing power while funding budget needs. AA: <b>high equities &amp; alternatives (PE, real assets)</b> (long horizon).</td></tr>
+                  <tr><td><b>Reserve</b></td><td>Earn returns on <b>excess FX reserves</b> held by central banks (reduce the negative cost of carry).</td><td>Technically the yield promised on govt/CB-issued bonds; funds target higher; horizon <b>very long, no near-term liabilities</b>.</td><td>Lower than stabilization but <b>higher than savings</b>; hold liquid FI that can be sold if CB reserves change dramatically.</td><td>Earn a return &gt; the yield the govt/CB pays on its bonds. AA similar to savings but <b>lower alts</b> (higher liquidity needs).</td></tr>
+                  <tr><td><b>Pension reserve</b></td><td>Save &amp; invest to meet <b>future govt pension liabilities</b>.</td><td>Linked to future pension payments &rarr; <b>long term</b>; may have accumulation &amp; decumulation phases.</td><td>Vary: <b>lower in accumulation, higher in decumulation</b>.</td><td>Earn returns to meet unfunded pension/social-care payments. AA: <b>high equities/alts</b> due to long horizon &amp; low liquidity in accumulation.</td></tr>
+                </table>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Stakeholders</span><span class="rc-dbody">Current &amp; future <b>citizens</b> (direct payments / indirect via lower tax or more domestic investment); <b>investment offices</b> (invest in-house or appoint external); the <b>board</b> (fiduciary duty to ultimate beneficiaries); <b>governments</b> (may rely on SWF returns to balance deficits).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">External constraints</span><span class="rc-dbody">Established by <b>laws</b> giving mission &amp; structure (esp. development funds with a socioeconomic mission). To avoid political influence: governance, independence, transparency, accountability &mdash; the <b>Santiago Principles</b> (IFSWF best-practice framework). Generally <b>tax-exempt</b> &rarr; may void ability to claim withholding-tax credits; watch double-tax treaties abroad; avoid being seen to dodge foreign taxes.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Savings &asymp; endowments</span><span class="rc-dbody">Savings funds &amp; pension reserve funds typically follow the <b>Canadian model</b>; savings funds share very similar objectives to endowments &amp; foundations (broader mandate, longer horizon &rarr; higher alts).</span></span>
+                </div>
+                <div class="ii-trap"><b>Quiz 10.3 keys.</b> <b>Q1</b> (SAA of <b>10% equities / 60% FI / 30% cash</b>) &rarr; <b>C (budget stabilization)</b> &mdash; the defensive, FI-and-cash-heavy profile matches the highest-liquidity stabilization fund. <b>Q2</b> (BoC buys USD from exporters to boost FX reserves; reserve-fund context) &rarr; <b>B</b>: financing the USD purchase (issuing local-currency debt / creating reserves) can cause <b>deflationary pressures</b> is the accurate one relative to A (reserves aren't put in the riskiest assets &mdash; they stay liquid) and C (stabilization bonds create a <i>negative</i>, not positive, carry). <span class="ii-blue">(Reasoning-derived; official keys not in photos.)</span></div>
+              </div>
+
+              <!-- ═══════════ MODULE 10.4 — ENDOWMENTS & FOUNDATIONS (10.g) ═══════════ -->
+              <div class="ii-card">
+                <div class="rc-sec">Module 10.4 &middot; University Endowments &amp; Private Foundations</div>
+                <div class="ii-title"><span class="rc-los">LOS 10.g</span>University endowments</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Mission</span><span class="rc-dbody">Funds from gifts/donations, invested to give <b>ongoing support to the operating budget</b>. Main objective = balance the university's needs <b>today vs the future</b> &rarr; <b>intergenerational equity</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Stakeholders</span><span class="rc-dbody">Current &amp; future students, alumni donors, employees whose livelihoods depend on the university. Alumni (often investment professionals) frequently sit on the board/IC.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Horizon</span><span class="rc-dbody"><b>Perpetual</b> (unlimited university life + intergenerational equity).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liquidity</span><span class="rc-dbody"><b>Low</b> &mdash; net spending only ~<b>2&ndash;4%</b> of assets (gifts &amp; donations offset the 4&ndash;6% gross). Low liquidity + perpetual horizon &rarr; <b>high risk tolerance</b>, can absorb short-term volatility for long-term returns. Analyze <b>liquidity risk with cash-flow modeling</b>; some use a <b>liquidity risk band</b> capping illiquid exposure (incl. uncalled commitments).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">External constraints</span><span class="rc-dbody"><b>Total-return</b> investing + diversification (MPT); fiduciary duty of care. <b>US: UPMIFA</b> (flexibility in spending + adoption of MPT); <b>UK: Trustee Act 2000</b> (endowments often structured as trusts). Generally <b>tax-exempt</b> on returns; donors can deduct gifts.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Objectives</span><span class="rc-dbody"><b>Preserve purchasing power in perpetuity</b> (grow with inflation) while funding spending. Real return target typically ~<b>5% over HEPI</b> over 3&ndash;5y; volatility ~<b>10&ndash;15%</b>. Secondary = beat a passive benchmark; tertiary = beat a peer group (<span class="ii-red">peer-benchmarking risks herding &amp; dislocating from the core mission</span>).</span></span>
+                </div>
+                <div class="ii-body"><b>Spending-policy formula</b> &mdash; smooths payouts to insulate the university from market volatility:</div>
+                <div class="ii-fl">spending<sub>t+1</sub> = w &times; [spending<sub>t</sub> &times; (1 + inflation)] + {(1 &minus; w) &times; (spending rate &times; avg AUM)}
+  where w = weight on the prior year's spending amount</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Constant-growth (w=1)</span><span class="rc-dbody">Fixed real payout, grown by <b>HEPI</b>. Certain for the university, but the <b>% of AUM paid fluctuates with value</b>. Often has <b>caps &amp; floors</b> (max/min % of AUM over 1 or 3 years).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Market-value (w=0)</span><span class="rc-dbody">Payout = prespecified <b>spending rate (4&ndash;6%)</b> &times; a 3&ndash;5y moving average of asset values. <b>Procyclical</b> &mdash; spending tracks the moving average.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Hybrid (0&lt;w&lt;1)</span><span class="rc-dbody">Weighted average of the two rules.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Fundraising</span><span class="rc-dbody">Gifts/donations mean the <b>net</b> spending rate is closer to <b>2&ndash;4%</b> vs the 4&ndash;6% gross applied.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Reliance &amp; debt access</span><span class="rc-dbody">Higher endowment share of the operating budget &rarr; <b>lower</b> risk tolerance. Ability to issue debt &rarr; <b>higher</b> risk tolerance (can borrow to cover spending in downturns).</span></span>
+                </div>
+                <div class="ii-body"><b>Endowment AA:</b> large US endowments follow the <b>endowment model</b> &mdash; majority (&gt;50%) to alternatives (risen over two decades). Smaller endowments hold less alts, more domestic equity &amp; FI, with <b>home bias</b> overweighting US equities.</div>
+
+                <div class="ii-body"><b class="ii-main-c">Capital University endowment (10.g worked example)</b> &mdash; the required-return + SAA calc:</div>
+                <div class="ii-fl">Nominal required return = spending rate + HEPI
+HEPI = CPI (1%) + 100 bps = 2%   &rarr;   required = 4% + 2% = <b>6%</b>   (volatility cap 15%)
+
+Current AA (30% US eq @6%, 70% FI @3%):
+  0.30&times;6% + 0.70&times;3% = <b>3.9%</b>   &rarr; FAILS the 6% target
+
+New SAA:
+  FI 25%@3 + USeq 35%@6 + Intl 20%@7 + RE 10%@8 + PE 10%@10
+  = 0.75 + 2.10 + 1.40 + 0.80 + 1.00 = <b>6.05%</b>   &rarr; MEETS 6%</div>
+                <div class="ii-info"><b>Answers.</b> (1) Objective: maintain purchasing power in perpetuity while funding 10% of the operating budget; nominal required = <b>6%</b>. (2) <b>Accept</b> the shift on return grounds &mdash; current 3.9% fails, new 6.05% meets 6%. (3) Concern making it <b>inappropriate</b>: the investment office is <b>small &amp; inexperienced in alternatives</b> (new allocations to PE &amp; real assets need due-diligence skill), <b>and</b> the new SAA must still be checked against the <b>15% volatility cap</b>.</div>
+
+                <div class="ii-title" style="margin-top:14px;">Private foundations &mdash; vs endowments</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Mission</span><span class="rc-dbody">Nonprofits making <b>grants</b> to charitable causes. Types: <b>private</b> (donor/family, e.g. Gates), <b>community</b>, <b>operating</b> (fund a specific not-for-profit), <b>corporate</b>. Objective similar to endowments: maintain purchasing power in perpetuity &amp; fund grant-making.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Stakeholders</span><span class="rc-dbody">Founding family, donors, grant recipients, wider community, government (favorable tax). <b class="ii-red">Board members less likely to have professional investment experience than endowment alumni boards</b> &rarr; less rigorous oversight / more delegation &rarr; may hurt decision quality in sophisticated markets (alts). <b>Mission-related (impact) investing</b> promotes the mission but challenges maintaining sufficient returns.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Horizon</span><span class="rc-dbody"><b>Perpetual</b> (trend toward <b>limited-life</b> foundations that spend down within a set time of the founder's death &rarr; shorter horizon).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liabilities / spending</span><span class="rc-dbody"><b>US: minimum 5% of assets</b> (12-month trailing) + investment expenses; must spend donations in the year received (<b>flow-through</b>). <b class="ii-hl">Unlike universities, foundations rely almost exclusively on the endowment/spending to meet budgets</b> &rarr; higher liquidity needs &rarr; <b class="ii-red">lower risk tolerance than university endowments</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liquidity</span><span class="rc-dbody">Must fund the 5% near-term spend + capital calls from LP fund investments + margin calls on derivatives.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">External constraints</span><span class="rc-dbody">Same laws as endowments (UPMIFA / Trustee Act): total-return, diversification, duty of care. <b>Tax-exempt</b> status depends on meeting the minimum spending rule &mdash; <b class="ii-red">failing it &rarr; 30% tax on undistributed income</b>; most US foundations also pay a <b>2% tax on net investment income</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Objectives / AA</span><span class="rc-dbody">Real return over CPI of the <b>spending rate (min 5%) + investment expenses</b>; volatility ~10&ndash;15% over 3&ndash;5y; secondary = beat a policy benchmark on a tracking-error budget. Overall risk tolerance still high (beat inflation, long horizon) &rarr; larger US foundations put ~<b>half</b> in alternatives; smaller ones tilt to domestic equity &amp; FI.</span></span>
+                </div>
+                <div class="ii-trap"><b>Quiz 10.4 Q1.</b> Endowment spends 5% of a 3y rolling value; CPI 3%, HEPI 2.5%. Objective total <b>real</b> rate of return &rarr; <b>B (7.5%)</b>: to maintain purchasing power (measured by HEPI 2.5%) <i>and</i> fund the 5% spend, the return objective = spending 5% + HEPI 2.5% = 7.5%. <span class="ii-orange">(Reasoning-derived; official key not in photos.)</span></div>
+              </div>
+
+              <!-- ═══════════ MODULE 10.5 — BANKS & INSURERS (10.g) ═══════════ -->
+              <div class="ii-card">
+                <div class="rc-sec">Module 10.5 &middot; Banks &amp; Insurers</div>
+                <div class="ii-title"><span class="rc-los">LOS 10.g</span>Banks &amp; insurers &mdash; profit-seeking intermediaries (advise the <i>investment portfolio</i>, not the core business)</div>
+                <div class="ii-body"><b class="ii-main-c">Banks.</b> Primary function = earn profits by <b>taking deposits &amp; making loans</b> (also safeguarding assets, executing securities/derivatives, advising/investing).</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Stakeholders</span><span class="rc-dbody"><b>Shareholders</b> (profit max), <b>depositors</b> (most of liabilities; want asset protection), <b>borrowers</b> (loans = most of assets), creditors, rating agencies, regulators, communities; internal = employees/managers/directors.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liabilities / horizon</span><span class="rc-dbody"><b>Deposits</b> dominate liabilities: <b>demand deposits</b> (withdrawable without notice &rarr; <b class="ii-red">short duration</b>) &amp; <b>time/term deposits</b> (advance notice). Also short-term wholesale funding, long-term debt, repo. <b>Assets</b> = longer-term illiquid mortgage &amp; commercial loans. Horizon driven by the <b>long-illiquid-asset vs short-liquid-liability</b> gap; though perpetual, the investment portfolio holds <b>short instruments</b> to manage shareholder-capital volatility short/medium-term.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liquidity</span><span class="rc-dbody">Key focus (short-duration deposits + need to raise liquidity in stress). Post-GFC: <b>LCR</b> (cover near-term outflows with liquid assets) &amp; <b>NSFR</b> (adequate stable funding) &rarr; more liquid portfolios, less wholesale reliance. Retail banks (stable, low-cost retail deposits) &gt; commercial banks (wholesale-reliant) on liquidity.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">External constraints</span><span class="rc-dbody">Regulators focus on <b>capital adequacy, liquidity, leverage</b> (systemic-failure risk). Goal: adequate capital to absorb losses (not customers/creditors/taxpayers) via diversification, <b>asset-quality-based reserves</b>, stable funding. Largest banks = <b>SIFIs</b> &rarr; higher capital, dividend/buyback limits, restricted subordinated-holder claims &amp; derivatives/off-balance-sheet use. <span class="ii-hl">Quality-based reserves: switching to riskier assets (IG&rarr;HY) raises risk-weighted assets &rarr; higher required reserves.</span></span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Accounting (3 systems)</span><span class="rc-dbody">(1) <b>Standard (GAAP/IFRS)</b> &rarr; smoothest income (accruals). (2) <b>Statutory</b> (regulators) &rarr; more conservative (removes intangibles, accelerates expenses, recognizes reserves). (3) <b>True economic</b> &rarr; market value for all &rarr; <b class="ii-red">most volatile income</b>. Banks are <b>fully taxable</b> &rarr; consider after-tax returns.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Objectives</span><span class="rc-dbody">Primary = <b>manage liquidity &amp; reduce risk mismatches between the bank's noninvestment assets &amp; liabilities</b>. An <b>ALMCo</b> sets the IPS, monitors, sets market/credit/liquidity/solvency risk limits with authority over both sides of the balance sheet.</span></span>
+                </div>
+                <div class="ii-body"><b class="ii-main-c">Insurers.</b> Two types: <b>Life</b> (whole/term with fixed payments; variable life &amp; annuities with policyholder-chosen funds; annuities; health) &amp; <b>P&amp;C</b> (commercial property/liability, home, marine, surety, legal).</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Stakeholders / accounts</span><span class="rc-dbody">Publicly listed &rarr; shareholders want long-term capital max <b>while honoring policyholder obligations</b>; mutuals &rarr; owned by policyholders (surplus retained or returned via dividends/premium cuts). <b>General account</b> funds traditional-life &amp; fixed-annuity liabilities (<b>insurer bears investment risk</b>); <b>separate account</b> for variable life/annuities (<b class="ii-hl">policyholder bears investment risk</b>).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liabilities / horizon</span><span class="rc-dbody"><b>Life:</b> long-duration payouts &rarr; historically <b>20&ndash;40y</b> horizons. <b>P&amp;C:</b> shorter duration, higher uncertainty (unpredictable high-payout events, e.g. disasters). Both perpetual as institutions, but the <b>underwriting cycle</b> (competition-driven profitability swings) affects horizon &mdash; intense competition/low underwriting profit &rarr; more appetite for investment risk.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liquidity</span><span class="rc-dbody">Interest-rate-sensitive: <b>&uarr; rates &rarr; &uarr; lapses/surrenders</b> (policyholders on low-yield contracts surrender to reinvest &rarr; higher net outflows). P&amp;C need <b>ample cash/short-term FI</b> (cash-flow uncertainty). General account splits into a <b>reserve portfolio</b> (meets policy liabilities &rarr; managed conservatively) &amp; a <b>surplus portfolio</b> (generate higher returns, assume liquidity risk, allocate to alternatives).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">External constraints</span><span class="rc-dbody">Like banks, can be <b>SIFIs</b>; regulators ensure capital to absorb business + investment losses. <b>US: NAIC</b> (state regulators set accounting/reporting); <b>Europe: Solvency II</b>. Same 3 accounting systems; <b>fully taxable</b> &rarr; after-tax focus. Riskier investments &rarr; higher required reserves.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Objectives</span><span class="rc-dbody">Like banks: <b>manage liquidity &amp; reduce risk mismatches</b> between the institution's assets &amp; liabilities, considering general business conditions &amp; the economy. Oversight by an <b>investment committee</b> responsible for all policies, reporting to regulators &amp; stakeholders.</span></span>
+                </div>
+                <div class="ii-trap"><b>Quiz 10.5/10.6 Q1 &amp; Q2.</b> <b>Q1</b> (capital requirements for banks/insurers set with reference to) &rarr; <b>A (statutory reporting)</b> &mdash; regulators use conservative statutory accounting, not GAAP/economic. <b>Q2</b> (SAJ life insurer splits the <b>general account</b> into reserve + surplus portfolios) &rarr; <b>A (correct)</b>: the general account (not separate account) is indeed split into a conservatively-managed reserve portfolio and a higher-return surplus portfolio. <span class="ii-blue">(Reasoning-derived; official keys not in photos.)</span></div>
+              </div>
+
+              <!-- ═══════════ MODULE 10.6 — BALANCE-SHEET MANAGEMENT (10.h) ═══════════ -->
+              <div class="ii-card">
+                <div class="rc-sec">Module 10.6 &middot; Balance-Sheet Management &amp; Investment Considerations</div>
+                <div class="ii-title"><span class="rc-los">LOS 10.h</span>Balance-sheet considerations for banks &amp; insurers &mdash; the three equity formulas</div>
+                <div class="ii-body">For both banks &amp; insurers the overall objective is to <b>maximize the market value of equity capital</b> with high assurance that depositor/creditor/policyholder claims can be met. <b>M = leverage multiplier = A/E.</b> If E/A = 5%, M = 20 (assets funded $1 equity + $19 liabilities).</div>
+
+                <div class="ii-body"><b class="ii-main-c">1. Percentage change in equity (%&Delta;E).</b></div>
+                <div class="ii-fl">%&Delta;E = %&Delta;A &times; M &minus; %&Delta;L &times; (M &minus; 1)
+Example: E/A = 5% &rarr; M = 20. Liabilities rise 1.5%, assets stable:
+%&Delta;E = (0% &times; 20) &minus; (1.5% &times; 19) = <b>&minus;28.5%</b></div>
+                <div class="ii-info"><b>Read the terms:</b> asset returns are magnified by leverage (M); the &minus;(M&minus;1) on liabilities reflects that <b>rising liabilities cut equity</b>, and (M&minus;1) is the size of liabilities relative to equity. A tiny 1.5% liability rise wipes out 28.5% of equity because of 20&times; leverage.</div>
+
+                <div class="ii-body"><b class="ii-main-c">2. Equity duration (D<sub>E</sub>).</b></div>
+                <div class="ii-fl">D<sub>E</sub> = D<sub>A</sub>&times;M &minus; D<sub>L</sub>&times;(M&minus;1)&times;(&Delta;i / &Delta;y)
+  &Delta;i/&Delta;y = expected move in liability yield per unit move in asset yield
+
+WellLife: E/A = 12.5% &rarr; M = 8; D<sub>A</sub>=3, D<sub>L</sub>=2, &Delta;i/&Delta;y = 0.70
+D<sub>E</sub> = (3&times;8) &minus; (2 &times; 7 &times; 0.70) = 24 &minus; 9.8 = <b>14.2</b>
+&bull; 25 bp FALL in asset yield &rarr; equity value &uarr; &asymp; 14.2 &times; 0.25% = <b>+3.55%</b>
+&bull; If E/A raised to 10% &rarr; M = 10:  D<sub>E</sub> = (3&times;10) &minus; (2&times;9&times;0.70) = <b>17.4</b>  (lower leverage cut... no &mdash; higher M&rarr;lower here? M fell 8&rarr;10? note E/A up 12.5%&rarr;10% is M UP 8&rarr;10 &rarr; D<sub>E</sub> rises)</div>
+                <div class="ii-info"><b>Direction check:</b> raising E/A from 12.5% to 10% actually <i>lowers</i> equity relative to assets &rarr; M rises 8&rarr;10 &rarr; equity duration rises 14.2&rarr;17.4 (more asset-rate sensitivity per unit of equity). D<sub>E</sub> = modified duration of equity; a 1% asset-yield move &rarr; ~D<sub>E</sub>% equity move.</div>
+
+                <div class="ii-body"><b class="ii-main-c">3. Equity volatility (&sigma;<sub>E</sub>).</b> A two-asset variance with weight M on assets and &minus;(M&minus;1) on liabilities:</div>
+                <div class="ii-fl">&sigma;&sup2;<sub>E</sub> = M&sup2;&sigma;&sup2;<sub>A</sub> + (M&minus;1)&sup2;&sigma;&sup2;<sub>L</sub> &minus; 2&middot;M&middot;(M&minus;1)&middot;&sigma;<sub>A</sub>&sigma;<sub>L</sub>&rho;<sub>AL</sub>
+
+WellLife: M=8, &sigma;<sub>A</sub>=7%, &sigma;<sub>L</sub>=4%, &rho;<sub>AL</sub>=0.3
+&sigma;&sup2;<sub>E</sub> = (8&sup2;&times;0.07&sup2;) + (7&sup2;&times;0.04&sup2;) &minus; (2&times;8&times;7&times;0.07&times;0.04&times;0.3) = <b>0.298</b>
+&sigma;<sub>E</sub> = &radic;0.298 = 0.546 = <b>54.6%</b>
+
+New regs: E/A = 20% &rarr; M=5, &sigma;<sub>A</sub> lowered to 5%, &sigma;<sub>L</sub>=4%, &rho;=0.3
+&sigma;&sup2;<sub>E</sub> = (5&sup2;&times;0.05&sup2;) + (4&sup2;&times;0.04&sup2;) &minus; (2&times;5&times;4&times;0.05&times;0.04&times;0.3) = <b>0.0641</b>
+&sigma;<sub>E</sub> = &radic;0.0641 = 0.253 = <b>25.3%</b></div>
+                <div class="ii-info"><b>Why &sigma;<sub>E</sub> collapses 54.6%&rarr;25.3%:</b> two levers move together &mdash; <b>lower leverage</b> (M 8&rarr;5, i.e. more equity cushion) and <b>lower asset volatility</b> (7%&rarr;5%). Both shrink the magnified asset-risk term M&sup2;&sigma;&sup2;<sub>A</sub>. The negative correlation term (asset/liability co-movement) partially offsets equity volatility.</div>
+
+                <div class="ii-body"><b>Strategies for changing volatility (Fig 10.7)</b> &mdash; each lever &amp; its effect on &sigma;<sub>E</sub>:</div>
+                <table class="ii-tbl">
+                  <tr><th>Strategy</th><th>Impact on factor</th><th>&sigma;<sub>E</sub></th></tr>
+                  <tr><td>Hold diversified fixed income</td><td>Lowers &sigma;<sub>A</sub></td><td>Falls</td></tr>
+                  <tr><td>Hold high-quality fixed income</td><td>Lowers &sigma;<sub>A</sub></td><td>Falls</td></tr>
+                  <tr><td>Match asset/liability durations &amp; borrower/claimant options</td><td>Increases &rho;<sub>AL</sub></td><td>Falls</td></tr>
+                  <tr><td>Hold common stock</td><td>Increases &sigma;<sub>A</sub>, lowers &rho;<sub>AL</sub></td><td><b class="ii-red">Rises</b> (regulators require ~100% reserves vs stock)</td></tr>
+                  <tr><td>Derivatives transparency &amp; collateralization</td><td>Lowers &sigma;<sub>A</sub> &amp; &sigma;<sub>L</sub>, increases &rho;<sub>AL</sub></td><td>Falls</td></tr>
+                  <tr><td>Hold more liquid investments</td><td>Lowers &sigma;<sub>A</sub></td><td>Falls</td></tr>
+                  <tr><td>Surrender penalties on insurance contracts</td><td>Lowers &sigma;<sub>L</sub></td><td>Falls (cushions losses when rates rise)</td></tr>
+                  <tr><td>Prepayment penalties on debt</td><td>Increases &rho;<sub>AL</sub></td><td>Falls (offsets rising liabilities in falling-rate env.)</td></tr>
+                  <tr><td>Catastrophic insurance risk</td><td>Increases &sigma;<sub>L</sub></td><td><b class="ii-red">Rises</b></td></tr>
+                  <tr><td>Predictability of underwriting losses</td><td>Decreases &sigma;<sub>L</sub></td><td>Falls</td></tr>
+                  <tr><td>Diversifying insurance business</td><td>Decreases &sigma;<sub>L</sub></td><td>Falls</td></tr>
+                  <tr><td>Variable annuities</td><td>Increases &rho;<sub>AL</sub></td><td>Falls (gains/losses pass through to policyholders)</td></tr>
+                </table>
+                <div class="ii-tip"><b>SJT Bank switch (10.h worked example):</b> switch HY corporate floating-rate &rarr; IG govt fixed-rate + a pay-fixed/receive-floating swap. (1) Addresses the two findings: lowers exposure to <b>widening credit spreads</b> (HY&rarr;IG) &amp; improves the <b>liquidity position</b> (IG govt more liquid than HY, offsetting the loan-book/deposit stress). (2) <b>Regulatory risk-based capital falls</b> (IG govt lower risk weight than HY &rarr; lower RWA &rarr; less required capital). (3) <b>Duration:</b> floating&rarr;fixed <b>raises asset duration</b>, but the pay-fixed swap creates a <b>synthetic liability raising liability duration</b> &mdash; if tailored, the two offset &rarr; asset/liability profile unchanged. (4) <b>Earnings &amp; volatility:</b> govt yields lower than corporate (no credit spread) &rarr; <b>lower earnings</b>, but more-liquid IG govt is <b>less volatile</b> &rarr; lower equity-capital volatility.</div>
+                <div class="ii-trap"><b>Quiz 10.5/10.6 Q3.</b> Bank E/A = 20% &rarr; M = 5; &sigma;<sub>A</sub>=7%, &sigma;<sub>L</sub>=5%, &rho;<sub>AL</sub>=0.5.<br>&sigma;&sup2;<sub>E</sub> = (5&sup2;&times;0.07&sup2;) + (4&sup2;&times;0.05&sup2;) &minus; (2&times;5&times;4&times;0.07&times;0.05&times;0.5) = 0.1225 + 0.04 &minus; 0.07 = 0.0925 &rarr; &sigma;<sub>E</sub> = &radic;0.0925 = <b>30.4% &rarr; C</b>. <span class="ii-blue">(Node-verified; official key not in photos.)</span></div>
+              </div>
+
+            </div><!-- /#ii-recap -->
+          </div><!-- /#iim-recap -->
+
           <script>
             function iiMod(ev,id){
               var w=document.getElementById('iiWidget');
@@ -27080,6 +27649,7 @@ Portfolio = 5.70%  <  6%   -> NOT appropriate</div>
             <button class="tc-modtab" onclick="tcMod(event,'tcm-112')">11.2 Electronic Trading</button>
             <button class="tc-modtab" onclick="tcMod(event,'tcm-113')">11.3 Characteristics</button>
             <button class="tc-modtab" onclick="tcMod(event,'tcm-114')">11.4 Risks</button>
+            <button class="tc-modtab" onclick="tcMod(event,'tcm-recap')">Recap</button>
             <button class="tc-modtab" onclick="tcMod(event,'tcm-err')">⚠ Errors</button>
             <button class="tc-modtab" onclick="tcMod(event,'tcm-quiz')">Quiz</button>
           </div>
@@ -27709,6 +28279,190 @@ VWAP txn cost  = 300 &#215; (+1) &#215; (12.04 &#8722; 11.86) = $54</div>
               </div>
             </div>
           </div>
+
+          <!-- ════════════════════ MODULE 11.RECAP ════════════════════ -->
+          <div id="tcm-recap" class="tc-modpanel">
+            <div id="tc-recap" class="tc-toppanel active">
+              <style>
+                #tc-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+                #tc-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(251,191,36,.14); border:1px solid var(--tc-main); color:var(--tc-main); border-radius:3px; padding:1px 6px; margin-right:6px; }
+                #tc-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
+                #tc-recap .rc-drow { display:grid; grid-template-columns:170px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+                #tc-recap .rc-drow:last-child { border-bottom:none; }
+                #tc-recap .rc-dlabel { color:var(--tc-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+                #tc-recap .rc-dbody { min-width:0; }
+                @media (max-width:640px) {
+                  #tc-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                  #tc-recap .rc-dlabel { padding-top:0; }
+                }
+                #tc-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
+              </style>
+
+              <button class="recap-print-btn" onclick="printOneRecap('tc-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+              <div class="tc-card">
+                <div class="tc-title">Reading 11 &middot; Trading Costs and Electronic Markets</div>
+                <div class="tc-body">Full-reading recap, module by module: <b>execution-cost components (11.a)</b>, <b>effective spread &amp; VWAP (11.b)</b>, <b>implementation shortfall (11.c)</b>, <b>drivers of electronic trading (11.d)</b>, <b>market fragmentation (11.e)</b>, <b>types of electronic traders (11.f)</b>, <b>characteristics/uses of electronic systems (11.g)</b>, <b>low-latency advantages (11.h)</b>, <b>electronic-trading risks &amp; regulation (11.i)</b>, and <b>market abuses &amp; surveillance (11.j)</b>. Both calculation pieces &mdash; the <span class="tc-green">effective spread</span> and <span class="tc-green">VWAP transaction cost</span> &mdash; are node-verified and reproduced by the widget's calculators.</div>
+                <div class="tc-info"><b>Where the marks are:</b> (1) the sign convention on side (+1 buy / &minus;1 sell) in every cost formula; (2) which benchmark each measure uses (ES &rarr; midquote; VWAP &rarr; interval VWAP; IS &rarr; decision/arrival price); (3) matching each electronic-trader type &amp; each market abuse to its one-line definition.</div>
+              </div>
+
+              <!-- ═══════════ MODULE 11.1 — 11.a/11.b/11.c COSTS & BENCHMARKS ═══════════ -->
+              <div class="tc-card">
+                <div class="rc-sec">Module 11.1 &middot; Explicit &amp; Implicit Trading Costs</div>
+                <div class="tc-title"><span class="rc-los">LOS 11.a</span>Components of execution costs</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Explicit costs</span><span class="rc-dbody"><b>Brokerage, taxes, fees</b> &mdash; observable &amp; transparent (you get a receipt). Large buy-side: trading staff &amp; related expenses (<b>fixed</b>). Smaller traders: brokers &amp; variable commissions.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Implicit costs</span><span class="rc-dbody"><b class="tc-red">Not readily discernible</b> &mdash; must be estimated vs a benchmark. Comprise the bid-ask spread, market/price-impact, delay (slippage), and opportunity costs.</span></span>
+                </div>
+                <div class="tc-body"><b>The four implicit-cost components:</b></div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Bid-ask spread</span><span class="rc-dbody"><b>Highest potential cost for a SMALL trade.</b> Trades at posted bid/ask fill quickly; patient traders trade inside the spread but risk not filling. Larger, liquidity-demanding trades <b>walk down the book</b> &rarr; filled at worse prices.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Market/price impact</span><span class="rc-dbody">Impact of demanding liquidity (market-moving trades). A large buy must raise prices to attract sellers. <b>Breaking a large order into smaller trades reduces price impact</b> &mdash; but <b class="tc-red">increases delay &amp; opportunity cost</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Delay cost (slippage)</span><span class="rc-dbody">Cost of an <b>adverse price move during the lag</b> in executing a large trade. Breaking up a buy risks the price rising over time so later batches fill higher.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Opportunity cost</span><span class="rc-dbody">From <b>unfilled orders / failed opportunities</b>. If an underpriced security rises and the higher price forces cancellation of the unfilled part, the lost profit is the opportunity cost. <b class="tc-hl">Only opportunity cost looks at lost opportunities on unfilled trades</b>; the others compare actual execution vs the trigger price.</span></span>
+                </div>
+                <div class="tc-trap"><b>The central tradeoff:</b> market-impact cost on one hand vs delay + opportunity cost on the other. Demand liquidity now &rarr; high impact; wait patiently for a good price &rarr; the market may move out of range (delay + opportunity). Liquidity-<b>demanding</b> = market orders taking a posted quote; limit orders <b>provide</b> liquidity.</div>
+
+                <div class="tc-title" style="margin-top:14px;"><span class="rc-los">LOS 11.b</span>Dealer quotes, effective spread &amp; VWAP</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Inside/best bid</span><span class="rc-dbody"><b>Highest-posted</b> bid across dealers.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Inside/best ask</span><span class="rc-dbody"><b>Lowest-posted</b> ask.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Inside spread</span><span class="rc-dbody">best ask &minus; best bid (across dealers).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Quoted spread</span><span class="rc-dbody">ask &minus; bid for a <b>single dealer</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Midquote</span><span class="rc-dbody">(bid + ask) / 2 &mdash; the ES benchmark.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Standing limit order</span><span class="rc-dbody">A trader's own posted quote &mdash; <b>provides liquidity</b>, trades at posted price, but risks failure to complete. In non-exchange markets (no clearinghouse guarantee), dealer creditworthiness &amp; relationships matter beyond price.</span></span>
+                </div>
+                <div class="tc-body"><b class="tc-main-c">Calc 1 &mdash; Effective spread.</b> Uses the <b>midquote</b> as benchmark.</div>
+                <div class="tc-fl">Effective spread transaction cost = (side) &times; (transaction price &minus; midquote)
+Effective spread = 2 &times; (effective spread transaction cost)
+  side = +1 buy, &minus;1 sell
+
+Dealer P (bid 32.25, ask 32.31); buy fills at 32.29:
+  midquote = (32.25 + 32.31)/2 = 32.28
+  ES txn cost = (+1)(32.29 &minus; 32.28) = 0.01  &rarr;  effective spread = 2 &times; 0.01 = <b>$0.02</b>
+  quoted spread (P) = 32.31 &minus; 32.25 = <b>$0.06</b></div>
+                <div class="tc-info"><b>Interpretation:</b> if the trade fills at the posted bid/ask, effective spread = quoted spread. If it fills at a <b>better</b> price (as here, 0.02 &lt; 0.06), there was a <b>price improvement</b> &rarr; effective spread &lt; quoted spread. Worked spreads (Fig 11.1): Dealer Q spread = 32.35 &minus; 32.24 = $0.11; inside spread = 32.29 &minus; 32.25 = $0.04; Dealer R midquote = (32.23 + 32.29)/2 = $32.26.</div>
+                <div class="tc-trap"><b>Limitations of effective spread:</b> (1) when a large order is split into smaller orders, ES is a <b>poor indicator</b> &mdash; it ignores <b>price-impact cost</b>; (2) it ignores <b>slippage / delay cost</b> (part of the order not filled at desired prices, or not routed to the best market); (3) it does <b class="tc-red">not capture opportunity cost</b> (unfilled part abandoned after an adverse move).</div>
+                <div class="tc-body"><b class="tc-main-c">Calc 2 &mdash; VWAP transaction cost.</b> Benchmark = the <b>interval VWAP</b> (volume-weighted average of all trades between order placement &amp; execution).</div>
+                <div class="tc-fl">VWAP txn cost = trade size &times; (side) &times; (trade VWAP &minus; benchmark VWAP)
+
+BNC interval: 100@12.11, 300@12.00, 600@11.75 (total 1,000):
+  benchmark VWAP = (100/1000)(12.11)+(300/1000)(12.00)+(600/1000)(11.75) = <b>$11.86</b>
+Buy of 300 executed 100@12.11 + 200@12.00:
+  trade VWAP = (100/300)(12.11)+(200/300)(12.00) = <b>$12.04</b>
+  VWAP txn cost = 300 &times; (+1) &times; (12.04 &minus; 11.86) = <b>$54</b></div>
+                <div class="tc-trap"><b>Limitations of VWAP:</b> (1) <b>not useful if the trade is a significant part of trading volume</b> &mdash; benchmark &amp; trade VWAP converge &rarr; measured cost skewed toward zero; (2) <b class="tc-red">does not capture price-impact cost</b> (a large buy that is the only trade sets both the benchmark and trade VWAP equal &rarr; measured cost zero even at a bad price). The bias-toward-zero may explain VWAP's popularity with managers wanting to look low-cost.</div>
+                <div class="tc-body"><b class="tc-main-c">LOS 11.c &mdash; Implementation shortfall (IS).</b> Measures transaction cost as the <b>difference between the value of the actual portfolio and a hypothetical paper portfolio</b>. In the paper portfolio the trade is <b>fully executed at no cost, at the prevailing (decision/arrival/strike) price</b> when the order was placed &mdash; generally the <b>midquote</b> at that time.</div>
+                <div class="tc-tip"><b>Why IS is the best measure:</b> it addresses VWAP's shortfalls by capturing <b>all three implicit costs</b> &mdash; price impact, slippage (delay), and opportunity cost. The tradeoff: the computation is <b>more complex</b>. (Quiz 11.1 Q7 / carry-over: which measure captures price impact + slippage + opportunity cost &rarr; <b>implementation shortfall</b>.)</div>
+              </div>
+
+              <!-- ═══════════ MODULE 11.2 — 11.d/11.e/11.f ELECTRONIC TRADING ═══════════ -->
+              <div class="tc-card">
+                <div class="rc-sec">Module 11.2 &middot; Electronic Trading Systems</div>
+                <div class="tc-title"><span class="rc-los">LOS 11.d</span>Factors driving the development of electronic trading systems</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">1. Cost</span><span class="rc-dbody"><b>Cheaper to operate</b> than manual counterparts.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">2. Accuracy</span><span class="rc-dbody">Perform exactly as programmed &rarr; <b>precisely enforce the exchange's order-precedence &amp; pricing rules</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">3. Audit trails</span><span class="rc-dbody">Generate &amp; maintain records &rarr; investigators can examine the precise chain of events.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">4. Fraud prevention</span><span class="rc-dbody"><b>Keep hidden orders hidden</b>; don't leak information inadvertently or fraudulently.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">5. Continuous market</span><span class="rc-dbody">No breaks; operate continuously; <b>unaffected by severe weather</b> or events that stop human traders.</span></span>
+                </div>
+                <div class="tc-info"><b>From the trader's perspective:</b> process vast data quickly, exhibit <b>perfect discipline</b> (no behavioral bias), maintain perfect records. <b class="tc-hl">Bond-market trades remain largely OTC</b> &mdash; competing electronic bond exchanges exist but are used primarily by dealers; public investors would gain significant cost savings if given access via brokers. (Quiz 11.2 Q1: <i>least likely</i> a driver &rarr; <b>market fragmentation</b> is a consequence, not a driver. Q2 <i>least accurate</i> &rarr; electronic trading has <b>NOT</b> mostly facilitated <b>retail bond</b> trading &mdash; bonds are still OTC/dealer.)</div>
+
+                <div class="tc-title" style="margin-top:14px;"><span class="rc-los">LOS 11.e</span>Market fragmentation</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Definition</span><span class="rc-dbody">A security <b>trades in multiple markets</b> &rarr; liquidity differs across them (many bids in one venue, few offers in another). Leads to <b>price &amp; liquidity differences between markets</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Smart order routing</span><span class="rc-dbody">Sends orders to the markets with the <b>best prices &amp; sizes</b>.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Liquidity aggregation</span><span class="rc-dbody">Creates a <b>"super book"</b> displaying liquidity across all markets &rarr; overcomes fragmentation. (Quiz 11.2 Q3: liquidity-seeking algos across markets are a response to <b>market fragmentation</b>.)</span></span>
+                </div>
+
+                <div class="tc-title" style="margin-top:14px;"><span class="rc-los">LOS 11.f</span>Types of electronic traders</div>
+                <div class="tc-body"><b>Latency</b> = the time lapse between the occurrence of an event and the execution of a trade based on it. Proprietary traders include <b>high-frequency traders</b> (thousands of round-trips/day) &amp; <b>low-latency traders</b> (rely on speed of receiving &amp; acting on news).</div>
+                <table class="tc-tbl">
+                  <tr><th>Trader type</th><th>What they do / decisive detail</th></tr>
+                  <tr><td><b>Electronic news traders</b></td><td>Analyze high-speed news feeds &amp; submit <b>market orders</b>; use AI / NLP to trade against <b>stale limit orders</b> (prices not yet reflecting news). Low round-trip costs mean they profit <b>even if right only a fraction of the time</b>.</td></tr>
+                  <tr><td><b>Electronic dealers</b></td><td>Post bid &amp; offer to <b>profit from the spread</b>; profit depends on trade frequency. Keep <b>low inventory</b> of actively-traded securities; manage adverse-move risk by taking the opposite side. Monitor news &amp; <b>suspend quotes when news is material</b> &rarr; lose trades to news traders on immaterial news, but protected on material news.</td></tr>
+                  <tr><td><b>Electronic arbitrageurs</b></td><td>Trade in multiple markets to exploit <b>price discrepancies</b>. Arbitrage portfolios = long &amp; short positions (<b>legs</b>) that minimize cost &amp; risk.</td></tr>
+                  <tr><td><b>Electronic front runners</b></td><td>Use <b>AI to sniff out large trades</b> (or many small trades) on the same side, then use <b>low latency to trade ahead</b>. Search for <b>patterns</b> (repeat order sizes/timing) &amp; <b>event relationships</b> (e.g. orders after earnings). Most jurisdictions <b>forbid dealers/brokers</b> from front-running <i>clients'</i> orders (would be trading on inside info); brokers randomize buy-side clients' trades to hide patterns.</td></tr>
+                  <tr><td><b>Electronic quote matchers</b></td><td>Use standing limit orders as <b>valuable options to trade while limiting risk</b>. E.g. see a standing buy at 12.20, buy at 12.25; if price rises they profit, downside limited to $0.05 (the standing buy backstops them).</td></tr>
+                  <tr><td><b>Buy-side traders</b></td><td>Execute trades for <b>portfolio managers</b>; use <b>OMSs</b> to track orders sent/filled; use <b>electronic brokers</b> offering advanced order-processing algos/tactics. <span class="tc-red">Not the same as "buy orders"</span> &mdash; buy-side traders process both buys &amp; sells for their PMs.</td></tr>
+                </table>
+                <div class="tc-trap"><b>Quiz 11.2 Q4.</b> Traders using AI to sniff out large trades processed in small parts &rarr; <b>front runners</b> (A). Not arbitrageurs (multi-market mispricing) or dealers (spread capture).</div>
+              </div>
+
+              <!-- ═══════════ MODULE 11.3 — 11.g/11.h CHARACTERISTICS & LOW LATENCY ═══════════ -->
+              <div class="tc-card">
+                <div class="rc-sec">Module 11.3 &middot; Characteristics &amp; Uses of Electronic Systems</div>
+                <div class="tc-title"><span class="rc-los">LOS 11.g / 11.h</span>The need for speed &amp; low-latency advantages</div>
+                <div class="tc-body"><b>Jumping the order queue</b> gives low-latency traders an edge: order-taking (execute against a standing sell on positive news), market-making (take precedence when providing liquidity), and order-canceling (pull a quote before it fills when it becomes ill-advised). Electronic traders must be <b>faster than competitors</b> to capitalize on opportunities.</div>
+                <div class="tc-body"><b>Low-latency traders minimize latency in three phases of a trade:</b></div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">1. News &rarr; receipt</span><span class="rc-dbody">Gap between publication of actionable news &amp; the trader receiving it &mdash; a <b>communication-speed</b> issue.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">2. Receipt &rarr; decision</span><span class="rc-dbody">Gap between receiving news &amp; deciding an action &mdash; a <b>computation-speed</b> issue.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">3. Decision &rarr; exchange</span><span class="rc-dbody">Gap between order determination &amp; communicating it to the exchange &mdash; a <b>communication-speed</b> issue.</span></span>
+                </div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Communication speed</span><span class="rc-dbody">Minimize distance traveled: latest/fastest tech &amp; <b>co-location</b> (servers in the exchange). Fairness &rarr; the exchange <b>cannot selectively offer co-location</b> to only a few.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Computation speed</span><span class="rc-dbody">Best hardware: <b>overclocked processors</b> (souped-up cooling), <b>fast memory</b> vs hard disks (disc-seek time), multiple task-specialized processors. Low-overhead software: no-frills OS, <b>assembler</b> over C++ for critical functions.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Dynamic code</span><span class="rc-dbody">If code updates as markets change, use <b>faster-to-write languages (e.g. Python)</b> &mdash; deployment speed matters more than processing speed there.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Pre-computation</span><span class="rc-dbody">Run scenario analysis <b>ahead of time</b> so the optimal action per scenario is predetermined &rarr; no delay once the scenario occurs.</span></span>
+                </div>
+                <div class="tc-info"><b>Quiz 11.3 Q1:</b> achieving lower latency via <b>computation</b> speed &rarr; <b>B (simple, no-frills operating systems)</b>. (Co-location &amp; fiber-optic networks are <b>communication</b> speed.)</div>
+                <div class="tc-body"><b>Advanced orders, tactics &amp; algorithms:</b></div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Advanced orders</span><span class="rc-dbody">Limit orders with a <b>dynamic limit price</b> that varies with a benchmark. E.g. a <b>pegged</b> limit buy one tick below the lowest ask &mdash; as posted asks change, the order is auto-canceled &amp; replaced. (Quiz 11.3 Q2: limit orders with dynamic prices &rarr; <b>advanced orders</b>, C.)</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Trading tactics</span><span class="rc-dbody">Plans to submit multiple orders across exchanges to <b>uncover hidden liquidity</b>. E.g. a limit buy at 18.01 may uncover hidden asks; a limit with a <b>&plusmn; discretion</b> amount; <b>IOC (immediate-or-cancel)</b> orders; trading at <b>dark pools</b>; <b>midspread orders</b> (pegged to the bid-ask midpoint). Randomize order size &amp; time-to-cancel to reduce footprint.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Algorithms (algos)</span><span class="rc-dbody">Programmed execution strategies. A <b>VWAP algo</b> breaks an order into pieces proportional to expected trading volume &rarr; reduces price impact. Good algos minimize total transaction cost by judiciously using limit orders (offer liquidity) &amp; market orders (minimize delay/opportunity cost).</span></span>
+                </div>
+                <div class="tc-body"><b>Impact of electronic trading (strategy changes):</b></div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Hidden orders</span><span class="rc-dbody">Limit orders hidden from all but the exchange &rarr; remove the valuable option that standing orders give the market. Electronic markets are <b>better suited</b> to hidden orders (lower chance of inadvertent exposure). Detected by <b>pinging</b> (small IOC orders) &mdash; a fill reveals a hidden order exists (not its size or side).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Leapfrog</span><span class="rc-dbody">Beating the best bid/ask. With large quoted spreads, dealers post a better price (lower ask / higher bid) &rarr; <b>narrows the inside spread</b> &amp; frustrates traders who must re-quote to keep precedence. (Quiz 11.3 Q3: leapfrog most likely during <b>a large inside spread</b>, B.)</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Flickering quotes</span><span class="rc-dbody">Exposed limit orders <b>canceled almost immediately</b> &mdash; used to remove the option standing orders give others. Traders anticipate the flickering quote's return &amp; may submit a hidden limit order.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Electronic arbitrage (3 types)</span><span class="rc-dbody"><b>(A) Take liquidity on both sides</b> &mdash; market buy &amp; sell simultaneously across markets; low latency critical; opportunities few. <b>(B) Offer liquidity on one side</b> &mdash; e.g. buy at 100-bid 105-offer, place a bid at 95; if filled, immediately sell to the 100 bid for a profit of 5. <b>(C) Offer liquidity on both sides</b> &mdash; post limit orders inferior to the best bid/offer in different markets; <b class="tc-red">fraught with risk</b> &mdash; if one leg fills and the other doesn't, exposed to adverse price moves.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Machine learning</span><span class="rc-dbody">(data mining) statistical models that evolve with new empirical data to fine-tune algos &mdash; but <b class="tc-red">ineffective in extraordinary times</b> when volatility spikes &amp; the past is not a useful guide; many traders shut down then.</span></span>
+                </div>
+                <div class="tc-tip"><b>Khuslow arbitrage (11.g worked example).</b> Alpha bid 10.06/ask 10.12; Bravo bid 10.02/ask 10.05. <b>Take liquidity both sides:</b> buy at best ask 10.05 (Bravo), sell at best bid 10.06 (Alpha) &rarr; <b>$0.01/share</b> (on 11,000 shares &rarr; $110). <b>(a) Offer liquidity one side:</b> post a limit buy at 10.04 in Bravo; if filled, sell at Alpha (10.06) &rarr; <b>$0.02</b>. <b>(b) Offer liquidity both sides:</b> limit buy 10.04 (Bravo) + limit sell 10.07 (Alpha) &rarr; <b>$0.03</b> if both fill. <span class="tc-red">Risk:</span> quotes may go stale (lag between quote / receipt / action / communication) &rarr; a leg may not fill &mdash; failure-to-fill risk is <b>highest when offering liquidity on both sides</b>, lowest for market orders. <span class="tc-blue">(Quiz 11.4 Q5: Philly bid 16.13 / LA ask 16.11, take-liquidity both sides &rarr; 0.02/share &times; 50,000 available &rarr; ~$1,000, A.)</span></div>
+              </div>
+
+              <!-- ═══════════ MODULE 11.4 — 11.i/11.j RISKS & SURVEILLANCE ═══════════ -->
+              <div class="tc-card">
+                <div class="rc-sec">Module 11.4 &middot; Risks &amp; Surveillance of Electronic Trading</div>
+                <div class="tc-title"><span class="rc-los">LOS 11.i</span>Risks of electronic trading &amp; how regulators mitigate them</div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">HFT arms race</span><span class="rc-dbody">Competitive edge to the fastest &rarr; HFTs must deploy the <b>latest, most expensive tech</b>. This arms race <b>offsets the low-cost benefit</b> of electronic trading &amp; acts as an entry barrier (unlevel field for smaller traders). Calls to mitigate: <b>random-interval trading delays</b> (unforecastable by HFT algos).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Systemic risk</span><span class="rc-dbody">Cost of bad trades borne by <b>parties other than the responsible one</b> &rarr; less incentive to prevent bad decisions. Programming errors can cascade to market chaos before being caught.</span></span>
+                </div>
+                <div class="tc-body"><b>Common trading errors (subtypes of systemic risk):</b></div>
+                <div class="rc-drivers">
+                  <span class="rc-drow"><span class="rc-dlabel">Runaway algorithms</span><span class="rc-dbody">Produce a series of unintended orders. E.g. the <b>May 2010 flash crash</b> &mdash; a large market sell of mini S&amp;P 500 futures, programmed to release orders <b>proportional to trading volume</b>; since it wasn't a limit order, the volume it created fed more selling &rarr; huge volatility spike.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Fat-finger errors</span><span class="rc-dbody">Input errors; if large enough, dramatic volatility (where human checks/balances are missing).</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Overlarge orders</span><span class="rc-dbody">Orders larger than available liquidity in the market they're routed to.</span></span>
+                  <span class="rc-drow"><span class="rc-dlabel">Malevolent orders</span><span class="rc-dbody"><b>Deliberate abuse</b> &mdash; e.g. traders seeking to <b>DoS-attack competitors with excessive quote submission</b>. (Quiz 11.4 Q2: "concerned about DoS attacks via excessive quotes" &rarr; <b>malevolent orders</b>, C.)</span></span>
+                </div>
+                <div class="tc-body"><b>Regulatory mitigation:</b> systemic risks can be managed &mdash; ensure only adequately <b>backtested</b> algos are used, controls are strict, software is tested before deployment. Brokers must scrutinize the <b>appropriateness</b> of orders; markets should have <b>circuit breakers</b> that kick in when volatility spikes.</div>
+
+                <div class="tc-title" style="margin-top:14px;"><span class="rc-los">LOS 11.j</span>Market abuses &amp; real-time surveillance</div>
+                <div class="tc-body">Real-time surveillance detects abuses &amp; potential manipulation. Major abuse categories:</div>
+                <table class="tc-tbl">
+                  <tr><th>Abuse</th><th>Definition / decisive detail</th></tr>
+                  <tr><td><b>Front running</b></td><td>An order being processed by an unsuspecting party is <b>traded ahead of</b>. Illegal if the info is obtained improperly. Detected: orders broken into smaller ones, then patterns sought.</td></tr>
+                  <tr><td><b>Market manipulation</b></td><td>Trading to create artificial prices; enforcement seeks genuine vs manipulative intent.</td></tr>
+                  <tr><td><b>Wash trading</b></td><td>Trading between <b>commonly controlled accounts</b> to create <b>false liquidity</b> &rarr; false sense of security about a stock's liquidity.</td></tr>
+                  <tr><td><b>Spoofing / layering</b></td><td><b>Fake limit orders</b> posted to create false optimism/pessimism. E.g. a buyer posts a <b>hidden</b> buy at a low price + exposed <b>sell</b> orders to convince others prices are falling &rarr; they sell into the hidden buy. Layering is risky &mdash; the exposed sells may actually fill.</td></tr>
+                  <tr><td><b>Bluffing</b></td><td>Preying on <b>momentum traders</b> (who buy rising / sell falling). Post orders to influence <b>perceived value</b>. <b>Pump-and-dump</b>: buy to raise the price, sell higher to momentum traders (may use rumormongering / wash trading). Sell-side analogue = <b>short-and-distort</b>. Analysts need a sound basis for valuation (Standard V(A): Diligence &amp; Reasonable Basis) to avoid falling for bluffing.</td></tr>
+                  <tr><td><b>Gunning the market</b></td><td>Forces other traders into <b>bad trades</b>. E.g. <b>rapid short selling</b> collapses a security &rarr; triggers stop-loss orders &rarr; manipulator repurchases at the lower price. (Quiz 11.4 Q3: "rapid short selling collapses market, triggers stop-losses" &rarr; <b>gunning the market</b>, B.)</td></tr>
+                  <tr><td><b>Squeezing / cornering</b></td><td>Obtain control of resources needed to settle contracts, then withdraw them &rarr; trigger defaults, extend resources at a higher price. <b>Short squeeze:</b> take control of lendable shares, lend to shorts, recall abruptly &rarr; shorts cover higher. <b>Cornering (commodities):</b> long futures + buy up the spot supply &rarr; demand physical delivery counterparties can't supply. <b>Illegal &amp; prohibited by most futures exchanges.</b></td></tr>
+                </table>
+                <div class="tc-trap"><b>Quiz 11.4 keys (Storm/Kotak).</b><br>
+                <b>Q1</b> Storm's two statements (only authorized personnel input orders; algo updates signed off by supervisors) &rarr; both are appropriate checks &amp; balances &rarr; <b>A (both correct)</b>.<br>
+                <b>Q2</b> Kotak I ("concerned about DoS attacks via excessive quote submission") &rarr; <b>C (malevolent orders)</b> &mdash; a deliberate trading-error/abuse of the system, not a price-manipulation tactic. <span class="tc-blue">(C circled in photo.)</span><br>
+                <b>Q3</b> Kotak II ("rapid short selling may collapse the market, triggering stop-loss orders") &rarr; <b>B (gunning the market)</b>. <span class="tc-orange">(Reasoning-derived; not circled. Gunning = forcing others into bad trades via stop-loss triggering; distinct from bluffing, which preys on momentum traders via perceived-value orders.)</span></div>
+                <div class="tc-info"><b>Quiz 11.1 answer summary (calc-verified).</b> Q1 &rarr; <b>B ($0.02)</b> price impact of the 2nd lot (17.71 &minus; 17.69). Q2 &rarr; <b>C ($0.04)</b> inside spread (17.69 &minus; 17.65). Q3 &rarr; <b>C ($44.70)</b> benchmark VWAP. Q4 &rarr; <b>B ($44.68)</b> trade VWAP. Q5 &rarr; <b>B ($25)</b> VWAP txn cost = 1,500 &times; (44.68 &minus; 44.70) &asymp; &minus;$25. Q6 &rarr; <b>B</b> (VWAP appropriate when the trade is a SMALL part of volume). Q7 &rarr; <b>C (implementation shortfall)</b> captures price impact + slippage + opportunity cost.</div>
+              </div>
+
+            </div><!-- /#tc-recap -->
+          </div><!-- /#tcm-recap -->
 
           <script>
             function tcMod(ev,id){
@@ -36143,7 +36897,10 @@ var RECAP_REGISTRY = [
   { id: 'rwr-recap', title: 'Reading 5 · Asset Allocation with Real-World Constraints' },
   { id: 'eq-recap',  title: 'Reading 6 · Overview of Equity Portfolio Management' },
   { id: 'fipm-recap', title: 'Reading 7 · Overview of Fixed-Income Portfolio Management' },
-  { id: 'aai-recap', title: 'Reading 8 · Asset Allocation to Alternative Investments' }
+  { id: 'aai-recap', title: 'Reading 8 · Asset Allocation to Alternative Investments' },
+  { id: 'pwm-recap', title: 'Reading 9 · An Overview of Private Wealth Management' },
+  { id: 'ii-recap', title: 'Reading 10 · Portfolio Management for Institutional Investors' },
+  { id: 'tc-recap', title: 'Reading 11 · Trading Costs and Electronic Markets' }
 ];
 
 // Shared print stylesheet used by both single- and all-recap printing.
