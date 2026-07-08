@@ -20505,6 +20505,7 @@ Range = 40% &plusmn; 7.14% = <b>32.86% &ndash; 47.14%</b></div>
             <button class="os-toptab" onclick="osTop('greeks', this)">Greeks (16.9)</button>
             <button class="os-toptab" onclick="osTop('grk2', this)">Greeks II &amp; Vol (16.10/16.11)</button>
             <button class="os-toptab" onclick="osTop('cheat', this)">Cheat Sheet</button>
+            <button class="os-toptab" onclick="osTop('recap', this)">Recap</button>
             <button class="os-toptab" onclick="osTop('err', this)">Errors</button>
             <button class="os-toptab" onclick="osTop('mas', this)">Mastery</button>
           </div>
@@ -21466,6 +21467,373 @@ BREAKEVEN:  S₀ + net</div>
           <!-- ===================== MASTERY ===================== -->
           <div id="osr-mas" class="os-toppanel">
             <div class="os-empty">Mastery items to be populated.</div>
+          </div>
+
+          <!-- ===================== RECAP (Reading 16) ===================== -->
+          <div id="osr-recap" class="os-toppanel">
+            <style>
+              #osr-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+              #osr-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(212,160,23,.14); border:1px solid var(--os-gold); color:var(--os-gold); border-radius:3px; padding:1px 6px; margin-right:6px; }
+              #osr-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; page-break-inside:avoid; }
+              #osr-recap .rc-drow { display:grid; grid-template-columns:160px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; page-break-inside:avoid; }
+              #osr-recap .rc-drow:last-child { border-bottom:none; }
+              #osr-recap .rc-dlabel { color:var(--os-gold); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #osr-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #osr-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #osr-recap .rc-dlabel { padding-top:0; }
+              }
+              #osr-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; page-break-inside:avoid; }
+              #osr-recap .os-fl, #osr-recap .os-trap, #osr-recap .os-tip, #osr-recap .os-table { page-break-inside:avoid; }
+            </style>
+
+            <button class="recap-print-btn" onclick="printOneRecap('osr-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+            <div class="os-card">
+              <div class="os-title">Reading 16 &middot; Options Strategies</div>
+              <div class="os-body">Full-reading recap, module by module: <b>options basics &amp; profit at expiration (16.1)</b>, <b>synthetic positions / put&ndash;call parity (16.2 / LOS 16.a)</b>, <b>covered calls (16.3 / 16.b)</b>, <b>protective puts (16.4 / 16.c)</b>, <b>hedging a short position (16.5 / 16.e)</b>, <b>collars (16.6 / 16.f)</b>, <b>straddles (16.7 / 16.f)</b>, <b>spreads (16.8 / 16.f)</b>, <b>delta &amp; gamma (16.9 / 16.d)</b>, <b>theta, vega &amp; calendar spreads (16.10 / 16.g)</b>, <b>volatility skew &amp; smile (16.11 / 16.h)</b>, and <b>applications (16.12 / 16.i&ndash;16.j)</b>. Every calculation below is node-verified against the Schweser figures (XYZ data: S&#8320;&nbsp;=&nbsp;$52.14, 20&nbsp;March, rf&nbsp;=&nbsp;3%).</div>
+              <div class="os-info"><b>Where the marks are:</b> (1) the four at-expiry numbers &mdash; <span class="os-gold">max profit, max loss, breakeven, value/profit at a given S<sub>T</sub></span> &mdash; for every strategy; (2) profit line = value line shifted by the net premium (down if paid, up if received); (3) long/short of the same position share the <b>same breakeven</b>, max profit/loss swap; (4) choosing the strategy from the <b>direction &times; volatility</b> matrix (16.12).</div>
+            </div>
+
+            <!-- ═══════════ REFERENCE DATA ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Reference &middot; XYZ Option Data (used by every example)</div>
+              <div class="os-body">S&#8320; = <b>$52.14</b> on 20 March; APR/MAY/JUN expiries = 31/61/91 days out; rf = 3%; vol assumed 60%; no dividends. Prices per share:</div>
+              <table class="os-table">
+                <tr><th>APR call</th><th>MAY call</th><th>JUN call</th><th>Strike</th><th>APR put</th><th>MAY put</th><th>JUN put</th></tr>
+                <tr><td>4.80</td><td>6.26</td><td>7.40</td><td><b>50</b></td><td>2.53</td><td>3.87</td><td>4.88</td></tr>
+                <tr><td>3.53</td><td>5.05</td><td>6.22</td><td><b>52.5</b></td><td>3.75</td><td>5.14</td><td>6.19</td></tr>
+                <tr><td>2.52</td><td>4.02</td><td>5.20</td><td><b>55</b></td><td>5.24</td><td>6.61</td><td>7.65</td></tr>
+              </table>
+              <div class="os-tip">Each traded contract is a right over <b>100 shares</b>, but all workings are per share unless stated. &ldquo;MAY 50 call&rdquo; = May-expiry call, strike 50.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 16.1 — BASICS ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.1 &middot; Options Basics &mdash; Value &amp; Profit at Expiration</div>
+              <div class="os-title">Terminology, moneyness, intrinsic vs time value</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Call / Put</span><span class="rc-dbody">Call = right to <b>buy</b>; put = right to <b>sell</b>. Buyer (long) pays the <b>premium</b> and holds the right; seller (short) receives it as payment for the contingent liability.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">European / American</span><span class="rc-dbody">European: exercisable <b>only at expiration</b>. American: any trading day <b>up to and including</b> expiration. Labels only &mdash; nothing to do with where they trade.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Moneyness</span><span class="rc-dbody"><b>Call ITM</b> if S &gt; X; <b>put ITM</b> if S &lt; X. ATM: S = X. <b>Call OTM</b> if S &lt; X; <b>put OTM</b> if S &gt; X. Not-ITM &rArr; zero intrinsic value.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Premium split</span><span class="rc-dbody"><b>Premium = intrinsic value + time value.</b> Intrinsic = value of immediate exercise (degree ITM). Time value = what might happen over remaining life; greatest near ATM; zero at expiration.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Value drivers</span><span class="rc-dbody">Strike; underlying level; time to expiry; volatility (<i>expected</i>, annualized); risk-free rate; yield on underlying; style. Holding all else constant: <b>higher vol &rArr; higher premiums</b> (calls &amp; puts); <b>less time &rArr; lower premiums</b> (both).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Implied vol</span><span class="rc-dbody">Backed out of the market price via a pricing model &mdash; the consensus <b>forward-looking</b> vol estimate. Not the same as <b>historical (realized)</b> vol = &radic; of actual realized variance to date.</span></span>
+              </div>
+              <div class="os-trap"><b>&#9888; ITM &ne; profitable.</b> Intrinsic value ignores the premium originally paid &mdash; an option can expire ITM and still lose money for the long (intrinsic &lt; initial premium). ITM only means exercise beats non-exercise.</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">The four basic positions (XYZ numbers, node-verified)</div>
+              <div class="os-body">Profit line = value line shifted <b>down</b> by premium paid (long) or <b>up</b> by premium received (short). Same shape, always.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Long call (MAY 50, c&#8320;=6.26)</span><span class="rc-dbody">Value = max(S<sub>T</sub>&minus;X, 0). <b class="os-red">Max loss = c&#8320; = 6.26</b> (S<sub>T</sub>&le;50). <b class="os-green">Max profit unlimited.</b> BE = X+c&#8320; = <b>56.26</b>. At $60: 10&minus;6.26 = <b>+3.74</b>; at $40: <b>&minus;6.26</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Short call (MAY 50)</span><span class="rc-dbody">Mirror image. <b class="os-green">Max profit = c&#8320; = 6.26</b>; <b class="os-red">unlimited max loss</b>; BE = <b>56.26</b> (same as long). Sold with no hedge = <b>naked (uncovered) call</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Long put (JUN 50, p&#8320;=4.88)</span><span class="rc-dbody">Value = max(X&minus;S<sub>T</sub>, 0). <b class="os-red">Max loss = p&#8320; = 4.88</b> (S<sub>T</sub>&ge;50). <b class="os-green">Max profit = X&minus;p&#8320; = 45.12</b> (stock &rarr; 0), identical number to BE = <b>45.12</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Short put (JUN 50)</span><span class="rc-dbody"><b class="os-green">Max profit = p&#8320; = 4.88</b>; <b class="os-red">max loss = 45.12</b> = BE. Writing a put + depositing X in a designated account = <b>cash-secured put</b>; without = naked put.</span></span>
+              </div>
+              <div class="os-fl">Long &amp; short of the same option share ONE breakeven; their max profit / max loss just SWAP (zero-sum game, ignoring transaction costs).</div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">Payoff shapes at expiration (profit lines)</div>
+              <div class="rc-svg-wrap">
+                <svg viewBox="0 0 760 330" width="760" height="330" xmlns="http://www.w3.org/2000/svg" style="min-width:700px">
+                  <style>.pxl{stroke:#2A3441;stroke-width:1}.pft{stroke:#3DD68C;stroke-width:2.5;fill:none}.lbl{fill:#C9D1D9;font:600 11px monospace}.sub{fill:#7D8590;font:9.5px monospace}.zx{stroke:#4A5561;stroke-width:1;stroke-dasharray:3 3}</style>
+                  <!-- row 1 -->
+                  <g transform="translate(10,10)">
+                    <text x="85" y="10" text-anchor="middle" class="lbl">LONG CALL</text>
+                    <line x1="0" y1="70" x2="170" y2="70" class="zx"/>
+                    <polyline points="0,95 90,95 170,25" class="pft"/>
+                    <text x="85" y="135" text-anchor="middle" class="sub">loss capped at &minus;c&#8320;; up &infin;</text>
+                  </g>
+                  <g transform="translate(200,10)">
+                    <text x="85" y="10" text-anchor="middle" class="lbl">SHORT CALL</text>
+                    <line x1="0" y1="70" x2="170" y2="70" class="zx"/>
+                    <polyline points="0,45 90,45 170,115" class="pft" style="stroke:#FF7B72"/>
+                    <text x="85" y="135" text-anchor="middle" class="sub">gain capped at +c&#8320;; down &infin;</text>
+                  </g>
+                  <g transform="translate(390,10)">
+                    <text x="85" y="10" text-anchor="middle" class="lbl">LONG PUT</text>
+                    <line x1="0" y1="70" x2="170" y2="70" class="zx"/>
+                    <polyline points="0,25 80,95 170,95" class="pft"/>
+                    <text x="85" y="135" text-anchor="middle" class="sub">max gain X&minus;p&#8320; at S=0</text>
+                  </g>
+                  <g transform="translate(580,10)">
+                    <text x="85" y="10" text-anchor="middle" class="lbl">SHORT PUT</text>
+                    <line x1="0" y1="70" x2="170" y2="70" class="zx"/>
+                    <polyline points="0,115 80,45 170,45" class="pft" style="stroke:#FF7B72"/>
+                    <text x="85" y="135" text-anchor="middle" class="sub">gain capped +p&#8320;; loss X&minus;p&#8320;</text>
+                  </g>
+                  <!-- row 2 -->
+                  <g transform="translate(10,170)">
+                    <text x="85" y="10" text-anchor="middle" class="lbl">COVERED CALL</text>
+                    <line x1="0" y1="70" x2="170" y2="70" class="zx"/>
+                    <polyline points="0,120 100,40 170,40" class="pft" style="stroke:#79C0FF"/>
+                    <text x="85" y="135" text-anchor="middle" class="sub">shape = short put</text>
+                  </g>
+                  <g transform="translate(200,170)">
+                    <text x="85" y="10" text-anchor="middle" class="lbl">PROTECTIVE PUT</text>
+                    <line x1="0" y1="70" x2="170" y2="70" class="zx"/>
+                    <polyline points="0,92 70,92 170,20" class="pft" style="stroke:#79C0FF"/>
+                    <text x="85" y="135" text-anchor="middle" class="sub">shape = long call</text>
+                  </g>
+                  <g transform="translate(390,170)">
+                    <text x="85" y="10" text-anchor="middle" class="lbl">COLLAR</text>
+                    <line x1="0" y1="70" x2="170" y2="70" class="zx"/>
+                    <polyline points="0,92 50,92 120,45 170,45" class="pft" style="stroke:#79C0FF"/>
+                    <text x="85" y="135" text-anchor="middle" class="sub">flat&ndash;slope&ndash;flat, both tails cut</text>
+                  </g>
+                  <g transform="translate(580,170)">
+                    <text x="85" y="10" text-anchor="middle" class="lbl">LONG STRADDLE</text>
+                    <line x1="0" y1="70" x2="170" y2="70" class="zx"/>
+                    <polyline points="0,20 85,110 170,20" class="pft" style="stroke:#BC8CFF"/>
+                    <text x="85" y="135" text-anchor="middle" class="sub">V at strike; 2 breakevens</text>
+                  </g>
+                </svg>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 16.2 — SYNTHETICS / PARITY ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.2 &middot; Synthetic Positions Using Options</div>
+              <div class="os-title"><span class="rc-los">LOS 16.a</span>Replicating an asset&rsquo;s returns with options</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Synthetic long forward</span><span class="rc-dbody"><b>Long call + short put</b>, same X, same expiry. Value at expiration = <b>S<sub>T</sub> &minus; X</b> whatever happens (above X the call is ITM, below X the short put is exercised against you &mdash; either way you buy at X).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">MAY 50 numbers</span><span class="rc-dbody">Pay c&#8320; = 6.26, receive p&#8320; = 3.87 &rarr; net outlay <b>2.39</b>. Profit line sits 2.39 below value line; BE = 50 + 2.39 = <b>$52.39</b> (call is $2.39 ITM there, just covering the net premium).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Put&ndash;call parity</span><span class="rc-dbody">Same payoff as buy stock + borrow PV(X), so same cost: <b>c&#8320; &minus; p&#8320; = S&#8320; &minus; PV(X)</b> &hArr; <b>S&#8320; + p&#8320; = c&#8320; + PV(X)</b>. Check: PV(50) = 50/1.03<sup>61/365</sup> = <b>49.75</b>; 52.14 &minus; 49.75 = <b>2.39</b> = 6.26 &minus; 3.87 &#10003;. Assumes no yield on the underlying.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Put&ndash;call FORWARD parity</span><span class="rc-dbody">Substitute PV(F&#8320;(T)) for S&#8320;: <b>PV(F&#8320;(T)) + p&#8320; = c&#8320; + PV(X)</b>. Since fair F&#8320;(T) = FV(S&#8320;) for a no-yield underlying, this is just standard parity restated.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Special case</span><span class="rc-dbody">If PV(X) = S&#8320; exactly &rArr; c&#8320; = p&#8320; (identical premiums); that X is the fair forward price. <b>Ennis example:</b> dealer short a 4-month forward at 179.59 hedges by <b>buying the 179.59 call + selling the 179.59 put</b> (net premium zero since both trade at 16.34) &mdash; buys 1,000 shares at 179.59 at expiry whichever leg is exercised.</span></span>
+              </div>
+              <div class="os-trap"><b>&#9888; Synthetic SHORT exposure</b> = short call + long put (same X/expiry), possibly + lend PV(X) for the full synthetic short stock. Quiz trap: watch <b>borrow vs lend</b> in the answer choices &mdash; replicating short stock means you receive today, i.e. positions equivalent to <i>lending</i> arithmetic, and the long-put/short-call combination is the defining pair.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 16.3 — COVERED CALLS ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.3 &middot; Covered Calls</div>
+              <div class="os-title"><span class="rc-los">LOS 16.b</span>Covered call = long stock + short call</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Construction / view</span><span class="rc-dbody">Own the stock, sell a call against it (short-call risk is hedged by the shares). View: <b>neutral-to-mildly-bullish</b>, willing to cap upside for premium income.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">At-expiry formulas</span><span class="rc-dbody"><b class="os-green">Max profit = X &minus; S&#8320; + c&#8320;</b> &middot; <b class="os-red">Max loss = S&#8320; &minus; c&#8320;</b> (stock to zero) &middot; <b>BE = S&#8320; &minus; c&#8320;</b> (same number as max loss).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">APR 55 example</span><span class="rc-dbody">Sell APR 55 call @ 2.52 vs stock @ 52.14. Max profit = 2.86 + 2.52 = <b>5.38</b>; BE = 52.14 &minus; 2.52 = <b>49.62</b> = max loss. Only worse off than plain stock if S<sub>T</sub> &gt; 55 + 2.52 = <b>57.52</b>. Shape = <b>short put</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Motivation 1 &mdash; yield</span><span class="rc-dbody"><b>Yield enhancement:</b> calls are <b>OTM</b> (possibly substantially). Cash in the upside you don&rsquo;t believe in.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Motivation 2 &mdash; reduce position</span><span class="rc-dbody"><b>Reducing a holding at a favorable price:</b> calls are <b>ITM</b>. Jenkins sells 15 APR 50 calls (1,500 sh) @ 4.80 &rarr; premium <b>$7,200</b>; if S<sub>T</sub> &ge; 50 delivers at 50 &rarr; 75,000 + 7,200 = <b>$82,200</b> &gt; $78,210 outright &mdash; captures time value 4.80 &minus; 2.14 = <b>$2.66/sh</b> (&times;1,500 = $3,990). Risk: S<sub>T</sub> &lt; 50 &rarr; calls lapse, shares unsold.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Motivation 3 &mdash; target price</span><span class="rc-dbody"><b>Target price realization:</b> calls <b>marginally OTM</b>, strike just above spot. Perkins writes APR 52.5 @ 3.53; if exercised realizes 52.50 + 3.53 = <b>$56.03</b>. Dangers: stock soars (regret) or falls (sale missed).</span></span>
+              </div>
+              <div class="os-fl">Strike vs spot tells you the motivation:
+  OTM (well above)   -> yield enhancement
+  ITM (below spot)   -> reduce position at favorable price
+  marginally OTM     -> target price realization</div>
+            </div>
+
+            <!-- ═══════════ MODULE 16.4 — PROTECTIVE PUTS ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.4 &middot; Protective Puts</div>
+              <div class="os-title"><span class="rc-los">LOS 16.c</span>Protective put = long stock + long put</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Construction / view</span><span class="rc-dbody">Own the stock, buy a put as insurance: hedged below the strike, <b>full upside retained</b>. Classic options hedge of a long position.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">At-expiry formulas</span><span class="rc-dbody"><b class="os-red">Max loss = S&#8320; &minus; X + p&#8320;</b> &middot; <b>BE = S&#8320; + p&#8320;</b> &middot; <b class="os-green">Max profit = unlimited</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">MAY 50 example</span><span class="rc-dbody">Put @ 3.87 vs stock @ 52.14. Net max loss = 2.14 + 3.87 = <b>6.01</b>; BE = 52.14 + 3.87 = <b>56.01</b> (must recoup the premium). Shape = <b>long call</b>.</span></span>
+              </div>
+              <div class="os-trap"><b>&#9888; CC vs PP breakevens move in opposite directions:</b> covered call BE is <i>below</i> S&#8320; (S&#8320;&minus;c&#8320;, premium cushions), protective put BE is <i>above</i> S&#8320; (S&#8320;+p&#8320;, premium must be earned back). Mixing these up is a free mark lost.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 16.5 — HEDGING A SHORT ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.5 &middot; Options as a Hedge of a Short Position</div>
+              <div class="os-title"><span class="rc-los">LOS 16.e</span>Buying a call vs selling a put on a short underlying</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Short position exposure</span><span class="rc-dbody">Short stock gains if price falls, loses (without limit) if price rises.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Buy a call</span><span class="rc-dbody">(Probably above spot.) Hedges the stock <b>rising</b> &mdash; positive call value caps the loss above the strike. Analog of the <b>protective put</b> on a long position.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Sell a put</span><span class="rc-dbody">(Probably below spot.) Sells off part of the benefit of the stock <b>falling</b>, in exchange for premium. Analog of the <b>covered call</b> on a long position.</span></span>
+              </div>
+            </div>
+            <!-- ═══════════ MODULE 16.6 — COLLARS ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.6 &middot; Collars</div>
+              <div class="os-title"><span class="rc-los">LOS 16.f</span>Collar = protective put + covered call</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Construction</span><span class="rc-dbody">Long stock + <b>buy put</b> (most likely OTM, hedges downside) + <b>sell call</b> (most likely OTM, sells upside &amp; subsidizes the put). A.k.a. <i>fence</i> or <i>hedge wrapper</i>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Zero-cost collar</span><span class="rc-dbody">Set the put strike first, then pick the call strike so <b>call premium = put premium</b> &rarr; no net inflow/outflow at initiation (easy OTC, approximate with exchange-traded).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">XYZ example</span><span class="rc-dbody">Buy JUN 50 put (4.88) + sell JUN 55.87 call (4.88), zero net premium. <b class="os-green">Max profit = 55.87 &minus; 52.14 = 3.73</b> (rise to call strike); <b class="os-red">max loss = 52.14 &minus; 50 = 2.14</b> (fall to put strike); <b>BE = S&#8320; = 52.14</b> exactly (zero-cost &rArr; profit line = stock-plus-options value line, unshifted).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">General formulas</span><span class="rc-dbody">Max profit = X<sub>call</sub> &minus; S&#8320; &minus; net premium &middot; Max loss = S&#8320; &minus; X<sub>put</sub> + net premium &middot; BE = S&#8320; + net premium (net premium = 0 for zero-cost).</span></span>
+              </div>
+              <div class="os-tip">Pre-expiry, the collar <b>dampens position variability to roughly 15&ndash;20%</b> of the unhedged level (delta well below 1 between the strikes) &mdash; that is the practical point of collaring.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 16.7 — STRADDLES ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.7 &middot; Straddles</div>
+              <div class="os-title"><span class="rc-los">LOS 16.f</span>Straddle = call + put, same strike &amp; expiry</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Long straddle</span><span class="rc-dbody">Buy equal numbers of calls and puts, same strike (typically near ATM), same expiry. <b>Classic long-volatility play</b> &mdash; no position in the underlying. Value line is a <b>V centered on the strike</b> (both legs worthless there).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">JUN 52.5 numbers</span><span class="rc-dbody">c = 6.22 + p = 6.19 &rarr; outlay = <b class="os-red">max loss = 12.41</b> (at the strike). BEs: 52.50 &plusmn; 12.41 = <b>$64.91</b> and <b>$40.09</b>. Upside unlimited via the call; downside max profit = strike &minus; cost via the put.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Short straddle</span><span class="rc-dbody">Sell both: <b>neutrality play</b>. Max profit = total premium at the strike; <b class="os-red">unlimited potential loss</b>; same two breakevens.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Strangle (footnote)</span><span class="rc-dbody">Like a straddle but <b>call and put strikes differ</b> (met again in the currency reading). BEs: put strike &minus; total cost / call strike + total cost.</span></span>
+              </div>
+              <div class="os-trap"><b>&#9888; &ldquo;Expensive vol&rdquo; check (16.12 KH scenario):</b> if a news story bids up implied vol before you trade, re-derive the move needed to reach the <i>new</i> breakevens. KH expected &plusmn;10% but the pricier straddle needed &gt;&plusmn;12% &rarr; <b>don&rsquo;t enter</b>. Vega estimates the repricing: &Delta;straddle &asymp; vega &times; &Delta;vol-points = 0.468 &times; 15 = <b>$7.02</b>.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 16.8 — SPREADS ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.8 &middot; Spreads</div>
+              <div class="os-title"><span class="rc-los">LOS 16.f</span>Bull &amp; bear spreads (calls or puts)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Definitions</span><span class="rc-dbody"><b>Bull</b> = long the <b>lower</b> strike, short the higher (&ldquo;Buy Low&rdquo;). <b>Bear</b> = short the lower, long the higher. Equal numbers each leg; bear spread = short bull spread. Debit spreads (net outlay): <b>bull call</b>, <b>bear put</b>. Credit spreads (net inflow): <b>bear call</b>, <b>bull put</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Bull call 50/55</span><span class="rc-dbody">Buy JUN 50 call 7.40, sell JUN 55 call 5.20 &rarr; debit <b>2.20</b> = <b class="os-red">max loss</b>. BE = 50 + 2.20 = <b>52.20</b>. <b class="os-green">Max profit = 5 &minus; 2.20 = 2.80</b> (value maxes at strike difference above 55). Bullish but capped.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Bear put 55/50</span><span class="rc-dbody">Buy MAY 55 put 6.61, sell MAY 50 put 3.87 &rarr; debit <b>2.74</b> = <b class="os-red">max loss</b>. BE = 55 &minus; 2.74 = <b>52.26</b>. <b class="os-green">Max profit = 5 &minus; 2.74 = 2.26</b>. Bearish but capped.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Bear call 50/55</span><span class="rc-dbody">Short JUN 50 call 7.40 + long JUN 55 call 5.20 &rarr; <b class="os-green">credit 2.20 = max profit</b> (at 50 and below). At 55+ net intrinsic = &minus;5 &rarr; <b class="os-red">max loss = 2.80</b>. BE = 52.20.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Bull put 55/50</span><span class="rc-dbody">Short MAY 55 put 6.61 + long MAY 50 put 3.87 &rarr; <b class="os-green">credit 2.74 = max profit</b>; <b class="os-red">max loss = 5 &minus; 2.74 = 2.26</b>; BE = 55 &minus; 2.74 = <b>52.26</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Adding a leg later</span><span class="rc-dbody">The two legs need not be simultaneous: long an Oct 30 call bought at S=28, stock now 38.5 &rarr; <b>sell an Oct 40 call</b> to cash in upside no longer believed in (covered-call motivation, done with options).</span></span>
+              </div>
+              <div class="os-fl">GENERALIZED AT-EXPIRY FORMULAS (net premium = |difference of premiums|)
+  Debit spreads (bull call, bear put):
+    max loss   = net premium paid
+    max profit = strike difference - net premium paid
+  Credit spreads (bear call, bull put):
+    max profit = net premium received
+    max loss   = strike difference - net premium received
+  Breakeven, CALL spreads: lower strike + net premium
+  Breakeven, PUT  spreads: higher strike - net premium</div>
+              <div class="os-trap"><b>&#9888; Two traps.</b> (1) Professor&rsquo;s note: unless a question says otherwise, assume bull spread = <b>calls</b>, bear spread = <b>puts</b> (prefer debit spreads). (2) <b>American-style credit spreads:</b> the short leg can go ITM while the long leg is still OTM &rarr; early exercise by the counterparty can disrupt the strategy.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 16.9 — DELTA & GAMMA ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.9 &middot; Delta and Gamma</div>
+              <div class="os-title"><span class="rc-los">LOS 16.d</span>The Greeks; position deltas; pre-expiry behavior</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Delta (&Delta;)</span><span class="rc-dbody">Change in option price per +1 in stock. <b class="os-green">+ for long calls</b>, <b class="os-red">&minus; for long puts</b>. |&Delta;| &rarr; 1 the more <b>ITM</b>; |&Delta;| &rarr; 0 the more <b>OTM</b> (all else constant). = slope of the value line at the current price.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Gamma (&Gamma;)</span><span class="rc-dbody">Change in <b>delta</b> per +1 in stock. <b>Positive for long calls AND long puts.</b> Highest near <b>ATM</b>, and greatest for ATM options <b>close to expiration</b> (premium line crammed around the strike).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Theta (&theta;) / Vega (&nu;)</span><span class="rc-dbody">&theta; = daily price change from time passing &mdash; <b>negative</b> for long calls &amp; puts. &nu; = price change per +1% vol &mdash; <b>positive</b> for long calls &amp; puts. Greeks are given if needed, never calculated.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Delta in action</span><span class="rc-dbody">MAY 55 call: &Delta; = 0.47 &rarr; stock 52.14&rarr;53.14 predicts 4.02 + 0.47 = <b>4.49</b>; model says <b>4.51</b>. Gap = curvature (gamma = 0.031): new delta 0.470 + 0.031 = <b>0.501</b>; using the average delta 0.486 &rarr; 4.02 + 0.486 = <b>4.506</b>, much closer. Time value = vertical gap between value and intrinsic lines; greatest near ATM.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Underlying &amp; forwards</span><span class="rc-dbody">&Delta; of one unit of underlying: <b>+1 long / &minus;1 short</b>. Futures &amp; forwards on no-yield underlyings are proxies &rarr; also &plusmn;1. A traded stock option contract = right over <b>100 shares</b> (long call, &Delta;=0.65 &rArr; position delta +65).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Position delta</span><span class="rc-dbody">Sum the individual deltas, watching signs. 1,000 sh + 10 put contracts (&Delta; = &minus;0.6): (1,000&times;+1) + (10&times;100&times;&minus;0.6) = <b>+400</b> &rarr; stock &minus;$1 costs $400, not $1,000. Forward hedge, same size: N&times;(+1 + &minus;1) = <b>0</b>, fully hedged.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Pre-expiry shapes</span><span class="rc-dbody"><b>Protective put</b> delta: &rarr;+1 for big rises (put deep OTM), &rarr;0 for big falls (put deep ITM, downside protected) &mdash; net exposure &asymp; <b>long call</b>. <b>Covered call</b>: &asymp;+1 deep-OTM call, &rarr;0 deep-ITM call (upside all hedged away). <b>Collar / bull spread</b> pre-expiry: delta muted between strikes &mdash; the two look alike.</span></span>
+              </div>
+              <table class="os-table">
+                <tr><th colspan="3">Call delta</th><th>Strike</th><th colspan="3">Put delta</th></tr>
+                <tr><th>APR</th><th>MAY</th><th>JUN</th><th></th><th>APR</th><th>MAY</th><th>JUN</th></tr>
+                <tr><td>0.634</td><td>0.623</td><td>0.623</td><td><b>50</b></td><td>&minus;0.366</td><td>&minus;0.377</td><td>&minus;0.377</td></tr>
+                <tr><td>0.525</td><td>0.546</td><td>0.560</td><td><b>52.5</b></td><td>&minus;0.475</td><td>&minus;0.454</td><td>&minus;0.440</td></tr>
+                <tr><td>0.419</td><td>0.470</td><td>0.499</td><td><b>55</b></td><td>&minus;0.581</td><td>&minus;0.530</td><td>&minus;0.501</td></tr>
+              </table>
+              <div class="os-tip">Gammas on 20 March (S = 52.14) cluster at <b>0.024&ndash;0.044</b>, calls &amp; puts identical at each strike/expiry &mdash; peak at 52.5 (ATM) and for the nearest expiry (APR).</div>
+              <div class="os-trap"><b>&#9888; MQ 16.9 pattern:</b> just-established covered call and protective put both have deltas <b>between 0 and +1</b> (e.g. CC 0.4 / PP 0.45-ish) &mdash; never 0, and the protective put&rsquo;s delta is <b>positive</b> (stock +1 dominates put&rsquo;s &minus;&Delta;). An answer giving the PP a negative delta is wrong.</div>
+            </div>
+            <!-- ═══════════ MODULE 16.10 — THETA, VEGA, CALENDAR SPREADS ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.10 &middot; Theta and Vega; Calendar Spreads</div>
+              <div class="os-title"><span class="rc-los">LOS 16.g</span>Time decay, vega, and calendar spreads</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Theta pattern</span><span class="rc-dbody">All thetas <b>negative</b> (less time = less time value). XYZ 52.5 calls: APR &minus;0.061 / MAY &minus;0.043 / JUN &minus;0.036 &mdash; <b>near-dated ATM options decay fastest</b>, and ATM theta gets more negative as expiry approaches. Deep ITM/OTM: decay <b>slows</b> near maturity.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Vega pattern</span><span class="rc-dbody">Vegas always <b>positive</b> (more vol = more time value). Higher with <b>more time to expiry</b> (JUN &gt; MAY &gt; APR: e.g. 52.5 strike 0.102 / 0.084 / 0.060); diminishes the further ITM/OTM.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Long calendar spread</span><span class="rc-dbody"><b>Buy longer-dated, sell shorter-dated</b>, same strike (&asymp;ATM) &amp; underlying. Exploits |&theta;<sub>near</sub>| &gt; |&theta;<sub>far</sub>|: the short leg decays faster than the long leg loses. Needs <b>little movement</b> over the near option&rsquo;s life. Calls if long-term bullish, <b>puts if long-term bearish</b>. Benefits from a <b>stable market or rising implied vol</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Jenkins example</span><span class="rc-dbody">Buy 4 JUN 52.5 calls @ 6.22, sell 4 APR 52.5 @ 3.53 &rarr; net 2.69 &times; 4 &times; 100 = <b>$1,076</b>. S unchanged at April expiry: April lapses, June call worth $5.00 &rarr; position <b>$5 &times; 400 = $2,000</b> vs $1,076 paid. Higher IV would add more.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Short calendar spread</span><span class="rc-dbody"><b>Sell longer-dated, buy shorter-dated.</b> Used when options are sufficiently <b>ITM or OTM</b> (there the longer-dated theta is relatively higher). Benefits from a <b>big move</b> in the underlying or a <b>fall in implied vol</b>. Both variants: sell whatever is expected to lose time value relatively faster.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Vol &radic;-time conversion</span><span class="rc-dbody">Scale vol by <b>&radic;(period ratio)</b>: annual 57% &rarr; 2-month (42 of 252 trading days): 57% &times; &radic;(42/252) = <b>23.27%</b>. Monthly (21d) &rarr; annual: multiply by &radic;(252/21).</span></span>
+              </div>
+              <div class="os-trap"><b>&#9888; MQ 16.10 pattern:</b> long-term bearish + short-term flat &rArr; long calendar spread <b>with puts</b>: sell near-dated ATM puts, buy longer-dated ATM puts &mdash; after the short leg expires you are left holding the bearish exposure you wanted.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 16.11 — SKEW & SMILE ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.11 &middot; Volatility Skew and Smile</div>
+              <div class="os-title"><span class="rc-los">LOS 16.h</span>Implied-vol patterns; straddle pre-expiry; risk reversals</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Straddle pre-expiry</span><span class="rc-dbody">Value curve is a smooth U (not the V of expiry). Near the strike delta &asymp; <b>0 (delta neutral)</b>, tending to +1 far above / &minus;1 far below. Long straddle = <b>positive vega, negative theta</b> &mdash; vol must rise fast enough to beat decay. That is the real sense of &ldquo;going long volatility.&rdquo; Short straddle: delta-neutral, <b>negative vega</b> = bet on falling vol.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Smile</span><span class="rc-dbody">Further-from-ATM options have <b>higher implied vols</b> &rarr; U-shape of IV vs strike. Less common than skew.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Skew</span><span class="rc-dbody">IV <b>increases for more-OTM puts</b>, decreases for more-OTM calls. OTM puts are bid up as <b>insurance against market declines</b>; OTM call demand is low.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Sentiment reads</span><span class="rc-dbody">Skew jumps + surge in absolute IV &rArr; sentiment turning <b>bearish</b>. Higher-than-historical IVs on <b>OTM calls</b> &rArr; investors <b>bullish</b> (demand for upside exposure).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Risk reversal</span><span class="rc-dbody"><b>Long RR = long call + short put</b> (short RR = reverse), same underlying/expiry. Trade skew deviations expected to correct: put IV looks too rich vs calls &rarr; buy the &ldquo;cheap&rdquo; OTM call, sell the &ldquo;rich&rdquo; OTM put. Side effect: net <b>long exposure</b> to the underlying.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Delta hedge</span><span class="rc-dbody">PQR RR: delta 0.3, 10+10 contracts on 1,000 sh &rarr; $1 fall costs 1 &times; 0.3 &times; 1,000 = <b>$300</b> &rArr; hedge = <b>sell 300 shares</b> (1,000 &times; 0.3). Delta drifts with price &amp; time &rarr; delta hedges are <b>dynamic</b>, needing periodic rebalancing.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Term structure / surface</span><span class="rc-dbody"><b>Term structure of vol:</b> IV differs across maturities; <i>contango</i> (longer-dated higher) is common. <b>IV surface:</b> 3-D graph &mdash; maturity (x), strike (y), implied vol (z).</span></span>
+              </div>
+              <div class="os-trap"><b>&#9888; MQ 16.11 wording trap:</b> skew = IV <b>up for OTM puts</b>, down for OTM calls. Answers that flip puts/calls are the standard distractor. And a long straddle is a play on <b>realized movement/vol</b>, not on the &ldquo;smile.&rdquo;</div>
+            </div>
+
+            <!-- ═══════════ MODULE 16.12 — APPLICATIONS ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module 16.12 &middot; Applications</div>
+              <div class="os-title"><span class="rc-los">LOS 16.i / 16.j</span>Choosing the strategy; targeted equity exposures</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Covered call (cash)</span><span class="rc-dbody">Client needs cash, advisor bearish 6 months, stock @ 169. <b>Sell 170 calls</b> (50 contracts vs 5,000 sh): premium meets the cash target &amp; cuts delta. ITM calls raise the most cash but risk the shares being called away; deep-OTM raise too little. Risks: S<sub>T</sub> &gt; 170 caps gains; stock may fall (cushioned by premium).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Put writing</span><span class="rc-dbody">OQ wants the shares but only at 165 (spot 169): <b>write 165-strike OTM puts</b> &mdash; paid to wait. If S<sub>T</sub> &lt; 165 the put is exercised and OQ buys at 165. Risk: shares fall below X &minus; p&#8320; &rarr; outright purchase later would have been cheaper by more than the premium. If S<sub>T</sub> &minus; 169 &gt; p&#8320;, buying at 169 would have beaten the premium.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Long straddle check</span><span class="rc-dbody">KH expects &plusmn;10%; news bids IV up before the trade. New BEs need &gt; &plusmn;12% &rarr; <b>straddle no longer worthwhile; don&rsquo;t enter</b>. Vega pre-check: 15 IV pts &times; 0.468 = <b>$7.02</b> straddle repricing &asymp; actual.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Zero-cost collar</span><span class="rc-dbody">Low-cost-basis stock &rarr; selling ruled out (tax); need downside protection. <b>Zero-cost collar</b>: short calls sell the right tail and fund puts that remove the left tail.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Calendar spread (index)</span><span class="rc-dbody">ID: flat EURO STOXX 50 near-term (3,500), bearish long-term. <b>Sell 3-month 3,500 put (&euro;119), buy 6-month 3,500 put (&euro;173)</b>, net &euro;54. Short put lapses ATM; long put keeps time value &gt; &euro;54 &rarr; net profit; then keep the long put as the bearish bet. <b>Puts, not calls</b>, because the residual exposure wanted is bearish. Worst case: entire net premium lost; big move either way hurts; IV up helps / IV down hurts.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Vol hedge (VIX)</span><span class="rc-dbody">JW fears a correction + vol spike: <b>buy ATM VIX-futures call</b>; fund it by <b>selling an OTM VIX put</b> (collar-like, but vs an effective <i>short</i>-vol book, since equity portfolios are short vol). Sizing: regress portfolio P&amp;L on vol changes. Alternative: buy VIX futures (less flexible).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Long call as proxy</span><span class="rc-dbody">AS expects &pound;60&rarr;&pound;70 in 3m, IV unchanged: choose the call maximizing <b>[70 &minus; (X + c&#8320;)] / c&#8320;</b> (profit-to-premium). Auto-exclude any call with BE (X + c&#8320;) above &pound;70. If closing early, the winner has <b>lower |delta| but higher gamma</b>, which more than compensates. Risk: share ends elsewhere than &pound;70.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Protective put pick</span><span class="rc-dbody">EM expects &le;10% drop (&euro;42 &rarr; &euro;37.80) in a week: maximize <b>[(X &minus; p&#8320;) &minus; 37.8] / p&#8320;</b>; exclude puts with BE (X &minus; p&#8320;) below &euro;37.80. Hedge closed by <b>selling the put</b> after the danger passes &rarr; what matters is how the premium changes; again lower |&Delta;| + higher &Gamma; wins.</span></span>
+              </div>
+            </div>
+
+            <div class="os-card">
+              <div class="os-title">Figure 16.1 &middot; Strategy selection: direction &times; implied volatility</div>
+              <div class="rc-svg-wrap">
+                <svg viewBox="0 0 720 240" width="720" height="240" xmlns="http://www.w3.org/2000/svg" style="min-width:660px">
+                  <style>.gh{fill:#D4A017;font:600 11px monospace}.gc{fill:#C9D1D9;font:600 12px var(--serif),serif}.gs{fill:#7D8590;font:10px monospace}.bx{fill:#0B0F14;stroke:#2A3441}.hx{fill:#161B22;stroke:#2A3441}</style>
+                  <rect x="150" y="10" width="180" height="34" class="hx"/><text x="240" y="31" text-anchor="middle" class="gh">BEARISH</text>
+                  <rect x="335" y="10" width="190" height="34" class="hx"/><text x="430" y="26" text-anchor="middle" class="gh">TRADING RANGE /</text><text x="430" y="39" text-anchor="middle" class="gh">NEUTRAL VIEW</text>
+                  <rect x="530" y="10" width="180" height="34" class="hx"/><text x="620" y="31" text-anchor="middle" class="gh">BULLISH</text>
+                  <rect x="10" y="49" width="135" height="58" class="hx"/><text x="77" y="73" text-anchor="middle" class="gh">IV DECREASE</text>
+                  <rect x="10" y="112" width="135" height="58" class="hx"/><text x="77" y="132" text-anchor="middle" class="gh">IV REMAIN</text><text x="77" y="146" text-anchor="middle" class="gh">UNCHANGED</text>
+                  <rect x="10" y="175" width="135" height="58" class="hx"/><text x="77" y="199" text-anchor="middle" class="gh">IV INCREASE</text>
+                  <rect x="150" y="49" width="180" height="58" class="bx"/><text x="240" y="82" text-anchor="middle" class="gc">Write calls</text>
+                  <rect x="335" y="49" width="190" height="58" class="bx"/><text x="430" y="82" text-anchor="middle" class="gc">Write straddle</text>
+                  <rect x="530" y="49" width="180" height="58" class="bx"/><text x="620" y="82" text-anchor="middle" class="gc">Write puts</text>
+                  <rect x="150" y="112" width="180" height="58" class="bx"/><text x="240" y="138" text-anchor="middle" class="gc">Write calls</text><text x="240" y="154" text-anchor="middle" class="gc">and buy puts</text>
+                  <rect x="335" y="112" width="190" height="58" class="bx"/><text x="430" y="145" text-anchor="middle" class="gc">Calendar spread</text>
+                  <rect x="530" y="112" width="180" height="58" class="bx"/><text x="620" y="138" text-anchor="middle" class="gc">Buy calls and</text><text x="620" y="154" text-anchor="middle" class="gc">write puts</text>
+                  <rect x="150" y="175" width="180" height="58" class="bx"/><text x="240" y="208" text-anchor="middle" class="gc">Buy puts</text>
+                  <rect x="335" y="175" width="190" height="58" class="bx"/><text x="430" y="208" text-anchor="middle" class="gc">Buy straddle</text>
+                  <rect x="530" y="175" width="180" height="58" class="bx"/><text x="620" y="208" text-anchor="middle" class="gc">Buy calls</text>
+                </svg>
+              </div>
+              <div class="os-tip">Logic: <b>direction</b> picks the leg you are long/short (calls bullish, puts bearish); the <b>vol view</b> decides whether you buy options (IV up &rarr; long vega) or write them (IV down &rarr; short vega / harvest premium). Neutral + unchanged IV lands on the theta play: <b>calendar spread</b>.</div>
+            </div>
+            <!-- ═══════════ QUIZ ANSWER KEYS ═══════════ -->
+            <div class="os-card">
+              <div class="rc-sec">Module Quizzes &middot; Answer Keys (reasoning-derived &mdash; not visible in source photos; all numbers node-verified)</div>
+
+              <div class="os-title">MQ 16.1&ndash;16.3</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &mdash; synthetic short</span><span class="rc-dbody"><b>A.</b> Synthetic short exposure to PQR needs <b>long 100 put + short 100 call</b>; A is the only choice with that pair (B buys both; C&rsquo;s long call/short put + short forward nets to flat). PV(100) at 2% for 6m &asymp; 99 explains the &ldquo;99&rdquo; leg.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &mdash; covered call (43 stock, short 45 call @ 2.10)</span><span class="rc-dbody">a) <b class="os-green">Max profit = (45&minus;43)+2.10 = 4.10</b>; <b class="os-red">max loss = 43&minus;2.10 = 40.90</b> = BE at <b>$40.90</b>. b) Profit at S<sub>T</sub>: $0 &rarr; <b>&minus;40.90</b>; $35 &rarr; <b>&minus;5.90</b>; $40 &rarr; <b>&minus;0.90</b>; $45 &rarr; <b>+4.10</b>; $50 &rarr; <b>+4.10</b> (capped).</span></span>
+              </div>
+
+              <div class="os-title">MQ 16.4&ndash;16.5</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &mdash; protective put (37.50 stock, long 35 put @ 1.40)</span><span class="rc-dbody">a) <b class="os-red">Max loss = (37.50&minus;35)+1.40 = 3.90</b>; <b>BE = 37.50+1.40 = 38.90</b>; <b class="os-green">max profit unlimited</b>. b) $30 &rarr; <b>&minus;3.90</b> (floor); $35 &rarr; <b>&minus;3.90</b>; $40 &rarr; <b>+1.10</b>; $50 &rarr; <b>+11.10</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &mdash; Jones short @ 220</span><span class="rc-dbody"><b>C. October 200 puts.</b> Short stock + flat near-term + bearish long-term &rarr; harvest yield by <b>selling OTM puts below spot</b> (covered-call analog for a short). 240 calls would be bought as a hedge, not sold; 240 puts are ITM.</span></span>
+              </div>
+
+              <div class="os-title">MQ 16.6&ndash;16.7</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &mdash; collar (29 stock, 27.50 put @ 0.20, short 30 call @ 0.20)</span><span class="rc-dbody">Zero net premium. a) <b class="os-green">Max profit = 30&minus;29 = 1.00</b>; <b class="os-red">max loss = 29&minus;27.50 = 1.50</b>; <b>BE = 29.00</b>. b) $15 &amp; $20 &rarr; <b>&minus;1.50</b> (floored at 27.50); $23.50... note prices below 27.50 all floor at <b>&minus;1.50</b>; $28.50 &rarr; <b>&minus;0.50</b>; $25 &rarr; <b>&minus;1.50</b>; $30 &rarr; <b>+1.00</b>; $100 &rarr; <b>+1.00</b> (capped).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &mdash; straddle (45 strike, c 3 + p 2)</span><span class="rc-dbody">a) <b class="os-red">Max loss = 5</b> (at 45); BEs <b>40</b> and <b>50</b>; max profit: unlimited up, 40 down. b) $0 &rarr; <b>+40</b>; $35 &rarr; <b>+5</b>; $40 &rarr; <b>0</b>; $45 &rarr; <b>&minus;5</b>; $47 &rarr; <b>&minus;3</b>; $55 &rarr; <b>+5</b>; $100 &rarr; <b>+50</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q3 &mdash; EUR vol trade</span><span class="rc-dbody">Expecting vol &gt; priced &rarr; buy the OTM pair = <b>long strangle</b>: buy 0.98 put @ 0.005 + buy 1.04 call @ 0.004, cost 0.009. BEs: 0.98 &minus; 0.009 = <b>0.971</b> and 1.04 + 0.009 = <b>1.049</b>.</span></span>
+              </div>
+
+              <div class="os-title">MQ 16.8</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &mdash; bull call (long 45 @ 2.10, short 50 @ 0.50)</span><span class="rc-dbody">Net debit 1.60. a) <b class="os-red">Max loss = 1.60</b>; <b>BE = 46.60</b>; <b class="os-green">max profit = 5&minus;1.60 = 3.40</b>. b) $35 &rarr; <b>&minus;1.60</b>; $45 &rarr; <b>&minus;1.60</b>; $48 &rarr; <b>+1.40</b>; $50 &rarr; <b>+3.40</b>; $55 &rarr; <b>+3.40</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &mdash; bear put (long 25 @ 4.00, short 20 @ 1.80)</span><span class="rc-dbody">Net debit 2.20. a) <b class="os-red">Max loss = 2.20</b>; <b>BE = 25&minus;2.20 = 22.80</b>; <b class="os-green">max profit = 5&minus;2.20 = 2.80</b>. b) $15 &rarr; <b>+2.80</b>; $20 &rarr; <b>+2.80</b>; $23.50 &rarr; <b>&minus;0.70</b>; $25 &rarr; <b>&minus;2.20</b>; $30 &rarr; <b>&minus;2.20</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q3 &mdash; bear spread (stock 51; calls 47 @ 5.25, 53 @ 0.75)</span><span class="rc-dbody">Bear call spread: <b>short 47 call, long 53 call</b> &rarr; initial <b class="os-green">inflow 4.50</b> (&ldquo;initial investment&rdquo; = net credit of 4.50; no outlay). <b>BE = 47 + 4.50 = 51.50</b>. Max loss = 6 &minus; 4.50 = 1.50; max profit = 4.50.</span></span>
+              </div>
+
+              <div class="os-title">MQ 16.9 &ndash; 16.12</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">16.9 Q1 &mdash; deltas</span><span class="rc-dbody"><b>B.</b> Just-established, 3 months out: both CC and PP have deltas <b>strictly between 0 and 1</b> (CC 0.4 / PP 0.45 plausible). A (zero) is the fully hedged forward case; C&rsquo;s negative PP delta is impossible for stock+put.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">16.10/16.11 Q1 &mdash; calendar</span><span class="rc-dbody"><b>B.</b> Long-term bearish + short-term flat &rArr; long calendar spread <b>in puts</b>: sell 2-month ATM puts, buy 5-month ATM puts. A is a short calendar in calls; C is a risk-reversal-style directional trade.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">16.10/16.11 Q2 &mdash; skew</span><span class="rc-dbody"><b>C.</b> Skew: IV <b>up for more-OTM puts</b>, down for more-OTM calls. B flips it; A misdescribes the straddle (payoff from movement, not the smile).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">16.12 Q1 &mdash; Austin, up 3%</span><span class="rc-dbody"><b>B. Protective put.</b> Objective: keep a positive stock position AND retain upside &rarr; only the protective put keeps unlimited upside while flooring the downside. Bull call/bull put cap the upside.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">16.12 Q2 &mdash; Austin, up 16%, needs 15%</span><span class="rc-dbody"><b>Long straddle (A).</b> Scenario is large gains OR large losses (big move either way) &rarr; long vol. Short straddle is the opposite bet; calendar wants a flat market.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">16.12 Q3 &mdash; oscillating, drifting down</span><span class="rc-dbody"><b>A. Sell call options.</b> Range-bound with mild downside &rarr; harvest premium via covered calls; buying puts spends premium on protection the oscillation view doesn&rsquo;t justify; C double-spends.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">16.12 Q4 &mdash; hedging naked calls</span><span class="rc-dbody"><b>B. Buy the underlying asset.</b> Short calls lose when the price rises &rarr; long stock offsets (turns them into covered calls). A long put adds to the downside bet; shorting the stock doubles the upside risk.</span></span>
+              </div>
+              <div class="os-tip">Every quiz answer above is <b>reasoning-derived</b> (the answer pages were not photographed). Numeric parts are node-verified; MCQ letters follow directly from the module logic recapped above &mdash; re-derive rather than memorize.</div>
+            </div>
           </div>
 
           <script>
@@ -36900,7 +37268,8 @@ var RECAP_REGISTRY = [
   { id: 'aai-recap', title: 'Reading 8 · Asset Allocation to Alternative Investments' },
   { id: 'pwm-recap', title: 'Reading 9 · An Overview of Private Wealth Management' },
   { id: 'ii-recap', title: 'Reading 10 · Portfolio Management for Institutional Investors' },
-  { id: 'tc-recap', title: 'Reading 11 · Trading Costs and Electronic Markets' }
+  { id: 'tc-recap', title: 'Reading 11 · Trading Costs and Electronic Markets' },
+  { id: 'osr-recap', title: 'Reading 16 · Options Strategies' }
 ];
 
 // Shared print stylesheet used by both single- and all-recap printing.
