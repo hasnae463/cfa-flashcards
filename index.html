@@ -32510,6 +32510,7 @@ Asset-weighted SD:
             <button class="sf-toptab" onclick="sfTop('ch3', this)">Equity (17.3)</button>
             <button class="sf-toptab" onclick="sfTop('ch4', this)">Volatility (17.4)</button>
             <button class="sf-toptab" onclick="sfTop('ch5', this)">Expectations (17.5)</button>
+            <button class="sf-toptab" onclick="sfTop('recap', this)">Recap</button>
             <button class="sf-toptab" onclick="sfTop('err', this)">Errors</button>
             <button class="sf-toptab" onclick="sfTop('mas', this)">Mastery</button>
           </div>
@@ -33157,6 +33158,577 @@ current target = MIDPOINT of the target range</div>
               <div class="sf-title">Mastery</div>
               <div class="sf-empty">Vide pour l'instant.</div>
             </div>
+          </div>
+
+          <!-- ===================== RECAP (Reading 17) ===================== -->
+          <div id="sfr-recap" class="sf-toppanel">
+            <style>
+              #sfr-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+              #sfr-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(167,139,250,.14); border:1px solid var(--sf-main); color:var(--sf-main); border-radius:3px; padding:1px 6px; margin-right:6px; }
+              #sfr-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; page-break-inside:avoid; }
+              #sfr-recap .rc-drow { display:grid; grid-template-columns:160px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; page-break-inside:avoid; }
+              #sfr-recap .rc-drow:last-child { border-bottom:none; }
+              #sfr-recap .rc-dlabel { color:var(--sf-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #sfr-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #sfr-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #sfr-recap .rc-dlabel { padding-top:0; }
+              }
+              #sfr-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; page-break-inside:avoid; }
+              #sfr-recap .sf-fl, #sfr-recap .sf-trap, #sfr-recap .sf-tip, #sfr-recap .sf-info, #sfr-recap .sf-table { page-break-inside:avoid; }
+            </style>
+
+            <button class="recap-print-btn" onclick="printOneRecap('sfr-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+            <div class="sf-card">
+              <div class="sf-title">Reading 17 &middot; Swaps, Forwards, and Futures Strategies</div>
+              <div class="sf-body">Full-reading recap, module by module: <b>interest rate risk &mdash; swaps, FRAs, futures (17.1 / LOS 17.a)</b>, <b>currency exposure (17.2 / 17.b)</b>, <b>equity risk (17.3 / 17.c)</b>, <b>derivatives on volatility (17.4 / 17.d)</b>, and <b>portfolio uses &mdash; targeted exposures, asset allocation, inferring market expectations (17.5 / 17.e&ndash;17.f)</b>. Every calculation below is node-verified against the Schweser figures.</div>
+              <div class="sf-info"><b>Where the marks are:</b> (1) picking the right instrument &amp; direction &mdash; <span class="sf-gold">payer vs receiver, long vs short, buy vs sell</span> &mdash; from the exposure and the rate/market view; (2) the four hedge-sizing formulas: <b>NP<sub>S</sub></b> (swap duration), <b>BPVHR</b> (bond futures), <b>&beta;-adjustment contracts</b> (equity futures), <b>N<sub>VAR</sub> = N<sub>vega</sub>/2K</b> (variance swaps); (3) sign conventions &mdash; negative answer = <b>sell/short</b>; (4) cash-flow direction on every leg of every swap.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 17.1 — INTEREST RATE SWAPS ═══════════ -->
+            <div class="sf-card">
+              <div class="rc-sec">Module 17.1 &middot; Managing Interest Rate Risk</div>
+              <div class="sf-title"><span class="rc-los">LOS 17.a</span>Interest rate swaps &mdash; payer vs receiver</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Payer swap</span><span class="rc-dbody"><b>Pay fixed, receive floating</b> on a notional principal. Value <b class="sf-green">rises</b> if future floating rates come in <b>above</b> what was expected at initiation; <b class="sf-red">falls</b> if below. Counterparty holds the <b>receiver swap</b> (receive fixed, pay floating).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Netting</span><span class="rc-dbody">In practice payments are <b>netted</b> &mdash; the party owing the larger amount pays the difference &mdash; to reduce credit risk.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Floating leg timing</span><span class="rc-dbody">The floating payment for the <b>first settlement date is known at initiation</b>; later ones are not. A quarterly-pay swap settles on the quarterly MRR (market reference rate).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Replication</span><span class="rc-dbody">Payer swap &equiv; <b>issue a fixed-rate bond + buy an identical FRN</b>. Receiver swap &equiv; issue an FRN + buy a fixed-rate note. Same cash flows via a capital-market trade.</span></span>
+              </div>
+              <table class="sf-table">
+                <tr><th>Existing exposure</th><th>Converting</th><th>Swap required</th><th>Beneficial when</th></tr>
+                <tr><td>Floating-rate <b>liability</b></td><td>Floating &rarr; fixed</td><td class="sf-main-c"><b>Payer</b></td><td>Floating rates expected to <b class="sf-red">rise</b></td></tr>
+                <tr><td>Fixed-rate <b>liability</b></td><td>Fixed &rarr; floating</td><td class="sf-main-c"><b>Receiver</b></td><td>Floating rates expected to <b class="sf-green">fall</b></td></tr>
+                <tr><td>Floating-rate <b>asset</b></td><td>Floating &rarr; fixed</td><td class="sf-main-c"><b>Receiver</b></td><td>Floating rates expected to <b class="sf-green">fall</b></td></tr>
+                <tr><td>Fixed-rate <b>asset</b></td><td>Fixed &rarr; floating</td><td class="sf-main-c"><b>Payer</b></td><td>Floating rates expected to <b class="sf-red">rise</b></td></tr>
+              </table>
+              <div class="sf-trap"><b>&#9888; Liability vs asset flips the swap.</b> A floating <b>liability</b> is fixed with a <b>payer</b> swap, but a floating <b>asset</b> is fixed with a <b>receiver</b> swap. Read which side of the balance sheet the exposure sits on before naming the swap.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Example &mdash; converting a floating-rate liability to fixed (ABC, Inc.)</div>
+              <div class="sf-body">ABC issued <b>$30M</b> 4-yr semiannual FRNs at 6-mo MRR + 25 bp, expects rates to rise, and enters a 3-yr <b>payer swap</b>: fixed 2%, notional $30M, same settlement dates. MRR at initiation = 1.5%; at date 1 = 3%.</div>
+              <div class="sf-fl"><b>Date 1 (MRR was 1.5%)</b>
+Step 1  swap fixed paid ..... $30M &times; 2% &times; 180/360 = <b>$300,000</b>
+Step 2  swap floating rec ... $30M &times; 1.5% &times; 180/360 = <b>$225,000</b>
+Step 3  swap net ............ 225,000 &minus; 300,000 = <b class="sf-red">&minus;$75,000</b>
+Step 4  FRN coupon .......... $30M &times; (1.5% + 0.25%) &times; 180/360 = <b>$262,500</b>
+Step 5  total paid .......... 262,500 + 75,000 = <b class="sf-gold">$337,500</b>
+
+<b>Date 2 (MRR was 3%)</b>
+swap net = 450,000 &minus; 300,000 = <b class="sf-green">+$150,000</b>; FRN = $487,500
+total paid = 487,500 &minus; 150,000 = <b class="sf-gold">$337,500</b>  (identical)
+
+Lock check: $30M &times; (2% + 0.25%) &times; 180/360 = <b>$337,500</b> = swap fixed + FRN margin</div>
+              <div class="sf-tip">The FRN floating coupon and the swap floating receipt <b>offset exactly</b> (same MRR, same dates), leaving swap fixed rate + FRN margin regardless of realized MRR. This kills both the downside <i>and the upside</i> of floating exposure.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Using swaps to alter portfolio duration</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Swap durations</span><span class="rc-dbody">Fixed-rate note has <b>greater MD</b> than an identical FRN &rArr; <b>payer swap has negative duration</b> (gains when rates rise); <b>receiver swap has positive duration</b> (loses when rates rise).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Effect on portfolio</span><span class="rc-dbody">Add <b>payer</b> &rArr; portfolio duration <b class="sf-red">falls</b>. Add <b>receiver</b> &rArr; duration <b class="sf-green">rises</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Notional formula</span><span class="rc-dbody">NP<sub>S</sub> = [(MD<sub>T</sub> &minus; MD<sub>P</sub>) / MD<sub>S</sub>] &times; MV<sub>P</sub> &mdash; target MD, current portfolio MD, <b>swap MD</b>, portfolio market value.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Which MD<sub>S</sub></span><span class="rc-dbody">If increasing duration, use the <b>receiver</b> swap&rsquo;s (positive) MD; if reducing, the <b>payer</b> swap&rsquo;s MD (negative signs then take care of direction).</span></span>
+              </div>
+              <div class="sf-fl"><b>Example (&pound;120M U.K. bonds, MD 4.5 &rarr; 6; payer MD = &minus;2, receiver MD = +2)</b>
+Step 1  duration must rise &rArr; <b>receiver swap</b>
+Step 2  NP&#8347; = [(6 &minus; 4.5) / 2] &times; &pound;120M = <b class="sf-gold">&pound;90 million</b></div>
+              <div class="sf-trap"><b>&#9888; Professor&rsquo;s Note:</b> the whole analysis uses <b>modified duration</b> &mdash; it implicitly assumes a <b>flat yield curve and parallel shifts</b>. Non-parallel moves (shaping risk) are not captured.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title"><span class="rc-los">LOS 17.a</span>Forward rate agreements (FRAs)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">What&rsquo;s hedged</span><span class="rc-dbody">Uncertainty about a <b>future short-term borrowing or lending rate</b> (e.g., borrowing a lump sum for 60 days, 30 days from now).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Direction</span><span class="rc-dbody"><b>Long FRA</b> &rArr; hedges a future <b>borrower</b>; gains when rates <b class="sf-red">rise</b>. <b>Short FRA</b> &rArr; hedges a future <b>lender</b>; gains when rates <b class="sf-green">fall</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Payoff (long)</span><span class="rc-dbody">(floating rate &minus; fixed FRA rate) &times; days/360 &times; NP, computed for the loan period. NP = anticipated loan amount.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Settlement timing</span><span class="rc-dbody">Payment is based on end-of-loan-period interest, but is <b>discounted back and exchanged at FRA expiry</b> (the loan start date).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Naming</span><span class="rc-dbody">A <b>2&times;6 FRA</b>: expires in 2 months, on the rate covering months 2&rarr;6 (a 120-day rate discovered at T60).</span></span>
+              </div>
+              <div class="rc-svg-wrap">
+                <svg viewBox="0 0 720 170" width="720" height="170" xmlns="http://www.w3.org/2000/svg" style="min-width:660px">
+                  <style>.ftl{stroke:#4A5561;stroke-width:2}.ftk{stroke:#4A5561;stroke-width:2}.fla{fill:#C9D1D9;font:600 11px monospace}.fsu{fill:#7D8590;font:9.5px monospace}.fvi{fill:#A78BFA;font:600 10.5px monospace}.fbr{stroke:#A78BFA;stroke-width:1.5;fill:none}</style>
+                  <line x1="60" y1="70" x2="660" y2="70" class="ftl"/>
+                  <line x1="60" y1="60" x2="60" y2="80" class="ftk"/>
+                  <line x1="260" y1="60" x2="260" y2="80" class="ftk"/>
+                  <line x1="660" y1="60" x2="660" y2="80" class="ftk"/>
+                  <text x="60" y="50" text-anchor="middle" class="fla">T0</text>
+                  <text x="60" y="100" text-anchor="middle" class="fsu">FRA initiated:</text>
+                  <text x="60" y="113" text-anchor="middle" class="fsu">fixed rate set</text>
+                  <text x="260" y="50" text-anchor="middle" class="fla">T60 &middot; FRA expiry</text>
+                  <text x="260" y="100" text-anchor="middle" class="fsu">floating 120-day rate discovered;</text>
+                  <text x="260" y="113" text-anchor="middle" class="fsu">borrowing starts; PV of payoff paid</text>
+                  <text x="660" y="50" text-anchor="middle" class="fla">T180</text>
+                  <text x="660" y="100" text-anchor="middle" class="fsu">end of borrowing</text>
+                  <path d="M 300 70 Q 460 30 620 70" class="fbr"/>
+                  <text x="460" y="34" text-anchor="middle" class="fvi">notional borrowing period 120 days</text>
+                  <text x="460" y="145" text-anchor="middle" class="fvi">payoff long = (floating &minus; fixed) &times; 120/360 &times; NP, discounted to T60</text>
+                </svg>
+              </div>
+              <div class="sf-fl"><b>Example &mdash; Smithies Plc borrows &pound;1M for 180d, 90d from now, at MRR + 50 bp; long FRA @ 5%</b>
+<b>MRR = 7% at expiry:</b>
+loan cost ......... 7.5% &times; 180/360 &times; &pound;1M = <b>&pound;37,500</b>
+FRA receipt ....... (7% &minus; 5%) &times; 180/360 &times; &pound;1M = <b class="sf-green">+&pound;10,000</b>
+net ............... <b class="sf-gold">&pound;27,500</b>
+<b>MRR = 3% at expiry:</b>
+loan cost &pound;17,500; FRA pays <b class="sf-red">&minus;&pound;10,000</b> &rarr; net <b class="sf-gold">&pound;27,500</b>
+Lock check: 5.5% &times; 180/360 &times; &pound;1M = <b>&pound;27,500</b> = FRA rate + 50 bp spread</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Short-term interest rate (STIR) futures &mdash; Eurodollar</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Contract</span><span class="rc-dbody">Based on <b>$1M deposits for 90 days</b> starting at futures expiry; standardized maturities (typically quarterly); hedgers usually close out with an offsetting trade.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">IMM pricing</span><span class="rc-dbody">Price = <b>100 &minus; annualized forward rate</b>. Futures prices <b class="sf-green">rise</b> when forward rates <b>fall</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Tick value</span><span class="rc-dbody">1 bp move = <b>$25</b> per contract: $1M &times; 0.0001 &times; 90/360.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">vs FRA direction</span><span class="rc-dbody"><b>Long Eurodollar futures gains when rates FALL</b> &mdash; the <b>opposite</b> of a long FRA. A future depositor/lender goes <b>long futures</b>; a future borrower goes <b>short futures</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">vs FRA structure</span><span class="rc-dbody">Futures: standardized, exchange-traded, <b>margined / marked-to-market</b>, liquid. FRAs: dealer-customized, not liquid, <b>counterparty risk</b>. Both prevent arbitrage by pricing off the same forward rate.</span></span>
+              </div>
+              <div class="sf-fl"><b>Example &mdash; Luard: $20M inheritance in 120d, 90-day deposit at MRR &minus; 25 bp; futures @ 95, long 20 contracts</b>
+<b>A. MRR = 3.5% in 120 days:</b>
+deposit interest ... $20M &times; (3.5% &minus; 0.25%) &times; 90/360 = <b>$162,500</b>
+contracts .......... $20M / $1M = <b>20</b>
+futures at expiry .. 100 &minus; 3.5 = 96.5 &rarr; gain 150 bp &times; $25 &times; 20 = <b class="sf-green">+$75,000</b>
+total .............. <b class="sf-gold">$237,500</b>
+<b>B. MRR = 6.5%:</b> interest $312,500; futures 93.5 &rarr; <b class="sf-red">&minus;$75,000</b>; total <b class="sf-gold">$237,500</b>
+Lock check: $20M &times; (5% &minus; 0.25%) &times; 90/360 = <b>$237,500</b></div>
+              <div class="sf-trap"><b>&#9888; Long futures &ne; long FRA.</b> Long FRA gains when rates rise; long STIR futures gains when rates fall (price = 100 &minus; rate). Exam answers hinge on this inversion.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Fixed-income (Treasury) futures &mdash; CF, invoice price, CTD</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Delivery option</span><span class="rc-dbody">Short party may deliver <b>any eligible bond</b> (U.S. T-bond futures: maturity 15&ndash;25 yrs). Longer-maturity bonds are usually hedged with bond futures (best liquidity).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Conversion factor</span><span class="rc-dbody">Futures price is quoted vs a notional <b>6% coupon</b> bond. Each deliverable gets a CF = clean price of $1 face discounted at 6% YTM. Coupon &gt; 6% &rArr; CF &gt; 1; coupon &lt; 6% &rArr; CF &lt; 1.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Invoice price</span><span class="rc-dbody">principal invoice = (futures settlement / 100) &times; $100,000 &times; CF; total invoice = principal invoice + accrued interest.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">CTD</span><span class="rc-dbody">CF bias (flat 6% curve assumed) &rArr; one bond gives the short the <b>greatest gain / smallest loss</b> at delivery = <b>cheapest-to-deliver</b>. Found via <b>highest implied repo rate</b> or <b>lowest basis</b> (basis = spot &minus; futures price).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Delivery P&amp;L</span><span class="rc-dbody">profit/(loss) = [(settlement &times; CF) + AI<sub>T</sub>] &minus; (CTD clean price + AI<sub>T</sub>).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Yield bias</span><span class="rc-dbody">Yields <b>&lt; 6%</b> &rArr; CTD biased to <b>short-duration</b> (high coupon, low maturity); yields <b>&gt; 6%</b> &rArr; biased to <b>long-duration</b>.</span></span>
+              </div>
+              <div class="sf-fl"><b>Example &mdash; identifying the CTD (settlement 148.75, AI = 0)</b>
+Bond 1: invoice 148.75 &times; 0.9422 = 140.15 ; dirty 141.13 &rarr; loss <b class="sf-red">&minus;$980</b> per $100,000
+Bond 2: invoice 148.75 &times; 0.9719 = 144.57 ; dirty 145.10 &rarr; loss <b class="sf-red">&minus;$530</b>
+&rArr; <b class="sf-gold">Bond 2 is CTD</b> (smallest delivery loss)</div>
+              <div class="sf-info"><b>Professor&rsquo;s Note (MTM):</b> daily P&amp;L on futures = FP<sub>t</sub> &minus; FP<sub>t&minus;1</sub>, credited/debited to margin. To avoid double counting, the short receives <b>final settlement price &times; CF</b> at maturity, not the initial futures price.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Hedging interest rate risk with Treasury futures &mdash; BPVHR</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Direction</span><span class="rc-dbody">To hedge a long bond portfolio, <b>sell</b> futures: rates &uarr; &rArr; bond prices &darr;, short futures gain. <b>Short futures reduce duration; long futures increase it.</b></span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Why CTD-based</span><span class="rc-dbody">Futures prices track the <b>CTD</b> most closely (lowest basis) &rArr; &Delta;futures price = &Delta;CTD / CF; futures and CTD share the same duration.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">BPV</span><span class="rc-dbody">BPV = expected value change for a <b>1 bp</b> yield move: BPV<sub>portfolio</sub> = MD<sub>P</sub> &times; 0.0001 &times; MV<sub>P</sub>; BPV<sub>CTD</sub> = MD<sub>CTD</sub> &times; 0.0001 &times; MV<sub>CTD</sub>, with MV<sub>CTD</sub> = CTD price / 100 &times; $100,000.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Full hedge</span><span class="rc-dbody">BPVHR = (&minus;BPV<sub>portfolio</sub> / BPV<sub>CTD</sub>) &times; CF = number of futures (negative &rArr; <b>short</b>).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Target duration</span><span class="rc-dbody">BPVHR = [(BPV<sub>target</sub> &minus; BPV<sub>portfolio</sub>) / BPV<sub>CTD</sub>] &times; CF, with BPV<sub>target</sub> = MD<sub>target</sub> &times; 0.0001 &times; MV<sub>P</sub>. Full hedge = special case BPV<sub>target</sub> = 0.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Basis / spread risk</span><span class="rc-dbody">Portfolio and CTD are imperfect substitutes &rArr; mismatch between asset value change and hedge value change = <b>basis (spread) risk</b>.</span></span>
+              </div>
+              <div class="sf-fl"><b>Example &mdash; immunizing &pound;60M (MD 10.75) with Long Gilt futures (CTD: price 139.56, CF 1.0709, MD 9.7)</b>
+Step 1  BPV&#8346; = 10.75 &times; 0.0001 &times; &pound;60M = <b>&pound;64,500</b>
+Step 2  BPV&#8353;&#8348;&#8342; = 9.7 &times; 0.0001 &times; (139.56/100 &times; &pound;100,000) = <b>&pound;135.37</b>
+Step 3  BPVHR = (&minus;64,500 / 135.37) &times; 1.0709 = <b class="sf-red">&minus;510.25 &rarr; sell 510</b>
+
+<b>Target MD 8.7 instead:</b>
+BPV&#8348; = 8.7 &times; 0.0001 &times; &pound;60M = &pound;52,200
+BPVHR = [(52,200 &minus; 64,500) / 135.37] &times; 1.0709 = <b class="sf-red">&minus;97.30 &rarr; sell 97</b></div>
+              <div class="sf-trap"><b>&#9888; Three reasons hedges are imperfect:</b> (1) the <b>CTD can change</b> if the level/slope of the curve moves &mdash; futures duration then changes too; (2) duration ignores <b>convexity</b>; (3) MD only captures <b>parallel</b> shifts &mdash; steepening/flattening/curvature = <b>shaping risk</b>.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Module Quiz 17.1 &mdash; answers (reasoning-derived, node-verified)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &rarr; C</span><span class="rc-dbody">Quarterly floating payments are set <b>in advance, paid in arrears</b>: the Day-270 payment uses the <b>90-day MRR observed at Day 180</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &mdash; receiver swap</span><span class="rc-dbody">Sharma holds a floating <b>asset</b> (FRN) and fears falling rates &rArr; <b>receiver swap</b> (receive 4% fixed, pay floating) on $4M. Settlement 1 (MRR 3.5%): net = 4M &times; (4% &minus; 3.5%) &times; 0.5 = <b class="sf-green">+$10,000</b>; FRN coupon $78,000 &rarr; total $88,000. Settlement 2 (MRR 2.5%): net <b class="sf-green">+$30,000</b>; FRN $58,000 &rarr; total $88,000. Locked at swap rate + 40 bp margin: 4M &times; 4.4% &times; 0.5 = <b class="sf-gold">$88,000 per period</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q3 &rarr; A</span><span class="rc-dbody">BPV&#8346; = 12 &times; 0.0001 &times; $200M = 240,000; BPV&#8348; = 8 &times; 0.0001 &times; $200M = 160,000; BPV&#8353;&#8348;&#8342; = 14.54 &times; 0.0001 &times; (126.39/100 &times; 100,000) = 183.77. BPVHR = (160,000 &minus; 240,000)/183.77 &times; 0.7689 = <b class="sf-red">&minus;334.7 &rarr; sell 335 contracts</b>.</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 17.2 — CURRENCY ═══════════ -->
+            <div class="sf-card">
+              <div class="rc-sec">Module 17.2 &middot; Managing Currency Exposure</div>
+              <div class="sf-title"><span class="rc-los">LOS 17.b</span>Currency swaps &amp; cross-currency basis swaps</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Currency swap</span><span class="rc-dbody">Each party makes periodic interest payments on a notional in a <b>different currency</b>; notionals are equivalent at the inception FX rate. Enables <b>synthetic borrowing</b> in a foreign currency when direct access is poor/expensive.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Cross-currency basis swap</span><span class="rc-dbody">Notionals <b>exchanged at start AND re-exchanged at maturity</b> at the <b>same amounts</b> &rArr; no FX risk on principal. Typical legs: <b>floating-for-floating</b>, quarterly.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Who pays what</span><span class="rc-dbody">Each counterparty pays <b>variable interest on the currency it received</b> at initiation. The company borrowing locally passes the swap-received interest to service its bank loan.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Naming trap</span><span class="rc-dbody">&ldquo;Dollar payer&rdquo; / &ldquo;euro payer&rdquo; refers to the <b>interest flows and final principal payment</b>, NOT the initial principal exchange.</span></span>
+              </div>
+              <div class="rc-svg-wrap">
+                <svg viewBox="0 0 720 210" width="720" height="210" xmlns="http://www.w3.org/2000/svg" style="min-width:660px">
+                  <style>.cbx{fill:#0B0F14;stroke:#A78BFA;stroke-width:1.2;rx:4}.ctt{fill:#C9D1D9;font:600 10.5px monospace}.cst{fill:#7D8590;font:9.5px monospace}.car{stroke:#3DD68C;stroke-width:1.6;fill:none;marker-end:url(#sfr-ah)}.car2{stroke:#FF7B72;stroke-width:1.6;fill:none;marker-end:url(#sfr-ah2)}.chd{fill:#A78BFA;font:600 10px monospace}</style>
+                  <defs>
+                    <marker id="sfr-ah" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#3DD68C"/></marker>
+                    <marker id="sfr-ah2" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#FF7B72"/></marker>
+                  </defs>
+                  <text x="120" y="16" text-anchor="middle" class="chd">AT INITIATION</text>
+                  <rect x="20" y="30" width="90" height="30" class="cbx"/><text x="65" y="49" text-anchor="middle" class="ctt">Euro co.</text>
+                  <rect x="150" y="30" width="90" height="30" class="cbx"/><text x="195" y="49" text-anchor="middle" class="ctt">Dealer</text>
+                  <line x1="112" y1="38" x2="146" y2="38" class="car"/><text x="129" y="30" text-anchor="middle" class="cst">&euro;50m</text>
+                  <line x1="148" y1="52" x2="114" y2="52" class="car2"/><text x="129" y="66" text-anchor="middle" class="cst">$56.18m</text>
+                  <text x="130" y="90" text-anchor="middle" class="cst">&euro; borrowed from bank,</text>
+                  <text x="130" y="102" text-anchor="middle" class="cst">swapped into $ at $1.1236</text>
+
+                  <text x="360" y="16" text-anchor="middle" class="chd">QUARTERLY SETTLEMENTS</text>
+                  <rect x="270" y="30" width="90" height="30" class="cbx"/><text x="315" y="49" text-anchor="middle" class="ctt">Euro co.</text>
+                  <rect x="400" y="30" width="90" height="30" class="cbx"/><text x="445" y="49" text-anchor="middle" class="ctt">Dealer</text>
+                  <line x1="362" y1="38" x2="396" y2="38" class="car2"/><text x="379" y="30" text-anchor="middle" class="cst">$ ref rate</text>
+                  <line x1="398" y1="52" x2="364" y2="52" class="car"/><text x="379" y="66" text-anchor="middle" class="cst">&euro; ref rate</text>
+                  <text x="380" y="90" text-anchor="middle" class="cst">each pays variable on the</text>
+                  <text x="380" y="102" text-anchor="middle" class="cst">currency it received; &euro; leg</text>
+                  <text x="380" y="114" text-anchor="middle" class="cst">services the bank loan</text>
+
+                  <text x="600" y="16" text-anchor="middle" class="chd">AT MATURITY</text>
+                  <rect x="510" y="30" width="90" height="30" class="cbx"/><text x="555" y="49" text-anchor="middle" class="ctt">Euro co.</text>
+                  <rect x="640" y="30" width="70" height="30" class="cbx"/><text x="675" y="49" text-anchor="middle" class="ctt">Dealer</text>
+                  <line x1="602" y1="38" x2="636" y2="38" class="car2"/><text x="619" y="30" text-anchor="middle" class="cst">$56.18m</text>
+                  <line x1="638" y1="52" x2="604" y2="52" class="car"/><text x="619" y="66" text-anchor="middle" class="cst">&euro;50m</text>
+                  <text x="610" y="90" text-anchor="middle" class="cst">same notionals re-exchanged</text>
+                  <text x="610" y="102" text-anchor="middle" class="cst">&rArr; no FX risk on principal;</text>
+                  <text x="610" y="114" text-anchor="middle" class="cst">&euro;50m repays the bank loan</text>
+
+                  <text x="360" y="160" text-anchor="middle" class="cst">Here the European company = <tspan fill="#FF7B72">dollar payer</tspan>; dealer = <tspan fill="#3DD68C">euro payer</tspan></text>
+                  <text x="360" y="178" text-anchor="middle" class="cst">(labels follow interest flows + final principal, not the initial exchange)</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Cross-currency basis</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">CIRP baseline</span><span class="rc-dbody">Under covered interest rate parity, borrowing USD directly costs the same as borrowing foreign currency + swapping. Frictionless market &rArr; <b>zero basis</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Why it fails</span><span class="rc-dbody">Since the GFC: stricter capital rules raise arbitrage costs + <b>high demand for USD</b> &rArr; USD lending via swaps commands a premium; basis &ne; 0.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Negative basis</span><span class="rc-dbody">Viewed from the <b>foreign currency</b>: if synthetic USD (via swap) costs more than direct USD borrowing, the foreign currency shows <b>negative basis</b>. Most currencies since the crisis. The USD borrower <b>accepts a lower rate on the foreign-currency interest it receives</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">USD investor play</span><span class="rc-dbody">When basis is negative, a USD investor can <b>swap USD &rarr; foreign currency, buy foreign bonds, swap returns back</b>, earning more than USD bonds.</span></span>
+              </div>
+              <div class="sf-fl"><b>Example &mdash; Boivis: needs $50M 4 yrs; direct USD = $ref + 100 bp; instead borrows &euro; at &euro;ref + 60 bp + basis swap (&minus;20 bp); spot $1.1815; &euro;ref 1.5%, $ref 2.0% &rarr; 1.6% / 1.9% at settle 1</b>
+Step 1  &euro; principal ......... $50M / 1.1815 = <b>&euro;42,319,086</b> (re-exchanged at maturity)
+Step 2  pays &euro; loan ......... 42,319,086 &times; (1.5% + 0.6%) &times; 90/360 = <b>&euro;222,175</b>
+Step 3  pays $ swap ......... $50M &times; 2.0% &times; 90/360 = <b>$250,000</b>
+Step 4  receives &euro; swap ..... 42,319,086 &times; (1.5% &minus; 0.2%) &times; 90/360 = <b>&euro;137,537</b>
+Step 5  direct $ cost ....... $50M &times; 3.0% &times; 90/360 = $375,000
+        synthetic $ cost .... $50M &times; (2.0% + 0.6% + 0.2%) &times; 90/360 = <b>$350,000</b>
+        net benefit ......... <b class="sf-green">$25,000</b> = $50M &times; (1% &minus; 0.8%) &times; 90/360
+Settle 2 (1.6%/1.9%): loan &euro;232,755; $ swap $237,500; rec &euro;148,117;
+direct $362,500 vs synthetic $337,500 &rarr; benefit <b class="sf-green">$25,000</b>
+<b>Locked cost = $ref + 80 bp</b>  (60 bp loan spread + 20 bp negative basis)</div>
+              <div class="sf-trap"><b>&#9888; The &minus;20 bp basis is SUBTRACTED from the &euro; interest Boivis receives</b> on the swap &mdash; it doesn&rsquo;t reduce what it pays. Synthetic cost = $ref + loan spread (60) + basis paid away (20) = +80 bp, still 20 bp cheaper than direct (+100 bp).</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Currency forwards &amp; futures</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Forwards vs futures</span><span class="rc-dbody">Forwards: <b>customized</b> (exact quantity + date). Futures: standardized quantity &amp; delivery dates, limited pairs, but <b>greater liquidity</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Hedge ratio</span><span class="rc-dbody">HR = amount of currency to be exchanged / futures contract size.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Direction</span><span class="rc-dbody">Receiving foreign currency later &rArr; <b>sell</b> its futures (deliver it at the locked rate). Paying foreign currency later &rArr; <b>buy</b> its futures.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Basis risk</span><span class="rc-dbody">If futures settlement date &ne; cash-flow date, the hedge is imperfect: futures closed early trade at a price &ne; spot &rArr; more or less domestic currency than a matched delivery.</span></span>
+              </div>
+              <div class="sf-fl"><b>Example &mdash; U.S. firm receives &euro;20M in 90d; EUR-USD futures 1.3150, size &euro;125,000</b>
+HR = &euro;20,000,000 / &euro;125,000 = <b class="sf-red">sell 160 contracts</b>
+At settlement: deliver &euro;20M, receive 20M &times; 1.3150 = <b class="sf-gold">$26,300,000</b></div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Module Quiz 17.2 &mdash; answers (reasoning-derived, node-verified)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &rarr; A</span><span class="rc-dbody">NZD trades at a <b>positive</b> cross-currency basis vs USD &rArr; a USD investor picks up the basis by <b>swapping USD for NZD and investing in NZ government securities</b>. GBP&rsquo;s negative basis would cost a USD-based investor; C starts from GBP, not USD.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &mdash; long 160 EUR futures</span><span class="rc-dbody">Wood owes &euro;20M in 30d (GBP-based) &rArr; <b>buy</b> 20M/125,000 = <b>160</b> EUR-GBP futures @ 0.8989. Unhedged cost = 20M &times; 0.9034 = <b>&pound;18,068,000</b>. Hedged: futures gain = (0.9054 &minus; 0.8989) &times; 125,000 &times; 160 = <b class="sf-green">+&pound;130,000</b> &rarr; net cost <b class="sf-gold">&pound;17,938,000</b>. Futures expire in 40d (&gt; 30d) &rArr; closed early at 0.9054, leaving basis risk.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q3 &mdash; saves 25 bp</span><span class="rc-dbody">ABC borrows $30M &times; 1.2000 = <b>$36M</b> at $ref + 40 bp, swaps into &pound;30M paying &pound;ref &minus; 15 bp, receiving $ref. Settle 1 ($2.5% / &pound;1.5%): pays loan 36M &times; 2.9% &times; 0.5 = <b>$522,000</b>; receives swap $450,000; pays &pound;30M &times; 1.35% &times; 0.5 = <b>&pound;202,500</b>. Settle 2 ($2.25% / &pound;1%): loan $477,000; receives $405,000; pays &pound;127,500. Synthetic &pound; cost = &pound;ref + 40 &minus; 15 = <b>&pound;ref + 25 bp</b> vs direct &pound;ref + 50 bp &rArr; saves <b class="sf-green">25 bp &asymp; &pound;37,500 per semiannual period</b> (30M &times; 0.25% &times; 0.5).</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 17.3 — EQUITY RISK ═══════════ -->
+            <div class="sf-card">
+              <div class="rc-sec">Module 17.3 &middot; Managing Equity Risk</div>
+              <div class="sf-title"><span class="rc-los">LOS 17.c</span>Equity swaps</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Purpose</span><span class="rc-dbody">Create <b>synthetic exposure</b> to equities &mdash; the economic benefits of ownership without the cost of holding shares. Return may be on a <b>single stock, a basket, or an index</b>; price return (typical) or total return (price + dividends).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Three types</span><span class="rc-dbody">(1) pay <b>fixed</b>, receive equity return; (2) pay <b>floating</b>, receive equity return; (3) pay one equity return, receive another (e.g., pay Nasdaq, receive S&amp;P 500).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Payments</span><span class="rc-dbody">Usually a series at periodic settlement dates; some swaps settle with a <b>single payment at maturity</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Negative return trap</span><span class="rc-dbody">If the index falls, the equity-return <b>receiver pays BOTH legs</b>: the floating rate <i>and</i> the negative equity return.</span></span>
+              </div>
+              <table class="sf-table">
+                <tr><th>Advantages vs physical stock</th><th>Disadvantages</th></tr>
+                <tr><td>Gain exposure where physical participation is <b>restricted</b></td><td>Typically require <b>collateral</b></td></tr>
+                <tr><td>Avoid tax on physical ownership (e.g., <b>stamp duty</b>)</td><td>Swaps are <b>illiquid</b></td></tr>
+                <tr><td>Avoid <b>custody fees</b></td><td>No <b>voting rights</b></td></tr>
+                <tr><td>Avoid monitoring costs from corporate actions (dividends, splits, buybacks, M&amp;A)</td><td></td></tr>
+              </table>
+              <div class="sf-fl"><b>Example &mdash; German pension fund, &euro;200M tracking DAX 30 (12,400), wants +40% exposure: swap NP &euro;80M, pay floating + 30 bp, receive index; semiannual, 6-mo rate 6%</b>
+<b>Scenario 1 &mdash; DAX &rarr; 13,020 (+5%):</b>
+portfolio ....... &euro;200M &times; 5% = <b class="sf-green">+&euro;10M</b>
+equity leg ...... &euro;80M &times; 5% = +&euro;4M
+floating leg .... &euro;80M &times; (6% + 0.3%) &times; 180/360 = &minus;&euro;2.52M
+swap net ........ <b class="sf-green">+&euro;1.48M</b> = &euro;80M &times; [0.05 &minus; 0.063 &times; 180/360]
+position ........ <b class="sf-gold">+&euro;11.48M</b>
+<b>Scenario 2 &mdash; DAX &rarr; 11,780 (&minus;5%):</b>
+swap net = &minus;4M &minus; 2.52M = <b class="sf-red">&minus;&euro;6.52M</b> &rarr; position <b class="sf-red">&minus;&euro;16.52M</b></div>
+              <div class="sf-tip">The swap is the synthetic equivalent of <b>borrowing &euro;80M at floating + 30 bp and investing it in the index tracker</b>. To <b>reduce</b> equity exposure instead: pay the equity return, receive floating/fixed = synthetic sale of equity into the money market.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Equity futures &amp; forwards</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Uses</span><span class="rc-dbody">Tactical allocation (selling futures <b>reduces</b> equity exposure, buying <b>increases</b> it); diversification; international exposure; directional bets.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Futures vs forwards</span><span class="rc-dbody">Futures: exchange-traded, standardized, margined, low transaction costs. Forwards: <b>customizable</b> but illiquid, no clearinghouse &rArr; <b>counterparty credit risk</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Multiplier</span><span class="rc-dbody">Actual futures price = quoted points &times; multiplier. S&amp;P 500 = <b>$250</b>/pt; FTSE 100 = <b>&pound;10</b>/pt.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Contracts to hedge</span><span class="rc-dbody">N = monetary value of position to be hedged / (futures price &times; multiplier), negative for a hedge (short).</span></span>
+              </div>
+              <div class="sf-fl"><b>Example &mdash; hedge 30% of a &pound;200M FTSE tracker; Sep futures 7,300, &pound;10/pt</b>
+Step 1  N = &minus;&pound;60M / (7,300 &times; &pound;10) = &minus;821.9 &rarr; <b class="sf-red">sell 822</b>
+<b>FTSE +5% (futures 7,665):</b>
+futures ......... (7,665 &minus; 7,300) &times; &pound;10 &times; (&minus;822) = <b class="sf-red">&minus;&pound;3,000,300</b>
+portfolio ....... 1.05 &times; &pound;200M = &pound;210M &rarr; net &pound;206,999,700
+hedged slice .... &minus;3,000,300 + 60M &times; 5% = <b>&minus;&pound;300</b> (rounding only)
+<b>FTSE &minus;5% (futures 6,935):</b>
+futures <b class="sf-green">+&pound;3,000,300</b>; portfolio &pound;190M &rarr; net &pound;193,000,300; slice <b>+&pound;300</b></div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Achieving a target portfolio beta</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Formula</span><span class="rc-dbody">number of futures = [(&beta;<sub>T</sub> &minus; &beta;<sub>P</sub>) / &beta;<sub>F</sub>] &times; (MV<sub>P</sub> / F), with F = futures price &times; multiplier. Negative &rArr; <b>sell</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Drivers</span><span class="rc-dbody">&beta;<sub>T</sub> target beta; &beta;<sub>P</sub> current beta; &beta;<sub>F</sub> futures (index) beta, usually 1; MV<sub>P</sub> portfolio value. Short futures <b>cut</b> beta, long futures <b>raise</b> it. Full hedge: &beta;<sub>T</sub> = 0.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Effectiveness check</span><span class="rc-dbody">realized &beta; = % change in portfolio / % change in index.</span></span>
+              </div>
+              <div class="sf-fl"><b>Example &mdash; $60M, &beta; 1.2 &rarr; 0.8; S&amp;P futures 2,984 &times; $250; index &minus;1.5% over 6 mo</b>
+Step 1  F = 2,984 &times; $250 = <b>$746,000</b>
+Step 2  N = [(0.8 &minus; 1.2)/1] &times; (60M / 746,000) = &minus;32.17 &rarr; <b class="sf-red">sell 32</b>
+Step 3  portfolio: $60M &times; [1 &minus; (0.015 &times; 1.2)] = <b>$58,920,000</b>
+Step 4  futures: 2,984 &times; 0.985 = 2,939.24 &rarr; 2,939 (nearest 0.5 pt)
+        profit = (2,984 &minus; 2,939) &times; $250 &times; 32 = <b class="sf-green">+$360,000</b>
+Step 5  net $59,280,000 &rarr; return &minus;1.2%
+Step 6  realized &beta; = &minus;0.012 / &minus;0.015 = <b class="sf-gold">0.8 &#10003;</b></div>
+              <div class="sf-trap"><b>&#9888; The portfolio moves by index move &times; its OWN beta</b> (&minus;1.5% &times; 1.2 = &minus;1.8%), not by the index move. The futures leg then drags the combined return to target &beta; &times; index move.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Cash equitization (cash securitization / cash overlay)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Problem</span><span class="rc-dbody">Cash yields less than equity/FI &rArr; <b>cash drag</b>, risk of underperforming the benchmark.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Fix</span><span class="rc-dbody"><b>Buy index futures</b> replicating the return the cash would earn in the index &mdash; liquid, low transaction cost. Alternative: <b>buy calls + sell puts</b> (same strike/expiry) = synthetic forward.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Sizing</span><span class="rc-dbody">Same beta formula with &beta;<sub>P</sub> = 0 (cash) and &beta;<sub>T</sub> = 1 (or the fund&rsquo;s target): N = (&beta;<sub>T</sub>/&beta;<sub>F</sub>) &times; (cash / F).</span></span>
+              </div>
+              <div class="sf-fl"><b>Example &mdash; $8M cash, S&amp;P futures 2,780 &times; $250, &beta; 1</b>
+F = $695,000 ; N = (1/1) &times; (8M / 695,000) = 11.51 &rarr; <b class="sf-green">buy 12 contracts</b></div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Module Quiz 17.3 &mdash; answers (reasoning-derived, node-verified)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &rarr; A</span><span class="rc-dbody">N = [(1.4 &minus; 0.8)/1] &times; [&pound;20M / (7,425 &times; &pound;10)] = 0.6 &times; 269.4 = 161.6 &rarr; <b>162 FTSE futures (long)</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &rarr; A</span><span class="rc-dbody">Cash = 5% &times; &yen;4.35B = &yen;217.5M; F = 21,624 &times; &yen;1,000 = &yen;21,624,000; N = 217.5M / 21.624M = 10.06 &rarr; <b>10 futures</b>.</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 17.4 — VOLATILITY ═══════════ -->
+            <div class="sf-card">
+              <div class="rc-sec">Module 17.4 &middot; Derivatives on Volatility</div>
+              <div class="sf-title"><span class="rc-los">LOS 17.d</span>The VIX Index</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">What it measures</span><span class="rc-dbody"><b>Implied</b> (expected) volatility priced into S&amp;P 500 options over a forward <b>30-day</b> window &mdash; a weighted average across traded calls &amp; puts averaging 30 days to expiry. <b>NOT actual/realized volatility.</b> A.k.a. the <b>fear index/gauge</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Interpretation</span><span class="rc-dbody">VIX = annualized SD of expected &plusmn;% S&amp;P moves over next 30 days. VIX 20 &rArr; &plusmn;20% over a year with 68% confidence &rArr; 30-day range &plusmn; 20/&radic;12 = <b>5.77%</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Rules of thumb</span><span class="rc-dbody">&lt; 20 low-risk environment; &gt; 30 high-risk. Extremes flag sentiment: very low VIX = excessively <b>bullish</b>; very high = excessively <b>bearish</b>. Spikes <b>mean-revert</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Correlation</span><span class="rc-dbody">VIX vs stock returns: <b class="sf-red">negative</b>, stronger in downturns &rArr; VIX-based derivatives can offset equity losses when vol spikes.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Other indexes</span><span class="rc-dbody">U.S.: S&amp;P 100, DJIA, Nasdaq, Russell 2000. Europe: <b>VSTOXX</b> (EURO STOXX 50), <b>VFTSE</b> (FTSE 100), <b>VDAX-NEW</b> (DAX 30).</span></span>
+              </div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">VIX futures &amp; options</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Pricing</span><span class="rc-dbody">Spot VIX is <b>not investable</b> &rArr; cost-of-carry does NOT apply. Futures price = expected S&amp;P vol in the <b>30 days after the futures expiration</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Tail hedge</span><span class="rc-dbody"><b>Buy VIX futures</b> to protect equities from extreme downturns: vol &uarr; &rArr; equities &darr; but VIX futures &uarr;. Selling VIX futures = short vol, harvesting the vol premium in S&amp;P options &mdash; large losses if expected vol spikes.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Term structure</span><span class="rc-dbody"><b>Contango</b> (typical, VIX low): longer futures &gt; spot; basis (spot &minus; futures) <b>negative</b>. <b>Backwardation</b> (post-shock, VIX high): futures &lt; spot. Shape reflects expected 30-day vol at future dates.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Convergence &amp; roll</span><span class="rc-dbody">Futures settle against spot VIX &rArr; basis &rarr; 0 over life. P&amp;L from that drift = <b>roll yield</b>, magnified when the short end of the curve is steeper than the long end.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">VIX options</span><span class="rc-dbody"><b>European, cash-settled</b>, exercisable only at maturity &rArr; valued off <b>expected VIX at expiry</b>. Calls gain if expected vol at maturity &uarr;; puts gain if it &darr;.</span></span>
+              </div>
+              <div class="rc-svg-wrap">
+                <svg viewBox="0 0 720 190" width="720" height="190" xmlns="http://www.w3.org/2000/svg" style="min-width:660px">
+                  <style>.vax{stroke:#2A3441;stroke-width:1}.vln{stroke:#3DD68C;stroke-width:2.2;fill:none}.vln2{stroke:#FF7B72;stroke-width:2.2;fill:none}.vlb{fill:#C9D1D9;font:600 10.5px monospace}.vsu{fill:#7D8590;font:9.5px monospace}.vdt{fill:#A78BFA}</style>
+                  <g transform="translate(30,15)">
+                    <text x="150" y="8" text-anchor="middle" class="vlb">CONTANGO (18 Jul 2011, spot 20.95)</text>
+                    <line x1="0" y1="130" x2="300" y2="130" class="vax"/>
+                    <line x1="0" y1="20" x2="0" y2="130" class="vax"/>
+                    <polyline points="10,110 60,96 110,82 160,68 210,52 260,40 295,36" class="vln"/>
+                    <circle cx="10" cy="110" r="3" class="vdt"/>
+                    <text x="150" y="150" text-anchor="middle" class="vsu">futures ABOVE spot; basis negative; upward slope</text>
+                    <text x="150" y="163" text-anchor="middle" class="vsu">long futures &rArr; NEGATIVE roll yield (price falls to spot)</text>
+                  </g>
+                  <g transform="translate(390,15)">
+                    <text x="150" y="8" text-anchor="middle" class="vlb">BACKWARDATION (9 Aug 2011, spot 35.06)</text>
+                    <line x1="0" y1="130" x2="300" y2="130" class="vax"/>
+                    <line x1="0" y1="20" x2="0" y2="130" class="vax"/>
+                    <polyline points="10,30 40,62 70,82 110,94 160,100 220,104 295,105" class="vln2"/>
+                    <circle cx="10" cy="30" r="3" class="vdt"/>
+                    <text x="150" y="150" text-anchor="middle" class="vsu">futures BELOW spot (VIX spiked on U.S. AAA&rarr;AA+)</text>
+                    <text x="150" y="163" text-anchor="middle" class="vsu">long futures &rArr; POSITIVE roll yield (price rises to spot)</text>
+                  </g>
+                </svg>
+              </div>
+              <table class="sf-table">
+                <tr><th>Position</th><th>Term structure</th><th>Roll yield</th></tr>
+                <tr><td>Long futures</td><td>Contango</td><td class="sf-red"><b>Negative</b></td></tr>
+                <tr><td>Short futures</td><td>Contango</td><td class="sf-green"><b>Positive</b></td></tr>
+                <tr><td>Long futures</td><td>Backwardation</td><td class="sf-green"><b>Positive</b></td></tr>
+                <tr><td>Short futures</td><td>Backwardation</td><td class="sf-red"><b>Negative</b></td></tr>
+              </table>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Variance swaps</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Payoff basis</span><span class="rc-dbody"><b>Variance (&sigma;&sup2;)</b>, not volatility. Fixed leg = <b>variance strike</b> = implied volatility&sup2;, known at initiation. Variable leg = <b>realized variance</b> of the underlying over the swap&rsquo;s life, known only at maturity.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Long / short</span><span class="rc-dbody"><b>Long (purchaser)</b> receives realized variance, pays the strike. Realized vol &gt; strike &rArr; long <b class="sf-green">profits</b>; realized vol &lt; strike &rArr; long <b class="sf-red">loses</b>. Pure play on realized vs implied variance.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Structure</span><span class="rc-dbody"><b>No notional exchanged</b>, no interim settlements, single payment at expiration: settlement<sub>T</sub> = variance notional &times; (realized variance &minus; variance strike). Value = 0 at initiation (implied vol = best ex ante estimate).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Notional conversion</span><span class="rc-dbody">Quoted as <b>vega notional</b>; N<sub>VAR</sub> = N<sub>vega</sub> / (2 &times; K). profit/(loss) = N<sub>VAR</sub> &times; (&sigma;&sup2; &minus; K&sup2;) = N<sub>vega</sub> &times; (&sigma;&sup2; &minus; K&sup2;)/(2K). Both &sigma; and K quoted in vol (SD) terms &rArr; <b>square them</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Realized variance</span><span class="rc-dbody">R&#7522; = ln(P&#8348;/P&#8348;&#8331;&#8321;); daily variance = &Sigma;R&#7522;&sup2;/(N&minus;1) &mdash; <b>mean NOT deducted</b> (movement regardless of direction; makes variances time-additive). Annualized = daily &times; 252.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Convexity</span><span class="rc-dbody">Payoff convex in volatility: vs a linear vol derivative, losses <b>smaller</b> below strike, gains <b>greater</b> above &rArr; attractive tail-risk hedge (gains accelerate as vol explodes).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Mark-to-market</span><span class="rc-dbody">Value drifts as realized &amp; implied diverge. Expected variance at maturity = <b>time-weighted average</b>: (&sigma;&#8348;&sup2; &times; t/T) + (K&sup2;<sub>(T&minus;t)</sub> &times; (T&minus;t)/T), using annualized realized vol so far and the implied vol quoted for the <b>remaining</b> term.</span></span>
+              </div>
+              <div class="sf-fl"><b>MTM in 3 steps</b>
+Step 1  expected variance to maturity = (&sigma;&#8348;&sup2; &times; t/T) + (K&sup2;&#8080;&#8348;&#8331;&#8348;&#8081; &times; (T&minus;t)/T)
+Step 2  expected payoff at maturity = N&#8342;&#8336;&#8344; &times; (expected variance &minus; original strike&sup2;)
+Step 3  discount to valuation date at the unannualized rate</div>
+              <div class="sf-fl"><b>Example &mdash; Luke Amos: 1-yr S&amp;P variance swap, N&#8342;&#8339;&#8336; = $100,000, strike 20; after 9 mo realized vol 21; 3-mo strike now 22; r = 2%</b>
+Step 1  EV = (21&sup2; &times; 9/12) + (22&sup2; &times; 3/12) = 330.75 + 121 = <b>451.75</b>
+Step 2  N&#8342;&#8336;&#8344; = 100,000 / (2 &times; 20) = <b>$2,500</b>
+        payoff = (451.75 &minus; 20&sup2;) &times; 2,500 = <b class="sf-green">$129,375</b>
+Step 3  r = 2% &times; 3/12 = 0.5% &rarr; value = 129,375 / 1.005 = <b class="sf-gold">$128,731</b>
+        gain to the long (purchaser), loss to the seller</div>
+              <div class="sf-trap"><b>&#9888; Time weights use elapsed/remaining over TOTAL:</b> t/T = 9/12 on realized, (T&minus;t)/T = 3/12 on the <b>3-month</b> re-quoted strike &mdash; and everything is squared before weighting. Forgetting to square K (20 &rarr; 400) is the classic error.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Module Quiz 17.4 &mdash; answers (reasoning-derived, node-verified)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &rarr; B</span><span class="rc-dbody">Least accurate: VIX measures <b>implied</b>, not realized, volatility. A and C are true statements.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &rarr; B</span><span class="rc-dbody">profit/(loss) = <b>notional variance</b> &times; (&sigma;&sup2; &minus; K&sup2;). Vega notional needs the /2K conversion first.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q3 &mdash; &minus;&euro;3,678,447 to Quark</span><span class="rc-dbody">N&#8342;&#8336;&#8344; = 150,000/(2 &times; 15) = <b>&euro;5,000</b>. EV = (28&sup2; &times; 3/12) + (32&sup2; &times; 9/12) = 196 + 768 = <b>964</b>. Payoff = (964 &minus; 15&sup2;) &times; 5,000 = <b>&euro;3,695,000</b>. Discount 0.6% &times; 9/12 = 0.45%: 3,695,000 / 1.0045 = <b>&euro;3,678,447</b> &mdash; a <b class="sf-green">gain to the long</b> and a <b class="sf-red">loss to Quark (the seller)</b>, who posts margin accordingly.</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 17.5 — PORTFOLIO USES ═══════════ -->
+            <div class="sf-card">
+              <div class="rc-sec">Module 17.5 &middot; Uses of Derivatives in Portfolio Management</div>
+              <div class="sf-title"><span class="rc-los">LOS 17.e</span>Targeted equity exposure with a total return swap</div>
+              <div class="sf-fl"><b>Example &mdash; Seago: 80,000 ABC shares @ &euro;6.00 (can&rsquo;t sell: tax); fears decline; 1-yr total return swap: pay ABC total return, receive floating 0.95%; NP = 80,000 &times; &euro;6.00 = &euro;480,000</b>
+<b>Stock &minus;5% + &euro;0.05 dividend:</b>
+total return = (5.70 + 0.05)/6.00 &minus; 1 = <b class="sf-red">&minus;4.1667%</b>
+Seago receives [0.0095 &minus; (&minus;0.041667)] &times; 480,000 = <b class="sf-green">+&euro;24,560</b>
+<b>Stock +5% + &euro;0.05:</b>
+total return = (6.30 + 0.05)/6.00 &minus; 1 = +5.8333%
+Seago receives (0.0095 &minus; 0.058333) &times; 480,000 = <b class="sf-red">&minus;&euro;23,440</b> (pays)</div>
+              <div class="sf-tip">Paying the <b>total return</b> (price + dividend) and receiving floating removes the concentrated exposure without triggering a taxable sale &mdash; she keeps positive carry only if the stock underperforms the floating rate.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Cash equitization at scale (Barbet)</div>
+              <div class="sf-fl"><b>&pound;60M cash + &pound;300M equities (&beta; 1.2 vs FTSE); 6-mo futures 7,348.50 &times; &pound;10 (&beta; 1); cash rate 0.86%</b>
+Step 1  F = 7,348.50 &times; 10 = &pound;73,485
+Step 2  N = (1.2/1) &times; (60M / 73,485) = 979.79 &rarr; <b class="sf-green">buy 980</b>
+<b>Scenario: FTSE +6%, futures &rarr; 7,642</b>
+equities ....... &pound;300M &times; [1 + 0.06 &times; 1.2] = &pound;321.6M &rarr; <b>+&pound;21.6M</b>
+cash interest .. 60M &times; 0.0086 &times; 180/360 = <b>+&pound;258,000</b>
+futures ........ (7,642 &minus; 7,348.5) &times; &pound;10 &times; 980 = <b class="sf-green">+&pound;2,876,300</b>
+total .......... &pound;24,734,300 &rarr; return 24,734,300 / 360M = <b class="sf-gold">6.87%</b></div>
+              <div class="sf-trap"><b>&#9888; Why 6.87% &lt; 7.2% (= 6% &times; 1.2):</b> rounding to 980 contracts + <b>basis change</b> &mdash; the futures moved 7,642/7,348.50 &minus; 1 = <b>3.99%</b> while the index moved 6%. The futures leg earns the futures change, not the index change.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title"><span class="rc-los">LOS 17.f</span>Asset allocation with futures (Chausset, &euro;800M)</div>
+              <div class="sf-body">80/20 equity/FI &rarr; 60/40; within equity, German 50% &rarr; 30%, French 50% &rarr; 70%. Changes: German stocks <b class="sf-red">&minus;&euro;176M</b> (320&rarr;144), French stocks <b class="sf-green">+&euro;16M</b> (320&rarr;336), French OATs <b class="sf-green">+&euro;160M</b> (160&rarr;320).</div>
+              <div class="sf-fl"><b>German &minus;&euro;176M (&beta;&#8346; 1.2, DAX futures 12,200 &times; &euro;25):</b>
+N = [(0 &minus; 1.2)/1] &times; (176M / 305,000) = <b class="sf-red">&minus;692.45 &rarr; sell 692 DAX</b>
+<b>French +&euro;16M (&beta; 0.95, CAC futures 5,500 &times; &euro;10):</b>
+N = [(0.95 &minus; 0)/1] &times; (16M / 55,000) = <b class="sf-green">+276.36 &rarr; buy 276 CAC</b>
+<b>OATs +&euro;160M (MD&#8348; 8.5; CTD 127.72, CF 0.7768, MD 8.89):</b>
+BPV&#8348; = 8.5 &times; 0.0001 &times; 160M = &euro;136,000
+BPV&#8353;&#8348;&#8342; = 8.89 &times; 0.0001 &times; 127,720 = &euro;113.54
+BPVHR = (136,000 &minus; 0)/113.54 &times; 0.7768 = <b class="sf-green">+930.46 &rarr; buy 930 OAT futures</b></div>
+              <div class="sf-trap"><b>&#9888; Building NEW exposure from zero:</b> for the added French slice &beta;&#8346; = 0 and &beta;&#8348; = 0.95 (the beta you want the new money to have); for the added OATs BPV<sub>portfolio</sub> = 0 and BPV<sub>target</sub> uses the <b>target duration on the &euro;160M being added</b>. Don&rsquo;t recycle the whole-portfolio numbers.</div>
+              <table class="sf-table">
+                <tr><th>Slice</th><th>Futures position</th><th>Contracts</th></tr>
+                <tr><td>German stock</td><td class="sf-red">Short DAX 30</td><td><b>692</b></td></tr>
+                <tr><td>French stock</td><td class="sf-green">Long CAC 40</td><td><b>276</b></td></tr>
+                <tr><td>French bonds</td><td class="sf-green">Long OATs</td><td><b>930</b></td></tr>
+              </table>
+              <div class="sf-fl"><b>Outcome check &mdash; 6 mo later: German &minus;4%, French +2%; CAC futures 5,616; DAX futures 11,793.5</b>
+<b>German:</b> holding 320M &times; &minus;0.04 = &minus;12.8M; DAX futures (11,793.5 &minus; 12,200) &times; 25 &times; (&minus;692) = <b class="sf-green">+7,032,450</b>
+net &minus;5,767,550 vs physical sale &minus;5,760,000 &rarr; imperfection <b class="sf-red">&minus;&euro;7,550</b>
+<b>French:</b> +6.4M; CAC (5,616 &minus; 5,500) &times; 10 &times; 276 = +320,160 &rarr; net <b class="sf-green">+6,720,160</b> vs 6,720,000 &rarr; +&euro;160
+<b>OATs (yield &minus;50 bp parallel):</b> holding &minus;8.5 &times; &minus;0.005 &times; 160M = +6.8M
+BPV&#8321; = BPV&#8353;&#8348;&#8342;/CF = 113.54/0.7768 = &euro;146.16
+futures = 146.16 &times; 50 &times; 930 = <b class="sf-green">+6,796,440</b> &rarr; net &euro;13,596,440 vs 13,600,000 physical</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Rebalancing to target weights (Birmingham)</div>
+              <div class="sf-fl"><b>70/30 target; fund grew $200M &rarr; $210M: equity $140M (66.67%) needs +$7M; bonds $70M (33.33%) need &minus;$7M. Equity &beta; 0.8; FI MD 9.5.</b>
+<b>Equity (S&amp;P futures 2,930 &times; $250):</b>
+N = [(0.8 &minus; 0)/1] &times; (7M / 732,500) = 7.65 &rarr; <b class="sf-green">buy 8 S&amp;P futures</b>
+<b>Fixed income (T-futures: CTD 110.25, CF 0.8140, MD 8.5):</b>
+BPV&#8346; = 9.5 &times; 0.0001 &times; 7M = $6,650
+BPV&#8353;&#8348;&#8342; = 8.5 &times; 0.0001 &times; 110,250 = $93.71
+BPVHR = (0 &minus; 6,650)/93.71 &times; 0.8140 = <b class="sf-red">&minus;57.76 &rarr; sell 58 Treasury futures</b></div>
+              <div class="sf-info">Rebalancing sizes the equity add with &beta;<sub>T</sub> = the <b>slice&rsquo;s own beta</b> (0.8) on the $7M, and the FI cut with BPV<sub>target</sub> = 0 on the $7M being removed.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Changing allocations with swaps (Weber, &yen;21.58B)</div>
+              <div class="sf-body">Equity 70% &rarr; 60% and FI 30% &rarr; 40%, plus subfund shifts. Changes: value stocks <b class="sf-red">&minus;&yen;5,179.2M</b>, growth stocks <b class="sf-green">+&yen;3,021.2M</b>, government bonds <b class="sf-green">+&yen;1,942.2M</b>, corporate bonds <b class="sf-green">+&yen;215.8M</b>. One swap per index, notional = the change:</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Swap 1</span><span class="rc-dbody"><b>Pay</b> MSCI Japan Value return, <b>receive</b> floating (&minus; dealer margin bp) on NP <b>&yen;5,179,200,000</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Swap 2</span><span class="rc-dbody"><b>Pay</b> floating (+ margin), <b>receive</b> MSCI Japan Growth return on NP <b>&yen;3,021,200,000</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Swap 3</span><span class="rc-dbody"><b>Pay</b> floating (+ margin), <b>receive</b> S&amp;P Japanese Government Bond Index return on NP <b>&yen;1,942,200,000</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Swap 4</span><span class="rc-dbody"><b>Pay</b> floating (+ margin), <b>receive</b> S&amp;P Japanese Corporate Bond Index return on NP <b>&yen;215,800,000</b>.</span></span>
+              </div>
+              <div class="sf-trap"><b>&#9888; Residual risks of the swap route:</b> (1) indexes won&rsquo;t match the subportfolios unless they track them; (2) index legs pay <b>total return</b> (price + cash flow) &mdash; paying the Value return means funding the price element without selling securities; (3) the <b>dealer&rsquo;s margin</b> on floating legs is a real cost.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title"><span class="rc-los">LOS 17.f</span>Inferring market expectations &mdash; Fed funds futures</div>
+              <table class="sf-table">
+                <tr><th>Inferring expectations of&hellip;</th><th>Derivative</th></tr>
+                <tr><td>FOMC rate moves</td><td class="sf-main-c"><b>Fed funds futures</b></td></tr>
+                <tr><td>Inflation</td><td class="sf-main-c"><b>CPI swaps</b></td></tr>
+                <tr><td>Future volatility</td><td class="sf-main-c"><b>VIX futures &amp; options</b></td></tr>
+              </table>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">FFE vs target</span><span class="rc-dbody"><b>FFE rate</b> = weighted average of overnight interbank rates (the Fed influences it via open-market ops + interest on reserves, doesn&rsquo;t set it). <b>Target rate</b> = range set by the FOMC (8 meetings/yr), e.g., 2.25%&ndash;2.50%.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Contract</span><span class="rc-dbody">CME; price = <b>100 &minus; expected average FFE</b> at contract maturity; monthly maturities out to 36 months. Use the <b>nearest contract after the next FOMC meeting</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Probability</span><span class="rc-dbody">% prob of change = (implied FFE &minus; current target midpoint) / (target assuming change &minus; current midpoint) = (implied FFE &minus; midpoint) / expected size of change.</span></span>
+              </div>
+              <div class="sf-fl"><b>Example &mdash; Stokes: futures 98.1625; current target 1.50%&ndash;1.75%; 25 bp hike?</b>
+Step 1  implied FFE = 100 &minus; 98.1625 = <b>1.8375%</b>
+Step 2  midpoint = (1.50 + 1.75)/2 = 1.625% ; post-hike = 1.875%
+Step 3  prob = (1.8375 &minus; 1.625) / (1.875 &minus; 1.625) = 0.2125/0.25 = <b class="sf-gold">85%</b></div>
+              <div class="sf-trap"><b>&#9888; Work from the MIDPOINT of the target range,</b> and put the <b>expected size of the move</b> (25 bp, 50 bp&hellip;) in the denominator. Futures price falling = implied FFE rising = market pricing hikes.</div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">Module Quiz 17.5 &mdash; answers (reasoning-derived, node-verified)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &mdash; Schwarz</span><span class="rc-dbody">&euro;400M: equity 240M (120 Sp / 120 De), FI 160M (80 Bunds / 80 Obligaciones). Targets: equity 280M (Sp 168 / De 112); FI 120M (De 84 / Sp 36). Changes: Spanish equity <b class="sf-green">+48M</b>, German equity <b class="sf-red">&minus;8M</b>, Bunds <b class="sf-green">+4M</b>, Obligaciones <b class="sf-red">&minus;44M</b>.<br>&bull; IBEX: (1.2/1) &times; 48M/(9,200 &times; 10) = 626.1 &rarr; <b class="sf-green">buy 626 IBEX 35</b><br>&bull; DAX: (0 &minus; 0.9)/1 &times; 8M/(12,500 &times; 25) = &minus;23.04 &rarr; <b class="sf-red">sell 23 DAX 30</b><br>&bull; Bunds: BPV&#8348; = 10.25 &times; 0.0001 &times; 4M = 4,100; BPV&#8353;&#8348;&#8342; = 9.67 &times; 0.0001 &times; 105,440 = 101.96; N = 4,100/101.96 &times; 0.6095 = 24.5 &rarr; <b class="sf-green">buy 25 Bund futures</b> (target MD = German book&rsquo;s 10.25)<br>&bull; Obligaciones: BPV&#8348; = 7.34 &times; 0.0001 &times; 44M = 32,296; BPV&#8353;&#8348;&#8342; = 8.26 &times; 0.0001 &times; 149,940 = 123.85; N = &minus;32,296/123.85 &times; 0.9628 = &minus;251.1 &rarr; <b class="sf-red">sell 251 Obligaciones futures</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &rarr; B (40%)</span><span class="rc-dbody">Implied FFE = 100 &minus; 97.925 = 2.075%; midpoint = (1.75 + 2.00)/2 = 1.875%; prob = (2.075 &minus; 1.875)/0.50 = <b>40%</b>. Falling futures price after Zappa&rsquo;s hawkish speech = market pricing a hike.</span></span>
+              </div>
+            </div>
+
+            <div class="sf-card">
+              <div class="sf-title">One-screen decision map</div>
+              <table class="sf-table">
+                <tr><th>Exposure / view</th><th>Instrument</th><th>Direction</th><th>Sizing</th></tr>
+                <tr><td>Floating liability, rates &uarr;</td><td>IR swap</td><td class="sf-main-c">Payer</td><td>NP = liability</td></tr>
+                <tr><td>Bond portfolio duration &Delta;</td><td>IR swap</td><td class="sf-main-c">Receiver &uarr; / payer &darr;</td><td>NP&#8347; = (MD&#8348;&minus;MD&#8346;)/MD&#8347; &times; MV&#8346;</td></tr>
+                <tr><td>Future borrowing rate</td><td>FRA / STIR futures</td><td class="sf-main-c">Long FRA / short futures</td><td>NP = loan; HR = NP/size</td></tr>
+                <tr><td>Bond portfolio, futures hedge</td><td>Treasury futures</td><td class="sf-main-c">Short cuts MD</td><td>BPVHR = (BPV&#8348;&minus;BPV&#8346;)/BPV&#8353;&#8348;&#8342; &times; CF</td></tr>
+                <tr><td>FX receivable / payable</td><td>FX forward / futures</td><td class="sf-main-c">Sell / buy the currency</td><td>HR = amount/size</td></tr>
+                <tr><td>Equity beta &Delta; / cash drag</td><td>Index futures</td><td class="sf-main-c">Long &uarr;&beta; / short &darr;&beta;</td><td>N = (&beta;&#8348;&minus;&beta;&#8346;)/&beta;&#8321; &times; MV&#8346;/F</td></tr>
+                <tr><td>Vol view / tail hedge</td><td>VIX futures / variance swap</td><td class="sf-main-c">Long vol</td><td>N&#8342;&#8336;&#8344; = N&#8342;&#8339;&#8336;&#8339;/2K</td></tr>
+                <tr><td>FOMC expectations</td><td>Fed funds futures</td><td class="sf-main-c">Read implied FFE</td><td>prob = (FFE&minus;mid)/&Delta;size</td></tr>
+              </table>
+            </div>
+
           </div>
 
           <script>
@@ -37269,7 +37841,8 @@ var RECAP_REGISTRY = [
   { id: 'pwm-recap', title: 'Reading 9 · An Overview of Private Wealth Management' },
   { id: 'ii-recap', title: 'Reading 10 · Portfolio Management for Institutional Investors' },
   { id: 'tc-recap', title: 'Reading 11 · Trading Costs and Electronic Markets' },
-  { id: 'osr-recap', title: 'Reading 16 · Options Strategies' }
+  { id: 'osr-recap', title: 'Reading 16 · Options Strategies' },
+  { id: 'sfr-recap', title: 'Reading 17 · Swaps, Forwards, and Futures Strategies' }
 ];
 
 // Shared print stylesheet used by both single- and all-recap printing.
