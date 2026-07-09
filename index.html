@@ -34131,6 +34131,7 @@ Step 3  prob = (1.8375 &minus; 1.625) / (1.875 &minus; 1.625) = 0.2125/0.25 = <b
             <button class="cm-toptab" onclick="cmTop(event,'cm-185')">Implementation &amp; Options</button>
             <button class="cm-toptab" onclick="cmTop(event,'cm-186')">Advanced Issues &amp; EM</button>
             <button class="cm-toptab" onclick="cmTop(event,'cm-cheat')">Cheat Sheet</button>
+            <button class="cm-toptab" onclick="cmTop(event,'cm-recap')">Recap</button>
             <button class="cm-toptab" onclick="cmTop(event,'cm-err')">Errors</button>
             <button class="cm-toptab" onclick="cmTop(event,'cm-mast')">Mastery</button>
           </div>
@@ -35147,6 +35148,374 @@ Band width: &#177;5% discretionary | &#177;25% active | rule-based passive</div>
               </table>
               <div class="cm-tip">Zero conceptual gaps in the whole mock — every miss was trap-class execution. The knowledge is in.</div>
             </div>
+          </div>
+
+          <!-- ===================== RECAP (Reading 18) ===================== -->
+          <div id="cm-recap" class="cm-toppanel">
+            <style>
+              #cm-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+              #cm-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(34,211,238,.14); border:1px solid var(--cm-main); color:var(--cm-main); border-radius:3px; padding:1px 6px; margin-right:6px; }
+              #cm-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; page-break-inside:avoid; }
+              #cm-recap .rc-drow { display:grid; grid-template-columns:160px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; page-break-inside:avoid; }
+              #cm-recap .rc-drow:last-child { border-bottom:none; }
+              #cm-recap .rc-dlabel { color:var(--cm-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #cm-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #cm-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #cm-recap .rc-dlabel { padding-top:0; }
+              }
+              #cm-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; page-break-inside:avoid; }
+              #cm-recap .rc-info { background:rgba(121,192,255,.08); border-left:3px solid #79C0FF; border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; page-break-inside:avoid; }
+              #cm-recap .cm-fl, #cm-recap .cm-trap, #cm-recap .cm-tip, #cm-recap .cm-tbl { page-break-inside:avoid; }
+              #cm-recap .cm-gold { color:var(--cm-gold); } #cm-recap .cm-green { color:var(--cm-green); } #cm-recap .cm-red { color:var(--cm-red); } #cm-recap .cm-main-c { color:var(--cm-main); }
+            </style>
+
+            <button class="recap-print-btn" onclick="printOneRecap('cm-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+            <div class="cm-card">
+              <div class="cm-title">Reading 18 &middot; Currency Management: An Introduction</div>
+              <div class="cm-body">Full-reading recap, module by module: <b>managing currency exposure &mdash; currency math, R<sub>DC</sub>, risk, strategic choices (18.1 / LOS 18.a&ndash;18.c)</b>, <b>active strategies: fundamentals &amp; technical (18.2 / 18.d)</b>, <b>carry &amp; volatility trading (18.3 / 18.d)</b>, <b>implementation &amp; forwards: tactical decisions, hedge ratios, roll yield (18.4 / 18.e&ndash;18.f)</b>, <b>implementation &amp; options: reducing hedge cost (18.5 / 18.g)</b>, and <b>advanced issues: cross/macro hedges, MVHR, emerging markets, NDFs (18.6 / 18.h&ndash;18.i)</b>. Every calculation node-verified against the Schweser figures.</div>
+              <div class="rc-info"><b>Where the marks are:</b> (1) <span class="cm-gold">base currency in the denominator</span> &mdash; every buy/sell, call/put, premium/discount statement refers to the base unless stated; (2) <b>R<sub>FX</sub> must be computed with the foreign currency as base</b> (invert if needed, EV/BV &minus; 1); (3) forward points &divide; 10<sup>decimals of the spot quote</sup>; (4) the <b>hedge-cost ladder</b> in 18.5 &mdash; what each tweak gives up (downside protection vs upside); (5) roll yield sign &rarr; hedge or don&rsquo;t.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 18.1 — CURRENCY MATH ═══════════ -->
+            <div class="cm-card">
+              <div class="rc-sec">Module 18.1 &middot; Managing Currency Exposure</div>
+              <div class="cm-title">Price &amp; base currencies, bid/ask, forward points</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">P/B convention</span><span class="rc-dbody">Quote = price currency / <b>base currency (denominator)</b>. &ldquo;Buy&rdquo; and &ldquo;sell&rdquo; refer to the <b>base</b>. Sell 1,000,000 at CAD/USD 0.9800 = sell USD 1M, buy CAD 980,000. Settlement convention: spot = 2 business days.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Bid/ask rules</span><span class="rc-dbody">Smaller number first. Dealer&rsquo;s margin = the spread; customer pays more / receives less. A 0.9790/0.9810 CAD/USD quote: buy 1 USD &rarr; deliver 0.9810 CAD (dealer&rsquo;s ask); sell 1 USD &rarr; receive 0.9790 CAD (bid). Four equivalent phrasings per side.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Forward points</span><span class="rc-dbody">Adjustment to spot: move the decimal <b>left by the number of decimals in the spot quote</b>. 1.33 + 1.1 pts &rarr; 1.33 + 0.011 = 1.341; 2.554 &minus; 9.6 &rarr; 2.5444; 0.7654 + 13.67 &rarr; 0.766767. &divide;10,000 <b>only</b> when spot has 4 decimals; 5 decimals &rArr; &divide;100,000.</span></span>
+              </div>
+              <div class="cm-fl"><b>Example &mdash; AUD/EUR spot 1.2571/1.2574; 30d pts &minus;1.0/&minus;0.9; 90d pts +11.7/+12.0</b>
+30-day quotes: 1.2571 &minus; 0.00010 = <b>1.25700</b> ; 1.2574 &minus; 0.00009 = <b>1.25731</b>
+90-day quotes: 1.2571 + 0.00117 = <b>1.25827</b> / 1.2574 + 0.00120 = <b>1.25860</b>
+Manager sells AUD 1,000,000 90d forward (delivers AUD, receives EUR):
+delivering the base&rsquo;s counterpart &rArr; deals at the <b>ask 1.25860</b>
+receives 1,000,000 / 1.25860 = <b class="cm-gold">EUR 794,533.61</b> in 90 days</div>
+              <div class="cm-trap"><b>&#9888; Which side of the quote?</b> The customer always gets the worse side: delivering <b>more AUD / receiving fewer EUR</b> here means both bid and ask work against you &mdash; identify what you deliver vs receive before picking bid or ask.</div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">Offsetting transactions &amp; mark-to-market</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Concept</span><span class="rc-dbody">Forwards have no interim cash flows, but the position can be <b>marked to market</b>: MTM value = <b>PV of the gain/loss locked in by an offsetting contract</b> for the remaining term.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Mechanics</span><span class="rc-dbody">Offset a short with a <b>matching-maturity long</b> (and vice versa); both settle on the original date; discount the locked-in difference at the market reference rate of the P&amp;L currency for the remaining days.</span></span>
+              </div>
+              <div class="cm-fl"><b>Example &mdash; sold EUR 10,000,000 90d forward at AUD/EUR 1.25827; 30 days later:</b>
+Step 1  offset: <b>buy</b> EUR 10M 60d forward at the ask:
+        1.3191 + 0.00105 = <b>1.32015</b>
+Step 2  in 60 days: receive 10M &times; 1.25827 = AUD 12,582,700
+        pay 10M &times; 1.32015 = AUD 13,201,500
+        locked-in loss = <b class="cm-red">&minus;AUD 618,800</b>  (= 0.06188/&euro; &times; 10M)
+Step 3  MTM = &minus;618,800 / [1 + 0.012 &times; 60/360] = <b class="cm-gold">&minus;AUD 617,564.87</b>
+        (60-day AUD reference rate 1.20%)</div>
+              <div class="cm-trap"><b>&#9888; Discount at the 60-day rate of the P&amp;L currency (AUD),</b> unannualized as rate &times; days/360 &mdash; the loss settles 90 days after inception but only 60 days after the valuation date.</div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">FX swap &mdash; rolling a forward</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">What it is</span><span class="rc-dbody"><b>Not</b> a currency swap: an FX swap rolls a maturing forward via a <b>spot transaction + a new forward</b> &mdash; the existing forward is &ldquo;swapped&rdquo; for another.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Mechanics</span><span class="rc-dbody">Two days before expiry (spot settlement window), take the spot position that <b>offsets</b> the maturing leg, and enter the new forward. Mismatched sizes on near/far legs &rArr; <b>&ldquo;mismatched&rdquo; FX swap</b> (used for dynamic re-sizing).</span></span>
+              </div>
+              <div class="cm-fl"><b>Example &mdash; long ZAR 10,000,000 3-mo forward at ZAR/USD 9.4518; extend 30 days:</b>
+&bull; sell <b>spot</b> ZAR 10,000,000 (offsets the maturing purchase; both settle T+2)
+&bull; enter a new <b>30-day forward to buy ZAR 10,000,000</b> vs USD &rarr; trade rolled</div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">Option &amp; currency-option basics</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Deltas</span><span class="rc-dbody">Call delta 0 &rarr; +1.00 as underlying rises through the strike; put delta 0 &rarr; &minus;1.00 as it falls (sign usually dropped: &ldquo;100-delta&rdquo;). ATM &asymp; 50-delta. Same-parameter call + put: <b>|&Delta;call| + |&Delta;put| = 1.00</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Two-currency duality</span><span class="rc-dbody"><b>A call on the base = a put on the pricing currency.</b> Call on 10M at ZAR/GBP 14.56 = right to buy GBP 10M and sell ZAR 145.6M = put on ZAR 145.6M. Unless specified, options are read from the <b>base currency</b> perspective.</span></span>
+              </div>
+              <table class="cm-tbl">
+                <tr><th>As the base currency rises&hellip;</th><th>Call on the base</th><th>Put on the base</th></tr>
+                <tr><td>From 0 to the strike</td><td>OTM, rising in value; &Delta; 0.0 &rarr; 0.5</td><td>ITM, falling; &Delta; &minus;1.0 &rarr; &minus;0.5</td></tr>
+                <tr><td>At the strike</td><td>ATM; &Delta; &asymp; 0.5</td><td>ATM; &Delta; &asymp; &minus;0.5</td></tr>
+                <tr><td>Above the strike</td><td>ITM, rising; &Delta; 0.5 &rarr; 1.0</td><td>OTM, falling; &Delta; &minus;0.5 &rarr; 0.0</td></tr>
+              </table>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title"><span class="rc-los">LOS 18.a</span>Effects of currency on portfolio return &mdash; R<sub>DC</sub></div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Definitions</span><span class="rc-dbody">R<sub>FC</sub> = foreign asset return in its local currency; R<sub>FX</sub> = % change in value of the <b>foreign currency</b> (foreign = base!); R<sub>DC</sub> = return in the investor&rsquo;s currency.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Equation 1</span><span class="rc-dbody">R<sub>DC</sub> = (1 + R<sub>FC</sub>)(1 + R<sub>FX</sub>) &minus; 1 = R<sub>FC</sub> + R<sub>FX</sub> + R<sub>FC</sub>R<sub>FX</sub> &asymp; R<sub>FC</sub> + R<sub>FX</sub>. Approximation OK for well-spaced MC answers; use the <b>compounded</b> form when precision matters; hedged currency &rArr; determine the precise R<sub>FX</sub> from the hedge.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Equation 2</span><span class="rc-dbody">Multiple foreign assets: R<sub>DC</sub> = &Sigma; w&#7522; &times; R<sub>DC,i</sub>, with weights in <b>domestic currency</b> terms.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Risk-free special case</span><span class="rc-dbody">Naive hedge sells the <b>beginning</b> number of FC units forward; the true ending number isn&rsquo;t knowable for a risky asset &rArr; F&#8320;/S&#8320; comparison &ne; true R<sub>FX</sub>. Direct route: R<sub>DC</sub> = (EV &minus; BV)/BV in domestic units.</span></span>
+              </div>
+              <div class="cm-fl"><b>Example &mdash; USD investor, EUR stocks +5%; USD/EUR 1.300 &rarr; 1.339</b>
+R&#8342;&#8339; = 1.339/1.300 &minus; 1 = <b>+3%</b>
+R&#8332;&#8347; = 1.05 &times; 1.03 &minus; 1 = <b class="cm-gold">8.15%</b>   (&asymp; 5 + 3 = 8%)
+
+<b>Two-market example (EUR investor, 75% GBP / 25% USD)</b>
+GBP leg: 1.12 &times; (1.1437/1.1666) &minus; 1 = <b>9.80%</b>   (GBP fell &asymp;2% vs EUR)
+USD leg: quotes given USD/EUR &rarr; INVERT: 1/1.332 = 0.7508; 1/1.324 = 0.7553
+         1.05 &times; (0.7553/0.7508) &minus; 1 = <b>5.63%</b>
+Portfolio: 0.75 &times; 9.80 + 0.25 &times; 5.63 = <b class="cm-gold">8.76%</b></div>
+              <div class="cm-trap"><b>&#9888; R<sub>FX</sub> needs the FOREIGN currency as base.</b> Using USD/EUR quotes to measure USD (0.74683/0.76923 &minus; 1 = &minus;2.912%) gives the USD&rsquo;s depreciation &mdash; NOT the negative of the EUR&rsquo;s appreciation (+3.000%). Invert first, then EV/BV &minus; 1.</div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">Risk of R<sub>DC</sub></div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Equation 3</span><span class="rc-dbody">&sigma;&sup2;(R<sub>DC</sub>) &asymp; &sigma;&sup2;(R<sub>FC</sub>) + &sigma;&sup2;(R<sub>FX</sub>) + 2&sigma;(R<sub>FC</sub>)&sigma;(R<sub>FX</sub>)&rho;(R<sub>FC</sub>,R<sub>FX</sub>) &mdash; single foreign asset, weights = 1.0. Positive &rho; <b>amplifies</b> volatility; negative &rho; <b>dampens</b> it (&rarr; MVHR).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Why approximate</span><span class="rc-dbody">Ignores the (R<sub>FC</sub>)(R<sub>FX</sub>) cross term; a &ldquo;precise&rdquo; formula would demand every correlation pair (2 assets &rarr; 6 pairs; 3 &rarr; 15) &mdash; false precision. The CFA text uses the approximation.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Equation 4</span><span class="rc-dbody">If R<sub>FC</sub> is <b>risk-free</b>: &sigma;(R<sub>DC</sub>) = &sigma;(R<sub>FX</sub>) &times; (1 + R<sub>FC</sub>) &mdash; a special case NOT derivable from Eq 3.</span></span>
+              </div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title"><span class="rc-los">LOS 18.b</span>Strategic decisions in currency management</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Don&rsquo;t hedge args</span><span class="rc-dbody">Avoid time &amp; cost; long-run currency effects are a <b>zero-sum game</b>; currencies revert to fair value in the long run.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Active args</span><span class="rc-dbody">Short-run moves can be extreme; <b>inefficient pricing</b> exists &mdash; many FX trades (international trade, central banks) aren&rsquo;t motivated by fair value.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Passive hedging</span><span class="rc-dbody">Rule-based; <b>matches the benchmark&rsquo;s currency exposure</b>; periodic rebalancing; goal = eliminate currency risk vs the benchmark.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Discretionary</span><span class="rc-dbody">Modest deviations allowed (e.g., &plusmn;5% around the matched ratio); goal = <b>risk reduction first</b>, plus modest incremental return.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Active</span><span class="rc-dbody">Larger deviations permitted; manager is <b>expected to generate alpha</b> from currency, not just reduce risk.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Currency overlay</span><span class="rc-dbody"><b>Outsourced</b> currency management; at the extreme, currency = separate asset class, positions independent of portfolio assets (e.g., short SEK with no SEK exposure). Mandates range from pure risk reduction to pure alpha.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">IPS contents</span><span class="rc-dbody">Target hedge %, allowable discretion around it, rebalancing frequency, evaluation benchmarks, allowed/prohibited tools.</span></span>
+              </div>
+              <div class="rc-info"><b>Choosing-an-approach example:</b> client fully hedges to a global index, rebalances monthly, low liquidity needs, short-term evaluation &rArr; either (A) manager lacks currency skill: <b>fully hedge and rebalance monthly</b>, add value elsewhere; or (B) manager has currency views: over/underweight currencies expected to appreciate/depreciate. Short-term focus &rArr; can&rsquo;t assume &ldquo;currency doesn&rsquo;t matter&rdquo;; rebalancing must reflect <b>R<sub>FC</sub> differentials</b> between portfolio and index, not just explicit trades.</div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title"><span class="rc-los">LOS 18.c</span>Diversification, cost, and the hedge decision</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Diversification</span><span class="rc-dbody">Long run: currency vol is <b>lower</b> &rArr; less need to hedge long-horizon portfolios. Positive &rho;(R<sub>FC</sub>,R<sub>FX</sub>) raises &sigma;(R<sub>DC</sub>) &rArr; hedge more; negative &rho; dampens &rArr; hedge less. &rho; varies by period &rArr; <b>varying hedge ratio</b> appropriate. Bond portfolios: asset&ndash;currency correlation typically <b>higher</b> than equities &rArr; more reason to hedge bonds.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Costs</span><span class="rc-dbody">Bid/ask (small per trade, adds up); option premiums (lost if OTM); rolling short-dated forwards (FX swaps) &rArr; realized cash-flow volatility; overhead (back office, multi-currency accounts, margin); <b>100% hedging = opportunity cost</b> (zero favorable moves) &rArr; some adopt a 50% strategic ratio; partial hedges / monthly rebalancing are common.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Toward full hedge</span><span class="rc-dbody">Short time horizon; high risk aversion; client unconcerned with opportunity cost; high short-term income/liquidity needs; significant foreign <b>bond</b> exposure; low hedging costs; client doubts discretionary value.</span></span>
+              </div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">Module Quiz 18.1 &mdash; answers (circled/handwritten in photo where noted; node-verified)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &rarr; C (circled)</span><span class="rc-dbody">1,253,000 &times; 1.05 = USD 1,315,650 &times; 192.85 ending spot = <b>DJF 253,723,103 &asymp; 253,700,000</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &rarr; C (circled)</span><span class="rc-dbody">R&#8342;&#8339; = 192.85/179.54 &minus; 1 = +7.41% (USD is base of DJF/USD &#10003;); R&#8332;&#8347; = 1.05 &times; 1.0741 &minus; 1 = <b>+12.8% &asymp; +12%</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q3 &mdash; 7.80%</span><span class="rc-dbody">Eq 3: &sigma;&sup2; = 4.5&sup2; + 3.7&sup2; + 2(4.5)(3.7)(0.81) = 60.91 &rArr; &sigma; = <b>7.80%</b> (reasoning-derived).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q4 &rarr; A (circled)</span><span class="rc-dbody">The <b>strategic</b> decision is least affected by the manager&rsquo;s market views (those drive tactical); it IS driven by horizon, risk aversion, liquidity (C) and &rho; (B).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q5 &rarr; C (circled)</span><span class="rc-dbody">Minimizing regret + higher equity allocation &rarr; <b>discretionary hedging</b> fits (modest deviation reduces regret of a rigid 100% hedge; equities have lower asset&ndash;currency correlation).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q6 (your answer &#10003;)</span><span class="rc-dbody">KRW expected to <b>depreciate</b> vs EUR &rArr; she reduces the long-KRW rollover &rarr; new contract = 1,000,000 &times; 0.9 = <b>KRW 900,000</b>. Rolling the long: far leg <b>buys KRW forward at the ask</b>. Spot has 5 decimals &rArr; points/100,000: 0.00068 + (&minus;1.1/100,000) = <b>EUR/KRW 0.000669</b> (bid side would be 0.00067 &minus; 0.000012 = 0.000658).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q7 (reasoning-derived)</span><span class="rc-dbody">a. R&#8332;&#8347; per market: EUR 1.02 &times; 0.99 &minus; 1 = <b>0.98%</b>; AUD 1.025 &times; 1.03 &minus; 1 = <b>5.575%</b>; portfolio 0.6(0.98) + 0.4(5.575) = <b>2.82%</b>.<br>b. Eq 3 per market: &sigma;&#8337;&#8346;&#8345; = &radic;(15&sup2;+7&sup2;+2&middot;15&middot;7&middot;0.85) = <b>21.27%</b>; &sigma;&#8336;&#8346;&#8342; = &radic;(25&sup2;+9&sup2;+2&middot;25&middot;9&middot;0.65) = <b>31.60%</b>; then two-asset: &radic;(0.6&sup2;&middot;452.5 + 0.4&sup2;&middot;998.5 + 2&middot;0.6&middot;0.4&middot;0.70&middot;21.27&middot;31.60) = <b>23.42%</b>.<br>c. 1.5(5.575) &minus; 1.5(0.98) = <b>6.89%</b>.<br>d. &radic;(1.5&sup2;&middot;998.5 + 1.5&sup2;&middot;452.5 + 2(1.5)(&minus;1.5)(0.70)(21.27)(31.60)) = <b>33.87%</b> &mdash; leverage nearly triples the return but &sigma; rises too; the &minus;w cross term only partially offsets.</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULES 18.2 / 18.3 — ACTIVE STRATEGIES ═══════════ -->
+            <div class="cm-card">
+              <div class="rc-sec">Modules 18.2 / 18.3 &middot; Active Strategies</div>
+              <div class="cm-title"><span class="rc-los">LOS 18.d</span>Four active approaches (none work consistently)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Economic fundamentals</span><span class="rc-dbody">Long term, currency converges to <b>fair value</b> (e.g., PPP). Appreciation associated with: more <b>undervalued</b> currencies; fastest <b>rise in fundamental value</b>; higher real/nominal rates; <b>lower inflation</b>; <b>decreasing risk premiums</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Technical analysis</span><span class="rc-dbody">3 principles: past prices predict (prices reflect all info); humans repeat patterns; <b>fair value irrelevant</b> &mdash; only where it will trade. FX = price trends (volume scarce). <b>Support</b> = bids cluster, price bounces up; <b>resistance</b> = offers cluster, bounces down; through a sticky level &rArr; move accelerates. <b>Moving averages</b>: 50-day crossing above 200-day = buy signal; below = sell.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Carry trade</span><span class="rc-dbody">Borrow the <b>low-rate (funding)</b> currency, invest in the <b>high-rate (investing)</b> currency &mdash; typically fund in developed, invest in EM.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Volatility trading</span><span class="rc-dbody">Trade vega, not direction (next card).</span></span>
+              </div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">The carry trade &mdash; CIRP, UCIRP, forward rate bias</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">CIRP (holds)</span><span class="rc-dbody">Arbitrage forces F&#8320; vs S&#8320; to reflect the rate differential: <b>higher-rate currency trades at a forward discount</b> (F&#8320; &lt; S&#8320;); lower-rate at a premium (F&#8320; &gt; S&#8320;).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">UCIRP (fails)</span><span class="rc-dbody">Asserts the CIRP forward is an <b>unbiased forecast</b> of the future spot (high-rate currency depreciates by the differential). If true, carry earns <b>zero</b>. Empirically the high-rate currency depreciates <b>less</b> than predicted or even appreciates &rArr; carry profits &mdash; = <b>trading the forward rate bias</b>. Small % of the time: crashes &rArr; large losses.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Figure 18.1</span><span class="rc-dbody">Implemented by: borrow &amp; <b>sell spot the lower-yield</b> currency, buy &amp; invest in the higher-yield. Forward-rate-bias view: <b>sell the currency at a forward premium; buy the one at a forward discount</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Crash risk</span><span class="rc-dbody">Profitable in calm markets; big losses in <b>financial distress / rising vol</b> as investors flee high-yield currencies &rArr; traders exit carry when FX vol spikes.</span></span>
+              </div>
+              <div class="cm-fl"><b>Example &mdash; BRL/USD spot 2.41; rates 6% (BRL) / 1% (USD)</b>
+Step 1  1-yr forward &asymp; 5% below spot: 2.41 &times; (1.06/1.01) = <b>BRL/USD 2.529</b>
+        (forward measured as BRL price of USD rises = BRL at a discount)
+Step 2  trade: borrow USD @1% &rarr; convert to BRL @2.41 &rarr; invest @6%
+Step 3  unchanged spot: borrow 100 &rarr; owe 101; BRL 241 &rarr; 255.46
+        convert back: 255.46/2.41 = 106.00 &rarr; profit <b class="cm-gold">USD 5.00 per 100</b>
+        (= the 5% rate differential, spot unchanged)
+Step 4  primary risk: <b>unhedged</b> &mdash; BRL falling &gt; 5% makes it unprofitable</div>
+              <div class="cm-trap"><b>&#9888; Professor&rsquo;s Note:</b> the curriculum does NOT support the forward rate as a predictor of the future spot. The forward is for <b>hedging</b>; empirically the higher-rate currency tends to appreciate, not depreciate &mdash; that violation IS the carry trade.</div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">Volatility trading</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Greeks</span><span class="rc-dbody"><b>Delta</b> = &Delta;option/&Delta;underlying; <b>vega</b> = &Delta;option/&Delta;implied vol, <b>positive for both puts and calls</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Delta hedging</span><span class="rc-dbody"><b>Delta-neutral position</b>: no P&amp;L from small underlying moves; gains/loses on changes in <b>implied vol</b> &rArr; a pure vol bet. Deltas drift &rArr; must be <b>continually rebalanced</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Long straddle</span><span class="rc-dbody">Expect vol &uarr;: buy <b>ATM call + ATM put</b> (equal, opposite deltas &rArr; neutral) = buying volatility.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Short straddle</span><span class="rc-dbody">Expect vol &darr;: sell both; repurchase cheaper if vol declines.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Strangle</span><span class="rc-dbody">OTM call + OTM put, <b>same |delta|</b>: cheaper, needs a bigger move, more moderate cost AND likely profit than a straddle.</span></span>
+              </div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">Module Quiz 18.2, 18.3 &mdash; answers (circled in photo)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &rarr; C (circled)</span><span class="rc-dbody">Carry works when investing-currency yields are <b>higher</b> and volatility is <b>stable</b> &mdash; rising vol (B) is when carry trades are exited.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &rarr; C (circled)</span><span class="rc-dbody">Rising euro-zone <b>real rates</b> &rArr; euro expected to appreciate &rArr; a delta-neutral book can be <b>tilted net long the euro</b>. A is false (falling vol favors staying in carry); B false (a collar&rsquo;s premium income makes it cheaper than a protective put as vol rises).</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 18.4 — IMPLEMENTATION & FORWARDS ═══════════ -->
+            <div class="cm-card">
+              <div class="rc-sec">Module 18.4 &middot; Implementation &amp; Forwards</div>
+              <div class="cm-title"><span class="rc-los">LOS 18.e</span>Tactical trading decisions</div>
+              <table class="cm-tbl">
+                <tr><th>Expectation</th><th></th><th>Action</th></tr>
+                <tr><td rowspan="2">Relative currency</td><td>Appreciation</td><td><b>Reduce the hedge</b> (short) OR <b>increase the long</b></td></tr>
+                <tr><td>Depreciation</td><td><b>Increase the hedge</b> or decrease the long</td></tr>
+                <tr><td rowspan="2">Volatility</td><td>Rising</td><td class="cm-main-c"><b>Long straddle</b> (or strangle)</td></tr>
+                <tr><td>Falling</td><td class="cm-main-c"><b>Short straddle</b> (or strangle)</td></tr>
+                <tr><td rowspan="2">Market conditions</td><td>Stable</td><td class="cm-main-c"><b>Carry trade</b></td></tr>
+                <tr><td>Crisis</td><td class="cm-red"><b>Discontinue the carry trade</b></td></tr>
+              </table>
+              <div class="rc-info"><b>Variations:</b> carry bundles need not be equally weighted (overweight the currency with the strongest expected gain); delta-neutral books can be <b>tilted</b> net positive/negative delta on a directional view.</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Exam tips (1&ndash;7)</span><span class="rc-dbody">(1) identify the exposure to hedge; (2) make the foreign currency the <b>base</b> &mdash; given B/P, take the reciprocal; (3) statements refer to the base unless stated &mdash; be explicit in answers; (4) buy base risk &rArr; buy forwards/calls; sell base risk &rArr; sell forwards/buy puts; call on base = put on pricing; (5) hedging isn&rsquo;t free &mdash; forwards: no upfront cost, high <b>opportunity cost</b>; options: high upfront, keep upside; cheapen via writing options / strikes / notional / exotics; (6) discretion lowers cost, raises underperformance risk; (7) the IPS defines the policy-neutral hedge &mdash; generally 100% of benchmark exposure.</span></span>
+              </div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title"><span class="rc-los">LOS 18.f</span>Forwards, FX swaps, and hedge-ratio adjustment</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Forwards preferred</span><span class="rc-dbody">Customizable; nearly every pair; futures require <b>margin</b> + periodic cash flows; FX forward/swap volume <b>dwarfs</b> futures &rArr; better liquidity.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Static vs dynamic</span><span class="rc-dbody">Static = hold to expiry; dynamic = <b>periodically rebalanced</b> (frequency specified by the strategy).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Rolling (1-mo)</span><span class="rc-dbody">EUR manager short CHF 10M 1-mo; asset &rarr; 11M. At rollover: realized gain/loss + cash flow; new size can match the new value (dynamic at rollover). Via <b>mismatched FX swap</b>: buy CHF 10M spot (covers the maturing short) + sell CHF <b>11M</b> forward &mdash; near and far legs unequal. Spot vs initial-forward gap &rArr; EUR cash flow (CHF &minus;0.01 &rArr; gain EUR 100,000 on 10M).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">3-mo alternative</span><span class="rc-dbody">One month in, underhedged 10M vs 11M: static &rArr; do nothing; dynamic &rArr; sell CHF <b>1M more</b> 2-mo forward (total 11M); nothing closes &rArr; all gains/losses <b>deferred to the end</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Choice drivers</span><span class="rc-dbody">Shorter/dynamic &rArr; more transaction costs, better hedge; <b>higher risk aversion &rArr; more frequent rebalancing</b>; lower risk aversion + strong views &rArr; more discretion.</span></span>
+              </div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">Roll yield</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Definition</span><span class="rc-dbody">Return from the forward price <b>converging to spot</b>; profit/loss if spot unchanged at expiry. Held to expiry: roll yield = (initial forward &minus; spot)/initial spot. Depends on (1) forward premium/discount and (2) <b>bought or sold</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Known vs unknown</span><span class="rc-dbody">Total forward return = &Delta;forward price = unknown &Delta;spot + <b>known-in-advance roll yield</b>. Roll yield is a hedging cost/benefit: positive roll &rarr; hedge; negative roll &rarr; think twice.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Quick example</span><span class="rc-dbody">Sell CHF 1M 6-mo fwd @1.05, spot 1.04: sells at a premium &rArr; short earns as F rolls down: gain USD 10,000; roll = 0.01/1.04 = <b>0.96%</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">IRP shortcut</span><span class="rc-dbody">F<sub>P/B</sub> = S<sub>P/B</sub> (1+i&#8346;)/(1+i&#8384;); % premium/discount = (F&minus;S)/S; with parity spot 1/1: % roll = (1+i&#8346;)/(1+i&#8384;) elevated to the period, &minus;1. Analyzing currency X &rArr; <b>X in the denominator of every term</b>.</span></span>
+              </div>
+              <div class="cm-fl"><b>Example &mdash; ZAR exposure, USD investor; i&#8342;&#8347;&#8342; 2.8%, i&#8347;&#8336;&#8344; 3.6%, 6-mo hedge (sell ZAR fwd)</b>
+approx: +2.8%/2 &minus; 3.6%/2 = <b>&minus;0.4%</b> (ZAR at a forward discount)
+precise: (1.00)(1.028/1.036)&#8304;&#8901;&#8309; &minus; 1 = <b class="cm-gold">&minus;0.387%</b>
+selling ZAR at a discount &rArr; <b class="cm-red">negative roll</b>: hedging costs &asymp;0.39%/6 mo</div>
+              <table class="cm-tbl">
+                <tr><th>Position in foreign asset (B)</th><th>Hedge</th><th>F &gt; S, i&#8384; &lt; i&#8346; (fwd premium)</th><th>F &lt; S, i&#8384; &gt; i&#8346; (fwd discount)</th></tr>
+                <tr><td>Short the foreign asset</td><td>Long forward in B</td><td class="cm-red">Negative roll &rarr; discourages hedging</td><td class="cm-green">Positive roll &rarr; encourages hedging</td></tr>
+                <tr><td>Long the foreign asset</td><td>Short forward in B</td><td class="cm-green">Positive roll &rarr; encourages hedging</td><td class="cm-red">Negative roll &rarr; discourages hedging</td></tr>
+              </table>
+              <div class="rc-svg-wrap">
+                <svg viewBox="0 0 720 200" width="720" height="200" xmlns="http://www.w3.org/2000/svg" style="min-width:660px">
+                  <style>.rlx{stroke:#4A5561;stroke-width:1.4}.rlbl{fill:#C9D1D9;font:600 11px monospace}.rsub{fill:#7D8590;font:9.5px monospace}.rcv{stroke:#22D3EE;stroke-width:1.6;fill:none;marker-end:url(#cmr-ah)}</style>
+                  <defs><marker id="cmr-ah" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#22D3EE"/></marker></defs>
+                  <circle cx="80" cy="110" r="3" fill="#22D3EE"/>
+                  <text x="60" y="114" text-anchor="end" class="rlbl">S&#8320;</text>
+                  <circle cx="80" cy="70" r="3" fill="#F0A04B"/>
+                  <text x="60" y="74" text-anchor="end" class="rlbl">F&#8320;</text>
+                  <line x1="80" y1="70" x2="560" y2="30" class="rlx"/>
+                  <line x1="80" y1="70" x2="560" y2="150" class="rlx"/>
+                  <line x1="80" y1="110" x2="560" y2="30" class="rlx" stroke-dasharray="4 3"/>
+                  <line x1="80" y1="110" x2="560" y2="150" class="rlx" stroke-dasharray="4 3"/>
+                  <text x="590" y="34" class="rlbl">S&#8348; (up)</text>
+                  <text x="590" y="154" class="rlbl">S&#8348; (down)</text>
+                  <path d="M 560 26 Q 575 22 560 18" class="rcv" opacity="0"/>
+                  <text x="330" y="188" text-anchor="middle" class="rsub">F&#8348; = S&#8348; at expiration whatever the spot does &mdash; if F&#8320; &gt; S&#8320;, the SHORT of the base earns the F&#8320;&minus;S&#8320; roll regardless</text>
+                  <text x="330" y="16" text-anchor="middle" class="rsub">convergence: forward and spot meet at T; positive roll for the short = negative roll for the long</text>
+                </svg>
+              </div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">Worked set &mdash; hedging &amp; roll yield (KRW portfolio, node-verified)</div>
+              <div class="cm-body">Reporting currency KRW; assets in EUR, USD, CHF. Spot / 6-mo forward / manager forecast: KRW/EUR 1,483.99 / 1,499.23 / 1,450.87; KRW/USD 1,108.78 / 1,112.56 / 1,146.63; KRW/CHF 1,265.22 / 1,257.89 / 1,212.55.</div>
+              <table class="cm-tbl">
+                <tr><th></th><th>Unhedged (forecast/spot &minus; 1)</th><th>Hedged (forward/spot &minus; 1)</th><th>Decision</th></tr>
+                <tr><td><b>EUR</b></td><td class="cm-red">&minus;2.23%</td><td class="cm-green">+1.03%</td><td class="cm-main-c"><b>Hedge</b></td></tr>
+                <tr><td><b>USD</b></td><td class="cm-green">+3.41%</td><td>+0.34%</td><td><b>Don&rsquo;t hedge</b></td></tr>
+                <tr><td><b>CHF</b></td><td class="cm-red">&minus;4.16%</td><td class="cm-red">&minus;0.58%</td><td class="cm-main-c"><b>Hedge</b></td></tr>
+              </table>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1/Q2</span><span class="rc-dbody">EUR &amp; USD trade at a forward <b>premium</b> (F &gt; S) &rArr; selling them forward earns <b>positive roll</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q3</span><span class="rc-dbody">Active manager compares columns &rarr; hedge <b>EUR and CHF</b> (hedged &gt; unhedged); leave USD (expected appreciation beats the +0.34% locked hedge).</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q4</span><span class="rc-dbody">Positive roll from selling USD/EUR forward <b>reduces hedging cost</b> &mdash; but roll is only one input: for USD, expected appreciation dominates.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q5</span><span class="rc-dbody">Implied roll on the CHF hedge = (F&#8320; &minus; S&#8320;)/S&#8320; = 1,257.89/1,265.22 &minus; 1 = <b>&minus;0.58%</b> = the hedged currency return.</span></span>
+              </div>
+              <div class="cm-tip"><b>Two views, one number:</b> positive (negative) roll reduces (increases) hedging cost; equivalently, hedging locks the forward as the end-of-period exchange rate.</div>
+            </div>
+
+            <!-- ═══════════ MODULE 18.5 — IMPLEMENTATION & OPTIONS ═══════════ -->
+            <div class="cm-card">
+              <div class="rc-sec">Module 18.5 &middot; Implementation &amp; Options</div>
+              <div class="cm-title"><span class="rc-los">LOS 18.g</span>Reducing hedging cost &mdash; the strategy ladder (long CHF, EUR/CHF quotes)</div>
+              <table class="cm-tbl">
+                <tr><th>#</th><th>Strategy</th><th>Build</th><th>Gives up / keeps</th></tr>
+                <tr><td>1</td><td><b>Over/underhedge with forwards</b></td><td>CHF &uarr; expected &rArr; hedge &lt;100%; CHF &darr; &rArr; hedge &gt;100%</td><td>&ldquo;Positive convexity&rdquo; if right; low cost</td></tr>
+                <tr><td>2</td><td><b>ATM protective put</b> (portfolio insurance)</td><td>Buy 50-delta put on CHF</td><td class="cm-red">Highest initial cost</td></tr>
+                <tr><td>3</td><td><b>OTM put</b></td><td>Buy 35- or 25-delta put</td><td>Cheaper; unprotected down to the strike</td></tr>
+                <tr><td>4</td><td><b>Collar</b></td><td>Buy 35&Delta; put + <b>sell 35&Delta; call</b></td><td>Premium income; caps upside</td></tr>
+                <tr><td>5</td><td><b>Put spread</b></td><td>Buy 35&Delta; put, sell 25&Delta; put</td><td>Protection only between the strikes</td></tr>
+                <tr><td>6</td><td><b>Seagull</b></td><td>Put spread + sell 35&Delta; call</td><td>Cheapest; put-spread protection AND capped upside</td></tr>
+              </table>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Risk reversal</span><span class="rc-dbody">Buy OTM call + sell OTM put = <b>long risk reversal</b> (profits if underlying rises). The collar seller side (sell call, buy put) = <b>short the risk reversal</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">1&times;2 ratio spread</span><span class="rc-dbody">Buy 100 40&Delta; puts, <b>sell 200</b> 30&Delta; puts: extra premium cuts cost but <b>doubles downside risk</b> below the sold strike.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Exotics</span><span class="rc-dbody"><b>Knock-in</b>: comes into existence only if a level is hit; <b>knock-out</b>: ceases to exist at a level; <b>binary/digital</b>: fixed payout regardless of moneyness depth.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Hedge-selection steps</span><span class="rc-dbody">(1) find the base in the P/B quote &mdash; quoted price &uarr; = base appreciates; (2) will the base be bought or sold?; (3) buying base risk &rArr; forwards/calls, OTM or written options cheapen it; (4) selling base risk &rArr; sell forwards / buy puts; (5) higher risk tolerance + stronger views &rArr; less likely a plain 100% hedge; (6) cost can reach <b>zero</b> &mdash; only by giving up protection or upside.</span></span>
+              </div>
+            </div>
+
+            <!-- ═══════════ MODULE 18.6 — ADVANCED & EM ═══════════ -->
+            <div class="cm-card">
+              <div class="rc-sec">Module 18.6 &middot; More Advanced Implementation Issues</div>
+              <div class="cm-title"><span class="rc-los">LOS 18.h</span>Cross hedges, macro hedges, MVHR</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Cross (proxy) hedge</span><span class="rc-dbody">Hedge with an instrument <b>imperfectly correlated</b> with the exposure. Rare in FX (forwards exist for nearly all pairs) but can improve efficiency. <b>Residual risk rises</b> when correlation is imperfect or shifts &mdash; e.g., AUD/NZD natural hedge: equal over/underweights may need no extra hedging, but cross-hedge risk &gt; 0.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Macro hedge</span><span class="rc-dbody">Cross hedge of <b>portfolio-wide</b> risk factors (e.g., a fixed currency-<b>basket</b> derivative) &mdash; cheaper than hedging each currency, but the basket &ne; portfolio &rArr; <b>higher residual currency risk vs lower cost</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">MVHR</span><span class="rc-dbody"><b>Regression of R<sub>DC</sub> on the hedging instrument&rsquo;s returns</b>; hedge ratio = the <b>beta (slope)</b>. Minimizes tracking-error variance; jointly optimizes over R<sub>FX</sub> AND R<sub>FC</sub>. Based on <b>historical</b> data &rArr; if correlation changes, the hedge underperforms.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">When MVHR &ne; 1</span><span class="rc-dbody">Direct hedges (long CHF 1M, sell CHF 1M forward): corr &asymp; 1.00 &rArr; no MVHR needed. Import-dependent economy: +R<sub>FX</sub> &rArr; +R<sub>FC</sub> (strong <b>positive</b> &rho;) &rArr; volatility amplified &rArr; <b>hedge ratio &gt; 1.0</b>. Export-dependent: +R<sub>FX</sub> &rArr; &minus;R<sub>FC</sub> (negative &rho;) &rArr; natural damping &rArr; <b>ratio &lt; 1.0</b>.</span></span>
+              </div>
+              <div class="cm-fl"><b>Example &mdash; U.S. portfolio long EUR 2,000,000; regression on weekly data:</b>
+R&#8342;&#8347; = 0.12 + <b>1.25</b> (%&Delta;S&#8342;&#8347;&#8342;&#8340;&#8337;&#8342;&#8346;) + &epsilon;   (&rho; = 0.75)
+hedge = 2,000,000 &times; 1.25 = <b class="cm-red">short EUR 2,500,000</b>
+effectiveness: cross-hedge on past correlation; 0.75 isn&rsquo;t perfect and can change
+&rArr; hedge may perform better or worse than expected</div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title"><span class="rc-los">LOS 18.i</span>Emerging market currency &amp; NDFs</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Two core problems</span><span class="rc-dbody">(1) higher transaction costs (&ldquo;high markups&rdquo;); (2) increased probability of <b>extreme events</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Symptoms</span><span class="rc-dbody">Low volume &rArr; wide bid/ask, wider in crises; exit costlier than entry (carry unwinds crush EM currencies together); EM&ndash;EM pairs routed through EUR legs; return distributions <b>non-normal, negatively skewed</b> &rArr; normal-based risk measures flawed; high yields &rArr; large forward discounts = <b>negative roll for sellers</b>; <b>contagion</b>: correlations &rarr; +1.0 exactly when diversification is needed; <b>tail risk</b> from government intervention &mdash; long artificial stability, then sharp moves.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">NDFs</span><span class="rc-dbody">For restricted currencies (BRL, CNY, RUB): <b>cash settlement of the gain/loss in the developed-market currency</b>, no exchange of notionals &rArr; <b>lower credit risk</b> (only one party&rsquo;s gain moves). They exist BECAUSE markets are restricted &rArr; policy changes = tail risk.</span></span>
+              </div>
+              <div class="cm-fl"><b>Example &mdash; buy EUR 1,000,000 6-mo NDF at RUB/EUR 39; spot at expiry 40</b>
+agreed: &ldquo;sell&rdquo; RUB 39,000,000 for EUR 1,000,000 &rarr; EUR now worth RUB 40,000,000
+gain = <b>RUB 1,000,000</b>, but settled in EUR at ending spot:
+1,000,000 / 40 = <b class="cm-gold">EUR 25,000</b> received net from the counterparty</div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">Module Quiz 18.4, 18.5, 18.6 &mdash; answers (circled in photo; node-verified)</div>
+              <div class="rc-drivers">
+                <span class="rc-drow"><span class="rc-dlabel">Q1 &rarr; B (circled)</span><span class="rc-dbody">Reduce <b>downside protection</b> to cut cost while staying a put-based hedge &rArr; <b>put spread</b>: buy 40&Delta; put, sell 20&Delta; put. C (collar) reduces <b>upside</b>, not downside; A is a straddle, not a hedge-cost reduction.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q2 &rarr; B (circled)</span><span class="rc-dbody">Direct hedge = notional <b>GBP 1,000,000</b>; minimum-variance = 1,000,000 &times; slope 1.25 = <b>GBP 1,250,000</b>.</span></span>
+                <span class="rc-drow"><span class="rc-dlabel">Q3 &rarr; C (circled)</span><span class="rc-dbody">Short CNY 2,000,000 NDF at CNY/USD 6.1155 &rArr; locked to receive 2,000,000/6.1155 = USD 327,038. Ending spot USD/CNY 0.1612 &rArr; CNY/USD 6.2035 &rArr; market value 2,000,000/6.2035 = USD 322,400. Gain to the short &asymp; <b>USD 4,638 &rarr; closest: USD 4,650 gain</b>, cash-settled in USD.</span></span>
+              </div>
+            </div>
+
+            <div class="cm-card">
+              <div class="cm-title">One-screen decision map</div>
+              <table class="cm-tbl">
+                <tr><th>Situation / view</th><th>Tool</th><th>Key rule</th></tr>
+                <tr><td>Convert FC return to DC</td><td>Eq 1</td><td>(1+R&#8332;&#8351;)(1+R&#8342;&#8339;) &minus; 1 ; R&#8342;&#8339; with FC as base</td></tr>
+                <tr><td>Value an open forward</td><td>Offset + PV</td><td>Opposite trade, same maturity; discount locked P&amp;L</td></tr>
+                <tr><td>Roll a maturing hedge</td><td>FX swap</td><td>Spot offset + new forward (mismatch to resize)</td></tr>
+                <tr><td>Currency to appreciate</td><td>Forwards</td><td>Reduce hedge / go longer; underhedge = discretion</td></tr>
+                <tr><td>Vol view</td><td>Straddle / strangle</td><td>Long vol = buy ATM pair; tilt delta for direction</td></tr>
+                <tr><td>Stable markets, rate gap</td><td>Carry</td><td>Fund low-rate, invest high-rate; exit when vol spikes</td></tr>
+                <tr><td>Hedge or not?</td><td>Roll yield</td><td>Sell at a premium = positive roll &rarr; encourages hedging</td></tr>
+                <tr><td>Cheapen an option hedge</td><td>Ladder 2&rarr;6</td><td>Each step trades protection or upside for premium</td></tr>
+                <tr><td>Imperfect instrument</td><td>MVHR</td><td>Hedge = regression beta; breaks if &rho; shifts</td></tr>
+                <tr><td>Restricted EM currency</td><td>NDF</td><td>Cash-settle gain in the DM currency; tail risk stays</td></tr>
+              </table>
+            </div>
+
           </div>
 
           <script>
@@ -37842,7 +38211,8 @@ var RECAP_REGISTRY = [
   { id: 'ii-recap', title: 'Reading 10 · Portfolio Management for Institutional Investors' },
   { id: 'tc-recap', title: 'Reading 11 · Trading Costs and Electronic Markets' },
   { id: 'osr-recap', title: 'Reading 16 · Options Strategies' },
-  { id: 'sfr-recap', title: 'Reading 17 · Swaps, Forwards, and Futures Strategies' }
+  { id: 'sfr-recap', title: 'Reading 17 · Swaps, Forwards, and Futures Strategies' },
+  { id: 'cm-recap', title: 'Reading 18 · Currency Management: An Introduction' }
 ];
 
 // Shared print stylesheet used by both single- and all-recap printing.
