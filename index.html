@@ -253,6 +253,7 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
   <button class="main-tab" onclick="switchScreen('essay',this)">📌 Essay Method</button>
   <button class="main-tab" onclick="switchScreen('essaybank',this)">📚 Essay Bank</button>
   <button class="main-tab" onclick="switchScreen('triggers',this)">⚡ Triggers</button>
+  <button class="main-tab" onclick="switchScreen('search',this)">🔍 Search</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -37383,6 +37384,7 @@ function switchScreen(name, btn) {
   if(name==='essay')  { /* static reference, no build needed */ }
   if(name==='essaybank') { ebRender(); }
   if(name==='triggers') { /* static sheet, no build needed */ }
+  if(name==='search') { var sq=document.getElementById('search-q'); if(sq) sq.focus(); }
 }
 
 // ══════════════════════════════════════════════════
@@ -38406,6 +38408,88 @@ async function init() {
   applyFilters();
 }
 init();
+</script>
+<!-- ══════════════════════════════════════
+     SEARCH SCREEN
+══════════════════════════════════════ -->
+<div class="screen" id="screen-search" style="overflow-y:auto;">
+  <div style="max-width:940px; margin:0 auto; width:100%; padding:16px 14px 60px;">
+    <style>
+      #search-results [class*="-card"] { background:#161B22; border:1px solid #2A3441; border-radius:8px; padding:14px 16px; margin-bottom:12px; }
+      #search-results [class*="-title"] { font-size:14px; color:#E6EDF3; font-weight:700; margin-bottom:8px; }
+      #search-results [class*="-body"] { font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+      #search-results [class*="-fl"] { background:#0B0F14; border-radius:5px; padding:8px 11px; font-family:var(--mono); font-size:11.5px; line-height:1.65; color:#C9D1D9; white-space:pre-wrap; margin:8px 0; }
+      #search-results [class*="-trap"] { background:rgba(255,123,114,.08); border-left:3px solid #FF7B72; border-radius:3px; padding:8px 11px; margin:8px 0; font-size:12px; line-height:1.5; color:#C9D1D9; }
+      #search-results [class*="-tip"] { background:rgba(61,214,140,.08); border-left:3px solid #3DD68C; border-radius:3px; padding:8px 11px; margin:8px 0; font-size:12px; line-height:1.5; color:#C9D1D9; }
+      #search-results .rc-info { background:rgba(121,192,255,.08); border-left:3px solid #79C0FF; border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+      #search-results table { border-collapse:collapse; width:100%; margin:6px 0; }
+      #search-results th { background:#0B0F14; color:#D4A017; font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding:6px 8px; text-align:left; border:1px solid #2A3441; }
+      #search-results td { border:1px solid #2A3441; padding:6px 8px; font-size:12px; line-height:1.55; color:#C9D1D9; vertical-align:top; }
+      #search-results .rc-drivers { background:#0B0F14; border:1px solid #2A3441; border-radius:5px; padding:9px 11px; margin:10px 0; }
+      #search-results .rc-drow { display:grid; grid-template-columns:160px 1fr; column-gap:14px; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+      #search-results .rc-drow:last-child { border-bottom:none; }
+      #search-results .rc-dlabel { color:#79C0FF; font-family:var(--mono); font-size:10px; padding-top:2px; }
+      #search-results .rc-sec, #search-results .rc-los { font-family:var(--mono); font-size:10px; color:#7D8590; }
+      #search-results .rc-svg-wrap { background:#0B0F14; border:1px solid #2A3441; border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
+      #search-results mark { background:#D4A017; color:#0D1117; border-radius:2px; padding:0 2px; }
+      #search-results .sr-badge { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(212,160,23,.14); border:1px solid #D4A017; color:#D4A017; border-radius:3px; padding:2px 8px; margin-bottom:8px; }
+      @media (max-width:640px){ #search-results .rc-drow { grid-template-columns:1fr; } }
+    </style>
+    <input id="search-q" type="text" placeholder="&#128269; Search formulas, traps, concepts&hellip; (min 3 characters)" oninput="searchDebounce()"
+      style="width:100%; box-sizing:border-box; background:#0B0F14; border:1px solid #2A3441; border-radius:8px; color:#E6EDF3; font-family:var(--mono); font-size:14px; padding:12px 14px; outline:none; margin-bottom:6px;">
+    <div id="search-count" style="font-family:var(--mono); font-size:10.5px; color:#7D8590; margin:2px 2px 12px;">Searches every recap card and the Trigger Sheet.</div>
+    <div id="search-results"></div>
+  </div>
+</div>
+<script>
+var searchTimer = null;
+function searchDebounce(){ clearTimeout(searchTimer); searchTimer = setTimeout(searchRecaps, 220); }
+function searchRecaps(){
+  var q = document.getElementById('search-q').value.trim().toLowerCase();
+  var out = document.getElementById('search-results');
+  var cnt = document.getElementById('search-count');
+  out.innerHTML = '';
+  if (q.length < 3) { cnt.textContent = 'Searches every recap card and the Trigger Sheet.'; return; }
+  var hits = 0, MAX = 50;
+  RECAP_REGISTRY.forEach(function(sec){
+    if (hits >= MAX) return;
+    var panel = document.getElementById(sec.id);
+    if (!panel) return;
+    panel.querySelectorAll('[class*="-card"]').forEach(function(card){
+      if (hits >= MAX) return;
+      if (card.textContent.toLowerCase().indexOf(q) === -1) return;
+      var clone = card.cloneNode(true);
+      clone.querySelectorAll('button, style, script').forEach(function(b){ b.remove(); });
+      // highlight matches in text nodes
+      var walker = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT, null, false);
+      var nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach(function(n){
+        var t = n.nodeValue, lo = t.toLowerCase(), idx = lo.indexOf(q);
+        if (idx === -1) return;
+        var frag = document.createDocumentFragment(), pos = 0;
+        while (idx !== -1) {
+          frag.appendChild(document.createTextNode(t.slice(pos, idx)));
+          var mk = document.createElement('mark');
+          mk.textContent = t.slice(idx, idx + q.length);
+          frag.appendChild(mk);
+          pos = idx + q.length;
+          idx = lo.indexOf(q, pos);
+        }
+        frag.appendChild(document.createTextNode(t.slice(pos)));
+        n.parentNode.replaceChild(frag, n);
+      });
+      var badge = document.createElement('div');
+      badge.className = 'sr-badge';
+      badge.textContent = sec.title;
+      clone.insertBefore(badge, clone.firstChild);
+      out.appendChild(clone);
+      hits++;
+    });
+  });
+  cnt.textContent = hits === 0 ? 'No match \u2014 try a shorter term (e.g. "BPV", "roll", "collar").'
+    : hits + ' card' + (hits > 1 ? 's' : '') + (hits >= MAX ? ' (first ' + MAX + ')' : '');
+}
 </script>
 <!-- ══════════════════════════════════════
      TRIGGER SHEET SCREEN
