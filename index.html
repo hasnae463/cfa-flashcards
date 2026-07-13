@@ -38602,6 +38602,29 @@ market-adjusted    = arrival cost &minus; &beta; &times; index move  (strip the 
       </div>
 
       <div class="tg-card">
+        <div class="tg-title">&ldquo;REBALANCING A PORTFOLIO WITH ILLIQUID ASSETS?&rdquo; (Asset Allocation / endowment)</div>
+        <div style="overflow-x:auto;">
+        <table class="tg-tbl" style="min-width:760px;">
+          <tr><th style="width:20%">Theme</th><th style="width:22%">Item</th><th>What it means / how it works</th></tr>
+          <tr><td rowspan="3"><b>Why it&rsquo;s hard</b></td><td>Core problem</td><td>Illiquids (PE, RE, VC, HF) can&rsquo;t trade cheaply/quickly &mdash; wide spreads, market impact, stale appraised prices, long time-to-transact, exit penalties. Physical rebalancing = <b class="tg-red">forced selling at bad prices</b>.</td></tr>
+          <tr><td><b>Denominator effect</b></td><td>In a drawdown, liquid assets fall while illiquids stay at stale marks &rarr; the illiquid <b>% mechanically rises above target</b> though you did nothing. Rebalancing back = selling illiquids when you least can.</td></tr>
+          <tr><td>Appraisal / stale pricing</td><td>Illiquid values come from periodic appraisals, not live markets &rarr; reported weights lag, drift is understated, rebalancing signals arrive late.</td></tr>
+          <tr><td rowspan="3"><b>Assess liquidity needs</b></td><td>Cash-flow projection / liquidity budgeting</td><td>Project inflows (distributions, income) vs outflows (spending draw &asymp;5%, capital calls on unfunded commitments) period by period &rarr; net liquidity requirement; enough liquid assets without forced sales.</td></tr>
+          <tr><td>Stress testing / scenarios</td><td>Adverse cases (crash; calls spike while distributions dry up; denominator effect) &rarr; reveals the shortfall in the tail that base-case projection misses.</td></tr>
+          <tr><td>Liquidity classification (bucketing)</td><td>Sort holdings by time-to-liquidate (&lt;1 week / &lt;1 month / &gt;1 year) &rarr; compare liquid buckets vs near-term needs.</td></tr>
+          <tr><td rowspan="2"><b>How to rebalance</b></td><td>Cash-market approach</td><td>Physically buy/sell the underlying &rarr; for illiquids: high cost, market impact, forced sales, losses/penalties. The problem, not the solution.</td></tr>
+          <tr><td><b class="tg-green">Derivatives overlay (preferred)</b></td><td>Adjust <b>market exposure</b> synthetically with index futures/swaps &rarr; illiquids stay untouched. Low cost, high liquidity, margin only (not full capital), fast to execute/reverse, preserves the illiquid sleeve, keeps exposure at target between dates. (R17 cash-equitization / overlay logic.)</td></tr>
+          <tr><td rowspan="4"><b>When to rebalance</b></td><td>Calendar rebalancing</td><td>Fixed schedule (monthly/quarterly). Simple; ignores how far the portfolio has actually drifted.</td></tr>
+          <tr><td><b class="tg-gold">Percentage-range / corridor</b> (automatic mechanism)</td><td>Pre-set tolerance bands around each target (e.g., 60% &plusmn;5%). Trades trigger <b>automatically</b> when a band is breached &rarr; back to target or the near edge. Rules-based, no discretion.</td></tr>
+          <tr><td>Benefits of the automatic rule</td><td>(1) <b>Discipline / removes behavioral bias</b> &mdash; forces sell-high/buy-low, takes timing out of human hands; (2) <b>tighter tracking of the SAA / risk control</b> &mdash; catches drift (incl. denominator effect) continuously, not at the next meeting; (3) lower monitoring cost.</td></tr>
+          <tr><td>Setting corridor width</td><td><b>Wider</b> bands when: illiquid / high transaction cost, high correlation with the rest, higher risk tolerance. <b>Narrower</b> when: liquid, low cost, tight risk control needed.</td></tr>
+          <tr><td><b>Value illiquid assets</b></td><td>Marketable comparable + option data</td><td>Value illiquid Y from a marketable twin X via put-call parity: <b>V&#7527; = S&#8339; &minus; (C &minus; P) = PV(strike)</b>. The (C &minus; P) spread = the <b>illiquidity discount</b> (value of the tradability Y lacks). MUE: 100 &minus; (13.02 &minus; 8.15) = <b class="tg-gold">$95.13</b>.</td></tr>
+        </table>
+        </div>
+        <div class="tg-tip"><b>Through-line:</b> illiquid assets make rebalancing costly &rarr; (a) <b>assess liquidity needs</b> before committing, (b) rebalance the <b>exposure with derivatives</b>, not physicals, (c) <b>automate the trigger with corridors</b> so drift &mdash; especially the denominator effect &mdash; gets caught without forced sales.</div>
+      </div>
+
+      <div class="tg-card">
         <div class="tg-title">&ldquo;COMPARE SAA vs TAA&rdquo; / &ldquo;HOW IS THE ALLOCATION BUILT?&rdquo; (R4 / R8)</div>
         <table class="tg-tbl">
           <tr><th style="width:12%"></th><th>SAA &mdash; strategic</th><th>TAA &mdash; tactical</th></tr>
