@@ -252,6 +252,7 @@ header { padding: 14px 20px; border-bottom: 1px solid var(--border); display: fl
   <button class="main-tab" onclick="switchScreen('notes',this)">📝 Notes</button>
   <button class="main-tab" onclick="switchScreen('essay',this)">📌 Essay Method</button>
   <button class="main-tab" onclick="switchScreen('essaybank',this)">📚 Essay Bank</button>
+  <button class="main-tab" onclick="switchScreen('triggers',this)">⚡ Triggers</button>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -35178,6 +35179,103 @@ Band width: &#177;5% discretionary | &#177;25% active | rule-based passive</div>
               <div class="rc-info"><b>Where the marks are:</b> (1) <span class="cm-gold">base currency in the denominator</span> &mdash; every buy/sell, call/put, premium/discount statement refers to the base unless stated; (2) <b>R<sub>FX</sub> must be computed with the foreign currency as base</b> (invert if needed, EV/BV &minus; 1); (3) forward points &divide; 10<sup>decimals of the spot quote</sup>; (4) the <b>hedge-cost ladder</b> in 18.5 &mdash; what each tweak gives up (downside protection vs upside); (5) roll yield sign &rarr; hedge or don&rsquo;t.</div>
             </div>
 
+            <div class="cm-card">
+              <div class="cm-title">The map &mdash; how the six modules are one pipeline</div>
+              <div class="rc-svg-wrap">
+                <svg viewBox="0 0 740 400" width="740" height="400" xmlns="http://www.w3.org/2000/svg" style="min-width:680px">
+                  <style>
+                    .mbx{fill:#11161D;stroke:#22D3EE;stroke-width:1.3;rx:6}
+                    .mbx2{fill:#11161D;stroke:#4A5561;stroke-width:1.1;rx:6}
+                    .mtt{fill:#22D3EE;font:600 11px monospace}
+                    .mtx{fill:#C9D1D9;font:10.5px monospace}
+                    .msu{fill:#7D8590;font:9.5px monospace}
+                    .mar{stroke:#22D3EE;stroke-width:1.6;fill:none;marker-end:url(#cmm-ah)}
+                    .mar2{stroke:#F0A04B;stroke-width:1.3;fill:none;stroke-dasharray:4 3;marker-end:url(#cmm-ah2)}
+                  </style>
+                  <defs>
+                    <marker id="cmm-ah" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#22D3EE"/></marker>
+                    <marker id="cmm-ah2" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#F0A04B"/></marker>
+                  </defs>
+
+                  <rect x="20" y="16" width="215" height="56" class="mbx"/>
+                  <text x="127" y="34" text-anchor="middle" class="mtt">1 &middot; MEASURE (18.1)</text>
+                  <text x="127" y="49" text-anchor="middle" class="mtx">R&#8332;&#8347; = (1+R&#8332;&#8351;)(1+R&#8342;&#8339;) &minus; 1</text>
+                  <text x="127" y="63" text-anchor="middle" class="msu">risk: Eq 3 &mdash; &sigma;&#8342;&#8351;, &sigma;&#8342;&#8339;, &rho;</text>
+
+                  <line x1="235" y1="44" x2="268" y2="44" class="mar"/>
+
+                  <rect x="272" y="16" width="215" height="56" class="mbx"/>
+                  <text x="379" y="34" text-anchor="middle" class="mtt">2 &middot; STRATEGIC (18.1 / IPS)</text>
+                  <text x="379" y="49" text-anchor="middle" class="mtx">how much R&#8342;&#8339; to keep?</text>
+                  <text x="379" y="63" text-anchor="middle" class="msu">unhedged&hellip;100%&hellip;discret.&hellip;active&hellip;overlay</text>
+
+                  <line x1="487" y1="44" x2="520" y2="44" class="mar"/>
+
+                  <rect x="524" y="16" width="196" height="56" class="mbx"/>
+                  <text x="622" y="34" text-anchor="middle" class="mtt">3 &middot; VIEW (18.2/18.3)</text>
+                  <text x="622" y="49" text-anchor="middle" class="mtx">fundamentals | technical</text>
+                  <text x="622" y="63" text-anchor="middle" class="mtx">carry | volatility</text>
+
+                  <line x1="622" y1="72" x2="622" y2="104" class="mar"/>
+
+                  <rect x="524" y="108" width="196" height="56" class="mbx"/>
+                  <text x="622" y="126" text-anchor="middle" class="mtt">4 &middot; ACT (18.4)</text>
+                  <text x="622" y="141" text-anchor="middle" class="mtx">expectation &rarr; action table</text>
+                  <text x="622" y="155" text-anchor="middle" class="msu">forwards + FX swaps; static/dynamic</text>
+
+                  <line x1="520" y1="136" x2="487" y2="136" class="mar"/>
+
+                  <rect x="272" y="108" width="215" height="56" class="mbx"/>
+                  <text x="379" y="126" text-anchor="middle" class="mtt">5 &middot; ENGINEER COST (18.5)</text>
+                  <text x="379" y="141" text-anchor="middle" class="mtx">options ladder: fwd &rarr; seagull</text>
+                  <text x="379" y="155" text-anchor="middle" class="msu">premium vs protection vs upside</text>
+
+                  <line x1="268" y1="136" x2="235" y2="136" class="mar"/>
+
+                  <rect x="20" y="108" width="215" height="56" class="mbx"/>
+                  <text x="127" y="126" text-anchor="middle" class="mtt">6 &middot; FRICTIONS (18.6)</text>
+                  <text x="127" y="141" text-anchor="middle" class="mtx">cross / macro / MVHR</text>
+                  <text x="127" y="155" text-anchor="middle" class="msu">EM currencies &rarr; NDFs, tail risk</text>
+
+                  <text x="370" y="196" text-anchor="middle" class="mtt">THE FOUR CONCEPTS THAT KEEP COMING BACK</text>
+
+                  <rect x="20" y="210" width="345" height="80" class="mbx2"/>
+                  <text x="192" y="228" text-anchor="middle" class="mtt">&#9654; the rate differential (one number, 4 names)</text>
+                  <text x="192" y="245" text-anchor="middle" class="mtx">CIRP fwd premium/discount = carry return</text>
+                  <text x="192" y="260" text-anchor="middle" class="mtx">= forward rate bias = ROLL YIELD</text>
+                  <text x="192" y="277" text-anchor="middle" class="msu">speculator EARNS it &mdash; hedger PAYS or EARNS it</text>
+
+                  <rect x="375" y="210" width="345" height="80" class="mbx2"/>
+                  <text x="547" y="228" text-anchor="middle" class="mtt">&#9654; &rho;(R&#8332;&#8351;, R&#8342;&#8339;) &mdash; three jobs</text>
+                  <text x="547" y="245" text-anchor="middle" class="mtx">Eq 3: amplifies/dampens &sigma;(R&#8332;&#8347;) (18.1)</text>
+                  <text x="547" y="260" text-anchor="middle" class="mtx">hedge more (+&rho;) / less (&minus;&rho;) (18.1c)</text>
+                  <text x="547" y="277" text-anchor="middle" class="mtx">MVHR &gt; 1 or &lt; 1 (18.6)</text>
+
+                  <rect x="20" y="300" width="345" height="80" class="mbx2"/>
+                  <text x="192" y="318" text-anchor="middle" class="mtt">&#9654; base in the denominator (18.1)</text>
+                  <text x="192" y="335" text-anchor="middle" class="mtx">buy/sell refer to the base; R&#8342;&#8339; needs FC as base</text>
+                  <text x="192" y="350" text-anchor="middle" class="mtx">call on base = put on pricing</text>
+                  <text x="192" y="367" text-anchor="middle" class="msu">drives every hedge-selection step in 18.5</text>
+
+                  <rect x="375" y="300" width="345" height="80" class="mbx2"/>
+                  <text x="547" y="318" text-anchor="middle" class="mtt">&#9654; &ldquo;hedging isn&rsquo;t free&rdquo; &mdash; four bills</text>
+                  <text x="547" y="335" text-anchor="middle" class="mtx">opportunity cost (18.1c) &rarr; roll yield (18.4)</text>
+                  <text x="547" y="350" text-anchor="middle" class="mtx">&rarr; option premium (18.5)</text>
+                  <text x="547" y="367" text-anchor="middle" class="mtx">&rarr; residual / basis risk (18.6)</text>
+                </svg>
+              </div>
+              <table class="cm-tbl">
+                <tr><th>Where you saw it first</th><th>Where it comes back</th><th>Same idea, new seat</th></tr>
+                <tr><td>CIRP: high-rate currency at a fwd <b>discount</b> (18.3)</td><td>Roll yield sign &amp; Figure 18.2 (18.4)</td><td>Carry trader&rsquo;s <b>return</b> = hedger&rsquo;s <b>cost/benefit</b></td></tr>
+                <tr><td>Straddles/strangles as a vol strategy (18.3)</td><td>Tactical table: vol &uarr;/&darr; rows (18.4)</td><td>Same trade; 18.4 just tells you <b>when</b></td></tr>
+                <tr><td>Eq 3 correlation term (18.1)</td><td>Hedge-more/less list (18.1c) &amp; MVHR (18.6)</td><td>&rho; as risk &rarr; &rho; as policy &rarr; &rho; as <b>hedge ratio</b></td></tr>
+                <tr><td>Options basics &amp; deltas (18.1)</td><td>25/35/50-delta ladder (18.5), quiz 18.4&ndash;6 Q1</td><td>Delta = <b>price tag</b> for protection depth</td></tr>
+                <tr><td>Discretion spectrum (18.1b)</td><td>Over/underhedge = strategy #1 (18.5)</td><td>Strategic permission &rarr; tactical <b>tool</b></td></tr>
+                <tr><td>FX swap rollover (18.1)</td><td>Mismatched swap, static/dynamic (18.4)</td><td>Mechanics first, <b>sizing decision</b> second</td></tr>
+              </table>
+              <div class="cm-tip"><b>How to use this:</b> for any exam vignette, walk the pipeline left to right &mdash; What&rsquo;s the exposure? What does the IPS permit? What&rsquo;s the view and which of the 4 sources produced it? Which instrument, and what does the rate differential do to its cost? Can the cost be engineered down, and what friction remains? Every LOS in R18 answers exactly one of those questions.</div>
+            </div>
+
             <!-- ═══════════ MODULE 18.1 — CURRENCY MATH ═══════════ -->
             <div class="cm-card">
               <div class="rc-sec">Module 18.1 &middot; Managing Currency Exposure</div>
@@ -37284,6 +37382,7 @@ function switchScreen(name, btn) {
   if(name==='notes')  { buildNotesTree(); }
   if(name==='essay')  { /* static reference, no build needed */ }
   if(name==='essaybank') { ebRender(); }
+  if(name==='triggers') { /* static sheet, no build needed */ }
 }
 
 // ══════════════════════════════════════════════════
@@ -38212,7 +38311,8 @@ var RECAP_REGISTRY = [
   { id: 'tc-recap', title: 'Reading 11 · Trading Costs and Electronic Markets' },
   { id: 'osr-recap', title: 'Reading 16 · Options Strategies' },
   { id: 'sfr-recap', title: 'Reading 17 · Swaps, Forwards, and Futures Strategies' },
-  { id: 'cm-recap', title: 'Reading 18 · Currency Management: An Introduction' }
+  { id: 'cm-recap', title: 'Reading 18 · Currency Management: An Introduction' },
+  { id: 'trig-recap', title: 'Trigger Sheet · Cue → Formula → Sign' }
 ];
 
 // Shared print stylesheet used by both single- and all-recap printing.
@@ -38307,5 +38407,154 @@ async function init() {
 }
 init();
 </script>
+<!-- ══════════════════════════════════════
+     TRIGGER SHEET SCREEN
+══════════════════════════════════════ -->
+<div class="screen" id="screen-triggers" style="overflow-y:auto;">
+  <div style="max-width:940px; margin:0 auto; width:100%; padding:16px 14px 60px;">
+    <div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+      <button onclick="printOneRecap('trig-recap')" style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;background:var(--surface2);border:1px solid var(--border);color:#79C0FF;padding:6px 14px;border-radius:5px;cursor:pointer">&#128424; PRINT SHEET</button>
+    </div>
+    <div id="trig-recap">
+      <style>
+        #trig-recap .tg-card { background:#161B22; border:1px solid #2A3441; border-radius:8px; padding:14px 16px; margin-bottom:12px; }
+        #trig-recap .tg-title { font-size:14px; color:#D4A017; font-weight:700; letter-spacing:.03em; margin-bottom:8px; font-family:monospace; }
+        #trig-recap .tg-tbl { border-collapse:collapse; width:100%; margin:6px 0; }
+        #trig-recap .tg-tbl th { background:#0B0F14; color:#D4A017; font-family:monospace; font-size:10px; letter-spacing:.04em; padding:6px 8px; text-align:left; border:1px solid #2A3441; }
+        #trig-recap .tg-tbl td { border:1px solid #2A3441; padding:6px 8px; font-size:12px; line-height:1.55; color:#C9D1D9; vertical-align:top; }
+        #trig-recap .tg-fl { background:#0B0F14; border-radius:5px; padding:8px 11px; font-family:monospace; font-size:11.5px; line-height:1.65; color:#C9D1D9; white-space:pre-wrap; margin:8px 0; }
+        #trig-recap .tg-trap { background:rgba(255,123,114,.08); border-left:3px solid #FF7B72; border-radius:3px; padding:8px 11px; margin:8px 0; font-size:12px; line-height:1.5; color:#C9D1D9; }
+        #trig-recap .tg-body { font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+        #trig-recap .tg-green { color:#3DD68C; } #trig-recap .tg-red { color:#FF7B72; } #trig-recap .tg-gold { color:#D4A017; }
+        #trig-recap b { color:#E6EDF3; }
+      </style>
+
+      <div class="tg-card">
+        <div class="tg-title">&#9889; TRIGGER SHEET &mdash; read the cue, fire the formula</div>
+        <div class="tg-body">Organized by the <b>phrase in the question</b>, not by reading. Column 3 is where marks die.</div>
+        <div class="tg-trap"><b>The five sign traps, before anything else:</b> (1) a <b>negative contract count = SELL/short</b> &mdash; state the direction; (2) R<sub>FX</sub> needs the <b>foreign currency as base</b> &mdash; given B/P, invert 1/x first; (3) variance swaps: <b>square both vols</b> (K 20 &rarr; 400); (4) buy/sell &amp; premium/discount statements refer to the <b>base (denominator)</b>; (5) forward points &divide; 10^(decimals of the spot quote) &mdash; not always 10,000.</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;HOW MANY CONTRACTS?&rdquo; / &ldquo;WHAT NOTIONAL?&rdquo;</div>
+        <table class="tg-tbl">
+          <tr><th>Cue in the vignette</th><th>Formula</th><th>Signs &amp; conventions</th></tr>
+          <tr><td>Change equity <b>&beta;</b> / hedge equity (R17)</td><td>N = [(&beta;<sub>T</sub> &minus; &beta;<sub>P</sub>)/&beta;<sub>F</sub>] &times; MV<sub>P</sub>/F ; F = price &times; multiplier</td><td>Negative &rArr; <b class="tg-red">sell</b>. Full hedge: &beta;<sub>T</sub> = 0. S&amp;P mult $250, FTSE &pound;10.</td></tr>
+          <tr><td><b>Cash drag / equitization</b> (R17)</td><td>Same, with &beta;<sub>P</sub> = 0 (cash), &beta;<sub>T</sub> = 1 or fund target</td><td>Always <b class="tg-green">buy</b>. MV<sub>P</sub> = the cash only.</td></tr>
+          <tr><td>Bond portfolio <b>duration</b> via futures (R17)</td><td>BPVHR = [(BPV<sub>T</sub> &minus; BPV<sub>P</sub>)/BPV<sub>CTD</sub>] &times; CF</td><td>BPV = MD &times; MV &times; 0.0001; MV<sub>CTD</sub> = price/100 &times; 100,000. Negative &rArr; sell. Full hedge: BPV<sub>T</sub> = 0.</td></tr>
+          <tr><td><b>Immunize / hedge a liability</b> (P4)</td><td>N<sub>f</sub> = (BPV<sub>L</sub> &minus; BPV<sub>A</sub>) / BPV<sub>f</sub> ; BPV<sub>f</sub> = BPV<sub>CTD</sub>/CF</td><td>Assets short of liability duration &rArr; <b class="tg-green">buy</b> futures. 100% hedge closes the gap; corridor = partial.</td></tr>
+          <tr><td>Change duration with a <b>swap</b> (R17)</td><td>NP<sub>S</sub> = [(MD<sub>T</sub> &minus; MD<sub>P</sub>)/MD<sub>S</sub>] &times; MV<sub>P</sub></td><td>&uarr; duration &rArr; <b>receiver</b> (use receiver&rsquo;s MD); &darr; &rArr; <b>payer</b>.</td></tr>
+          <tr><td>Hedge an <b>FX amount</b> (R17/R18)</td><td>HR = currency amount / contract size</td><td>Will <b>receive</b> the FC &rArr; <b class="tg-red">sell</b> its futures; will <b>pay</b> &rArr; <b class="tg-green">buy</b>.</td></tr>
+          <tr><td><b>Variance swap</b> P&amp;L (R17)</td><td>N<sub>VAR</sub> = N<sub>vega</sub>/(2K) ; P&amp;L = N<sub>VAR</sub>(&sigma;&sup2; &minus; K&sup2;)</td><td>Long gains if realized &gt; strike. Square both.</td></tr>
+          <tr><td>Hedge with <b>regression / imperfect instrument</b> (R18)</td><td>hedge = exposure &times; slope &beta; (MVHR)</td><td>&beta; &gt; 1 when &rho;(R<sub>FC</sub>,R<sub>FX</sub>) &gt; 0 (import economy); &lt; 1 when negative (export).</td></tr>
+        </table>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;RETURN IN THE INVESTOR&rsquo;S CURRENCY?&rdquo; (R18)</div>
+        <div class="tg-fl">R&#8332;&#8347; = (1 + R&#8332;&#8351;)(1 + R&#8342;&#8339;) &minus; 1        multi-asset: R&#8332;&#8347; = &Sigma; w&#7522; &times; R&#8332;&#8347;,&#7522;  (weights in DC)
+R&#8342;&#8339;: FOREIGN currency as base &mdash; if quoted B/P, invert 1/x, then EV/BV &minus; 1
+risk:  &sigma;&sup2;(R&#8332;&#8347;) &asymp; &sigma;&sup2;&#8332;&#8351; + &sigma;&sup2;&#8342;&#8339; + 2&sigma;&#8332;&#8351;&sigma;&#8342;&#8339;&rho;      R&#8332;&#8351; risk-free: &sigma;(R&#8332;&#8347;) = &sigma;(R&#8342;&#8339;)(1 + R&#8332;&#8351;)</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;HEDGED RETURN?&rdquo; / &ldquo;COST OF THE HEDGE?&rdquo; / &ldquo;ROLL YIELD?&rdquo; (R18)</div>
+        <div class="tg-fl">roll yield (held to expiry) = (F&#8320; &minus; S&#8320;)/S&#8320;  = the hedged currency return
+IRP: F = S &times; (1+i&#8346;)/(1+i&#8384;)  (period-adjust the rates; analyzed currency in the DENOMINATOR)</div>
+        <table class="tg-tbl">
+          <tr><th>You are&hellip;</th><th>Currency trades at&hellip;</th><th>Roll yield &rarr; hedging</th></tr>
+          <tr><td>Selling it forward (long asset hedge)</td><td>Forward <b>premium</b> (F&gt;S, low-rate ccy)</td><td class="tg-green">Positive &rarr; cheaper, encourages hedging</td></tr>
+          <tr><td>Selling it forward</td><td>Forward <b>discount</b> (F&lt;S, high-rate ccy)</td><td class="tg-red">Negative &rarr; costly, discourages hedging (EM!)</td></tr>
+        </table>
+        <div class="tg-body">Same number, other seat: the carry trade <b>earns</b> the rate differential (fund low, invest high; exit when vol spikes).</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;VALUE THE POSITION TODAY (MTM)?&rdquo;</div>
+        <div class="tg-fl"><b>Forward (R18):</b>  1) offset with the OPPOSITE trade, SAME maturity, current quote
+            2) locked P&amp;L at settlement   3) PV at the P&amp;L-currency rate &times; days/360
+<b>Variance swap (R17):</b>  1) EV = &sigma;&#8348;&sup2;(t/T) + K&sup2;&#8080;&#8348;&#8331;&#8348;&#8081;((T&minus;t)/T)   (re-quoted strike for the REMAINING term)
+            2) payoff = N&#8342;&#8336;&#8344; &times; (EV &minus; K&#8320;&sup2;)   3) discount at r &times; remaining/12</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;NET CASH FLOW / TOTAL COST ON THE SWAP, FRA, STIR?&rdquo; (R17)</div>
+        <div class="tg-fl">payer swap net       = (MRR &minus; fixed) &times; NP &times; days/360      (set in advance, paid in arrears)
+FRN + payer lock     = swap fixed + FRN margin, every period
+long FRA payoff      = (realized &minus; FRA rate) &times; loan days/360 &times; NP, PV&rsquo;d to expiry
+Eurodollar futures   = $25 per bp per contract; price = 100 &minus; rate &rarr; LONG gains when rates FALL
+Fed move probability = (implied FFE &minus; target midpoint) / expected move size ; FFE = 100 &minus; futures</div>
+        <div class="tg-trap"><b>Long FRA gains when rates rise; long STIR futures gains when rates fall.</b> Same borrower hedges long FRA / <b>short</b> futures.</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;EXPECTED FIXED-INCOME RETURN?&rdquo; / &ldquo;EXCESS SPREAD?&rdquo; (R7 / P5 / P6)</div>
+        <div class="tg-fl">E(R) &asymp; yield income + rolldown + E(&Delta;price | view) &minus; credit losses &plusmn; FX
+rolldown = (projected price, curve UNCHANGED &minus; beginning price) / beginning price
+XS &asymp; spread&#8320; &minus; (EffSpreadDur &times; &Delta;spread) &minus; (POD &times; LGD)      POD &asymp; spread / LGD
+DTS = spread duration &times; spread</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;WHAT DID THE TRADE COST?&rdquo; (R11 / P7)</div>
+        <div class="tg-fl">IS = paper portfolio return &minus; actual return   (delay + execution + opportunity + fees)
+side-adjusted cost = side &times; (exec price &minus; arrival)/arrival ;  side = +1 buy / &minus;1 sell
+effective spread   = 2 &times; |exec &minus; midquote at arrival|
+market-adjusted    = arrival cost &minus; &beta; &times; index move  (strip the market&rsquo;s drift)</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;WHICH INSTRUMENT / DIRECTION?&rdquo; &mdash; 10-second router</div>
+        <table class="tg-tbl">
+          <tr><th>Exposure + view</th><th>Do this</th></tr>
+          <tr><td>Floating <b>liability</b>, rates &uarr; / fixed liability, rates &darr;</td><td><b>Payer</b> swap / <b>receiver</b> swap</td></tr>
+          <tr><td>Floating <b>asset</b>, rates &darr;</td><td><b>Receiver</b> swap (asset flips the direction!)</td></tr>
+          <tr><td>Future borrower / future lender</td><td>Long FRA, short STIR / short FRA, long STIR</td></tr>
+          <tr><td>Currency to appreciate / depreciate</td><td>Cut the hedge or add long / raise the hedge</td></tr>
+          <tr><td>Vol &uarr; / vol &darr;</td><td>Long straddle-strangle / short</td></tr>
+          <tr><td>Cheapen an option hedge, keep puts</td><td>OTM put &rarr; put spread; accept a cap &rarr; collar &rarr; seagull</td></tr>
+          <tr><td>Restricted EM currency</td><td>NDF &mdash; cash-settle the gain in the DM currency</td></tr>
+        </table>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;COMPARE SAA vs TAA&rdquo; / &ldquo;HOW IS THE ALLOCATION BUILT?&rdquo; (R4 / R8)</div>
+        <table class="tg-tbl">
+          <tr><th style="width:12%"></th><th>SAA &mdash; strategic</th><th>TAA &mdash; tactical</th></tr>
+          <tr><td><b>Definition</b></td><td>Long-term <b>target weights</b> per asset class from the IPS + long-run CMEs; the <b>policy portfolio</b>, rebalanced back to targets</td><td>Deliberate <b>short-term deviations</b> from SAA weights, within allowed ranges, to exploit perceived mispricings; return to SAA after</td></tr>
+          <tr><td><b>How it&rsquo;s built</b></td><td>Inputs (R1&ndash;R2): long-run E(r), &sigma;, &rho;. Then an optimizer (R4): <b>MVO</b> (max U = E(r) &minus; 0.005&lambda;&sigma;&sup2;) &middot; <b>reverse optimization / Black-Litterman</b> (market weights &rarr; implied returns + views; fixes MVO input sensitivity) &middot; <b>resampled MVO</b> &middot; <b>Monte Carlo</b> path testing &middot; <b>risk budgeting / risk parity</b> &middot; <b>liability-relative</b> (surplus) or <b>goals-based</b></td><td>Two families (R8): <b>discretionary</b> &mdash; judgment on macro, valuation, cycle, policy, sentiment, flows &middot; <b>systematic</b> &mdash; rule-based signals with documented premiums: <b>value</b> (incl. the FX carry / forward rate bias, R18) and <b>momentum/trend</b> (time-series momentum, 50d/200d MA crossovers = R18 technicals)</td></tr>
+          <tr><td><b>Return source</b></td><td><b class="tg-green">Beta</b> &mdash; long-run risk premiums</td><td><b class="tg-gold">Alpha</b> &mdash; forecasting skill</td></tr>
+          <tr><td><b>Advantages</b></td><td>Discipline vs behavioral errors; low turnover &rarr; low costs &amp; taxes; captures the reliable premiums; clean benchmark for everything else</td><td>Adds value if views are right; flexibility in changing conditions; cheap to implement with futures/ETFs (R17 overlay)</td></tr>
+          <tr><td><b>Shortcomings</b></td><td>Ignores short-term opportunities; hostage to CME estimation error; can go stale between reviews; rebalancing cost</td><td>Trading costs + <b class="tg-red">tax drag</b>; tracking error vs policy; skill rarely persistent; concentration reduces diversification</td></tr>
+          <tr><td><b>Evaluation</b></td><td>Objectives met? Periodic / life-event review</td><td><b>Sharpe vs the SAA&rsquo;s Sharpe</b>; information ratio; plot vs the SAA on the risk/return frontier</td></tr>
+        </table>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;HOW DOES THIS DB-PLAN FEATURE AFFECT THE LIABILITY / IPS?&rdquo; (R10 / P4)</div>
+        <div style="overflow-x:auto;">
+        <table class="tg-tbl" style="min-width:820px;">
+          <tr><th>DB characteristic</th><th>Liab. PV</th><th>Liab. dur.</th><th>Horizon</th><th>Risk tol.</th><th>Liquidity</th><th>Objective / constraint</th><th>Why (one line)</th></tr>
+          <tr><td><b>More retired lives</b></td><td>paid down, near-weighted</td><td class="tg-red"><b>&darr;</b></td><td>&darr;</td><td>&darr;</td><td class="tg-gold"><b>&uarr;</b></td><td>LDI / match payouts</td><td>Benefits flow out <b>now</b> &mdash; cash flows are close, discounting barely shrinks them, cash must be on hand.</td></tr>
+          <tr><td><b>Older active workforce</b></td><td class="tg-red"><b>&uarr;</b></td><td class="tg-red"><b>&darr;</b></td><td>&darr;</td><td>&darr;</td><td>&uarr; soon</td><td>De-risking glide path</td><td>Accruals become payments at near-peak salaries &mdash; little time to recover a drawdown.</td></tr>
+          <tr><td><b>Younger employees</b></td><td class="tg-green"><b>&darr;</b></td><td class="tg-green"><b>&uarr;</b></td><td class="tg-green"><b>&uarr;</b></td><td class="tg-green"><b>&uarr;</b></td><td class="tg-green"><b>&darr;</b></td><td>Growth assets OK</td><td>Payments are decades away: heavy discounting shrinks the PV, and decades of runway absorb volatility.</td></tr>
+          <tr><td><b>Extended time to retirement</b></td><td class="tg-green"><b>&darr;</b></td><td class="tg-green"><b>&uarr;</b></td><td class="tg-green"><b>&uarr;</b></td><td class="tg-green"><b>&uarr;</b></td><td class="tg-green"><b>&darr;</b></td><td>Longer glide path</td><td>Raising the retirement age pushes every payout further out &mdash; same effect as a younger workforce.</td></tr>
+          <tr><td><b>Plan frozen / closed</b></td><td>growth <b>stops</b></td><td>&darr; over time</td><td>&darr;</td><td>&darr;</td><td>&uarr; over time</td><td>Immunize &rarr; annuitize</td><td>No new accruals: the liability is a fixed, shrinking bond &mdash; hold the bond that matches it.</td></tr>
+          <tr><td><b>Early-retirement / lump-sum options</b></td><td class="tg-red"><b>&uarr;</b>, unpredictable</td><td class="tg-red"><b>&darr;</b></td><td>&darr;</td><td>&darr;</td><td class="tg-red"><b>&uarr;&uarr;</b></td><td>Liquidity buffer; no illiquids</td><td>Members hold an option against the plan: money can leave sooner, and the plan can&rsquo;t schedule it.</td></tr>
+          <tr><td><b>Higher funded status</b></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>ability &uarr;, used to <b>de-risk</b></td><td>&mdash;</td><td>Protect the funded ratio</td><td>Surplus is a cushion you <i>could</i> risk &mdash; but sponsors lock the win: losing a surplus hurts more than growing it helps.</td></tr>
+          <tr><td><b>Strong sponsor</b></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td class="tg-green">&uarr;</td><td>&mdash;</td><td>More return-seeking</td><td>A deficit is a small call on a big healthy balance sheet &mdash; contributions can fix mistakes.</td></tr>
+          <tr><td><b>Sponsor &harr; plan correlation high</b></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td class="tg-red">&darr;</td><td>&uarr; in stress</td><td>Diversify away from sponsor</td><td>The plan needs cash exactly when the sponsor can least contribute &mdash; one shock hits both.</td></tr>
+          <tr><td><b>Discount rate &darr;</b></td><td class="tg-red"><b>&uarr;&uarr;</b> (&asymp; BPV&#8343; &times; &Delta;y)</td><td>&uarr; (convexity)</td><td>&mdash;</td><td>&darr; (funded status falls)</td><td>&mdash;</td><td>Duration hedge: N&#8342; = (BPV&#8343; &minus; BPV&#8336;)/BPV&#8342;</td><td>The liability is a short bond: rates down = its PV up &mdash; unhedged, the funded ratio falls with no change in benefits.</td></tr>
+          <tr><td><b>Longevity &uarr; / wage growth &uarr;</b></td><td class="tg-red"><b>&uarr;</b></td><td class="tg-red"><b>&uarr;</b></td><td>&uarr;</td><td>&mdash;</td><td>&mdash;</td><td>Return &ge; discount rate</td><td>More years of payments at higher final salaries &mdash; the promise itself grows, not just its price.</td></tr>
+        </table>
+        </div>
+        <div class="tg-trap"><b>Mirror rule:</b> younger workforce / raised retirement age = exact inverse of retired lives / early retirement &mdash; every column flips (PV &darr;, duration &uarr;, horizon &uarr;, tolerance &uarr;, liquidity &darr;). And <b>funded status is the hinge</b>: it drives both the ability to take risk and the glide path that removes it.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 </body>
 </html>
