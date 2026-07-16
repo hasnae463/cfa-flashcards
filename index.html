@@ -38602,6 +38602,35 @@ market-adjusted    = arrival cost &minus; &beta; &times; index move  (strip the 
       </div>
 
       <div class="tg-card">
+        <div class="tg-title">&ldquo;P&amp;L ON A CDX / CDS INDEX POSITION?&rdquo; (Credit strategies)</div>
+        <div class="tg-trap"><b>&#9888; Do NOT use &Delta;Spread &times; duration &times; notional for a CDX index.</b> That single-duration shortcut lands on a decoy answer. Use the <b>index price</b> at each date, each with its OWN spread duration.</div>
+        <div class="tg-fl"><b>Index price</b>  =  1 + (Coupon &minus; Spread) &times; Spread Duration
+CDX HY fixed coupon = 500 bp (5%)   |   CDX IG = 100 bp (1%)
+
+<b>TOTAL P&amp;L (buyer) = price change &minus; coupon paid</b>
+   price change = (Price&#8320; &minus; Price&#8321;) &times; N   (buyer is short the index &rarr; gains as price falls)
+   coupon paid  = Coupon &times; N   (the buyer PAYS the fixed premium all period)
+Seller: mirror &mdash; price change = (Price&#8321; &minus; Price&#8320;) &times; N, and the seller RECEIVES the coupon.</div>
+        <table class="tg-tbl">
+          <tr><th>Position</th><th>Credit risk</th><th>Gains when&hellip;</th></tr>
+          <tr><td><b>Buy protection</b></td><td>Short credit risk</td><td>Spreads <b class="tg-red">widen</b> &rarr; index <b>price falls</b> (buyer is short the index)</td></tr>
+          <tr><td><b>Sell protection</b></td><td>Long credit risk</td><td>Spreads <b class="tg-green">tighten</b> &rarr; index <b>price rises</b> (seller is long the index)</td></tr>
+        </table>
+        <div class="tg-fl"><b>Worked &mdash; fund buys $10M CDX HY protection; recession view right (Mock 3 Q53)</b>
+Inception:  spread 350 bp, spread duration 4.66
+12 mo on:   spread doubled to 700 bp, spread duration 3.77
+
+Price&#8320; = 1 + (0.05 &minus; 0.0350) &times; 4.66 = 1 + 0.06990 = <b>1.0699</b>
+Price&#8321; = 1 + (0.05 &minus; 0.0700) &times; 3.77 = 1 &minus; 0.07540 = <b>0.9246</b>
+
+price change = (1.0699 &minus; 0.9246) &times; $10M = <b>+$1,453,000</b>
+coupon paid  = 0.05 &times; $10M              = <b class="tg-red">&minus;$500,000</b>
+<b>TOTAL P&amp;L    = 1,453,000 &minus; 500,000    = <span class="tg-green">$953,000 gain</span></b></div>
+        <div class="tg-trap"><b>The two decoys this generates:</b> &bull; <b>$1,453,000</b> = the price change but <b>forgot to subtract the coupon the buyer pays</b> &mdash; the most tempting trap; &bull; <b>$1,631,000</b> = &Delta;Spread &times; <b>beginning</b> SD (4.66), no coupon at all. <b>Correct = price change (each leg at its own SD) MINUS the coupon paid over the period.</b></div>
+        <div class="tg-tip"><b>Two reflexes:</b> (1) buy protection = short the index = short credit risk &rarr; profits when spreads <b>widen</b> (recession view); seller is the mirror. (2) <b>Always net the coupon</b>: the buyer PAYS the fixed premium (a cost), the seller RECEIVES it &mdash; &ldquo;total return <b>including the coupon outflow</b>&rdquo; is the exam&rsquo;s phrase for the correct answer.</div>
+      </div>
+
+      <div class="tg-card">
         <div class="tg-title">&ldquo;EVERYTHING THAT MOVES A CURRENCY&rdquo; &mdash; full driver list (R18 + economics foundation)</div>
         <div class="rc-info" style="background:rgba(121,192,255,.08);border-left:3px solid #79C0FF;border-radius:3px;padding:9px 12px;margin:10px 0;font-size:12.5px;line-height:1.55;color:#C9D1D9;"><b>Master principle:</b> a currency appreciates when capital flows <b>toward</b> it, and capital flows toward the <b>highest risk-adjusted expected return</b>. Every driver below is just a channel that raises or lowers that risk-adjusted return. (CFA Institute: capital flows respond to high nominal rates, lower inflation expectations, a lower risk premium, and an upward revision of long-run fair value.)</div>
         <table class="tg-tbl">
