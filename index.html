@@ -37383,7 +37383,7 @@ function switchScreen(name, btn) {
   if(name==='notes')  { buildNotesTree(); }
   if(name==='essay')  { /* static reference, no build needed */ }
   if(name==='essaybank') { ebRender(); }
-  if(name==='triggers') { /* static sheet, no build needed */ }
+  if(name==='triggers') { colorizeTriggers(); }
   if(name==='search') { var sq=document.getElementById('search-q'); if(sq) sq.focus(); }
 }
 
@@ -38408,6 +38408,48 @@ async function init() {
   applyFilters();
 }
 init();
+try{ colorizeTriggers(); }catch(e){}
+</script>
+
+<script>
+function colorizeTriggers(){
+  var root = document.getElementById('trig-recap');
+  if(!root || root.dataset.colorized === '1') return;
+  var GREEN = ['&uarr;','\u2191','appreciat','strengthen','tighten','encourages hedging','positive roll'];
+  var RED   = ['&darr;','\u2193','depreciat','weaken','widen','discourages hedging','negative roll'];
+  // operate on text nodes inside table cells and driver rows, skip nodes already inside a colored span
+  var cells = root.querySelectorAll('td, .tg-body, .rc-dbody');
+  cells.forEach(function(cell){
+    var walker = document.createTreeWalker(cell, NodeFilter.SHOW_TEXT, null, false);
+    var nodes = [];
+    while(walker.nextNode()){
+      var n = walker.currentNode;
+      // skip if any ancestor already has a color class
+      var anc = n.parentNode, skip=false;
+      while(anc && anc!==cell){ if(anc.className && /tg-(green|red|gold|main-c)/.test(anc.className)){skip=true;break;} anc=anc.parentNode; }
+      if(!skip) nodes.push(n);
+    }
+    nodes.forEach(function(n){
+      var t = n.nodeValue;
+      if(!t.trim()) return;
+      // arrows (unicode) first
+      var lo = t.toLowerCase();
+      var hasGreen = t.indexOf('\u2191')!==-1 || /appreciat|strengthen|\btighten|encourages hedging|positive roll/.test(lo);
+      var hasRed   = t.indexOf('\u2193')!==-1 || /depreciat|weaken|\bwiden|discourages hedging|negative roll/.test(lo);
+      if(!hasGreen && !hasRed) return;
+      var html = t;
+      html = html.replace(/\u2191/g,'\u0001G\u2191\u0002');
+      html = html.replace(/\u2193/g,'\u0001R\u2193\u0002');
+      html = html.replace(/(appreciat\w*|strengthen\w*|tighten\w*|encourages hedging|positive roll)/gi, '\u0001G$1\u0002');
+      html = html.replace(/(depreciat\w*|weaken\w*|widen\w*|discourages hedging|negative roll)/gi, '\u0001R$1\u0002');
+      html = html.replace(/\u0001G([^\u0002]*)\u0002/g,'<span class="tg-green">$1</span>')
+                 .replace(/\u0001R([^\u0002]*)\u0002/g,'<span class="tg-red">$1</span>');
+      var frag = document.createRange().createContextualFragment(html);
+      n.parentNode.replaceChild(frag, n);
+    });
+  });
+  root.dataset.colorized = '1';
+}
 </script>
 <!-- ══════════════════════════════════════
      SEARCH SCREEN
@@ -38551,6 +38593,7 @@ IRP: F = S &times; (1+i&#8346;)/(1+i&#8384;)  (period-adjust the rates; analyzed
           <tr><td>Selling it forward</td><td>Forward <b>discount</b> (F&lt;S, high-rate ccy)</td><td class="tg-red">Negative &rarr; costly, discourages hedging (EM!)</td></tr>
         </table>
         <div class="tg-body">Same number, other seat: the carry trade <b>earns</b> the rate differential (fund low, invest high; exit when vol spikes).</div>
+        <div class="tg-trap"><b>&#9888; This table is for the hedge that SELLS the currency forward (short forward &mdash; hedging a long foreign asset).</b> Rule: <b>short forward + F &gt; S (premium) = POSITIVE roll</b> (CFA LOS: if F&gt;S a short forward earns positive roll). If instead you must <b>BUY</b> the currency forward (long forward), the signs <b>flip</b>: long + premium = negative roll (you buy high as F rolls down to S). Always ask: am I the <b>short or the long</b> of this forward?</div>
       </div>
 
       <div class="tg-card">
@@ -38608,14 +38651,15 @@ market-adjusted    = arrival cost &minus; &beta; &times; index move  (strip the 
         <div style="overflow-x:auto;">
         <table class="tg-tbl" style="min-width:720px;">
           <tr><th>Phase</th><th>Inflation</th><th>Short rates / bond yields</th><th>Stocks &amp; cyclicals</th></tr>
-          <tr><td><b>Initial recovery</b></td><td>Decelerating / low</td><td>Short rates &amp; yields <b>low</b>, yields near a <b>bottom</b></td><td>Stocks may <b class="tg-green">rise strongly</b>; cyclicals (small caps, HY, EM) do well</td></tr>
-          <tr><td><b>Early expansion</b></td><td>Still low, creeping up</td><td>Short rates <b>moving up</b>; long yields stable / slightly up</td><td>Stocks <b class="tg-green">trending up</b></td></tr>
-          <tr><td><b>Late expansion</b></td><td><b>Rising</b> (accelerating)</td><td>Rates rise, <b>yield curve flattens</b></td><td>Stocks up but <b>volatile</b>; cyclicals underperform, <b>inflation hedges outperform</b></td></tr>
-          <tr><td><b>Slowdown</b></td><td>Peaks, then rolls over</td><td>Short rates at/near <b>peak</b>; govt yields peak then fall; <b>curve may invert</b>; credit spreads <b class="tg-red">widen</b></td><td>Stocks fall / defensive rotation</td></tr>
-          <tr><td><b>Contraction (recession)</b></td><td>Falling</td><td>Yields <b>fall</b>, bond prices <b class="tg-green">rise</b>; easing policy &rarr; curve <b>steepens</b></td><td>Stocks weak early, bottom before the economy</td></tr>
+          <tr><td><b>Initial recovery</b></td><td>Falling / low</td><td>Short rates &amp; yields <b>low</b>, bottoming; curve <b>steep</b></td><td>Stocks may <b class="tg-green">rise strongly</b>; cyclicals (small caps, HY, EM) do well</td></tr>
+          <tr><td><b>Early expansion (upswing)</b></td><td>Low, stable, creeping up</td><td>Short rates <b>rising</b>; long yields stable / slightly up</td><td>Stocks <b class="tg-green">trending up</b>; profits rise rapidly</td></tr>
+          <tr><td><b>Late expansion (upswing)</b></td><td><b>Rising</b> (accelerating)</td><td>Rates rise, <b>yield curve flattens</b></td><td>Stocks up but <b>volatile</b>; cyclicals underperform, <b>inflation hedges outperform</b></td></tr>
+          <tr><td><b>Slowdown</b></td><td><b>Still rising / accelerating</b> (does NOT peak yet)</td><td>Short rates at/near <b>peak</b>; govt yields peak then may <b>fall sharply</b>; <b>curve may invert</b>; credit spreads <b class="tg-red">widen</b> (weak credits)</td><td>Stocks may fall; <b>interest-sensitive &amp; &ldquo;quality&rdquo; stocks perform best</b></td></tr>
+          <tr><td><b>Contraction (recession)</b></td><td><b>Peaks, then falls</b> (the peak lives HERE)</td><td>Rates &amp; yields <b>drop</b>; easing policy &rarr; curve <b>steepens</b> (bull steepener)</td><td>Stocks drop initially but <b class="tg-green">rise well before recovery</b> (bottom ~3&ndash;6 mo before the economy)</td></tr>
         </table>
         </div>
         <div class="rc-info" style="background:rgba(121,192,255,.08);border-left:3px solid #79C0FF;border-radius:3px;padding:9px 12px;margin:10px 0;font-size:12.5px;line-height:1.55;color:#C9D1D9;">Business-cycle analysis is most reliable/actionable in the <b>2&ndash;3 year range</b>. Central banks are better at <b>slowing</b> than accelerating &rarr; they prefer persistent <b>positive</b> inflation. The real rate on cash is <b>procyclical</b> around the target.</div>
+        <div class="tg-trap"><b>&#9888; Classic trap &mdash; the inflation peak:</b> inflation keeps <b>accelerating right through Slowdown</b> and only <b>peaks in the Contraction/Recession</b> phase. Candidates wrongly place the peak at Slowdown because <b>short rates</b> peak there &mdash; but rates peak <b>before</b> inflation does (the central bank is still fighting rising prices). Rate peak = Slowdown; inflation peak = Recession.</div>
 
         <div class="tg-body" style="margin:12px 0 6px;"><b>2) Inflation vs expectations &mdash; effect by asset class</b> (the exam&rsquo;s core LOS grid):</div>
         <div style="overflow-x:auto;">
