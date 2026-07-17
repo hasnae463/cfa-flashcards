@@ -38645,6 +38645,150 @@ market-adjusted    = arrival cost &minus; &beta; &times; index move  (strip the 
       </div>
 
       <div class="tg-card">
+        <div class="tg-title">&ldquo;YIELD CURVE AS AN ECONOMIC PREDICTOR&rdquo; (CME Part 1 &mdash; policy mix)</div>
+        <div class="tg-body">The yield curve = relationship between <b>interest rates and maturity</b>. It&rsquo;s sensitive to government actions (monetary + fiscal) and to <b>current / expected conditions</b>. Its shape encodes the <b>policy mix</b>:</div>
+        <div class="rc-svg-wrap">
+          <svg viewBox="0 0 720 260" width="720" height="260" xmlns="http://www.w3.org/2000/svg" style="min-width:660px">
+            <style>
+              .ycax{stroke:#4A5561;stroke-width:1.4}
+              .yclbl{fill:#C9D1D9;font:600 11px monospace}
+              .ycsub{fill:#7D8590;font:9.5px monospace}
+              .ycg{stroke:#3DD68C;stroke-width:2.4;fill:none}
+              .ycf{stroke:#D4A017;stroke-width:2.4;fill:none}
+              .ycr{stroke:#FF7B72;stroke-width:2.4;fill:none}
+            </style>
+            <!-- three mini panels -->
+            <g transform="translate(20,20)">
+              <text x="100" y="0" text-anchor="middle" class="yclbl">STEEP &uarr;</text>
+              <line x1="20" y1="150" x2="200" y2="150" class="ycax"/>
+              <line x1="20" y1="30" x2="20" y2="150" class="ycax"/>
+              <path d="M 25 135 Q 100 120 195 45" class="ycg"/>
+              <text x="110" y="172" text-anchor="middle" class="ycsub">maturity &rarr;</text>
+              <text x="110" y="188" text-anchor="middle" class="ycsub">both EXPANSIVE</text>
+              <text x="110" y="203" text-anchor="middle" class="ycsub" fill="#3DD68C">&rarr; economy likely to EXPAND</text>
+            </g>
+            <g transform="translate(260,20)">
+              <text x="100" y="0" text-anchor="middle" class="yclbl">FLAT &middot;</text>
+              <line x1="20" y1="150" x2="200" y2="150" class="ycax"/>
+              <line x1="20" y1="30" x2="20" y2="150" class="ycax"/>
+              <path d="M 25 95 Q 100 88 195 82" class="ycf"/>
+              <text x="110" y="172" text-anchor="middle" class="ycsub">maturity &rarr;</text>
+              <text x="110" y="188" text-anchor="middle" class="ycsub">M restrictive + F stimulative</text>
+              <text x="110" y="203" text-anchor="middle" class="ycsub" fill="#D4A017">&rarr; implications LESS CLEAR</text>
+            </g>
+            <g transform="translate(500,20)">
+              <text x="100" y="0" text-anchor="middle" class="yclbl">INVERTED &darr;</text>
+              <line x1="20" y1="150" x2="200" y2="150" class="ycax"/>
+              <line x1="20" y1="30" x2="20" y2="150" class="ycax"/>
+              <path d="M 25 45 Q 100 120 195 135" class="ycr"/>
+              <text x="110" y="172" text-anchor="middle" class="ycsub">maturity &rarr;</text>
+              <text x="110" y="188" text-anchor="middle" class="ycsub">both RESTRICTIVE</text>
+              <text x="110" y="203" text-anchor="middle" class="ycsub" fill="#FF7B72">&rarr; economy likely to CONTRACT</text>
+            </g>
+            <text x="360" y="252" text-anchor="middle" class="ycsub">short &lt; long = steep (upward) &nbsp;|&nbsp; short &asymp; long = flat &nbsp;|&nbsp; short &gt; long = inverted (downward)</text>
+          </svg>
+        </div>
+        <table class="tg-tbl">
+          <tr><th>Monetary</th><th>Fiscal</th><th>Curve shape</th><th>Signal</th></tr>
+          <tr><td>Expansive</td><td>Expansive</td><td><b>Sharply upward (steep)</b> &mdash; short &lt; long</td><td class="tg-green">Economy likely to <b>expand</b></td></tr>
+          <tr><td>Restrictive</td><td>Restrictive</td><td><b>Downward / inverted</b> &mdash; short &gt; long</td><td class="tg-red">Economy likely to <b>contract</b></td></tr>
+          <tr><td>Restrictive</td><td>Stimulative</td><td><b>Flat</b></td><td>Implications <b>less clear</b></td></tr>
+          <tr><td>Stimulative</td><td>Restrictive</td><td><b>Moderately steep</b></td><td>Implications <b>less clear</b></td></tr>
+        </table>
+        <div class="tg-body" style="margin-top:10px;"><b>The curve morphing through the cycle:</b></div>
+        <div class="rc-svg-wrap">
+          <svg viewBox="0 0 720 210" width="720" height="210" xmlns="http://www.w3.org/2000/svg" style="min-width:660px">
+            <style>
+              .ccax{stroke:#4A5561;stroke-width:1.2}
+              .cclbl{fill:#C9D1D9;font:600 10.5px monospace}
+              .ccsub{fill:#7D8590;font:9px monospace}
+              .ccph{fill:#22D3EE;font:600 9.5px monospace}
+              .ccg{stroke:#3DD68C;stroke-width:2.2;fill:none}
+              .ccf{stroke:#D4A017;stroke-width:2.2;fill:none}
+              .ccr{stroke:#FF7B72;stroke-width:2.2;fill:none}
+              .ccarr{stroke:#7D8590;stroke-width:1.4;fill:none;marker-end:url(#cc-ah)}
+            </style>
+            <defs><marker id="cc-ah" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#7D8590"/></marker></defs>
+            <!-- 1 bottom: steep -->
+            <g transform="translate(10,26)">
+              <text x="70" y="0" text-anchor="middle" class="ccph">1 &middot; BOTTOM</text>
+              <line x1="15" y1="120" x2="130" y2="120" class="ccax"/>
+              <line x1="15" y1="20" x2="15" y2="120" class="ccax"/>
+              <path d="M 20 110 Q 70 95 125 32" class="ccg"/>
+              <text x="72" y="140" text-anchor="middle" class="ccsub">STEEP</text>
+              <text x="72" y="153" text-anchor="middle" class="ccsub">short cut to lows</text>
+            </g>
+            <line x1="152" y1="80" x2="182" y2="80" class="ccarr"/>
+            <!-- 2 expansion: flattens -->
+            <g transform="translate(190,26)">
+              <text x="70" y="0" text-anchor="middle" class="ccph">2 &middot; EXPANSION</text>
+              <line x1="15" y1="120" x2="130" y2="120" class="ccax"/>
+              <line x1="15" y1="20" x2="15" y2="120" class="ccax"/>
+              <path d="M 20 95 Q 70 75 125 45" class="ccg"/>
+              <text x="72" y="140" text-anchor="middle" class="ccsub">FLATTENS</text>
+              <text x="72" y="153" text-anchor="middle" class="ccsub">short rates rising</text>
+            </g>
+            <line x1="332" y1="80" x2="362" y2="80" class="ccarr"/>
+            <!-- 3 top: flat/inverted -->
+            <g transform="translate(370,26)">
+              <text x="70" y="0" text-anchor="middle" class="ccph">3 &middot; TOP / PEAK</text>
+              <line x1="15" y1="120" x2="130" y2="120" class="ccax"/>
+              <line x1="15" y1="20" x2="15" y2="120" class="ccax"/>
+              <path d="M 20 45 Q 70 85 125 78" class="ccr"/>
+              <text x="72" y="140" text-anchor="middle" class="ccsub">FLAT &rarr; INVERTED</text>
+              <text x="72" y="153" text-anchor="middle" class="ccsub">short &gt; long (tight)</text>
+            </g>
+            <line x1="512" y1="80" x2="542" y2="80" class="ccarr"/>
+            <!-- 4 contraction: re-steepens -->
+            <g transform="translate(550,26)">
+              <text x="70" y="0" text-anchor="middle" class="ccph">4 &middot; CONTRACTION</text>
+              <line x1="15" y1="120" x2="130" y2="120" class="ccax"/>
+              <line x1="15" y1="20" x2="15" y2="120" class="ccax"/>
+              <path d="M 20 105 Q 70 88 125 40" class="ccg"/>
+              <text x="72" y="140" text-anchor="middle" class="ccsub">RE-STEEPENS</text>
+              <text x="72" y="153" text-anchor="middle" class="ccsub">bull steepener</text>
+            </g>
+            <path d="M 620 165 Q 360 200 90 165" class="ccarr"/>
+            <text x="360" y="205" text-anchor="middle" class="ccsub">&hellip; cycle repeats: short rates cut in the downturn re-steepen the curve back to stage 1</text>
+          </svg>
+        </div>
+        <div class="tg-tip"><b>Curve over the cycle:</b> typically <b>steep at the bottom</b> of the cycle &rarr; <b>flattens toward expansion</b> &rarr; <b>flat / inverted at the top</b> &rarr; <b>re-steepens during contraction</b> (bull steepener as short rates get cut). Use the curve to read the state of the economy and the future path of rates &mdash; but the relationships <b>may not always hold</b>.</div>
+        <div class="tg-trap"><b>&#9888; The two clear signals are the &ldquo;both same&rdquo; cases:</b> both expansive &rarr; steep &rarr; expand; both restrictive &rarr; inverted &rarr; contract. When monetary and fiscal <b>pull opposite ways</b> (one tight, one loose), the curve is flat/moderate and the signal is <b>ambiguous</b> &mdash; don&rsquo;t over-read it.</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;HOW DOES FISCAL POLICY WORK?&rdquo; (CME Part 1 &mdash; countercyclical policy)</div>
+        <div class="tg-fl"><b>To STIMULATE (loose fiscal):</b>  &darr; taxes  or  &uarr; government spending  &rarr;  <b>larger budget deficit</b>
+<b>To REIN IN growth (tight fiscal):</b>  &uarr; taxes  or  &darr; spending  &rarr;  smaller deficit / surplus</div>
+        <div class="tg-trap"><b>&#9888; It&rsquo;s the CHANGE, not the level.</b> The <b>size</b> of the deficit does NOT stimulate &mdash; an <b>increase</b> in the deficit does. A large but <b>steady</b> deficit is <b>not stimulative</b>. This is the single most common fiscal-policy trap.</div>
+        <div class="tg-body"><b>Cyclical &ne; policy (automatic stabilizers don&rsquo;t count).</b> Deficit changes that happen <b>naturally over the cycle</b> are neither stimulative nor restrictive:</div>
+        <table class="tg-tbl">
+          <tr><th>Phase</th><th>What happens automatically</th><th>Deficit</th><th>Counts as stimulus?</th></tr>
+          <tr><td><b>Expansion</b></td><td>Tax receipts &uarr;, transfer payments (unemployment, welfare) &darr;</td><td>Deficit <b>falls</b></td><td class="tg-red"><b>No</b> &mdash; automatic</td></tr>
+          <tr><td><b>Recession</b></td><td>Tax receipts &darr;, transfers &uarr;</td><td>Deficit <b>rises</b></td><td class="tg-red"><b>No</b> &mdash; automatic</td></tr>
+          <tr><td><b>Discretionary</b></td><td>Government deliberately cuts taxes / raises spending</td><td>Deficit rises <b>by policy</b></td><td class="tg-green"><b>Yes</b> &mdash; real stimulus</td></tr>
+        </table>
+        <div class="tg-tip"><b>Exam trap (state it exactly):</b> a large deficit <b>by itself does not stimulate</b>; only a <b>discretionary increase</b> in the deficit does. <b>Automatic-stabilizer swings</b> (deficit falling in expansion, rising in recession) are <b>not</b> stimulus or restraint &mdash; they&rsquo;re the cycle working on the budget, not policy working on the cycle.</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;HOW DOES MONETARY POLICY WORK?&rdquo; (CME Part 1 &mdash; countercyclical policy)</div>
+        <div class="tg-body">Central banks use monetary policy as a <b>countercyclical force</b>, balancing <b>price stability</b> against <b>economic growth</b>. Goal: keep growth near its <b>long-run sustainable rate</b> &mdash; growth persistently <b>above</b> it &rarr; inflation. Late-expansion inflation &rarr; CBs turn <b>restrictive</b>; risk: <b>overtighten and cause a recession</b> (policy is better at slowing than accelerating).</div>
+        <div class="tg-fl"><b>Lower rates (easing) transmit to:</b>
+  &uarr; consumer spending      &uarr; business spending / investment
+  &uarr; stock prices           &uarr; bond prices (yields fall)
+  lower domestic currency  &rarr;  &uarr; exports (cheaper goods abroad)
+Raising rates (tightening) = the mirror on every line.</div>
+        <div class="tg-trap"><b>&#9888; Level matters, not just direction.</b> Rates raised <b>4% &rarr; 6%</b> to fight inflation may still be <b>low vs the country&rsquo;s historical average</b> &rarr; policy is <b>still growth-permissive</b> even though it&rsquo;s tightening. Direction &ne; the whole story &mdash; always compare the rate to the <b>neutral rate</b> and the country&rsquo;s norm before calling policy &ldquo;tight&rdquo; or &ldquo;loose.&rdquo;</div>
+        <div class="tg-body"><b>Neutral (equilibrium) rate</b> = the policy rate that balances growth &amp; inflation &mdash; neither stimulative nor restrictive:</div>
+        <div class="tg-fl"><b>Neutral rate = real trend growth component + inflation (target) component</b>  (+ judgment)
+e.g. inflation target 3% + trend growth 2%  &rarr;  <b>neutral &asymp; 5%</b>
+
+policy is EASY  when actual rate &lt; neutral   |   TIGHT when actual rate &gt; neutral</div>
+        <div class="tg-tip"><b>Exam reflex:</b> to judge if a central bank is stimulative or restrictive, don&rsquo;t look at the last move &mdash; compare the <b>actual rate to the neutral rate</b> (real growth + target inflation). A 6% rate is <b>loose</b> if neutral is 7%, <b>tight</b> if neutral is 5%.</div>
+      </div>
+
+      <div class="tg-card">
         <div class="tg-title">&ldquo;INFLATION, THE BUSINESS CYCLE &amp; ASSET RETURNS&rdquo; (CME Part 1 &mdash; LOS 1.g)</div>
 
         <div class="tg-body" style="margin-bottom:6px;"><b>1) Inflation &amp; the business cycle</b> &mdash; the 5 phases and what markets do:</div>
