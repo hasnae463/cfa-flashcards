@@ -38548,9 +38548,21 @@ function searchRecaps(){
         #trig-recap .tg-tbl { border-collapse:collapse; width:100%; margin:6px 0; }
         #trig-recap .tg-tbl th { background:#0B0F14; color:#D4A017; font-family:monospace; font-size:10px; letter-spacing:.04em; padding:6px 8px; text-align:left; border:1px solid #2A3441; }
         #trig-recap .tg-tbl td { border:1px solid #2A3441; padding:6px 8px; font-size:12px; line-height:1.55; color:#C9D1D9; vertical-align:top; }
-        #trig-recap .tg-fl { background:#0B0F14; border-radius:5px; padding:8px 11px; font-family:monospace; font-size:11.5px; line-height:1.65; color:#C9D1D9; white-space:pre-wrap; margin:8px 0; }
-        #trig-recap .tg-trap { background:rgba(255,123,114,.08); border-left:3px solid #FF7B72; border-radius:3px; padding:8px 11px; margin:8px 0; font-size:12px; line-height:1.5; color:#C9D1D9; }
-        #trig-recap .tg-body { font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+        /* ---- normalized box system: identical sizing, colour = meaning only ---- */
+        #trig-recap .tg-body { font-size:12.5px; line-height:1.6; color:#C9D1D9; margin:8px 0; }
+        #trig-recap .tg-tip,
+        #trig-recap .tg-trap,
+        #trig-recap .rc-info { font-size:12.5px; line-height:1.6; color:#C9D1D9; padding:9px 12px; margin:9px 0; border-radius:4px; border-left:3px solid; }
+        #trig-recap .tg-tip  { background:rgba(61,214,140,.08);  border-left-color:#3DD68C; }
+        #trig-recap .tg-trap { background:rgba(255,123,114,.08); border-left-color:#FF7B72; }
+        #trig-recap .rc-info { background:rgba(121,192,255,.08); border-left-color:#79C0FF; }
+        #trig-recap .tg-fl { background:#0B0F14; border-radius:4px; padding:9px 12px; font-family:monospace; font-size:11.5px; line-height:1.65; color:#C9D1D9; white-space:pre-wrap; margin:9px 0; }
+        #trig-recap .rc-drivers { background:#0B0F14; border:1px solid #2A3441; border-radius:5px; padding:9px 11px; margin:10px 0; }
+        #trig-recap .rc-drow { display:grid; grid-template-columns:150px 1fr; column-gap:14px; align-items:start; padding:6px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+        #trig-recap .rc-drow:last-child { border-bottom:none; }
+        #trig-recap .rc-dlabel { color:#79C0FF; font-family:monospace; font-size:10px; letter-spacing:.03em; padding-top:2px; }
+        #trig-recap .rc-dbody { min-width:0; }
+        @media (max-width:640px){ #trig-recap .rc-drow { grid-template-columns:1fr; row-gap:3px; } #trig-recap .rc-dlabel { padding-top:0; } }
         #trig-recap .tg-green { color:#3DD68C; } #trig-recap .tg-red { color:#FF7B72; } #trig-recap .tg-gold { color:#D4A017; }
         #trig-recap b { color:#E6EDF3; }
       </style>
@@ -38646,7 +38658,7 @@ market-adjusted    = arrival cost &minus; &beta; &times; index move  (strip the 
 
       <div class="tg-card">
         <div class="tg-title">&ldquo;EM HEALTH CHECKLIST &mdash; THRESHOLDS &amp; WHY THEY MATTER&rdquo; (CME / EM debt)</div>
-        <div class="rc-info" style="background:rgba(121,192,255,.08);border-left:3px solid #79C0FF;border-radius:3px;padding:9px 12px;margin:10px 0;font-size:12.5px;line-height:1.55;color:#C9D1D9;"><b>The unifying story:</b> EM crises are almost always <b>foreign-currency debt + short maturities + reliance on foreign capital</b>. Every threshold below is really one question: <b>if foreign investors suddenly stop lending or the currency falls, can this country still pay?</b></div>
+        <div class="rc-info"><b>The unifying story:</b> EM crises are almost always <b>foreign-currency debt + short maturities + reliance on foreign capital</b>. Every threshold below is really one question: <b>if foreign investors suddenly stop lending or the currency falls, can this country still pay?</b></div>
         <table class="tg-tbl">
           <tr><th>Metric</th><th>Threshold</th><th>Why it matters / what goes wrong</th></tr>
           <tr><td><b>Fiscal deficit / GDP</b></td><td class="tg-red"><b>&gt; 4%</b> = substantial credit risk</td><td>Gov&rsquo;t keeps borrowing to cover the shortfall. EMs <b>borrow short &amp; refinance repeatedly</b> &rarr; each rollover needs markets to stay willing to lend. A big deficit compounds the debt pile &rarr; higher odds the market balks at some rollover &rarr; <b>non-payment risk rises</b>. (The flow that feeds the stock.)</td></tr>
@@ -38661,11 +38673,11 @@ market-adjusted    = arrival cost &minus; &beta; &times; index move  (strip the 
 
       <div class="tg-card">
         <div class="tg-title">&ldquo;STEEP CURVE = BULLISH FOR CREDIT &rarr; BARBELL&rdquo; (CME / credit)</div>
-        <div class="rc-info" style="background:rgba(121,192,255,.08);border-left:3px solid #79C0FF;border-radius:3px;padding:9px 12px;margin:10px 0;font-size:12.5px;line-height:1.55;color:#C9D1D9;"><b>Why a steep curve is bullish for a credit manager:</b> you&rsquo;re paid <b>two fat premiums at once</b> &mdash; a high credit premium AND a high term premium &mdash; at exactly the moment defaults are about to <b>fall</b>. Paid a lot, for risk that&rsquo;s about to shrink.</div>
+        <div class="rc-info"><b>Why a steep curve is bullish for a credit manager:</b> you&rsquo;re paid <b>two fat premiums at once</b> &mdash; a high credit premium AND a high term premium &mdash; at exactly the moment defaults are about to <b>fall</b>. Paid a lot, for risk that&rsquo;s about to shrink.</div>
         <div class="rc-drivers">
-          <span class="rc-drow"><span class="rc-dlabel">High OAS</span><span class="rc-dbody">OAS = pure compensation for <b>credit risk</b> (spread over Treasuries, options stripped out). High OAS &rarr; market pays a lot to hold credit &rarr; big <b>credit premium</b>.</span></span>
-          <span class="rc-drow"><span class="rc-dlabel">Steep Treasury curve</span><span class="rc-dbody">Signals <b>expansion ahead</b> (short rates cut to stimulate; both policies expansive &mdash; card 19) &rarr; firms improve &rarr; <b>default rates decline</b>. So the high OAS is <b>overcompensating</b> for a risk that&rsquo;s falling.</span></span>
-          <span class="rc-drow"><span class="rc-dlabel">Big term premium too</span><span class="rc-dbody">Steep = long yields &gt;&gt; short yields &rarr; extending maturity (<b>duration/term risk</b>) earns a large <b>term premium</b>. So a steep curve pays generously for <b>credit AND duration</b> risk together.</span></span>
+          <div class="rc-drow"><div class="rc-dlabel">High OAS</div><div class="rc-dbody">OAS = pure compensation for <b>credit risk</b> (spread over Treasuries, options stripped out). High OAS &rarr; market pays a lot to hold credit &rarr; big <b>credit premium</b>.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Steep Treasury curve</div><div class="rc-dbody">Signals <b>expansion ahead</b> (short rates cut to stimulate; both policies expansive &mdash; card 19) &rarr; firms improve &rarr; <b>default rates decline</b>. So the high OAS is <b>overcompensating</b> for a risk that&rsquo;s falling.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Big term premium too</div><div class="rc-dbody">Steep = long yields &gt;&gt; short yields &rarr; extending maturity (<b>duration/term risk</b>) earns a large <b>term premium</b>. So a steep curve pays generously for <b>credit AND duration</b> risk together.</div></div>
         </div>
         <div class="tg-body"><b>The trade &mdash; a BARBELL</b> (hold both ends, skip the middle), sourcing each premium where it&rsquo;s <b>safest</b>:</div>
         <table class="tg-tbl">
@@ -38678,7 +38690,7 @@ market-adjusted    = arrival cost &minus; &beta; &times; index move  (strip the 
 
       <div class="tg-card">
         <div class="tg-title">&ldquo;WHAT PREDICTS CREDIT-SPREAD CHANGES? (&amp; why the spread isn&rsquo;t a default forecast)&rdquo; (CME)</div>
-        <div class="rc-info" style="background:rgba(121,192,255,.08);border-left:3px solid #79C0FF;border-radius:3px;padding:9px 12px;margin:10px 0;font-size:12.5px;line-height:1.55;color:#C9D1D9;"><b>Unifying principle:</b> spread changes are predicted by <b>forward-looking, market-priced, firm-value signals</b> &mdash; NOT by <b>backward-looking, lagged, lumpy realized data</b>. Markets price the future; macro data reports the past.</div>
+        <div class="rc-info"><b>Unifying principle:</b> spread changes are predicted by <b>forward-looking, market-priced, firm-value signals</b> &mdash; NOT by <b>backward-looking, lagged, lumpy realized data</b>. Markets price the future; macro data reports the past.</div>
         <table class="tg-tbl">
           <tr><th>Predictor</th><th>Strong / weak?</th><th>Why</th></tr>
           <tr><td><b>Stock returns</b></td><td class="tg-green"><b>STRONG</b></td><td>Equity &amp; credit are claims on the same firm. Stock <b>rises</b> &rarr; bigger equity cushion &rarr; default risk falls &rarr; spreads <b>tighten</b> (Merton: bond &asymp; short a put on firm assets).</td></tr>
@@ -38689,16 +38701,16 @@ market-adjusted    = arrival cost &minus; &beta; &times; index move  (strip the 
         </table>
         <div class="tg-body" style="margin-top:10px;"><b>Why the yield spread is NOT a good predictor of future default rates:</b></div>
         <div class="rc-drivers">
-          <span class="rc-drow"><span class="rc-dlabel">Premiums uneven</span><span class="rc-dbody">The realized credit premium isn&rsquo;t earned smoothly &mdash; <b>many small gains, then occasional large losses</b> (a bad recession year). Lumpy, not steady, so one year&rsquo;s spread is a poor guide to what you&rsquo;ll actually earn.</span></span>
-          <span class="rc-drow"><span class="rc-dlabel">Defaults cluster</span><span class="rc-dbody">Defaults are <b>serially correlated</b> &mdash; long stretches of low defaults (calm expansions), then a <b>sudden cluster of high</b> defaults in recessions. They come in waves, not evenly spread.</span></span>
-          <span class="rc-drow"><span class="rc-dlabel">So the spread is&hellip;</span><span class="rc-dbody"><b>Compensation for bearing lumpy, clustered, hard-to-time risk</b> (plus liquidity), NOT an unbiased forecast of defaults. A tight spread is <b>not &ldquo;safe&rdquo;</b> &mdash; it&rsquo;s often the calm before the cluster; a wide spread reflects current fear, not a clean forecast.</span></span>
+          <div class="rc-drow"><div class="rc-dlabel">Premiums uneven</div><div class="rc-dbody">The realized credit premium isn&rsquo;t earned smoothly &mdash; <b>many small gains, then occasional large losses</b> (a bad recession year). Lumpy, not steady, so one year&rsquo;s spread is a poor guide to what you&rsquo;ll actually earn.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Defaults cluster</div><div class="rc-dbody">Defaults are <b>serially correlated</b> &mdash; long stretches of low defaults (calm expansions), then a <b>sudden cluster of high</b> defaults in recessions. They come in waves, not evenly spread.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">So the spread is&hellip;</div><div class="rc-dbody"><b>Compensation for bearing lumpy, clustered, hard-to-time risk</b> (plus liquidity), NOT an unbiased forecast of defaults. A tight spread is <b>not &ldquo;safe&rdquo;</b> &mdash; it&rsquo;s often the calm before the cluster; a wide spread reflects current fear, not a clean forecast.</div></div>
         </div>
         <div class="tg-trap"><b>&#9888; The exam split:</b> to predict <b>spread changes</b> &rarr; use stocks, stock vol, risk-free rate (forward-looking market signals). Do NOT lean on GDP or realized defaults (lagged, lumpy). And never read today&rsquo;s spread as the market&rsquo;s <b>default forecast</b> &mdash; it&rsquo;s a risk premium for timing risk, earned unevenly.</div>
       </div>
 
       <div class="tg-card">
         <div class="tg-title">&ldquo;ARE BONDS A RECESSION HEDGE? &rarr; TERM PREMIUM&rdquo; (CME Part 1)</div>
-        <div class="rc-info" style="background:rgba(121,192,255,.08);border-left:3px solid #79C0FF;border-radius:3px;padding:9px 12px;margin:10px 0;font-size:12.5px;line-height:1.55;color:#C9D1D9;"><b>The insurance logic:</b> an asset is a <b>hedge</b> if it pays off <b>when you need it most (in a recession)</b>. Good insurance &rarr; investors accept a <b>LOW</b> expected return (low term premium). Bad insurance (does badly in bad times) &rarr; investors demand a <b>HIGH</b> return. So the term premium hinges on one thing: <b>do bonds do well or badly in a recession?</b> &mdash; which depends on <b>why</b> inflation moves.</div>
+        <div class="rc-info"><b>The insurance logic:</b> an asset is a <b>hedge</b> if it pays off <b>when you need it most (in a recession)</b>. Good insurance &rarr; investors accept a <b>LOW</b> expected return (low term premium). Bad insurance (does badly in bad times) &rarr; investors demand a <b>HIGH</b> return. So the term premium hinges on one thing: <b>do bonds do well or badly in a recession?</b> &mdash; which depends on <b>why</b> inflation moves.</div>
         <table class="tg-tbl">
           <tr><th>Inflation caused by&hellip;</th><th>Inflation vs growth</th><th>Bonds in a recession</th><th>Bond return vs growth</th><th>Recession hedge?</th><th>Term premium</th></tr>
           <tr><td><b>DEMAND shocks</b> (agg. demand)</td><td>moves <b>WITH</b> growth (boom&rarr;inflation up, recession&rarr;inflation down)</td><td class="tg-green">rise (inflation falls &rarr; CB cuts &rarr; yields fall)</td><td><b>NEGATIVELY</b> correlated (bonds gain when growth is bad)</td><td class="tg-green"><b>GOOD hedge</b></td><td class="tg-green"><b>LOW</b></td></tr>
@@ -38714,7 +38726,7 @@ SUPPLY inflation  &rarr; recession brings HIGH inflation &rarr; no cuts &rarr; b
 
       <div class="tg-card">
         <div class="tg-title">&ldquo;CURRENCY PEGS, RATE DIFFERENTIALS &amp; THE TRILEMMA&rdquo; (CME Part 1)</div>
-        <div class="rc-info" style="background:rgba(121,192,255,.08);border-left:3px solid #79C0FF;border-radius:3px;padding:9px 12px;margin:10px 0;font-size:12.5px;line-height:1.55;color:#C9D1D9;"><b>Master idea:</b> capital chases the best risk-adjusted return, so the <b>interest rate</b>, the <b>currency</b>, or <b>both</b> must adjust until investors are indifferent. A peg removes the currency as a shock absorber &rarr; <b>rates absorb everything</b>.</div>
+        <div class="rc-info"><b>Master idea:</b> capital chases the best risk-adjusted return, so the <b>interest rate</b>, the <b>currency</b>, or <b>both</b> must adjust until investors are indifferent. A peg removes the currency as a shock absorber &rarr; <b>rates absorb everything</b>.</div>
 
         <div class="tg-body"><b>The Impossible Trinity (trilemma)</b> &mdash; a country can hold at most <b>2 of 3</b>; the third must give:</div>
         <table class="tg-tbl">
@@ -38727,19 +38739,19 @@ SUPPLY inflation  &rarr; recession brings HIGH inflation &rarr; no cuts &rarr; b
 
         <div class="tg-body" style="margin-top:12px;"><b>WITH a peg</b> (small economy pegs to a larger anchor):</div>
         <div class="rc-drivers">
-          <span class="rc-drow"><span class="rc-dlabel">Cycles converge</span><span class="rc-dbody">To hold the peg the country must <b>mimic the anchor&rsquo;s monetary policy</b> &rarr; monetary conditions &amp; business cycles <b>converge</b>. If it doesn&rsquo;t follow, investors favor one currency &rarr; <b>the peg fails</b>.</span></span>
-          <span class="rc-drow"><span class="rc-dlabel">Rate differential</span><span class="rc-dbody">Pegged-currency rates generally <b>exceed</b> the anchor&rsquo;s &mdash; the gap is a <b>risk premium on the peg surviving</b>. High confidence &rarr; <b>small</b> differential; doubt &rarr; <b>large</b> differential. It&rsquo;s a live confidence meter.</span></span>
-          <span class="rc-drow"><span class="rc-dlabel">Defending the peg</span><span class="rc-dbody">If confidence cracks and the currency starts to <b>fall</b>, the country <b>raises short-term rates</b> to attract capital and hold the peg (rates are the only lever left once the currency can&rsquo;t move).</span></span>
+          <div class="rc-drow"><div class="rc-dlabel">Cycles converge</div><div class="rc-dbody">To hold the peg the country must <b>mimic the anchor&rsquo;s monetary policy</b> &rarr; monetary conditions &amp; business cycles <b>converge</b>. If it doesn&rsquo;t follow, investors favor one currency &rarr; <b>the peg fails</b>.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Rate differential</div><div class="rc-dbody">Pegged-currency rates generally <b>exceed</b> the anchor&rsquo;s &mdash; the gap is a <b>risk premium on the peg surviving</b>. High confidence &rarr; <b>small</b> differential; doubt &rarr; <b>large</b> differential. It&rsquo;s a live confidence meter.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Defending the peg</div><div class="rc-dbody">If confidence cracks and the currency starts to <b>fall</b>, the country <b>raises short-term rates</b> to attract capital and hold the peg (rates are the only lever left once the currency can&rsquo;t move).</div></div>
         </div>
 
         <div class="tg-body"><b>WITHOUT a peg</b> (floating) &mdash; the differential &amp; currency reflect fundamentals:</div>
         <div class="rc-drivers">
-          <span class="rc-drow"><span class="rc-dlabel">Overvalued currency</span><span class="rc-dbody">If substantially <b>overvalued &amp; expected to decline</b> &rarr; bond rates likely <b>higher</b>, to compensate foreign investors for the expected currency loss on conversion (UCIRP logic).</span></span>
-          <span class="rc-drow"><span class="rc-dlabel">Relative bond yields</span><span class="rc-dbody">Both <b>nominal &amp; real</b> yields <b>rise</b> with strong economic activity &amp; rising demand for funds.</span></span>
-          <span class="rc-drow"><span class="rc-dlabel">Real rates</span><span class="rc-dbody">Driven by <b>savings/investment</b> decisions &amp; <b>capital productivity</b>. They <b>differ across countries but tend to move together</b> &mdash; global saving &amp; investing are linked through the <b>current account</b>.</span></span>
+          <div class="rc-drow"><div class="rc-dlabel">Overvalued currency</div><div class="rc-dbody">If substantially <b>overvalued &amp; expected to decline</b> &rarr; bond rates likely <b>higher</b>, to compensate foreign investors for the expected currency loss on conversion (UCIRP logic).</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Relative bond yields</div><div class="rc-dbody">Both <b>nominal &amp; real</b> yields <b>rise</b> with strong economic activity &amp; rising demand for funds.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Real rates</div><div class="rc-dbody">Driven by <b>savings/investment</b> decisions &amp; <b>capital productivity</b>. They <b>differ across countries but tend to move together</b> &mdash; global saving &amp; investing are linked through the <b>current account</b>.</div></div>
         </div>
         <div class="tg-trap"><b>&#9888; The link between the two halves:</b> same law, two regimes. <b>Pegged</b> = currency can&rsquo;t move, so <b>the rate differential (and rate hikes) do ALL the adjusting</b>. <b>Floating</b> = the adjustment <b>splits</b> between the currency&rsquo;s move and the rate differential (an overvalued, expected-to-fall currency pays a higher yield to hold investors). The rate differential is always the market pricing the risk of holding that currency.</div>
-        <div class="rc-info" style="background:rgba(121,192,255,.08);border-left:3px solid #79C0FF;border-radius:3px;padding:9px 12px;margin:10px 0;font-size:12.5px;line-height:1.55;color:#C9D1D9;"><b>&ldquo;But rate moves influence the currency &mdash; isn&rsquo;t that still independent MP?&rdquo;</b> No. Having the rate <b>tool</b> &ne; monetary <b>independence</b>. Independence = using rates for your <b>own domestic goals</b> (inflation, growth). Under a peg with open capital, <b>every rate decision is consumed defending the currency</b>, leaving nothing for domestic goals.<br><br><b>Independent MP:</b> look at the <b>domestic economy</b> &rarr; set the rate you want &rarr; accept whatever the currency does.<br><b>Pegged MP:</b> look at the <b>currency</b> &rarr; set whatever rate holds the peg &rarr; accept whatever that does to the economy.<br><br><b>One-line resolution:</b> under a peg, MP <b>acts but does not choose</b> &mdash; you can touch rates, but only in service of the peg, never in service of your economy. Defending a falling currency by <b>hiking</b> when a weak economy would want a <b>cut</b> is the proof: the peg chose, not the central bank.</div>
+        <div class="rc-info"><b>&ldquo;But rate moves influence the currency &mdash; isn&rsquo;t that still independent MP?&rdquo;</b> No. Having the rate <b>tool</b> &ne; monetary <b>independence</b>. Independence = using rates for your <b>own domestic goals</b> (inflation, growth). Under a peg with open capital, <b>every rate decision is consumed defending the currency</b>, leaving nothing for domestic goals.<br><br><b>Independent MP:</b> look at the <b>domestic economy</b> &rarr; set the rate you want &rarr; accept whatever the currency does.<br><b>Pegged MP:</b> look at the <b>currency</b> &rarr; set whatever rate holds the peg &rarr; accept whatever that does to the economy.<br><br><b>One-line resolution:</b> under a peg, MP <b>acts but does not choose</b> &mdash; you can touch rates, but only in service of the peg, never in service of your economy. Defending a falling currency by <b>hiking</b> when a weak economy would want a <b>cut</b> is the proof: the peg chose, not the central bank.</div>
       </div>
 
       <div class="tg-card">
@@ -38900,7 +38912,7 @@ policy is EASY  when actual rate &lt; neutral   |   TIGHT when actual rate &gt; 
           <tr><td><b>Contraction (recession)</b></td><td><b>Peaks, then falls</b> (the peak lives HERE)</td><td>Rates &amp; yields <b>drop</b>; easing policy &rarr; curve <b>steepens</b> (bull steepener)</td><td>Stocks drop initially but <b class="tg-green">rise well before recovery</b> (bottom ~3&ndash;6 mo before the economy)</td></tr>
         </table>
         </div>
-        <div class="rc-info" style="background:rgba(121,192,255,.08);border-left:3px solid #79C0FF;border-radius:3px;padding:9px 12px;margin:10px 0;font-size:12.5px;line-height:1.55;color:#C9D1D9;">Business-cycle analysis is most reliable/actionable in the <b>2&ndash;3 year range</b>. Central banks are better at <b>slowing</b> than accelerating &rarr; they prefer persistent <b>positive</b> inflation. The real rate on cash is <b>procyclical</b> around the target.</div>
+        <div class="rc-info">Business-cycle analysis is most reliable/actionable in the <b>2&ndash;3 year range</b>. Central banks are better at <b>slowing</b> than accelerating &rarr; they prefer persistent <b>positive</b> inflation. The real rate on cash is <b>procyclical</b> around the target.</div>
         <div class="tg-trap"><b>&#9888; Classic trap &mdash; the inflation peak:</b> inflation keeps <b>accelerating right through Slowdown</b> and only <b>peaks in the Contraction/Recession</b> phase. Candidates wrongly place the peak at Slowdown because <b>short rates</b> peak there &mdash; but rates peak <b>before</b> inflation does (the central bank is still fighting rising prices). Rate peak = Slowdown; inflation peak = Recession.</div>
 
         <div class="tg-body" style="margin:12px 0 6px;"><b>2) Inflation vs expectations &mdash; effect by asset class</b> (the exam&rsquo;s core LOS grid):</div>
@@ -38918,7 +38930,7 @@ policy is EASY  when actual rate &lt; neutral   |   TIGHT when actual rate &gt; 
         <div class="tg-body" style="margin:12px 0 6px;"><b>3) Why cash has a POSITIVE real return in deflation (nominal rate bound at 0)</b></div>
         <div class="tg-fl">real return on cash = nominal (floored at ~0%) &minus; inflation
 in deflation inflation &lt; 0  &rarr;  real return = 0 &minus; (&minus;x%) = <b>+x%</b>  (positive!)</div>
-        <div class="rc-info" style="background:rgba(121,192,255,.08);border-left:3px solid #79C0FF;border-radius:3px;padding:9px 12px;margin:10px 0;font-size:12.5px;line-height:1.55;color:#C9D1D9;">
+        <div class="rc-info">
           <b>1. Cash becomes attractive vs bonds / risky assets in deflation.</b> Normally cash is the drag (negative real return when inflation is positive &mdash; the &ldquo;cash drag&rdquo; from equitization). Flip inflation negative and cash quietly becomes a <b>positive-real-return</b> holding &mdash; one reason deflation is pernicious: it incentivizes <b>hoarding cash</b> instead of spending/investing, deepening the downturn.<br><br>
           <b>2. It&rsquo;s the floor that makes deflation dangerous for policy (the ZLB trap).</b> Because nominal rates can&rsquo;t go below zero, the central bank <b>can&rsquo;t make cash unattractive enough</b> to force money out &mdash; real rates stay positive (or can&rsquo;t fall enough), monetary stimulus loses traction.<br><br>
           <b>3. Asset-allocation / liability context:</b> when discounting or comparing returns, cash&rsquo;s real return <b>isn&rsquo;t zero in deflation &mdash; it&rsquo;s positive</b>, which changes the relative attractiveness of holding cash vs locking into low-yielding bonds.
@@ -38957,7 +38969,7 @@ coupon paid  = 0.05 &times; $10M              = <b class="tg-red">&minus;$500,00
 
       <div class="tg-card">
         <div class="tg-title">&ldquo;EVERYTHING THAT MOVES A CURRENCY&rdquo; &mdash; full driver list (R18 + economics foundation)</div>
-        <div class="rc-info" style="background:rgba(121,192,255,.08);border-left:3px solid #79C0FF;border-radius:3px;padding:9px 12px;margin:10px 0;font-size:12.5px;line-height:1.55;color:#C9D1D9;"><b>Master principle:</b> a currency appreciates when capital flows <b>toward</b> it, and capital flows toward the <b>highest risk-adjusted expected return</b>. Every driver below is just a channel that raises or lowers that risk-adjusted return. (CFA Institute: capital flows respond to high nominal rates, lower inflation expectations, a lower risk premium, and an upward revision of long-run fair value.)</div>
+        <div class="rc-info"><b>Master principle:</b> a currency appreciates when capital flows <b>toward</b> it, and capital flows toward the <b>highest risk-adjusted expected return</b>. Every driver below is just a channel that raises or lowers that risk-adjusted return. (CFA Institute: capital flows respond to high nominal rates, lower inflation expectations, a lower risk premium, and an upward revision of long-run fair value.)</div>
         <table class="tg-tbl">
           <tr><th style="width:34%">Factor</th><th style="width:14%">Currency</th><th>Why (the mechanism)</th></tr>
           <tr><td colspan="3" style="background:#0B0F14;color:#D4A017;font-family:var(--mono);font-size:10px;letter-spacing:.05em;">THE FOUR CANONICAL R18 FUNDAMENTAL DRIVERS (exam-quotable)</td></tr>
