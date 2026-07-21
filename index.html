@@ -31762,6 +31762,7 @@ SMAs: liquidity = liquidity of the underlying assets (sellable any time)</div>
             <button class="gips-modtab" onclick="gipsMod(event,'gipsm-155')">15.5 Presentation &amp; Reporting</button>
             <button class="gips-modtab" onclick="gipsMod(event,'gipsm-156')">15.6 Valuation Hierarchy</button>
             <button class="gips-modtab" onclick="gipsMod(event,'gipsm-157')">15.7 Verification</button>
+            <button class="gips-modtab" onclick="gipsMod(event,'gips-recap')">&#128203; Recap</button>
             <button class="gips-modtab" onclick="gipsMod(event,'gipsm-err')">&#9888; Errors</button>
           </div>
 
@@ -32841,6 +32842,234 @@ Asset-weighted SD:
             </div>
             <div id="gipserr-mastery" class="gips-toppanel">
               <div class="gips-card"><div class="gips-title">Mastery checklist</div><div class="gips-info">Confirmed mastery points move here.</div></div>
+            </div>
+          </div>
+
+          <!-- ════════ 📋 RECAP — READING 15 (registered in RECAP_REGISTRY) ════════ -->
+          <div id="gips-recap" class="gips-modpanel">
+            <style>
+              #gips-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+              #gips-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(52,211,153,.14); border:1px solid var(--gips-main); color:var(--gips-main); border-radius:3px; padding:1px 6px; margin-right:6px; }
+              #gips-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
+              #gips-recap .rc-drow { display:grid; grid-template-columns:160px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+              #gips-recap .rc-drow:last-child { border-bottom:none; }
+              #gips-recap .rc-dlabel { color:var(--gips-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #gips-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #gips-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #gips-recap .rc-dlabel { padding-top:0; }
+              }
+              #gips-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
+              #gips-recap .gips-tip { background:rgba(63,185,80,.08); border-left:3px solid var(--gips-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+              #gips-recap .gips-fl { display:block; white-space:pre-wrap; font-family:var(--mono); font-size:12px; line-height:1.6; color:#C9D1D9; background:#0B0F14; border:1px solid var(--border); border-radius:6px; padding:11px 13px; margin:10px 0; overflow-x:auto; tab-size:2; }
+              #gips-recap .gips-fl b { color:var(--gips-main); font-weight:600; }
+            </style>
+
+            <button class="recap-print-btn" onclick="printOneRecap('gips-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+            <div class="gips-card">
+              <div class="gips-title">Reading 15 &middot; Overview of the Global Investment Performance Standards</div>
+              <div class="gips-body">Full-reading recap: <b>objectives / scope / benefits (15.a)</b>, <b>compliance fundamentals &amp; firm definition (15.b)</b>, <b>return calculations (15.c)</b>, <b>composites &amp; asset weighting (15.e&ndash;h)</b>, <b>presentation &amp; reporting (15.i)</b>, <b>portability (15.j)</b>, <b>valuation hierarchy (15.d)</b>, and <b>verification (15.k)</b>. All calculation figures <span class="gips-green">node-verified</span> against the Kaplan examples.</div>
+              <div class="gips-info"><b>Exam focus:</b> GIPS sits inside Performance Measurement (5&ndash;10% of the exam), usually item sets, occasionally constructed response. Like Ethics: know the principles, then <b>apply them to spot compliance / noncompliance</b>. There is a surprising number of calculation issues &mdash; work the practice questions. Master heuristic: <b class="gips-main-c">GIPS can't be halfway</b>.</div>
+            </div>
+
+            <!-- ═══ 15.1 ═══ -->
+            <div class="gips-card">
+              <div class="rc-sec">Module 15.1 &middot; GIPS Overview</div>
+              <div class="gips-title"><span class="rc-los">LOS 15.a</span>Objectives, scope, benefits</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">Nature</div><div class="rc-dbody"><b>Voluntary</b>, ethical <b>minimum</b> standards for performance presentation, built on <b>full disclosure and fair representation</b>; firms should add any information that helps clients understand results. 2020 edition: three sections &mdash; <b>firms, asset owners, verifiers</b>. Asset owners who <b>compete for business</b> use the Standards for <b>Firms</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">5 objectives</div><div class="rc-dbody">Advance investor interests &amp; confidence &middot; accurate, comparable data &middot; a <b>globally accepted standard</b> for determining AND presenting performance &middot; fair competition among global managers &middot; encourage industry <b>self-regulation</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Vocabulary</div><div class="rc-dbody"><b>Composite</b> = collection of portfolios with similar mandates/objectives/strategies. <b>Segregated account (SMA)</b> = portfolio owned by a single investor. <b>Pooled fund</b> = not owned by a single investor: <b>broad distribution</b> = regulated, general public (mutual funds); <b>limited distribution</b> = not available to the general public (hedge funds).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Scope: FIRMWIDE only</div><div class="rc-dbody">Compliance can be claimed <b>only on a firmwide basis</b> &mdash; never for some products, specific composites, pooled funds, or portfolios. Must comply with <b>all</b> applicable requirements (recommendations optional, best practice). The <b>GIPS Report</b> must go to <b>ALL</b> prospective clients and investors.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Compliance claim means</div><div class="rc-dbody">Data inputs, processes &amp; return calcs compliant &middot; <b>all fee-paying segregated accounts in &ge;1 composite</b> &middot; all <b>limited distribution pooled funds</b> in an appropriate composite &middot; <b>broad distribution pooled funds only required in a composite if the strategy is also offered as separate accounts</b> (why: they're government-regulated &mdash; investor protections already exist).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Benefits</div><div class="rc-dbody"><b>To clients/investors</b>: standardized determination &amp; presentation &rarr; comparability; more reliable performance; benchmark requirements facilitate strategy discussion. <b>To managers</b>: investor confidence (especially with third-party verification), attracts new investors, compete internationally, stronger internal controls from recordkeeping, extra operational insight from adopted technology &mdash; against the costs of compliance.</div></div>
+              </div>
+            </div>
+
+            <!-- ═══ 15.2 ═══ -->
+            <div class="gips-card">
+              <div class="rc-sec">Module 15.2 &middot; Compliance Fundamentals</div>
+              <div class="gips-title"><span class="rc-los">LOS 15.b</span>Firm definition, total firm assets, discretion basics</div>
+              <div class="gips-body"><b>Firm</b> = &ldquo;an investment firm, subsidiary, or division held out to clients as a <b>distinct business entity</b>&rdquo; &mdash; a unit organizationally/functionally separated that <b>retains discretion over the assets it manages</b> and should have <b>autonomy over investment decisions</b>. More likely distinct if it has its own: legal organization, market, client base, investment process, strategy, investment staff, physical location, chain of command. Judgment case: two divisions sharing a trading desk &mdash; if the desk <b>only executes</b>, they can still be distinct; if it <b>helps value securities</b>, less likely.</div>
+              <table class="gips-tbl">
+                <tr><th>Total firm assets INCLUDE</th><th>Total firm assets EXCLUDE</th></tr>
+                <tr><td>Discretionary <b>AND nondiscretionary</b> assets &middot; fee-paying <b>AND non-fee-paying</b> &middot; <b>net of leverage</b> &middot; actual assets only &middot; assets run by a <b>subadviser IF the firm selects the subadviser</b></td><td><b>Advisory-only</b> assets (no trading authority) &middot; <b>uncalled committed capital</b> &middot; simulated assets</td></tr>
+              </table>
+              <div class="gips-trap"><b>Trap pair:</b> <b>total FIRM assets</b> include nondiscretionary; <b>COMPOSITE assets exclude nondiscretionary</b> (performance not controlled by the manager isn't attributed to the manager). And subadviser assets count <b>only if the firm selects</b> the subadviser &mdash; client-appointed subadviser assets are OUT (the Guptar quiz excerpt is incorrect on exactly this).</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">Other fundamentals</div><div class="rc-dbody">Initial claim: <b>minimum 5 years</b> of compliance (or since inception if younger) &middot; establish, <b>update timely</b>, and document policies &amp; procedures (incl. voluntarily adopted recommendations &amp; error correction) &middot; GIPS vs local law conflict &rarr; <b>comply with local law and disclose the conflict</b> &middot; never present false/misleading performance info (GIPS-related or not) &middot; annual GIPS-compliant report to <b>all existing clients</b> of their composites &middot; benchmarks must be <b>total return</b> (not price-only) &middot; disclose all <b>material errors</b> to clients &amp; verifiers &middot; maintain data + a list of composites for the <b>last five years</b>.</div></div>
+              </div>
+            </div>
+
+            <!-- ═══ 15.3 ═══ -->
+            <div class="gips-card">
+              <div class="rc-sec">Module 15.3 &middot; Return Calculations</div>
+              <div class="gips-title"><span class="rc-los">LOS 15.c</span>TWRR, Modified Dietz, MIRR &mdash; the toolkit</div>
+              <div class="gips-fl">No interim ECFs:    R<sub>t</sub> = (EV &minus; BV) / BV
+Exact TWRR:         value at EVERY ECF &rarr; chain-link:  R = (1+R&#8321;)(1+R&#8322;)&hellip;(1+R&#8342;) &minus; 1
+Modified Dietz:     R<sub>MD</sub> = (EV &minus; BV &minus; ECF) / (BV + adjusted ECF)     adjusted ECF = &Sigma; W&#7522;&times;ECF&#7522;,  W&#7522; = (days remaining)/(days in month)
+MIRR:               solve r:  EV = BV(1+r) + &Sigma; ECF&#7522;(1+r)^{W&#7522;}     (daily-weighted, like Mod Dietz; typically similar values)</div>
+              <div class="gips-body"><b>Rooney example (node-verified):</b> subperiods +0.4%, &minus;0.2%, +4.9% &rarr; exact TWRR = <b>5.1%</b>; Modified Dietz with adjusted ECFs $34,500 (23/30 &times; 45k) and $9,167 (11/30 &times; 25k) &rarr; <b>5.1%</b>; MIRR &rarr; <b>5.1%</b>. Approximations are close when ECFs are small; <b>the larger the ECFs and the more volatile the market, the greater the gap</b> vs true TWRR. Inflows are positive, outflows (withdrawals) negative.</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">Valuation frequency</div><div class="rc-dbody"><b>Non-private-market</b> portfolios: returns <b>monthly</b>; if daily valuations, geometrically link dailies to a monthly true TWRR; monthly returns geometrically linked to annual. <b>Private market</b> (RE, PE, illiquid): at least <b>quarterly</b>. <b>Pooled funds not in a composite</b>: at least <b>annually</b> + valued and subperiod return at <b>subscriptions/redemptions</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Large ECFs</div><div class="rc-dbody">Definition is set <b>by each firm for each composite</b> (generally: large enough to affect the return) and the policy must be <b>documented</b>. Small ECFs &rarr; approximations OK without interim valuation; <b>large ECFs &rarr; the portfolio MUST be valued at the ECF time</b> for a subperiod return.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">MWR instead of TWR</div><div class="rc-dbody">Allowed when the <b>firm controls the timing and size of the ECFs</b> AND the portfolio is <b>closed-end, fixed life, fixed commitment, or holds significant illiquid assets</b>. The MWR (an IRR) must be calculated and portfolios valued at least <b>annually</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Other requirements</div><div class="rc-dbody"><b>Trade date</b> (not settlement) &middot; <b>partial-year returns cannot be annualized</b> (= presenting simulated as actual) &middot; <b>total returns</b> (income + capital gains/losses); income-generating assets use <b>accrual accounting</b> &middot; returns must reflect <b>cash &amp; cash equivalents</b> (money-market instruments, FI maturities &lt; 1yr) even if an outside firm manages the cash.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Fees</div><div class="rc-dbody"><b>Gross-of-fees</b> return must be <b>after deducting transaction costs</b> (brokerage commissions, spreads, exchange fees; private markets: also legal/advisory). <b>Custody fees NOT included.</b> Transaction costs may be estimated <b>only if unknown</b>. <b>Bundled/all-in fees</b>: reduce the gross return by the transaction-cost portion, or by the <b>entire bundled fee</b> if it can't be separated. Net-of-fees returns recommended; a <b>fee schedule</b> must be provided to investors.</div></div>
+              </div>
+              <div class="gips-tip"><b>Quiz patterns (reasoning-derived):</b> Firm Z ignoring the swept cash in returns &rarr; NOT acceptable (returns must reflect cash even if managed externally). ADA quarterly returns &rarr; geometric link: (1.03)(1.0415)(1.0375)(1.0315) &minus; 1 = <b>14.80%</b>. Kenzo: Modified Dietz &rarr; 2 / 52.667 = <b>3.80%</b>; exact TWRR (3.0%, 4.425%, &minus;3.509%) &rarr; <b>3.78%</b>. MWR-over-TWR condition &rarr; <b>manager controls the timing of ECFs</b>.</div>
+            </div>
+
+            <!-- ═══ 15.4 ═══ -->
+            <div class="gips-card">
+              <div class="rc-sec">Module 15.4 &middot; Composites</div>
+              <div class="gips-title"><span class="rc-los">LOS 15.e</span>Composite returns &mdash; 3 asset-weighting methods</div>
+              <div class="gips-body">Composites = groupings of portfolios with similar mandates/objectives/strategies. Composite returns are essential to investor communication &rarr; calculated at least <b>monthly</b> (except private market investments). Three acceptable methods:</div>
+              <table class="gips-tbl">
+                <tr><th>Method</th><th>Weights</th><th>Worked example (A/B/C, node-verified)</th></tr>
+                <tr><td><b>1. BOP values</b></td><td>w&#7522; = BV&#7522; / &Sigma;BV (simplest)</td><td>17.68% &times; 8.77 + 26.98% &times; 6.32 + 55.34% &times; (&minus;5.80) = <b class="gips-green">+0.05%</b></td></tr>
+                <tr><td><b>2. BOP values + ECFs</b></td><td>w&#7522; = Modified Dietz denominator (BV + adjusted ECFs)</td><td>106.09 / 631.51, 161.35 / 631.51, 364.07 / 631.51 &rarr; <b class="gips-red">&minus;0.25%</b></td></tr>
+                <tr><td><b>3. Aggregate</b></td><td>Treat the composite as ONE portfolio; Modified Dietz on totals</td><td>(621.20 &minus; 622.00 &minus; net ECFs) / 631.51 = <b class="gips-red">&minus;0.25%</b></td></tr>
+              </table>
+              <div class="gips-trap"><b>Why methods 1 and 2 differ:</b> Portfolio C received a large <b>early-month inflow</b> ($22 on Oct 3) &rarr; the ECF-adjusted weight of C is bigger (57.65% vs 55.34%) &rarr; C's <b>negative</b> return (&minus;5.80%) drags the composite negative. Methods 2 and 3 often produce the same result. Also note the Mod Dietz sign logic: a positive return despite EV &lt; BV means the client <b>withdrew</b>; a negative return despite EV &gt; BV means the client <b>contributed</b>.</div>
+            </div>
+
+            <div class="gips-card">
+              <div class="gips-title"><span class="rc-los">LOS 15.f</span>Discretion &mdash; what goes in a composite</div>
+              <table class="gips-tbl">
+                <tr><th>MUST be in &ge;1 composite</th><th>Must NOT be in a composite</th></tr>
+                <tr><td>All <b>actual, fee-paying, discretionary segregated accounts</b> &middot; pooled funds <b>also offered as segregated accounts</b> (limited distribution + broad distribution whose strategy is offered via separate account)</td><td><b>Nondiscretionary</b> accounts &middot; pooled funds <b>not</b> also offered as segregated accounts (typical broad distribution fund) &middot; <b>simulated portfolios</b></td></tr>
+              </table>
+              <div class="gips-body"><b>Non-fee-paying discretionary</b> accounts <b>MAY</b> be included &mdash; if included, disclose the <b>% of composite assets</b> that is non-fee-paying. Intent of the rules: prevent managers from <b>excluding poorly performing portfolios</b> (cherry-picking). Key test: does performance reflect the manager's decisions? If not &rarr; nondiscretionary &rarr; excluded from composite returns.</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">IPS constraints</div><div class="rc-dbody">Benchmark, risk controls (sector weights, credit quality, derivatives limits), ESG preferences, restrictions on company-stock sales, low-basis-stock limits (tax), legal restrictions. <b>NONE automatically makes a portfolio nondiscretionary</b> &mdash; there are <b>degrees of discretion</b>; the test is whether professional judgment is <b>materially constrained</b> (e.g. a derivatives limit on a manager who doesn't use them anyway &rarr; still discretionary).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Materiality routing</div><div class="rc-dbody">Constraint <b>immaterial</b> &rarr; composite with similar <b>unconstrained</b> portfolios. Constraint <b>material</b> &rarr; group with similar <b>constrained</b> portfolios OR <b>exclude from all composites</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Restricted assets</div><div class="rc-dbody">3 options: treat the <b>entire portfolio nondiscretionary</b>; <b>remove the restricted assets</b> and composite the remainder; or keep it <b>discretionary if restricted assets &lt; a policy-stated % of the portfolio</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">ECF-driven</div><div class="rc-dbody">Large repeated withdrawals forcing a big cash balance can make a portfolio <b>nondiscretionary</b> (manager can't invest like the composite's other portfolios).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Model portfolios</div><div class="rc-dbody"><b>Simulated / hypothetical / model / backtested</b> portfolios <b>cannot be in a composite</b> &mdash; only <b>supplemental</b> info (labeled, not conflicting with required disclosures). But <b>seed money</b> (firm's own funds) creates an ACTUAL portfolio &rarr; can join composites, with <b>non-fee-paying disclosures</b>. (TIM quiz: backtested model composite in the presentation &rarr; NOT acceptable.)</div></div>
+              </div>
+            </div>
+
+            <div class="gips-card">
+              <div class="gips-title"><span class="rc-los">LOS 15.g</span>Composite construction</div>
+              <div class="gips-body">Composites must: be determined by <b>investment mandate, objective, or strategy</b> &middot; contain <b>ALL portfolios matching the definition</b> &middot; be based on criteria <b>documented in policies &amp; procedures</b> &middot; let clients <b>compare firms</b> &middot; be <b>representative of the firm's products</b> and consistent with its marketing. Bases: equity style, benchmark, equity/bond sector, risk-return profile (tracking error), active/passive/core-plus, strategy (sector rotation, fundamental&hellip;).</div>
+              <div class="gips-trap"><b>Goldilocks trap:</b> definition <b>too narrow</b> (small-cap value frontier markets) &rarr; too few portfolios per composite, unnecessary cost, potential client-confidentiality risk. <b>Too broad</b> &rarr; disparate performance within the composite. A portfolio can sit in <b>multiple composites</b> (a small-cap value portfolio &rarr; both the value composite AND the small-cap value composite) &mdash; but don't double-count its assets in total firm value.</div>
+            </div>
+
+            <div class="gips-card">
+              <div class="gips-title"><span class="rc-los">LOS 15.h</span>Inclusion, exclusion, switching, SCFs, minimum asset levels</div>
+              <div class="gips-body">Firms must have policies for: inclusion &middot; exclusion &middot; switching between composites &middot; cash flows from new investments/liquidations &middot; minimum asset level &mdash; set <b>composite-by-composite</b>, applied timely &amp; consistently (unethical managers might otherwise steer best performers into a favored composite).</div>
+              <div class="rc-svg-wrap">
+                <svg viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px;display:block;margin:0 auto;">
+                  <text x="350" y="16" text-anchor="middle" fill="#34D399" font-family="monospace" font-size="12" font-weight="bold">Inclusion &amp; exclusion timing (monthly measurement periods)</text>
+                  <line x1="50" y1="70" x2="650" y2="70" stroke="#2A3441" stroke-width="2"/>
+                  <line x1="170" y1="62" x2="170" y2="78" stroke="#7D8590" stroke-width="1.5"/>
+                  <line x1="330" y1="62" x2="330" y2="78" stroke="#7D8590" stroke-width="1.5"/>
+                  <circle cx="240" cy="70" r="5" fill="#3FB950"/>
+                  <text x="240" y="55" text-anchor="middle" fill="#3FB950" font-family="monospace" font-size="10" font-weight="bold">funded Jul 6</text>
+                  <text x="170" y="92" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Jul 1</text>
+                  <text x="330" y="92" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Aug 1</text>
+                  <path d="M 245 70 C 290 40, 320 40, 328 62" fill="none" stroke="#3FB950" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  <text x="470" y="55" text-anchor="start" fill="#3FB950" font-family="monospace" font-size="10">INCLUDE from Aug 1 = next FULL period</text>
+                  <line x1="50" y1="155" x2="650" y2="155" stroke="#2A3441" stroke-width="2"/>
+                  <line x1="170" y1="147" x2="170" y2="163" stroke="#7D8590" stroke-width="1.5"/>
+                  <line x1="330" y1="147" x2="330" y2="163" stroke="#7D8590" stroke-width="1.5"/>
+                  <circle cx="200" cy="155" r="5" fill="#FF7B72"/>
+                  <text x="200" y="140" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="10" font-weight="bold">stop-trading notice Jun 4</text>
+                  <text x="170" y="177" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Jun 1</text>
+                  <text x="330" y="177" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">Jun 30</text>
+                  <path d="M 195 155 C 150 125, 120 125, 112 147" fill="none" stroke="#FF7B72" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  <text x="360" y="140" text-anchor="start" fill="#FF7B72" font-family="monospace" font-size="10">EXCLUDE after May 31 = last FULL period WITH discretion</text>
+                </svg>
+              </div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">Inclusion</div><div class="rc-dbody">New portfolios enter at the <b>beginning of the next full measurement period</b> (funded July 6, monthly calc &rarr; in composite <b>August 1</b>). Firm has discretion to allow longer when investing takes time: <b>illiquid securities</b> (EM) or funding with <b>securities that must be sold first</b> &mdash; documented policy may vary by composite.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Exclusion</div><div class="rc-dbody">Terminated portfolios stay in through the <b>last full measurement period in which the firm had discretion</b> (client stops trading June 4, leaving July 9 &rarr; include <b>only through May 31</b>). Terminated portfolios' history <b>stays in the composite record</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Switching</div><div class="rc-dbody">Only on <b>client mandate/objective/strategy change</b> (e.g. client now allows derivatives) or a firm redefinition of the composite &mdash; which should be <b>highly unusual</b> (create a new composite instead). Performance to date <b>remains in the OLD composite's history</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Significant cash flows</div><div class="rc-dbody">= large enough to <b>impede implementing the strategy on a timely basis</b>; the firm documents what's &ldquo;significant.&rdquo; Options: <b>temporarily exclude the portfolio</b>, or use a <b>temporary new account</b> (outside the composite) holding contributions until invested / securities until divested. Account #207 example: best = temporary subaccount <b>207T</b>, excluded from GIPS reporting only, merged into 207 once invested; alternative = exclude 207 itself for April&ndash;June until invested. Either way the client still gets full reports (Standards of Professional Conduct).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Minimum asset level</div><div class="rc-dbody">A portfolio too small to be invested appropriately may be excluded. Size limits for adding/removing per firm policy (add &gt; &euro;5M, remove &lt; &euro;4.5M). Must be <b>specified in advance</b>; removed portfolios <b>keep their prior performance in the composite history</b>.</div></div>
+              </div>
+              <div class="gips-tip"><b>Quiz (reasoning-derived):</b> monthly valuation, portfolio terminated <b>July 15</b> &rarr; include through <b>June 30</b>. Client with significant liquidity needs/cash &rarr; MAY be included (judgment / degrees of discretion). Non-fee-paying &rarr; MAY be included (with disclosure). Client demands strict index tracking &rarr; nondiscretionary &rarr; <b>MUST be excluded</b>.</div>
+            </div>
+
+            <!-- ═══ 15.5 ═══ -->
+            <div class="gips-card">
+              <div class="rc-sec">Module 15.5 &middot; Presentation &amp; Reporting</div>
+              <div class="gips-title"><span class="rc-los">LOS 15.i</span>GIPS Reports &mdash; history, returns, size, risk</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">Two report types</div><div class="rc-dbody"><b>GIPS Composite Report</b> and <b>GIPS Pooled Fund Report</b> &mdash; every reasonable effort to deliver to prospects &amp; limited-distribution pooled fund investors when marketing a strategy. Curriculum focus: <b>composite time-weighted return reports</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Performance history</div><div class="rc-dbody">On adoption: GIPS-compliant <b>annual</b> performance for <b>at least 5 years</b> (or since composite inception if younger), then extend each year up to a <b>10-year</b> compliant history.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Returns &amp; size</div><div class="rc-dbody"><b>TWRs for composite AND benchmark</b> &middot; amount of <b>firm assets</b> &middot; amount of <b>composite assets</b> &middot; number of portfolios <b>if six or more</b>. <b>No minimum number of portfolios to form a composite.</b></div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Risk measures</div><div class="rc-dbody"><b>Internal composite dispersion</b> (micro: variability of portfolio returns WITHIN the composite) + <b>benchmark dispersion and composite dispersion as a whole</b> (macro: compare composite's historical risk vs benchmark) &mdash; <b>ex post standard deviation, each annual period, using the previous 3 years annualized</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Internal dispersion</div><div class="rc-dbody">Shows consistency. <b>Very large dispersion</b> &rarr; firm not consistently implementing the strategy AND/OR <b>composite definition too broad</b>. Only <b>full-year</b> portfolios enter the calc (Fig 15.1: A, C, E in; B, D, F out); <b>six or more</b> portfolios required to report dispersion. Acceptable measures: high/low, range (simple but skewed by extremes, not standalone risk measures), <b>equal-weighted &sigma;</b> (most widely accepted; n or n&minus;1 both defensible &mdash; disclose), <b>asset-weighted &sigma;</b>, or another fair measure.</div></div>
+              </div>
+              <div class="gips-fl">equal-weighted:  &sigma;<sub>C</sub> = &radic;[ &Sigma;(R&#7522; &minus; MEAN(R))&sup2; / (n&minus;1) ]
+asset-weighted:  dispersion = &radic;[ &Sigma; w&#7522;(R&#7522; &minus; C<sub>ASSET</sub>)&sup2; ]     C<sub>ASSET</sub> = &Sigma; w&#7522;R&#7522;</div>
+              <div class="gips-title"><span class="rc-los">LOS 15.j</span>Portability &mdash; the 4 conditions</div>
+              <div class="gips-body">On acquisition/joining, the new firm can <b>LINK</b> the previous firm's history if: <b>1)</b> substantially all investment decision makers retained; <b>2)</b> decision-making process substantially intact &amp; independent within the new firm; <b>3)</b> records documenting the history exist; <b>4)</b> <b>no break in the performance record</b>. Only 1&ndash;3 met &rarr; the old history can <b>represent</b> the new firm but <b>cannot be linked</b> (e.g. garden leave at acquisition &rarr; break for that period). New firm compliant but the acquired firm isn't &rarr; <b>1 year</b> to bring the assets into compliance.</div>
+            </div>
+
+            <!-- ═══ 15.6 ═══ -->
+            <div class="gips-card">
+              <div class="rc-sec">Module 15.6 &middot; Valuation Hierarchy</div>
+              <div class="gips-title"><span class="rc-los">LOS 15.d</span>Recommended fair-value hierarchy (descending)</div>
+              <div class="gips-body"><b>Fair value</b> = amount in an arm's-length transaction between willing, knowledgeable parties; includes <b>accrued income</b> for bonds and other income-generating assets (cash income: cash or accrual basis). Valuation process documented, <b>composite- or pooled-fund-specific</b>. Use a lower level <b>only when all higher levels are unavailable</b>:</div>
+              <div class="rc-svg-wrap">
+                <svg viewBox="0 0 700 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:700px;display:block;margin:0 auto;">
+                  <text x="350" y="16" text-anchor="middle" fill="#34D399" font-family="monospace" font-size="12" font-weight="bold">GIPS fair-value ladder &#8212; step down ONLY if the level above is unavailable</text>
+                  <rect x="60" y="30" width="580" height="32" rx="4" fill="rgba(63,185,80,.16)" stroke="#3FB950"/>
+                  <text x="76" y="51" fill="#3FB950" font-family="monospace" font-size="11" font-weight="bold">1</text>
+                  <text x="100" y="51" fill="#C9D1D9" font-family="monospace" font-size="10.5">Quoted price &#8212; IDENTICAL asset, liquid market, same day</text>
+                  <rect x="90" y="68" width="520" height="32" rx="4" fill="rgba(63,185,80,.10)" stroke="#3FB950" stroke-opacity=".7"/>
+                  <text x="106" y="89" fill="#3FB950" font-family="monospace" font-size="11" font-weight="bold">2</text>
+                  <text x="130" y="89" fill="#C9D1D9" font-family="monospace" font-size="10.5">Quoted price &#8212; SIMILAR asset, liquid market, same day</text>
+                  <rect x="120" y="106" width="460" height="32" rx="4" fill="rgba(224,168,46,.12)" stroke="#E0A82E" stroke-opacity=".8"/>
+                  <text x="136" y="127" fill="#E0A82E" font-family="monospace" font-size="11" font-weight="bold">3</text>
+                  <text x="160" y="127" fill="#C9D1D9" font-family="monospace" font-size="10.5">Quoted price &#8212; identical/similar, market NOT active (stale last price)</text>
+                  <rect x="150" y="144" width="400" height="32" rx="4" fill="rgba(224,168,46,.08)" stroke="#E0A82E" stroke-opacity=".6"/>
+                  <text x="166" y="165" fill="#E0A82E" font-family="monospace" font-size="11" font-weight="bold">4</text>
+                  <text x="190" y="165" fill="#C9D1D9" font-family="monospace" font-size="10.5">Market-based INPUTS (P/E of comparables &#215; firm earnings)</text>
+                  <rect x="180" y="182" width="340" height="32" rx="4" fill="rgba(255,123,114,.12)" stroke="#FF7B72"/>
+                  <text x="196" y="203" fill="#FF7B72" font-family="monospace" font-size="11" font-weight="bold">5</text>
+                  <text x="220" y="203" fill="#C9D1D9" font-family="monospace" font-size="10.5">SUBJECTIVE unobservable &#8212; last resort, disclose %</text>
+                </svg>
+              </div>
+              <div class="gips-trap"><b>Quiz:</b> no observable quoted price from an <b>active</b> market &rarr; next best = <b>quoted prices from an INACTIVE market for the same or similar security</b> (level 3) &mdash; NOT market-based inputs (level 4). If level 5 is used, disclose those assets as a <b>% of composite assets</b>.</div>
+              <div class="gips-body"><b>Advisory-only &amp; uncalled committed capital:</b> never in total firm assets, but the firm CAN report them separately or <b>combined with composite/firm assets</b> &mdash; if combined, it must ALSO report the advisory-only and uncalled-committed amounts, always <b>clearly labeled</b>.</div>
+            </div>
+
+            <!-- ═══ 15.7 ═══ -->
+            <div class="gips-card">
+              <div class="rc-sec">Module 15.7 &middot; GIPS Verification</div>
+              <div class="gips-title"><span class="rc-los">LOS 15.k</span>Purpose, scope, process</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">What it is</div><div class="rc-dbody">An <b>independent third party</b> assesses the firm's: policies &amp; procedures for composite / pooled fund <b>construction &amp; maintenance</b>; performance <b>calculation</b>; <b>presentation</b>; <b>distribution</b>. Purpose: greater confidence in the compliance claim.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Three exam facts</div><div class="rc-dbody"><b>1.</b> Verification is <b class="gips-red">NOT required</b> &mdash; voluntary, recommended, best practice. <b>2.</b> It does <b class="gips-red">NOT assure</b> that the construction, calculation, and presentation of any <b>particular</b> portfolio or composite is accurate. <b>3.</b> <b>Firmwide only</b> &mdash; never for a single portfolio, composite, or pooled fund; no compliance &ldquo;except for.&rdquo; BUT a firm can commission a <b>performance examination</b> on specific composites/funds and state that an examination was issued on them.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Benefits to the firm</div><div class="rc-dbody">More knowledgeable presentation personnel &middot; better-quality presentations &middot; better internal processes &amp; procedures &middot; possible marketing benefits.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Selecting a verifier</div><div class="rc-dbody">Match to operations/products/needs (large global vs small local; tax-exempt pension vs tax-focused; quant-derivatives vs direct real estate). Request: verifier description (personnel, org structure), services &amp; past projects, <b>project-management / sampling / testing procedures</b>, client references, fees-proposal-timeline.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Process</div><div class="rc-dbody"><b>Planning</b>: gather all products, calculation methodologies, GIPS policies. <b>Sampling</b> (assertion is firmwide but samples are used): consider firm &amp; composite <b>size</b>, <b>internal controls &amp; methods</b>, <b>number of years verified</b>; deficiencies &rarr; larger samples. <b>Testing</b>: recordkeeping, policies &amp; procedures, firm definition, thoroughness of the composite / limited-distribution-fund list, <b>total firm assets calc</b>, input data (vs custodial statements), composite construction &amp; maintenance (discretionary classification, portfolio assignment, <b>outlier returns</b> = possible calc errors or misassignment), GIPS Report content &amp; marketing material.</div></div>
+              </div>
+              <div class="gips-tip"><b>Quiz (circled in photo):</b> least accurate about verification = &ldquo;a <b>requirement</b> noted in a GIPS-compliant presentation&rdquo; (it's voluntary); most accurate = &ldquo;does <b>not assure</b> accuracy of any particular portfolio or composite.&rdquo;</div>
+            </div>
+
+            <!-- ═══ COMPLIANCE DRILL ═══ -->
+            <div class="gips-card">
+              <div class="gips-title"><span class="rc-los">Drill</span>Compliance spot-check patterns (essay-style, reasoning-derived)</div>
+              <table class="gips-tbl">
+                <tr><th>Action</th><th>Verdict</th><th>Why</th></tr>
+                <tr><td>S&amp;P 500 as benchmark for FI + equity + balanced composites</td><td><b class="gips-red">Not compliant</b></td><td>Benchmark must reflect each composite's <b>investment strategy</b></td></tr>
+                <tr><td>Book values used for FI return computations</td><td><b class="gips-red">Not compliant</b></td><td><b>Fair values</b> required</td></tr>
+                <tr><td>Accrued income included in FI returns</td><td><b class="gips-green">Compliant</b></td><td>Accrual accounting required for income-generating assets</td></tr>
+                <tr><td>Fee schedule omitted</td><td><b class="gips-red">Not compliant</b></td><td>A <b>fee schedule must be provided</b> to investors</td></tr>
+                <tr><td>Asset-weighted composite returns using <b>end</b>-of-period weights</td><td><b class="gips-red">Not compliant</b></td><td>Weights must be <b>beginning-of-period</b> (&plusmn; ECFs)</td></tr>
+                <tr><td>No linking of simulated / model performance</td><td><b class="gips-green">Compliant</b></td><td>Simulated results can never join actual composite results</td></tr>
+                <tr><td>Portfolio TWRs that adjust for cash flows</td><td><b class="gips-green">Compliant</b></td><td>Required at portfolio level (composite level = asset-weighted)</td></tr>
+                <tr><td>Performance after actual trading expenses</td><td><b class="gips-green">Compliant</b></td><td>Gross-of-fees is <b>net of transaction costs</b></td></tr>
+                <tr><td>Excluding never-marketed strategy portfolios from all composites (RRC)</td><td><b class="gips-red">Not acceptable</b></td><td>ALL actual fee-paying discretionary accounts must be in &ge;1 composite &mdash; marketing intent is irrelevant</td></tr>
+                <tr><td>Composites covering only 60% of fee-paying discretionary portfolios + &ldquo;compliant for most assets&rdquo; statement (JIM)</td><td><b class="gips-red">Not acceptable</b></td><td>Firmwide or nothing &mdash; no partial compliance language</td></tr>
+                <tr><td>Presenting gross-of-fees returns (Tribon excerpt)</td><td><b class="gips-green">Acceptable</b></td><td>Gross returns are fine if after transaction costs; net-of-fees is <b>recommended</b>, not required &rarr; Tribon incorrect</td></tr>
+              </table>
             </div>
           </div>
 
@@ -38783,6 +39012,7 @@ var RECAP_REGISTRY = [
   { id: 'tc-recap', title: 'Reading 11 · Trading Costs and Electronic Markets' },
   { id: 'ppe-recap', title: 'Reading 13 · Portfolio Performance Evaluation' },
   { id: 'ims-recap', title: 'Reading 14 · Investment Manager Selection' },
+  { id: 'gips-recap', title: 'Reading 15 · Overview of the Global Investment Performance Standards' },
   { id: 'osr-recap', title: 'Reading 16 · Options Strategies' },
   { id: 'sfr-recap', title: 'Reading 17 · Swaps, Forwards, and Futures Strategies' },
   { id: 'cm-recap', title: 'Reading 18 · Currency Management: An Introduction' },
