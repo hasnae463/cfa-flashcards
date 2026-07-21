@@ -30455,6 +30455,7 @@ Geometric  G = (1+R)/(1+B) &minus; 1     <b>&rarr; DOES compound across periods<
             <button class="ims-modtab" onclick="imsMod(event,'imsm-143b')">14.3 Philosophy</button>
             <button class="ims-modtab" onclick="imsMod(event,'imsm-14g')">14.g Pooled / SMA</button>
             <button class="ims-modtab" onclick="imsMod(event,'imsm-144')">14.4 Contracts &amp; Fees</button>
+            <button class="ims-modtab" onclick="imsMod(event,'ims-recap')">&#128203; Recap</button>
             <button class="ims-modtab" onclick="imsMod(event,'imsm-err')">&#9888; Errors</button>
           </div>
 
@@ -31406,6 +31407,198 @@ net active   = 3.50% &minus; 0.90% = 2.60%</span>
             </div>
             <div id="imserr-mastery" class="ims-toppanel">
               <div class="ims-card"><div class="ims-title">Mastery checklist</div><div class="ims-info">Once a pattern is no longer being missed, it moves here as a confirmed mastery point.</div></div>
+            </div>
+          </div>
+
+          <!-- ════════ 📋 RECAP — READING 14 (registered in RECAP_REGISTRY) ════════ -->
+          <div id="ims-recap" class="ims-modpanel">
+            <style>
+              #ims-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+              #ims-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(244,114,182,.14); border:1px solid var(--ims-main); color:var(--ims-main); border-radius:3px; padding:1px 6px; margin-right:6px; }
+              #ims-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
+              #ims-recap .rc-drow { display:grid; grid-template-columns:160px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+              #ims-recap .rc-drow:last-child { border-bottom:none; }
+              #ims-recap .rc-dlabel { color:var(--ims-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #ims-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #ims-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #ims-recap .rc-dlabel { padding-top:0; }
+              }
+              #ims-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
+              #ims-recap .ims-tip { background:rgba(63,185,80,.08); border-left:3px solid var(--ims-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+              #ims-recap .ims-fl { display:block; white-space:pre-wrap; font-family:var(--mono); font-size:12px; line-height:1.6; color:#C9D1D9; background:#0B0F14; border:1px solid var(--border); border-radius:6px; padding:11px 13px; margin:10px 0; overflow-x:auto; tab-size:2; }
+              #ims-recap .ims-fl b { color:var(--ims-main); font-weight:600; }
+            </style>
+
+            <button class="recap-print-btn" onclick="printOneRecap('ims-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+            <div class="ims-card">
+              <div class="ims-title">Reading 14 &middot; Investment Manager Selection</div>
+              <div class="ims-body">Full-reading recap: <b>selection process &amp; due diligence (14.a)</b>, <b>Type I / II errors (14.b)</b>, <b>RBSA vs HBSA style analysis (14.c)</b>, <b>capture ratios &amp; drawdowns in selection (14.d)</b>, <b>philosophy &amp; decision-making process (14.e)</b>, <b>team behavioral biases (14.f)</b>, <b>pooled vs SMA (14.g)</b>, <b>liquidity terms (14.h)</b>, <b>fee forms (14.i)</b> and the <b>sample performance-based fee schedule (14.j)</b>. Fee figures <span class="ims-green">node-verified</span>.</div>
+              <div class="ims-info"><b>Exam focus:</b> the reading is <b>primarily qualitative</b>. The named key areas: <b>Type I / II errors</b>, <b>capture ratios &amp; drawdowns</b>, and <b>computing performance-based fees</b>.</div>
+            </div>
+
+            <!-- ═══ MODULE 14.1 ═══ -->
+            <div class="ims-card">
+              <div class="rc-sec">Module 14.1 &middot; Manager Selection Process</div>
+              <div class="ims-title"><span class="rc-los">LOS 14.a</span>Due diligence = universe &rarr; quantitative &rarr; qualitative</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">Manager universe</div><div class="rc-dbody">Only managers <b>suitable</b> for the IPS objectives/constraints, the desired <b>style</b> (value/growth/mixed), and the right <b>active vs passive</b> balance. A <b>process of elimination</b> &mdash; not too many, not too few. The role is <b>defined by the benchmark</b>, determined via <b>third-party categorization</b> (trap: provider's style definition may differ from yours), <b>returns-based</b> and <b>holdings-based style analysis</b>, and <b>manager experience</b>. <b class="ims-red">NO performance assessment at this stage</b> &mdash; focus on risk profile &amp; portfolio fit.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Quantitative</div><div class="rc-dbody">Evaluate the <b>distribution of past returns</b> objectively: <b>attribution &amp; appraisal</b> distinguish skill vs luck; the <b>capture ratio</b> tests both good and weak markets; check for significant <b>drawdowns</b> (peak-to-trough % decline over a period).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Qualitative</div><div class="rc-dbody">Two questions: (1) will the <b>same level of returns continue</b>? (2) does the process <b>account for all relevant risks</b>? Continuity via the <b>four Ps</b>: <b>Philosophy</b> (which market inefficiency), <b>Process + People</b> (is the strategy feasible &amp; executable with the team's skills), <b>Portfolio</b> (built congruent with philosophy &amp; process).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Risk assessment</div><div class="rc-dbody">The <b>firm</b>: robust, a going concern? <b>Operational due diligence</b>: back-office quality, safeguarding assets, timely useful reports &rarr; firm sustainability. The <b>investment vehicle</b> must suit the strategy; contract <b>terms</b> reasonable &amp; relevant; <b>continual monitoring</b> that the manager remains appropriate.</div></div>
+              </div>
+            </div>
+
+            <div class="ims-card">
+              <div class="ims-title"><span class="rc-los">LOS 14.b</span>Type I vs Type II errors (H<sub>0</sub>: no value added)</div>
+              <table class="ims-tbl">
+                <tr><th>Decision</th><th>Below expectations (no skill)</th><th>At/above expectations (skill)</th></tr>
+                <tr><td><b>Hire / retain</b></td><td><b class="ims-red">Type I</b></td><td>Correct</td></tr>
+                <tr><td><b>Not hire / fire</b></td><td>Correct</td><td><b class="ims-red">Type II</b></td></tr>
+              </table>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">Type I = COMMISSION</div><div class="rc-dbody">Hire/retain a manager with <b>no skill</b> (reject H<sub>0</sub> wrongly). Gets <b>more attention</b>: linked to <b>regret aversion</b>; an active decision with <b class="ims-red">explicit, visible costs</b>; <b>easier to determine</b> (relative performance measured vs a benchmark &mdash; also feeds the decision maker's compensation, so extra care to avoid it); clients can easily see underperformance.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Type II = OMISSION</div><div class="rc-dbody">Do not hire / fire a manager who <b>had skill</b> (fail to reject H<sub>0</sub> wrongly). Costs are <b>implicit / opportunity</b> costs (less visible); <b>difficult to determine</b> &mdash; clients rarely monitor how not-hired or fired managers would have performed.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Preventing Type II</div><div class="rc-dbody"><b>Track the subsequent performance</b> of managers who were NOT hired and those who were fired; compare characteristics of selected vs non-selected, retained vs fired, against portfolio objectives. Ultimately: <b>don't hire or fire on short-term performance or behavioral biases</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Costs logic</div><div class="rc-dbody">Bigger <b>difference in mean returns</b> between skilled &amp; unskilled &rarr; <b>greater the cost</b> of an error. But <b>wider dispersion</b> between strong and weak &rarr; easier to distinguish skill &rarr; errors <b>less likely</b> &rarr; lower <b>expected</b> cost. In an <b>efficient market</b> the dispersion is smaller (alpha is harder) &rarr; lessens the cost of hiring/retaining weak managers (Type I).</div></div>
+              </div>
+              <div class="ims-trap"><b>Quiz traps (reasoning-derived):</b> &ldquo;expected cost of Type I and II&rdquo; &rarr; <b>higher the greater the difference between mean returns</b> of skilled/unskilled. Skilled distribution <b>not distinct</b> from unskilled &rarr; <b>low opportunity cost of not hiring a skilled manager</b> (small mean gap &rarr; small cost &mdash; NOT &ldquo;highly inefficient market&rdquo;).</div>
+            </div>
+
+            <!-- ═══ MODULE 14.2 ═══ -->
+            <div class="ims-card">
+              <div class="rc-sec">Module 14.2 &middot; Approaches to Manager Analysis</div>
+              <div class="ims-title"><span class="rc-los">LOS 14.c</span>Style analysis &mdash; RBSA vs HBSA</div>
+              <div class="ims-body">Style analysis examines the manager's <b>risk exposures vs an appropriate benchmark and their changes over time</b> &rarr; classify managers by style, verify <b>congruence</b> between output and stated process, and detect <b class="ims-red">style drift</b>. Useful style analysis is <b>meaningful, accurate, consistent, timely</b>. Works best with <b>publicly traded, frequently priced</b> investments; for illiquid ones it still generates due-diligence questions.</div>
+              <table class="ims-tbl">
+                <tr><th></th><th>RBSA (returns-based)</th><th>HBSA (holdings-based)</th></tr>
+                <tr><td><b>Approach</b></td><td><b>Top-down</b>: regress returns on market indexes; risk factors <b>estimated</b>, not predetermined</td><td><b>Bottom-up</b>: actual securities held <b>at a point in time</b> &rarr; current, security-specific exposures</td></tr>
+                <tr><td><b>Strengths</b></td><td>Little data needed; computationally easy; works for basic AND complex strategies; objective &amp; comparable across managers/time; <b>timely</b> (right after data release)</td><td>Same comparability/timeliness benefits; more precise on current exposures; <b class="ims-green">most appropriate for equity-based strategies</b></td></tr>
+                <tr><td><b>Weaknesses</b></td><td><b class="ims-red">Lacks precision</b> &mdash; assumes a static portfolio for the period; can't isolate multiperiod decisions; illiquid holdings &rarr; stale prices &rarr; <b>understated risk</b>; VC/PE appraisal-and-IRR-based data &rarr; short-term &sigma; understated (true &sigma; needs long periods); illiquidity delays reporting</td><td><b class="ims-red">Computational burden</b> grows with complexity while transparency falls; point-in-time snapshot projects poorly (esp. high turnover); same stale-pricing / reporting-timeliness issues</td></tr>
+              </table>
+              <div class="ims-trap"><b>Quiz trap:</b> &ldquo;data required for HBSA is generally easier to obtain&rdquo; is the <b>false</b> advantage &mdash; RBSA is the low-data method; HBSA needs full holdings.</div>
+            </div>
+
+            <div class="ims-card">
+              <div class="ims-title"><span class="rc-los">LOS 14.d</span>Capture ratios &amp; drawdowns in manager evaluation</div>
+              <div class="ims-fl"><b>UC</b> = capture when benchmark return &gt; 0   (&gt;100% = outperformance)
+<b>DC</b> = capture when benchmark return &lt; 0   (<b>lower</b> = better; &lt;100% = outperformance)
+<b>CR = UC / DC</b>   &gt;1 positive asymmetry (<b>convex</b>)   &lt;1 negative asymmetry (<b>concave</b>)</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">Suitability tool</div><div class="rc-dbody">Capture ratios determine how <b>suitable</b> a manager is for the investor's <b>risk tolerance and time horizon</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Convexity: strategy or skill?</div><div class="rc-dbody">Ask whether convexity is <b>natural to the strategy</b> or comes from <b>manager skill</b>. Structural example: hedging by buying series of <b>OTM puts</b> before severe downturns &mdash; many small losses as puts expire worthless, but protection when it matters. Skill example: <b>long-only equity</b> actively minimizing losses &amp; maximizing gains &mdash; requires skill and <b>may not be consistent</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Beta &amp; strategy check</div><div class="rc-dbody">Rising (falling) betas &rarr; <b>momentum</b>-driven strategies should show <b>higher (lower) UC</b> than value-driven. A <b>low-beta</b> strategy &rarr; lower UC <b>and</b> DC (high-beta &rarr; higher both). Use CRs to <b>confirm the stated investment strategy</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Drawdown in selection</div><div class="rc-dbody">Total <b>peak-to-trough</b> loss over a period; max drawdown = largest; duration = time until cumulative drawdown <b>recovers to zero via offsetting gains</b>. Large drawdowns are <b class="ims-red">not appropriate for investors near the end of their horizon</b>; IPS link: shorter horizon / lower risk tolerance &rarr; pick managers with <b>smaller, less extended</b> drawdowns.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">What drawdowns reveal</div><div class="rc-dbody">Useful for identifying <b>poor or poorly executed strategies, weak internal controls, operational problems</b>. Fine line between <b>risk management</b> (prudent selling on fundamental change) and <b>self-preservation</b> (overreaction) &mdash; judge whether the manager acted per the IPS. A <b>low-beta</b> strategy can beat a long-only on a <b>risk-adjusted</b> basis via lower drawdowns despite lower absolute returns.</div></div>
+              </div>
+              <div class="ims-tip"><b>Quiz:</b> manager whose relative performance is better during market <b>upturns</b> &rarr; capture ratio <b>greater than one</b>.</div>
+            </div>
+
+            <!-- ═══ MODULE 14.3 ═══ -->
+            <div class="ims-card">
+              <div class="rc-sec">Module 14.3 &middot; Evaluating Managers</div>
+              <div class="ims-title"><span class="rc-los">LOS 14.e</span>Investment philosophy &mdash; passive vs active, inefficiencies, capacity</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">Passive philosophy</div><div class="rc-dbody">Markets efficient; active underperforms after costs &rarr; earn <b>risk premiums</b> = returns above r<sub>f</sub> for bearing <b>undiversifiable (systematic)</b> risk. Target factors: <b>equity, credit, liquidity, volatility</b> risk.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Active: 2 inefficiency types</div><div class="rc-dbody"><b>Behavioral</b>: mispricings caused by other investors' biases (e.g. trend-following) &mdash; <b>very short-term</b>, must be exploited quickly (sometimes within seconds) before correction. <b>Structural</b>: caused by <b>laws &amp; regulations</b> &mdash; can be <b>long-term</b>. Exploit incongruence before prices converge to intrinsic value.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Repeatability test</div><div class="rc-dbody">Assumptions conveyed clearly &amp; congruent with the process? Philosophy constant over time &mdash; and if it changed, was the change <b>logical</b> given market shifts or merely <b>reactionary to short-term performance</b>? Informational advantages are short-term &amp; <b>less repeatable</b>; structural inefficiencies are long-term &amp; <b class="ims-green">more repeatable</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Capacity</div><div class="rc-dbody">Amount / repeatability / sustainability of the inefficiency: must cover <b>transaction costs and fees</b>; leverage &rarr; add <b>borrowing costs</b>; repeatable or one-time?; <b>minimum asset level</b> needed for sufficient return; sustainability depends on <b>market depth</b> and the capital that can be set aside.</div></div>
+              </div>
+            </div>
+
+            <div class="ims-card">
+              <div class="ims-title"><span class="rc-los">LOS 14.e</span>Investment decision-making process &mdash; the 4 stages</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">1. Idea generation</div><div class="rc-dbody">Signal exploiting an inefficiency requires <b>unique information</b> (informational advantage), used on a <b>very timely basis</b> (windows are short), plus <b>superior cognitive/interpretive skills</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">2. Idea implementation</div><div class="rc-dbody">Transform idea into a position (<b>signal capture</b>). Two concerns: <b>repeatability</b> of the process and <b>congruence</b> with the philosophy + determination &amp; approval of the position.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">3. Portfolio construction</div><div class="rc-dbody">Which securities? (derivatives &rarr; is the manager sufficiently knowledgeable?). Allocations quant or qual but must fit the philosophy &mdash; a <b>passive portfolio should not have excessive turnover</b>. Long/short: <b>paired</b> (proper sizing <b>eliminates market risk</b>, isolates the inefficiency) or determined separately. Growing AUM &rarr; adjust for <b>liquidity constraints</b>. <b>Stop losses</b>: <b>hard</b> = automatic disposition at a loss threshold; <b>soft</b> = subjective evaluation when threshold hit. Hedging: which instruments, how implemented, hedge ratios.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">3b. Liquidity checks</div><div class="rc-dbody">Net <b>supplier or demander</b> of liquidity? Too many illiquid securities &rarr; high transaction costs + <b>high exit costs / depressed prices</b> if funds are suddenly required. Tests: how much liquidates in <b>&le;5 days</b> (liquid, flexible) vs needing <b>&gt;10 days</b>; <b>average daily volume weighted by position size</b>; flag any security where the firm owns <b>&gt;5% of its market cap</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">4. Portfolio monitoring</div><div class="rc-dbody"><b>External</b>: economy &amp; markets vs the exploited inefficiencies. <b>Internal</b>: historical returns, risk level, allocations; check for deviations from the process (<b>style drift</b>) and congruence with <b>up-to-date client objectives</b>.</div></div>
+              </div>
+            </div>
+
+            <div class="ims-card">
+              <div class="ims-title"><span class="rc-los">LOS 14.f</span>Behavioral biases in investment teams + mitigation</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">Groupthink</div><div class="rc-dbody">Teams minimize conflict/dissent to keep consensus &rarr; individuals <b>withhold information</b> or won't share insights. Symptom: <b>confirmation bias</b> (new info, different interpretations &amp; dissent get discarded).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Authority bias</div><div class="rc-dbody">Deferring to members perceived as <b>experts or in authority</b> &rarr; loses the perspectives and skills of other members.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Aversion to complexity</div><div class="rc-dbody">= <b>Parkinson's law of triviality</b>: too much attention to small, familiar issues instead of the important, difficult ones (asset allocation, manager selection) &mdash; e.g. over-researching a familiar small position vs analyzing a large unfamiliar one.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Mitigation (due-diligence Qs)</div><div class="rc-dbody"><b>Team size 3&ndash;5</b> is optimal (larger &rarr; coordination issues + groupthink odds &uarr;). <b>Secret ballot</b> preferable to open deliberation (reduces groupthink AND authority bias). <b>Agendas agreed in advance</b>, most important topics first with the most time (mitigates complexity aversion + availability bias). <b>Team diversity</b> (social &amp; cognitive) is shown to reduce groupthink and errors. Using a group at all mitigates <b>key person risk</b>.</div></div>
+              </div>
+            </div>
+
+            <div class="ims-card">
+              <div class="ims-title"><span class="rc-los">LOS 14.g</span>Pooled vehicles vs separately managed accounts</div>
+              <table class="ims-tbl">
+                <tr><th></th><th>Pooled (mutual funds, ETFs, hedge funds)</th><th>SMA</th></tr>
+                <tr><td><b>Structure</b></td><td>All investors' funds in one portfolio; <b class="ims-red">no customization</b></td><td>One investor's funds in a separate account; manager needs capability &amp; resources to run it</td></tr>
+                <tr><td><b>Costs</b></td><td>Lower</td><td><b class="ims-red">Higher transaction costs</b></td></tr>
+                <tr><td><b>Benefits</b></td><td>Simplicity, scale</td><td><b>Control</b> = direct legal ownership of securities &rarr; extra protection if the manager has a liquidity event / bankruptcy, and <b>not impacted by other investors' redemptions</b>; <b>customization</b> to client objectives/constraints; <b>tax efficiency</b> (pay only on <b>realized</b> gains; pooled may require paying accrued taxes on unrealized gains); separate reporting; greater transparency</td></tr>
+              </table>
+            </div>
+
+            <!-- ═══ MODULE 14.4 ═══ -->
+            <div class="ims-card">
+              <div class="rc-sec">Module 14.4 &middot; Manager Contracts and Fees</div>
+              <div class="ims-title"><span class="rc-los">LOS 14.h</span>Liquidity spectrum of vehicles</div>
+              <div class="ims-fl"><b>MOST liquid</b>  closed-end funds &amp; ETFs (intraday) &gt; open-end funds (end-of-day NAV) &gt; hedge funds (LP terms) &gt; PE / VC (capital calls)  <b>LEAST liquid</b>
+SMAs: liquidity = liquidity of the underlying assets (sellable any time)</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">Hedge fund LP terms</div><div class="rc-dbody"><b>Redemption frequency</b> (how often you can withdraw) &middot; <b>notification period</b> (advance notice required) &middot; <b>lockup period</b> (post-investment freeze): <b>hard lock = no redemptions</b>, <b>soft lock = redemptions for a fee</b> &middot; <b>gates</b> = cap on the amount redeemable at any given redemption.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">PE / VC = lowest</div><div class="rc-dbody"><b>Capital calls</b>; returns only ~<b>5 years into the ~10-year average life</b>; manager may extend the life by up to <b>two one-year periods</b> &rarr; even less liquidity.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">LP terms: + / &minus;</div><div class="rc-dbody"><b class="ims-green">Advantages</b>: long horizon (investors can't overreact to short-term noise), earn <b>illiquidity premiums</b>, no forced selling at depressed prices on redemptions. <b class="ims-red">Disadvantages</b>: impaired ability to <b>change allocations</b> as markets move, impaired ability to meet <b>sudden liquidity demands</b>.</div></div>
+              </div>
+              <div class="ims-tip"><b>Quiz:</b> least liquidity &rarr; <b>private equity fund</b> (capital calls + 10-year life beat even hedge-fund lockups).</div>
+            </div>
+
+            <div class="ims-card">
+              <div class="ims-title"><span class="rc-los">LOS 14.i</span>Management fees &amp; the 3 performance-based forms</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">AUM fees</div><div class="rc-dbody">Cover fixed + variable costs + profit; average expense ratios have <b>declined</b> (shift to no-load &amp; index funds). <b>+</b> rewards skill in growing the asset base; declining % for larger accounts reduces investor fees. <b>&minus;</b> luck drives short-term growth; once assets are attained the incentive is to <b>retain them</b> (safe strategies, e.g. indexing) rather than take risk for the investor &mdash; principal-agent misalignment.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">3 basic performance forms</div><div class="rc-dbody"><b>1. Symmetrical</b> (full upside + downside): fee = base + performance sharing &rarr; <b>greatest alignment</b> of interests but most risk transferred to the manager. <b>2. Bonus, full upside / limited downside</b>: fee = greater of (base) or (base + sharing of positive performance). <b>3. Bonus, limited upside AND downside</b>: fee = greater of (base) or (base + sharing of positive performance, <b>within a limit</b>).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Key consequences</div><div class="rc-dbody">Performance fees transform <b>symmetrical gross</b> active-return distributions into <b>asymmetrical net</b> distributions (lower relative variance on the upside) &rarr; a symmetric risk measure like <b>&sigma; underestimates downside risk</b>. Investors benefit (pay less when active returns are low vs a fixed fee); managers benefit (incentives, higher compensation). <b class="ims-red">All three forms: the base fee is paid even when the manager underperforms.</b> Tempering tools: <b>high-water marks / clawbacks</b> (offset prior negative periods); PE waterfall: LPs receive <b>principal + profit share before</b> any GP performance fee. Only the most successful / capacity-constrained managers command the highest base fees and sharing percentages.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">Call-option analogy</div><div class="rc-dbody">A bonus structure = manager <b>long a call on active return</b> with <b>exercise price = base fee</b>; payoff theoretically unlimited. Limited upside adds a <b>short call struck at the maximum fee</b>. A net long call incentivizes <b>more risk-taking</b> (higher volatility &rarr; higher option value) &rarr; recommended to <b>penalize excessive risk and reward risk-adjusted returns</b>.</div></div>
+              </div>
+              <div class="ims-trap"><b>Quiz trap:</b> which fee structure has <b>no impact on the volatility of net returns</b>? &rarr; <b>Management fees only</b> (a flat % shifts the distribution; incentive fees reshape it asymmetrically).</div>
+            </div>
+
+            <div class="ims-card">
+              <div class="ims-title"><span class="rc-los">LOS 14.j</span>Sample performance-based fee schedule (Fig 14.4) &mdash; node-verified</div>
+              <table class="ims-tbl">
+                <tr><th>Panel A</th><th></th><th>Panel B</th><th>AR &le; 0.25%</th><th>AR = 1.50%</th><th>AR &ge; 2.75%</th></tr>
+                <tr><td>Standard fee</td><td>0.50%</td><td><b>Billed fee</b></td><td>0.25%</td><td>0.50%</td><td>0.75%</td></tr>
+                <tr><td>Base fee</td><td>0.25%</td><td><b>Net active return</b></td><td>&le; 0.00%</td><td>1.00%</td><td>&ge; 2.00%</td></tr>
+                <tr><td>Sharing (on AR beyond base fee)</td><td>20%</td><td colspan="4" rowspan="3">Bonus with limited upside (max billed fee) and limited downside (min billed fee); symmetric within the 0.25%&ndash;2.75% active-return range, centered on the 1.50% breakeven.</td></tr>
+                <tr><td>Breakeven active return</td><td>1.50%</td></tr>
+                <tr><td>Maximum annual fee</td><td>0.75%</td></tr>
+              </table>
+              <div class="ims-fl"><b>Breakeven check:</b>  (1.50% &minus; 0.25%) &times; 20% = <b>0.25%</b> performance fee  &rarr;  + 0.25% base = <b>0.50%</b> = the standard fee &#10003;
+<b>Floor:</b>  AR &le; 0.25% &rarr; performance fee = 0 (<b>nonnegativity constraint</b>) &rarr; billed = base = 0.25%
+<b>Cap:</b>   AR &ge; 2.75% &rarr; performance fee maxed at 0.50% &rarr; billed = <b>0.75%</b> maximum</div>
+              <div class="rc-svg-wrap">
+                <svg viewBox="0 0 640 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:640px;display:block;margin:0 auto;">
+                  <text x="320" y="15" text-anchor="middle" fill="#F472B6" font-family="monospace" font-size="12" font-weight="bold">Billed fee vs active return &#8212; long call (strike = base) + short call (strike = max)</text>
+                  <line x1="60" y1="200" x2="620" y2="200" stroke="#2A3441" stroke-width="1.5"/>
+                  <line x1="172" y1="30" x2="172" y2="210" stroke="#2A3441" stroke-width="1" stroke-dasharray="3 3"/>
+                  <line x1="60" y1="150" x2="620" y2="150" stroke="#2A3441" stroke-width="1" stroke-dasharray="2 4" opacity=".6"/>
+                  <line x1="60" y1="50" x2="620" y2="50" stroke="#2A3441" stroke-width="1" stroke-dasharray="2 4" opacity=".6"/>
+                  <polyline points="60,150 200,150 480,50 620,50" fill="none" stroke="#F472B6" stroke-width="2.5" stroke-linejoin="round"/>
+                  <circle cx="340" cy="100" r="4" fill="#79C0FF"/>
+                  <text x="340" y="88" text-anchor="middle" fill="#79C0FF" font-family="monospace" font-size="10" font-weight="bold">breakeven 1.50% &#8594; 0.50% = standard fee</text>
+                  <text x="118" y="142" text-anchor="middle" fill="#3FB950" font-family="monospace" font-size="10">MIN 0.25% (base)</text>
+                  <text x="552" y="42" text-anchor="middle" fill="#FF7B72" font-family="monospace" font-size="10">MAX 0.75%</text>
+                  <text x="200" y="222" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">0.25%</text>
+                  <text x="340" y="222" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">1.50%</text>
+                  <text x="480" y="222" text-anchor="middle" fill="#7D8590" font-family="monospace" font-size="9">2.75%</text>
+                  <text x="620" y="222" text-anchor="end" fill="#7D8590" font-family="monospace" font-size="9">active return &#8594;</text>
+                  <line x1="200" y1="196" x2="200" y2="204" stroke="#7D8590" stroke-width="1"/>
+                  <line x1="340" y1="196" x2="340" y2="204" stroke="#7D8590" stroke-width="1"/>
+                  <line x1="480" y1="196" x2="480" y2="204" stroke="#7D8590" stroke-width="1"/>
+                </svg>
+              </div>
+              <div class="ims-body"><b>Fee-quiz worked answers (reasoning-derived):</b> Fund X: gross &minus;3%, base 2%, 20% sharing of <b>both</b> positive and negative performance, on return <b>net of the base fee</b> &rarr; fee = 2% + 20% &times; (&minus;3% &minus; 2%) = 2% &minus; 1% = <b>1.0%</b>. Fund Y: gross 12%, benchmark 3%, fee = higher of 0.4% base or base + 20% of <b>active return</b>, capped at 2.9% &rarr; 0.4% + 20% &times; 9% = 2.2% &lt; cap &rarr; <b>2.2%</b>.</div>
+              <div class="ims-trap"><b>Read the sharing base carefully:</b> &ldquo;on active return <b>beyond the base fee</b>&rdquo; vs &ldquo;on <b>active return</b>&rdquo; vs &ldquo;net of the base fee, both signs&rdquo; &mdash; the three quiz variants above each use a different base. Identify (1) what's shared, (2) one-sided or symmetric, (3) floor/cap, before computing.</div>
             </div>
           </div>
 
@@ -38589,6 +38782,7 @@ var RECAP_REGISTRY = [
   { id: 'ii-recap', title: 'Reading 10 · Portfolio Management for Institutional Investors' },
   { id: 'tc-recap', title: 'Reading 11 · Trading Costs and Electronic Markets' },
   { id: 'ppe-recap', title: 'Reading 13 · Portfolio Performance Evaluation' },
+  { id: 'ims-recap', title: 'Reading 14 · Investment Manager Selection' },
   { id: 'osr-recap', title: 'Reading 16 · Options Strategies' },
   { id: 'sfr-recap', title: 'Reading 17 · Swaps, Forwards, and Futures Strategies' },
   { id: 'cm-recap', title: 'Reading 18 · Currency Management: An Introduction' },
