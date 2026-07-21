@@ -38657,6 +38657,80 @@ market-adjusted    = arrival cost &minus; &beta; &times; index move  (strip the 
       </div>
 
       <div class="tg-card">
+        <div class="tg-title">&ldquo;DISADVANTAGES OF EQUITY INDEX DERIVATIVES&rdquo; (asset allocation / rebalancing)</div>
+        <div class="rc-info"><b>The trade-off:</b> index derivatives are <b>cheap, fast, and preserve the underlying portfolio</b> (adjust exposure without selling holdings) &mdash; BUT they give you <b>market beta, not your alpha</b>, and carry the frictions below.</div>
+        <div class="tg-tip"><b>&#10003; CFA answer-key ADVANTAGES (3 pts &mdash; identify ONE):</b> (1) can <b>quickly adjust factor exposures at low cost</b>; (2) <b>trade in liquid markets</b>; (3) make it <b>easy to leverage</b> the portfolio.</div>
+        <div class="tg-trap"><b>&#10003; CFA answer-key DISADVANTAGES (identify TWO):</b> (1) <b>finite expirations</b> &rarr; must be <b>rolled</b> at/near expiry &rarr; extra transaction costs; (2) <b>position limits</b> &rarr; <b>full coverage may not be possible</b>; (3) <b>specialty needs</b> may not be met by existing <b>exchange-traded</b> offerings; (4) <b>OTC</b> derivatives introduce <b>counterparty risk</b>; (5) <b>basis risk</b> (e.g. futures) may <b>increase tracking error</b>.</div>
+        <div class="tg-body"><b>General (any equity index derivative):</b></div>
+        <div class="rc-drivers">
+          <div class="rc-drow"><div class="rc-dlabel">Basis risk</div><div class="rc-dbody">The derivative tracks the <b>index, not your actual holdings</b>. If your portfolio &ne; the index (active managers), the hedge/exposure won&rsquo;t move exactly with your book.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Beta, not alpha</div><div class="rc-dbody">Delivers only the <b>broad market return</b> &mdash; can&rsquo;t replicate stock-specific or factor bets. A blunt tool for anything but market exposure.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">No ownership rights</div><div class="rc-dbody">Not the actual shares &rarr; <b>no voting rights</b>, dividends only <b>embedded in pricing</b> (not directly received). Bad for stewardship/engagement mandates.</div></div>
+        </div>
+        <div class="tg-body"><b>Futures-specific:</b></div>
+        <div class="rc-drivers">
+          <div class="rc-drow"><div class="rc-dlabel">Roll risk</div><div class="rc-dbody">Short-dated &rarr; must <b>roll</b> to the next contract repeatedly &rarr; transaction costs + <b>roll yield</b> (contango can make rolling expensive).</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Standardized sizing</div><div class="rc-dbody">Fixed contract sizes &rarr; often <b>can&rsquo;t match the exact notional</b> &rarr; slightly over/under-hedged.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Margin / MTM</div><div class="rc-dbody">Daily settlement &rarr; <b>margin calls</b> force posting cash on adverse moves (a <b>liquidity drain</b>) even before closing; ongoing margin management.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Limited maturities</div><div class="rc-dbody">Liquid only for <b>near-dated, major indices</b> &mdash; long-horizon or niche exposures unavailable.</div></div>
+        </div>
+        <div class="tg-body"><b>Swap-specific (OTC):</b></div>
+        <div class="rc-drivers">
+          <div class="rc-drow"><div class="rc-dlabel">Counterparty risk</div><div class="rc-dbody">Bilateral OTC &rarr; exposed to <b>counterparty default</b> (no clearinghouse, unlike exchange-traded futures).</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Illiquidity</div><div class="rc-dbody">Customized &rarr; <b>hard to exit/unwind</b> before maturity; no continuous market price.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Less transparency</div><div class="rc-dbody">Bespoke terms &rarr; opaque pricing + dealer spread.</div></div>
+        </div>
+        <div class="tg-tip"><b>Exam one-liner:</b> cheap, fast, preserves the portfolio &mdash; but disadvantages cluster into <b>basis risk</b> (index &ne; your holdings), <b>roll/margin/sizing frictions</b> (futures), <b>counterparty &amp; illiquidity risk</b> (swaps), and <b>no ownership rights</b>. You get <b>market beta, not your alpha</b>. Plus: tracking error, operational/expertise burden, and possible IPS/regulatory limits.</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;WHAT MOVES ACTIVE SHARE vs ACTIVE RISK&rdquo; (active equity / portfolio construction)</div>
+        <div class="rc-info"><b>Two different things.</b> <b>Active Share</b> = &frac12;&Sigma;|w_p &minus; w_b| &mdash; a <b>holdings-based</b> measure (0 to 1) of how different your weights are; <b>fully controllable</b> by the manager. <b>Active risk (tracking error)</b> = std dev of active returns &mdash; depends on holdings <b>AND</b> volatilities/correlations, so it involves <b>forecasts</b> and is <b>NOT fully controllable</b>.</div>
+        <table class="tg-tbl">
+          <tr><th>Action</th><th>AS</th><th>AR</th><th>Why (the mechanism)</th></tr>
+          <tr><td>Hold <b>more securities</b> / smaller deviations</td><td class="tg-red"><b>&darr;</b></td><td class="tg-red"><b>&darr;</b></td><td>Weights move toward benchmark &rarr; smaller |w_p&minus;w_b|; AS-driven active risk is <b>inversely &prop; number of securities</b> (more names diversify the deviations).</td></tr>
+          <tr><td><b>Concentrate</b> (fewer, larger bets)</td><td class="tg-green"><b>&uarr;</b></td><td class="tg-green"><b>&uarr;</b></td><td>Bigger over/underweights &rarr; larger |w_p&minus;w_b| (AS up) AND fewer positions to diversify &rarr; bigger return deviations (AR up).</td></tr>
+          <tr><td>Hold securities <b>NOT in benchmark</b></td><td class="tg-green"><b>&uarr;</b></td><td class="tg-green"><b>&uarr;</b></td><td>A non-benchmark name is a 100% active weight (w_b=0) &rarr; AS up; it also adds return that can diverge from the benchmark &rarr; AR up (usually).</td></tr>
+          <tr><td>Bigger <b>systematic factor tilts</b> (sector/beta/style)</td><td><b>&uarr;</b> (somewhat)</td><td class="tg-green"><b>&uarr;&uarr;</b></td><td>Factor bets are <b>correlated</b> across many holdings &rarr; deviations move together, don&rsquo;t cancel &rarr; active risk rises <b>sharply</b> even for modest AS.</td></tr>
+          <tr><td>Take <b>idiosyncratic</b> (stock-specific) bets</td><td class="tg-green"><b>&uarr;</b></td><td><b>&uarr; modestly</b></td><td>Uncorrelated bets &rarr; deviations partly <b>cancel out</b> (diversify) &rarr; AS can be high while active risk grows only slowly.</td></tr>
+          <tr><td>Higher <b>benchmark / market volatility</b></td><td>&mdash;</td><td class="tg-green"><b>&uarr;</b></td><td>AS depends only on <b>weights</b> (unchanged), but active <b>return</b> = std of (R_p&minus;R_b) scales with market vol &rarr; AR up.</td></tr>
+          <tr><td>Higher <b>correlation</b> among active positions</td><td>&mdash;</td><td class="tg-green"><b>&uarr;</b></td><td>Weights unchanged (AS same), but correlated deviations <b>reinforce</b> instead of cancelling &rarr; AR up.</td></tr>
+        </table>
+        <div class="tg-tip"><b>The key split:</b> Active Share is about <b>WHAT you hold</b> (weights vs benchmark) &mdash; you control it exactly. Active risk adds <b>HOW those bets covary</b> (volatility + correlation) &mdash; forecast-based, not fully controllable. Two portfolios can have the <b>same Active Share but very different active risk</b>: concentrated <b>factor</b> bets &rarr; high active risk; diversified <b>stock-specific</b> bets &rarr; lower active risk for the same Active Share.</div>
+        <div class="tg-trap"><b>&#9888;</b> Active risk from Active Share is <b>inversely proportional to the number of securities</b>; active risk <b>rises with factor &amp; idiosyncratic risk levels</b>. <b>Benchmark-agnostic</b> managers usually have <b>higher Active Share AND higher active risk</b>. A <b>closet indexer</b> = low Active Share &amp; low active risk (looks active, isn&rsquo;t).</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;SECTOR-NEUTRALIZED PRICE MOMENTUM FACTOR&rdquo; (active equity / factors)</div>
+        <div class="rc-drivers">
+          <div class="rc-drow"><div class="rc-dlabel">Price momentum</div><div class="rc-dbody">Winners keep winning. Rank stocks by <b>past return</b> &mdash; typically trailing <b>12-month return skipping the last month (&ldquo;12-1&rdquo;)</b>, since the most recent month tends to reverse. <b>Long past winners, short past losers.</b></div></div>
+          <div class="rc-drow"><div class="rc-dlabel">The problem</div><div class="rc-dbody">Sectors move together &rarr; raw momentum loads up on <b>whichever sectors have been hot</b>. Your &ldquo;momentum&rdquo; bet secretly becomes a <b>sector bet</b> (e.g. massively overweight tech just because tech rose) &mdash; not what you wanted.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">The fix</div><div class="rc-dbody"><b>Rank each stock&rsquo;s momentum only against its OWN-sector peers</b>: within each sector, demean/standardize the scores (center each sector on zero), then build the long/short book from those within-sector ranks.</div></div>
+          <div class="rc-drow"><div class="rc-dlabel">Result</div><div class="rc-dbody">Long winners &amp; short losers <b>inside every sector</b> &rarr; portfolio holds &asymp; the benchmark&rsquo;s sector weights &rarr; <b>net sector exposure &asymp; 0</b>. What&rsquo;s left is <b>pure stock-selection momentum</b>.</div></div>
+        </div>
+        <div class="tg-tip"><b>Why do it:</b> (1) <b>isolates the momentum signal</b> from sector timing &mdash; you&rsquo;re paid for picking the right stocks <b>within</b> sectors, not for guessing which sector runs; (2) <b>cuts unintended risk</b> &mdash; raw-factor returns can be dominated by a few sector swings; neutralizing makes the factor cleaner &amp; more attributable to the anomaly. (Same idea generalizes: neutralize to sector, size, country, or beta.)</div>
+        <div class="rc-info"><b>One-line:</b> ranks each stock&rsquo;s past-return momentum <b>only against its own-sector peers</b> (long winners / short losers <b>within</b> each sector), so the portfolio carries <b>no net sector tilt</b> &mdash; pure within-sector momentum instead of an accidental bet on whichever sector has been running.</div>
+      </div>
+
+      <div class="tg-card">
+        <div class="tg-title">&ldquo;WHICH RETURN MODEL? &mdash; Gordon vs Grinold-Kroner vs Singer-Terhaar&rdquo; (CME Part 2)</div>
+        <div class="rc-info"><b>&ldquo;Justify with one reason&rdquo; questions:</b> pick the model by the <b>one distinguishing feature</b> that matches the data/asset given. Read the trigger words in the vignette.</div>
+        <table class="tg-tbl">
+          <tr><th>If the data / asset gives you&hellip;</th><th>Use</th><th>Because (your one reason)</th></tr>
+          <tr><td>Mature market, <b>dividend yield + a single stable long-run growth rate</b></td><td><b>Gordon growth</b></td><td>Assumes a <b>single constant perpetual growth rate</b> &mdash; fits a stable/mature market</td></tr>
+          <tr><td><b>Expected &Delta;P/E (repricing)</b> and/or <b>buybacks/issuance (%&Delta;S)</b></td><td><b>Grinold-Kroner</b></td><td>Only G-K captures <b>repricing (%&Delta;P/E)</b> and <b>net share change (&minus;%&Delta;S)</b></td></tr>
+          <tr><td>Market&rsquo;s <b>volatility, correlation w/ global, degree of integration</b> (EM, or new/illiquid asset)</td><td><b>Singer-Terhaar</b></td><td>Only S-T weights <b>integrated vs segmented</b> RPs by integration (and can add a <b>liquidity premium</b>)</td></tr>
+        </table>
+        <div class="tg-tip"><b>One-line router:</b> <b>P/E change or buybacks &rarr; Grinold-Kroner</b>. <b>Integration / correlation / EM / new-or-illiquid asset &rarr; Singer-Terhaar</b>. <b>Mature market, one steady dividend growth rate &rarr; Gordon growth</b>.</div>
+        <div class="tg-body"><b>Model-answer phrasing</b> &mdash; &ldquo;[Model] is most appropriate because [the one distinguishing feature]&rdquo;:</div>
+        <div class="tg-fl"><b>Singer-Terhaar:</b> &ldquo;&hellip;most appropriate because the country is an emerging market that is only <b>partially integrated</b> with global markets, and only Singer-Terhaar <b>weights the integrated and segmented risk premiums by the degree of integration</b>.&rdquo;
+
+<b>Grinold-Kroner:</b> &ldquo;&hellip;most appropriate because the forecast specifies an <b>expected change in the P/E ratio (repricing)</b>, which the Gordon growth model cannot incorporate.&rdquo;
+
+<b>Gordon growth:</b> &ldquo;&hellip;most appropriate because the market is <b>mature with a single stable long-run dividend growth rate</b>, which is exactly the model&rsquo;s assumption.&rdquo;</div>
+      </div>
+
+      <div class="tg-card">
         <div class="tg-title">&ldquo;FX FORECASTING &mdash; THE TWO APPROACHES (full checklist)&rdquo; (CME Part 2)</div>
         <div class="rc-info"><b>Two lenses on the same question.</b> Trade approach = the <b>goods</b> side (what a country buys/sells). Capital approach = the <b>money</b> side (where investors put assets). Capital flows dominate in the short/medium term; trade/CA in the long run.</div>
         <div class="tg-body"><b>Approach 1 &middot; Trade in goods &amp; services</b> &mdash; 3 pieces:</div>
