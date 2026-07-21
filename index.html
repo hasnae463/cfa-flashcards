@@ -33162,6 +33162,472 @@ asset-weighted:  dispersion = &radic;[ &Sigma; w&#7522;(R&#7522; &minus; C<sub>A
           </script>
         </div>
 
+        <div id="csiWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
+          <style>
+            #csiWidget { --csi-main:#FB7185; --csi-green:#3FB950; --csi-red:#FF7B72; --csi-blue:#79C0FF; --csi-amber:#E0A82E; }
+            #csiWidget .csi-h { font-family:var(--serif); font-size:21px; color:var(--csi-main); font-weight:700; margin:0 0 4px; letter-spacing:.01em; }
+            #csiWidget .csi-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:16px; letter-spacing:.04em; }
+            #csiWidget .csi-modtabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
+            #csiWidget .csi-modtab { background:var(--surface2); border:1px solid var(--csi-main); color:var(--csi-main); padding:10px 18px; border-radius:8px; font-family:var(--serif); font-size:14px; font-weight:700; cursor:pointer; letter-spacing:.02em; }
+            #csiWidget .csi-modtab.active { background:var(--csi-main); color:#0D1117; }
+            #csiWidget .csi-modpanel { display:none; }
+            #csiWidget .csi-modpanel.active { display:block; }
+            #csiWidget .csi-toptabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+            #csiWidget .csi-toptab { background:var(--surface2); border:1px solid rgba(251,113,133,.5); color:var(--csi-main); padding:7px 13px; border-radius:6px; font-family:var(--serif); font-size:12.5px; font-weight:600; cursor:pointer; letter-spacing:.02em; }
+            #csiWidget .csi-toptab.active { background:var(--csi-main); color:#0D1117; }
+            #csiWidget .csi-toppanel { display:none; }
+            #csiWidget .csi-toppanel.active { display:block; }
+            #csiWidget .csi-card { background:var(--surface); border:1px solid var(--border); border-radius:9px; padding:16px 18px; margin-bottom:14px; }
+            #csiWidget .csi-title { font-family:var(--serif); font-size:15.5px; color:var(--csi-main); font-weight:600; margin-bottom:9px; }
+            #csiWidget .csi-body { font-size:13px; line-height:1.6; color:#C9D1D9; margin-bottom:6px; }
+            #csiWidget .csi-trap { background:rgba(255,123,114,.08); border-left:3px solid var(--csi-red); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #csiWidget .csi-info { background:rgba(121,192,255,.08); border-left:3px solid var(--csi-blue); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #csiWidget .csi-green-box { background:rgba(63,185,80,.08); border-left:3px solid var(--csi-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.55; color:#C9D1D9; }
+            #csiWidget .csi-table { width:100%; border-collapse:collapse; font-size:12px; margin:10px 0; }
+            #csiWidget .csi-table th { font-family:var(--mono); font-size:10px; letter-spacing:.05em; text-transform:uppercase; color:var(--csi-main); text-align:left; padding:6px 8px; border-bottom:1px solid var(--csi-main); }
+            #csiWidget .csi-table td { padding:6px 8px; border-bottom:1px solid rgba(42,52,65,.6); color:#C9D1D9; line-height:1.5; vertical-align:top; }
+            #csiWidget .csi-table tr:last-child td { border-bottom:none; }
+            #csiWidget .csi-num { font-family:var(--mono); }
+            #csiWidget .csi-good { color:var(--csi-green); font-weight:600; }
+            #csiWidget .csi-bad { color:var(--csi-red); font-weight:600; }
+            #csiWidget .csi-fline { display:block; font-family:var(--mono); font-size:12px; line-height:1.6; color:#C9D1D9; background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:7px 11px; margin:6px 0; white-space:pre-wrap; }
+            #csiWidget .csi-fline b { color:var(--csi-main); font-weight:600; }
+          </style>
+
+          <div class="csi-h">Case Study in Portfolio Management: Institutional</div>
+          <div class="csi-sub">READING P8 &middot; Portfolio Management Pathway &middot; QU Endowment / QUINCO</div>
+
+          <div class="csi-modtabs">
+            <button class="csi-modtab active" onclick="csiMod(event,'csim-81')">P8.1 Managing Liquidity Risk</button>
+            <button class="csi-modtab" onclick="csiMod(event,'csim-82')">P8.2 QU Endowment &amp; SAA</button>
+            <button class="csi-modtab" onclick="csiMod(event,'csim-83')">P8.3 Implementation, Ethics &amp; ESG</button>
+            <button class="csi-modtab" onclick="csiMod(event,'csi-recap')">&#128203; Recap</button>
+            <button class="csi-modtab" onclick="csiMod(event,'csim-err')">&#9888; Errors</button>
+          </div>
+
+          <!-- ================ MODULE P8.1 ================ -->
+          <div id="csim-81" class="csi-modpanel active">
+            <div class="csi-toptabs">
+              <button class="csi-toptab active" onclick="csiTop(event,'csi81-tools')">Four Tools</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csi81-ttc')">Time-to-Cash</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csi81-reb')">Rebalancing &amp; Commitments</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csi81-sd')">Stress Testing &amp; Derivatives</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csi81-illiq')">Illiquidity Premium</button>
+            </div>
+
+            <div id="csi81-tools" class="csi-toppanel active">
+              <div class="csi-card">
+                <div class="csi-title">LOS P8.a &middot; Tools for managing portfolio liquidity risk</div>
+                <div class="csi-body"><b>Liquidity risk</b> = the portfolio having to dispose of illiquid securities at a <b>deep discount during troubled markets</b>. Four key management methods:</div>
+                <div class="csi-body">
+                  <b>1.</b> Liquidity profiling &amp; time-to-cash tables &nbsp;&middot;&nbsp;
+                  <b>2.</b> Rebalancing &amp; commitments &nbsp;&middot;&nbsp;
+                  <b>3.</b> Stress testing &nbsp;&middot;&nbsp;
+                  <b>4.</b> Derivatives
+                </div>
+                <div class="csi-info">Endowment cash-flow frame: <b>outflows</b> = distributions to the university + capital calls (HF/PE). <b>Inflows</b> = donations + investment income. Everything in this module hangs off that inflow/outflow map.</div>
+              </div>
+            </div>
+
+            <div id="csi81-ttc" class="csi-toppanel">
+              <div class="csi-card">
+                <div class="csi-title">Time-to-cash table (Fig P8.1) &mdash; the 3 components</div>
+                <div class="csi-body">A liquidity classification schedule with three distinct components: <b>(1)</b> time needed to convert to cash, <b>(2)</b> liquidity classification level, <b>(3)</b> liquidity budget.</div>
+                <table class="csi-table">
+                  <tr><th>Time to cash</th><th>Classification</th><th>Liquidity budget (% of portfolio)</th></tr>
+                  <tr><td class="csi-num">&lt; 1 week</td><td>Highly liquid</td><td class="csi-num">At least 5%</td></tr>
+                  <tr><td class="csi-num">&lt; 1 quarter</td><td>Liquid</td><td class="csi-num">At least 25%</td></tr>
+                  <tr><td class="csi-num">&lt; 1 year</td><td>Semi-liquid</td><td class="csi-num">At least 40%</td></tr>
+                  <tr><td class="csi-num">&gt; 1 year</td><td>Illiquid</td><td class="csi-num">Up to 40%</td></tr>
+                </table>
+                <div class="csi-body">Logic of the budget column: the three <b>liquid groups carry minimums</b>, the <b>illiquid group carries a maximum</b>. The requirements hold in ALL market situations &mdash; including constrained liquidity &mdash; so <b>stress-test results feed the budget calibration</b>.</div>
+                <div class="csi-body">Classification is tied to liquidating <b>without major market impact</b> (minimal differential in expected price immediately before vs after the sale). An exit taking <b>over one year &rarr; illiquid</b>.</div>
+                <div class="csi-trap"><b>Granularity trap (Fig P8.2):</b> liquidity lives at the <b>vehicle</b> level, not the asset-class level. Within domestic equity 20%: futures &amp; ETFs = 100% highly liquid, a separate account = 100% liquid, a commingled fund = 50% liquid / 50% semi-liquid. Two commingled funds can even differ (small-cap foreign = semiannual liquidity vs large-cap foreign = monthly). Always analyze the investments in detail.</div>
+              </div>
+            </div>
+
+            <div id="csi81-reb" class="csi-toppanel">
+              <div class="csi-card">
+                <div class="csi-title">Rebalancing: systematic policies vs automatic adjustment</div>
+                <div class="csi-body">Rebalancing keeps the risk profile inside a desired <b>quantitative</b> range; illiquid rebalancing costs are very high, so enough <b>liquid</b> assets must be kept to execute transactions.</div>
+                <div class="csi-body"><b>Systematic rebalancing policies</b> maintain the long-term (strategic) allocation. Examples: <b>calendar</b> rebalancing and <b>percent-range</b> rebalancing with predetermined ranges. Range-width tradeoff: <b>wider range</b> for more volatile investments (cuts transaction costs) &harr; <b>narrow range</b> triggers frequent transaction costs each time the allocation exits the corridor.</div>
+                <div class="csi-body"><b>Automatic adjustment mechanisms</b> keep the risk profile roughly constant when there is a change from target. Textbook example: PE has beta &asymp; 1 with public proxies &rarr; if the private equity allocation falls 2% vs target, <b>automatically increase public equity by 2%</b>. Systematic risk is maintained; unsystematic (illiquidity) risk has decreased. Public markets can proxy other illiquid classes the same way.</div>
+                <div class="csi-trap"><b>Module Quiz P8.1 Q1 (reasoning-derived from text; answer page not in batch):</b> Statement 1 &ldquo;illiquidity premium is relatively easy to determine&rdquo; = <b>wrong</b> (text: challenging in practice). Statement 2 &ldquo;calendar &amp; percent-range rebalancing are automatic adjustment mechanisms&rdquo; = <b>wrong</b> &mdash; they are <b>systematic rebalancing policies</b>. Answer: <b>A. Zero</b> correct statements.</div>
+              </div>
+              <div class="csi-card">
+                <div class="csi-title">Commitments &amp; commitment-pacing</div>
+                <div class="csi-body">Private market funds make stable allocations hard: <b>timing and frequency of capital draws and distributions are beyond the investor&rsquo;s control</b>. Investing across <b>multiple funds</b> stabilizes the timing/frequency.</div>
+                <div class="csi-body"><b>Commitment-pacing strategy</b> = multiyear funding strategy that sets the right level of <b>annual commitments</b> to reach a long-term optimal exposure. Quant inputs: rate committed capital is drawn, rate of distributions, rate of change of asset size &rarr; asset-class exposure as % of total portfolio for several hypothetical commitment levels. Scenario analysis extends it (regular vs stressed conditions); annual commitments are <b>adjusted over time</b>.</div>
+              </div>
+            </div>
+
+            <div id="csi81-sd" class="csi-toppanel">
+              <div class="csi-card">
+                <div class="csi-title">Stress testing</div>
+                <div class="csi-body"><b>Explicitly considers how liquidity needs change during market stress</b>: assume worst-case / very extreme conditions and hit assets and liabilities <b>at the same time</b>.</div>
+                <div class="csi-body">Assets side: volatility <b>high</b>, returns <b>low</b>, cross-asset correlations <b>high</b>, liquidity <b>low</b>. Liabilities side: distributions <b>suddenly increase significantly</b>.</div>
+                <div class="csi-body">Basis: any combination of <b>history, statistical models, and scenario analysis</b>.</div>
+              </div>
+              <div class="csi-card">
+                <div class="csi-title">Derivatives as a liquidity tool</div>
+                <div class="csi-body">Derivatives need <b>far less cash</b> than the underlying &rarr; ideal for rebalancing. A <b>futures overlay</b> rebalances many (but not all) asset classes <b>without altering external managers&rsquo; allocations</b>.</div>
+                <div class="csi-body">Long futures &rarr; only minimal margin cash; cash not tied up in margin can fund other assets or liquidity needs. <b>Options:</b> premiums are a fraction of the underlying cost (a form of leverage); options can also be <b>sold to earn premium income that generates liquidity</b>.</div>
+              </div>
+            </div>
+
+            <div id="csi81-illiq" class="csi-toppanel">
+              <div class="csi-card">
+                <div class="csi-title">LOS P8.b &middot; Illiquidity premium as a long-term strategy</div>
+                <div class="csi-body">Illiquid investments (PE, real estate) can earn an additional return over the market return for <b>holding up capital for an unknown amount of time</b> = illiquidity (liquidity) premium. The premium <b>increases with time</b> &mdash; think of an upward-sloping yield curve.</div>
+                <div class="csi-body"><b>Put-option model:</b> the premium is the value of a put where the strike = the marketable price (theoretically estimated as-if-freely-traded price) of the illiquid asset at purchase:</div>
+                <span class="csi-fline"><b>illiquid asset price</b> = marketable asset price &minus; put price</span>
+                <span class="csi-fline"><b>illiquidity premium (%)</b> = E(R) illiquid asset &minus; E(R) marketable asset</span>
+                <div class="csi-body">Many studies support the <b>positive correlation between illiquidity and expected returns</b> for publicly traded stocks.</div>
+                <div class="csi-trap"><b>In practice the premium is challenging to determine:</b> many interacting return factors; <b>broad market indexes</b> are used to estimate premiums although the typical investor holds nothing that broad &rarr; investors face more <b>unsystematic risk</b>. Hence liquidity budgeting is essential to simultaneously earn the premium and manage risk.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================ MODULE P8.2 ================ -->
+          <div id="csim-82" class="csi-modpanel">
+            <div class="csi-toptabs">
+              <button class="csi-toptab active" onclick="csiTop(event,'csi82-facts')">Case Facts &amp; Spending Rule</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csi82-quinco')">QUINCO Governance</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csi82-saa')">SAA &amp; Fig P8.3</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csi82-p84')">Fig P8.4 &amp; Thompson&rsquo;s Case</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csi82-liq')">Liquidity Management</button>
+            </div>
+
+            <div id="csi82-facts" class="csi-toppanel active">
+              <div class="csi-card">
+                <div class="csi-title">LOS P8.c &middot; QU endowment facts</div>
+                <div class="csi-body">Endowment value <b class="csi-num">$8 billion</b>; <b>75% unrestricted</b>, 25% donor-restricted. QU operating budget <b class="csi-num">$583M</b> (&gt; two-thirds = faculty/admin remuneration; rest = debt, maintenance, research, financial aid). Endowment distributions fund <b>~60% of the operating budget</b>, rising in dollar terms for 5 straight years.</div>
+                <div class="csi-body">Spending rule changed post-financial-crisis (board wanted <b>greater stability of distributions</b>). Old rule: 5% of beginning market value. New rule = <b>geometric smoothing</b>:</div>
+                <span class="csi-fline"><b>spending</b> = 66% &times; (prior-year spending) + 34% &times; (5% &times; endowment value at prior fiscal year-end)</span>
+                <div class="csi-body">Worked calc (circled in photo, node-verified): prior spending $358.1M, prior year-end value $7,002.3M:</div>
+                <span class="csi-fline">0.66 &times; 358.1 + 0.34 &times; (0.05 &times; 7,002.3) = 236.35 + 119.04 = <b>$355.4M</b></span>
+                <div class="csi-body"><b>Objectives:</b> earn a sufficient long-term return to cover annual spending AND maintain the endowment&rsquo;s real value. 5% spending + 2%&ndash;3% inflation &rarr; nominal return requirement <b class="csi-num">7%&ndash;8%</b>. Risk objective: annual &sigma; between <b class="csi-num">12% and 14%</b>.</div>
+                <div class="csi-info">Consistency checks (reasoning-derived, node-verified): 355.4/583 = 61% of budget (&asymp; the stated ~60%); implied spend rate 355.4/7,002.3 = 5.08% (&asymp; 5% rule).</div>
+              </div>
+            </div>
+
+            <div id="csi82-quinco" class="csi-toppanel">
+              <div class="csi-card">
+                <div class="csi-title">QUINCO governance chain</div>
+                <table class="csi-table">
+                  <tr><th>Body / role</th><th>Function</th></tr>
+                  <tr><td>Trustees</td><td>Board of trustees oversees QU itself</td></tr>
+                  <tr><td>QUINCO</td><td>University investment office; manages the QU endowment</td></tr>
+                  <tr><td>Aaron Winter</td><td>QUINCO president <b>and CIO</b>; reports to the university president AND the QUINCO Board</td></tr>
+                  <tr><td>QUINCO Board</td><td>11 individuals appointed by the Trustees; <b>approves investment policy &amp; guidelines</b> and gives <b>final approval for hiring any external manager</b></td></tr>
+                  <tr><td>Staff (13 professionals)</td><td>Implement policy: asset allocation, risk mgmt, manager selection/continuation &mdash; strategy is executed by <b>external managers</b>, no in-house management</td></tr>
+                  <tr><td>Portfolio strategist</td><td>Ongoing duties: <b>rebalancing, overlays, TAA tilts</b></td></tr>
+                  <tr><td>Internal investment cmte</td><td>Led by Winter; includes all senior PMs + strategist; approves external-manager decisions and <b>TAA deviations</b></td></tr>
+                </table>
+                <div class="csi-body">Five asset buckets: fixed income, public equity, private equity, real assets, diversifying strategies (last three = alternatives). Each of the five: senior PM + analyst; plus strategist + analyst on allocation/risk; plus the president/CIO = 13.</div>
+              </div>
+            </div>
+
+            <div id="csi82-saa" class="csi-toppanel">
+              <div class="csi-card">
+                <div class="csi-title">20-year allocation drift (1996&ndash;2017) &amp; unsmoothing</div>
+                <div class="csi-body">Cash constant 1%. Domestic stocks+bonds ~70% &rarr; ~30%. Intl developed ~25% &rarr; 10%. EM 0% &rarr; 10&ndash;15%. PE &lt;5% &rarr; 15&ndash;20%. Real assets &lt;5% &rarr; 10&ndash;15%. Diversifying 0% &rarr; 10&ndash;15%. Most recent SAA review (2 yrs ago): increase alternatives, decrease developed-market equities.</div>
+                <div class="csi-body"><b>Unsmoothing</b> applied to private equity (illiquid, infrequent pricing &rarr; artificially smooth reported returns) &rarr; <b>upward adjustment to reported PE volatility</b>.</div>
+              </div>
+              <div class="csi-card">
+                <div class="csi-title">Fig P8.3 &middot; Risk/return analysis (inflation 2.5% p.a.)</div>
+                <table class="csi-table">
+                  <tr><th>Asset class</th><th>E(R) real</th><th>E(R) nominal</th><th>&sigma;</th><th>Sharpe</th></tr>
+                  <tr><td>Cash</td><td class="csi-num">0.9%</td><td class="csi-num">3.4%</td><td class="csi-num">1.7%</td><td class="csi-num">&mdash;</td></tr>
+                  <tr><td>Fixed income</td><td class="csi-num">1.8%</td><td class="csi-num">4.3%</td><td class="csi-num">6.3%</td><td class="csi-num">0.14</td></tr>
+                  <tr><td>Domestic equity</td><td class="csi-num">5.0%</td><td class="csi-num">7.6%</td><td class="csi-num">18.1%</td><td class="csi-num">0.23</td></tr>
+                  <tr><td>Intl developed equity</td><td class="csi-num">4.8%</td><td class="csi-num">7.4%</td><td class="csi-num">19.7%</td><td class="csi-num">0.20</td></tr>
+                  <tr><td>EM equity</td><td class="csi-num">6.0%</td><td class="csi-num">8.7%</td><td class="csi-num">26.6%</td><td class="csi-num">0.19</td></tr>
+                  <tr><td>Private equity</td><td class="csi-num">8.5%</td><td class="csi-num">11.2%</td><td class="csi-num">24.0%</td><td class="csi-num">0.32</td></tr>
+                  <tr><td>Real assets</td><td class="csi-num">4.5%</td><td class="csi-num">7.1%</td><td class="csi-num">13.3%</td><td class="csi-num">0.27</td></tr>
+                  <tr><td>Diversifying strategies</td><td class="csi-num">4.0%</td><td class="csi-num">6.6%</td><td class="csi-num">10.0%</td><td class="csi-num">0.31</td></tr>
+                </table>
+                <div class="csi-green-box"><b>Node-verified Sharpe basis:</b> the printed ratios equal <b>(real return &minus; 0.9% real cash) / &sigma;</b> for all 8 rows. The nominal basis (&minus;3.4%)/&sigma; fails on EM (0.20&ne;0.19), real assets (0.28&ne;0.27) and diversifying (0.32&ne;0.31). If asked to reproduce a Sharpe from this exhibit, use the <b>real</b> pair.</div>
+                <div class="csi-body"><b>Peer underperformance driver (highlighted in text):</b> the QU endowment took a <b>lower amount of risk</b> and held a <b>lower allocation to illiquid investments, especially private equity</b>.</div>
+                <table class="csi-table">
+                  <tr><th>Allocation</th><th>Current</th><th>Proposed</th><th>&Delta;</th></tr>
+                  <tr><td>Cash</td><td class="csi-num">1%</td><td class="csi-num">1%</td><td class="csi-num">0</td></tr>
+                  <tr><td>Fixed income</td><td class="csi-num">14%</td><td class="csi-num">9%</td><td class="csi-num csi-bad">&minus;5</td></tr>
+                  <tr><td>Domestic equity</td><td class="csi-num">17%</td><td class="csi-num">15%</td><td class="csi-num csi-bad">&minus;2</td></tr>
+                  <tr><td>Intl developed equity</td><td class="csi-num">10%</td><td class="csi-num">9%</td><td class="csi-num csi-bad">&minus;1</td></tr>
+                  <tr><td>EM equity</td><td class="csi-num">12%</td><td class="csi-num">12%</td><td class="csi-num">0</td></tr>
+                  <tr><td>Private equity</td><td class="csi-num">18%</td><td class="csi-num">23%</td><td class="csi-num csi-good">+5</td></tr>
+                  <tr><td>Real assets</td><td class="csi-num">13%</td><td class="csi-num">16%</td><td class="csi-num csi-good">+3</td></tr>
+                  <tr><td>Diversifying strategies</td><td class="csi-num">15%</td><td class="csi-num">15%</td><td class="csi-num">0</td></tr>
+                </table>
+                <div class="csi-body">Fees warning (Thompson): PE/real assets carry higher management + performance fees than public equity / fixed income &rarr; Fig P8.4 returns are <b>net of fees</b>.</div>
+              </div>
+            </div>
+
+            <div id="csi82-p84" class="csi-toppanel">
+              <div class="csi-card">
+                <div class="csi-title">Fig P8.4 &middot; Current vs proposed SAA</div>
+                <table class="csi-table">
+                  <tr><th>Portfolio characteristic</th><th>Current SAA</th><th>Proposed SAA</th></tr>
+                  <tr><td>E(R) nominal (10-yr geo avg)</td><td class="csi-num">7.5%</td><td class="csi-num">7.8%</td></tr>
+                  <tr><td>E(R) real (10-yr geo avg)</td><td class="csi-num">5.0%</td><td class="csi-num">5.3%</td></tr>
+                  <tr><td>&sigma; of returns (annual)</td><td class="csi-num">12.5%</td><td class="csi-num">13.2% (+0.7%)</td></tr>
+                  <tr><td>Sharpe ratio</td><td class="csi-num">0.33</td><td class="csi-num">0.34</td></tr>
+                  <tr><td>P(25% purchasing-power erosion over 20 yrs, 5% spend)</td><td class="csi-num">35%</td><td class="csi-num csi-good">30%</td></tr>
+                </table>
+                <div class="csi-info"><b>Node check:</b> proposed Sharpe computes to (7.8&minus;3.4)/13.2 = (5.3&minus;0.9)/13.2 = 0.333, which rounds to 0.33 &mdash; the printed 0.34 is a curriculum figure carried as-is (circled in photo; likely from unrounded inputs). Both &sigma; values and the +0.7% delta verify exactly. Erosion probabilities come from Monte Carlo over a 20-yr horizon assuming the 10-yr return/vol characteristics persist.</div>
+                <div class="csi-body"><b>Thompson&rsquo;s reasons for taking more stand-alone risk:</b> (1) lower expected future returns across asset classes &rarr; more risk needed to hold the return level; (2) QU takes <b>less risk than peers</b>; (3) fixed income&rsquo;s low estimated Sharpe &rarr; less allocation to less-risky assets; (4) Monte Carlo: proposed SAA has a better chance of earning the desired real return and <b>preserving purchasing power</b>.</div>
+                <div class="csi-body">Board constraint: willing to accept annualized &sigma; between <b>12% and 14%</b> &rarr; proposed 13.2% fits inside the band.</div>
+              </div>
+            </div>
+
+            <div id="csi82-liq" class="csi-toppanel">
+              <div class="csi-card">
+                <div class="csi-title">Why liquidity deteriorates under stress &mdash; 3 reasons</div>
+                <div class="csi-body"><b>1.</b> PE <b>capital calls exceed distributions</b> &rarr; growing concentration of the most illiquid sleeve. <b>2.</b> Some funds <b>restrict withdrawals during stressed markets</b> &rarr; overall portfolio liquidity drops. <b>3.</b> <b>Lagged valuations:</b> PE is priced less frequently, so in a selloff liquid assets fall &ldquo;faster&rdquo; &rarr; illiquid share of the portfolio passively rises exactly when liquid assets are needed most (denominator effect).</div>
+              </div>
+              <div class="csi-card">
+                <div class="csi-title">Liquidity profiles (Thompson&rsquo;s summary)</div>
+                <table class="csi-table">
+                  <tr><th>Profile</th><th>Highly liquid</th><th>Liquid</th><th>Semi-liquid</th><th>Illiquid</th></tr>
+                  <tr><td>Existing &middot; normal</td><td class="csi-num">19%</td><td class="csi-num">26%</td><td class="csi-num">22%</td><td class="csi-num">33%</td></tr>
+                  <tr><td>Existing &middot; stress</td><td class="csi-num">15%</td><td class="csi-num">26%</td><td class="csi-num">20%</td><td class="csi-num">39%</td></tr>
+                  <tr><td>Proposed &middot; normal</td><td class="csi-num">14%</td><td class="csi-num">24%</td><td class="csi-num">23%</td><td class="csi-num">39%</td></tr>
+                  <tr><td>Proposed &middot; stress</td><td class="csi-num">11%</td><td class="csi-num">25%</td><td class="csi-num">21%</td><td class="csi-num csi-bad">43%</td></tr>
+                </table>
+                <div class="csi-body">All four rows sum to 100% (node-verified). Read the corners: proposed-under-stress leaves only <b>11% highly liquid</b> against <b>43% illiquid</b> &mdash; that is the tension between capturing the illiquidity premium and paying ~$355M of distributions.</div>
+                <div class="csi-trap"><b>Essay pointer (Quiz P8.2 Q3, reasoning-derived):</b> the smoothed spending rule bases 66% of spending on <b>prior-year spending</b> &rarr; in a downturn, dollar spending falls far less than the endowment value &rarr; the <b>effective spending rate rises</b> just as asset values and liquidity fall, forcing sales of liquid assets under stress. Smoothing stabilizes the university&rsquo;s budget but transfers the liquidity strain to the portfolio.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================ MODULE P8.3 ================ -->
+          <div id="csim-83" class="csi-modpanel">
+            <div class="csi-toptabs">
+              <button class="csi-toptab active" onclick="csiTop(event,'csi83-eth')">Manager Selection Ethics</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csi83-taa')">TAA &amp; Derivatives vs Cash</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csi83-reb')">Rebalancing in Practice</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csi83-esg')">ESG Integration</button>
+            </div>
+
+            <div id="csi83-eth" class="csi-toppanel active">
+              <div class="csi-card">
+                <div class="csi-title">LOS P8.d &middot; GVC vs Beacher &mdash; the fact pattern</div>
+                <div class="csi-body">RFP for a PE manager. <b>GVC Fund II</b> is owned by <b>Virginia Hall, CFA</b> &mdash; who sits on the <b>QU endowment board</b> and is a longtime, highly supportive donor. University treasurer + president strongly support GVC and told Winter so; Winter believes Hall solicited that support in advance. Finalists: GVC vs <b>Beacher</b> (more established, some problems in its previous fund; GVC concern = short existence).</div>
+                <div class="csi-body"><b>Jason Allen</b> (GVC managing director, Winter&rsquo;s former colleague) presents. Winter <b>knows</b> the presentation contains <b>possibly confidential information</b> (likely from the university treasurer) and that GVC&rsquo;s historical returns are shown <b>materially greater than third-party reported figures</b>. GVC struggles to raise its targeted $300M for Fund II (Fund I raised only $100M &mdash; threefold expansion worry).</div>
+                <div class="csi-body"><b>Bud Davis</b> (top QUINCO PE portfolio manager) recommends GVC: positive on manager and approach, confirms the management fee will be lowered; committee agrees. Afterward Allen reveals <b>Davis&rsquo;s spouse Andrea is Hall&rsquo;s daughter</b>; confronted, Davis claims it was &ldquo;well known.&rdquo;</div>
+                <div class="csi-trap"><b>Violation map (reasoning-derived; quiz says standard numbers not required):</b> <b>Hall</b> &mdash; exploiting board/donor position to influence selection; undisclosed conflict between GVC ownership and board role; presentation using confidential university information and inflated performance = misrepresentation. <b>Davis</b> &mdash; failure to disclose a material conflict (spouse is the GVC owner&rsquo;s daughter) before recommending GVC; &ldquo;everyone knew&rdquo; is not disclosure. <b>Winter</b> &mdash; knew about the confidential information and inflated returns yet let the process proceed without investigating; independence and objectivity compromised by treasurer/president pressure. <b>Allen</b> &mdash; delivered a presentation containing possibly confidential information and materially overstated returns.</div>
+              </div>
+            </div>
+
+            <div id="csi83-taa" class="csi-toppanel">
+              <div class="csi-card">
+                <div class="csi-title">LOS P8.e/P8.f &middot; TAA budget &amp; the $80M overweight</div>
+                <div class="csi-body">Board approves a bigger active risk budget: tracking-error limit <b>100 &rarr; 250 bps</b>; Winter&rsquo;s staff may use <b>150 bps</b> of it. Derivatives create leverage &rarr; max leverage position <b>5% of portfolio value</b>. Winter builds <b>fair value + mean reversion</b> models (1&ndash;3 yr horizons); backtesting worked well. Signal: large-cap U.S. equities priced far below fair value, mean reversion within ~1 year &rarr; overweight U.S. equities by <b>1%</b> via total return swap, equity futures, or ETFs; objective = minimize cash use and transaction costs.</div>
+                <table class="csi-table">
+                  <tr><th>Cost (bps, $80M S&amp;P 500 exposure, 1 yr, fully funded)</th><th>ETF</th><th>Futures</th><th>TRS</th></tr>
+                  <tr><td>Commission (round trip)</td><td class="csi-num">4.00</td><td class="csi-num">2.00</td><td class="csi-num">5.00</td></tr>
+                  <tr><td>Management fee (annual)</td><td class="csi-num">9.50</td><td class="csi-num">0.00</td><td class="csi-num">0.00</td></tr>
+                  <tr><td>Bid/offer spread (round trip)</td><td class="csi-num">2.50</td><td class="csi-num">2.00</td><td class="csi-num">6.00</td></tr>
+                  <tr><td>Price impact (round trip)</td><td class="csi-num">15.00</td><td class="csi-num">10.00</td><td class="csi-num">0.00</td></tr>
+                  <tr><td>Mispricing / tracking error (annual)</td><td class="csi-num">4.00</td><td class="csi-num">8.00</td><td class="csi-num">0.00</td></tr>
+                  <tr><td>Cost to roll futures</td><td class="csi-num">0.00</td><td class="csi-num">20.00</td><td class="csi-num">0.00</td></tr>
+                  <tr><td>Funding cost</td><td class="csi-num">0.00</td><td class="csi-num">0.00</td><td class="csi-num">40.00</td></tr>
+                  <tr><td><b>Total</b></td><td class="csi-num"><b>35.00</b></td><td class="csi-num"><b>42.00</b></td><td class="csi-num"><b>51.00</b></td></tr>
+                </table>
+                <div class="csi-body">Column sums node-verified (35 / 42 / 51). <b>Fully funded, cost-only &rarr; ETF cheapest.</b></div>
+                <div class="csi-body"><b>Qualitative overlay:</b> ETFs need 100% up-front cash (or 50% margin at best: $80M = $40M cash + $40M borrowed); futures/TRS need far less. ETFs + futures = liquid, low transaction costs, allow early termination (flexibility Thompson values). TRS = OTC, negotiated, customizable &mdash; but counterparty credit risk and interest-rate risk concern her; futures bring daily margin monitoring she dislikes.</div>
+                <div class="csi-body"><b>Leverage 4 case (Quiz P8.3 Q3 frame):</b> 25% of the investment in cash, 75% borrowed; financing at 2% 3-month MRR for futures/swaps, ETFs pay an additional 0.5% financing. Levered financing cost erodes the ETF cost advantage &rarr; with leverage, derivatives become the vehicle of choice; one non-cost issue: e.g. daily margin/roll management for futures or counterparty risk for the TRS.</div>
+              </div>
+            </div>
+
+            <div id="csi83-reb" class="csi-toppanel">
+              <div class="csi-card">
+                <div class="csi-title">Fig P8.6 &middot; Corridors after the drift</div>
+                <div class="csi-body">Three months on: U.S. equity overweight did well; fixed income hurt by a large rate rise &rarr; drift. Policy: <b>rebalance quarterly</b> (cost control), <b>check drift monthly</b>. Liquid classes outside the corridor at quarter-end &rarr; systematically rebalanced to <b>target or corridor edge</b>. Illiquid classes: high transaction costs &rarr; rebalance <b>implicitly via commitments and reinvestments</b>.</div>
+                <table class="csi-table">
+                  <tr><th>Class</th><th>Target</th><th>Corridor</th><th>Min/Max</th><th>Current</th></tr>
+                  <tr><td>Cash</td><td class="csi-num">1%</td><td class="csi-num">&plusmn;1%</td><td class="csi-num">0&ndash;2%</td><td class="csi-num">0.8%</td></tr>
+                  <tr><td>Fixed income</td><td class="csi-num">9%</td><td class="csi-num">&plusmn;3%</td><td class="csi-num">6&ndash;12%</td><td class="csi-num">6.5%</td></tr>
+                  <tr><td>Domestic equity</td><td class="csi-num">15%</td><td class="csi-num">&plusmn;2.5%</td><td class="csi-num">12.5&ndash;17.5%</td><td class="csi-num">17.3%</td></tr>
+                  <tr><td>Intl developed equity</td><td class="csi-num">9%</td><td class="csi-num">&plusmn;2%</td><td class="csi-num">7&ndash;11%</td><td class="csi-num csi-bad">11.5%</td></tr>
+                  <tr><td>EM equity</td><td class="csi-num">12%</td><td class="csi-num">&plusmn;2%</td><td class="csi-num">10&ndash;14%</td><td class="csi-num">13.9%</td></tr>
+                  <tr><td>Private equity</td><td class="csi-num">23%</td><td class="csi-num">&plusmn;5%</td><td class="csi-num">18&ndash;28%</td><td class="csi-num">19.2%</td></tr>
+                  <tr><td>Real assets</td><td class="csi-num">16%</td><td class="csi-num">&plusmn;3%</td><td class="csi-num">13&ndash;19%</td><td class="csi-num">13.8%</td></tr>
+                  <tr><td>Diversifying strategies</td><td class="csi-num">15%</td><td class="csi-num">&plusmn;3%</td><td class="csi-num">12&ndash;18%</td><td class="csi-num">17.1%</td></tr>
+                </table>
+                <div class="csi-body">All corridors node-verified against target &plusmn; band. Only breach: <b>intl developed equity 11.5% &gt; 11.0% top</b> (+0.5%). FI 6.5% is far from the 9% target but inside 6&ndash;12%. PE 19.2% and real assets 13.8% sit near the low ends. (Printed current column sums to 100.1% before rounding &mdash; flagged, cosmetic.)</div>
+              </div>
+              <div class="csi-card">
+                <div class="csi-title">Cash market vs futures &mdash; the two rebalances</div>
+                <table class="csi-table">
+                  <tr><th>Trade</th><th>Cash market</th><th>Futures</th><th>Winner</th></tr>
+                  <tr><td>0.5% (intl dev &rarr; FI), 3-month horizon</td><td class="csi-num">30 bps (5 spread + 5 impact + 20 cash drag)</td><td class="csi-num">24 bps (3 + 4 + 17 mispricing)</td><td class="csi-good">Futures</td></tr>
+                  <tr><td>2.5% (back to 9% target), 1-year horizon</td><td class="csi-num">60 bps (5 + 5 + 50 cash drag)</td><td class="csi-num">82 bps (4 + 4 + 68 mispricing + 6 roll)</td><td class="csi-good">Cash market</td></tr>
+                </table>
+                <div class="csi-body">All four totals node-verified. <b>Memorize the flip:</b> small size / short horizon / temporary &rarr; <b>derivatives</b> (mispricing &amp; roll costs haven&rsquo;t compounded); large size / long horizon / permanent &rarr; <b>cash market</b> (cash drag is one-off, mispricing accrues annually). Cash drag = timing delays + disruption to active manager portfolios; mispricing = futures tracking error. Implementation is slower in the cash market but necessary for larger, more important adjustments.</div>
+              </div>
+            </div>
+
+            <div id="csi83-esg" class="csi-toppanel">
+              <div class="csi-card">
+                <div class="csi-title">LOS P8.g &middot; Portro case &amp; the ESG playbook</div>
+                <div class="csi-body">Student protest over <b>Portro Inc.</b> (apparel; ILO report: child labor, health &amp; safety, poor working conditions at 2 large suppliers; one supplier also makes QU-branded clothing). Students demand <b>divestment</b> + dropping the supplier. Endowment exposure: (1) Portro as a <b>benchmark constituent</b> of the U.S. public equity allocation; (2) a <b>large holding in a concentrated strategy</b> run by an external U.S. equity manager.</div>
+                <div class="csi-body">7-year-old ESG policy rests on: risk/return are affected by ESG and traditional factors; transparency on material ESG issues; long-term sustainability of companies/markets. External managers are relied on to integrate ESG. <b>Natalya Long, CFA</b> (ESG integration specialist) adds: enhanced due diligence (formal policy exists? how factors enter the process? timely disclosure commitment? consistency with QUINCO policy); <b>responsible ownership = proxy voting + corporate engagement</b>; ESG metrics monitoring (peer/benchmark rating comparisons, climate sensitivity framework, carbon footprint, trend tracking); <b>UN PRI signatory</b>.</div>
+                <div class="csi-body"><b>Investment response:</b> issues already flagged pre-ILO-report by the metrics system + poor ratings; external manager questioned at quarterly review &mdash; she integrates ESG informally (no formal policy), stays confident long term after costing the supply-chain fix, will monitor management&rsquo;s response. Team: due diligence adequate, but more manager + corporate engagement needed. Responsible ownership: join other institutional investors in dialogue with Portro; proxy voting for transparency resolutions on supply-chain human capital reporting.</div>
+                <div class="csi-green-box"><b>The exam line:</b> under the responsible-investing strategy, <b>divestment is a last resort</b> because it is a <b>suboptimal risk-mitigation strategy</b> &mdash; you lose the seat at the table; engagement + proxy voting keep influence. Separate the portfolio question from operations: the university store supplier is removed <b>immediately</b> (operational decision), the Portro holding is engaged, not dumped.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================ ERRORS ================ -->
+          <div id="csim-err" class="csi-modpanel">
+            <div class="csi-toptabs">
+              <button class="csi-toptab active" onclick="csiTop(event,'csierr-pat')">Patterns</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csierr-mcq')">MCQ Misses</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csierr-essay')">Essay Misses</button>
+              <button class="csi-toptab" onclick="csiTop(event,'csierr-mastery')">Mastery</button>
+            </div>
+            <div id="csierr-pat" class="csi-toppanel active">
+              <div class="csi-card"><div class="csi-title">Patterns</div><div class="csi-info">Recurring mistake patterns from mocks land here.</div></div>
+            </div>
+            <div id="csierr-mcq" class="csi-toppanel">
+              <div class="csi-card"><div class="csi-title">MCQ Misses</div><div class="csi-info">Specific MCQ misses with the decisive detail that was dropped.</div></div>
+            </div>
+            <div id="csierr-essay" class="csi-toppanel">
+              <div class="csi-card"><div class="csi-title">Essay Misses</div><div class="csi-info">Constructed-response misses land here.</div></div>
+            </div>
+            <div id="csierr-mastery" class="csi-toppanel">
+              <div class="csi-card"><div class="csi-title">Mastery checklist</div><div class="csi-info">Confirmed mastery points move here.</div></div>
+            </div>
+          </div>
+
+          <!-- ================ RECAP - READING P8 (registered in RECAP_REGISTRY) ================ -->
+          <div id="csi-recap" class="csi-modpanel">
+            <style>
+              #csi-recap .rc-sec { font-family:var(--mono); font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:#7D8590; margin:2px 0 6px; }
+              #csi-recap .rc-los { display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.05em; background:rgba(251,113,133,.14); border:1px solid var(--csi-main); color:var(--csi-main); border-radius:3px; padding:1px 6px; margin-right:6px; }
+              #csi-recap .rc-drivers { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:9px 11px; margin:10px 0; }
+              #csi-recap .rc-drow { display:grid; grid-template-columns:160px 1fr; column-gap:14px; align-items:start; padding:5px 0; border-bottom:1px solid rgba(42,52,65,.6); font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+              #csi-recap .rc-drow:last-child { border-bottom:none; }
+              #csi-recap .rc-dlabel { color:var(--csi-main); font-family:var(--mono); font-size:10px; letter-spacing:.04em; padding-top:2px; }
+              #csi-recap .rc-dbody { min-width:0; }
+              @media (max-width:640px) {
+                #csi-recap .rc-drow { grid-template-columns:1fr; row-gap:2px; }
+                #csi-recap .rc-dlabel { padding-top:0; }
+              }
+              #csi-recap .rc-svg-wrap { background:#0B0F14; border:1px solid var(--border); border-radius:5px; padding:10px; margin:10px 0; overflow-x:auto; }
+              #csi-recap .csi-tip { background:rgba(63,185,80,.08); border-left:3px solid var(--csi-green); border-radius:3px; padding:9px 12px; margin:10px 0; font-size:12.5px; line-height:1.6; color:#C9D1D9; }
+              #csi-recap .csi-fl { display:block; white-space:pre-wrap; font-family:var(--mono); font-size:12px; line-height:1.6; color:#C9D1D9; background:#0B0F14; border:1px solid var(--border); border-radius:6px; padding:11px 13px; margin:10px 0; overflow-x:auto; tab-size:2; }
+              #csi-recap .csi-fl b { color:var(--csi-main); font-weight:600; }
+            </style>
+
+            <button class="recap-print-btn" onclick="printOneRecap('csi-recap')" style="float:right;font-family:monospace;font-size:10px;background:#1C2330;color:#79C0FF;border:1px solid #2A3441;border-radius:4px;padding:5px 10px;cursor:pointer">&#128424; Print this recap</button>
+
+            <div class="csi-card">
+              <div class="csi-title">Reading P8 &middot; Case Study in Portfolio Management: Institutional</div>
+              <div class="csi-body">Full-reading recap. One integrated case: the $8B Quadrivium University endowment run by QUINCO. Everything ties back to one tension &mdash; <b>harvest the illiquidity premium without failing a ~$355M annual distribution</b>.</div>
+            </div>
+
+            <div class="csi-card">
+              <div class="rc-sec">Module P8.1 &middot; Managing liquidity risk</div>
+              <div class="csi-body"><span class="rc-los">LOS P8.a</span><b>Four tools for liquidity risk</b> (fire-sale risk in troubled markets):</div>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">TIME-TO-CASH TABLE</div><div class="rc-dbody">3 components: time to convert &rarr; classification &rarr; liquidity budget. &lt;1wk highly liquid &ge;5% &middot; &lt;1qtr liquid &ge;25% &middot; &lt;1yr semi-liquid &ge;40% &middot; &gt;1yr illiquid &le;40%. Liquid tiers = minimums, illiquid tier = maximum; holds in ALL markets &rarr; calibrate with stress tests. Liquidity is a <b>vehicle-level</b> property (ETF 100% highly liquid vs commingled fund 50/50 liquid/semi-liquid within the same asset class).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">REBALANCING</div><div class="rc-dbody"><b>Systematic policies</b> = calendar + percent-range (wide range for volatile assets saves costs; narrow range trades often). <b>Automatic adjustment mechanisms</b> = keep risk constant on a change from target: PE (&beta;&asymp;1) falls 2% &rarr; public equity +2%; systematic risk held, illiquidity risk down. These two are different answers &mdash; do not swap the labels.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">COMMITMENTS</div><div class="rc-dbody">Draw/distribution timing is outside the LP&rsquo;s control; multiple funds stabilize it. <b>Commitment-pacing</b> = multiyear plan for annual commitments &rarr; long-term optimal exposure; inputs = draw rate, distribution rate, asset growth; run under regular vs stressed scenarios; adjust annually.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">STRESS TESTING</div><div class="rc-dbody">How liquidity needs change in stress: assets (vol &uarr;, returns &darr;, correlations &uarr;, liquidity &darr;) AND liabilities (distributions spike) simultaneously. Basis: history / statistical models / scenario analysis.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">DERIVATIVES</div><div class="rc-dbody">Far less cash than the underlying &rarr; ideal rebalancing tool; futures overlay leaves external managers&rsquo; sleeves untouched; freed cash serves other liquidity needs; buying options = leverage via small premiums, selling options = premium income = liquidity.</div></div>
+              </div>
+              <div class="csi-body"><span class="rc-los">LOS P8.b</span><b>Illiquidity premium</b> &mdash; extra return for locking capital for an unknown time; grows with time (upward-sloping curve analogy).</div>
+              <span class="csi-fl"><b>illiquid asset price</b> = marketable asset price &minus; put price
+<b>illiquidity premium (%)</b> = E(R)_illiquid &minus; E(R)_marketable</span>
+              <div class="csi-body">Put-option framing: strike = theoretically estimated freely-traded price at purchase. In practice the premium is <b>hard to pin down</b> (confounded factors; broad-index estimates vs concentrated real portfolios &rarr; unsystematic risk) &rarr; liquidity budgeting is the balancing act.</div>
+            </div>
+
+            <div class="csi-card">
+              <div class="rc-sec">Module P8.2 &middot; QU endowment &amp; the SAA decision</div>
+              <div class="csi-body"><span class="rc-los">LOS P8.c</span><b>The case in numbers:</b> $8B (75% unrestricted) &middot; budget $583M &middot; distributions fund ~60% of it &middot; return objective 5% spend + 2&ndash;3% inflation = <b>7&ndash;8% nominal</b> &middot; risk band &sigma; 12&ndash;14%.</div>
+              <span class="csi-fl"><b>spending</b> = 66% &times; prior spending + 34% &times; (5% &times; prior year-end value)
+0.66 &times; 358.1 + 0.34 &times; (0.05 &times; 7,002.3) = <b>$355.4M</b>   [circled in photo &middot; node-verified]</span>
+              <div class="rc-drivers">
+                <div class="rc-drow"><div class="rc-dlabel">GOVERNANCE</div><div class="rc-dbody">Trustees &rarr; QU. QUINCO Board (11, Trustee-appointed) approves policy + <b>final approval on external manager hires</b>. Winter = president AND CIO; internal investment committee (Winter + senior PMs + strategist) approves TAA deviations. Strategist owns rebalancing/overlays/TAA. 13 staff, 5 asset buckets, all management external.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">WHY CHANGE SAA</div><div class="rc-dbody">Peer underperformance = <b>less risk taken + lower illiquid allocation (esp. PE)</b>. Unsmoothing PE returns &rarr; volatility adjusted upward before optimizing. Proposal: FI 14&rarr;9, dom eq 17&rarr;15, intl 10&rarr;9; PE 18&rarr;23, real assets 13&rarr;16.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">FIG P8.4 SCORECARD</div><div class="rc-dbody">E(R) nominal 7.5&rarr;7.8%, real 5.0&rarr;5.3%, &sigma; 12.5&rarr;13.2% (+0.7, inside the Board&rsquo;s 12&ndash;14% band), Sharpe 0.33&rarr;0.34, P(25% purchasing-power erosion over 20y) 35%&rarr;<b>30%</b>. Thompson&rsquo;s reasons: lower future returns everywhere; QU below peer risk; low FI Sharpe; Monte Carlo favors proposed for real return + purchasing power. Fees: PE/real-asset returns are <b>net of fees</b>.</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">SHARPE BASIS TRAP</div><div class="rc-dbody">Fig P8.3 Sharpe ratios reproduce as <b>(real return &minus; 0.9)/&sigma;</b>, node-verified on all rows; the nominal basis fails on EM / real assets / diversifying. Portfolio-level proposed Sharpe computes 0.333 vs printed 0.34 (curriculum rounding &mdash; carried as circled).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">STRESS LIQUIDITY</div><div class="rc-dbody">3 deterioration channels: PE calls &gt; distributions; fund withdrawal gates in stress; <b>lagged PE valuations</b> &rarr; liquid assets fall &ldquo;faster,&rdquo; illiquid share passively rises. Profiles: existing normal 19/26/22/33 &rarr; proposed stress <b>11/25/21/43</b> (highly liquid/liquid/semi/illiquid, each row sums to 100).</div></div>
+                <div class="rc-drow"><div class="rc-dlabel">SPENDING &times; STRESS</div><div class="rc-dbody">66% weight on prior spending makes dollar spending sticky in a drawdown &rarr; effective spend rate rises exactly when values and liquidity fall &rarr; forced liquid-asset sales. Budget stability for QU = liquidity strain for the portfolio.</div></div>
+              </div>
+            </div>
+
+            <div class="csi-card">
+              <div class="rc-sec">Module P8.3 &middot; Implementation, ethics &amp; ESG</div>
+              <div class="csi-body"><span class="rc-los">LOS P8.d</span><b>Manager-selection ethics (GVC vs Beacher):</b> Hall (GVC owner, QU board member + donor) pre-solicits treasurer/president support; presentation uses possibly confidential university information and returns materially above third-party figures; Davis recommends GVC without disclosing his spouse is Hall&rsquo;s daughter (&ldquo;everyone knew&rdquo; &ne; disclosure); Winter proceeds despite knowing all of it. Themes: undisclosed conflicts, misrepresentation of performance, misuse of confidential information, loss of independence and objectivity under donor pressure.</div>
+              <div class="csi-body"><span class="rc-los">LOS P8.e</span><span class="rc-los">LOS P8.f</span><b>Derivatives vs cash for the 1% U.S. equity tilt</b> (TE budget 100&rarr;250 bps, staff may use 150; max leverage 5% of portfolio):</div>
+              <div class="rc-svg-wrap">
+                <svg viewBox="0 0 720 268" width="720" height="268" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cost comparisons: establishing exposure and rebalancing">
+                  <text x="10" y="18" fill="#FB7185" font-family="monospace" font-size="11" font-weight="bold">FIG P8.5 &middot; $80M, 1yr, fully funded (bps)</text>
+                  <text x="10" y="52" fill="#C9D1D9" font-family="monospace" font-size="11">ETF</text>
+                  <rect x="70" y="40" width="175" height="16" fill="#3FB950" rx="2" />
+                  <text x="252" y="52" fill="#3FB950" font-family="monospace" font-size="11" font-weight="bold">35</text>
+                  <text x="10" y="82" fill="#C9D1D9" font-family="monospace" font-size="11">FUT</text>
+                  <rect x="70" y="70" width="210" height="16" fill="#79C0FF" rx="2" />
+                  <text x="287" y="82" fill="#79C0FF" font-family="monospace" font-size="11" font-weight="bold">42</text>
+                  <text x="10" y="112" fill="#C9D1D9" font-family="monospace" font-size="11">TRS</text>
+                  <rect x="70" y="100" width="255" height="16" fill="#E0A82E" rx="2" />
+                  <text x="332" y="112" fill="#E0A82E" font-family="monospace" font-size="11" font-weight="bold">51</text>
+                  <text x="10" y="146" fill="#7D8590" font-family="monospace" font-size="10">Fully funded + cost only &rarr; ETF wins.</text>
+                  <text x="10" y="162" fill="#7D8590" font-family="monospace" font-size="10">Leverage 4 (25% cash / 75% borrowed):</text>
+                  <text x="10" y="178" fill="#7D8590" font-family="monospace" font-size="10">ETF pays MRR 2% + 0.5% extra financing</text>
+                  <text x="10" y="194" fill="#7D8590" font-family="monospace" font-size="10">&rarr; derivatives take over.</text>
+                  <line x1="368" y1="10" x2="368" y2="258" stroke="#2A3441" stroke-width="1" />
+                  <text x="384" y="18" fill="#FB7185" font-family="monospace" font-size="11" font-weight="bold">REBALANCING &middot; cash vs futures (bps)</text>
+                  <text x="384" y="40" fill="#C9D1D9" font-family="monospace" font-size="10">0.5% &middot; 3-month horizon</text>
+                  <text x="384" y="60" fill="#C9D1D9" font-family="monospace" font-size="10">cash</text>
+                  <rect x="432" y="49" width="78" height="13" fill="#FF7B72" rx="2" />
+                  <text x="516" y="60" fill="#FF7B72" font-family="monospace" font-size="10" font-weight="bold">30</text>
+                  <text x="384" y="80" fill="#C9D1D9" font-family="monospace" font-size="10">fut</text>
+                  <rect x="432" y="69" width="62" height="13" fill="#3FB950" rx="2" />
+                  <text x="500" y="80" fill="#3FB950" font-family="monospace" font-size="10" font-weight="bold">24 &#10003;</text>
+                  <text x="384" y="112" fill="#C9D1D9" font-family="monospace" font-size="10">2.5% &middot; 1-year horizon</text>
+                  <text x="384" y="132" fill="#C9D1D9" font-family="monospace" font-size="10">cash</text>
+                  <rect x="432" y="121" width="156" height="13" fill="#3FB950" rx="2" />
+                  <text x="594" y="132" fill="#3FB950" font-family="monospace" font-size="10" font-weight="bold">60 &#10003;</text>
+                  <text x="384" y="152" fill="#C9D1D9" font-family="monospace" font-size="10">fut</text>
+                  <rect x="432" y="141" width="213" height="13" fill="#FF7B72" rx="2" />
+                  <text x="651" y="152" fill="#FF7B72" font-family="monospace" font-size="10" font-weight="bold">82</text>
+                  <text x="384" y="186" fill="#7D8590" font-family="monospace" font-size="10">cash 30 = 5 spread + 5 impact + 20 cash drag</text>
+                  <text x="384" y="202" fill="#7D8590" font-family="monospace" font-size="10">fut 24 = 3 + 4 + 17 mispricing</text>
+                  <text x="384" y="218" fill="#7D8590" font-family="monospace" font-size="10">cash 60 = 5 + 5 + 50 &middot; fut 82 = 4 + 4 + 68 + 6 roll</text>
+                  <text x="384" y="242" fill="#3FB950" font-family="monospace" font-size="10" font-weight="bold">small/short/temporary &rarr; futures</text>
+                  <text x="384" y="258" fill="#3FB950" font-family="monospace" font-size="10" font-weight="bold">large/long/permanent &rarr; cash market</text>
+                </svg>
+              </div>
+              <div class="csi-body">Vehicle personalities: ETF (up-front cash 100%, or 50% margin max), futures (tiny margin but daily monitoring + roll + mispricing), TRS (OTC customization, no mispricing, but funding cost 40 bps + counterparty and interest-rate risk). Cash-market rebalancing = slower, cash drag, but right for larger/more important shifts; derivatives = fast, cheap short-term, tracking error.</div>
+              <div class="csi-body"><span class="rc-los">LOS P8.g</span><b>ESG (Portro):</b> exposure via benchmark constituent + concentrated external strategy. Responsible ownership = proxy voting + corporate engagement; Long&rsquo;s upgrades = manager ESG due diligence, metrics monitoring (peer/benchmark ratings, climate framework, carbon footprint), PRI signatory. <b>Divestment = last resort, a suboptimal risk-mitigation strategy</b>; engage the manager and the company instead. Operational cut (drop the store supplier) is immediate and separate from the portfolio decision.</div>
+              <div class="csi-tip"><b>One-breath story for the exam:</b> budget the liquidity (time-to-cash), earn the premium (raise PE despite 43% illiquid under stress, because Monte Carlo says purchasing power survives better), implement cheaply (ETF when funded, derivatives when levered or small/short, cash market when large/permanent), keep the process clean (disclose conflicts, no confidential info, verify performance), and when ESG blows up &mdash; engage, don&rsquo;t divest.</div>
+            </div>
+          </div>
+
+          <script>
+            function csiMod(ev,id){
+              var w=document.getElementById('csiWidget');
+              w.querySelectorAll('.csi-modpanel').forEach(function(p){p.classList.remove('active')});
+              w.querySelectorAll('.csi-modtabs > .csi-modtab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function csiTop(ev,id){
+              var mp=ev.currentTarget.closest('.csi-modpanel');
+              mp.querySelectorAll(':scope > .csi-toppanel').forEach(function(p){p.classList.remove('active')});
+              mp.querySelectorAll(':scope > .csi-toptabs > .csi-toptab').forEach(function(b){b.classList.remove('active')});
+              document.getElementById(id).classList.add('active');
+              ev.currentTarget.classList.add('active');
+            }
+            function csiInit(){ }
+          </script>
+        </div>
+
 
 
         <div id="sfWidget" style="display:none;min-height:100%;background:var(--surface2);padding:16px 20px;overflow-y:auto;">
@@ -36950,7 +37416,7 @@ const DEFAULT_DECK = {
     { name:"Derivatives",        subtopics:["Options Strategies","Swaps, Forwards, and Futures Strategies","Currency Management"] },
     { name:"Portfolio Construction", subtopics:["Overview of Equity Portfolio Management","Overview Of Fixed-Income Portfolio Management","Asset Allocation to Alternative Investments","Active Mgmt","Factor Models","Rebalancing","Portfolio Risk","An Overview of Private Wealth Management","Portfolio Management for Institutional Investors","Trading Costs and Electronic Markets"] },
     { name:"Performance Measurement", subtopics:["Portfolio Performance Evaluation","Investment Manager Selection","Overview of the Global Investment Performance Standards"] },
-    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution"] },
+    { name:"PM Pathway",         subtopics:["Liab-Driven Strategies","Yield Curve Strategies","Credit Strategies","Index-Based Strategies","Active Equity Investing: Strategies","Active Equity Investing: Portfolio Construction","Trade Strategy and Execution","Case Study in Portfolio Management: Institutional"] },
     { name:"Ethics / GIPS",      subtopics:["Standards I-VII","GIPS Composites","Asset Manager Code"] },
     { name:"Command Words",      subtopics:["Templates","Thin vs Full"] },
   ],
@@ -38798,7 +39264,7 @@ function toggleWidget(widgetId) {
     currentWidgetId = null;
   } else {
     // Showing widget → hide editor + edit controls
-    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget','imsWidget','gipsWidget'].forEach(function(id) {
+    ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget','imsWidget','gipsWidget','csiWidget'].forEach(function(id) {
       var el = document.getElementById(id); if (el) el.style.display = 'none';
     });
     widget.style.display = 'block';
@@ -38830,6 +39296,7 @@ function toggleWidget(widgetId) {
     if (widgetId === 'ppeWidget' && typeof ppeInit === 'function') setTimeout(ppeInit, 50);
     if (widgetId === 'imsWidget' && typeof imsInit === 'function') setTimeout(imsInit, 50);
     if (widgetId === 'gipsWidget' && typeof gipsInit === 'function') setTimeout(gipsInit, 50);
+  if (widgetId === 'csiWidget' && typeof csiInit === 'function') setTimeout(csiInit, 50);
   }
 }
 
@@ -38848,6 +39315,7 @@ function openNote(key, topic, subtopic) {
     'PM Pathway||Active Equity Investing: Strategies': 'awWidget',
     'PM Pathway||Active Equity Investing: Portfolio Construction': 'pcwWidget',
     'PM Pathway||Trade Strategy and Execution': 'tswWidget',
+    'PM Pathway||Case Study in Portfolio Management: Institutional': 'csiWidget',
     'Portfolio Construction||Overview of Equity Portfolio Management': 'eqWidget',
     'Portfolio Construction||Overview Of Fixed-Income Portfolio Management': 'fipmWidget',
     'Portfolio Construction||Asset Allocation to Alternative Investments': 'aaiWidget',
@@ -38868,7 +39336,7 @@ function openNote(key, topic, subtopic) {
   };
   var widgetId = WIDGET_MAP[key];
 
-  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget','imsWidget','gipsWidget'].forEach(function(id) {
+  ['ldiWidget','ycsWidget','creditWidget','indexWidget','awWidget','pcwWidget','tswWidget','cmeWidget','fiWidget','oaWidget','paWidget','rwWidget','osWidget','sfWidget','cmWidget','eqWidget','fipmWidget','aaiWidget','pwmWidget','iiWidget','tcWidget','ppeWidget','imsWidget','gipsWidget','csiWidget'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.style.display = 'none';
   });
 
@@ -38999,6 +39467,7 @@ var RECAP_REGISTRY = [
   { id: 'cw-recap',  title: 'Reading P6 · Credit Strategies' },
   { id: 'pcw-recap', title: 'Active Equity · Portfolio Construction' },
   { id: 'tsw-recap', title: 'Reading P7 · Trade Strategy &amp; Execution' },
+  { id: 'csi-recap', title: 'Reading P8 · Case Study in Portfolio Management: Institutional' },
   { id: 'cme-recap', title: 'Reading 1 · Capital Market Expectations, Part 1 (Framework &amp; Macro)' },
   { id: 'fir-recap', title: 'Reading 2 · Capital Market Expectations, Part 2 (Forecasting Asset Class Returns)' },
   { id: 'oar-recap', title: 'Reading 3 · Overview of Asset Allocation' },
